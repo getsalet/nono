@@ -173,11 +173,53 @@ jobs:
           # source SQL/rollback and aggregate publish files are also ignored by
           # *.sql, so force-add them so future checkouts carry the payload that
           # feeds each package (otherwise packages build with empty SQL).
+          # Signal file: written only when a NEW 50-post batch was packaged in
+          # this run. The FTPS upload workflow triggers on push of this file,
+          # so it fires exactly when a new batch is ready (not on every post).
+          python - <<'SIGNAL_PY'
+import json, pathlib, hashlib
+manifest_path = pathlib.Path("artifacts/city-content-queue/packages/manifest.json")
+state_path    = pathlib.Path("artifacts/city-content-queue/ftps-upload-state.json")
+signal_path   = pathlib.Path("artifacts/city-content-queue/.new-batch-signal")
+try:
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+except Exception:
+    sys.exit(0)
+new_batches = {p["batch"] for p in manifest.get("packages", [])}
+try:
+    state = json.loads(state_path.read_text(encoding="utf-8"))
+    known = {name.rsplit("-", 0) for name in state.get("files", {}).keys()}
+    known_batches = set(known)
+except Exception:
+    known_batches = set()
+# A batch is "new" if its zip is not yet in ftps-upload-state.json
+truly_new = new_batches - {n.replace(".zip","") for n in state.get("files", {})} if state_path.exists() else new_batches
+if truly_new:
+    signal_path.write_text("
+".join(sorted(truly_new)) + "
+", encoding="utf-8")
+    print(f"New batch(es) ready: {sorted(truly_new)} — wrote .new-batch-signal")
+else:
+    signal_path.unlink(missing_ok=True)
+    print("No new batch this run; .new-batch-signal removed (if present)")
+import sys
+SIGNAL_PY
+
+          git add -f artifacts/city-content-queue/.new-batch-signal 2>/dev/null || true
+          git add -A artifacts/city-content-queue
+
+          # Batch archives are upload-ready ZIPs that MUST be committed so the
+          # separate FTPS workflow can read them from git. The repo .gitignore
+          # ignores *.zip, so add the batch packages explicitly. The per-post
+          # source SQL/rollback and aggregate publish files are also ignored by
+          # *.sql, so force-add them so future checkouts carry the payload that
+          # feeds each package (otherwise packages build with empty SQL).
           git add -f artifacts/city-content-queue/packages/batch-*.zip
           git add -f artifacts/city-content-queue/sql/*.sql
           git add -f artifacts/city-content-queue/rollback/*.sql
           git add -f artifacts/city-content-queue/create-all-completed.sql
           git add -f artifacts/city-content-queue/rollback-all-completed.sql
+          git add -f artifacts/city-content-queue/.new-batch-signal 2>/dev/null || true
           git add -A artifacts/city-content-queue
 
           if git diff --cached --quiet; then
