@@ -176,83 +176,16 @@ jobs:
           # Signal file: written only when a NEW 50-post batch was packaged in
           # this run. The FTPS upload workflow triggers on push of this file,
           # so it fires exactly when a new batch is ready (not on every post).
-          python - <<'SIGNAL_PY'
-          import json, pathlib, sys
-          manifest_path = pathlib.Path("artifacts/city-content-queue/packages/manifest.json")
-          state_path    = pathlib.Path("artifacts/city-content-queue/ftps-upload-state.json")
-          signal_path   = pathlib.Path("artifacts/city-content-queue/.new-batch-signal")
-          try:
-      manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-          except Exception:
-      signal_path.unlink(missing_ok=True); sys.exit(0)
-          new_batches = {p.get("batch") for p in manifest.get("packages", [])}
-          try:
-      state = json.loads(state_path.read_text(encoding="utf-8"))
-      already_uploaded = {name.rsplit(".zip",1)[0] for name in state.get("files", {}).keys()}
-          except Exception:
-      already_uploaded = set()
-          truly_new = sorted(b for b in new_batches if b and b not in already_uploaded)
-          if truly_new:
-      signal_path.write_text(chr(10).join(truly_new) + chr(10), encoding="utf-8")
-      print(f"New batch(es) ready: {truly_new} - wrote .new-batch-signal")
-          else:
-      signal_path.unlink(missing_ok=True)
-      print("No new batch this run; .new-batch-signal cleared")
-SIGNAL_PY
-import json, pathlib, sys
-manifest_path = pathlib.Path("artifacts/city-content-queue/packages/manifest.json")
-state_path    = pathlib.Path("artifacts/city-content-queue/ftps-upload-state.json")
-signal_path   = pathlib.Path("artifacts/city-content-queue/.new-batch-signal")
-try:
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-except Exception:
-    signal_path.unlink(missing_ok=True); sys.exit(0)
-new_batches = {p.get("batch") for p in manifest.get("packages", [])}
-try:
-    state = json.loads(state_path.read_text(encoding="utf-8"))
-    already_uploaded = {name.rsplit(".zip",1)[0] for name in state.get("files", {}).keys()}
-except Exception:
-    already_uploaded = set()
-truly_new = sorted(b for b in new_batches if b and b not in already_uploaded)
-if truly_new:
-    signal_path.write_text("
-".join(truly_new) + "
-", encoding="utf-8")
-    print(f"New batch(es) ready: {truly_new} — wrote .new-batch-signal")
-else:
-    signal_path.unlink(missing_ok=True)
-    print("No new batch this run; .new-batch-signal cleared")
-SIGNAL_PY
+          python automation/write_new_batch_signal.py || true
 
-import json, pathlib, hashlib
-manifest_path = pathlib.Path("artifacts/city-content-queue/packages/manifest.json")
-state_path    = pathlib.Path("artifacts/city-content-queue/ftps-upload-state.json")
-signal_path   = pathlib.Path("artifacts/city-content-queue/.new-batch-signal")
-try:
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-except Exception:
-    sys.exit(0)
-new_batches = {p["batch"] for p in manifest.get("packages", [])}
-try:
-    state = json.loads(state_path.read_text(encoding="utf-8"))
-    known = {name.rsplit("-", 0) for name in state.get("files", {}).keys()}
-    known_batches = set(known)
-except Exception:
-    known_batches = set()
-# A batch is "new" if its zip is not yet in ftps-upload-state.json
-truly_new = new_batches - {n.replace(".zip","") for n in state.get("files", {})} if state_path.exists() else new_batches
-if truly_new:
-    signal_path.write_text("
-".join(sorted(truly_new)) + "
-", encoding="utf-8")
-    print(f"New batch(es) ready: {sorted(truly_new)} — wrote .new-batch-signal")
-else:
-    signal_path.unlink(missing_ok=True)
-    print("No new batch this run; .new-batch-signal removed (if present)")
-import sys
-SIGNAL_PY
-
+          # Batch archives + per-post SQL/rollback + aggregate publish files
+          # must be force-added (the .gitignore ignores *.zip / *.sql).
           git add -f artifacts/city-content-queue/.new-batch-signal 2>/dev/null || true
+          git add -f artifacts/city-content-queue/packages/batch-*.zip
+          git add -f artifacts/city-content-queue/sql/*.sql
+          git add -f artifacts/city-content-queue/rollback/*.sql
+          git add -f artifacts/city-content-queue/create-all-completed.sql
+          git add -f artifacts/city-content-queue/rollback-all-completed.sql
           git add -A artifacts/city-content-queue
 
           # Batch archives are upload-ready ZIPs that MUST be committed so the
