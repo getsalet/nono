@@ -13,9 +13,13 @@ def clean_title(title,item):
  else:base=title
  return base[:68].strip()
 
-def _clean_text_nodes(html):
- parts=TAG_SPLIT_RE.split(html or '')
- for index in range(0,len(parts),2):parts[index]=CYRILLIC_RE.sub('',parts[index])
+def _clean_text_nodes(html,item=None):
+ item=item or {};parts=TAG_SPLIT_RE.split(html or '')
+ for index in range(0,len(parts),2):
+  text=CYRILLIC_RE.sub('',parts[index])
+  if item.get('topic')=='tape20':
+   text=re.sub(r'\bPVC\b|پلی[‌\- ]?وینیل', 'پلی‌اتیلن', text, flags=re.I)
+  parts[index]=text
  return ''.join(parts)
 
 def _faq_html(item):
@@ -40,7 +44,7 @@ def cleanup_html(html,item=None):
   marker=f'[[[IMAGE_{number}]]]'
   if marker in html:markers.append(marker)
   html=html.replace(marker,'')
- html=_clean_text_nodes(html);html=FAQ_SECTION_RE.sub('',html);html=re.sub(r'<p>\s*</p>','',html).strip()
+ html=_clean_text_nodes(html,item);html=FAQ_SECTION_RE.sub('',html);html=re.sub(r'<p>\s*</p>','',html).strip()
  topic=item.get('topic');visible=re.sub(r'<[^>]+>',' ',html)
  if topic=='layflat' and not any(x in visible for x in ('لوله نخی','لوله تاشو')):html='<p>لوله نخی و لوله تاشو برای انتقال آب در مزرعه به‌کار می‌رود و انتخاب سایز، فشار، اتصال و دوام آن باید بر اساس دبی، طول مسیر و دیتاشیت سازنده انجام شود.</p>'+html
  if topic=='tape20' and not re.search(r'(?:۲۰|20)\s*سانتی',visible):html='<p>این راهنما بر انتخاب و کاربرد نوار تیپ با فاصله قطره‌چکان ۲۰ سانتی‌متر تمرکز دارد و مشخصات نهایی باید با طراحی مزرعه و دیتاشیت سازنده تطبیق داده شود.</p>'+html
