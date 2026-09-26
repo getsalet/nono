@@ -2,7 +2,7 @@
 """Fast image QA with hard rejection for product identity and physics failures."""
 import base64,json,os,re,urllib.request
 import image_prompt_policy
-REVIEW_POLICY='strict-no-human-scale-watermark-v2'
+REVIEW_POLICY='strict-no-human-scale-watermark-v3-metrics'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
@@ -36,19 +36,31 @@ def _vision_review(base,path,item,kind):
   reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 23 percent of the frame, taller than 30 percent of the frame, centered product staging, bottle, jar, canister, bucket, fertilizer or pesticide container, second package, second roll, layflat hose, pipe through the roll, fake label, impossible geometry or distorted dimensions.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
-The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never be rejected or requested for removal. Unattended tractors, pumps, filters and ordinary farm equipment are allowed when no person or human silhouette is visible; do not classify them as extra commercial products. Estimate product size from image pixels rather than assumed human scale. If pass is true, correction_prompt must be empty. Do not reject only for ordinary soil texture or distant crop rows. Return only JSON: {{"pass":true|false,"score":0-100,"reasons":["..."],"correction_prompt":"short regeneration instruction"}}. Pass at score {MIN_IMAGE_SCORE} or higher.'''
+The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never be rejected or requested for removal. Unattended tractors, pumps, filters and ordinary farm equipment are allowed when no person or human silhouette is visible; do not classify them as extra commercial products. Estimate the product bounding box from image pixels. Report product_width_percent, product_height_percent and product_x_center_percent as numeric percentages of the full image. If pass is true, correction_prompt must be empty. Do not reject only for ordinary soil texture or distant crop rows. Return only JSON: {{"pass":true|false,"score":0-100,"product_width_percent":0,"product_height_percent":0,"product_x_center_percent":0,"reasons":["..."],"correction_prompt":"short regeneration instruction"}}. Pass at score {MIN_IMAGE_SCORE} or higher.'''
  payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':[{'type':'text','text':prompt},{'type':'image_url','image_url':{'url':'data:image/webp;base64,'+encoded}}]}],'temperature':0,'response_format':{'type':'json_object'}}
  req=urllib.request.Request(base.AGNES_BASE+'/chat/completions',data=json.dumps(payload).encode(),headers={'Authorization':f'Bearer {base.AGNES_KEY}','Content-Type':'application/json'})
  with urllib.request.urlopen(req,timeout=60) as response:raw=json.loads(response.read())
  content=raw['choices'][0]['message']['content']
  if isinstance(content,list):content=''.join(str(x.get('text','')) for x in content if isinstance(x,dict))
- verdict=_extract_json(content);verdict['pass']=bool(verdict.get('pass')) and int(verdict.get('score',0))>=MIN_IMAGE_SCORE
+ verdict=_extract_json(content)
+ try:
+  width=float(verdict.get('product_width_percent'))
+  height=float(verdict.get('product_height_percent'))
+  x_center=float(verdict.get('product_x_center_percent'))
+  numeric_ok=(12<=width<=15 and height<=30) if family=='layflat' else (19<=width<=23 and height<=30)
+  off_center=x_center<=43 or x_center>=57
+ except (TypeError,ValueError):
+  numeric_ok=off_center=False
+ verdict['pass']=bool(verdict.get('pass')) and int(verdict.get('score',0))>=MIN_IMAGE_SCORE and numeric_ok and off_center
+ if not numeric_ok or not off_center:
+  verdict.setdefault('reasons',[]).append('machine-enforced bounding-box scale/off-center check failed')
+  verdict['correction_prompt']='Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.'
  return verdict
 
 def install(base,backend,raw_generator):
  reviews=base.OUT/'image-reviews';reviews.mkdir(parents=True,exist_ok=True)
  def guarded(item,kind):
-  original_prompt=backend.image_prompt;feedback='';history=[];family=image_prompt_policy.product_family(item)
+  feedback='';history=[];family=image_prompt_policy.product_family(item)
   review_path=reviews/f"{item['source_id']}-{kind}.json"
   try:
    if review_path.exists():
@@ -58,10 +70,10 @@ def install(base,backend,raw_generator):
      blob=path.read_bytes();return path.name,__import__('hashlib').sha256(blob).hexdigest()
   except Exception:
    pass
-  try:
-   for attempt in range(1,MAX_IMAGE_ATTEMPTS+1):
-    if feedback:backend.image_prompt=lambda current_item,current_kind,p=original_prompt,f=feedback:p(current_item,current_kind)+' HARD QA CORRECTION: '+f
-    name,digest=raw_generator(item,kind);path=base.IMAGES/name
+  for attempt in range(1,MAX_IMAGE_ATTEMPTS+1):
+    candidate_item=dict(item)
+    if feedback:candidate_item['_image_qa_feedback']=feedback
+    name,digest=raw_generator(candidate_item,kind);path=base.IMAGES/name
     try:verdict=_vision_review(base,path,item,kind)
     except Exception as exc:
      verdict={'pass':False,'score':0,'reasons':['visual reviewer unavailable: '+type(exc).__name__],'correction_prompt':'Regenerate and retry strict visual review.'}
@@ -70,6 +82,5 @@ def install(base,backend,raw_generator):
     review_path.write_text(json.dumps({'source_id':item['source_id'],'family':family,'kind':kind,'policy':REVIEW_POLICY,'fast_mode':FAST_MODE,'history':history},ensure_ascii=False,indent=2),encoding='utf-8')
     if verdict['pass']:return name,digest
     path.unlink(missing_ok=True);feedback=str(verdict.get('correction_prompt') or '; '.join(verdict.get('reasons',[])))
-   raise RuntimeError(f'image hard gate rejected role {kind} after {MAX_IMAGE_ATTEMPTS} attempt')
-  finally:backend.image_prompt=original_prompt
+  raise RuntimeError(f'image hard gate rejected role {kind} after {MAX_IMAGE_ATTEMPTS} attempt')
  return guarded
