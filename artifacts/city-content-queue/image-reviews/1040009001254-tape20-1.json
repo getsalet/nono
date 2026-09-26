@@ -2,22 +2,108 @@
   "source_id": "1040009001254-tape20",
   "family": "tape20",
   "kind": 1,
-  "policy": "strict-no-human-scale-watermark-v2",
+  "policy": "strict-no-human-scale-watermark-v3-metrics",
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
+      "pass": false,
       "score": 88,
+      "product_width_percent": 18,
+      "product_height_percent": 28,
+      "product_x_center_percent": 28,
       "reasons": [
-        "Zero people, human silhouettes, or body parts detected in the frame.",
-        "Required watermark 'AFP | 09134922013' is present and legible in the bottom-right corner.",
-        "Unattended green tractor is correctly identified as ordinary farm equipment, not an extra commercial product.",
-        "Single AFP white-and-blue cylindrical drip-tape roll is clearly visible and secondary to the farm context.",
-        "No hard-reject items (bottles, juries, second rolls, pipes, fake labels) detected.",
-        "Product size and off-center lower-third placement align with the '19-23% width' visual estimation."
+        "The image contains exactly one AFP white-and-blue cylindrical drip-tape carton roll.",
+        "The product occupies approximately 18% of the frame width and 28% of the frame height, adhering to the size constraints.",
+        "The product is positioned on the lower third, off-center to the left.",
+        "The farm context (tractor and crop rows) remains clearly visible and secondary to the product.",
+        "Zero people or human body parts are visible in the scene.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "No prohibited items such as bottles, pipes, or second rolls are present.",
+        "machine-enforced bounding-box scale/off-center check failed"
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 26,
+      "product_height_percent": 32,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Human presence detected: A person is sitting in the field in the background (right-middle), which triggers the hard reject rule for zero people or human silhouettes.",
+        "Product dimensions exceed limits: The carton roll width is estimated at ~26% of frame width (limit is 23%) and height at ~32% (limit is 30%).",
+        "Product centering: The product is centered horizontally (~50%), violating the 'off-center' requirement.",
+        "machine-enforced bounding-box scale/off-center check failed"
+      ],
+      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 27.5,
+      "product_height_percent": 22.0,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Product is an AFP white-and-blue cylindrical drip-tape roll, correct and single",
+        "Farm context with crop rows and distant unattended tractors only; no people or body parts",
+        "Required bottom-right watermark is present and intact",
+        "No forbidden items (bottles, cans, pipes, extra rolls, etc.)",
+        "Roll occupies lower third, off-center-ish, and is secondary to farm context",
+        "Width slightly above the preferred 19-23% range, but not enough to hard reject",
+        "machine-enforced bounding-box scale/off-center check failed"
+      ],
+      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 36,
+      "product_height_percent": 43,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Product width is ~36% of frame, exceeding the hard limit of 23%",
+        "Product height is ~43% of frame, exceeding the hard limit of 30%",
+        "Product is centered, violating the 'off-center' and 'secondary to context' requirements",
+        "machine-enforced bounding-box scale/off-center check failed"
+      ],
+      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue cylindrical drip-tape carton roll.",
+        "The product width (~21%) is within the 19-23% required range.",
+        "The product height (~25%) is within the 30% maximum.",
+        "The product is positioned in the lower third, remaining secondary to the vast farm landscape context.",
+        "No people, human body parts, or human silhouettes are visible.",
+        "The required bottom-right watermark \"AFP | 09134922013\" is present.",
+        "machine-enforced bounding-box scale/off-center check failed"
+      ],
+      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 31,
+      "product_height_percent": 39,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Rejected due to human presence: A visible worker is standing between the tractors in the background, violating the zero-person rule.",
+        "Product sizing failure: The carton roll is centered rather than off-center, and its width (~31%) and height (~39%) exceed the maximum limits of 23% and 30% respectively.",
+        "Product staging: The object is treated as a primary central element rather than a secondary item.",
+        "machine-enforced bounding-box scale/off-center check failed"
+      ],
+      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
+      "attempt": 6
     }
   ]
 }
