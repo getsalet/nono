@@ -2,16 +2,16 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-26T03:14:25+00:00`
-- وضعیت صف: **ready_with_failures**
+- آخرین بروزرسانی: `2026-09-26T03:25:30+00:00`
+- وضعیت صف: **failed**
 - پیشرفت: **258 از 1894 (13.62٪)**
 - تکمیل‌شده: **258**
 - در حال پردازش: **0**
-- در انتظار: **1631**
-- ناموفق: **5**
+- در انتظار: **1630**
+- ناموفق: **6**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
-- مدل تصویر: `agnes-image-2.0-flash`
+- مدل تصویر: `agnes-image-2.5-flash`
 - فاصله شروع پست بعدی: **۳۰ ثانیه**
 
 ## بسته‌های آماده آپلود
@@ -53,6 +53,7 @@
 - **لاریجان** — `layflat`: `Editorial review failed: 20cm product focus missing`
 - **دوزدوزان** — `tape20`: `Editorial review failed: Cyrillic characters`
 - **دوزدوزان** — `layflat`: `Editorial review failed: three details FAQ items required at end`
+- **شربیان** — `layflat`: `Editorial review failed: Cyrillic characters; layflat product focus missing; three details FAQ items required at end; word count below minimum; missing meta_description; missing focus_keyword; missing excerpt`
 
 ## فایل‌های خروجی
 
