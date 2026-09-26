@@ -3,7 +3,6 @@ policy=diverse-contextual-scenes-v20
 batch_size=1
 ftp_upload=separate_workflow_after_success
 actions_artifacts=preserved
-agnes_json_retry attempt=1/4 error=no valid JSON object found: Expecting ',' delimiter: line 7 column 1103 (char 1670)
 Traceback (most recent call last):
   File "/home/runner/work/nono/nono/automation/city_content_queue_cloudflare.py", line 104, in process
     obj=make_content(item,queue['link_index']);names=[];hashes=[]
@@ -11,7 +10,7 @@ Traceback (most recent call last):
   File "/home/runner/work/nono/nono/automation/reviewed_publish_city_queue.py", line 108, in reviewed_make_content
     queue.generate_image=reuse_or_generate
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Editorial review failed: Cyrillic characters
+RuntimeError: Editorial review failed: three details FAQ items required at end
 
 The above exception was the direct cause of the following exception:
 
@@ -33,6 +32,6 @@ Traceback (most recent call last):
   File "/home/runner/work/nono/nono/automation/city_content_queue_cloudflare.py", line 113, in process
     q.write_status(queue,'failed');raise RuntimeError(f'Queue item failed: {type(failure).__name__}: {failure}') from failure
                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Queue item failed: RuntimeError: Editorial review failed: Cyrillic characters
+RuntimeError: Queue item failed: RuntimeError: Editorial review failed: three details FAQ items required at end
 queue_exit_code=1
 auxiliary_exit_code=0
