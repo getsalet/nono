@@ -70,6 +70,7 @@ jobs:
             automation/run_agnes_city_queue_resilient.py \
             automation/run_agnes_city_queue_seo.py \
             automation/reviewed_publish_city_queue.py \
+            automation/repair_completed_city_sql.py \
             automation/import_permalink_fix.py \
             automation/package_city_content_batches.py \
             automation/render_city_queue_status.py
@@ -110,6 +111,7 @@ jobs:
           echo "queue_exit_code=$QUEUE_CODE" | tee -a artifacts/city-content-queue/run.log
 
           AUX_CODE=0
+          python automation/repair_completed_city_sql.py || AUX_CODE=$?
           python automation/import_permalink_fix.py || AUX_CODE=$?
           python automation/package_city_content_batches.py || AUX_CODE=$?
           python automation/render_city_queue_status.py || AUX_CODE=$?
