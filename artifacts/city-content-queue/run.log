@@ -1,8 +1,26 @@
 event=schedule
-policy=reference-rerender-3d-v3
+policy=reference-rerender-3d-v4-scale-controlled
 batch_size=4 article_workers=4 image_workers=8
 ftp_upload=separate_workflow_after_success
 actions_artifacts=preserved
-agnes_json_retry attempt=1/4 timeout=180s error=no valid JSON object found: Expecting ',' delimiter: line 4 column 170 (char 304)
-queue_exit_code=0
+Traceback (most recent call last):
+  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_fast.py", line 29, in <module>
+    runpy.run_path(str(HERE/'run_agnes_city_queue_resilient.py'),run_name='__main__')
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_resilient.py", line 20, in <module>
+    runpy.run_path(str(HERE/'run_agnes_city_queue_seo.py'),run_name='__main__')
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_seo.py", line 85, in <module>
+    exec(
+  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue.py", line 127, in <module>
+  File "/home/runner/work/nono/nono/automation/reviewed_publish_city_queue.py", line 156, in <module>
+  File "/home/runner/work/nono/nono/automation/city_content_queue_cloudflare.py", line 141, in process
+    if failures:raise RuntimeError('Queue items failed: '+' | '.join(failures))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Queue items failed: 10300010001233-tape20 (text): RuntimeError: Editorial review failed: unexpected Latin words: AFP | 10300010002144-tape20 (text): RuntimeError: Editorial review failed: PVC claim for irrigation tape | 10300010002144-layflat (text): RuntimeError: Editorial review failed: unexpected Latin words: AFP
+queue_exit_code=1
 auxiliary_exit_code=0
