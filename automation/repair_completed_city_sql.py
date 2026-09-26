@@ -7,7 +7,6 @@ from pathlib import Path
 
 import city_content_queue as base
 import city_content_queue_cloudflare as backend
-import text_cleanup_policy
 
 
 def main() -> int:
@@ -26,14 +25,6 @@ def main() -> int:
             missing.append(str(artifact.relative_to(base.OUT)))
             continue
         data = json.loads(artifact.read_text(encoding="utf-8"))
-        cleaned = text_cleanup_policy.cleanup_html(data.get("html", ""), item)
-        if cleaned != data.get("html", ""):
-            data["html"] = cleaned
-            artifact.write_text(
-                json.dumps(data, ensure_ascii=False, indent=2),
-                encoding="utf-8",
-            )
-            repaired += 1
         images = data.get("images") or item.get("images") or []
         if not images:
             missing.append(f"items/{sid}.json:images")
