@@ -98,11 +98,13 @@ def image_prompt(item,kind):
     if family=='layflat':
         product=(
           'A recognizable AFP black woven yarn-reinforced layflat-hose roll in its intact package is mandatory as exactly one small secondary prop. '
+          'The only printed package text permitted and required is exactly "AFP", "آبگسترفراپارسیان" and lowercase "layflat"; never print "Drip Irrigation tape" on this product. '
           'It must occupy about 10 to 20 percent of the frame and sit naturally off-center at the side or in the midground. '
           'Do not turn it into drip tape, a white carton or a rigid pipe.')
     else:
         product=(
           'A recognizable AFP 1000-meter drip-irrigation tape roll/carton is mandatory as exactly one small secondary prop: white cylindrical body, blue lower band and central core. '
+          'The only printed package text permitted and required is exactly "AFP", "آبگسترفراپارسیان" and "Drip Irrigation tape" with this exact capitalization; never print "layflat" on this product. '
           'It must occupy about 10 to 20 percent of the frame and sit naturally off-center at the side or in the midground. '
           'Do not turn it into layflat hose, an exposed black coil or a rigid pipe.')
     diversity=(
@@ -115,7 +117,7 @@ def image_prompt(item,kind):
       'Photorealistic 16:9 editorial agricultural photograph, natural color and realistic detail. '
       f'The article scene and action are the primary subject and must receive roughly 75 to 85 percent of the visual emphasis. Scene role: {scene}. '
       +product+' The product is required in every image but must remain incidental, never the focal point, hero subject, reference-image recreation, advertisement or product-only shot. '
-      'No product close-up, centered package, oversized package, studio background, duplicate product, floating object, collage, fake specifications, gibberish label, caption or watermark. '
+      'No product close-up, centered package, oversized package, studio background, duplicate product, floating object, collage, fake specifications, extra words, numbers, phone numbers, gibberish label, caption or watermark. '
       +location+' '+diversity)
 
 
