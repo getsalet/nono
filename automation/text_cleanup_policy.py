@@ -3,6 +3,10 @@
 import re
 IMAGE_1_MARKER='[[[IMAGE_1]]]'
 CYRILLIC_RE=re.compile(r'[\u0400-\u04ff]+')
+CJK_RE=re.compile(r'[\u3400-\u9fff]+')
+FULLWIDTH_RE=re.compile(r'[，。；：！？]+')
+LATIN_RE=re.compile(r'\b[A-Za-z]{3,}\b')
+ALLOWED_LATIN={'FAQ','AFP'}
 TAG_SPLIT_RE=re.compile(r'(<[^>]+>)')
 FAQ_SECTION_RE=re.compile(r'<h3[^>]*>\s*(?:پرسش|سوال|سؤالات|سوالات).*?(?:متداول|FAQ).*?</h3>.*?(?=<h2|<h3|$)',re.I|re.S)
 
@@ -17,8 +21,16 @@ def _clean_text_nodes(html,item=None):
  item=item or {};parts=TAG_SPLIT_RE.split(html or '')
  for index in range(0,len(parts),2):
   text=CYRILLIC_RE.sub('',parts[index])
+  text=CJK_RE.sub('',text)
+  text=FULLWIDTH_RE.sub('،',text)
+  text=LATIN_RE.sub(lambda m:m.group(0) if m.group(0) in ALLOWED_LATIN else '',text)
   if item.get('topic')=='tape20':
    text=re.sub(r'\bPVC\b|پلی[‌\- ]?وینیل', 'پلی‌اتیلن', text, flags=re.I)
+  elif item.get('topic')=='layflat':
+   text=text.replace('رول نوار تیپ','رول لوله نخی و تاشو')
+   text=text.replace('خرید نوار تیپ ۲۰','خرید لوله نخی و تاشو')
+   text=text.replace('فاصله قطره‌چکان ۲۰','انتخاب سایز و فشار لوله تاشو')
+  text=re.sub(r'[ \t]{2,}',' ',text)
   parts[index]=text
  return ''.join(parts)
 

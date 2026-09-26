@@ -118,7 +118,19 @@ base.IMAGE_MODEL=queue.MODEL
 state=base.initialize(False)
 queue.migrate(state)
 state['rules'].update({'draft_only':False,'post_status':'publish','editorial_review_required':True,'review_model':base.AGNES_MODEL,'quality_gate_version':QUALITY_GATE_VERSION,'reject_cyrillic':True,'reject_cjk':True,'reject_unexpected_latin':True,'reject_fullwidth_punctuation':True,'rebuild_safe_internal_links':True,'technical_plausibility_required':True,'post_delay_seconds':30})
+REPAIRABLE_FAILURES=(
+    'Cyrillic characters','CJK characters','full-width punctuation',
+    'unexpected Latin words','unexpected Latin after cleanup',
+    'three details FAQ items required at end','word count below minimum',
+    'missing meta_description','missing focus_keyword','missing excerpt',
+    '20cm product focus missing','layflat product focus missing',
+    'layflat article still focuses on drip tape','PVC claim for irrigation tape',
+)
 for item in state['items']:
+    if item.get('status')=='failed' and any(signal in str(item.get('last_error','')) for signal in REPAIRABLE_FAILURES):
+        item['status']='pending';item['attempts']=0
+        for k in ('completed_at','last_error','failed_at','started_at','word_count','failed_stage'):item.pop(k,None)
+        continue
     if item.get('status')=='completed':
         artifact=base.ITEMS/f"{item['source_id']}.json";passed=False
         if artifact.exists():

@@ -2,6 +2,11 @@ name: Upload new city batches via FTPS
 
 on:
   workflow_dispatch:
+  # Commits created by another GitHub Actions workflow do not reliably trigger
+  # a second push workflow. Poll twice per hour; the hash gate below exits
+  # immediately when every package is already uploaded.
+  schedule:
+    - cron: "10,40 * * * *"
   # Fire only when the generate workflow commits a NEW 50-post batch (it writes
   # .new-batch-signal). This replaces the old workflow_run trigger that fired on
   # every single-post commit — the cause of 500+ no-op FTPS runs.
