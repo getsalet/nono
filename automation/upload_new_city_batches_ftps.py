@@ -43,25 +43,40 @@ def main() -> int:
         print("No ZIP batches are currently available; nothing to upload.")
         return 0
 
+    ftp = connect()
     pending = []
     skipped = 0
-    for path in packages:
-        digest = sha256(path)
-        size = path.stat().st_size
-        previous = tracked.get(path.name, {})
-        if previous.get("sha256") == digest and int(previous.get("size", -1)) == size:
-            print(f"Already uploaded; skipped: {path.name}")
-            skipped += 1
-        else:
-            pending.append((path, digest, size))
-
-    if not pending:
-        print(json.dumps({"uploaded": 0, "skipped": skipped, "checked": len(packages)}, ensure_ascii=False))
-        return 0
-
-    ftp = connect()
+    missing_remote = []
     uploaded = 0
     try:
+        # Local state alone is not proof that a remote file still exists.
+        # Compare the actual FTPS object size before skipping a package.
+        for path in packages:
+            digest = sha256(path)
+            size = path.stat().st_size
+            previous = tracked.get(path.name, {})
+            try:
+                remote_size = ftp.size(path.name)
+            except Exception:
+                remote_size = None
+            state_matches = (
+                previous.get("sha256") == digest
+                and int(previous.get("size", -1)) == size
+            )
+            if state_matches and remote_size == size:
+                print(f"Remote file verified; skipped: {path.name}")
+                skipped += 1
+            else:
+                if remote_size is None:
+                    missing_remote.append(path.name)
+                    print(f"Remote file missing; will restore: {path.name}")
+                elif remote_size != size:
+                    print(
+                        f"Remote size mismatch; will replace: {path.name} "
+                        f"local={size} remote={remote_size}"
+                    )
+                pending.append((path, digest, size))
+
         for path, digest, size in pending:
             with path.open("rb") as stream:
                 ftp.storbinary(f"STOR {path.name}", stream, blocksize=1024 * 1024)
@@ -83,6 +98,7 @@ def main() -> int:
         "uploaded": uploaded,
         "skipped": skipped,
         "checked": len(packages),
+        "restored_missing_remote": missing_remote,
         "completed_at": now(),
     }
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
