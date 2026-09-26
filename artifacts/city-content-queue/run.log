@@ -1,5 +1,5 @@
 event=schedule
-policy=diverse-contextual-scenes-v20
+policy=exact-asset-composite-v1
 batch_size=4 article_workers=4 image_workers=8
 ftp_upload=separate_workflow_after_success
 actions_artifacts=preserved
@@ -14,13 +14,12 @@ Traceback (most recent call last):
   File "<frozen runpy>", line 287, in run_path
   File "<frozen runpy>", line 98, in _run_module_code
   File "<frozen runpy>", line 88, in _run_code
-  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_seo.py", line 66, in <module>
-    exec(
-  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue.py", line 127, in <module>
-  File "/home/runner/work/nono/nono/automation/reviewed_publish_city_queue.py", line 148, in <module>
-  File "/home/runner/work/nono/nono/automation/city_content_queue_cloudflare.py", line 141, in process
-    if failures:raise RuntimeError('Queue items failed: '+' | '.join(failures))
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Queue items failed: 10300020001224-layflat (text): RuntimeError: Editorial review failed: unexpected Latin words: Coupling, Disk, Filter, HDPE, Head, Lateral, Layflat, Million, PVC, Pressure, Rating, Regulators; PVC claim for irrigation tape; unexpected Latin after cleanup: Coupling, Disk, Filter, HDPE, Head, Lateral, Layflat, Million; blocked utility link
+  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_seo.py", line 45, in <module>
+    run_source=replace_once(run_source,'''    name=f"{item['source_id']}-{kind}.jpg";(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()''','''    image=Image.open(BytesIO(blob)).convert('RGB')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_seo.py", line 14, in replace_once
+    if count!=1:raise RuntimeError('Cannot patch '+label)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Cannot patch SEO WebP filenames
 queue_exit_code=1
 auxiliary_exit_code=0
