@@ -58,7 +58,7 @@ BATCH=max(1,int(os.getenv('BATCH_SIZE','3'))); MIN_WORDS=int(os.getenv('MIN_WORD
 
 
 
-PROVINCE_TYPES={100:'arak',101:'gilan',102:'mazandaran',103:'post',104:'orumiyeh',105:'post',106:'ahvaz',107:'shiraz',108:'post',109:'mashhad',110:'isfahan',111:'zahedan',112:'kurdistan',113:'hamadan',114:'shahrekord',115:'post',116:'post',117:'post',118:'bushehr',119:'zanjan',120:'semnan',121:'yazd',122:'bandarabbas',123:'tehran',124:'ardabil',125:'post',126:'qazvin',127:'golestan',128:'post',129:'post',130:'karaj'}
+PROVINCE_TYPES={100:'arak',101:'gilan',102:'mazandaran',103:'east_azarbaijan',104:'orumiyeh',105:'kermanshah',106:'ahvaz',107:'shiraz',108:'kerman',109:'mashhad',110:'isfahan',111:'zahedan',112:'kurdistan',113:'hamadan',114:'shahrekord',115:'lorestan',116:'ilam',117:'kohgiluyeh',118:'bushehr',119:'zanjan',120:'semnan',121:'yazd',122:'bandarabbas',123:'tehran',124:'ardabil',125:'qom',126:'qazvin',127:'golestan',128:'north_khorasan',129:'south_khorasan',130:'karaj'}
 
 
 
@@ -216,7 +216,18 @@ def initialize(force=False):
 
 
 
- if QUEUE.exists() and not force:return json.loads(QUEUE.read_text(encoding='utf-8'))
+ if QUEUE.exists() and not force:
+  q=json.loads(QUEUE.read_text(encoding='utf-8'));changed=0
+  for item in q.get('items',[]):
+   province_id=str(item.get('province_id',''))
+   target=PROVINCE_TYPES.get(int(province_id)) if province_id.isdigit() else None
+   if target and item.get('post_type')!=target:
+    item['post_type']=target;changed+=1
+  if changed:
+   q['updated_at']=now();q['post_type_mapping_version']=2
+   QUEUE.write_text(json.dumps(q,ensure_ascii=False,indent=2),encoding='utf-8')
+   print(f'migrated_queue_post_types={changed}',flush=True)
+  return q
 
 
 

@@ -86,6 +86,13 @@ def healthy_existing_zip(
             embedded = json.loads(archive.read("manifest.json").decode("utf-8"))
             create_sql = archive.read("sql/create-batch.sql").decode("utf-8")
             actual_ids = {str(post.get("source_id")) for post in embedded.get("posts", [])}
+            expected_post_types = {
+                source_id(item): str(item.get("post_type", "")) for item in expected
+            }
+            actual_post_types = {
+                str(post.get("source_id")): str(post.get("post_type", ""))
+                for post in embedded.get("posts", [])
+            }
             if (
                 embedded.get("batch") != batch_name
                 or int(embedded.get("post_count", 0)) != len(expected)
@@ -97,6 +104,10 @@ def healthy_existing_zip(
                 or (
                     require_database_preamble
                     and f"USE `{DB_NAME}`;" not in create_sql[:500]
+                )
+                or (
+                    require_database_preamble
+                    and actual_post_types != expected_post_types
                 )
             ):
                 return None
@@ -138,6 +149,7 @@ def build_package(batch: list[dict], batch_name: str) -> dict:
                 "province": item.get("province"),
                 "topic": item.get("topic"),
                 "slug": item.get("slug"),
+                "post_type": item.get("post_type"),
                 "completed_at": item.get("completed_at"),
                 "word_count": item.get("word_count"),
             }
