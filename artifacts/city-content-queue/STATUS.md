@@ -2,13 +2,13 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-26T14:26:24+00:00`
-- وضعیت صف: **ready_with_failures**
-- پیشرفت: **320 از 1894 (16.90٪)**
-- تکمیل‌شده: **320**
+- آخرین بروزرسانی: `2026-09-26T14:34:04+00:00`
+- وضعیت صف: **ready**
+- پیشرفت: **324 از 1894 (17.11٪)**
+- تکمیل‌شده: **324**
 - در حال پردازش: **0**
-- در انتظار: **1564**
-- ناموفق: **10**
+- در انتظار: **1570**
+- ناموفق: **0**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -26,6 +26,10 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **لاریجان** — آذربایجان شرقی — `layflat` — 1366 کلمه — `2026-09-26T14:34:03+00:00`
+- **لاریجان** — آذربایجان شرقی — `tape20` — 1472 کلمه — `2026-09-26T14:33:32+00:00`
+- **خمارلو** — آذربایجان شرقی — `layflat` — 1359 کلمه — `2026-09-26T14:33:13+00:00`
+- **دوزدوزان** — آذربایجان شرقی — `tape20` — 1313 کلمه — `2026-09-26T14:32:29+00:00`
 - **ورزقان** — آذربایجان شرقی — `tape20` — 1102 کلمه — `2026-09-26T14:26:23+00:00`
 - **ورزقان** — آذربایجان شرقی — `layflat` — 1647 کلمه — `2026-09-26T14:25:50+00:00`
 - **خاروانا** — آذربایجان شرقی — `layflat` — 1401 کلمه — `2026-09-26T14:25:29+00:00`
@@ -42,23 +46,10 @@
 - **زرنق** — آذربایجان شرقی — `layflat` — 1706 کلمه — `2026-09-26T13:37:46+00:00`
 - **هریس** — آذربایجان شرقی — `layflat` — 1470 کلمه — `2026-09-26T13:37:23+00:00`
 - **زرنق** — آذربایجان شرقی — `tape20` — 1312 کلمه — `2026-09-26T13:36:38+00:00`
-- **خواجه** — آذربایجان شرقی — `layflat` — 1652 کلمه — `2026-09-26T13:28:07+00:00`
-- **میانه** — آذربایجان شرقی — `tape20` — 1510 کلمه — `2026-09-26T13:25:12+00:00`
-- **خواجه** — آذربایجان شرقی — `tape20` — 1245 کلمه — `2026-09-26T13:24:57+00:00`
-- **اربطان** — آذربایجان شرقی — `layflat` — 1217 کلمه — `2026-09-26T13:24:29+00:00`
 
 ## خطاهای اخیر
 
-- **خمارلو** — `layflat`: `Editorial review failed: layflat article still focuses on drip tape`
-- **لاریجان** — `tape20`: `Editorial review failed: Cyrillic characters; 20cm product focus missing; three details FAQ items required at end; word count below minimum; missing meta_description; missing focus_keyword; missing excerpt`
-- **لاریجان** — `layflat`: `Editorial review failed: 20cm product focus missing`
-- **دوزدوزان** — `tape20`: `Editorial review failed: Cyrillic characters`
-- **دوزدوزان** — `layflat`: `Editorial review failed: three details FAQ items required at end`
-- **شربیان** — `layflat`: `Editorial review failed: Cyrillic characters; layflat product focus missing; three details FAQ items required at end; word count below minimum; missing meta_description; missing focus_keyword; missing excerpt`
-- **شبستر** — `layflat`: `Editorial review failed: Cyrillic characters; three details FAQ items required at end`
-- **شرفخانه** — `tape20`: `Editorial review failed: unexpected Latin words: AdvertiserContentArticle; unexpected Latin after cleanup: AdvertiserContentArticle`
-- **لیلان** — `layflat`: `Editorial review failed: unexpected Latin words: Product; unexpected Latin after cleanup: Product`
-- **بخشایش** — `tape20`: `Editorial review failed: CJK characters`
+- خطای فعالی ثبت نشده است.
 
 ## فایل‌های خروجی
 
