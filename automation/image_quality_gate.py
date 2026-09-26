@@ -2,7 +2,7 @@
 """Fast image QA with hard rejection for product identity and physics failures."""
 import base64,json,os,re,urllib.request
 import image_prompt_policy
-REVIEW_POLICY='strict-no-human-scale-watermark-v3-metrics'
+REVIEW_POLICY='strict-no-human-scale-watermark-v4-metric-feedback'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
@@ -21,6 +21,28 @@ def _quick_file_check(path):
   return {'pass':False,'score':0,'reasons':['image file missing or too small'],'correction_prompt':'Regenerate a valid photorealistic farm irrigation image.'}
  return None
 
+
+def _metric_check(family,verdict):
+ try:
+  width=float(verdict.get('product_width_percent'))
+  height=float(verdict.get('product_height_percent'))
+  x_center=float(verdict.get('product_x_center_percent'))
+ except (TypeError,ValueError):
+  return False,['Return numeric product_width_percent, product_height_percent and product_x_center_percent.']
+ min_width,max_width=(12,15) if family=='layflat' else (20,23)
+ issues=[]
+ if width<min_width:
+  issues.append(f'Enlarge the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
+ elif width>max_width:
+  issues.append(f'Reduce the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
+ if height>30:
+  issues.append(f'Reduce product height from {height:g}% to at most 30% of frame height.')
+ # Bounding-box estimates near the center are noisy. Reject only an effectively
+ # exact center; semantic off-center placement must still pass model review.
+ if 49.5<=x_center<=50.5:
+  issues.append('Move the product clearly to the left or right lower third; do not center it.')
+ return not issues,issues
+
 def _vision_review(base,path,item,kind):
  quick=_quick_file_check(path)
  if quick:return quick
@@ -32,7 +54,7 @@ def _vision_review(base,path,item,kind):
   criteria='The image must show exactly two approved layflat objects: one packaged AFP coil and one bare black woven coil. The complete pair must occupy only about 12 to 15 percent of frame width, stay off-center on the lower third, remain fully visible, separate and flat on the ground. The image must contain zero people and zero human body parts.'
   reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 15 percent of the frame, centered product staging, any third hose or product, round pipe, drip tape, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or distorted dimensions.'
  else:
-  criteria='The image must show exactly one AFP white-and-blue cylindrical drip-tape carton roll. Estimate its pixel bounding box: it must occupy only about 19 to 23 percent of full frame width, no more than about 30 percent of frame height, stay off-center on the lower third, and remain secondary to the farm context. The image must contain zero people and zero human body parts.'
+  criteria='The image must show exactly one AFP white-and-blue cylindrical drip-tape carton roll. Estimate its pixel bounding box: it must occupy only about 20 to 23 percent of full frame width, no more than about 30 percent of frame height, stay off-center on the lower third, and remain secondary to the farm context. The image must contain zero people and zero human body parts.'
   reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 23 percent of the frame, taller than 30 percent of the frame, centered product staging, bottle, jar, canister, bucket, fertilizer or pesticide container, second package, second roll, layflat hose, pipe through the roll, fake label, impossible geometry or distorted dimensions.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
@@ -43,18 +65,12 @@ The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never 
  content=raw['choices'][0]['message']['content']
  if isinstance(content,list):content=''.join(str(x.get('text','')) for x in content if isinstance(x,dict))
  verdict=_extract_json(content)
- try:
-  width=float(verdict.get('product_width_percent'))
-  height=float(verdict.get('product_height_percent'))
-  x_center=float(verdict.get('product_x_center_percent'))
-  numeric_ok=(12<=width<=15 and height<=30) if family=='layflat' else (19<=width<=23 and height<=30)
-  off_center=x_center<=43 or x_center>=57
- except (TypeError,ValueError):
-  numeric_ok=off_center=False
- verdict['pass']=bool(verdict.get('pass')) and int(verdict.get('score',0))>=MIN_IMAGE_SCORE and numeric_ok and off_center
- if not numeric_ok or not off_center:
-  verdict.setdefault('reasons',[]).append('machine-enforced bounding-box scale/off-center check failed')
-  verdict['correction_prompt']='Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.'
+ metric_ok,metric_issues=_metric_check(family,verdict)
+ verdict['pass']=bool(verdict.get('pass')) and int(verdict.get('score',0))>=MIN_IMAGE_SCORE and metric_ok
+ if not metric_ok:
+  verdict.setdefault('reasons',[]).append('machine-enforced bounding-box check failed: '+'; '.join(metric_issues))
+  model_correction=str(verdict.get('correction_prompt') or '').strip()
+  verdict['correction_prompt']=' '.join(x for x in [model_correction,' '.join(metric_issues)] if x)
  return verdict
 
 def install(base,backend,raw_generator):

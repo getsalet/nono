@@ -98,6 +98,11 @@ jobs:
             echo "No new or changed batches were uploaded."
             exit 0
           fi
+          state_dir="$(mktemp -d)"
+          cp artifacts/city-content-queue/ftps-upload-state.json "$state_dir/ftps-upload-state.json"
+          git fetch origin main
+          git reset --hard origin/main
+          cp "$state_dir/ftps-upload-state.json" artifacts/city-content-queue/ftps-upload-state.json
+          git add -f artifacts/city-content-queue/ftps-upload-state.json
           git commit -m "Record automatic FTPS batch uploads"
-          git pull --rebase --autostash origin main
           git push origin main

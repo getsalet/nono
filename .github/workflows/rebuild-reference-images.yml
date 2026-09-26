@@ -55,6 +55,16 @@ jobs:
           git add -f artifacts/city-content-queue/packages/batch-*.zip 2>/dev/null || true
           git add -f artifacts/city-content-queue/image-rebuild-reference-rerender-3d-v5-approved-scales-topic-first.json reference-image-rebuild.log
           if git diff --cached --quiet; then exit 0; fi
+          state_dir="$(mktemp -d)"
+          git diff --cached --name-only -z --diff-filter=ACMRT > "$state_dir/files"
+          git diff --cached --name-only -z --diff-filter=D > "$state_dir/deleted"
+          if [ -s "$state_dir/files" ]; then tar --null -T "$state_dir/files" -cf "$state_dir/payload.tar"; fi
+          git fetch origin main
+          git reset --hard origin/main
+          if [ -f "$state_dir/payload.tar" ]; then tar -xf "$state_dir/payload.tar"; fi
+          if [ -s "$state_dir/deleted" ]; then xargs -0 -r rm -f -- < "$state_dir/deleted"; fi
+          git add -A artifacts/city-content-queue
+          git add -f artifacts/city-content-queue/packages/batch-*.zip 2>/dev/null || true
+          git add -f artifacts/city-content-queue/image-rebuild-reference-rerender-3d-v5-approved-scales-topic-first.json reference-image-rebuild.log
           git commit -m "Rebuild city images with approved topic-first AFP policy"
-          git pull --rebase origin main
           git push origin main

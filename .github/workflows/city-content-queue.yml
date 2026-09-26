@@ -152,12 +152,31 @@ jobs:
           git add -f artifacts/city-content-queue/rollback/*.sql 2>/dev/null || true
           git add -f artifacts/city-content-queue/create-all-completed.sql 2>/dev/null || true
           git add -f artifacts/city-content-queue/rollback-all-completed.sql 2>/dev/null || true
+          git add -f artifacts/city-content-queue/run.log 2>/dev/null || true
           git add -A artifacts/city-content-queue
 
           if ! git diff --cached --quiet; then
+            state_dir="$(mktemp -d)"
+            git diff --cached --name-only -z --diff-filter=ACMRT > "$state_dir/files"
+            git diff --cached --name-only -z --diff-filter=D > "$state_dir/deleted"
+            if [ -s "$state_dir/files" ]; then
+              tar --null -T "$state_dir/files" -cf "$state_dir/payload.tar"
+            fi
+
+            git fetch origin main
+            git reset --hard origin/main
+            if [ -f "$state_dir/payload.tar" ]; then tar -xf "$state_dir/payload.tar"; fi
+            if [ -s "$state_dir/deleted" ]; then xargs -0 -r rm -f -- < "$state_dir/deleted"; fi
+
+            git add -f artifacts/city-content-queue/.new-batch-signal 2>/dev/null || true
+            git add -f artifacts/city-content-queue/packages/batch-*.zip 2>/dev/null || true
+            git add -f artifacts/city-content-queue/sql/*.sql 2>/dev/null || true
+            git add -f artifacts/city-content-queue/rollback/*.sql 2>/dev/null || true
+            git add -f artifacts/city-content-queue/create-all-completed.sql 2>/dev/null || true
+            git add -f artifacts/city-content-queue/rollback-all-completed.sql 2>/dev/null || true
+            git add -f artifacts/city-content-queue/run.log 2>/dev/null || true
+            git add -A artifacts/city-content-queue
             git commit -m "Process next city content queue item"
-            git reset --hard HEAD
-            git pull --rebase --autostash origin main
             git push origin main
           fi
 
