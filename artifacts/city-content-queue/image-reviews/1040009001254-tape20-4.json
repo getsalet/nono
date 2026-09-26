@@ -7,96 +7,48 @@
   "history": [
     {
       "pass": false,
-      "score": 0,
-      "product_width_percent": 26,
-      "product_height_percent": 44,
-      "product_x_center_percent": 47,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Hard reject: image contains visible people (farmer, workers).",
-        "Product bounding box is centered and violates the 'lower third' and 'secondary' constraints.",
-        "Product width (approx 26%) exceeds the 23% maximum limit.",
-        "Product height (approx 44%) exceeds the 30% maximum limit.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 26% to 20-23% of frame width.; Reduce product height from 44% to at most 30% of frame height."
+        "Product is centered rather than off-center on the lower third",
+        "Product width is approximately 28% of the frame, exceeding the 23% maximum limit",
+        "Product appears slightly wider than specified constraints",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 20-23% of frame width."
       ],
-      "correction_prompt": "Regenerate image with no people or human body parts. Show a single AFP white-and-blue drip-tape roll occupying <23% of width and <30% of height, positioned in the lower third, with the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 26% to 20-23% of frame width. Reduce product height from 44% to at most 30% of frame height.",
+      "correction_prompt": "Shift the AFP drip-tape roll to the left or right off-center position within the lower third of the frame, and reduce its width to occupy only 20-23% of the full frame width while maintaining the farm context and keeping the bottom-right watermark 'AFP | 09134922013' intact. Reduce the product group from 28% to 20-23% of frame width.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 20,
-      "product_width_percent": 28,
-      "product_height_percent": 33,
-      "product_x_center_percent": 49,
+      "score": 0,
+      "product_width_percent": 21.0,
+      "product_height_percent": 29.0,
+      "product_x_center_percent": 44.0,
       "reasons": [
-        "Presence of a human subject (farmer) is a hard reject condition.",
-        "The product roll is wider than 23% of the frame width.",
-        "The product roll is taller than 30% of the frame height.",
-        "The product is centered rather than off-center on the lower third.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 20-23% of frame width.; Reduce product height from 33% to at most 30% of frame height."
+        "Human silhouette/farmer clearly visible in the background under the greenhouse arch",
+        "Prompt required zero people or silhouettes"
       ],
-      "correction_prompt": "Regenerate the image with a fully unattended farm scene containing no people or human silhouettes. Shrink the AFP drip-tape roll so it occupies roughly 20-23% of the frame width and under 30% of the frame height, and shift the roll to an off-center position within the lower third of the image. Reduce the product group from 28% to 20-23% of frame width. Reduce product height from 33% to at most 30% of frame height.",
+      "correction_prompt": "Regenerate to remove the human figure and silhouette in the background under the greenhouse, ensuring no human presence remains.",
       "attempt": 2
     },
     {
-      "pass": false,
-      "score": 15,
-      "product_width_percent": 28,
-      "product_height_percent": 45,
-      "product_x_center_percent": 50,
-      "reasons": [
-        "Presence of a human figure (farmer/worker) in the background violates the hard reject rule for zero people or human silhouettes",
-        "Product width is approximately 28% of the frame, exceeding the strict maximum of 23%",
-        "Product height is approximately 45% of the frame, exceeding the strict maximum of 30%",
-        "Product is centered horizontally, which violates the requirement to remain off-center and secondary to the farm context",
-        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 20-23% of frame width.; Reduce product height from 45% to at most 30% of frame height.; Move the product clearly to the left or right lower third; do not center it."
-      ],
-      "correction_prompt": "Remove the person standing in the background entirely. Shrink the drip-tape carton roll to occupy less than 20% of the frame width and less than 30% of the frame height. Reposition the roll to the lower-left or lower-right corner (off-center) to ensure it remains secondary to the field context. Ensure no other objects or people are visible in the background. Reduce the product group from 28% to 20-23% of frame width. Reduce product height from 45% to at most 30% of frame height. Move the product clearly to the left or right lower third; do not center it.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 28,
-      "product_height_percent": 36,
-      "product_x_center_percent": 42,
-      "reasons": [
-        "Visible human silhouette (driver) present in the tractor",
-        "Product roll is wider than 23% of the frame",
-        "Product roll is taller than 30% of the frame",
-        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 20-23% of frame width.; Reduce product height from 36% to at most 30% of frame height."
-      ],
-      "correction_prompt": "Remove the driver from the tractor to ensure zero human presence. Reduce the physical scale of the drip tape roll to fit within 20-23% frame width and <30% frame height. Position the roll strictly in the lower third, offset from the center. Reduce the product group from 28% to 20-23% of frame width. Reduce product height from 36% to at most 30% of frame height.",
-      "attempt": 4
-    },
-    {
-      "pass": false,
-      "score": 15,
-      "product_width_percent": 32,
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 23,
       "product_height_percent": 28,
-      "product_x_center_percent": 48,
+      "product_x_center_percent": 46,
       "reasons": [
-        "Visible human farmer in the background (hard reject)",
-        "Product roll is too wide, occupying ~32% of frame width instead of the required 20-23%",
-        "Product is centered horizontally instead of being off-center on the lower third",
-        "Product staging is primary/dominant rather than secondary to the farm context",
-        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 20-23% of frame width."
+        "The single AFP drip-tape roll is the correct white-and-blue cylindrical carton product.",
+        "No people, human silhouettes, or body parts are present.",
+        "No hard-reject items such as bottles, jars, canisters, or second packages are visible.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly present.",
+        "The roll is in the lower-third area and off-center (slightly left of middle), while the greenhouse remains the primary context.",
+        "Product height stays under the 30% limit; width is at the upper limit but within the allowed 23%."
       ],
-      "correction_prompt": "Regenerate: remove the human farmer entirely. Rescale the AFP drip-tape roll to be much smaller (approx 20% frame width) and shift it to the lower-left third to make it secondary to the farm context, ensuring no human body parts remain. Reduce the product group from 32% to 20-23% of frame width.",
-      "attempt": 5
-    },
-    {
-      "pass": false,
-      "score": 20,
-      "product_width_percent": 11,
-      "product_height_percent": 18,
-      "product_x_center_percent": 34,
-      "reasons": [
-        "Contains a visible person (farmer) on the right side of the frame, which triggers the hard reject condition for human figures or silhouettes.",
-        "The product roll is positioned too low (very close to the bottom edge) rather than in the middle of the lower third.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 11% to 20-23% of frame width."
-      ],
-      "correction_prompt": "Regenerate the image without any people or human silhouettes. Ensure the farmer in the background is completely removed. Adjust the composition so the drip tape roll is clearly situated in the lower third area, not touching the bottom edge. Enlarge the product group from 11% to 20-23% of frame width.",
-      "attempt": 6
+      "correction_prompt": "",
+      "attempt": 3
     }
   ]
 }
