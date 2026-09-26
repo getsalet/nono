@@ -134,7 +134,14 @@ def process(queue):
     except Exception as exc:
      if isinstance(exc,StageFailure):stage=exc.stage;error=exc.original
      else:error=exc
-     item.update(status='failed',failed_at=q.now(),last_error=str(error)[:1200],failed_stage=stage);item.pop('started_at',None);failures.append(f"{item['source_id']} ({stage}): {type(error).__name__}: {error}")
+     msg=str(error)[:1200];qa_retry=stage=='image' and 'image hard gate rejected role' in msg
+     if qa_retry:
+      item.update(status='pending',last_error=msg,failed_stage='image_qa')
+      item['attempts']=max(0,int(item.get('attempts',0))-1)
+      item.pop('started_at',None);item.pop('failed_at',None)
+     else:
+      item.update(status='failed',failed_at=q.now(),last_error=msg,failed_stage=stage);item.pop('started_at',None)
+     failures.append(f"{item['source_id']} ({stage}): {type(error).__name__}: {error}")
     queue['updated_at']=q.now();q.QUEUE.write_text(json.dumps(queue,ensure_ascii=False,indent=2),encoding='utf-8');q.write_status(queue,'processing')
  (q.OUT/'create-all-completed.sql').write_text('\n'.join(['-- Editorially reviewed generated posts.',q.sql_preamble()]+[path.read_text(encoding='utf-8') for path in sorted(q.SQL.glob('*.sql'))]),encoding='utf-8')
  (q.OUT/'rollback-all-completed.sql').write_text('\n'.join([q.sql_preamble()]+[path.read_text(encoding='utf-8') for path in sorted(q.ROLLBACK.glob('*.sql'))]),encoding='utf-8')

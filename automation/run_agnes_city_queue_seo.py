@@ -17,6 +17,7 @@ run_source=run_path.read_text(encoding='utf-8')
 run_source=replace_once(run_source,'RAW_AGNES=base.agnes\n','''from io import BytesIO
 from PIL import Image
 import image_prompt_policy
+import image_quality_gate
 import city_research
 import faq_policy
 import text_cleanup_policy
@@ -57,6 +58,12 @@ if seo_webp_name not in run_source:
     else:
         raise RuntimeError('Cannot patch SEO WebP filenames')
 run_source=replace_once(run_source,'backend.generate_image=agnes_generate_image\n','backend.seo_image_name=seo_image_name\nbackend.generate_image=agnes_generate_image\n','SEO helper exposure')
+run_source=replace_once(
+    run_source,
+    'backend.generate_image=agnes_generate_image\n',
+    'backend.generate_image=image_quality_gate.install(base,backend,agnes_generate_image)\n',
+    'strict model image QA',
+)
 original=review_path.read_text(encoding='utf-8')
 review=replace_once(original,'import hashlib,json,os,re,time\n','import hashlib,json,os,re,time,urllib.parse\nimport image_prompt_policy\nimport research_grounding_review\nimport faq_policy\nimport text_cleanup_policy\n','review imports')
 review=replace_once(review,'QUALITY_GATE_VERSION=6','QUALITY_GATE_VERSION=9','quality gate version')

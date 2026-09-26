@@ -11,6 +11,7 @@ on:
       - 'automation/run_agnes_city_queue.py'
       - 'automation/run_agnes_city_queue_seo.py'
       - 'automation/image_prompt_policy.py'
+      - 'automation/image_quality_gate.py'
       - 'automation/text_cleanup_policy.py'
       - 'automation/repair_completed_city_sql.py'
       - 'automation/assets/**'
@@ -43,9 +44,11 @@ jobs:
       AGNES_IMAGE_MODEL: agnes-image-2.5-flash
       IMAGE_MODEL: agnes-image-2.5-flash
 
-      BATCH_SIZE: "4"
-      ARTICLE_WORKERS: "4"
-      IMAGE_WORKERS: "8"
+      BATCH_SIZE: "1"
+      ARTICLE_WORKERS: "1"
+      IMAGE_WORKERS: "5"
+      IMAGE_QA_ATTEMPTS: "6"
+      IMAGE_QA_FAST_MODE: "0"
       WORDPRESS_DB_NAME: navaraby_wp569
       CURRENT_IMAGE_POLICY: reference-rerender-3d-v5-approved-scales-topic-first
 

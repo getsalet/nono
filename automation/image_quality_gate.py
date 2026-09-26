@@ -2,7 +2,7 @@
 """Fast image QA with hard rejection for product identity and physics failures."""
 import base64,json,os,re,urllib.request
 import image_prompt_policy
-MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','3')))
+MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
 REVIEW_KINDS={int(x) for x in os.getenv('IMAGE_QA_REVIEW_KINDS','1,2,3,4,5').split(',') if x.strip().isdigit()}
@@ -13,7 +13,7 @@ def _extract_json(text):
  except Exception:
   a=text.find('{');b=text.rfind('}')
   if a>=0 and b>a:return json.loads(text[a:b+1])
- return {'pass':True,'score':MIN_IMAGE_SCORE,'reasons':['non-json review ignored in fast mode'],'correction_prompt':''}
+ return {'pass':False,'score':0,'reasons':['visual reviewer returned invalid JSON'],'correction_prompt':'Regenerate and submit a clean image for strict review.'}
 
 def _quick_file_check(path):
  if (not path.exists()) or path.stat().st_size<10000:
@@ -54,7 +54,7 @@ def install(base,backend,raw_generator):
     name,digest=raw_generator(item,kind);path=base.IMAGES/name
     try:verdict=_vision_review(base,path,item,kind)
     except Exception as exc:
-     verdict={'pass':True,'score':80,'reasons':['visual review unavailable; accepted in fast mode: '+type(exc).__name__],'correction_prompt':''}
+     verdict={'pass':False,'score':0,'reasons':['visual reviewer unavailable: '+type(exc).__name__],'correction_prompt':'Regenerate and retry strict visual review.'}
     verdict['attempt']=attempt;history.append(verdict)
     print(f"image_quality_review_fast source_id={item['source_id']} topic={item.get('topic')} kind={kind} attempt={attempt} pass={verdict['pass']} score={verdict.get('score',0)} reasons={verdict.get('reasons',[])}",flush=True)
     (reviews/f"{item['source_id']}-{kind}.json").write_text(json.dumps({'source_id':item['source_id'],'family':family,'kind':kind,'fast_mode':FAST_MODE,'history':history},ensure_ascii=False,indent=2),encoding='utf-8')
