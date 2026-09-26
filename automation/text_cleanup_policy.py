@@ -1,14 +1,52 @@
 #!/usr/bin/env python3
 """Deterministically repair common generated-content QA failures."""
 import re
+from urllib.parse import unquote, urlparse
 IMAGE_1_MARKER='[[[IMAGE_1]]]'
 CYRILLIC_RE=re.compile(r'[\u0400-\u04ff]+')
 CJK_RE=re.compile(r'[\u3400-\u9fff]+')
 FULLWIDTH_RE=re.compile(r'[，。；：！？]+')
 LATIN_RE=re.compile(r'\b[A-Za-z]{3,}\b')
+HEX_UTF8_RE=re.compile(r'\b(?:[0-9A-Fa-f]{2}){4,}\b')
 ALLOWED_LATIN={'FAQ','AFP'}
 TAG_SPLIT_RE=re.compile(r'(<[^>]+>)')
 FAQ_SECTION_RE=re.compile(r'<h3[^>]*>\s*(?:پرسش|سوال|سؤالات|سوالات).*?(?:متداول|FAQ).*?</h3>.*?(?=<h2|<h3|$)',re.I|re.S)
+CONTACT_RE=re.compile(
+ r'<p>\s*برای دریافت مشاوره یا سفارش محصول،?\s*از طریق\s*'
+ r'<a\b[^>]*href=["\']https://wa\.me/989134922013["\'][^>]*>'
+ r'\s*واتساپ با ما در ارتباط باشید\s*</a>\s*[.。]?\s*</p>',
+ re.I|re.S,
+)
+RELATED_P_RE=re.compile(
+ r'<p\b[^>]*>\s*برای مقایسه و تصمیم‌گیری بهتر،?.*?</p>',
+ re.I|re.S,
+)
+ANCHOR_RE=re.compile(
+ r'<a\b(?P<attrs>[^>]*)href=["\'](?P<href>[^"\']+)["\'](?P<rest>[^>]*)>'
+ r'(?P<label>.*?)</a>',
+ re.I|re.S,
+)
+ARABIC_ONLY_RE=re.compile(r'[ةۀؤإأٱ]')
+FOREIGN_URL_RE=re.compile(r'(?:^|[/_.?&=-])(ar|arabic|en|english|tr|turkish)(?:[/_.?&=-]|$)',re.I)
+
+def _decode_hex_label(match):
+ try:value=bytes.fromhex(match.group(0)).decode('utf-8')
+ except (ValueError,UnicodeDecodeError):return match.group(0)
+ return value if re.search(r'[\u0600-\u06ff]',value) else match.group(0)
+
+def _foreign_related_link(match):
+ """Remove a related-post paragraph when its target or label is not Persian."""
+ paragraph=match.group(0)
+ anchor=ANCHOR_RE.search(paragraph)
+ if not anchor:return ''
+ href=unquote(anchor.group('href'))
+ label=re.sub(r'<[^>]+>',' ',anchor.group('label'))
+ parsed=urlparse(href)
+ path_and_query=f'{parsed.path}?{parsed.query}'
+ if FOREIGN_URL_RE.search(path_and_query):return ''
+ if CYRILLIC_RE.search(label) or CJK_RE.search(label) or re.search(r'[A-Za-z]{3,}',label):return ''
+ if ARABIC_ONLY_RE.search(label):return ''
+ return paragraph
 
 def clean_title(title,item):
  title=(title or '').strip();topic=item.get('topic');city=item.get('city','').strip()
@@ -23,6 +61,7 @@ def _clean_text_nodes(html,item=None):
   text=CYRILLIC_RE.sub('',parts[index])
   text=CJK_RE.sub('',text)
   text=FULLWIDTH_RE.sub('،',text)
+  text=HEX_UTF8_RE.sub(_decode_hex_label,text)
   text=LATIN_RE.sub(lambda m:m.group(0) if m.group(0) in ALLOWED_LATIN else '',text)
   if item.get('topic')=='tape20':
    text=re.sub(r'\bPVC\b|پلی[‌\- ]?وینیل', 'پلی‌اتیلن', text, flags=re.I)
@@ -52,7 +91,11 @@ def _faq_html(item):
 
 def cleanup_html(html,item=None):
  item=item or {};html=(html or '').replace(IMAGE_1_MARKER,'')
- html=_clean_text_nodes(html,item);html=FAQ_SECTION_RE.sub('',html);html=re.sub(r'<p>\s*</p>','',html).strip()
+ html=_clean_text_nodes(html,item)
+ html=RELATED_P_RE.sub(_foreign_related_link,html)
+ html=FAQ_SECTION_RE.sub('',html)
+ html=CONTACT_RE.sub('',html)
+ html=re.sub(r'<p>\s*</p>','',html).strip()
  topic=item.get('topic');visible=re.sub(r'<[^>]+>',' ',html)
  if topic=='layflat' and not any(x in visible for x in ('لوله نخی','لوله تاشو')):html='<p>لوله نخی و لوله تاشو برای انتقال آب در مزرعه به‌کار می‌رود و انتخاب سایز، فشار، اتصال و دوام آن باید بر اساس دبی، طول مسیر و دیتاشیت سازنده انجام شود.</p>'+html
  if topic=='tape20' and not re.search(r'(?:۲۰|20)\s*سانتی',visible):html='<p>این راهنما بر انتخاب و کاربرد نوار تیپ با فاصله قطره‌چکان ۲۰ سانتی‌متر تمرکز دارد و مشخصات نهایی باید با طراحی مزرعه و دیتاشیت سازنده تطبیق داده شود.</p>'+html
