@@ -2,100 +2,55 @@
   "source_id": "1040009001254-tape20",
   "family": "tape20",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v3-metrics",
+  "policy": "strict-no-human-scale-watermark-v4-metric-feedback",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 43,
-      "product_height_percent": 46,
-      "product_x_center_percent": 50,
+      "score": 0,
+      "product_width_percent": 40,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Product width exceeds 23% of frame",
-        "Product height exceeds 30% of frame",
-        "Product is centered",
-        "machine-enforced bounding-box scale/off-center check failed"
+        "A person (farmer/worker) is clearly visible in the background near the tractors, violating the 'zero people' requirement.",
+        "The product roll is too large; it occupies approximately 40% of the frame width and 38% of the frame height, exceeding the maximum limits of 23% and 30% respectively.",
+        "The product is centered horizontally, whereas the requirements specify it must be off-center on the lower third.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 20-23% of frame width.; Reduce product height from 38% to at most 30% of frame height."
       ],
-      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
+      "correction_prompt": "Regenerate the image to remove the person in the background. Rescale the drip-tape roll significantly to occupy only 20-23% of the frame width and 30% of the height. Reposition the roll to the left or right side (lower third) so it is not centered, keeping the farm context as the primary focus. Reduce the product group from 40% to 20-23% of frame width. Reduce product height from 38% to at most 30% of frame height.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 20,
-      "product_width_percent": 37.5,
-      "product_height_percent": 34.3,
-      "product_x_center_percent": 48.2,
+      "score": 58,
+      "product_width_percent": 40,
+      "product_height_percent": 42,
+      "product_x_center_percent": 51,
       "reasons": [
-        "Image contains visible people/farmers in the background, violating the zero-human rule.",
-        "The product bounding box is too wide (>23% of frame width) and too tall (>30% of frame height).",
-        "The product is staged centrally rather than in the lower third off-center.",
-        "machine-enforced bounding-box scale/off-center check failed"
+        "Product width exceeds 23 percent maximum limit (currently ~40% of frame width)",
+        "Product height exceeds 30 percent maximum limit (currently ~42% of frame height)",
+        "Product is centered in the frame rather than positioned off-center on the lower third as required",
+        "Product dominates the composition rather than remaining secondary to the farm context",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 20-23% of frame width.; Reduce product height from 42% to at most 30% of frame height."
       ],
-      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
+      "correction_prompt": "Regenerate with the AFP drip-tape roll scaled to 20-23% of frame width and under 30% of frame height, positioned off-center on the lower third, with the farm context (soil, crop rows, distant tractor) clearly dominant and secondary to the product. Reduce the product group from 40% to 20-23% of frame width. Reduce product height from 42% to at most 30% of frame height.",
       "attempt": 2
     },
     {
-      "pass": false,
-      "score": 35,
-      "product_width_percent": 32,
-      "product_height_percent": 34,
-      "product_x_center_percent": 50,
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 20,
+      "product_x_center_percent": 46,
       "reasons": [
-        "Hard reject: 3 visible people/farmers in the background (one bending over equipment, one standing by a tractor, one crouching).",
-        "Product width exceeds the 23% maximum limit (estimated ~32%).",
-        "Product height exceeds the 30% maximum limit (estimated ~34%).",
-        "Product is centered horizontally, violating the 'off-center on the lower third' requirement.",
-        "machine-enforced bounding-box scale/off-center check failed"
+        "Contains exactly one AFP white-and-blue drip-tape roll with no additional packaging or rolls",
+        "No human figures, faces, hands, limbs, or silhouettes visible",
+        "Required bottom-right watermark is present and intact",
+        "Product sits on the lower third of the frame and remains secondary to the field and tractor context",
+        "Roll dimensions are within the specified size and width limits"
       ],
-      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
+      "correction_prompt": "",
       "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 45,
-      "product_width_percent": 28,
-      "product_height_percent": 42,
-      "product_x_center_percent": 50,
-      "reasons": [
-        "Detected multiple persons in the background (farmers near tractors)",
-        "Product height exceeds 30 percent frame limit",
-        "Product is centered horizontally instead of being off-center",
-        "machine-enforced bounding-box scale/off-center check failed"
-      ],
-      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
-      "attempt": 4
-    },
-    {
-      "pass": false,
-      "score": 0,
-      "product_width_percent": 34,
-      "product_height_percent": 38,
-      "product_x_center_percent": 50,
-      "reasons": [
-        "Presence of people",
-        "Product roll exceeds width limit (>23% frame width)",
-        "Product roll exceeds height limit (>30% frame height)",
-        "Product is centered",
-        "machine-enforced bounding-box scale/off-center check failed"
-      ],
-      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
-      "attempt": 5
-    },
-    {
-      "pass": false,
-      "score": 10,
-      "product_width_percent": 30,
-      "product_height_percent": 33,
-      "product_x_center_percent": 49,
-      "reasons": [
-        "Hard reject: Image contains multiple people (human figures in the background).",
-        "Product staging is centered rather than offset to the lower third.",
-        "Product bounding box width (~30%) and height (~33%) exceed the strict maximum limits of 23% and 30%.",
-        "machine-enforced bounding-box scale/off-center check failed"
-      ],
-      "correction_prompt": "Make the product smaller to the exact requested pixel percentage and place it clearly off-center on the lower third.",
-      "attempt": 6
     }
   ]
 }
