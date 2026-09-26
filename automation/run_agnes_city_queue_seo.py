@@ -42,15 +42,34 @@ a="    refs=image_prompt_policy.reference_images(kind,item)\n    payload={'model
 legacy_payload="    payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}}"
 if a not in run_source and legacy_payload in run_source:
     run_source=replace_once(run_source,legacy_payload,a,'topic-specific image references')
-run_source=replace_once(run_source,'''    name=f"{item['source_id']}-{kind}.jpg";(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()''','''    image=Image.open(BytesIO(blob)).convert('RGB')
+legacy_jpg_name='''    name=f"{item['source_id']}-{kind}.jpg";(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()'''
+current_webp_name='''    name=f"{item['source_id']}-{kind}.webp";(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()'''
+seo_webp_name='''    name=seo_image_name(item,kind);(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()'''
+if seo_webp_name not in run_source:
+    if legacy_jpg_name in run_source:
+        legacy_webp='''    image=Image.open(BytesIO(blob)).convert('RGB')
     encoded=BytesIO();image.save(encoded,format='WEBP',quality=60,method=6)
     blob=encoded.getvalue()
-    name=seo_image_name(item,kind);(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()''','SEO WebP filenames')
+'''+seo_webp_name
+        run_source=replace_once(run_source,legacy_jpg_name,legacy_webp,'SEO WebP filenames')
+    elif current_webp_name in run_source:
+        run_source=replace_once(run_source,current_webp_name,seo_webp_name,'SEO WebP filenames')
+    else:
+        raise RuntimeError('Cannot patch SEO WebP filenames')
 run_source=replace_once(run_source,'backend.generate_image=agnes_generate_image\n','backend.seo_image_name=seo_image_name\nbackend.generate_image=agnes_generate_image\n','SEO helper exposure')
 original=review_path.read_text(encoding='utf-8')
 review=replace_once(original,'import hashlib,json,os,re,time\n','import hashlib,json,os,re,time,urllib.parse\nimport image_prompt_policy\nimport research_grounding_review\nimport faq_policy\nimport text_cleanup_policy\n','review imports')
 review=replace_once(review,'QUALITY_GATE_VERSION=6','QUALITY_GATE_VERSION=9','quality gate version')
-review=replace_once(review,'''    path=base.IMAGES/f"{item['source_id']}-{kind}.jpg"''','''    path=base.IMAGES/queue.seo_image_name(item,kind)''','image cache')
+legacy_cache='''    path=base.IMAGES/f"{item['source_id']}-{kind}.jpg"'''
+current_cache='''        path=base.IMAGES/f"{item['source_id']}-{kind}.webp"'''
+seo_cache='''        path=base.IMAGES/queue.seo_image_name(item,kind)'''
+if seo_cache not in review:
+    if legacy_cache in review:
+        review=replace_once(review,legacy_cache,seo_cache.strip(),'image cache')
+    elif current_cache in review:
+        review=replace_once(review,current_cache,seo_cache,'image cache')
+    else:
+        raise RuntimeError('Cannot patch image cache')
 review=replace_once(review,"        url=str(link.get('url',''));title=str(link.get('title',''))\n        return any(x in url for x in BLOCKED_LINK_TERMS) or any(x in title for x in BLOCKED_TITLE_TERMS)","        url=str(link.get('url',''));decoded_url=urllib.parse.unquote(url);title=str(link.get('title',''))\n        return any(x in url or x in decoded_url for x in BLOCKED_LINK_TERMS) or any(x in title for x in BLOCKED_TITLE_TERMS)",'decoded unsafe links')
 review=replace_once(review,"    body=obj.get('html','');errors=language_errors(body)+technical_errors(body)","    obj=text_cleanup_policy.apply(obj,item)\n    body=obj.get('html','');errors=language_errors(body)+technical_errors(body)+research_grounding_review.validate_grounding(obj,item,obj.get('city_research',{}))\n    if '[[[IMAGE_1]]]' in body: errors.append('IMAGE_1 marker leaked into body')\n    if not faq_policy.has_faq_at_end(body): errors.append('three details FAQ items required at end')\n    if image_prompt_policy.product_family(item)=='layflat' and any(term in body for term in ['رول نوار تیپ','خرید نوار تیپ ۲۰','فاصله قطره‌چکان ۲۰']): errors.append('layflat article still focuses on drip tape')",'grounding faq cleanup validation')
 review=replace_once(review,'ادعاهای ساختگی درباره اقلیم محلی، قیمت، نمایندگی، موجودی، ارسال و مشخصات محصول را حذف کن.','هر ادعای محلی درباره اقلیم، خاک، آب، رسوب، شوری، محصول و زمان کشت را فقط با شاهد صریح city_research و scope صحیح نگه دار؛ اگر تحقیق insufficient_evidence است همه این ادعاها و حدس‌های محلی را حذف کن. عنوان را کوتاه و سئویی کن: حداکثر ۶۵ کاراکتر و شامل محصول و شهر. نشانگر IMAGE_1 را از متن حذف کن چون فقط تصویر شاخص است. اگر topic=layflat است متن را روی لوله نخی و لوله تاشو نگه دار و تصاویر/توضیحات نوار تیپ را موضوع اصلی نکن. اگر topic=tape20 است فقط فاصله قطره‌چکان ۲۰ سانتی‌متر مجاز است. در انتهای مقاله بخش سوالات متداول را دقیقاً با ساختار h3 + details/summary و دقیقاً ۳ سوال بساز؛ قبل از آن جمله تماس واتساپ بیاور. بعد از FAQ بخش محتوایی h2 یا h3 جدید نساز. ادعاهای قیمت، ارز، بهترین فصل نصب، نمایندگی، موجودی و ارسال را حذف کن.','grounded editorial prompt with cleanup')
