@@ -3,6 +3,7 @@
 import hashlib,json,os,re,time
 import city_content_queue as base
 import city_content_queue_cloudflare as queue
+import content_layout_policy
 
 ORIGINAL_MAKE=queue.make_content
 ORIGINAL_IMAGE=queue.generate_image
@@ -44,23 +45,22 @@ def safe_links(links):
         url=str(link.get('url',''));title=str(link.get('title',''))
         return any(x in url for x in BLOCKED_LINK_TERMS) or any(x in title for x in BLOCKED_TITLE_TERMS)
     clean=[x for x in links if x.get('url') and x.get('title') and not blocked(x)]
-    preferred=[x for x in clean if any(term in str(x.get('title','')) for term in PREFERRED_LINK_TERMS)]
     chosen=[];seen=set()
-    for link in preferred+clean:
+    for link in clean:
         if link['url'] in seen:continue
         chosen.append(link);seen.add(link['url'])
-        if len(chosen)>=12:break
     return chosen
 
 def rebuild_internal_links(obj,links):
     body=obj.get('html','')
     body=ANCHOR_RE.sub(lambda m:m.group(1),body)
+    body=content_layout_policy.distribute_image_markers(body)
     approved=safe_links(links)
     if len(approved)<base.MIN_LINKS:raise RuntimeError('Not enough safe internal links')
-    selected=approved[:base.MIN_LINKS]
-    related='، '.join(f'<a href="{x["url"]}">{x["title"]}</a>' for x in selected)
-    body+='\n<p><strong>مطالب مرتبط:</strong> '+related+'</p>'
-    obj['html']=body
+    seed='|'.join(str(obj.get(key,'')) for key in ('title','focus_keyword','meta_title'))
+    selected=content_layout_policy.select_internal_links(approved,seed,body,base.MIN_LINKS)
+    obj['html']=content_layout_policy.insert_internal_links(body,selected)
+    obj['internal_link_selection']=[{'title':x['title'],'url':x['url']} for x in selected]
     return obj
 
 def validate_reviewed(obj,item,links):
