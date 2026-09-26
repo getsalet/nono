@@ -2,13 +2,13 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-26T05:14:53+00:00`
+- آخرین بروزرسانی: `2026-09-26T05:31:17+00:00`
 - وضعیت صف: **failed**
 - پیشرفت: **265 از 1894 (13.99٪)**
 - تکمیل‌شده: **265**
 - در حال پردازش: **0**
-- در انتظار: **1620**
-- ناموفق: **9**
+- در انتظار: **1619**
+- ناموفق: **10**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -57,6 +57,7 @@
 - **تسوج** — `tape20`: `Editorial review failed: Cyrillic characters; unexpected Latin words: AFP`
 - **تسوج** — `layflat`: `Editorial review failed: Cyrillic characters; unexpected Latin words: AFP; three details FAQ items required at end`
 - **شبستر** — `layflat`: `Editorial review failed: Cyrillic characters; three details FAQ items required at end`
+- **شرفخانه** — `tape20`: `Editorial review failed: unexpected Latin words: AdvertiserContentArticle; unexpected Latin after cleanup: AdvertiserContentArticle`
 
 ## فایل‌های خروجی
 
