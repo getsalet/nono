@@ -4,6 +4,7 @@ import base64,hashlib,io,json,os,urllib.error,urllib.request
 from PIL import Image
 import city_content_queue as base
 import city_content_queue_cloudflare as backend
+import content_layout_policy
 import image_prompt_policy
 image_prompt_policy.install(backend)
 
@@ -41,8 +42,7 @@ def repair_links_and_markers(obj,links):
         if link['url'] not in used:
             additions.append(f'<a href="{link["url"]}">{link["title"]}</a>');used.add(link['url'])
     if additions:body+='\n<p><strong>مطالب مرتبط:</strong> '+'، '.join(additions)+'</p>'
-    for i in range(2,6):
-        marker=f'[[[IMAGE_{i}]]]';body=body.replace(marker,'');body+='\n'+marker
+    body=content_layout_policy.distribute_image_markers(body)
     obj['html']=body;return enforce_minimum_words(obj)
 
 def agnes_draft(item,links):
