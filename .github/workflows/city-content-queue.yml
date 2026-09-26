@@ -2,6 +2,13 @@ name: Generate missing city posts and images
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/city-content-queue.yml'
+      - 'automation/city_content_queue_cloudflare.py'
+      - 'automation/reviewed_publish_city_queue.py'
+      - 'automation/run_agnes_city_queue.py'
 
   schedule:
     - cron: "*/15 * * * *"
