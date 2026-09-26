@@ -123,15 +123,9 @@ for item in state['items']:
             item['status']='pending';item['attempts']=0
             for k in ('completed_at','last_error','failed_at','started_at','word_count'):item.pop(k,None)
 state['updated_at']=base.now();base.QUEUE.write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf-8')
-requested_batch=base.BATCH
-post_delay=max(0,int(os.getenv('POST_DELAY_SECONDS','30')))
-base.BATCH=1
-for index in range(requested_batch):
-    queue.process(state)
-    more=any(x.get('status')=='pending' or (x.get('status')=='failed' and x.get('attempts',0)<base.MAX_ATTEMPTS) for x in state['items'])
-    if not more or index+1>=requested_batch:break
-    print(f'Waiting {post_delay} seconds before the next city post...',flush=True)
-    time.sleep(post_delay)
+# The queue coordinator processes the selected batch concurrently and remains
+# the only writer of queue state, SQL and item metadata.
+queue.process(state)
 for item in state['items']:
     artifact=base.ITEMS/f"{item['source_id']}.json"
     if item.get('status')=='completed' and artifact.exists():

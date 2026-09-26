@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/15 * * * *"
 
 permissions:
   contents: write
@@ -24,12 +24,16 @@ jobs:
 
       AGNES_API_BASE: https://apihub.agnes-ai.com/v1
       AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+      IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY }}
+      IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
 
       AGNES_MODEL: agnes-3.0-flash
       AGNES_IMAGE_MODEL: agnes-image-2.5-flash
       IMAGE_MODEL: agnes-image-2.5-flash
 
-      BATCH_SIZE: "1"
+      BATCH_SIZE: "4"
+      ARTICLE_WORKERS: "4"
+      IMAGE_WORKERS: "8"
       WORDPRESS_DB_NAME: navaraby_wp569
       CURRENT_IMAGE_POLICY: diverse-contextual-scenes-v20
 
@@ -54,7 +58,7 @@ jobs:
 
           echo "event=${{ github.event_name }}" | tee -a artifacts/city-content-queue/run.log
           echo "policy=$CURRENT_IMAGE_POLICY" | tee -a artifacts/city-content-queue/run.log
-          echo "batch_size=$BATCH_SIZE" | tee -a artifacts/city-content-queue/run.log
+          echo "batch_size=$BATCH_SIZE article_workers=$ARTICLE_WORKERS image_workers=$IMAGE_WORKERS" | tee -a artifacts/city-content-queue/run.log
           echo "ftp_upload=separate_workflow_after_success" | tee -a artifacts/city-content-queue/run.log
           echo "actions_artifacts=preserved" | tee -a artifacts/city-content-queue/run.log
 

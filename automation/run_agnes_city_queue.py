@@ -9,7 +9,9 @@ import image_prompt_policy
 image_prompt_policy.install(backend)
 
 MODEL=os.getenv('AGNES_IMAGE_MODEL','agnes-image-2.5-flash')
-KEY=os.getenv('AGNES_API_KEY','').strip();API=os.getenv('AGNES_API_BASE','https://apihub.agnes-ai.com/v1').rstrip('/')
+TEXT_API=os.getenv('AGNES_API_BASE','https://apihub.agnes-ai.com/v1').rstrip('/')
+KEY=(os.getenv('IMAGE_API_KEY') or os.getenv('AGNES_API_KEY','')).strip()
+API=os.getenv('IMAGE_ENDPOINT') or TEXT_API+'/images/generations'
 TARGET_WORDS=max(base.MIN_WORDS+200,1250)
 RAW_AGNES=base.agnes
 
@@ -68,9 +70,9 @@ def neutral_image_input():
 
 
 def agnes_generate_image(item,kind):
-    if not KEY:raise RuntimeError('AGNES_API_KEY is missing')
+    if not KEY:raise RuntimeError('IMAGE_API_KEY/AGNES_API_KEY is missing')
     payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':[neutral_image_input()]}}
-    req=urllib.request.Request(API+'/images/generations',data=json.dumps(payload).encode(),method='POST',headers={'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Accept':'application/json','User-Agent':'navar-city-content-queue/3.0'})
+    req=urllib.request.Request(API,data=json.dumps(payload).encode(),method='POST',headers={'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Accept':'application/json','User-Agent':'navar-city-content-queue/3.0'})
     try:
         with urllib.request.urlopen(req,timeout=600) as response:data=json.loads(response.read())
     except urllib.error.HTTPError as exc:raise RuntimeError(f"Agnes Image HTTP {exc.code}: {exc.read().decode('utf-8','replace')[:1200]}")

@@ -2,6 +2,7 @@
 """Cloudflare/Lucid Origin production adapter for missing-city draft queue."""
 import base64,hashlib,io,json,os,time,urllib.error,urllib.request
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor,as_completed
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 import city_content_queue as q
@@ -9,6 +10,8 @@ import city_content_queue as q
 MODEL=os.getenv('CLOUDFLARE_IMAGE_MODEL','@cf/leonardo/lucid-origin')
 TOKEN=os.getenv('CLOUDFLARE_API_TOKEN','').strip(); ACCOUNT=os.getenv('CLOUDFLARE_ACCOUNT_ID','').strip()
 IMAGE_COUNT=5
+ARTICLE_WORKERS=max(1,int(os.getenv('ARTICLE_WORKERS','4')))
+IMAGE_WORKERS=max(1,int(os.getenv('IMAGE_WORKERS','8')))
 WATERMARK='AFP Pipe | 09134922013'
 ALT_TEMPLATES={
  1:'تصویر شاخص راهنمای خرید نوار آبیاری در {city}',
@@ -85,33 +88,58 @@ def sql_for(item,obj,image_names):
 
 def migrate(queue):
  queue['version']=2; queue['text_model']=q.AGNES_MODEL; queue['image_model']=MODEL; queue['images_per_post']=5
- queue.setdefault('rules',{}).update({'draft_only':True,'minimum_words':q.MIN_WORDS,'minimum_internal_links':q.MIN_LINKS,'featured_images':1,'inline_images':4,'watermark':WATERMARK})
+ queue.setdefault('rules',{}).update({'draft_only':True,'minimum_words':q.MIN_WORDS,'minimum_internal_links':q.MIN_LINKS,'featured_images':1,'inline_images':4,'watermark':WATERMARK,'article_workers':ARTICLE_WORKERS,'image_workers':IMAGE_WORKERS})
  for item in queue['items']:
   if item.get('status')=='blocked_image_model':
    item['status']='pending';item['attempts']=0
    for k in ('last_error','failed_at','started_at','image_model_error'):item.pop(k,None)
  queue.pop('image_model_error',None);queue['updated_at']=q.now();q.QUEUE.write_text(json.dumps(queue,ensure_ascii=False,indent=2),encoding='utf-8')
 
+class StageFailure(RuntimeError):
+ def __init__(self,stage,error):self.stage=stage;self.original=error;super().__init__(str(error))
+
+def generate_images_parallel(item,pool):
+ futures={pool.submit(generate_image,item,kind):kind for kind in range(1,6)};results={}
+ for future in as_completed(futures):
+  kind=futures[future];results[kind]=future.result()
+ return [results[kind] for kind in range(1,6)]
+
+def _produce_item(item,links,image_pool):
+ try:obj=make_content(item,links)
+ except Exception as exc:raise StageFailure('text',exc) from exc
+ try:rows=generate_images_parallel(item,image_pool)
+ except Exception as exc:raise StageFailure('image',exc) from exc
+ return obj,[row[0] for row in rows],[row[1] for row in rows]
+
 def process(queue):
  batch=[x for x in queue['items'] if x.get('status')=='pending' and x.get('attempts',0)<q.MAX_ATTEMPTS][:q.BATCH]
  if not batch:
   result='complete_with_failures' if any(x.get('status')=='failed' for x in queue['items']) else 'complete'
   q.write_status(queue,result);return
- failure=None
- for item in batch:
-  item.update(status='processing',attempts=item.get('attempts',0)+1,started_at=q.now());q.QUEUE.write_text(json.dumps(queue,ensure_ascii=False,indent=2),encoding='utf-8')
-  try:
-   obj=make_content(item,queue['link_index']);names=[];hashes=[]
-   for kind in range(1,6):name,digest=generate_image(item,kind);names.append(name);hashes.append(digest);time.sleep(2)
-   insert,rollback,body=sql_for(item,obj,names);(q.SQL/f"{item['source_id']}.sql").write_text(insert,encoding='utf-8');(q.ROLLBACK/f"{item['source_id']}.sql").write_text(rollback,encoding='utf-8');(q.ITEMS/f"{item['source_id']}.json").write_text(json.dumps({**item,**obj,'html':body,'images':names,'image_sha256':hashes,'image_roles':['featured','inline','inline','inline','inline'],'watermark':WATERMARK},ensure_ascii=False,indent=2),encoding='utf-8');item.update(status='completed',completed_at=q.now(),word_count=q.words(body),images=names,last_error='');item.pop('started_at',None)
-  except Exception as exc:
-   item.update(status='failed',failed_at=q.now(),last_error=str(exc)[:1200]);item.pop('started_at',None);failure=exc
-  queue['updated_at']=q.now();q.QUEUE.write_text(json.dumps(queue,ensure_ascii=False,indent=2),encoding='utf-8');q.write_status(queue,'failed' if failure else 'processing')
-  if failure:break
- (q.OUT/'create-all-completed.sql').write_text('\n'.join(['-- Editorially reviewed generated posts.',q.sql_preamble()]+[p.read_text(encoding='utf-8') for p in sorted(q.SQL.glob('*.sql'))]),encoding='utf-8');(q.OUT/'rollback-all-completed.sql').write_text('\n'.join([q.sql_preamble()]+[p.read_text(encoding='utf-8') for p in sorted(q.ROLLBACK.glob('*.sql'))]),encoding='utf-8')
- if failure:
-  q.write_status(queue,'failed');raise RuntimeError(f'Queue item failed: {type(failure).__name__}: {failure}') from failure
+ for item in batch:item.update(status='processing',attempts=item.get('attempts',0)+1,started_at=q.now())
+ queue['updated_at']=q.now();q.QUEUE.write_text(json.dumps(queue,ensure_ascii=False,indent=2),encoding='utf-8');q.write_status(queue,'processing')
+ failures=[];article_workers=min(ARTICLE_WORKERS,len(batch))
+ with ThreadPoolExecutor(max_workers=IMAGE_WORKERS,thread_name_prefix='city-image') as image_pool:
+  with ThreadPoolExecutor(max_workers=article_workers,thread_name_prefix='city-article') as article_pool:
+   future_items={article_pool.submit(_produce_item,item,queue['link_index'],image_pool):item for item in batch}
+   for future in as_completed(future_items):
+    item=future_items[future];stage='text'
+    try:
+     obj,names,hashes=future.result();stage='sql'
+     insert,rollback,body=sql_for(item,obj,names)
+     (q.SQL/f"{item['source_id']}.sql").write_text(insert,encoding='utf-8');(q.ROLLBACK/f"{item['source_id']}.sql").write_text(rollback,encoding='utf-8')
+     (q.ITEMS/f"{item['source_id']}.json").write_text(json.dumps({**item,**obj,'html':body,'images':names,'image_sha256':hashes,'image_roles':['featured','inline','inline','inline','inline'],'watermark':WATERMARK},ensure_ascii=False,indent=2),encoding='utf-8')
+     item.update(status='completed',completed_at=q.now(),word_count=q.words(body),images=names,last_error='');item.pop('started_at',None);item.pop('failed_at',None)
+    except Exception as exc:
+     if isinstance(exc,StageFailure):stage=exc.stage;error=exc.original
+     else:error=exc
+     item.update(status='failed',failed_at=q.now(),last_error=str(error)[:1200],failed_stage=stage);item.pop('started_at',None);failures.append(f"{item['source_id']} ({stage}): {type(error).__name__}: {error}")
+    queue['updated_at']=q.now();q.QUEUE.write_text(json.dumps(queue,ensure_ascii=False,indent=2),encoding='utf-8');q.write_status(queue,'processing')
+ (q.OUT/'create-all-completed.sql').write_text('\n'.join(['-- Editorially reviewed generated posts.',q.sql_preamble()]+[path.read_text(encoding='utf-8') for path in sorted(q.SQL.glob('*.sql'))]),encoding='utf-8')
+ (q.OUT/'rollback-all-completed.sql').write_text('\n'.join([q.sql_preamble()]+[path.read_text(encoding='utf-8') for path in sorted(q.ROLLBACK.glob('*.sql'))]),encoding='utf-8')
  result='ready_with_failures' if any(x.get('status')=='failed' for x in queue['items']) else 'ready';q.write_status(queue,result)
+ if failures:raise RuntimeError('Queue items failed: '+' | '.join(failures))
+
 
 def main():
  q.IMAGE_MODEL=MODEL
