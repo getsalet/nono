@@ -2,7 +2,7 @@
 """Fast image QA with hard rejection for product identity and physics failures."""
 import base64,json,os,re,urllib.request
 import image_prompt_policy
-MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','1')))
+MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','3')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
 REVIEW_KINDS={int(x) for x in os.getenv('IMAGE_QA_REVIEW_KINDS','1,2,3,4,5').split(',') if x.strip().isdigit()}
@@ -28,15 +28,15 @@ def _vision_review(base,path,item,kind):
   return {'pass':True,'score':90,'reasons':['fast mode: trusted prompt for non-key image'],'correction_prompt':''}
  encoded=base64.b64encode(path.read_bytes()).decode('ascii')
  if family=='layflat':
-  criteria='The image must show exactly one black woven yarn-reinforced collapsible layflat hose matching the approved reference. The hose must be fully visible, physically continuous, correctly scaled and resting naturally on the ground. No other product or object may touch or cross it.'
-  reject='Hard reject any second hose, round pipe, drip tape, cable, fitting, valve, filter, coupler, box, package, tool, hand, person, fake label, impossible intersection, object passing through the coil, floating/merged product, or distorted dimensions/markings.'
+  criteria='The image must show exactly two approved layflat objects: one packaged AFP coil and one bare black woven coil, both fully visible, correctly scaled, separate and resting flat on the ground. The image must contain zero people and zero human body parts.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Also hard reject any third hose or product, round pipe, drip tape, cable, fitting, valve, filter, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or distorted dimensions.'
  else:
-  criteria='The image must show one thin flat black drip-tape roll in a real farm context, naturally placed on soil and not confused with a round pipe or layflat hose.'
-  reject='Hard reject any second irrigation product, pipe through the roll, white cylinder, carton, fake label, impossible geometry, upright wheel-like roll, or distorted product dimensions.'
+  criteria='The image must show exactly one AFP white-and-blue cylindrical drip-tape carton roll in a real topic-specific farm context. The roll must be secondary, compact, below knee height and naturally placed on soil. The image must contain zero people and zero human body parts.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Also hard reject any bottle, jar, canister, bucket, fertilizer or pesticide container, second package, second roll, extra commercial product, layflat hose, pipe through the roll, fake label, impossible geometry, giant roll or distorted dimensions.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
 Do not reject only for ordinary soil texture or distant crop rows. Return only JSON: {{"pass":true|false,"score":0-100,"reasons":["..."],"correction_prompt":"short regeneration instruction"}}. Pass at score {MIN_IMAGE_SCORE} or higher.'''
- payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':[{'type':'text','text':prompt},{'type':'image_url','image_url':{'url':'data:image/jpeg;base64,'+encoded}}]}],'temperature':0,'response_format':{'type':'json_object'}}
+ payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':[{'type':'text','text':prompt},{'type':'image_url','image_url':{'url':'data:image/webp;base64,'+encoded}}]}],'temperature':0,'response_format':{'type':'json_object'}}
  req=urllib.request.Request(base.AGNES_BASE+'/chat/completions',data=json.dumps(payload).encode(),headers={'Authorization':f'Bearer {base.AGNES_KEY}','Content-Type':'application/json'})
  with urllib.request.urlopen(req,timeout=60) as response:raw=json.loads(response.read())
  content=raw['choices'][0]['message']['content']
@@ -47,7 +47,7 @@ Do not reject only for ordinary soil texture or distant crop rows. Return only J
 def install(base,backend,raw_generator):
  reviews=base.OUT/'image-reviews';reviews.mkdir(parents=True,exist_ok=True)
  def guarded(item,kind):
-  original_prompt=backend.image_prompt;feedback='';history=[]
+  original_prompt=backend.image_prompt;feedback='';history=[];family=image_prompt_policy.product_family(item)
   try:
    for attempt in range(1,MAX_IMAGE_ATTEMPTS+1):
     if feedback:backend.image_prompt=lambda current_item,current_kind,p=original_prompt,f=feedback:p(current_item,current_kind)+' HARD QA CORRECTION: '+f
