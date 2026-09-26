@@ -2,8 +2,9 @@
 """Product routing plus deterministic visual diversity for generated city images."""
 from __future__ import annotations
 
-import hashlib
+import base64,hashlib,io
 from pathlib import Path
+from PIL import Image
 ASSET_DIR=Path(__file__).with_name('assets')
 
 DRIP_TAPE_ROLL_REFERENCE='https://navar-abyari.ir/wp-content/uploads/%D9%86%D9%88%D8%A7%D8%B1-%D8%A2%D8%A8%DB%8C%D8%A7%D8%B1%DB%8C-1.webp'
@@ -20,10 +21,10 @@ def product_family(item):
 
 
 TAPE_SCENES={
-  1:'wide city-article hero where the agricultural field, crop rows and local irrigation context are the main subject',
+  1:'wide empty city-article landscape where the agricultural field, crop rows and local irrigation context are the main subject; all machinery is parked and unattended and no person is present',
   2:'practical selection or comparison scene where farm requirements and the article topic are the main subject',
   3:'technical irrigation scene where filtration, pressure control or water distribution is the main subject',
-  4:'active installation scene along crop rows where the work and correct placement are the main subject',
+  4:'unattended completed installation layout along crop rows, showing correct tape placement and connections with no worker, driver, human activity or human silhouette',
   5:'maintenance and inspection scene where the drip line, emitter area or connection detail is the main subject'
 }
 LAYFLAT_SCENES={
@@ -94,7 +95,16 @@ def reference_images(kind,item=None):
           'data:image/webp;base64,'+(ASSET_DIR/'afp-layflat.webp.b64').read_text(encoding='ascii').strip(),
           'data:image/jpeg;base64,'+(ASSET_DIR/'afp-layflat-bare.jpg.b64').read_text(encoding='ascii').strip(),
         ]
-    return ['data:image/webp;base64,'+(ASSET_DIR/'afp-tape.webp.b64').read_text(encoding='ascii').strip()]
+    # Condition scale as well as identity. A raw close-up reference repeatedly
+    # made the generator fill 35-50% of the frame. This 22%-wide padded
+    # reference matches the production contract while preserving exact product
+    # geometry and branding.
+    raw=base64.b64decode((ASSET_DIR/'afp-tape.webp.b64').read_text(encoding='ascii').strip())
+    product=Image.open(io.BytesIO(raw)).convert('RGB').resize((264,170),Image.Resampling.LANCZOS)
+    canvas=Image.new('RGB',(1200,675),(238,238,235))
+    canvas.paste(product,(84,675-product.height-55))
+    buf=io.BytesIO();canvas.save(buf,'WEBP',quality=90,method=6)
+    return ['data:image/webp;base64,'+base64.b64encode(buf.getvalue()).decode('ascii')]
 
 
 def image_prompt(item,kind):
