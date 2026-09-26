@@ -7,48 +7,131 @@
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 28,
-      "product_height_percent": 24,
-      "product_x_center_percent": 48,
+      "score": 35,
+      "product_width_percent": 44,
+      "product_height_percent": 45,
+      "product_x_center_percent": 47,
       "reasons": [
-        "Product is centered rather than off-center on the lower third",
-        "Product width is approximately 28% of the frame, exceeding the 23% maximum limit",
-        "Product appears slightly wider than specified constraints",
-        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 20-23% of frame width."
+        "Product bounding box exceeds 23% width limit (estimated 44%)",
+        "Product bounding box exceeds 30% height limit (estimated 45%)",
+        "Product is centered in the frame rather than off-center on the lower third",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 20-23% of frame width.; Reduce product height from 45% to at most 30% of frame height."
       ],
-      "correction_prompt": "Shift the AFP drip-tape roll to the left or right off-center position within the lower third of the frame, and reduce its width to occupy only 20-23% of the full frame width while maintaining the farm context and keeping the bottom-right watermark 'AFP | 09134922013' intact. Reduce the product group from 28% to 20-23% of frame width.",
+      "correction_prompt": "Scale down the white and blue cylindrical drip-tape carton roll so it occupies less than 23% of the frame width and less than 30% of the height. Move the object off-center (slightly left) within the lower third of the frame to preserve the farm context perspective. Reduce the product group from 44% to 20-23% of frame width. Reduce product height from 45% to at most 30% of frame height.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 0,
-      "product_width_percent": 21.0,
-      "product_height_percent": 29.0,
-      "product_x_center_percent": 44.0,
+      "score": 45,
+      "product_width_percent": 21,
+      "product_height_percent": 23,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Human silhouette/farmer clearly visible in the background under the greenhouse arch",
-        "Prompt required zero people or silhouettes"
+        "Visible human silhouette/person seated in the cab of the unattended tractor in the background, which triggers a hard reject."
       ],
-      "correction_prompt": "Regenerate to remove the human figure and silhouette in the background under the greenhouse, ensuring no human presence remains.",
+      "correction_prompt": "Remove the human silhouette from the tractor cab in the background.",
       "attempt": 2
     },
     {
-      "pass": true,
-      "score": 90,
-      "product_width_percent": 23,
-      "product_height_percent": 28,
-      "product_x_center_percent": 46,
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
       "reasons": [
-        "The single AFP drip-tape roll is the correct white-and-blue cylindrical carton product.",
-        "No people, human silhouettes, or body parts are present.",
-        "No hard-reject items such as bottles, jars, canisters, or second packages are visible.",
-        "The required bottom-right watermark 'AFP | 09134922013' is clearly present.",
-        "The roll is in the lower-third area and off-center (slightly left of middle), while the greenhouse remains the primary context.",
-        "Product height stays under the 30% limit; width is at the upper limit but within the allowed 23%."
+        "Product width exceeds the 23% limit (estimated ~28% of frame width).",
+        "Product height exceeds the 30% limit (estimated ~35% of frame height).",
+        "Product is centered rather than placed on the lower third off-center.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 20-23% of frame width.; Reduce product height from 35% to at most 30% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the drip-tape roll significantly smaller (width ~20%, height ~25%) and positioned off-center to the left or right in the lower third of the frame, keeping the farm context secondary and ensuring no people are visible. Reduce the product group from 28% to 20-23% of frame width. Reduce product height from 35% to at most 30% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 20,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Image contains people (visible workers in the background near the greenhouse and tractor), triggering a hard reject condition.",
+        "Product roll is centered on the frame rather than staying off-center on the lower third as required.",
+        "machine-enforced bounding-box check failed: Move the product clearly to the left or right lower third; do not center it."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove all human figures and workers from the background. Reposition the AFP drip-tape carton roll to the lower-third left or right side so it is distinctly off-center, and ensure it remains secondary to the farm environment. Maintain the exact bottom-right watermark 'AFP | 09134922013'. Move the product clearly to the left or right lower third; do not center it.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 10.5,
+      "product_height_percent": 23.0,
+      "product_x_center_percent": 47.0,
+      "reasons": [
+        "The image contains exactly two cylindrical rolls, but the requirements mandate the presence of exactly one roll.",
+        "The presence of a second roll violates the 'second roll' hard reject constraint.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 10.5% to 20-23% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to display only a single AFP white-and-blue cylindrical drip-tape carton roll on the lower left side. Remove the second roll on the right. Ensure the single roll is secondary to the farm context and strictly maintain the 'AFP | 09134922013' watermark at the bottom right. Enlarge the product group from 10.5% to 20-23% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 38,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "Violation: Human body parts visible (person standing in the background near the greenhouse and figure in the tractor cab).",
+        "Violation: Product bounding box height (approx 38%) exceeds the 30% maximum limit.",
+        "Violation: Product bounding box width (approx 25%) exceeds the 23% maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 25% to 20-23% of frame width.; Reduce product height from 38% to at most 30% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures and body parts from the background and tractor cab. Reduce the product's relative size to less than 23% width and 30% height. Reduce the product group from 25% to 20-23% of frame width. Reduce product height from 38% to at most 30% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of human silhouettes in the greenhouse in the background",
+        "Product bounding box exceeds width limit (>23% of frame)",
+        "Product bounding box exceeds height limit (>30% of frame)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 25% to 20-23% of frame width.; Reduce product height from 35% to at most 30% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with strictly no humans visible anywhere. Shrink the AFP drip-tape roll to occupy approximately 20-22% of frame width and 25-28% of frame height. Move the product slightly to the right to avoid centered positioning, keeping it on the lower third. Reduce the product group from 25% to 20-23% of frame width. Reduce product height from 35% to at most 30% of frame height.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 20,
+      "product_height_percent": 20,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Human silhouettes (drivers/operators) are visible inside the unattended tractors in the background, violating the hard reject constraint for any visible person or human silhouette.",
+        "The product is centered horizontally (48%), whereas the requirements specify it should be off-center on the lower third."
+      ],
+      "correction_prompt": "Regenerate the image ensuring all unattended tractors and farm equipment in the background have no visible operators or silhouettes. Move the drip-tape roll to the right side of the frame (lower third) to make it clearly off-center. Keep the AFP white-and-blue cylindrical drip-tape carton roll at approximately 20% width and 20% height. Maintain the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 8
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 21,
+      "product_height_percent": 26,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Product bounding box meets all criteria: ~21% frame width, ~26% frame height, positioned in the lower third, and off-center to the right.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and unaltered.",
+        "The scene is a farm context with no people, human body parts, or silhouettes.",
+        "The product is a single cylindrical drip-tape carton roll and matches the 'AFP white-and-blue' description. No forbidden objects (bottles, jars, etc.) or multiple packages are present."
       ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 9
     }
   ]
 }
