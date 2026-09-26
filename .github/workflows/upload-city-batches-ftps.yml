@@ -13,6 +13,7 @@ on:
   push:
     branches: [main]
     paths:
+      - ".github/workflows/upload-city-batches-ftps.yml"
       - "artifacts/city-content-queue/.new-batch-signal"
 
 permissions:
@@ -27,7 +28,9 @@ env:
   FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
 
 concurrency:
-  group: navar-city-ftps-upload
+  # Serialize uploads with city generation and image rebuilds so a ZIP cannot
+  # change while it is being hashed or transferred.
+  group: navar-city-content-queue
   cancel-in-progress: false
 
 jobs:

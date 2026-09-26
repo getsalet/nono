@@ -157,8 +157,8 @@ def save_marker(rebuilt, skipped, failures, total, remaining, final=False):
             {
                 "policy": POLICY,
                 "mode": MODE,
-                "completed": bool(final and not failures),
-                "completed_at": now() if final and not failures else None,
+                "completed": bool(final and not failures and remaining == 0),
+                "completed_at": now() if final and not failures and remaining == 0 else None,
                 "total_candidates": total,
                 "remaining_candidates": remaining,
                 "rebuilt_posts": sorted(rebuilt),
