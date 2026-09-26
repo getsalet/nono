@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-26T00:55:28+00:00`
+- آخرین بروزرسانی: `2026-09-26T01:05:39+00:00`
 - وضعیت صف: **ready**
 - پیشرفت: **251 از 1894 (13.25٪)**
 - تکمیل‌شده: **251**
@@ -48,7 +48,7 @@
 
 ## خطاهای اخیر
 
-- **خمارلو** — `tape20`: `Editorial review failed: three details FAQ items required at end; word count below minimum`
+- **خمارلو** — `tape20`: `Editorial review failed: PVC claim for irrigation tape`
 
 ## فایل‌های خروجی
 
