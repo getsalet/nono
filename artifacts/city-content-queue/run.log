@@ -3,23 +3,6 @@ policy=reference-rerender-3d-v3
 batch_size=4 article_workers=4 image_workers=8
 ftp_upload=separate_workflow_after_success
 actions_artifacts=preserved
-Traceback (most recent call last):
-  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_fast.py", line 29, in <module>
-    runpy.run_path(str(HERE/'run_agnes_city_queue_resilient.py'),run_name='__main__')
-  File "<frozen runpy>", line 287, in run_path
-  File "<frozen runpy>", line 98, in _run_module_code
-  File "<frozen runpy>", line 88, in _run_code
-  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_resilient.py", line 20, in <module>
-    runpy.run_path(str(HERE/'run_agnes_city_queue_seo.py'),run_name='__main__')
-  File "<frozen runpy>", line 287, in run_path
-  File "<frozen runpy>", line 98, in _run_module_code
-  File "<frozen runpy>", line 88, in _run_code
-  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_seo.py", line 45, in <module>
-    run_source=replace_once(run_source,'''    name=f"{item['source_id']}-{kind}.jpg";(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()''','''    image=Image.open(BytesIO(blob)).convert('RGB')
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_seo.py", line 14, in replace_once
-    if count!=1:raise RuntimeError('Cannot patch '+label)
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: Cannot patch SEO WebP filenames
-queue_exit_code=1
+agnes_json_retry attempt=1/4 timeout=180s error=no valid JSON object found: Expecting ',' delimiter: line 4 column 170 (char 304)
+queue_exit_code=0
 auxiliary_exit_code=0

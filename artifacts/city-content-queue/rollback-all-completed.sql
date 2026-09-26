@@ -2164,6 +2164,46 @@ COMMIT;
 SET NAMES utf8mb4;
 USE `navaraby_wp569`;
 START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='10300010002401-layflat' WHERE p.post_name='آقکند-آذربایجان-شرقی-looleh-nakhi-tashoo' AND p.post_type='east_azarbaijan' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='10300010002401-tape20' WHERE p.post_name='آقکند-آذربایجان-شرقی-navar-tip-20cm' AND p.post_type='east_azarbaijan' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='10300010002842-layflat' WHERE p.post_name='اچاچی-آذربایجان-شرقی-looleh-nakhi-tashoo' AND p.post_type='east_azarbaijan' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='10300010002842-tape20' WHERE p.post_name='اچاچی-آذربایجان-شرقی-navar-tip-20cm' AND p.post_type='east_azarbaijan' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
 SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='10300012001221-layflat' WHERE p.post_name='بناب-آذربایجان-شرقی-looleh-nakhi-tashoo' AND p.post_type='east_azarbaijan' LIMIT 1);
 DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
 DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
