@@ -2,33 +2,22 @@
   "source_id": "1040009001254-tape20",
   "family": "tape20",
   "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v2",
   "fast_mode": false,
   "history": [
     {
-      "pass": false,
-      "score": 20,
-      "reasons": [
-        "Hard reject: The image contains a person (a female farmer) crouching in the field.",
-        "Hard reject: Human body parts (face, hands, arms, legs) are clearly visible.",
-        "Dimension Fail: The drip-tape roll is depicted as oversized (giant) relative to the person and the surrounding crop rows, failing the 'compact' and 'secondary' requirements.",
-        "Scale Fail: The roll appears significantly taller than the 'below knee height' constraint."
-      ],
-      "correction_prompt": "Regenerate image with zero people or body parts. Show exactly one compact AFP white-and-blue cylindrical drip-tape roll sitting naturally on the soil. Ensure the roll is small, secondary, and below knee height. Use a wide-angle farm shot with no crops or people obscuring the roll.",
-      "attempt": 1
-    },
-    {
       "pass": true,
-      "score": 85,
+      "score": 88,
       "reasons": [
-        "Image contains exactly one AFP white-and-blue cylindrical drip-tape carton roll.",
-        "The roll is placed naturally on soil in a farm context with crop rows.",
-        "Roll is compact and positioned at a reasonable secondary scale relative to the field, fitting the 'below knee height' intent.",
-        "Zero people, hands, faces, or body parts are present.",
-        "Zero prohibited items such as bottles, jars, buckets, or second rolls are visible.",
-        "Label 'AFP' and 'Drip Irrigation Tape' are clearly visible and authentic looking."
+        "Zero people, human silhouettes, or body parts detected in the frame.",
+        "Required watermark 'AFP | 09134922013' is present and legible in the bottom-right corner.",
+        "Unattended green tractor is correctly identified as ordinary farm equipment, not an extra commercial product.",
+        "Single AFP white-and-blue cylindrical drip-tape roll is clearly visible and secondary to the farm context.",
+        "No hard-reject items (bottles, juries, second rolls, pipes, fake labels) detected.",
+        "Product size and off-center lower-third placement align with the '19-23% width' visual estimation."
       ],
-      "correction_prompt": "Keep the current composition. Remove the watermark 'AFP | 09134922013' at the bottom right to ensure a clean, commercial product focus.",
-      "attempt": 2
+      "correction_prompt": "",
+      "attempt": 1
     }
   ]
 }

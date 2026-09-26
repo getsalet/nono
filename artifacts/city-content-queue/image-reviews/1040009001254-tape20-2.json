@@ -2,73 +2,73 @@
   "source_id": "1040009001254-tape20",
   "family": "tape20",
   "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v2",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 25,
+      "score": 10,
       "reasons": [
-        "Visible driver in the red tractor in the background (face and body parts) triggers hard reject.",
-        "The carton roll is disproportionately large (giant roll) relative to the soil context."
+        "Visible human figure in the background (standing near the equipment), violating the 'zero people' requirement.",
+        "The product roll is centered in the lower third of the frame, violating the 'stay off-center' requirement."
       ],
-      "correction_prompt": "Remove all human figures (including background driver). Resize the carton roll to be compact and secondary, no taller than 10cm. Ensure the roll is naturally placed on soil.",
+      "correction_prompt": "Regenerate the image removing all human figures from the background. Shift the drip-tape roll position horizontally to the far left or far right of the frame so it is distinctly off-center.",
       "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 30,
-      "reasons": [
-        "Giant/oversized roll: The diameter is disproportionately large relative to the background tractor, suggesting a huge industrial spool rather than a compact roll.",
-        "Label text error: The text on the carton is misspelled as 'Frivotion' and 'Irrigation' is slightly garbled ('Irrrgation'), which makes it look like a fake or low-quality label.",
-        "Text overlay: There is a significant text overlay ('AFP | 09134922013') in the bottom right corner, which violates the requirement for a clean product context."
-      ],
-      "correction_prompt": "Regenerate image: Replace the giant roll with a small, compact white-and-blue cylindrical drip-tape carton roll (approx. 20cm diameter). Ensure the text 'AFP' is clearly readable and labels are professional/correct. Remove the phone number overlay at the bottom. Place the small roll on bare soil in a vast agricultural field with a distant tractor for scale context.",
-      "attempt": 2
     },
     {
       "pass": false,
       "score": 45,
       "reasons": [
-        "Hard reject: A tractor containing a human driver is visible in the background. Although distant, the vehicle and operator violate the requirement for 'zero people' and 'zero human silhouettes'.",
-        "Roll size and placement: The product roll is oversized relative to the 'secondary, compact' constraint and appears to float on the soil surface rather than sitting naturally within it.",
-        "Watermark: A commercial phone number watermark is visible in the bottom right corner, which degrades the quality of the image as a clean product shot."
+        "Roll width is approximately 40% of the frame, exceeding the 23% maximum limit",
+        "Roll height is approximately 35% of the frame, exceeding the 30% maximum limit",
+        "Product is centered in the frame rather than off-center on the lower third",
+        "Required bottom-right watermark 'AFP | 09134922013' is missing"
       ],
-      "correction_prompt": "Regenerate the image removing the tractor and any background machinery or human silhouettes entirely. Shrink the AFP drip-tape roll by 50% to make it look compact and secondary to the farm scene. Place the roll lower on the soil so it sits naturally in a furrow. Remove the bottom-right text watermark.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 30,
-      "reasons": [
-        "Person: The top of a human head (red hair) is visible on the tractor in the distant background, violating the zero-person rule.",
-        "Second Product: A green tractor is visible in the background, which counts as extra commercial equipment/vehicle.",
-        "Text: The phone number overlay 'AFP | 09134922013' is present in the bottom right corner."
-      ],
-      "correction_prompt": "Regenerate the image with the tractor and the person in the background completely removed. Remove the phone number overlay in the bottom right. Keep the single white and blue AFP drip tape roll in the foreground on the soil.",
-      "attempt": 4
+      "correction_prompt": "Reduce the drip-tape roll to occupy only 20% of frame width and 25% of frame height, shift it to the right side of the lower third, add the watermark 'AFP | 09134922013' in the bottom right, and ensure no human presence or silhouettes remain visible",
+      "attempt": 2
     },
     {
       "pass": false,
       "score": 40,
       "reasons": [
-        "The roll appears too large relative to the surrounding crop rows; dimensions look distorted and not compact",
-        "The image contains no people, but the tractor in the background, while not a person, adds context that may distract, though not a hard reject on its own; however, the main issue is the roll's size and realism",
-        "The roll is not clearly 'secondary, compact, below knee height' — it dominates the foreground and appears oversized for a drip-tape carton roll",
-        "No human body parts present — good, but fails on geometry and scale requirements"
+        "The product occupies too large a portion of the frame width (over 23%)."
       ],
-      "correction_prompt": "Regenerate with a compact, realistically scaled AFP white-and-blue drip-tape carton roll placed low on soil (below knee height), secondary to the farm scene, no people or containers, natural outdoor light, distant tractor optional but not dominant, correct roll proportions.",
+      "correction_prompt": "Shrink the drip tape roll so it occupies approximately 20% of the frame width. Move it slightly to the lower-right to keep it off-center in the lower third, ensuring the farm context remains the primary focus.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "Contains people (two human silhouettes in the background)",
+        "Product occupies approximately 35-40% of frame width, exceeding the 23% limit",
+        "Product is centered, violating the requirement to be off-center on the lower third",
+        "Product size is too large relative to the frame"
+      ],
+      "correction_prompt": "Regenerate the image to remove all human figures completely. Shrink the drip-tape roll to occupy less than 23% of the frame width and position it off-center on the lower third of the frame. Maintain the farm background with unattended equipment and the required bottom-right watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "reasons": [
+        "Hard reject: Multiple people (human body parts/silhouettes) are clearly visible in the background on tractors and on the ground",
+        "Hard reject: Roll is centered and occupies approximately 40% of the frame width, exceeding the maximum 23% limit",
+        "Hard reject: The roll occupies approximately 45% of the frame height, exceeding the maximum 30% limit"
+      ],
+      "correction_prompt": "Regenerate the image strictly excluding all human figures and silhouettes from the background field. Reframe the shot to feature a single AFP drip-tape roll in the lower-right third of the frame, sized to a compact width of 19-23% and height of under 30%. Ensure the farm scene remains as a wide, unpopulated background.",
       "attempt": 5
     },
     {
       "pass": false,
       "score": 25,
       "reasons": [
-        "Hard reject: Visible person standing on the tractor in the background.",
-        "Hard reject: Text on the drum label is distorted and misspelled ('Itrigation').",
-        "Hard reject: There is a watermark/overlay text at the bottom right ('AFP | 09134922013').",
-        "Roll dimensions appear slightly oversized (violates 'compact' requirement)."
+        "Product is centered horizontally rather than staying off-center on the lower third.",
+        "Visible human silhouettes/figures present near background tractors (person on left tractor and person near the green machine), violating the zero-persons rule.",
+        "Product width appears larger than the allowed 19–23% of frame width (roughly ~35–40%).",
+        "Product height exceeds the allowed ~30% of frame height (about 45–50%)."
       ],
-      "correction_prompt": "Remove the person and tractor from the background; keep background as empty farm field with crop rows. Fix the label text on the white and blue cylindrical roll to clearly read 'AFP Drip Irrigation Tape' in blue font with the water drop logo. Remove all on-image text watermarks. Ensure the roll is compact, secondary, and below knee height, placed naturally on the soil.",
+      "correction_prompt": "Regenerate with the roll shifted to the lower third and off-center, width around 19–23% of frame and height ≤30%, keep the farm context dominant, and ensure zero people or human silhouettes anywhere; keep the bottom-right watermark 'AFP | 09134922013' intact.",
       "attempt": 6
     }
   ]
