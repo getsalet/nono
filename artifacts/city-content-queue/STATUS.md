@@ -2,13 +2,13 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-26T02:02:36+00:00`
-- وضعیت صف: **ready_with_failures**
+- آخرین بروزرسانی: `2026-09-26T02:12:53+00:00`
+- وضعیت صف: **failed**
 - پیشرفت: **255 از 1894 (13.46٪)**
 - تکمیل‌شده: **255**
 - در حال پردازش: **0**
-- در انتظار: **1638**
-- ناموفق: **1**
+- در انتظار: **1637**
+- ناموفق: **2**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.0-flash`
@@ -49,6 +49,7 @@
 ## خطاهای اخیر
 
 - **خمارلو** — `layflat`: `Editorial review failed: layflat article still focuses on drip tape`
+- **لاریجان** — `tape20`: `Editorial review failed: Cyrillic characters; 20cm product focus missing; three details FAQ items required at end; word count below minimum; missing meta_description; missing focus_keyword; missing excerpt`
 
 ## فایل‌های خروجی
 
