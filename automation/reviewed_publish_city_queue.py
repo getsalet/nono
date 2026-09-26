@@ -92,9 +92,16 @@ def reviewed_make_content(item,links):
     raise RuntimeError('Editorial review failed: '+'; '.join(last))
 
 def reuse_or_generate(item,kind):
-    path=base.IMAGES/f"{item['source_id']}-{kind}.jpg"
-    if path.exists() and path.stat().st_size>10000:
-        blob=path.read_bytes();return path.name,hashlib.sha256(blob).hexdigest()
+    artifact=base.ITEMS/f"{item['source_id']}.json"
+    approved=False
+    if artifact.exists():
+        try:
+            approved=json.loads(artifact.read_text(encoding='utf-8')).get('image_rebuild_policy')=='exact-asset-composite-v1'
+        except Exception:approved=False
+    if approved:
+        path=base.IMAGES/f"{item['source_id']}-{kind}.webp"
+        if path.exists() and path.stat().st_size>10000:
+            blob=path.read_bytes();return path.name,hashlib.sha256(blob).hexdigest()
     return ORIGINAL_IMAGE(item,kind)
 
 def publish_sql(item,obj,image_names):
@@ -123,13 +130,18 @@ for item in state['items']:
             item['status']='pending';item['attempts']=0
             for k in ('completed_at','last_error','failed_at','started_at','word_count'):item.pop(k,None)
 state['updated_at']=base.now();base.QUEUE.write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf-8')
+previously_completed={item['source_id'] for item in state['items'] if item.get('status')=='completed'}
 # The queue coordinator processes the selected batch concurrently and remains
 # the only writer of queue state, SQL and item metadata.
 queue.process(state)
 for item in state['items']:
     artifact=base.ITEMS/f"{item['source_id']}.json"
     if item.get('status')=='completed' and artifact.exists():
-        data=json.loads(artifact.read_text(encoding='utf-8'));data['status']='completed';data['completed_at']=item.get('completed_at');data['word_count']=item.get('word_count');artifact.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
+        data=json.loads(artifact.read_text(encoding='utf-8'));data['status']='completed';data['completed_at']=item.get('completed_at');data['word_count']=item.get('word_count')
+        if item['source_id'] not in previously_completed:
+            data['image_generation_mode']='exact-approved-asset-composite';data['image_rebuild_policy']='exact-asset-composite-v1'
+            item['image_generation_mode']='exact-approved-asset-composite';item['image_rebuild_policy']='exact-asset-composite-v1'
+        artifact.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
 combined=base.OUT/'create-all-completed.sql'
 if combined.exists():
     text=combined.read_text(encoding='utf-8').replace('-- Review before importing. All generated posts are drafts.','-- Editorially reviewed. Generated posts use publish status.')

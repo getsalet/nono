@@ -2,7 +2,12 @@
 """Product routing plus deterministic visual diversity for generated city images."""
 from __future__ import annotations
 
-import hashlib
+import hashlib,base64,io
+from collections import deque
+from functools import lru_cache
+from pathlib import Path
+from PIL import Image,ImageFilter
+ASSET_DIR=Path(__file__).with_name('assets')
 
 DRIP_TAPE_ROLL_REFERENCE='https://navar-abyari.ir/wp-content/uploads/%D9%86%D9%88%D8%A7%D8%B1-%D8%A2%D8%A8%DB%8C%D8%A7%D8%B1%DB%8C-1.webp'
 LAYFLAT_REFERENCE_PACKAGE='https://navar-abyari.ir/wp-content/uploads/%D9%84%D9%88%D9%84%D9%87-%D9%86%D8%AE%DB%8C-2-%D8%A7%DB%8C%D9%86%DA%86-1.webp'
@@ -85,40 +90,57 @@ def _variation(item,kind):
     }
 
 
-def reference_images(kind,item=None):
-    """Kept for compatibility only; generation must not pass references."""
-    return []
+def reference_images(kind,item=None):return []
 
 
 def image_prompt(item,kind):
     family=product_family(item);variation=_variation(item,kind)
-    city=str((item or {}).get('city') or 'the target city')
-    province=str((item or {}).get('province') or 'Iran')
+    city=str((item or {}).get('city') or 'the target city');province=str((item or {}).get('province') or 'Iran')
     scene=(LAYFLAT_SCENES if family=='layflat' else TAPE_SCENES).get(kind)
-    if family=='layflat':
-        product=(
-          'A recognizable AFP black woven yarn-reinforced layflat-hose roll in its intact package is mandatory as exactly one small secondary prop. '
-          'The only printed package text permitted and required is exactly "AFP", "آبگسترفراپارسیان" and lowercase "layflat"; never print "Drip Irrigation tape" on this product. '
-          'It must occupy about 10 to 20 percent of the frame and sit naturally off-center at the side or in the midground. '
-          'Do not turn it into drip tape, a white carton or a rigid pipe.')
-    else:
-        product=(
-          'A recognizable AFP 1000-meter drip-irrigation tape roll/carton is mandatory as exactly one small secondary prop: white cylindrical body, blue lower band and central core. '
-          'The only printed package text permitted and required is exactly "AFP", "آبگسترفراپارسیان" and "Drip Irrigation tape" with this exact capitalization; never print "layflat" on this product. '
-          'It must occupy about 10 to 20 percent of the frame and sit naturally off-center at the side or in the midground. '
-          'Do not turn it into layflat hose, an exposed black coil or a rigid pipe.')
-    diversity=(
-      f'Camera: {variation["camera"]}. Background: {variation["background"]}. Lighting: {variation["light"]}. Composition: {variation["composition"]}. '
-      'Make this image visibly different from the other images in the same article. '
-      f'Use visual variation token {variation["token"]} only as a creative seed; never render it as text.')
-    location=(
-      f'Use a plausible Iranian agricultural environment suitable for {city}, {province}, without famous landmarks or unsupported local claims.')
-    return (
-      'Photorealistic 16:9 editorial agricultural photograph, natural color and realistic detail. '
-      f'The article scene and action are the primary subject and must receive roughly 75 to 85 percent of the visual emphasis. Scene role: {scene}. '
-      +product+' The product is required in every image but must remain incidental, never the focal point, hero subject, reference-image recreation, advertisement or product-only shot. '
-      'No product close-up, centered package, oversized package, studio background, duplicate product, floating object, collage, fake specifications, extra words, numbers, phone numbers, gibberish label, caption or watermark. '
-      +location+' '+diversity)
+    diversity=(f'Camera: {variation["camera"]}. Background: {variation["background"]}. Lighting: {variation["light"]}. Composition: {variation["composition"]}. Make this image visibly different from the other article images. Use visual variation token {variation["token"]} only as a seed and never render it.')
+    return ('Photorealistic 16:9 editorial agricultural photograph with the article action as the primary subject. '+f'Scene role: {scene}. Use a plausible Iranian agricultural environment suitable for {city}, {province}. '
+      'IMPORTANT: do not generate, draw or imitate any irrigation product package, roll, AFP logo, brand text, label, carton, layflat package or product-shaped object. Leave clean naturally lit ground space in the lower-left corner for a later exact product overlay. '
+      'No fake writing, product close-up, centered package, duplicate product, floating object, collage, caption or watermark. '+diversity)
+
+def _is_background(pixel):
+    r,g,b,a=pixel
+    return a==0 or (r>=232 and g>=232 and b>=232 and max(r,g,b)-min(r,g,b)<=22)
+
+
+@lru_cache(maxsize=2)
+def _product_cutout(family):
+    filename='afp-layflat.webp.b64' if family=='layflat' else 'afp-tape.webp.b64'
+    blob=base64.b64decode((ASSET_DIR/filename).read_text(encoding='ascii'))
+    image=Image.open(io.BytesIO(blob)).convert('RGBA');width,height=image.size;pixels=image.load()
+    seen=bytearray(width*height);queue=deque()
+    def add(x,y):
+        idx=y*width+x
+        if not seen[idx] and _is_background(pixels[x,y]):seen[idx]=1;queue.append((x,y))
+    for x in range(width):add(x,0);add(x,height-1)
+    for y in range(height):add(0,y);add(width-1,y)
+    while queue:
+        x,y=queue.popleft();r,g,b,a=pixels[x,y];pixels[x,y]=(r,g,b,0)
+        if x:add(x-1,y)
+        if x+1<width:add(x+1,y)
+        if y:add(x,y-1)
+        if y+1<height:add(x,y+1)
+    alpha=image.getchannel('A');box=alpha.getbbox()
+    if not box:raise RuntimeError('Exact product asset became empty after background removal')
+    return image.crop(box)
+
+
+def composite_product(scene,item,kind):
+    """Overlay the untouched approved product asset; never redraw its shape/text."""
+    canvas=scene.convert('RGBA');product=_product_cutout(product_family(item)).copy()
+    target_width=max(170,int(canvas.width*0.19));target_height=max(1,round(product.height*target_width/product.width))
+    product=product.resize((target_width,target_height),Image.Resampling.LANCZOS)
+    margin=max(18,int(canvas.width*0.025));x=margin;y=canvas.height-product.height-max(14,int(canvas.height*0.025))
+    alpha=product.getchannel('A')
+    shadow_alpha=alpha.filter(ImageFilter.GaussianBlur(max(4,target_width//35))).point(lambda value:value*90//255)
+    shadow=Image.new('RGBA',product.size,(0,0,0,0));shadow.putalpha(shadow_alpha)
+    canvas.alpha_composite(shadow,(x+max(4,target_width//45),y+max(7,target_width//30)))
+    canvas.alpha_composite(product,(x,y))
+    return canvas.convert('RGB')
 
 
 def install(backend):

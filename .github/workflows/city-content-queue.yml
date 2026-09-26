@@ -9,6 +9,8 @@ on:
       - 'automation/city_content_queue_cloudflare.py'
       - 'automation/reviewed_publish_city_queue.py'
       - 'automation/run_agnes_city_queue.py'
+      - 'automation/image_prompt_policy.py'
+      - 'automation/assets/**'
 
   schedule:
     - cron: "*/15 * * * *"
@@ -42,7 +44,7 @@ jobs:
       ARTICLE_WORKERS: "4"
       IMAGE_WORKERS: "8"
       WORDPRESS_DB_NAME: navaraby_wp569
-      CURRENT_IMAGE_POLICY: diverse-contextual-scenes-v20
+      CURRENT_IMAGE_POLICY: exact-asset-composite-v1
 
     steps:
       - name: Checkout repository

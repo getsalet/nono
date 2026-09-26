@@ -86,9 +86,13 @@ def agnes_generate_image(item,kind):
         nw=int(h*target);left=(w-nw)//2;image=image.crop((left,0,left+nw,h))
     else:
         nh=int(w/target);top=(h-nh)//2;image=image.crop((0,top,w,top+nh))
-    image=image.resize((1200,675),Image.Resampling.LANCZOS);buf=io.BytesIO();image.save(buf,'JPEG',quality=93,optimize=True);blob=backend.watermark(buf.getvalue())
+    image=image.resize((1200,675),Image.Resampling.LANCZOS)
+    image=image_prompt_policy.composite_product(image,item,kind)
+    stage=io.BytesIO();image.save(stage,'JPEG',quality=93,optimize=True)
+    watermarked=Image.open(io.BytesIO(backend.watermark(stage.getvalue()))).convert('RGB')
+    out=io.BytesIO();watermarked.save(out,'WEBP',quality=60,method=6);blob=out.getvalue()
     if len(blob)<10000:raise RuntimeError('Agnes generated image is unexpectedly small')
-    name=f"{item['source_id']}-{kind}.jpg";(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()
+    name=f"{item['source_id']}-{kind}.webp";(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()
 
 if base.QUEUE.exists():
     state=json.loads(base.QUEUE.read_text(encoding='utf-8'));changed=False
