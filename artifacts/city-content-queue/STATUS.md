@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-26T00:20:40+00:00`
+- آخرین بروزرسانی: `2026-09-26T00:30:40+00:00`
 - وضعیت صف: **ready**
 - پیشرفت: **250 از 1894 (13.20٪)**
 - تکمیل‌شده: **250**
@@ -48,7 +48,7 @@
 
 ## خطاهای اخیر
 
-- **هادیشهر** — `layflat`: `Agnes JSON response invalid after retries: The read operation timed out`
+- **هادیشهر** — `layflat`: `Editorial review failed: layflat article still focuses on drip tape`
 
 ## فایل‌های خروجی
 
