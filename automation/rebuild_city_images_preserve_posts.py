@@ -20,10 +20,10 @@ import city_content_queue as base
 import city_content_queue_cloudflare as backend
 import image_prompt_policy
 
-POLICY = "reference-rerender-3d-v4-scale-controlled"
-MODE = "reference-conditioned-3d-rerender-scale-controlled"
+POLICY = "reference-rerender-3d-v5-approved-scales-topic-first"
+MODE = "reference-conditioned-3d-rerender-approved-scales-topic-first"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
-MARKER = OUT / "image-rebuild-reference-rerender-3d-v4-scale-controlled.json"
+MARKER = OUT / "image-rebuild-reference-rerender-3d-v5-approved-scales-topic-first.json"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")
 API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
     "AGNES_API_BASE", "https://apihub.agnes-ai.com/v1"
@@ -32,6 +32,7 @@ KEY = (os.getenv("IMAGE_API_KEY") or os.getenv("AGNES_API_KEY", "")).strip()
 WORKERS = max(1, int(os.getenv("IMAGE_WORKERS", "2")))
 RETRIES = max(2, int(os.getenv("IMAGE_RETRIES", "6")))
 FROM_POST = max(1, int(os.getenv("REBUILD_FROM_POST", "250")))
+POST_LIMIT = max(1, int(os.getenv("REBUILD_POST_LIMIT", "4")))
 image_prompt_policy.install(backend)
 
 
@@ -150,7 +151,7 @@ def replace_names(path: Path, mapping: dict[str, str]) -> None:
         path.write_text(updated, encoding="utf-8")
 
 
-def save_marker(rebuilt, skipped, failures, total, final=False):
+def save_marker(rebuilt, skipped, failures, total, remaining, final=False):
     MARKER.write_text(
         json.dumps(
             {
@@ -159,6 +160,7 @@ def save_marker(rebuilt, skipped, failures, total, final=False):
                 "completed": bool(final and not failures),
                 "completed_at": now() if final and not failures else None,
                 "total_candidates": total,
+                "remaining_candidates": remaining,
                 "rebuilt_posts": sorted(rebuilt),
                 "skipped": skipped,
                 "failures": failures,
@@ -191,11 +193,24 @@ def main() -> int:
             continue
         records[source_id] = (item, path, data)
 
+    def current_ids():
+        result=[]
+        for row in completed:
+            sid=str(row.get("source_id") or "")
+            path=base.ITEMS/f"{sid}.json"
+            if not sid or not path.exists():continue
+            try:data=json.loads(path.read_text(encoding="utf-8"))
+            except (OSError,json.JSONDecodeError):continue
+            if data.get("image_rebuild_policy")==POLICY:result.append(sid)
+        return sorted(result)
+
     if not records:
-        save_marker([], skipped, [], len(completed), final=True)
+        current=current_ids();remaining=max(0,len(completed)-len(current))
+        save_marker(current, skipped, [], len(completed), remaining, final=True)
         print("exact_product_rebuild=already_current")
         return 0
 
+    records=dict(list(records.items())[:POST_LIMIT])
     results = {source_id: {} for source_id in records}
     failures = []
     with ThreadPoolExecutor(max_workers=WORKERS, thread_name_prefix="exact-product") as pool:
@@ -251,19 +266,19 @@ def main() -> int:
         replace_names(OUT / "sql" / f"{source_id}.sql", mapping)
         replace_names(OUT / "rollback" / f"{source_id}.sql", mapping)
         rebuilt.append(source_id)
-        save_marker(rebuilt, skipped, failures, len(completed), final=False)
 
     replace_names(OUT / "create-all-completed.sql", aggregate_mapping)
     replace_names(OUT / "rollback-all-completed.sql", aggregate_mapping)
     state["updated_at"] = now()
     base.QUEUE.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
-    save_marker(rebuilt, skipped, failures, len(completed), final=True)
+    current=current_ids();remaining=max(0,len(completed)-len(current))
+    save_marker(current, skipped, failures, len(completed), remaining, final=True)
     print(
         f"exact_product_rebuild rebuilt={len(rebuilt)} failures={len(failures)} "
-        f"workers={WORKERS} policy={POLICY}",
+        f"workers={WORKERS} post_limit={POST_LIMIT} remaining={remaining} policy={POLICY}",
         flush=True,
     )
-    return 0
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":

@@ -1,6 +1,8 @@
 name: Rebuild exact product reference images
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "23 * * * *"
   push:
     branches: [main]
     paths:
@@ -27,6 +29,7 @@ jobs:
       IMAGE_WORKERS: "2"
       IMAGE_RETRIES: "6"
       REBUILD_FROM_POST: "250"
+      REBUILD_POST_LIMIT: "4"
     steps:
       - uses: actions/checkout@v7
         with: {fetch-depth: 0}
@@ -50,8 +53,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A artifacts/city-content-queue
           git add -f artifacts/city-content-queue/packages/batch-*.zip 2>/dev/null || true
-          git add -f artifacts/city-content-queue/image-rebuild-reference-rerender-3d-v4-scale-controlled.json reference-image-rebuild.log
+          git add -f artifacts/city-content-queue/image-rebuild-reference-rerender-3d-v5-approved-scales-topic-first.json reference-image-rebuild.log
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Rebuild city images with scale-controlled AFP rerendering"
+          git commit -m "Rebuild city images with approved topic-first AFP policy"
           git pull --rebase origin main
           git push origin main

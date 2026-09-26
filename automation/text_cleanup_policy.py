@@ -51,17 +51,12 @@ def _faq_html(item):
  return contact+heading+''.join(f'<details><summary>{q}</summary>{a}<br><br></details>' for q,a in questions)
 
 def cleanup_html(html,item=None):
- item=item or {};html=(html or '').replace(IMAGE_1_MARKER,'');markers=[]
- for number in range(2,6):
-  marker=f'[[[IMAGE_{number}]]]'
-  if marker in html:markers.append(marker)
-  html=html.replace(marker,'')
+ item=item or {};html=(html or '').replace(IMAGE_1_MARKER,'')
  html=_clean_text_nodes(html,item);html=FAQ_SECTION_RE.sub('',html);html=re.sub(r'<p>\s*</p>','',html).strip()
  topic=item.get('topic');visible=re.sub(r'<[^>]+>',' ',html)
  if topic=='layflat' and not any(x in visible for x in ('لوله نخی','لوله تاشو')):html='<p>لوله نخی و لوله تاشو برای انتقال آب در مزرعه به‌کار می‌رود و انتخاب سایز، فشار، اتصال و دوام آن باید بر اساس دبی، طول مسیر و دیتاشیت سازنده انجام شود.</p>'+html
  if topic=='tape20' and not re.search(r'(?:۲۰|20)\s*سانتی',visible):html='<p>این راهنما بر انتخاب و کاربرد نوار تیپ با فاصله قطره‌چکان ۲۰ سانتی‌متر تمرکز دارد و مشخصات نهایی باید با طراحی مزرعه و دیتاشیت سازنده تطبیق داده شود.</p>'+html
  html+=_faq_html(item)
- if markers:html+='\n'+'\n'.join(markers)
  return html.strip()
 
 def apply(obj,item):

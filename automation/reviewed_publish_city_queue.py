@@ -96,7 +96,7 @@ def reuse_or_generate(item,kind):
     approved=False
     if artifact.exists():
         try:
-            approved=json.loads(artifact.read_text(encoding='utf-8')).get('image_rebuild_policy')=='reference-rerender-3d-v4-scale-controlled'
+            approved=json.loads(artifact.read_text(encoding='utf-8')).get('image_rebuild_policy')=='reference-rerender-3d-v5-approved-scales-topic-first'
         except Exception:approved=False
     if approved:
         path=base.IMAGES/f"{item['source_id']}-{kind}.webp"
@@ -151,8 +151,8 @@ for item in state['items']:
     if item.get('status')=='completed' and artifact.exists():
         data=json.loads(artifact.read_text(encoding='utf-8'));data['status']='completed';data['completed_at']=item.get('completed_at');data['word_count']=item.get('word_count')
         if item['source_id'] not in previously_completed:
-            data['image_generation_mode']='reference-conditioned-3d-rerender-scale-controlled';data['image_rebuild_policy']='reference-rerender-3d-v4-scale-controlled'
-            item['image_generation_mode']='reference-conditioned-3d-rerender-scale-controlled';item['image_rebuild_policy']='reference-rerender-3d-v4-scale-controlled'
+            data['image_generation_mode']='reference-conditioned-3d-rerender-approved-scales-topic-first';data['image_rebuild_policy']='reference-rerender-3d-v5-approved-scales-topic-first'
+            item['image_generation_mode']='reference-conditioned-3d-rerender-approved-scales-topic-first';item['image_rebuild_policy']='reference-rerender-3d-v5-approved-scales-topic-first'
         artifact.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
 combined=base.OUT/'create-all-completed.sql'
 if combined.exists():

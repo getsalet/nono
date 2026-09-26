@@ -12,7 +12,7 @@ TOKEN=os.getenv('CLOUDFLARE_API_TOKEN','').strip(); ACCOUNT=os.getenv('CLOUDFLAR
 IMAGE_COUNT=5
 ARTICLE_WORKERS=max(1,int(os.getenv('ARTICLE_WORKERS','4')))
 IMAGE_WORKERS=max(1,int(os.getenv('IMAGE_WORKERS','8')))
-WATERMARK='AFP Pipe | 09134922013'
+WATERMARK='AFP | 09134922013'
 ALT_TEMPLATES={
  1:'تصویر شاخص راهنمای خرید نوار آبیاری در {city}',
  2:'انتخاب نوار تیپ متناسب با مزرعه {city}',
@@ -118,7 +118,7 @@ def process(queue):
   q.write_status(queue,result);return
  for item in batch:item.update(status='processing',attempts=item.get('attempts',0)+1,started_at=q.now())
  queue['updated_at']=q.now();q.QUEUE.write_text(json.dumps(queue,ensure_ascii=False,indent=2),encoding='utf-8');q.write_status(queue,'processing')
- failures=[];article_workers=min(ARTICLE_WORKERS,len(batch))
+ failures=[];successes=0;article_workers=min(ARTICLE_WORKERS,len(batch))
  with ThreadPoolExecutor(max_workers=IMAGE_WORKERS,thread_name_prefix='city-image') as image_pool:
   with ThreadPoolExecutor(max_workers=article_workers,thread_name_prefix='city-article') as article_pool:
    future_items={article_pool.submit(_produce_item,item,queue['link_index'],image_pool):item for item in batch}
@@ -130,6 +130,7 @@ def process(queue):
      (q.SQL/f"{item['source_id']}.sql").write_text(insert,encoding='utf-8');(q.ROLLBACK/f"{item['source_id']}.sql").write_text(rollback,encoding='utf-8')
      (q.ITEMS/f"{item['source_id']}.json").write_text(json.dumps({**item,**obj,'html':body,'images':names,'image_sha256':hashes,'image_roles':['featured','inline','inline','inline','inline'],'watermark':WATERMARK},ensure_ascii=False,indent=2),encoding='utf-8')
      item.update(status='completed',completed_at=q.now(),word_count=q.words(body),images=names,last_error='');item.pop('started_at',None);item.pop('failed_at',None)
+     successes+=1
     except Exception as exc:
      if isinstance(exc,StageFailure):stage=exc.stage;error=exc.original
      else:error=exc
@@ -138,7 +139,8 @@ def process(queue):
  (q.OUT/'create-all-completed.sql').write_text('\n'.join(['-- Editorially reviewed generated posts.',q.sql_preamble()]+[path.read_text(encoding='utf-8') for path in sorted(q.SQL.glob('*.sql'))]),encoding='utf-8')
  (q.OUT/'rollback-all-completed.sql').write_text('\n'.join([q.sql_preamble()]+[path.read_text(encoding='utf-8') for path in sorted(q.ROLLBACK.glob('*.sql'))]),encoding='utf-8')
  result='ready_with_failures' if any(x.get('status')=='failed' for x in queue['items']) else 'ready';q.write_status(queue,result)
- if failures:raise RuntimeError('Queue items failed: '+' | '.join(failures))
+ if failures and not successes:raise RuntimeError('All queue items failed: '+' | '.join(failures))
+ if failures:print('partial_success failures='+' | '.join(failures),flush=True)
 
 
 def main():

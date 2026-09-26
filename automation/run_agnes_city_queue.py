@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Run the reviewed production queue with Agnes text and image models."""
 import base64,hashlib,io,json,os,urllib.error,urllib.request
+import time
 from PIL import Image
 import city_content_queue as base
 import city_content_queue_cloudflare as backend
@@ -71,11 +72,26 @@ def neutral_image_input():
 
 def agnes_generate_image(item,kind):
     if not KEY:raise RuntimeError('IMAGE_API_KEY/AGNES_API_KEY is missing')
+    name=(backend.seo_image_name(item,kind) if hasattr(backend,'seo_image_name') else f"{item['source_id']}-{kind}.webp")
+    cached=base.IMAGES/name
+    if cached.exists() and cached.stat().st_size>10000:
+        blob=cached.read_bytes();return name,hashlib.sha256(blob).hexdigest()
     payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':image_prompt_policy.reference_images(kind,item)}}
-    req=urllib.request.Request(API,data=json.dumps(payload).encode(),method='POST',headers={'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Accept':'application/json','User-Agent':'navar-city-content-queue/3.0'})
-    try:
-        with urllib.request.urlopen(req,timeout=600) as response:data=json.loads(response.read())
-    except urllib.error.HTTPError as exc:raise RuntimeError(f"Agnes Image HTTP {exc.code}: {exc.read().decode('utf-8','replace')[:1200]}")
+    last=None
+    for attempt in range(1,6):
+        req=urllib.request.Request(API,data=json.dumps(payload).encode(),method='POST',headers={'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Accept':'application/json','User-Agent':'navar-city-content-queue/3.0'})
+        try:
+            with urllib.request.urlopen(req,timeout=600) as response:data=json.loads(response.read())
+            break
+        except urllib.error.HTTPError as exc:
+            detail=exc.read().decode('utf-8','replace')[:1200]
+            last=RuntimeError(f"Agnes Image HTTP {exc.code}: {detail}")
+            if exc.code not in (408,429,500,502,503,504) or attempt==5:raise last
+        except (urllib.error.URLError,TimeoutError,ConnectionError) as exc:
+            last=exc
+            if attempt==5:raise RuntimeError(f'Agnes Image transport failure: {exc}') from exc
+        time.sleep(min(120,15*(2**(attempt-1))))
+    else:raise RuntimeError(f'Agnes Image failed: {last}')
     row=(data.get('data') or [{}])[0]
     if row.get('b64_json'):blob=base64.b64decode(row['b64_json'])
     elif row.get('url'):
@@ -91,7 +107,7 @@ def agnes_generate_image(item,kind):
     watermarked=Image.open(io.BytesIO(backend.watermark(stage.getvalue()))).convert('RGB')
     out=io.BytesIO();watermarked.save(out,'WEBP',quality=60,method=6);blob=out.getvalue()
     if len(blob)<10000:raise RuntimeError('Agnes generated image is unexpectedly small')
-    name=f"{item['source_id']}-{kind}.webp";(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()
+    name=seo_image_name(item,kind);(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()
 
 if base.QUEUE.exists():
     state=json.loads(base.QUEUE.read_text(encoding='utf-8'));changed=False

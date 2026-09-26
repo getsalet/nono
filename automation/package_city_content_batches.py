@@ -227,14 +227,16 @@ def main() -> None:
             break
         batch_name = f"batch-{batch_no:03d}-posts-{start + 1:04d}-{start + len(batch):04d}"
         zip_path = PACKAGES / f"{batch_name}.zip"
+        # Uploaded packages are immutable. Packages not yet uploaded are rebuilt
+        # so image-policy repairs are included before their first FTPS delivery.
         existing = (
             healthy_existing_zip(
                 zip_path,
                 batch_name,
                 batch,
-                require_database_preamble=zip_path.name not in uploaded_names,
+                require_database_preamble=False,
             )
-            if zip_path.exists()
+            if zip_path.exists() and zip_path.name in uploaded_names
             else None
         )
         if existing is not None:
