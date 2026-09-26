@@ -2,13 +2,13 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-26T03:57:20+00:00`
+- آخرین بروزرسانی: `2026-09-26T04:03:58+00:00`
 - وضعیت صف: **failed**
 - پیشرفت: **260 از 1894 (13.73٪)**
 - تکمیل‌شده: **260**
 - در حال پردازش: **0**
-- در انتظار: **1627**
-- ناموفق: **7**
+- در انتظار: **1626**
+- ناموفق: **8**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -55,6 +55,7 @@
 - **دوزدوزان** — `layflat`: `Editorial review failed: three details FAQ items required at end`
 - **شربیان** — `layflat`: `Editorial review failed: Cyrillic characters; layflat product focus missing; three details FAQ items required at end; word count below minimum; missing meta_description; missing focus_keyword; missing excerpt`
 - **تسوج** — `tape20`: `Editorial review failed: Cyrillic characters; unexpected Latin words: AFP`
+- **تسوج** — `layflat`: `Editorial review failed: Cyrillic characters; unexpected Latin words: AFP; three details FAQ items required at end`
 
 ## فایل‌های خروجی
 
