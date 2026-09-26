@@ -41,6 +41,7 @@ jobs:
           python-version: "3.12"
 
       - name: Skip unless a new or changed batch exists
+        id: detect
         # Fast gate: if every batch ZIP already matches the recorded upload state,
         # there is nothing new to push to FTPS, so bail out before the expensive
         # image-policy check + FTPS connect. This stops the workflow from running
@@ -50,7 +51,7 @@ jobs:
         run: |
           set -euo pipefail
           python - <<'PY'
-          import json, hashlib, sys
+          import json, hashlib, os
           from pathlib import Path
           STATE = Path("artifacts/city-content-queue/ftps-upload-state.json")
           PKGS  = Path("artifacts/city-content-queue/packages")
@@ -64,10 +65,15 @@ jobs:
                   changed.append(z.name)
           if not changed:
               print("No new or changed batches since last FTPS upload; skipping this run.")
-              sys.exit(0)
+              with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+                  output.write("has_changes=false\n")
+              raise SystemExit(0)
           print(f"New/changed batches to upload: {changed}")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write("has_changes=true\n")
           PY
       - name: Verify compressed image policy
+        if: steps.detect.outputs.has_changes == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -88,13 +94,16 @@ jobs:
           PY
 
       - name: Verify FTPS secret exists
+        if: steps.detect.outputs.has_changes == 'true'
         shell: bash
         run: test -n "$FTP_PASSWORD"
 
       - name: Upload only new or changed batches
+        if: steps.detect.outputs.has_changes == 'true'
         run: python automation/upload_new_city_batches_ftps.py
 
       - name: Commit upload state when changed
+        if: steps.detect.outputs.has_changes == 'true'
         shell: bash
         run: |
           set -euo pipefail

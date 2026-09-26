@@ -1,31 +1,29 @@
 #!/usr/bin/env python3
-"""Run the resilient queue without dropping errored posts.
-
-Policy: failed posts remain eligible for future retries. Do not fail-forward by
-permanently skipping a city/topic after a small number of attempts; errors must
-be surfaced and repaired, then retried.
-"""
-import os, runpy
+"""Run the resilient queue while preserving failures for explicit repair."""
+import json,os,runpy
 from pathlib import Path
 import city_content_queue as base
+HERE=Path(__file__).resolve().parent
+base.MAX_ATTEMPTS=max(1,int(os.getenv('MAX_ATTEMPTS','4')))
 
-HERE = Path(__file__).resolve().parent
+# Same-group workflow concurrency means any committed processing item belongs to
+# an interrupted earlier run. Return it to pending without consuming an attempt.
+if base.QUEUE.exists():
+    state=json.loads(base.QUEUE.read_text(encoding='utf-8'));recovered=0
+    for item in state.get('items',[]):
+        if item.get('status')=='processing':
+            item['status']='pending';item['attempts']=max(0,int(item.get('attempts',0))-1)
+            item.pop('started_at',None);item['last_error']='Recovered after interrupted workflow';recovered+=1
+    if recovered:
+        state['updated_at']=base.now();base.QUEUE.write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf-8')
+        print(f'recovered_processing_items={recovered}',flush=True)
 
-# Override workflow MAX_ATTEMPTS=2. A small attempt cap caused failed city posts
-# to fall out of the retry selection. Keep items retryable across runs until the
-# underlying prompt/code/model issue is fixed.
-os.environ['MAX_ATTEMPTS'] = '9999'
-base.MAX_ATTEMPTS = 9999
-
-# Failed items must not block the queue. Retry them only during an explicit
-# repair run with RETRY_FAILED=1; normal scheduled runs continue to the next
-# pending item and preserve failures for diagnosis.
-if os.getenv('RETRY_FAILED', '0') == '1':
+if os.getenv('RETRY_FAILED','0')=='1':
     try:
         import keep_failed_in_queue
-        reset_count = keep_failed_in_queue.reset_failed_for_retry(base.QUEUE)
-        print(f'retry_failed_reset={reset_count}', flush=True)
+        reset_count=keep_failed_in_queue.reset_failed_for_retry(base.QUEUE)
+        print(f'retry_failed_reset={reset_count}',flush=True)
     except Exception as exc:
-        print(f'keep_failed_in_queue_warning={type(exc).__name__}: {exc}', flush=True)
+        print(f'keep_failed_in_queue_warning={type(exc).__name__}: {exc}',flush=True)
 
-runpy.run_path(str(HERE / 'run_agnes_city_queue_resilient.py'), run_name='__main__')
+runpy.run_path(str(HERE/'run_agnes_city_queue_resilient.py'),run_name='__main__')

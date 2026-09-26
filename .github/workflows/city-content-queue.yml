@@ -4,11 +4,10 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: "*/4 * * * *"
+    - cron: "*/5 * * * *"
 
 permissions:
   contents: write
-  actions: write
 
 concurrency:
   group: navar-city-content-queue
@@ -31,6 +30,7 @@ jobs:
       IMAGE_MODEL: agnes-image-2.0-flash
 
       BATCH_SIZE: "1"
+      WORDPRESS_DB_NAME: navaraby_wp569
       CURRENT_IMAGE_POLICY: reference-conditioned-full-scene-v19
 
     steps:
@@ -38,62 +38,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Free GitHub Actions artifact quota
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          python - <<'PY'
-          import json
-          import os
-          import urllib.error
-          import urllib.request
-
-          token = os.environ["GH_TOKEN"]
-          repo = os.environ["GITHUB_REPOSITORY"]
-          headers = {
-              "Authorization": f"Bearer {token}",
-              "Accept": "application/vnd.github+json",
-              "X-GitHub-Api-Version": "2022-11-28",
-              "User-Agent": "navar-artifact-cleanup",
-          }
-
-          def call(url, method="GET"):
-              req = urllib.request.Request(url, method=method, headers=headers)
-              try:
-                  with urllib.request.urlopen(req) as resp:
-                      return resp.status, resp.read()
-              except urllib.error.HTTPError as exc:
-                  return exc.code, exc.read()
-
-          deleted = 0
-          failed = 0
-          bytes_deleted = 0
-          while True:
-              status, body = call(f"https://api.github.com/repos/{repo}/actions/artifacts?per_page=100")
-              if status != 200:
-                  print(f"list artifacts failed: {status} {body.decode('utf-8', 'replace')}")
-                  raise SystemExit(0)
-              artifacts = json.loads(body).get("artifacts") or []
-              if not artifacts:
-                  break
-              for artifact in artifacts:
-                  artifact_id = artifact["id"]
-                  del_status, del_body = call(
-                      f"https://api.github.com/repos/{repo}/actions/artifacts/{artifact_id}",
-                      method="DELETE",
-                  )
-                  if del_status in (204, 200):
-                      deleted += 1
-                      bytes_deleted += int(artifact.get("size_in_bytes") or 0)
-                      print(f"deleted {artifact.get('name')} id={artifact_id} size={artifact.get('size_in_bytes')}")
-                  else:
-                      failed += 1
-                      print(f"failed {artifact.get('name')} id={artifact_id} status={del_status}")
-          print(f"artifact_cleanup deleted={deleted} failed={failed} bytes_deleted={bytes_deleted}")
-          PY
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -112,7 +56,7 @@ jobs:
           echo "policy=$CURRENT_IMAGE_POLICY" | tee -a artifacts/city-content-queue/run.log
           echo "batch_size=$BATCH_SIZE" | tee -a artifacts/city-content-queue/run.log
           echo "ftp_upload=separate_workflow_after_success" | tee -a artifacts/city-content-queue/run.log
-          echo "actions_artifacts=disabled" | tee -a artifacts/city-content-queue/run.log
+          echo "actions_artifacts=preserved" | tee -a artifacts/city-content-queue/run.log
 
           test -n "${AGNES_API_KEY:-}" || {
             echo "ERROR: AGNES_API_KEY missing" | tee -a artifacts/city-content-queue/run.log
@@ -120,7 +64,12 @@ jobs:
           }
 
           python -m py_compile \
+            automation/city_content_queue.py \
+            automation/city_content_queue_cloudflare.py \
             automation/run_agnes_city_queue_fast.py \
+            automation/run_agnes_city_queue_resilient.py \
+            automation/run_agnes_city_queue_seo.py \
+            automation/reviewed_publish_city_queue.py \
             automation/import_permalink_fix.py \
             automation/package_city_content_batches.py \
             automation/render_city_queue_status.py
@@ -153,66 +102,43 @@ jobs:
         shell: bash
         run: |
           set +e
-
           mkdir -p artifacts/city-content-queue
 
           python automation/run_agnes_city_queue_fast.py \
             2>&1 | tee -a artifacts/city-content-queue/run.log
-
           QUEUE_CODE=${PIPESTATUS[0]}
-          echo "queue_exit_code=$QUEUE_CODE" \
-            | tee -a artifacts/city-content-queue/run.log
+          echo "queue_exit_code=$QUEUE_CODE" | tee -a artifacts/city-content-queue/run.log
 
-          python automation/import_permalink_fix.py || true
-          python automation/package_city_content_batches.py || true
-          python automation/render_city_queue_status.py || true
-
-          # Batch archives are upload-ready ZIPs that MUST be committed so the
-          # separate FTPS workflow can read them from git. The repo .gitignore
-          # ignores *.zip, so add the batch packages explicitly. The per-post
-          # source SQL/rollback and aggregate publish files are also ignored by
-          # *.sql, so force-add them so future checkouts carry the payload that
-          # feeds each package (otherwise packages build with empty SQL).
-          # Signal file: written only when a NEW 50-post batch was packaged in
-          # this run. The FTPS upload workflow triggers on push of this file,
-          # so it fires exactly when a new batch is ready (not on every post).
-          python automation/write_new_batch_signal.py || true
-
-          # Batch archives + per-post SQL/rollback + aggregate publish files
-          # must be force-added (the .gitignore ignores *.zip / *.sql).
-          git add -f artifacts/city-content-queue/.new-batch-signal 2>/dev/null || true
-          git add -f artifacts/city-content-queue/packages/batch-*.zip
-          git add -f artifacts/city-content-queue/sql/*.sql
-          git add -f artifacts/city-content-queue/rollback/*.sql
-          git add -f artifacts/city-content-queue/create-all-completed.sql
-          git add -f artifacts/city-content-queue/rollback-all-completed.sql
-          git add -A artifacts/city-content-queue
-
-          # Batch archives + per-post SQL/rollback + aggregate publish files
-          # must be force-added (the .gitignore ignores *.zip / *.sql).
-          git add -f artifacts/city-content-queue/.new-batch-signal 2>/dev/null || true
-          git add -f artifacts/city-content-queue/packages/batch-*.zip
-          git add -f artifacts/city-content-queue/sql/*.sql
-          git add -f artifacts/city-content-queue/rollback/*.sql
-          git add -f artifacts/city-content-queue/create-all-completed.sql
-          git add -f artifacts/city-content-queue/rollback-all-completed.sql
-          git add -A artifacts/city-content-queue
-
-          if git diff --cached --quiet; then
-            if [ "$QUEUE_CODE" -ne 0 ]; then
-              echo "Queue generation failed with exit code $QUEUE_CODE" >&2
-              exit "$QUEUE_CODE"
-            fi
-            exit 0
+          AUX_CODE=0
+          python automation/import_permalink_fix.py || AUX_CODE=$?
+          python automation/package_city_content_batches.py || AUX_CODE=$?
+          python automation/render_city_queue_status.py || AUX_CODE=$?
+          if [ "$AUX_CODE" -eq 0 ]; then
+            python automation/write_new_batch_signal.py || AUX_CODE=$?
           fi
+          echo "auxiliary_exit_code=$AUX_CODE" | tee -a artifacts/city-content-queue/run.log
 
-          git commit -m "Process next city content queue item"
-          git reset --hard HEAD
-          git pull --rebase --autostash origin main
-          git push origin main
+          # Force-add generated SQL and ZIP payloads that are broadly ignored.
+          git add -f artifacts/city-content-queue/.new-batch-signal 2>/dev/null || true
+          git add -f artifacts/city-content-queue/packages/batch-*.zip 2>/dev/null || true
+          git add -f artifacts/city-content-queue/sql/*.sql 2>/dev/null || true
+          git add -f artifacts/city-content-queue/rollback/*.sql 2>/dev/null || true
+          git add -f artifacts/city-content-queue/create-all-completed.sql 2>/dev/null || true
+          git add -f artifacts/city-content-queue/rollback-all-completed.sql 2>/dev/null || true
+          git add -A artifacts/city-content-queue
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Process next city content queue item"
+            git reset --hard HEAD
+            git pull --rebase --autostash origin main
+            git push origin main
+          fi
 
           if [ "$QUEUE_CODE" -ne 0 ]; then
             echo "Queue generation failed with exit code $QUEUE_CODE" >&2
             exit "$QUEUE_CODE"
           fi
-          exit 0
+          if [ "$AUX_CODE" -ne 0 ]; then
+            echo "Packaging/status generation failed with exit code $AUX_CODE" >&2
+            exit "$AUX_CODE"
+          fi

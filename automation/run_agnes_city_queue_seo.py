@@ -56,9 +56,22 @@ review=replace_once(review,"    body=obj.get('html','');errors=language_errors(b
 review=replace_once(review,'ادعاهای ساختگی درباره اقلیم محلی، قیمت، نمایندگی، موجودی، ارسال و مشخصات محصول را حذف کن.','هر ادعای محلی درباره اقلیم، خاک، آب، رسوب، شوری، محصول و زمان کشت را فقط با شاهد صریح city_research و scope صحیح نگه دار؛ اگر تحقیق insufficient_evidence است همه این ادعاها و حدس‌های محلی را حذف کن. عنوان را کوتاه و سئویی کن: حداکثر ۶۵ کاراکتر و شامل محصول و شهر. نشانگر IMAGE_1 را از متن حذف کن چون فقط تصویر شاخص است. اگر topic=layflat است متن را روی لوله نخی و لوله تاشو نگه دار و تصاویر/توضیحات نوار تیپ را موضوع اصلی نکن. اگر topic=tape20 است فقط فاصله قطره‌چکان ۲۰ سانتی‌متر مجاز است. در انتهای مقاله بخش سوالات متداول را دقیقاً با ساختار h3 + details/summary و دقیقاً ۳ سوال بساز؛ قبل از آن جمله تماس واتساپ بیاور. بعد از FAQ بخش محتوایی h2 یا h3 جدید نساز. ادعاهای قیمت، ارز، بهترین فصل نصب، نمایندگی، موجودی و ارسال را حذف کن.','grounded editorial prompt with cleanup')
 review=replace_once(review,'        obj=rebuild_internal_links(base.agnes(review_prompt),links)\n        errors=validate_reviewed(obj,item,links)',"        obj=base.agnes(review_prompt)\n        obj['city_research']=draft.get('city_research',{})\n        obj['topic']=draft.get('topic')\n        obj=research_grounding_review.rewrite_grounded(obj,item,obj['city_research'],base.agnes,base.MIN_WORDS)\n        obj=rebuild_internal_links(obj,links)\n        obj=text_cleanup_policy.apply(obj,item)\n        errors=validate_reviewed(obj,item,links)",'v9 grounding cleanup pass')
 review=replace_once(review,"            obj['editorial_review']={'passed':True,'review_model':base.AGNES_MODEL,'attempt':attempt,'quality_gate_version':QUALITY_GATE_VERSION,'checks':['Persian language','technical plausibility','SEO fields','minimum length','safe internal links','image markers']}\n            return obj","            obj=text_cleanup_policy.apply(obj,item)\n            obj['city_research']=draft.get('city_research',{})\n            obj['topic']=draft.get('topic')\n            obj['editorial_review']={'passed':True,'review_model':base.AGNES_MODEL,'attempt':attempt,'quality_gate_version':QUALITY_GATE_VERSION,'checks':['Persian language','technical plausibility','SEO fields','minimum length','safe internal links','no visible IMAGE_1 marker','short SEO title','evidence-aware city research','topic-specific product focus','three collapsible FAQ details at end']}\n            return obj","QA v9 stamp")
-review_path.write_text(review,encoding='utf-8')
-try:exec(compile(run_source,str(run_path),'exec'),{'__name__':'__main__','__file__':str(run_path)})
-finally:review_path.write_text(original,encoding='utf-8')
+run_source=replace_once(
+    run_source,
+    'import reviewed_publish_city_queue\n',
+    "exec(compile(REVIEW_SOURCE, REVIEW_PATH, 'exec'), "
+    "{'__name__':'reviewed_publish_city_queue','__file__':REVIEW_PATH})\n",
+    'in-memory reviewed queue',
+)
+exec(
+    compile(run_source,str(run_path),'exec'),
+    {
+        '__name__':'__main__',
+        '__file__':str(run_path),
+        'REVIEW_SOURCE':review,
+        'REVIEW_PATH':str(review_path),
+    },
+)
 for artifact in (HERE.parent/'artifacts'/'city-content-queue'/'items').glob('*.json'):
     try:
         data=json.loads(artifact.read_text(encoding='utf-8'))
