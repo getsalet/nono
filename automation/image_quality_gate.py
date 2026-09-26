@@ -2,6 +2,7 @@
 """Fast image QA with hard rejection for product identity and physics failures."""
 import base64,json,os,re,urllib.request
 import image_prompt_policy
+REVIEW_POLICY='strict-no-human-scale-watermark-v2'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
@@ -28,14 +29,14 @@ def _vision_review(base,path,item,kind):
   return {'pass':True,'score':90,'reasons':['fast mode: trusted prompt for non-key image'],'correction_prompt':''}
  encoded=base64.b64encode(path.read_bytes()).decode('ascii')
  if family=='layflat':
-  criteria='The image must show exactly two approved layflat objects: one packaged AFP coil and one bare black woven coil, both fully visible, correctly scaled, separate and resting flat on the ground. The image must contain zero people and zero human body parts.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Also hard reject any third hose or product, round pipe, drip tape, cable, fitting, valve, filter, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or distorted dimensions.'
+  criteria='The image must show exactly two approved layflat objects: one packaged AFP coil and one bare black woven coil. The complete pair must occupy only about 12 to 15 percent of frame width, stay off-center on the lower third, remain fully visible, separate and flat on the ground. The image must contain zero people and zero human body parts.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 15 percent of the frame, centered product staging, any third hose or product, round pipe, drip tape, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or distorted dimensions.'
  else:
-  criteria='The image must show exactly one AFP white-and-blue cylindrical drip-tape carton roll in a real topic-specific farm context. The roll must be secondary, compact, below knee height and naturally placed on soil. The image must contain zero people and zero human body parts.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Also hard reject any bottle, jar, canister, bucket, fertilizer or pesticide container, second package, second roll, extra commercial product, layflat hose, pipe through the roll, fake label, impossible geometry, giant roll or distorted dimensions.'
+  criteria='The image must show exactly one AFP white-and-blue cylindrical drip-tape carton roll. Estimate its pixel bounding box: it must occupy only about 19 to 23 percent of full frame width, no more than about 30 percent of frame height, stay off-center on the lower third, and remain secondary to the farm context. The image must contain zero people and zero human body parts.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 23 percent of the frame, taller than 30 percent of the frame, centered product staging, bottle, jar, canister, bucket, fertilizer or pesticide container, second package, second roll, layflat hose, pipe through the roll, fake label, impossible geometry or distorted dimensions.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
-Do not reject only for ordinary soil texture or distant crop rows. Return only JSON: {{"pass":true|false,"score":0-100,"reasons":["..."],"correction_prompt":"short regeneration instruction"}}. Pass at score {MIN_IMAGE_SCORE} or higher.'''
+The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never be rejected or requested for removal. Unattended tractors, pumps, filters and ordinary farm equipment are allowed when no person or human silhouette is visible; do not classify them as extra commercial products. Estimate product size from image pixels rather than assumed human scale. If pass is true, correction_prompt must be empty. Do not reject only for ordinary soil texture or distant crop rows. Return only JSON: {{"pass":true|false,"score":0-100,"reasons":["..."],"correction_prompt":"short regeneration instruction"}}. Pass at score {MIN_IMAGE_SCORE} or higher.'''
  payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':[{'type':'text','text':prompt},{'type':'image_url','image_url':{'url':'data:image/webp;base64,'+encoded}}]}],'temperature':0,'response_format':{'type':'json_object'}}
  req=urllib.request.Request(base.AGNES_BASE+'/chat/completions',data=json.dumps(payload).encode(),headers={'Authorization':f'Bearer {base.AGNES_KEY}','Content-Type':'application/json'})
  with urllib.request.urlopen(req,timeout=60) as response:raw=json.loads(response.read())
@@ -48,6 +49,15 @@ def install(base,backend,raw_generator):
  reviews=base.OUT/'image-reviews';reviews.mkdir(parents=True,exist_ok=True)
  def guarded(item,kind):
   original_prompt=backend.image_prompt;feedback='';history=[];family=image_prompt_policy.product_family(item)
+  review_path=reviews/f"{item['source_id']}-{kind}.json"
+  try:
+   if review_path.exists():
+    prior=json.loads(review_path.read_text(encoding='utf-8'))
+    path=base.IMAGES/backend.seo_image_name(item,kind)
+    if prior.get('policy')==REVIEW_POLICY and prior.get('history') and prior['history'][-1].get('pass') and path.exists() and path.stat().st_size>10000:
+     blob=path.read_bytes();return path.name,__import__('hashlib').sha256(blob).hexdigest()
+  except Exception:
+   pass
   try:
    for attempt in range(1,MAX_IMAGE_ATTEMPTS+1):
     if feedback:backend.image_prompt=lambda current_item,current_kind,p=original_prompt,f=feedback:p(current_item,current_kind)+' HARD QA CORRECTION: '+f
@@ -57,7 +67,7 @@ def install(base,backend,raw_generator):
      verdict={'pass':False,'score':0,'reasons':['visual reviewer unavailable: '+type(exc).__name__],'correction_prompt':'Regenerate and retry strict visual review.'}
     verdict['attempt']=attempt;history.append(verdict)
     print(f"image_quality_review_fast source_id={item['source_id']} topic={item.get('topic')} kind={kind} attempt={attempt} pass={verdict['pass']} score={verdict.get('score',0)} reasons={verdict.get('reasons',[])}",flush=True)
-    (reviews/f"{item['source_id']}-{kind}.json").write_text(json.dumps({'source_id':item['source_id'],'family':family,'kind':kind,'fast_mode':FAST_MODE,'history':history},ensure_ascii=False,indent=2),encoding='utf-8')
+    review_path.write_text(json.dumps({'source_id':item['source_id'],'family':family,'kind':kind,'policy':REVIEW_POLICY,'fast_mode':FAST_MODE,'history':history},ensure_ascii=False,indent=2),encoding='utf-8')
     if verdict['pass']:return name,digest
     path.unlink(missing_ok=True);feedback=str(verdict.get('correction_prompt') or '; '.join(verdict.get('reasons',[])))
    raise RuntimeError(f'image hard gate rejected role {kind} after {MAX_IMAGE_ATTEMPTS} attempt')
