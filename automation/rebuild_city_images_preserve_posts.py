@@ -20,10 +20,10 @@ import city_content_queue as base
 import city_content_queue_cloudflare as backend
 import image_prompt_policy
 
-POLICY = "reference-rerender-3d-v3"
-MODE = "reference-conditioned-3d-rerender"
+POLICY = "reference-rerender-3d-v4-scale-controlled"
+MODE = "reference-conditioned-3d-rerender-scale-controlled"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
-MARKER = OUT / "image-rebuild-reference-rerender-3d-v3.json"
+MARKER = OUT / "image-rebuild-reference-rerender-3d-v4-scale-controlled.json"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")
 API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
     "AGNES_API_BASE", "https://apihub.agnes-ai.com/v1"
