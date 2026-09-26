@@ -29,8 +29,8 @@ API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
     "AGNES_API_BASE", "https://apihub.agnes-ai.com/v1"
 ).rstrip("/") + "/images/generations"
 KEY = (os.getenv("IMAGE_API_KEY") or os.getenv("AGNES_API_KEY", "")).strip()
-WORKERS = max(1, int(os.getenv("IMAGE_WORKERS", "8")))
-RETRIES = max(2, int(os.getenv("IMAGE_RETRIES", "4")))
+WORKERS = max(1, int(os.getenv("IMAGE_WORKERS", "2")))
+RETRIES = max(2, int(os.getenv("IMAGE_RETRIES", "6")))
 FROM_POST = max(1, int(os.getenv("REBUILD_FROM_POST", "250")))
 image_prompt_policy.install(backend)
 
@@ -132,7 +132,10 @@ def generate(item: dict, kind: int) -> dict:
                 flush=True,
             )
             if attempt < RETRIES:
-                time.sleep(min(60, 5 * 2 ** (attempt - 1)))
+                message = str(exc).lower()
+                delay = min(300, 60 * 2 ** (attempt - 1)) if '429' in message or 'rate_limit' in message else min(90, 10 * 2 ** (attempt - 1))
+                print(f"exact_product_backoff_seconds={delay}", flush=True)
+                time.sleep(delay)
     raise RuntimeError(f"image generation failed after {RETRIES} attempts: {last}") from last
 
 
