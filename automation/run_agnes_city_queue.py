@@ -59,9 +59,17 @@ def agnes_draft(item,links):
         prompt=f'''JSON مقاله زیر در کنترل کیفیت رد شده است: {last}. همان مقاله را ویرایش کن، نه اینکه خلاصه یا از نو کوتاه‌نویسی کنی. محتوای HTML را با توضیحات کاربردی و غیرتکراری تا حداقل {TARGET_WORDS} کلمه گسترش بده. همه فیلدها، لینک‌های موجود و چهار نشانگر تصویر را حفظ کن. فقط JSON معتبر با همان کلیدها برگردان.\n{json.dumps(obj,ensure_ascii=False)}'''
     raise RuntimeError('Agnes 3 draft QA failed: '+last)
 
+def neutral_image_input():
+    # agnes-image-2.5-flash requires a non-empty image field. A plain neutral
+    # canvas satisfies transport validation without making a product photo the
+    # visual reference or focal subject.
+    canvas=Image.new('RGB',(1024,576),(232,234,228));buf=io.BytesIO();canvas.save(buf,'PNG',optimize=True)
+    return 'data:image/png;base64,'+base64.b64encode(buf.getvalue()).decode('ascii')
+
+
 def agnes_generate_image(item,kind):
     if not KEY:raise RuntimeError('AGNES_API_KEY is missing')
-    payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}}
+    payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':[neutral_image_input()]}}
     req=urllib.request.Request(API+'/images/generations',data=json.dumps(payload).encode(),method='POST',headers={'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Accept':'application/json','User-Agent':'navar-city-content-queue/3.0'})
     try:
         with urllib.request.urlopen(req,timeout=600) as response:data=json.loads(response.read())
@@ -83,7 +91,7 @@ def agnes_generate_image(item,kind):
 if base.QUEUE.exists():
     state=json.loads(base.QUEUE.read_text(encoding='utf-8'));changed=False
     for item in state.get('items',[]):
-        if item.get('status')=='failed' and ('draft QA failed' in item.get('last_error','') or 'Text QA failed' in item.get('last_error','')):
+        if item.get('status')=='failed' and any(signal in item.get('last_error','') for signal in ('draft QA failed','Text QA failed','Agnes Image HTTP','Agnes JSON','read operation timed out','no valid JSON')):
             item['status']='pending';item['attempts']=0;changed=True
             for key in ('last_error','failed_at','started_at'):item.pop(key,None)
     if changed:base.QUEUE.write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf-8')
