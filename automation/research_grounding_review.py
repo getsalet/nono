@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Ground local claims and deterministically clean common QA failures."""
 import json,re
+import image_prompt_policy
 DISTANCE_RE=re.compile(r'(?:فاصله(?:‌|\s|-)*(?:قطره(?:‌|\s|-)*چکان(?:‌|\s|-)*ها?)?|قطره(?:‌|\s|-)*چکان).{0,55}?(?:۵|5|۱۰|10|۱۵|15|۲۵|25|۳۰|30)\s*(?:سانتی(?:‌|\s|-)*متر|سانت)',re.I)
 CLAIM_TERMS=('اقلیم','آب و هوا','آب‌وهوا','خاک','رسوب','شوری','حاصلخیز','دشت','زعفران','صیفی','گندم','جو')
 SPECULATION_TERMS=('احتمال','احتمالاً','محتمل','ممکن است','به نظر می‌رسد','شاید')
@@ -34,7 +35,12 @@ def sanitize_html(html,item,research):
   marker=f'[[[IMAGE_{number}]]]';html=html.replace(marker,'')+'\n'+marker
  return html
 def rewrite_grounded(obj,item,research,agnes_call,minimum_words):
- prompt=f'''مقاله زیر را یک بار به‌عنوان حقیقت‌سنج نسخه ۷ اصلاح کن و فقط JSON معتبر با کلیدهای title, meta_title, meta_description, focus_keyword, excerpt, html برگردان. طول حداقل {minimum_words} کلمه و چهار نشانگر تصویر را حفظ کن. ادعای محلی فقط با شاهد تحقیق و scope صحیح مجاز است؛ اگر تحقیق insufficient_evidence است هیچ اقلیم، خاک، آب، رسوب، شوری یا محصولی را به شهر نسبت نده. فقط فاصله قطره‌چکان ۲۰ سانتی‌متر مجاز است. واژه لاتین، PVC، ادعای قیمت و بهترین فصل نصب را حذف کن. لینک HTML نساز. تحقیق: {json.dumps(research,ensure_ascii=False)} مقاله: {json.dumps(obj,ensure_ascii=False)}'''
+ family=image_prompt_policy.product_family(item)
+ if family=='layflat':
+  product_instruction='موضوع مقاله لوله نخی/تاشو برای انتقال آب است؛ متن را روی سایز، فشار، اتصال، دوام و کاربرد آن نگه دار و نوار تیپ یا فاصله قطره‌چکان را موضوع اصلی نکن.'
+ else:
+  product_instruction='موضوع مقاله نوار تیپ ۲۰ سانتی‌متر است و فقط فاصله قطره‌چکان ۲۰ سانتی‌متر مجاز است.'
+ prompt=f'''مقاله زیر را یک بار به‌عنوان حقیقت‌سنج نسخه ۷ اصلاح کن و فقط JSON معتبر با کلیدهای title, meta_title, meta_description, focus_keyword, excerpt, html برگردان. طول حداقل {minimum_words} کلمه و چهار نشانگر تصویر را حفظ کن. ادعای محلی فقط با شاهد تحقیق و scope صحیح مجاز است؛ اگر تحقیق insufficient_evidence است هیچ اقلیم، خاک، آب، رسوب، شوری یا محصولی را به شهر نسبت نده. {product_instruction} واژه لاتین، PVC، ادعای قیمت و بهترین فصل نصب را حذف کن. لینک HTML نساز. تحقیق: {json.dumps(research,ensure_ascii=False)} مقاله: {json.dumps(obj,ensure_ascii=False)}'''
  result=agnes_call(prompt)
  if not isinstance(result,dict):raise RuntimeError('Grounding review did not return a JSON object')
  result['html']=sanitize_html(result.get('html',''),item,research);result['city_research']=research
@@ -47,5 +53,7 @@ def validate_grounding(obj,item,research):
  if research.get('status')=='insufficient_evidence':
   sentences=re.split(r'[.!؟\n]+',visible);names=(item.get('city',''),item.get('county',''))
   if any(any(name and name in sentence for name in names) and any(term in sentence for term in CLAIM_TERMS) for sentence in sentences):errors.append('unsupported local agricultural claim')
- if '۲۰ سانتی' not in visible and '20 سانتی' not in visible:errors.append('20cm product focus missing')
+ family=image_prompt_policy.product_family(item)
+ if family=='tape20' and not re.search(r'(?:۲۰|20)\s*سانتی',visible):errors.append('20cm product focus missing')
+ if family=='layflat' and not any(term in visible for term in ('لوله نخی','لوله تاشو')):errors.append('layflat product focus missing')
  return errors
