@@ -41,6 +41,8 @@ DATA_BASE='https://'+'raw.githubusercontent.com/sajaddp/list-of-cities-in-Iran/'
 
 
 SITE='https://navar-abyari.ir'; TABLE='ha_posts'; META='ha_postmeta'
+DB_NAME=os.getenv('WORDPRESS_DB_NAME','navaraby_wp569').strip()
+if not re.fullmatch(r'[A-Za-z0-9_]+',DB_NAME):raise RuntimeError('WORDPRESS_DB_NAME contains unsafe characters')
 
 
 
@@ -65,6 +67,8 @@ WORD_RE=re.compile(r'[\u0600-\u06ff\u200c]+|[A-Za-z]+'); HREF_RE=re.compile(r'<a
 
 
 def now():return dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
+
+def sql_preamble():return f"SET NAMES utf8mb4;\nUSE `{DB_NAME}`;"
 
 
 
@@ -389,36 +393,19 @@ def sanitize_links(html_text, allowed_urls):
 
     return _re.sub(r'<a\b[^>]*>.*?</a>', _keep, html_text, flags=_re.I | _re.S)
 def sql_for(item,obj,image_names):
-
-
-
  title=obj['title'];body=obj['html'];urls=[]
-
-
-
  for i,name in enumerate(image_names,1):
-
-
-
   url=f'{SITE}/wp-content/uploads/2026/09/navar-city-generated/{name}';urls.append(url);body=body.replace(f'[[[IMAGE_{i}]]]',f'<figure class="wp-block-image size-large"><img src="{url}" alt="نوار آبیاری در {item["city"]} - تصویر {i}"/><figcaption>کاربرد نوار آبیاری در مدیریت مزرعه</figcaption></figure>')
-
-
-
- pt=item['post_type'];slug=item['slug'];excerpt=obj.get('excerpt','');q=['START TRANSACTION;',f"SET @existing_post=(SELECT ID FROM `{TABLE}` WHERE `post_name`='{esc(slug)}' OR (`post_type`='{esc(pt)}' AND `post_title`='{esc(title)}') LIMIT 1);",f"INSERT INTO `{TABLE}` (`post_author`,`post_date`,`post_date_gmt`,`post_content`,`post_title`,`post_excerpt`,`post_status`,`comment_status`,`ping_status`,`post_name`,`post_modified`,`post_modified_gmt`,`post_parent`,`guid`,`menu_order`,`post_type`,`post_mime_type`,`comment_count`) SELECT 1,NOW(),UTC_TIMESTAMP(),'{esc(body)}','{esc(title)}','{esc(excerpt)}','publish','open','open','{esc(slug)}',NOW(),UTC_TIMESTAMP(),0,'',0,'{esc(pt)}','',0 WHERE @existing_post IS NULL;",'SET @post_id=COALESCE(@existing_post,LAST_INSERT_ID());']
-
-
-
- for key,val in [('_rank_math_title',obj.get('meta_title','')),('_rank_math_description',obj.get('meta_description','')),('rank_math_focus_keyword',obj.get('focus_keyword','')),('_navar_geo_level','city'),('_navar_city',item['city']),('_navar_county',item['county']),('_navar_province',item['province'])]:q.append(f"INSERT INTO `{META}` (`post_id`,`meta_key`,`meta_value`) SELECT @post_id,'{esc(key)}','{esc(val)}' WHERE NOT EXISTS (SELECT 1 FROM `{META}` WHERE post_id=@post_id AND meta_key='{esc(key)}');")
-
-
-
- for idx,(name,url) in enumerate(zip(image_names,urls),1):q.append(f"INSERT INTO `{TABLE}` (`post_author`,`post_date`,`post_date_gmt`,`post_content`,`post_title`,`post_excerpt`,`post_status`,`comment_status`,`ping_status`,`post_name`,`post_modified`,`post_modified_gmt`,`post_parent`,`guid`,`menu_order`,`post_type`,`post_mime_type`,`comment_count`) VALUES (1,NOW(),UTC_TIMESTAMP(),'','{esc(item['city'])} - تصویر {idx}','','inherit','open','closed','{esc(name.rsplit('.',1)[0])}',NOW(),UTC_TIMESTAMP(),@post_id,'{esc(url)}',0,'attachment','image/webp',0); SET @media_{idx}=LAST_INSERT_ID(); INSERT INTO `{META}` (`post_id`,`meta_key`,`meta_value`) VALUES (@media_{idx},'_wp_attached_file','2026/09/navar-city-generated/{esc(name)}');")
-
-
-
- q+=['INSERT INTO `ha_postmeta` (`post_id`,`meta_key`,`meta_value`) VALUES (@post_id,\'_thumbnail_id\',@media_1);','COMMIT;'];rollback=f"START TRANSACTION; DELETE pm FROM `{META}` pm JOIN `{TABLE}` p ON p.ID=pm.post_id WHERE p.post_parent=(SELECT ID FROM `{TABLE}` WHERE post_name='{esc(slug)}' AND post_type='{esc(pt)}' LIMIT 1) AND p.post_type='attachment'; DELETE FROM `{TABLE}` WHERE post_parent=(SELECT ID FROM `{TABLE}` WHERE post_name='{esc(slug)}' AND post_type='{esc(pt)}' LIMIT 1) AND post_type='attachment'; DELETE pm FROM `{META}` pm JOIN `{TABLE}` p ON p.ID=pm.post_id WHERE p.post_name='{esc(slug)}' AND p.post_type='{esc(pt)}'; DELETE FROM `{TABLE}` WHERE post_name='{esc(slug)}' AND post_type='{esc(pt)}'; COMMIT;\n";return '\n'.join(q)+'\n',rollback,body
-
-
+ pt=item['post_type'];slug=item['slug'];excerpt=obj.get('excerpt','');marker=str(item.get('source_id',''))
+ commands=[sql_preamble(),'START TRANSACTION;',f"SET @existing_post=(SELECT ID FROM `{TABLE}` WHERE `post_name`='{esc(slug)}' AND `post_type`='{esc(pt)}' LIMIT 1);",'SET @created_post=IF(@existing_post IS NULL,1,0);',f"INSERT INTO `{TABLE}` (`post_author`,`post_date`,`post_date_gmt`,`post_content`,`post_title`,`post_excerpt`,`post_status`,`comment_status`,`ping_status`,`post_name`,`post_modified`,`post_modified_gmt`,`post_parent`,`guid`,`menu_order`,`post_type`,`post_mime_type`,`comment_count`) SELECT 1,NOW(),UTC_TIMESTAMP(),'{esc(body)}','{esc(title)}','{esc(excerpt)}','publish','open','open','{esc(slug)}',NOW(),UTC_TIMESTAMP(),0,'',0,'{esc(pt)}','',0 WHERE @created_post=1;",'SET @post_id=COALESCE(@existing_post,LAST_INSERT_ID());']
+ metadata=[('_rank_math_title',obj.get('meta_title','')),('_rank_math_description',obj.get('meta_description','')),('rank_math_focus_keyword',obj.get('focus_keyword','')),('_navar_geo_level','city'),('_navar_city',item['city']),('_navar_county',item['county']),('_navar_province',item['province']),('_navar_city_queue_generated',marker)]
+ for key,val in metadata:commands.append(f"INSERT INTO `{META}` (`post_id`,`meta_key`,`meta_value`) SELECT @post_id,'{esc(key)}','{esc(val)}' WHERE @created_post=1 AND NOT EXISTS (SELECT 1 FROM `{META}` WHERE post_id=@post_id AND meta_key='{esc(key)}');")
+ for idx,(name,url) in enumerate(zip(image_names,urls),1):
+  media_slug=name.rsplit('.',1)[0];mime='image/webp' if name.lower().endswith('.webp') else ('image/png' if name.lower().endswith('.png') else 'image/jpeg')
+  commands += [f"SET @media_{idx}=(SELECT ID FROM `{TABLE}` WHERE post_parent=@post_id AND post_type='attachment' AND post_name='{esc(media_slug)}' LIMIT 1);",f"INSERT INTO `{TABLE}` (`post_author`,`post_date`,`post_date_gmt`,`post_content`,`post_title`,`post_excerpt`,`post_status`,`comment_status`,`ping_status`,`post_name`,`post_modified`,`post_modified_gmt`,`post_parent`,`guid`,`menu_order`,`post_type`,`post_mime_type`,`comment_count`) SELECT 1,NOW(),UTC_TIMESTAMP(),'','{esc(item['city'])} - تصویر {idx}','','inherit','open','closed','{esc(media_slug)}',NOW(),UTC_TIMESTAMP(),@post_id,'{esc(url)}',0,'attachment','{mime}',0 WHERE @created_post=1 AND @media_{idx} IS NULL;",f"SET @media_{idx}=COALESCE(@media_{idx},LAST_INSERT_ID());",f"INSERT INTO `{META}` (`post_id`,`meta_key`,`meta_value`) SELECT @media_{idx},'_wp_attached_file','2026/09/navar-city-generated/{esc(name)}' WHERE @created_post=1 AND NOT EXISTS (SELECT 1 FROM `{META}` WHERE post_id=@media_{idx} AND meta_key='_wp_attached_file');"]
+ commands += [f"INSERT INTO `{META}` (`post_id`,`meta_key`,`meta_value`) SELECT @post_id,'_thumbnail_id',@media_1 WHERE @created_post=1 AND @media_1 IS NOT NULL AND NOT EXISTS (SELECT 1 FROM `{META}` WHERE post_id=@post_id AND meta_key='_thumbnail_id');",'COMMIT;']
+ rollback='\n'.join([sql_preamble(),'START TRANSACTION;',f"SET @rollback_post_id=(SELECT p.ID FROM `{TABLE}` p JOIN `{META}` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='{esc(marker)}' WHERE p.post_name='{esc(slug)}' AND p.post_type='{esc(pt)}' LIMIT 1);",f"DELETE pm FROM `{META}` pm JOIN `{TABLE}` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';",f"DELETE FROM `{TABLE}` WHERE post_parent=@rollback_post_id AND post_type='attachment';",f"DELETE FROM `{META}` WHERE post_id=@rollback_post_id;",f"DELETE FROM `{TABLE}` WHERE ID=@rollback_post_id;",'COMMIT;'])+'\n'
+ return '\n'.join(commands)+'\n',rollback,body
 
 def process(q):
 
