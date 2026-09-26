@@ -20,10 +20,10 @@ import city_content_queue as base
 import city_content_queue_cloudflare as backend
 import image_prompt_policy
 
-POLICY = "exact-asset-composite-v1"
-MODE = "exact-approved-asset-composite"
+POLICY = "reference-rerender-3d-v3"
+MODE = "reference-conditioned-3d-rerender"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
-MARKER = OUT / "image-rebuild-exact-asset-composite-v1.json"
+MARKER = OUT / "image-rebuild-reference-rerender-3d-v3.json"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")
 API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
     "AGNES_API_BASE", "https://apihub.agnes-ai.com/v1"
@@ -31,6 +31,7 @@ API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
 KEY = (os.getenv("IMAGE_API_KEY") or os.getenv("AGNES_API_KEY", "")).strip()
 WORKERS = max(1, int(os.getenv("IMAGE_WORKERS", "8")))
 RETRIES = max(2, int(os.getenv("IMAGE_RETRIES", "4")))
+FROM_POST = max(1, int(os.getenv("REBUILD_FROM_POST", "250")))
 image_prompt_policy.install(backend)
 
 
@@ -56,7 +57,10 @@ def generate_once(item: dict, kind: int) -> dict:
         "prompt": image_prompt_policy.image_prompt(item, kind),
         "size": "1024x768",
         "return_base64": True,
-        "extra_body": {"response_format": "b64_json", "image": [NEUTRAL_INPUT]},
+        "extra_body": {
+            "response_format": "b64_json",
+            "image": image_prompt_policy.reference_images(kind, item),
+        },
     }
     request = urllib.request.Request(
         API,
@@ -96,7 +100,6 @@ def generate_once(item: dict, kind: int) -> dict:
         top = (height - new_height) // 2
         image = image.crop((0, top, width, top + new_height))
     image = image.resize((1200, 675), Image.Resampling.LANCZOS)
-    image = image_prompt_policy.composite_product(image, item, kind)
     stage = io.BytesIO()
     image.save(stage, "JPEG", quality=93, optimize=True)
     image = Image.open(io.BytesIO(backend.watermark(stage.getvalue()))).convert("RGB")
@@ -157,6 +160,7 @@ def save_marker(rebuilt, skipped, failures, total, final=False):
                 "skipped": skipped,
                 "failures": failures,
                 "workers": WORKERS,
+                "from_completed_post": FROM_POST,
                 "last_progress_at": now(),
             },
             ensure_ascii=False,
@@ -170,7 +174,8 @@ def main() -> int:
     if not base.QUEUE.exists():
         raise RuntimeError("Queue file is missing")
     state = json.loads(base.QUEUE.read_text(encoding="utf-8"))
-    completed = [x for x in state.get("items", []) if x.get("status") == "completed"]
+    completed_all = [x for x in state.get("items", []) if x.get("status") == "completed"]
+    completed = completed_all[FROM_POST - 1:]
     records, skipped = {}, []
     for item in completed:
         source_id = str(item.get("source_id") or "")

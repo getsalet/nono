@@ -96,7 +96,7 @@ def reuse_or_generate(item,kind):
     approved=False
     if artifact.exists():
         try:
-            approved=json.loads(artifact.read_text(encoding='utf-8')).get('image_rebuild_policy')=='exact-asset-composite-v1'
+            approved=json.loads(artifact.read_text(encoding='utf-8')).get('image_rebuild_policy')=='reference-rerender-3d-v3'
         except Exception:approved=False
     if approved:
         path=base.IMAGES/f"{item['source_id']}-{kind}.webp"
@@ -139,8 +139,8 @@ for item in state['items']:
     if item.get('status')=='completed' and artifact.exists():
         data=json.loads(artifact.read_text(encoding='utf-8'));data['status']='completed';data['completed_at']=item.get('completed_at');data['word_count']=item.get('word_count')
         if item['source_id'] not in previously_completed:
-            data['image_generation_mode']='exact-approved-asset-composite';data['image_rebuild_policy']='exact-asset-composite-v1'
-            item['image_generation_mode']='exact-approved-asset-composite';item['image_rebuild_policy']='exact-asset-composite-v1'
+            data['image_generation_mode']='reference-conditioned-3d-rerender';data['image_rebuild_policy']='reference-rerender-3d-v3'
+            item['image_generation_mode']='reference-conditioned-3d-rerender';item['image_rebuild_policy']='reference-rerender-3d-v3'
         artifact.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
 combined=base.OUT/'create-all-completed.sql'
 if combined.exists():

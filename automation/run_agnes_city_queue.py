@@ -71,7 +71,7 @@ def neutral_image_input():
 
 def agnes_generate_image(item,kind):
     if not KEY:raise RuntimeError('IMAGE_API_KEY/AGNES_API_KEY is missing')
-    payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':[neutral_image_input()]}}
+    payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':image_prompt_policy.reference_images(kind,item)}}
     req=urllib.request.Request(API,data=json.dumps(payload).encode(),method='POST',headers={'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Accept':'application/json','User-Agent':'navar-city-content-queue/3.0'})
     try:
         with urllib.request.urlopen(req,timeout=600) as response:data=json.loads(response.read())
@@ -87,7 +87,6 @@ def agnes_generate_image(item,kind):
     else:
         nh=int(w/target);top=(h-nh)//2;image=image.crop((0,top,w,top+nh))
     image=image.resize((1200,675),Image.Resampling.LANCZOS)
-    image=image_prompt_policy.composite_product(image,item,kind)
     stage=io.BytesIO();image.save(stage,'JPEG',quality=93,optimize=True)
     watermarked=Image.open(io.BytesIO(backend.watermark(stage.getvalue()))).convert('RGB')
     out=io.BytesIO();watermarked.save(out,'WEBP',quality=60,method=6);blob=out.getvalue()

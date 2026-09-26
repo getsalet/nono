@@ -25,6 +25,7 @@ jobs:
       IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
       AGNES_IMAGE_MODEL: agnes-image-2.5-flash
       IMAGE_WORKERS: "8"
+      REBUILD_FROM_POST: "250"
     steps:
       - uses: actions/checkout@v7
         with: {fetch-depth: 0}
@@ -48,8 +49,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A artifacts/city-content-queue
           git add -f artifacts/city-content-queue/packages/batch-*.zip 2>/dev/null || true
-          git add -f artifacts/city-content-queue/image-rebuild-exact-asset-composite-v1.json reference-image-rebuild.log
+          git add -f artifacts/city-content-queue/image-rebuild-reference-rerender-3d-v3.json reference-image-rebuild.log
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Rebuild city images with exact AFP product assets"
+          git commit -m "Rebuild city images with 3D AFP reference rerendering"
           git pull --rebase origin main
           git push origin main
