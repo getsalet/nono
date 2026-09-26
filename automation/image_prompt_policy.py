@@ -18,18 +18,18 @@ def product_family(item):
 
 
 TAPE_SCENES={
-  1:'editorial hero showing one intact original AFP drip-tape carton as the main subject beside long crop rows',
-  2:'close product-detail scene showing the original AFP carton, central core, blue band and packaging texture at realistic scale',
-  3:'technical irrigation context with drip tape, filtration or pressure-control equipment visible and the AFP product identity present but not dominating the frame',
-  4:'active installation context along a crop row, with hands or a farmer shown naturally and safely while drip tape is positioned correctly',
-  5:'maintenance and inspection context showing a drip line, emitter area or connection detail in a real cultivated field'
+  1:'wide city-article hero where the agricultural field, crop rows and local irrigation context are the main subject',
+  2:'practical selection or comparison scene where farm requirements and the article topic are the main subject',
+  3:'technical irrigation scene where filtration, pressure control or water distribution is the main subject',
+  4:'active installation scene along crop rows where the work and correct placement are the main subject',
+  5:'maintenance and inspection scene where the drip line, emitter area or connection detail is the main subject'
 }
 LAYFLAT_SCENES={
-  1:'editorial hero showing one original packaged AFP woven layflat-hose roll at the edge of an agricultural field',
-  2:'close product-detail scene showing the original black woven roll, wrap, straps, weave and package geometry at realistic scale',
-  3:'technical water-transfer context with a deployed layflat hose and a plausible pump, manifold or connection visible',
-  4:'active field setup showing a worker safely laying out or connecting the collapsible hose, without posing for the camera',
-  5:'maintenance and inspection context showing the hose connection, surface weave, bend or storage method in a real farm setting'
+  1:'wide city-article hero where the field and agricultural water-transfer context are the main subject',
+  2:'practical selection or measurement scene where the farm requirement and hose application are the main subject',
+  3:'technical water-transfer scene where a plausible pump, manifold or connection is the main subject',
+  4:'active field setup where laying out or connecting the collapsible hose is the main subject',
+  5:'maintenance and inspection scene where a hose connection, bend, surface or storage method is the main subject'
 }
 
 CAMERAS=[
@@ -86,7 +86,8 @@ def _variation(item,kind):
 
 
 def reference_images(kind,item=None):
-    return [LAYFLAT_REFERENCE_PACKAGE] if product_family(item)=='layflat' else [DRIP_TAPE_ROLL_REFERENCE]
+    """Kept for compatibility only; generation must not pass references."""
+    return []
 
 
 def image_prompt(item,kind):
@@ -95,29 +96,30 @@ def image_prompt(item,kind):
     province=str((item or {}).get('province') or 'Iran')
     scene=(LAYFLAT_SCENES if family=='layflat' else TAPE_SCENES).get(kind)
     if family=='layflat':
-        identity=(
-          'When the packaged product is visible, it must match the supplied approved AFP layflat reference: one black woven yarn-reinforced collapsible hose roll with the original wrap, straps, weave, proportions and label layout. '
-          'The brand text may only be "AFP", "آبگسترفراپارسیان" and lowercase "layflat". Never turn it into drip tape or a rigid pipe.')
+        product=(
+          'A recognizable AFP black woven yarn-reinforced layflat-hose roll in its intact package is mandatory as exactly one small secondary prop. '
+          'It must occupy about 10 to 20 percent of the frame and sit naturally off-center at the side or in the midground. '
+          'Do not turn it into drip tape, a white carton or a rigid pipe.')
     else:
-        identity=(
-          'When the packaged product is visible, it must match the supplied approved AFP 20-centimeter drip-tape reference: one white cylindrical carton with the AFP logo, blue lower band, central cardboard core and original side-label layout. '
-          'The only approved visible strings are "AFP", "آبگسترفراپارسیان" and "DRIP Irrigation tape". Do not invent specifications or replacement packaging.')
-    lock=(
-      'For image roles 1 and 2, keep the original package intact and make it the clear subject. '
-      'For roles 3, 4 and 5, prioritize the distinct real-world technical, installation or maintenance action; the package may be secondary or outside the frame. '
-      'Show one coherent scene, realistic equipment, believable scale and physical contact shadows. No duplicate product, floating object, fake writing, gibberish label, caption, watermark or collage.')
+        product=(
+          'A recognizable AFP 1000-meter drip-irrigation tape roll/carton is mandatory as exactly one small secondary prop: white cylindrical body, blue lower band and central core. '
+          'It must occupy about 10 to 20 percent of the frame and sit naturally off-center at the side or in the midground. '
+          'Do not turn it into layflat hose, an exposed black coil or a rigid pipe.')
     diversity=(
       f'Camera: {variation["camera"]}. Background: {variation["background"]}. Lighting: {variation["light"]}. Composition: {variation["composition"]}. '
-      'Make this image visibly different from the other images in the same article: do not repeat camera height, horizon placement, soil texture, crop layout, subject position or background. '
-      f'Use visual variation token {variation["token"]} only as a creative seed; never render the token as text.')
+      'Make this image visibly different from the other images in the same article. '
+      f'Use visual variation token {variation["token"]} only as a creative seed; never render it as text.')
     location=(
-      f'Use a plausible Iranian agricultural environment suitable for {city}, {province}, without famous landmarks or unsupported claims about local soil, crops, climate or water.')
+      f'Use a plausible Iranian agricultural environment suitable for {city}, {province}, without famous landmarks or unsupported local claims.')
     return (
-      'Photorealistic 16:9 editorial agricultural photograph, natural color, realistic detail, no synthetic studio background. '
-      +identity+' Scene role: '+scene+'. '+location+' '+diversity+' '+lock)
+      'Photorealistic 16:9 editorial agricultural photograph, natural color and realistic detail. '
+      f'The article scene and action are the primary subject and must receive roughly 75 to 85 percent of the visual emphasis. Scene role: {scene}. '
+      +product+' The product is required in every image but must remain incidental, never the focal point, hero subject, reference-image recreation, advertisement or product-only shot. '
+      'No product close-up, centered package, oversized package, studio background, duplicate product, floating object, collage, fake specifications, gibberish label, caption or watermark. '
+      +location+' '+diversity)
 
 
 def install(backend):
     backend.SCENES={**TAPE_SCENES,**LAYFLAT_SCENES}
-    backend.REFERENCE_IMAGES=REFERENCE_IMAGES
+    backend.REFERENCE_IMAGES={}
     backend.image_prompt=image_prompt

@@ -61,7 +61,7 @@ def agnes_draft(item,links):
 
 def agnes_generate_image(item,kind):
     if not KEY:raise RuntimeError('AGNES_API_KEY is missing')
-    payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':image_prompt_policy.reference_images(kind,item)}}
+    payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}}
     req=urllib.request.Request(API+'/images/generations',data=json.dumps(payload).encode(),method='POST',headers={'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Accept':'application/json','User-Agent':'navar-city-content-queue/3.0'})
     try:
         with urllib.request.urlopen(req,timeout=600) as response:data=json.loads(response.read())
