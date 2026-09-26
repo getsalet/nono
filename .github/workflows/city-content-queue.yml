@@ -26,8 +26,8 @@ jobs:
       AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
 
       AGNES_MODEL: agnes-3.0-flash
-      AGNES_IMAGE_MODEL: agnes-image-2.0-flash
-      IMAGE_MODEL: agnes-image-2.0-flash
+      AGNES_IMAGE_MODEL: agnes-image-2.5-flash
+      IMAGE_MODEL: agnes-image-2.5-flash
 
       BATCH_SIZE: "1"
       WORDPRESS_DB_NAME: navaraby_wp569
@@ -35,12 +35,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -72,6 +72,10 @@ jobs:
             automation/reviewed_publish_city_queue.py \
             automation/content_layout_policy.py \
             automation/image_prompt_policy.py \
+            automation/image_quality_gate.py \
+            automation/research_grounding_review.py \
+            automation/faq_policy.py \
+            automation/text_cleanup_policy.py \
             automation/repair_completed_city_sql.py \
             automation/import_permalink_fix.py \
             automation/package_city_content_batches.py \
