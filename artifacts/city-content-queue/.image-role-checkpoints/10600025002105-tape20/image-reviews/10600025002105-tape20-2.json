@@ -1,0 +1,94 @@
+{
+  "source_id": "10600025002105-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Human silhouette visible on the left side near the tractor (hard reject)",
+        "Visible drip tape running through the field is considered a layflat hose/pipe (hard reject)",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 10-48% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with zero people or silhouettes. Remove all laid-out drip tape/hoses from the field, showing only the single white and blue AFP roll. Enlarge the product group from 0% to 10-48% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 26,
+      "product_height_percent": 35,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Visible people (a farmer crouching and another standing) are present in the background, which is a hard reject condition.",
+        "Product text on the drip tape roll appears to be gibberish or non-English, violating the clear-text requirement.",
+        "The presence of human figures in a field scene where they are not explicitly part of a 'selection evidence' role (and generally hard-rejected) disqualifies the image."
+      ],
+      "correction_prompt": "Regenerate the image without any people or human figures in the background. Ensure the product label text is legible and correct. Keep the field context but remove all human elements.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Hard reject: Visible human (farmer) in the background",
+        "Hard reject: Layflat hose/pipe visible next to the carton (prohibited item)",
+        "Mandatory role failed: No visible emitter-spacing or field-selection evidence provided",
+        "Fake/unrelated headline text on the carton"
+      ],
+      "correction_prompt": "Regenerate image with exactly one AFP drip-tape carton in the foreground. Remove all people. Remove the loose hose. Add visible technical charts, a meter, or spacing markers to demonstrate selection evidence. Background should be a clean field edge without equipment.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 26,
+      "product_height_percent": 38,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Hard reject: Multiple commercial packages are present (the drip-tape roll, the product carton, and printed sheets/technical charts), violating the 'zero second commercial package' and 'zero second roll' rule."
+      ],
+      "correction_prompt": "Regenerate to remove the drip-tape carton and all printed technical charts or layout sheets. Only the white-and-blue drip-tape roll should be visible to satisfy the 'exactly one carton roll' requirement.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 38,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Human (farmer) is clearly visible in the background",
+        "Human body parts visible (full body, head, arms)"
+      ],
+      "correction_prompt": "Regenerate image with the same AFP drip-tape roll in the foreground on the farmed soil, but completely remove the person standing in the background. Retain the tractors and the farm building in the distance to maintain the farm context.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll, matching the mandatory object description.",
+        "The product size (width ~32%, height ~38%) is within the preferred and acceptable ranges (10-48% width, up to 58% height).",
+        "There are zero people or human body parts in the scene.",
+        "The background is an appropriate field context with a distant unattended tractor and farm building, which are allowed.",
+        "The scene includes visible drip tape on the soil, providing the required 'field-selection evidence' as per the article visual brief.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

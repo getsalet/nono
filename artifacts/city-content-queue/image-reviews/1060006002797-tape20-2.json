@@ -1,0 +1,67 @@
+{
+  "source_id": "1060006002797-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 20,
+      "product_height_percent": 26,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: The image contains a coiled drip tape lying on the ground next to the carton. This counts as a 'second roll' and violates the requirement for 'exactly one' product roll.",
+        "Missing mandatory elements: The brief requires 'elevated technical arrangement' with 'visible emitter-spacing or field-selection evidence'. The current image is a standard ground-level shot that does not provide this specific selection evidence or technical elevation."
+      ],
+      "correction_prompt": "Regenerate the image to remove the coiled tape on the ground; only the white-and-blue carton roll should be visible on the table. Include a technical elevation or close-up of the tape showing specific emitter spacing and selection markers. Maintain the field background with distant equipment.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 40,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: A human figure (person standing) is visible in the background on the left side, violating the 'zero people' rule.",
+        "Hard reject: A distinct 'bottle' or white plastic container is lying on the ground in the bottom-right quadrant (near the watermark), which is explicitly forbidden in addition to commercial rolls."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the human figure in the background and removing the white plastic bottle/container on the ground to the right of the roll. Keep the AFP drip tape roll, tractors, and watermark intact.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 32,
+      "product_height_percent": 27,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The image contains a second roll of drip tape lying on the ground immediately to the left of the main carton roll. The brief explicitly states that exactly one commercial roll is allowed, and a second roll is a hard reject.",
+        "The mandatory role 'Selection Evidence' requires visible emitter-spacing or field-selection evidence, which is not present in this image. The current composition is a simple product shot.",
+        "The text 'DRIP IRRIGATION TAPE' on the carton is partially obscured, which falls under the hard reject for gibberish or unreadable writing."
+      ],
+      "correction_prompt": "Remove the second roll of drip tape on the ground and keep only the single AFP carton roll. Regenerate the scene with the main carton as the sole commercial product, and add visible emitter-spacing markers or a technical field layout in the background to satisfy the 'Selection Evidence' role. Ensure the text on the carton is sharp and legible.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 38,
+      "product_height_percent": 40,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide cylindrical drip-tape carton roll is visible.",
+        "Product dimensions are within the accepted range (width ~38%, height ~40%).",
+        "No humans or body parts are present in the frame.",
+        "Visible irrigation lines (emitter-spacing/field-selection evidence) satisfy the 'Selection Evidence' role requirement.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "Background features (distant tractor, farm building) are permitted contextual elements.",
+        "No prohibited items (bottles, cans, second rolls) are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "source_id": "1060007001280-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Visible people (two workers) in the background."
+      ],
+      "correction_prompt": "Regenerate the image ensuring zero people or human body parts are visible; strictly focus on the irrigation hardware and unattended crop rows.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Article brief mandates 'MAINTENANCE DETAIL' (close view of installed emitter/connector), but the image displays a full unopened carton roll on the soil. This violates the specific visual role constraints."
+      ],
+      "correction_prompt": "Regenerate image as a close-up macro view of an installed drip tape emitter or flush connector attached to tape on soil. The AFP white-and-blue roll carton should only be visible in the background (approx 20-25% width), ensuring no people or second rolls are present. Keep the bottom-right watermark exactly as 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 14,
+      "product_height_percent": 18,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: Contains two commercial packages (two rolls). The brief explicitly requires 'exactly one approved carton remains visible' and 'second roll' is a hard reject.",
+        "Hard reject: The image shows two complete rolls, violating the 'exactly one approved carton' requirement for role 5.",
+        "The foreground roll size (approx 35% width) is acceptable, but the presence of the second roll makes the entire image invalid."
+      ],
+      "correction_prompt": "Regenerate the image showing exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. Remove the second roll in the background. Ensure the single roll is placed on the soil in a close-up view as required for the MAINTENANCE DETAIL role. Keep the unattended tractor in the far background. Maintain the bottom-right watermark 'AFP | 09134922013'. Ensure zero people or body parts are visible.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 38,
+      "product_height_percent": 44,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "gibberish text on carton label (e.g. 'DRIP ARRAQEET')",
+        "missing required bottom-right watermark 'AFP | 09134922013' (instead shows different AFP ID)",
+        "image role mismatch: shows standalone roll rather than required MAINTENANCE DETAIL close-up of installed emitter/connector/flush-point"
+      ],
+      "correction_prompt": "Regenerate to show close-up MAINTENANCE DETAIL of an installed drip-tape emitter or flush-point with one AFP white-and-blue roll visible; remove gibberish label text and ensure correct bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 38,
+      "product_height_percent": 48,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Human visible in background"
+      ],
+      "correction_prompt": "Regenerate the image ensuring a completely empty background with zero people or human figures. Keep the unattended close-up view of the drip-tape emitter and the single approved AFP carton in the foreground, maintaining the maintenance detail role without any human silhouettes or presence in the scene.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 36.5,
+      "product_height_percent": 52.0,
+      "product_x_center_percent": 31.5,
+      "reasons": [
+        "The image fails the primary requirement of containing 'zero people and zero human body parts.' There are clearly visible humans (farmers/workers) standing in the background (one on the left of the hay, one near the green tractor, and one driving the tractor).",
+        "The mandatory image role is 'MAINTENANCE DETAIL', requiring an unattended close view of an installed drip-tape emitter, connector, flush-point, or material detail. The image provided shows a wide landscape shot of a field with a roll on the ground, not a close-up detail of an installed system."
+      ],
+      "correction_prompt": "Regenerate as a close-up macro shot of an installed drip-tape emitter or connector on a crop leaf in a field. The background must be blurred to exclude all people or workers. Ensure one AFP drip-tape roll is visible, standing upright and unattended. Retain the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 6
+    }
+  ]
+}

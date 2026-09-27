@@ -1,0 +1,59 @@
+{
+  "source_id": "1060006002797-tape20",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 18,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "The provided set consists of only 4 images, failing to provide all 5 required editorial roles.",
+        "Role 1 (Editorial Hero) is missing: the first image is a low-angle shot dominated by the product roll and a document, with a tractor in the background; it lacks the required high-oblique view where the irrigation context dominates and the product stays small in the lower third.",
+        "Role 5 (Maintenance Detail) is missing: there is no close-up of an emitter, flush point, or material detail.",
+        "In Role 2 (Selection Evidence), the 'approved carton' is depicted as a large roll, violating the requirement for it to remain 'small and secondary'.",
+        "Role 3 (Headworks Story) is not clearly represented as a distinct, unattended view of a filter/gauge/manifold assembly, leaving a structural gap in the narrative."
+      ],
+      "correction_prompt": "Generate two additional images to complete the set: a high-oblique Editorial Hero shot where the crop and irrigation context dominate the frame with the small carton placed off-center in the lower third, and a close-up Maintenance Detail of a specific drip-tape emitter with no people, second rolls, or boxes, then regenerate the Selection Evidence image to ensure the product carton is visibly small and secondary.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        3,
+        4
+      ],
+      "reasons": [
+        "Missing Image 5: The set is incomplete; role 5 (Maintenance Detail) requires a macro shot of emitters or hardware, which is not provided in the image batch.",
+        "Role 3 Conflict: The hardware stack (image 2) features a prominent irrigation pump in the background. Role 3 specifies 'unattended fixed' and 'ordinary farm building', making the industrial pump visually contradictory to the unattended/field-side requirement.",
+        "Role 4 Violation: The installation shot (image 4) features a centered vanishing point aligned with the tractor, which explicitly violates the 'no centered vanishing point' directive.",
+        "Role 1 Violation: The carton in image 1 is centered in the lower third of the frame; the brief mandates it remain 'off-center'.",
+        "Generic Context: The backgrounds across the set rely heavily on repetitive furrow patterns with tractors, falling into the 'generic farm' trap."
+      ],
+      "correction_prompt": "Generate a close-up macro shot (Role 5) of a drip emitter and flush valve hardware without the product carton. For Role 4, crop the field view to avoid a central perspective line. For Role 1, shift the carton off-center to the left or right. Remove the background pump from Role 3 to ensure an unattended aesthetic.",
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2,
+        4
+      ],
+      "reasons": [
+        "Only 4 images were provided for the 5 required roles, causing a missing Role 5 (MAINTENANCE DETAIL) which is mandatory for the set to pass.",
+        "Role 1 fails to meet the specific 'wide high-oblique view' requirement, presenting a ground-level perspective instead of an elevated one that dominates the farm context.",
+        "Role 2 is rejected due to the recurring 'furrow-field plus tractor' composition, which explicitly violates the rule against repeated generic tractor and field structures that are flagged for rejection.",
+        "Role 4 (INSTALLATION PROOF) is a structural duplicate of Role 1 and Role 2, failing to remove the tractor and instead using a centered vanishing point which is explicitly prohibited for this specific role.",
+        "The camera angles and environment structures lack the distinct technical narratives required for a passing set, as they rely on the same static 'product on ground' layout rather than unique camera heights."
+      ],
+      "correction_prompt": "Provide the missing 5th image for a close-up maintenance detail and replace images 1-4 with unique technical compositions: a high-oblique wide shot for Role 1, a macro technical shot with a single filter for Role 2, and an asymmetric unattended crop-bed shot for Role 4 without a tractor or centered vanishing point.",
+      "set_attempt": 3,
+      "accepted_individual_qa_fallback": true
+    }
+  ]
+}
