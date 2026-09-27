@@ -1,0 +1,53 @@
+{
+  "source_id": "1060006002500-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 30,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: a full human body (farmer/worker) is clearly visible on the right side of the frame.",
+        "Role mismatch: the image role is 3, which corresponds to the product, but the mandatory visual brief for this article specifies a 'HEADWORKS STORY' (medium side view of unattended fixed filter, gauge, regulator and manifold) where the carton must be small and secondary. In this image, the carton is a primary foreground element, not secondary infrastructure.",
+        "The 'zero people' rule was violated by the presence of the standing man."
+      ],
+      "correction_prompt": "Regenerate an image strictly following the 'HEADWORKS STORY' role: a medium side view of a fixed green filtration unit with a white regulator/gauge on top and a manifold. A small AFP drip-tape carton must be present but secondary in the background. The field must be completely empty with zero people. Watermark 'AFP | 09134922013' in the bottom right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Second commercial package and second roll present (open cardboard box containing a smaller drip-tape roll in the right mid-ground).",
+        "Mandatory role 'HEADWORKS STORY' was not followed: the approved carton roll is shown large and primary in the foreground rather than small and secondary."
+      ],
+      "correction_prompt": "Remove the open cardboard box and the smaller second drip-tape roll from the right mid-ground entirely. Regenerate so the background headworks (filter, gauge, manifold) occupy the center as the main subject, and the single large unattended AFP drip-tape carton roll is positioned small and secondary at the far edge, with the required bottom-right watermark intact.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 27,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains exactly one AFP drip-tape carton roll.",
+        "Product size and proportions are physically plausible.",
+        "Zero people or body parts are visible.",
+        "Watermark is present and matches requirements.",
+        "Background and equipment are contextually relevant.",
+        "Placement and object hierarchy match the brief."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
