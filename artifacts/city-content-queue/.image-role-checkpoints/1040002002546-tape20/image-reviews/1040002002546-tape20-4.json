@@ -1,0 +1,94 @@
+{
+  "source_id": "1040002002546-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 26,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The carton roll is positioned almost perfectly in the horizontal center of the frame (48%), violating the 'off-center' and 'asymmetric' layout requirements for the image role.",
+        "The background features a classic center-perspective with a strong 'vanishing point' at the horizon, which the visual brief explicitly forbids for the INSTALLATION PROOF role.",
+        "The drip tape appears to disappear into the soil behind the roll rather than clearly extending forward as 'installed' tape; the roll acts as a central product placeholder rather than a small element at a field edge."
+      ],
+      "correction_prompt": "Generate a low-angle, wide-angle agricultural field shot with an 'off-center' composition (product shifted to bottom-right or bottom-left). The white-and-blue AFP drip tape carton must be small (12-23% width) and placed on the ground at the far right, serving as a field-edge detail. Avoid center-perspective 'vanishing points'. Show 'installed' drip tape clearly resting on top of soil ridges, leading away from the viewer. No people or vehicles.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 12,
+      "product_height_percent": 16,
+      "product_x_center_percent": 57,
+      "reasons": [
+        "The background composition uses a strict centered vanishing point and symmetric crop rows, which directly violates the 'no centered vanishing point' requirement and fails to provide the requested asymmetric unattended view.",
+        "Hard reject triggered: Human silhouettes (people) are visible in the distance on the crop row."
+      ],
+      "correction_prompt": "Remove all human silhouettes and figures from the background. Reconstruct the scene with an asymmetric, unattended perspective featuring no central vanishing point to strictly satisfy the installation proof brief.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 23,
+      "product_height_percent": 30,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: A tractor (vehicle/machine) is visible in the background",
+        "Hard reject: The roll is centered (centered product staging) rather than off-center in the lower third",
+        "Hard reject: The composition uses a centered vanishing point, violating the 'asymmetric unattended view' role requirement"
+      ],
+      "correction_prompt": "Regenerate an asymmetric field view with no vehicles or tractors in the background. Place the AFP drip-tape roll off-center to the left or right on the lower edge of the crop bed, moving the horizon point away from the center.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 18,
+      "product_height_percent": 30,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: A person (farmer) is clearly visible standing next to the tractor in the background.",
+        "Hard reject: A tractor and vehicle cabin are present in the background, which are explicitly forbidden items.",
+        "The image fails the requirement of zero people and zero vehicles."
+      ],
+      "correction_prompt": "Regenerate the image ensuring there are absolutely no people, farmers, workers, or vehicles (tractors, trucks, cabins) anywhere in the frame or background. The scene must be completely unattended. Keep the drip tape roll and the installation context identical.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The image contains visible human figures (a person standing on the left), which triggers a hard reject for any human presence.",
+        "The image contains tractors (one on the left, one on the right), which are explicitly forbidden vehicles.",
+        "The product (drip tape roll) is positioned in the center of the frame rather than off-center on the lower third.",
+        "The roll is centered in the lower third instead of maintaining an asymmetric 'unattended' view as required by the brief.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with a strictly unattended field scene. Remove all people and tractors completely. Position exactly one AFP drip tape roll on the far left or right edge of the lower third, ensuring it is off-center and secondary to the crop beds. Enlarge the product group from 0% to 12-36% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 38,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: Tractor/vehicle visible in the background.",
+        "Hard reject: Product is centered (x_center is 52%), violating the 'asymmetric' and 'no centered vanishing point' requirements.",
+        "The crop beds appear to converge at a centered vanishing point which is forbidden for this image role."
+      ],
+      "correction_prompt": "Remove the tractor in the background completely. Shift the drip-tape carton roll to the far left or right to ensure the view is asymmetric and not centered. Reposition the camera angle so the crop rows and carton do not align with a centered vanishing point.",
+      "attempt": 6
+    }
+  ]
+}

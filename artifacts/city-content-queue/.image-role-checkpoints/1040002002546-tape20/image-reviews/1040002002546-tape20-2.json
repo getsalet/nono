@@ -1,0 +1,91 @@
+{
+  "source_id": "1040002002546-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 27,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Critical reject: Background contains forbidden barn/skyline which violates the 'no skyline, barn' mandatory role constraint.",
+        "Critical reject: Background is a wide panorama field, whereas the brief mandates a 'near-overhead technical arrangement'.",
+        "Critical reject: Missing mandatory 'emitter-spacing or specification evidence' in the foreground; the visible tape lacks clear emitter markers.",
+        "Critical reject: Watermark text in the bottom right corner is garbled/gibberish instead of the required exact string 'AFP | 09134922013'."
+      ],
+      "correction_prompt": "Re-render with a close-up top-down view of the soil to eliminate the barn and field panorama. Include a section of exposed drip tape with clearly visible emitter holes/spacing markers. Correct the bottom-right watermark to strictly read 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: tractor visible in the background",
+        "Role violation: centered product staging instead of lower third off-center",
+        "Background mismatch: does not match the required near-overhead technical arrangement with specification evidence"
+      ],
+      "correction_prompt": "Remove the distant tractor. Re-frame the shot with a near-overhead angle and move the roll to the lower-left off-center third. Show the open drip tape clearly with emitter spacing or specification evidence.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 42,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Tractor is visible in the background",
+        "Hard reject: Human silhouette/person is visible in the background",
+        "The product (carton roll and unspooled tape) exceeds the maximum 36% width limit and occupies the lower-center rather than the off-center lower third",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 12-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image removing the tractor and person in the background. Frame the scene from a near-overhead technical perspective, ensuring the drip-tape roll and a short section of unspooled tape with emitters take up less than 35% of the frame width and are positioned clearly to the lower-left, not the center. Include a visual scale reference like a ruler or clear emitter spacing on the tape to act as selection evidence. Reduce the product group from 42% to 12-36% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: background contains a barn structure, which violates the requirement for 'no skyline, barn, tractor or panorama'.",
+        "Product height (approx 45%) exceeds the hard reject threshold of 42%.",
+        "Image role mismatch: The composition is a standard perspective shot rather than the required 'near-overhead technical arrangement' for SELECTION EVIDENCE.",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a strictly near-overhead top-down perspective. Remove the background barn entirely, showing only immediate tilled soil context. Ensure the carton roll height is strictly less than 42% of the frame height. Keep the tape extended to show markings. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "visual reviewer unavailable: HTTPError"
+      ],
+      "correction_prompt": "Regenerate and retry strict visual review.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Tractor is visible in the background",
+        "Hard reject: Second package (blue ring) is present",
+        "Hard reject: Barn/skyline visible in background, violating 'no skyline, barn' rule"
+      ],
+      "correction_prompt": "Regenerate with a high-angle close-up technical shot of ONLY the white and blue AFP drip-tape roll on dry soil. Remove the blue ring, tractor, barn, and skyline. Ensure no second package is visible.",
+      "attempt": 6
+    }
+  ]
+}

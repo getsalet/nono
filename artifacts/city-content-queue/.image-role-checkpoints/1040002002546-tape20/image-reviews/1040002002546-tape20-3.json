@@ -1,0 +1,72 @@
+{
+  "source_id": "1040002002546-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 33,
+      "product_height_percent": 41,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Tractor and vehicle present in the background (top right).",
+        "Hard reject: Human figure (operator) visible inside the tractor.",
+        "Violation: Role mismatch. The required role is 'HEADWORKS STORY' (medium side view of filter/gauge/manifold), but the image shows a field scene with a prominent product roll.",
+        "Violation: Product sizing. The roll occupies ~33% of the frame width, which exceeds the 23% preference limit and is too prominent/dominant rather than 'small and secondary'."
+      ],
+      "correction_prompt": "Regenerate image to show a close-up medium side view of a fixed drip irrigation filter, gauge, and manifold on a stand. A very small AFP white-and-blue drip tape carton (5-10% of frame width) must be placed on the ground nearby as a secondary element. Ensure zero people, zero tractors, and zero vehicles are present. Place the small carton in the lower-left quadrant.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Multiple rolls present: The image contains two distinct rolls of drip tape, violating the 'exactly one' constraint.",
+        "Background violation: A tractor is visible in the background, which is explicitly forbidden (hard reject).",
+        "Centering violation: The main filtration unit and roll are centered in the frame, whereas the brief requires the product to be off-center on the lower third.",
+        "Role mismatch: The primary focus is on the roll itself rather than it being a small, secondary element in a medium side view of the unattended fixed filter/gauge system.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate with exactly one small AFP white-and-blue wide low cylindrical drip-tape carton roll positioned in the lower right (secondary focus). Place the primary focus on an unattended fixed filter, gauge, and regulator manifold assembly. Ensure the background shows farmland with absolutely no vehicles or tractors. Enlarge the product group from 0% to 12-36% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 45,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Hard reject: A tractor and vehicle are visible in the distant background (upper right), which is strictly forbidden even when unattended.",
+        "Hard reject: The product bounding box height (approx. 45%) exceeds the maximum allowed height of 42%.",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove the tractor and vehicle from the background (keep only empty field and horizon). The background must match the location 'Lajan, West Azerbaijan'. Ensure the drip-tape carton roll in the bottom-right is smaller, with a height under 42% of the frame width, while keeping the required 'AFP | 09134922013' watermark. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 18,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Watermark present and correct.",
+        "No people, faces, or body parts visible.",
+        "No tractors, vehicles, or machine cabins visible.",
+        "Required irrigation components (filter, gauge, manifold) present and unattended.",
+        "Exactly one approved AFP white-and-blue drip tape roll visible.",
+        "The approved roll is small and secondary to the irrigation setup.",
+        "Roll dimensions are within acceptable limits (12-36% width, <42% height)."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
