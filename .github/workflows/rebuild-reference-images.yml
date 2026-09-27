@@ -14,7 +14,9 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: navar-city-content-queue
+  # Rebuilds have a separate lane so queue self-chaining cannot replace the pending rebuild.
+  # Capacity stays within the shared 64-image benchmark: 24+24+12 = 60.
+  group: navar-city-image-rebuild
   cancel-in-progress: false
 jobs:
   rebuild:
