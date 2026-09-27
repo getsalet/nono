@@ -1,0 +1,95 @@
+{
+  "source_id": "1050005002594-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 62,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible human body parts (crouching man with face, hands, and arms).",
+        "Hard reject: A third commercial package (packaged roll) is present alongside the two required coils.",
+        "Product width estimate exceeds the maximum limit (approx 62% frame width vs 60% limit).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Remove the crouching man and the third packaged roll in the foreground. Retain only the two coils (packaged AFP and bare black) and the bottom-right watermark. Reduce the product group from 62% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 78,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The required 'packaged AFP coil' is missing; both coils appear to be the same bare product. There is no second packaged coil, only a small accessory package.",
+        "A visible accessory package (small box) is present, which constitutes an extra commercial object not allowed in the two-coil pair.",
+        "The product pair width extends from the left edge of the first coil to the right edge of the second coil (plus the extending hose), occupying roughly 78% of the frame width, which exceeds the 60% maximum hard limit.",
+        "The extending hose from the right coil disrupts the physical placement of the pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate with exactly two coiled hoses: one clearly in a package (wrapped/packaged AFP) and one bare black coil. Remove the small accessory box/package. Ensure the combined width of the two coils and their hose endings fits within 55% of the image width. Place them in the foreground field, maintaining the same camera angle. Reduce the product group from 78% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 58,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible people (two men) in the background violate the zero-person rule",
+        "Watermark contains incorrect phone number ('09134922013' instead of '09134922013' is actually the number I used, but the instruction says '09134922013' is the required one - wait, I need to check the image vs instruction. Instruction says 'AFP | 09134922013'. Image shows 'AFP | 09134922013'. That is correct. The rejection is purely due to the humans."
+      ],
+      "correction_prompt": "Remove all people from the background. Keep the soil field and distant farm building. Keep the packaged coil on the left and the black woven coil on the right. Ensure the 'AFP | 09134922013' watermark remains in the bottom right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 75,
+      "product_height_percent": 50,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Contains a third commercial package (the coiled product with white packaging in the center), violating the 'exactly two items' constraint.",
+        "Hard reject: Contains an extra commercial/industrial component (plastic connector/fitting on the ground), violating the 'exactly two items' constraint.",
+        "Hard reject: Product pair width is estimated at 75% of frame width, exceeding the maximum 60% limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Remove the center packaged coil and the loose plastic connector. Ensure exactly two objects are visible: one large bare black woven coil and one small packaged AFP coil. Reduce the overall bounding box width of these two items to under 60% of the frame. Maintain bottom-right watermark 'AFP | 09134922013'. No people. Reduce the product group from 75% to 8-60% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 55,
+      "product_height_percent": 28,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: visible human worker/farmer sitting in the field with face and hands clearly shown.",
+        "Required visual content error: The mandatory 'one packaged AFP coil' is missing; the image only shows two bare black coils without the required contrasting package."
+      ],
+      "correction_prompt": "Remove the person entirely and replace the smaller bare black coil with a packaged AFP coil in a sealed industrial wrap to accurately represent the required comparison pair.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 72,
+      "product_height_percent": 48,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "The total width of the product group (from the left edge of the bare coil to the right edge of the package) exceeds the 60% hard reject limit, spanning approximately 72% of the frame width.",
+        "The third object on the far right is a commercial package (poly-wrap/bundle), not the approved packaged AFP coil, which disqualifies the image under the 'third commercial package' rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the total width of the two coils to approximately 30% of the frame width to ensure they are fully visible and do not exceed the 60% limit. Ensure the pair consists of exactly one bare coil and one packaged AFP coil, and remove any third objects or packages. Reduce the product group from 72% to 8-60% of frame width.",
+      "attempt": 6
+    }
+  ]
+}

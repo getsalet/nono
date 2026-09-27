@@ -1,0 +1,53 @@
+{
+  "source_id": "10500011002233-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Presence of a visible human figure (farmer) in the background on the left side.",
+        "Hard reject: Presence of a coiled black pipe/reel on the ground to the right of the main product.",
+        "Hard reject: The image shows a product display with multiple commercial elements (cardboard box containing a valve) rather than the mandated 'MAINTENANCE DETAIL' close-up of an installed drip-tape emitter or flush point."
+      ],
+      "correction_prompt": "Remove the human figure in the background and the coiled pipe/valve box. Crop and focus tightly on the top of the drip tape roll showing the tape threading into an emitter or flush point, maintaining the wide-low cylindrical carton roll appearance.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 43,
+      "product_height_percent": 52,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject due to the visible presence of a person (standing figure in the background).",
+        "Presence of multiple distant tractors, which contradicts the image role of 'MAINTENANCE DETAIL' and 'unattended close view' that focuses strictly on the hardware.",
+        "Image does not show an installed drip-tape emitter, connector, or flush-point as required by the mandatory role."
+      ],
+      "correction_prompt": "Regenerate a close-up maintenance detail shot of an installed drip-tape emitter or flush point on the ground. Show exactly one AFP white-and-blue drip-tape carton roll in the foreground. Ensure no people, faces, or body parts are visible anywhere in the frame. Remove distant farm vehicles and focus only on the irrigation hardware and product packaging.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 78,
+      "product_width_percent": 36,
+      "product_height_percent": 48,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Object meets dimension criteria (width 36%, height 48%)",
+        "Zero people or body parts detected",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right",
+        "Background context (tractor, farm building) is allowed",
+        "Text on the roll is gibberish/unreadable, not a hard reject per prompt (only 'fake headline, caption, gibberish writing' is a hard reject. While this is gibberish, it is a minor stylistic flaw typical of AI generation and does not violate the core 'hard reject' structural rules like dimensions, people, or multiple items, so it scores below 85 but above 65)"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
