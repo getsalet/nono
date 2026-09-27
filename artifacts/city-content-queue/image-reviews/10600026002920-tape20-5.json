@@ -1,0 +1,90 @@
+{
+  "source_id": "10600026002920-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 38,
+      "product_height_percent": 46,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Violation of 'zero people' hard reject: Visible drivers/operators are present inside the cabs of both distant tractors.",
+        "Violation of 'MAINTENANCE DETAIL' image role: The image displays a standalone carton roll on the ground rather than an unattended close view of an installed drip-tape emitter, connector, or flush-point.",
+        "Secondary commercial product violation: A coiled length of tape/drip line is visible on the ground to the right of the main carton roll."
+      ],
+      "correction_prompt": "Regenerate the image with an extreme close-up of an installed drip-tape emitter or flush-point hardware. Include a wide cylindrical AFP drip-tape carton roll as a background prop without any coiled lines. Ensure all tractors in the background are fully unattended with cabs empty or open to remove all human silhouettes. Maintain the required bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 33,
+      "product_height_percent": 48,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: A person (farmer) is visible on the left side of the image."
+      ],
+      "correction_prompt": "Remove all visible people from the scene. Ensure the background shows only unattended agricultural infrastructure, such as a stationary tractor and crops.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 68,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The text printed on the AFП carton is significantly garbled, gibberish, and non-English (specifically the word below the logo).",
+        "The brief explicitly hard-rejects any 'gibberish writing', which is clearly visible on the surface of the main product."
+      ],
+      "correction_prompt": "Regenerate the image, ensuring the text printed on the white AFП drip-tape carton is perfectly legible and correct English (e.g., 'AFП DRIP TAPE 20mm'), completely removing the current distorted/garbled text.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: A person is clearly visible in the midground, which strictly violates the 'zero people' and 'unattended' requirements."
+      ],
+      "correction_prompt": "Remove the person standing in the field background to ensure the scene is fully unattended and compliant with the strict no-human constraint.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 38,
+      "product_height_percent": 48,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "The image role requested was a maintenance detail (installed emitter/connector) but the image displays the product packaging (the roll itself).",
+        "The text on the side of the roll is gibberish ('THTENGONG') rather than meaningful labels.",
+        "The product is lying down on the soil, which is not consistent with the 'installed' maintenance detail role specified for image role 5."
+      ],
+      "correction_prompt": "Close-up detail of a drip tape emitter or flush connector in a crop row. Show the specific white-and-blue AFP carton roll in the foreground, but ensure it is being actively used or is positioned near the irrigation line. Ensure the tractor in the background is visible but out of focus. Fix the gibberish text on the roll to be legible.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 35,
+      "product_height_percent": 48,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "The primary object is a single white-and-blue wide low cylindrical drip-tape carton roll, positioned in the lower-left of the frame with an approximate width of 35% and height of 48%, fitting within the required 10-48% and 58% tolerance ranges.",
+        "Zero people, farmers, or human body parts are visible; the red tractor in the background is unattended infrastructure as required, and a person is not distinguishable in the driver's seat.",
+        "The background shows green crop rows and soil with a distant tractor, providing a contextually relevant agricultural environment for the article brief without any hard-reject elements.",
+        "The required exact watermark 'AFP | 09134922013' is clearly and correctly positioned in the bottom-right corner, and no other fake headlines or gibberish writing are present.",
+        "The image does not contain any hard-reject elements such as bottles, jars, second rolls, pipes, or off-center layout issues; the roll placement and proportions are physically plausible for the role of a maintenance detail."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}
