@@ -46,7 +46,14 @@ jobs:
           python -m py_compile automation/rebuild_city_images_preserve_posts.py automation/image_prompt_policy.py automation/image_quality_gate.py automation/city_content_queue.py automation/city_content_queue_cloudflare.py
           python -m unittest discover -s tests -p 'test_*.py'
       - name: Rebuild existing scenes with exact product assets
-        run: python automation/rebuild_city_images_preserve_posts.py | tee reference-image-rebuild.log
+        id: rebuild
+        shell: bash
+        run: |
+          set +e
+          python automation/rebuild_city_images_preserve_posts.py 2>&1 | tee reference-image-rebuild.log
+          rc=${PIPESTATUS[0]}
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
       - name: Refresh packages and status
         run: |
           python automation/package_city_content_batches.py
@@ -73,3 +80,6 @@ jobs:
           git add -f artifacts/city-content-queue/image-rebuild-reference-rerender-3d-v10-atomic-city-set-reviewed.json reference-image-rebuild.log
           git commit -m "Rebuild city images with approved topic-first AFP policy"
           git push origin main
+      - name: Fail after preserving rebuild diagnostics
+        if: steps.rebuild.outputs.exit_code != '0'
+        run: exit 1

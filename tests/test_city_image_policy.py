@@ -32,6 +32,8 @@ class CityImagePolicyTests(unittest.TestCase):
         self.assertTrue(all("People must not appear" in prompt for prompt in prompts))
         self.assertIn("HEADWORKS STORY", prompts[2])
         self.assertIn("MAINTENANCE DETAIL", prompts[4])
+        self.assertTrue(all("NO PEOPLE OR VEHICLES" in prompt for prompt in prompts))
+        self.assertTrue(all("tractor, harvester, vehicle or machine cabin" in prompt for prompt in prompts))
 
     def test_metric_feedback_is_directional_without_noisy_center_rejection(self):
         ok, issues = image_quality_gate._metric_check(

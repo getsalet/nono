@@ -298,6 +298,20 @@ def save_marker(rebuilt, skipped, failures, total, remaining, final=False):
     )
 
 
+def previously_failed_ids() -> set[str]:
+    if not MARKER.exists():
+        return set()
+    try:
+        marker = json.loads(MARKER.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return set()
+    return {
+        str(row.get("source_id") or "")
+        for row in marker.get("failures", [])
+        if row.get("source_id")
+    }
+
+
 def main() -> int:
     if not base.QUEUE.exists():
         raise RuntimeError("Queue file is missing")
@@ -333,7 +347,9 @@ def main() -> int:
         print("exact_product_rebuild=already_current")
         return 0
 
-    records=dict(list(records.items())[:POST_LIMIT])
+    failed_before = previously_failed_ids()
+    selected_ids = sorted(records, key=lambda source_id: (source_id in failed_before, source_id))[:POST_LIMIT]
+    records = {source_id: records[source_id] for source_id in selected_ids}
     results = {source_id: {} for source_id in records}
     failures = []
     for source_id, (item, _, data) in records.items():

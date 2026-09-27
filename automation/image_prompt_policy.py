@@ -21,7 +21,7 @@ def product_family(item):
 
 
 TAPE_SCENES={
-  1:'wide empty city-article landscape where the agricultural field, crop rows and local irrigation context are the main subject; all machinery is parked and unattended and no person is present',
+ 1:'wide empty city-article landscape where the agricultural field, crop rows and local irrigation context are the main subject; no tractor, vehicle, machine cabin, person or human silhouette is present',
   2:'practical selection or comparison scene where farm requirements and the article topic are the main subject',
   3:'technical irrigation scene where filtration, pressure control or water distribution is the main subject',
   4:'empty post-installation technical detail of drip tape laid across soil and crop rows; show no tractor, vehicle, cabin, greenhouse activity, worker, driver, person, body part or silhouette',
@@ -36,7 +36,7 @@ LAYFLAT_SCENES={
 }
 
 ROLE_DIRECTIVES={
- 1:'EDITORIAL HERO: a wide high-oblique view in which the local farm layout and irrigation context dominate; no close foreground product staging and no tractor-centered composition',
+ 1:'EDITORIAL HERO: a wide high-oblique view in which the local farm layout and irrigation context dominate; no close foreground product staging, tractor, vehicle, machine cabin or machinery',
  2:'SELECTION EVIDENCE: a near-overhead close technical arrangement showing tape specification, emitter spacing or field requirement evidence; no skyline, barn, tractor or panorama',
  3:'HEADWORKS STORY: a medium side view of an unattended filter, gauge, pressure regulator and manifold; the irrigation hardware must dominate and the field is only context',
  4:'INSTALLATION RESULT: an empty post-installation view of aligned drip tape and crop beds, with no human action, vehicle, cabin or long centered furrow vanishing point',
@@ -118,7 +118,7 @@ def reference_images(kind,item=None):
     # reference matches the production contract while preserving exact product
     # geometry and branding.
     raw=base64.b64decode((ASSET_DIR/'afp-tape.webp.b64').read_text(encoding='ascii').strip())
-    product=Image.open(io.BytesIO(raw)).convert('RGB').resize((264,170),Image.Resampling.LANCZOS)
+    product=Image.open(io.BytesIO(raw)).convert('RGB').resize((300,180),Image.Resampling.LANCZOS)
     canvas=Image.new('RGB',(1200,675),(238,238,235))
     canvas.paste(product,(84,675-product.height-55))
     buf=io.BytesIO();canvas.save(buf,'WEBP',quality=90,method=6)
@@ -139,12 +139,12 @@ def image_prompt(item,kind):
         shape=('exactly two separate related layflat-hose objects placed naturally beside each other: first, the packaged low wide black woven hose coil with the same folded printed cardboard pieces, crossing straps, center opening and package proportions; second, the unboxed black woven layflat hose coil exactly like its reference, as a low flat horizontal coil made of many tight concentric layers with a short hollow brown cardboard center, visible diagonal woven fabric texture, realistic compressed thickness and one short loose hose end')
         exact=('Keep the packaged object marks "AFP" and "layflat" readable. The bare black coil has no carton, logo or writing. The two references are separate objects in the same final scene, never alternatives and never fused. Both coils rest flat, horizontal and parallel to the soil. Never turn the bare coil into smooth round tubing, a tall cable spool, an upright wheel, a solid tire or a plastic pipe coil.')
         scale=('Use the approved 05-pair-far scale: the complete two-object group occupies approximately 12 to 15 percent of frame width, stays low on the soil and appears about four metres from the camera. Keep the pair off-center on the lower third.')
-        people_rule=('NO PEOPLE in any image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette or distant human figure. Show the article-specific field, crop, irrigation system and unattended equipment without any human presence.')
+        people_rule=('NO PEOPLE OR VEHICLES in any image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette, distant human figure, tractor, harvester, vehicle or machine cabin. Show the article-specific field, crop, irrigation system and fixed unattended equipment without any human-associated machinery.')
     else:
         shape='a wide cylindrical 1000-meter drip-tape roll in the same white-and-blue carton sleeve, with the same diameter-to-height ratio, central top hole, straight carton walls and blue lower band'
         exact='Keep the exact readable marks "AFP" and "Drip Irrigation Tape"; never change it into layflat hose.'
         scale=('Use the approved 03-compact scale: the product occupies approximately 20 to 23 percent of frame width, its top stays clearly below knee height and it sits about two metres from the camera. Keep it off-center on the lower third.')
-        people_rule=('NO PEOPLE in any drip-tape image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette or distant human figure. Show the article-specific field, crop, irrigation system and unattended equipment without any human presence.')
+        people_rule=('NO PEOPLE OR VEHICLES in any drip-tape image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette, distant human figure, tractor, harvester, vehicle or machine cabin. Show the article-specific field, crop, irrigation system and fixed unattended equipment without any human-associated machinery.')
     return ('Create one photorealistic 16:9 agricultural editorial photograph. The attached image is an identity and geometry reference, not a flat layer to paste. '
       +f'Article visual brief extracted from the post: {brief}. Every background and technical detail must visibly express this brief rather than a generic farm. Mandatory role blueprint: {role}. Scene role: {scene}. {role_safety}{correction_instruction}Use a plausible Iranian agricultural environment suitable for {city}, {province}, without inventing landmarks, crops, climate facts or local infrastructure. The background and equipment must follow this article scene and remain the main subject. {people_rule} Reconstruct the product as a true three-dimensional object: {shape}. '
       'Show it from a slightly different but physically plausible three-quarter angle, about 10 to 20 degrees from the reference. Preserve silhouette, packaging construction, proportions, material, printed-panel layout and brand colors. '
