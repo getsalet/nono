@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-27T14:39:35+00:00`
+- آخرین بروزرسانی: `2026-09-27T14:45:52+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **389 از 1894 (20.54٪)**
 - تکمیل‌شده: **389**
@@ -53,7 +53,7 @@
 - **نقده** — `layflat`: `image hard gate rejected role 5 after 6 attempt`
 - **پلدشت** — `tape20`: `image hard gate rejected role 3 after 6 attempt`
 - **پلدشت** — `layflat`: `image hard gate rejected role 2 after 6 attempt`
-- **لاجان** — `tape20`: `image hard gate rejected role 1 after 6 attempt`
+- **لاجان** — `tape20`: `image hard gate rejected role 5 after 6 attempt`
 
 ## فایل‌های خروجی
 
