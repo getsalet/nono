@@ -2,10 +2,13 @@ import os
 import sys
 import tempfile
 import unittest
+import base64
+import io
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "automation"))
@@ -15,6 +18,16 @@ import image_quality_gate
 
 
 class CityImagePolicyTests(unittest.TestCase):
+    def test_layflat_references_are_scale_conditioned(self):
+        refs = image_prompt_policy.reference_images(
+            1, {"source_id": "city-layflat", "title": "لوله نخی"}
+        )
+        self.assertEqual(len(refs), 2)
+        self.assertTrue(all(ref.startswith("data:image/webp;base64,") for ref in refs))
+        for ref in refs:
+            image = Image.open(io.BytesIO(base64.b64decode(ref.split(",", 1)[1])))
+            self.assertEqual(image.size, (1200, 675))
+
     def test_visual_brief_and_roles_are_grounded_and_distinct(self):
         item = {
             "source_id": 101,

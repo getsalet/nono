@@ -56,24 +56,42 @@ jobs:
           while True:
               status, body = call(f"https://api.github.com/repos/{repo}/actions/artifacts?per_page=100")
               if status != 200:
-                  raise SystemExit(f"list artifacts failed: {status} {body.decode('utf-8', 'replace')}")
+                  print(
+                      "::warning::Artifact cleanup could not list artifacts: "
+                      f"{status} {body.decode('utf-8', 'replace')}"
+                  )
+                  break
               artifacts = json.loads(body).get("artifacts") or []
               if not artifacts:
                   break
+              deleted_this_pass = 0
               for artifact in artifacts:
                   artifact_id = artifact["id"]
                   del_status, del_body = call(
                       f"https://api.github.com/repos/{repo}/actions/artifacts/{artifact_id}",
                       method="DELETE",
                   )
-                  if del_status in (204, 200):
+                  if del_status in (204, 200, 404):
                       deleted += 1
+                      deleted_this_pass += 1
                       bytes_deleted += int(artifact.get("size_in_bytes") or 0)
-                      print(f"deleted {artifact.get('name')} id={artifact_id} size={artifact.get('size_in_bytes')}")
+                      print(
+                          f"deleted {artifact.get('name')} id={artifact_id} "
+                          f"size={artifact.get('size_in_bytes')}"
+                      )
                   else:
                       failed += 1
-                      print(f"failed {artifact.get('name')} id={artifact_id} status={del_status} {del_body.decode('utf-8', 'replace')}")
-          print(f"artifact_cleanup deleted={deleted} failed={failed} bytes_deleted={bytes_deleted}")
-          if failed:
-              raise SystemExit(1)
+                      print(
+                          "::warning::Failed to delete "
+                          f"{artifact.get('name')} id={artifact_id} status={del_status} "
+                          f"{del_body.decode('utf-8', 'replace')}"
+                      )
+              # Avoid retrying the same undeletable page forever. Artifact
+              # cleanup is maintenance and must never block production queues.
+              if deleted_this_pass == 0:
+                  break
+          print(
+              f"artifact_cleanup deleted={deleted} failed={failed} "
+              f"bytes_deleted={bytes_deleted}"
+          )
           PY

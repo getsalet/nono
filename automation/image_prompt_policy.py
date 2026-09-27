@@ -109,10 +109,19 @@ def visual_brief(item,max_chars=700):
 def reference_images(kind,item=None):
     family=product_family(item)
     if family=='layflat':
-        return [
-          'data:image/webp;base64,'+(ASSET_DIR/'afp-layflat.webp.b64').read_text(encoding='ascii').strip(),
-          'data:image/jpeg;base64,'+(ASSET_DIR/'afp-layflat-bare.jpg.b64').read_text(encoding='ascii').strip(),
-        ]
+        # Raw close-up references repeatedly made the two-object set fill most
+        # of the generated frame. Put both identity references on the same
+        # scale-conditioned neutral canvas used by the tape product.
+        refs=[]
+        for filename in ('afp-layflat.webp.b64','afp-layflat-bare.jpg.b64'):
+            raw=base64.b64decode((ASSET_DIR/filename).read_text(encoding='ascii').strip())
+            product=Image.open(io.BytesIO(raw)).convert('RGB')
+            product.thumbnail((150,112),Image.Resampling.LANCZOS)
+            canvas=Image.new('RGB',(1200,675),(238,238,235))
+            canvas.paste(product,(90,675-product.height-55))
+            buf=io.BytesIO();canvas.save(buf,'WEBP',quality=90,method=6)
+            refs.append('data:image/webp;base64,'+base64.b64encode(buf.getvalue()).decode('ascii'))
+        return refs
     # Condition scale as well as identity. A raw close-up reference repeatedly
     # made the generator fill 35-50% of the frame. This 22%-wide padded
     # reference matches the production contract while preserving exact product
