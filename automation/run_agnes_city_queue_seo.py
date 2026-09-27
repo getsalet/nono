@@ -45,8 +45,10 @@ if a not in run_source and legacy_payload in run_source:
     run_source=replace_once(run_source,legacy_payload,a,'topic-specific image references')
 legacy_jpg_name='''    name=f"{item['source_id']}-{kind}.jpg";(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()'''
 current_webp_name='''    name=f"{item['source_id']}-{kind}.webp";(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()'''
+staged_webp_name='''    name=f"{item['source_id']}-{kind}.webp";(image_dir/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()'''
 seo_webp_name='''    name=seo_image_name(item,kind);(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()'''
-if seo_webp_name not in run_source:
+seo_staged_webp_name='''    name=seo_image_name(item,kind);(image_dir/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()'''
+if seo_webp_name not in run_source and seo_staged_webp_name not in run_source:
     if legacy_jpg_name in run_source:
         legacy_webp='''    image=Image.open(BytesIO(blob)).convert('RGB')
     encoded=BytesIO();image.save(encoded,format='WEBP',quality=60,method=6)
@@ -55,6 +57,8 @@ if seo_webp_name not in run_source:
         run_source=replace_once(run_source,legacy_jpg_name,legacy_webp,'SEO WebP filenames')
     elif current_webp_name in run_source:
         run_source=replace_once(run_source,current_webp_name,seo_webp_name,'SEO WebP filenames')
+    elif staged_webp_name in run_source:
+        run_source=replace_once(run_source,staged_webp_name,seo_staged_webp_name,'SEO WebP filenames')
     else:
         raise RuntimeError('Cannot patch SEO WebP filenames')
 run_source=replace_once(run_source,'backend.generate_image=agnes_generate_image\n','backend.seo_image_name=seo_image_name\nbackend.generate_image=agnes_generate_image\n','SEO helper exposure')
@@ -63,6 +67,13 @@ run_source=replace_once(
     'backend.generate_image=agnes_generate_image\n',
     'backend.generate_image=image_quality_gate.install(base,backend,agnes_generate_image)\n',
     'strict model image QA',
+)
+run_source=replace_once(
+    run_source,
+    'backend.generate_image=image_quality_gate.install(base,backend,agnes_generate_image)\n',
+    'backend.generate_image=image_quality_gate.install(base,backend,agnes_generate_image)\n'
+    'backend.generate_images_parallel=image_quality_gate.install_set_manager(base,backend,5)\n',
+    'atomic five-image set QA',
 )
 original=review_path.read_text(encoding='utf-8')
 review=replace_once(original,'import hashlib,json,os,re,time\n','import hashlib,json,os,re,time,urllib.parse\nimport image_prompt_policy\nimport research_grounding_review\nimport faq_policy\nimport text_cleanup_policy\n','review imports')

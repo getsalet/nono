@@ -8,6 +8,8 @@ import hashlib
 import io
 import json
 import os
+import shutil
+import tempfile
 import time
 import urllib.error
 import urllib.request
@@ -19,11 +21,12 @@ from PIL import Image
 import city_content_queue as base
 import city_content_queue_cloudflare as backend
 import image_prompt_policy
+import image_quality_gate
 
-POLICY = "reference-rerender-3d-v5-approved-scales-topic-first"
+POLICY = "reference-rerender-3d-v10-atomic-city-set-reviewed"
 MODE = "reference-conditioned-3d-rerender-approved-scales-topic-first"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
-MARKER = OUT / "image-rebuild-reference-rerender-3d-v5-approved-scales-topic-first.json"
+MARKER = OUT / "image-rebuild-reference-rerender-3d-v10-atomic-city-set-reviewed.json"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")
 API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
     "AGNES_API_BASE", "https://apihub.agnes-ai.com/v1"
@@ -31,8 +34,10 @@ API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
 KEY = (os.getenv("IMAGE_API_KEY") or os.getenv("AGNES_API_KEY", "")).strip()
 WORKERS = max(1, int(os.getenv("IMAGE_WORKERS", "2")))
 RETRIES = max(2, int(os.getenv("IMAGE_RETRIES", "6")))
-FROM_POST = max(1, int(os.getenv("REBUILD_FROM_POST", "250")))
-POST_LIMIT = max(1, int(os.getenv("REBUILD_POST_LIMIT", "4")))
+QA_ATTEMPTS = max(1, int(os.getenv("IMAGE_QA_ATTEMPTS", "10")))
+SET_ATTEMPTS = max(1, int(os.getenv("IMAGE_SET_QA_ATTEMPTS", "3")))
+FROM_POST = max(1, int(os.getenv("REBUILD_FROM_POST", "1")))
+POST_LIMIT = max(1, int(os.getenv("REBUILD_POST_LIMIT", "1")))
 image_prompt_policy.install(backend)
 
 
@@ -110,7 +115,9 @@ def generate_once(item: dict, kind: int) -> dict:
     if len(blob) < 10000:
         raise RuntimeError("Generated WebP is unexpectedly small")
     name = f"{item['source_id']}-{kind}.webp"
-    (base.IMAGES / name).write_bytes(blob)
+    output_dir = Path(item.get("_image_output_dir") or base.IMAGES)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    (output_dir / name).write_bytes(blob)
     return {
         "name": name,
         "sha256": hashlib.sha256(blob).hexdigest(),
@@ -121,23 +128,139 @@ def generate_once(item: dict, kind: int) -> dict:
 
 
 def generate(item: dict, kind: int) -> dict:
-    last = None
-    for attempt in range(1, RETRIES + 1):
+    image_dir = Path(item.get("_image_output_dir") or base.IMAGES)
+    review_dir = Path(item.get("_image_review_dir") or (OUT / "image-reviews"))
+    image_dir.mkdir(parents=True, exist_ok=True)
+    review_dir.mkdir(parents=True, exist_ok=True)
+    review_path = review_dir / f"{item['source_id']}-{kind}.json"
+    feedback, history = "", []
+    for qa_attempt in range(1, QA_ATTEMPTS + 1):
+        candidate = dict(item)
+        if feedback:
+            candidate["_image_qa_feedback"] = feedback
+        last = None
+        for attempt in range(1, RETRIES + 1):
+            try:
+                result = generate_once(candidate, kind)
+                break
+            except Exception as exc:
+                last = exc
+                print(
+                    f"exact_product_attempt source_id={item.get('source_id')} kind={kind} "
+                    f"attempt={attempt}/{RETRIES} error={exc}",
+                    flush=True,
+                )
+                if attempt < RETRIES:
+                    message = str(exc).lower()
+                    delay = min(300, 60 * 2 ** (attempt - 1)) if "429" in message or "rate_limit" in message else min(90, 10 * 2 ** (attempt - 1))
+                    print(f"exact_product_backoff_seconds={delay}", flush=True)
+                    time.sleep(delay)
+        else:
+            raise RuntimeError(f"image generation failed after {RETRIES} attempts: {last}") from last
+        path = image_dir / result["name"]
         try:
-            return generate_once(item, kind)
+            verdict = image_quality_gate.review_image(base, path, item, kind)
         except Exception as exc:
-            last = exc
-            print(
-                f"exact_product_attempt source_id={item.get('source_id')} kind={kind} "
-                f"attempt={attempt}/{RETRIES} error={exc}",
-                flush=True,
-            )
-            if attempt < RETRIES:
-                message = str(exc).lower()
-                delay = min(300, 60 * 2 ** (attempt - 1)) if '429' in message or 'rate_limit' in message else min(90, 10 * 2 ** (attempt - 1))
-                print(f"exact_product_backoff_seconds={delay}", flush=True)
-                time.sleep(delay)
-    raise RuntimeError(f"image generation failed after {RETRIES} attempts: {last}") from last
+            verdict = {
+                "pass": False,
+                "score": 0,
+                "reasons": [f"visual reviewer unavailable: {type(exc).__name__}"],
+                "correction_prompt": "Regenerate and retry strict visual review.",
+            }
+        verdict["attempt"] = qa_attempt
+        history.append(verdict)
+        review_path.write_text(
+            json.dumps(
+                {
+                    "source_id": item["source_id"],
+                    "kind": kind,
+                    "policy": image_quality_gate.REVIEW_POLICY,
+                    "approved": bool(verdict.get("pass")),
+                    "history": history,
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        print(
+            f"city_rebuild_image_qa source_id={item.get('source_id')} kind={kind} "
+            f"attempt={qa_attempt} pass={verdict.get('pass')} score={verdict.get('score')} "
+            f"reasons={verdict.get('reasons', [])}",
+            flush=True,
+        )
+        if verdict.get("pass"):
+            return result
+        path.unlink(missing_ok=True)
+        feedback = str(verdict.get("correction_prompt") or "; ".join(verdict.get("reasons", [])))
+    reasons = history[-1].get("reasons", []) if history else []
+    raise RuntimeError(f"image hard gate rejected role {kind} after {QA_ATTEMPTS} attempts: {reasons}")
+
+
+def generate_set(item: dict) -> dict[int, dict]:
+    source_id = str(item["source_id"])
+    OUT.mkdir(parents=True, exist_ok=True)
+    staging_root = Path(tempfile.mkdtemp(prefix=f".image-staging-{source_id}-", dir=OUT))
+    staging_images = staging_root / "images"
+    staging_reviews = staging_root / "image-reviews"
+    staging_images.mkdir(parents=True)
+    staging_reviews.mkdir(parents=True)
+    set_review_path = OUT / "image-reviews" / f"{source_id}-set.json"
+    results, feedback, history = {}, {}, []
+    pending = set(range(1, 6))
+    try:
+        with ThreadPoolExecutor(max_workers=WORKERS, thread_name_prefix="city-rebuild-image") as pool:
+            for set_attempt in range(1, SET_ATTEMPTS + 1):
+                futures = {}
+                for kind in sorted(pending):
+                    candidate = dict(item)
+                    candidate["_image_output_dir"] = str(staging_images)
+                    candidate["_image_review_dir"] = str(staging_reviews)
+                    if feedback.get(kind):
+                        candidate["_image_qa_feedback"] = feedback[kind]
+                    futures[pool.submit(generate, candidate, kind)] = kind
+                for future in as_completed(futures):
+                    kind = futures[future]
+                    results[kind] = future.result()
+                paths = [staging_images / results[kind]["name"] for kind in range(1, 6)]
+                verdict = image_quality_gate.review_image_set(base, paths, item)
+                verdict["set_attempt"] = set_attempt
+                history.append(verdict)
+                set_review_path.parent.mkdir(parents=True, exist_ok=True)
+                set_review_path.write_text(
+                    json.dumps({"source_id": source_id, "policy": POLICY, "history": history}, ensure_ascii=False, indent=2),
+                    encoding="utf-8",
+                )
+                print(
+                    f"city_rebuild_set_qa source_id={source_id} attempt={set_attempt} "
+                    f"pass={verdict.get('pass')} score={verdict.get('score')} "
+                    f"duplicate_roles={verdict.get('duplicate_roles', [])} reasons={verdict.get('reasons', [])}",
+                    flush=True,
+                )
+                if verdict.get("pass"):
+                    base.IMAGES.mkdir(parents=True, exist_ok=True)
+                    final_reviews = OUT / "image-reviews"
+                    final_reviews.mkdir(parents=True, exist_ok=True)
+                    for kind in range(1, 6):
+                        staged = staging_images / results[kind]["name"]
+                        if not staged.exists():
+                            raise RuntimeError(f"Approved staged image is missing for role {kind}")
+                        os.replace(staged, base.IMAGES / staged.name)
+                        role_review = staging_reviews / f"{source_id}-{kind}.json"
+                        if role_review.exists():
+                            os.replace(role_review, final_reviews / role_review.name)
+                    return results
+                pending = set(verdict.get("duplicate_roles") or range(1, 6))
+                correction = str(verdict.get("correction_prompt") or "; ".join(verdict.get("reasons", [])))
+                for kind in pending:
+                    feedback[kind] = correction + f" Create a new role-{kind} scene clearly unlike the other four."
+                    if kind in results:
+                        (staging_images / results[kind]["name"]).unlink(missing_ok=True)
+                        results.pop(kind, None)
+                    (staging_reviews / f"{source_id}-{kind}.json").unlink(missing_ok=True)
+        raise RuntimeError(f"Image-set diversity gate rejected the five-image editorial set after {SET_ATTEMPTS} rounds")
+    finally:
+        shutil.rmtree(staging_root, ignore_errors=True)
 
 
 def replace_names(path: Path, mapping: dict[str, str]) -> None:
@@ -213,20 +336,13 @@ def main() -> int:
     records=dict(list(records.items())[:POST_LIMIT])
     results = {source_id: {} for source_id in records}
     failures = []
-    with ThreadPoolExecutor(max_workers=WORKERS, thread_name_prefix="exact-product") as pool:
-        futures = {}
-        for source_id, (item, _, data) in records.items():
-            enriched = {**item, **data}
-            for kind in range(1, 6):
-                futures[pool.submit(generate, enriched, kind)] = (source_id, kind)
-        for future in as_completed(futures):
-            source_id, kind = futures[future]
-            try:
-                results[source_id][kind] = future.result()
-            except Exception as exc:
-                failures.append(
-                    {"source_id": source_id, "kind": kind, "error": str(exc)[:1200]}
-                )
+    for source_id, (item, _, data) in records.items():
+        try:
+            results[source_id] = generate_set({**item, **data})
+        except Exception as exc:
+            failures.append(
+                {"source_id": source_id, "kind": "set", "error": str(exc)[:1200]}
+            )
 
     failed_ids = {x["source_id"] for x in failures}
     rebuilt, stamp = [], now()

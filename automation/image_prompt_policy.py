@@ -2,7 +2,7 @@
 """Product routing plus deterministic visual diversity for generated city images."""
 from __future__ import annotations
 
-import base64,hashlib,io
+import base64,hashlib,io,re
 from pathlib import Path
 from PIL import Image
 ASSET_DIR=Path(__file__).with_name('assets')
@@ -33,6 +33,14 @@ LAYFLAT_SCENES={
   3:'technical water-transfer scene where a plausible pump, manifold or connection is the main subject',
   4:'active field setup where laying out or connecting the collapsible hose is the main subject',
   5:'maintenance and inspection scene where a hose connection, bend, surface or storage method is the main subject'
+}
+
+ROLE_DIRECTIVES={
+ 1:'EDITORIAL HERO: a wide high-oblique view in which the local farm layout and irrigation context dominate; no close foreground product staging and no tractor-centered composition',
+ 2:'SELECTION EVIDENCE: a near-overhead close technical arrangement showing tape specification, emitter spacing or field requirement evidence; no skyline, barn, tractor or panorama',
+ 3:'HEADWORKS STORY: a medium side view of an unattended filter, gauge, pressure regulator and manifold; the irrigation hardware must dominate and the field is only context',
+ 4:'INSTALLATION RESULT: an empty post-installation view of aligned drip tape and crop beds, with no human action, vehicle, cabin or long centered furrow vanishing point',
+ 5:'MAINTENANCE DETAIL: a tight unattended emitter, flush-point, connector or leak-prevention detail; no landscape panorama and no repeated role-3 manifold scene',
 }
 
 CAMERAS=[
@@ -88,6 +96,16 @@ def _variation(item,kind):
     }
 
 
+def visual_brief(item,max_chars=700):
+    item=item or {};parts=[]
+    for key in ('title','topic_title','topic_focus','focus_keyword','excerpt','meta_description','summary','city','county','province'):
+        value=re.sub(r'<[^>]+>',' ',str(item.get(key) or ''))
+        value=re.sub(r'\s+',' ',value).strip()
+        if value and value not in parts:parts.append(value)
+    brief=' | '.join(parts)
+    return brief[:max_chars].rsplit(' ',1)[0] if len(brief)>max_chars else brief
+
+
 def reference_images(kind,item=None):
     family=product_family(item)
     if family=='layflat':
@@ -114,6 +132,8 @@ def image_prompt(item,kind):
     correction=str((item or {}).get('_image_qa_feedback') or '').strip()
     correction_instruction=f'Previous candidate was rejected by strict visual QA. Correct every issue: {correction}. ' if correction else ''
     role_safety=('For this role use a completely empty field detail: no tractor, vehicle, machine cabin, greenhouse activity or living being anywhere in the image. ' if int(kind)==4 else '')
+    brief=visual_brief(item)
+    role=ROLE_DIRECTIVES.get(int(kind),ROLE_DIRECTIVES[1])
     diversity=(f'Camera: {variation["camera"]}. Background: {variation["background"]}. Lighting: {variation["light"]}. Composition: {variation["composition"]}. Make this image visibly different from the other article images. Use visual variation token {variation["token"]} only as a seed and never render it.')
     if family=='layflat':
         shape=('exactly two separate related layflat-hose objects placed naturally beside each other: first, the packaged low wide black woven hose coil with the same folded printed cardboard pieces, crossing straps, center opening and package proportions; second, the unboxed black woven layflat hose coil exactly like its reference, as a low flat horizontal coil made of many tight concentric layers with a short hollow brown cardboard center, visible diagonal woven fabric texture, realistic compressed thickness and one short loose hose end')
@@ -126,9 +146,9 @@ def image_prompt(item,kind):
         scale=('Use the approved 03-compact scale: the product occupies approximately 20 to 23 percent of frame width, its top stays clearly below knee height and it sits about two metres from the camera. Keep it off-center on the lower third.')
         people_rule=('NO PEOPLE in any drip-tape image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette or distant human figure. Show the article-specific field, crop, irrigation system and unattended equipment without any human presence.')
     return ('Create one photorealistic 16:9 agricultural editorial photograph. The attached image is an identity and geometry reference, not a flat layer to paste. '
-      +f'Scene role: {scene}. {role_safety}{correction_instruction}Use a plausible Iranian agricultural environment suitable for {city}, {province}. The background, equipment and activity must follow this article scene and remain the main subject. {people_rule} Reconstruct the product as a true three-dimensional object: {shape}. '
+      +f'Article visual brief extracted from the post: {brief}. Every background and technical detail must visibly express this brief rather than a generic farm. Mandatory role blueprint: {role}. Scene role: {scene}. {role_safety}{correction_instruction}Use a plausible Iranian agricultural environment suitable for {city}, {province}, without inventing landmarks, crops, climate facts or local infrastructure. The background and equipment must follow this article scene and remain the main subject. {people_rule} Reconstruct the product as a true three-dimensional object: {shape}. '
       'Show it from a slightly different but physically plausible three-quarter angle, about 10 to 20 degrees from the reference. Preserve silhouette, packaging construction, proportions, material, printed-panel layout and brand colors. '
-      +exact+' '+scale+' Enforce believable human scale. A drip-tape carton roll is roughly 40 to 55 cm across and 20 to 30 cm high; each layflat coil is roughly 45 to 65 cm across and 15 to 25 cm high. If people appear, every roll must remain clearly below knee height and must never look waist-high or table-sized. '
+      +exact+' '+scale+' Enforce believable real-world scale. A drip-tape carton roll is roughly 40 to 55 cm across and 20 to 30 cm high; each layflat coil is roughly 45 to 65 cm across and 15 to 25 cm high. People must not appear. Every roll must remain clearly below implied knee height and must never look waist-high or table-sized. '
       'Use a wide environmental composition with substantial space around the product; never make the product the hero, central subject or foreground focal point. Reject forced-perspective enlargement, giant packaging, people touching or leaning on the package, and any crop that cuts through the product. Match perspective, depth of field, color cast, contact shadow, reflected light and slight soil interaction. '
       'Absolutely no sticker look, hard cut-out edge, white halo, flat front-facing packshot, collage, floating or duplicate product, caption, added logo or invented writing. '+diversity)
 

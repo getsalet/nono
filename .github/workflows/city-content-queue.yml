@@ -23,11 +23,12 @@ permissions:
   contents: write
 
 concurrency:
-  group: navar-city-content-queue
+  group: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[image-rebuild]') && 'navar-city-content-queue-image-rebuild-skip' || 'navar-city-content-queue' }}
   cancel-in-progress: false
 
 jobs:
   generate:
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[image-rebuild]')
     runs-on: ubuntu-latest
     timeout-minutes: 240
 
@@ -48,9 +49,10 @@ jobs:
       ARTICLE_WORKERS: "1"
       IMAGE_WORKERS: "5"
       IMAGE_QA_ATTEMPTS: "10"
+      IMAGE_SET_QA_ATTEMPTS: "3"
       IMAGE_QA_FAST_MODE: "0"
       WORDPRESS_DB_NAME: navaraby_wp569
-      CURRENT_IMAGE_POLICY: reference-rerender-3d-v5-approved-scales-topic-first
+      CURRENT_IMAGE_POLICY: reference-rerender-3d-v10-atomic-city-set-reviewed
 
     steps:
       - name: Checkout repository

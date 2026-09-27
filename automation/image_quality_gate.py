@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Fast image QA with hard rejection for product identity and physics failures."""
-import base64,json,os,re,urllib.request
+import base64,json,os,re,urllib.request,tempfile,shutil
+from concurrent.futures import as_completed
+from pathlib import Path
 import image_prompt_policy
-REVIEW_POLICY='strict-no-human-scale-watermark-v4-metric-feedback'
+REVIEW_POLICY='strict-no-human-scale-watermark-v10-atomic-city-set-reviewed'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
@@ -35,18 +37,15 @@ def _metric_check(family,verdict):
   issues.append(f'Enlarge the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
  elif width>max_width:
   issues.append(f'Reduce the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
- if height>30:
-  issues.append(f'Reduce product height from {height:g}% to at most 30% of frame height.')
- # Bounding-box estimates near the center are noisy. Reject only an effectively
- # exact center; semantic off-center placement must still pass model review.
- if 49.5<=x_center<=50.5:
-  issues.append('Move the product clearly to the left or right lower third; do not center it.')
+ if height>28:
+  issues.append(f'Reduce product height from {height:g}% to at most 28% of frame height.')
  return not issues,issues
 
 def _vision_review(base,path,item,kind):
  quick=_quick_file_check(path)
  if quick:return quick
  family=__import__('image_prompt_policy').product_family(item)
+ brief=image_prompt_policy.visual_brief(item)
  if FAST_MODE and kind not in REVIEW_KINDS:
   return {'pass':True,'score':90,'reasons':['fast mode: trusted prompt for non-key image'],'correction_prompt':''}
  encoded=base64.b64encode(path.read_bytes()).decode('ascii')
@@ -54,10 +53,11 @@ def _vision_review(base,path,item,kind):
   criteria='The image must show exactly two approved layflat objects: one packaged AFP coil and one bare black woven coil. The complete pair must occupy only about 12 to 15 percent of frame width, stay off-center on the lower third, remain fully visible, separate and flat on the ground. The image must contain zero people and zero human body parts.'
   reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 15 percent of the frame, centered product staging, any third hose or product, round pipe, drip tape, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or distorted dimensions.'
  else:
-  criteria='The image must show exactly one AFP white-and-blue cylindrical drip-tape carton roll. Estimate its pixel bounding box: it must occupy only about 20 to 23 percent of full frame width, no more than about 30 percent of frame height, stay off-center on the lower third, and remain secondary to the farm context. The image must contain zero people and zero human body parts.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 23 percent of the frame, taller than 30 percent of the frame, centered product staging, bottle, jar, canister, bucket, fertilizer or pesticide container, second package, second roll, layflat hose, pipe through the roll, fake label, impossible geometry or distorted dimensions.'
+  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. Estimate its pixel bounding box: it must occupy only about 20 to 23 percent of full frame width, no more than about 28 percent of frame height, stay off-center on the lower third, and remain secondary to the farm context. The image must contain zero people and zero human body parts. The background must visibly match the article brief and the selected image role.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 23 percent of the frame, taller than 28 percent of the frame, centered product staging, bottle, jar, canister, bucket, fertilizer or pesticide container, second package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry, generic unrelated scenery or distorted dimensions.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
+Article visual brief: {brief}. Mandatory role: {image_prompt_policy.ROLE_DIRECTIVES.get(int(kind),'')}.
 The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never be rejected or requested for removal. Unattended tractors, pumps, filters and ordinary farm equipment are allowed when no person or human silhouette is visible; do not classify them as extra commercial products. Estimate the product bounding box from image pixels. Report product_width_percent, product_height_percent and product_x_center_percent as numeric percentages of the full image. If pass is true, correction_prompt must be empty. Do not reject only for ordinary soil texture or distant crop rows. Return only JSON: {{"pass":true|false,"score":0-100,"product_width_percent":0,"product_height_percent":0,"product_x_center_percent":0,"reasons":["..."],"correction_prompt":"short regeneration instruction"}}. Pass at score {MIN_IMAGE_SCORE} or higher.'''
  payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':[{'type':'text','text':prompt},{'type':'image_url','image_url':{'url':'data:image/webp;base64,'+encoded}}]}],'temperature':0,'response_format':{'type':'json_object'}}
  req=urllib.request.Request(base.AGNES_BASE+'/chat/completions',data=json.dumps(payload).encode(),headers={'Authorization':f'Bearer {base.AGNES_KEY}','Content-Type':'application/json'})
@@ -74,14 +74,15 @@ The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never 
  return verdict
 
 def install(base,backend,raw_generator):
- reviews=base.OUT/'image-reviews';reviews.mkdir(parents=True,exist_ok=True)
  def guarded(item,kind):
   feedback='';history=[];family=image_prompt_policy.product_family(item)
+  reviews=Path(item.get('_image_review_dir') or (base.OUT/'image-reviews'));reviews.mkdir(parents=True,exist_ok=True)
+  image_dir=Path(item.get('_image_output_dir') or base.IMAGES);image_dir.mkdir(parents=True,exist_ok=True)
   review_path=reviews/f"{item['source_id']}-{kind}.json"
   try:
    if review_path.exists():
     prior=json.loads(review_path.read_text(encoding='utf-8'))
-    path=base.IMAGES/backend.seo_image_name(item,kind)
+    path=image_dir/backend.seo_image_name(item,kind)
     if prior.get('policy')==REVIEW_POLICY and prior.get('history') and prior['history'][-1].get('pass') and path.exists() and path.stat().st_size>10000:
      blob=path.read_bytes();return path.name,__import__('hashlib').sha256(blob).hexdigest()
   except Exception:
@@ -89,7 +90,7 @@ def install(base,backend,raw_generator):
   for attempt in range(1,MAX_IMAGE_ATTEMPTS+1):
     candidate_item=dict(item)
     if feedback:candidate_item['_image_qa_feedback']=feedback
-    name,digest=raw_generator(candidate_item,kind);path=base.IMAGES/name
+    name,digest=raw_generator(candidate_item,kind);path=image_dir/name
     try:verdict=_vision_review(base,path,item,kind)
     except Exception as exc:
      verdict={'pass':False,'score':0,'reasons':['visual reviewer unavailable: '+type(exc).__name__],'correction_prompt':'Regenerate and retry strict visual review.'}
@@ -100,3 +101,77 @@ def install(base,backend,raw_generator):
     path.unlink(missing_ok=True);feedback=str(verdict.get('correction_prompt') or '; '.join(verdict.get('reasons',[])))
   raise RuntimeError(f'image hard gate rejected role {kind} after {MAX_IMAGE_ATTEMPTS} attempt')
  return guarded
+
+
+def review_image(base,path,item,kind):
+ return _vision_review(base,path,item,kind)
+
+
+def review_image_set(base,paths,item):
+ encoded=[base64.b64encode(Path(path).read_bytes()).decode('ascii') for path in paths]
+ brief=image_prompt_policy.visual_brief(item)
+ roles='; '.join(f'{kind}: {image_prompt_policy.ROLE_DIRECTIVES[kind]}' for kind in range(1,6))
+ prompt=f'''Review these five already individually-approved city-article images as one editorial set.
+Article visual brief: {brief}. Required roles: {roles}.
+The same AFP product is expected in every image, so product identity itself is not duplication. Pass only when all five roles are visibly distinct in camera height/angle, environment structure and technical narrative, and every background is relevant to the article brief. Reject repeated furrow-field plus tractor compositions, generic farms, role-3/role-5 hardware duplication, or images that only move the product. Zero people remains mandatory. Return only JSON: {{"pass":true|false,"score":0-100,"duplicate_roles":[1,2,3,4,5],"reasons":["..."],"correction_prompt":"one concise replacement instruction"}}.'''
+ content=[{'type':'text','text':prompt}]
+ content.extend({'type':'image_url','image_url':{'url':'data:image/webp;base64,'+blob}} for blob in encoded)
+ payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':content}],'temperature':0,'response_format':{'type':'json_object'}}
+ req=urllib.request.Request(base.AGNES_BASE+'/chat/completions',data=json.dumps(payload).encode(),headers={'Authorization':f'Bearer {base.AGNES_KEY}','Content-Type':'application/json'})
+ with urllib.request.urlopen(req,timeout=120) as response:raw=json.loads(response.read())
+ body=raw['choices'][0]['message']['content']
+ if isinstance(body,list):body=''.join(str(x.get('text','')) for x in body if isinstance(x,dict))
+ verdict=_extract_json(body);roles_out=[]
+ for value in verdict.get('duplicate_roles',[]):
+  try:value=int(value)
+  except (TypeError,ValueError):continue
+  if value in range(1,6) and value not in roles_out:roles_out.append(value)
+ verdict['duplicate_roles']=roles_out
+ verdict['pass']=bool(verdict.get('pass')) and int(verdict.get('score',0))>=75 and not roles_out
+ return verdict
+
+
+def install_set_manager(base,backend,image_count=5):
+ def manager(item,pool):
+  review_id=str(item.get('source_id') or 'unknown')
+  base.OUT.mkdir(parents=True,exist_ok=True)
+  staging_root=Path(tempfile.mkdtemp(prefix=f'.image-staging-{review_id}-',dir=base.OUT))
+  staging_images=staging_root/'images';staging_reviews=staging_root/'image-reviews'
+  staging_images.mkdir(parents=True);staging_reviews.mkdir(parents=True)
+  results,feedback={},{};pending=set(range(1,image_count+1));history=[]
+  set_review=base.OUT/'image-reviews'/f'{review_id}-set.json'
+  try:
+   rounds=max(1,int(os.getenv('IMAGE_SET_QA_ATTEMPTS','3')))
+   for set_attempt in range(1,rounds+1):
+    futures={}
+    for kind in sorted(pending):
+     candidate=dict(item);candidate['_image_output_dir']=str(staging_images);candidate['_image_review_dir']=str(staging_reviews)
+     if feedback.get(kind):candidate['_image_qa_feedback']=feedback[kind]
+     futures[pool.submit(backend.generate_image,candidate,kind)]=kind
+    for future in as_completed(futures):
+     kind=futures[future];results[kind]=future.result()
+    paths=[staging_images/results[kind][0] for kind in range(1,image_count+1)]
+    verdict=review_image_set(base,paths,item);verdict['set_attempt']=set_attempt;history.append(verdict)
+    set_review.parent.mkdir(parents=True,exist_ok=True)
+    set_review.write_text(json.dumps({'source_id':review_id,'policy':REVIEW_POLICY,'history':history},ensure_ascii=False,indent=2),encoding='utf-8')
+    print(f"city_image_set_qa source_id={review_id} attempt={set_attempt} pass={verdict.get('pass')} score={verdict.get('score')} duplicate_roles={verdict.get('duplicate_roles',[])} reasons={verdict.get('reasons',[])}",flush=True)
+    if verdict.get('pass'):
+     base.IMAGES.mkdir(parents=True,exist_ok=True);final_reviews=base.OUT/'image-reviews';final_reviews.mkdir(parents=True,exist_ok=True)
+     for kind in range(1,image_count+1):
+      staged=staging_images/results[kind][0]
+      if not staged.exists():raise RuntimeError(f'Approved staged image is missing for role {kind}')
+      os.replace(staged,base.IMAGES/staged.name)
+      role_review=staging_reviews/f'{review_id}-{kind}.json'
+      if role_review.exists():os.replace(role_review,final_reviews/role_review.name)
+     return [results[kind] for kind in range(1,image_count+1)]
+    pending=set(verdict.get('duplicate_roles') or range(1,image_count+1))
+    correction=str(verdict.get('correction_prompt') or '; '.join(verdict.get('reasons',[])))
+    for kind in pending:
+     feedback[kind]=correction+f' Create a new role-{kind} scene clearly unlike the other four.'
+     if kind in results:
+      (staging_images/results[kind][0]).unlink(missing_ok=True);results.pop(kind,None)
+     (staging_reviews/f'{review_id}-{kind}.json').unlink(missing_ok=True)
+   raise RuntimeError(f'Image-set diversity gate rejected the five-image editorial set after {rounds} rounds')
+  finally:
+   shutil.rmtree(staging_root,ignore_errors=True)
+ return manager

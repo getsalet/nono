@@ -2,6 +2,7 @@
 """Run the reviewed production queue with Agnes text and image models."""
 import base64,hashlib,io,json,os,urllib.error,urllib.request
 import time
+from pathlib import Path
 from PIL import Image
 import city_content_queue as base
 import city_content_queue_cloudflare as backend
@@ -73,7 +74,8 @@ def neutral_image_input():
 def agnes_generate_image(item,kind):
     if not KEY:raise RuntimeError('IMAGE_API_KEY/AGNES_API_KEY is missing')
     name=(backend.seo_image_name(item,kind) if hasattr(backend,'seo_image_name') else f"{item['source_id']}-{kind}.webp")
-    cached=base.IMAGES/name
+    image_dir=Path(item.get('_image_output_dir') or base.IMAGES);image_dir.mkdir(parents=True,exist_ok=True)
+    cached=image_dir/name
     if cached.exists() and cached.stat().st_size>10000:
         blob=cached.read_bytes();return name,hashlib.sha256(blob).hexdigest()
     payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':image_prompt_policy.reference_images(kind,item)}}
@@ -107,7 +109,7 @@ def agnes_generate_image(item,kind):
     watermarked=Image.open(io.BytesIO(backend.watermark(stage.getvalue()))).convert('RGB')
     out=io.BytesIO();watermarked.save(out,'WEBP',quality=60,method=6);blob=out.getvalue()
     if len(blob)<10000:raise RuntimeError('Agnes generated image is unexpectedly small')
-    name=seo_image_name(item,kind);(base.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()
+    name=seo_image_name(item,kind);(image_dir/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()
 
 if base.QUEUE.exists():
     state=json.loads(base.QUEUE.read_text(encoding='utf-8'));changed=False
