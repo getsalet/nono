@@ -1,0 +1,93 @@
+{
+  "source_id": "1060001001269-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 40,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Image contains multiple human figures in the background.",
+        "Hard reject: Visible human body parts (faces, torsos, legs) are present.",
+        "Role mismatch: The image shows a full commercial carton roll, whereas the mandatory role requires a 'MAINTENANCE DETAIL' (close view of an installed emitter, connector, or material detail).",
+        "The presence of people immediately disqualifies the image under strict constraints."
+      ],
+      "correction_prompt": "Regenerate image showing a close-up macro detail of an installed drip-tape emitter on a field ridge with one carton roll blurred in the background. Ensure there are absolutely no people, farmers, or human figures visible. Remove any other commercial containers. Keep the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 34,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Second commercial package/roll visible in the background",
+        "Fake or gibberish text on the cartons ('DRP PLERM6SS 718')",
+        "Fails 'exactly one approved carton' requirement"
+      ],
+      "correction_prompt": "Remove the second roll in the background so only one carton is visible. Correct all text on the carton to be clear and legible, specifically replacing gibberish characters with the intended product details.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 43,
+      "product_height_percent": 50,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The mandatory image role 'MAINTENANCE DETAIL' requires an unattended close view of an installed drip-tape emitter, connector, flush-point, or material detail. The submitted image displays a large commercial carton roll standing in the field rather than the required maintenance detail of installed infrastructure.",
+        "The role description requires 'exactly one approved carton remains visible', but the current composition is a product hero shot, not the requested technical close-up of installed components.",
+        "The tractor in the background is unattended and acceptable, but the primary subject matter violates the 'close view of an installed drip-tape emitter' constraint for this specific brief.",
+        "Text on the carton is partially gibberish, which is a secondary issue."
+      ],
+      "correction_prompt": "Regenerate the image to show a close-up maintenance detail of an installed 20mm drip-tape connector, flush-point, or emitter in the soil. In the background, a single small section of the white and blue AFP carton roll must be visible. Do not include the large foreground carton roll, second roll, or any people.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 42,
+      "product_height_percent": 52,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Second commercial package present (a second AFP carton roll is clearly visible on the right)",
+        "Second commercial package not allowed by role 5 brief",
+        "Brief requires exactly one approved carton visible; image has two"
+      ],
+      "correction_prompt": "Regenerate with exactly one AFP white-and-blue drip-tape carton roll (wide low cylindrical shape) on tilled soil, no second roll or commercial package, no people, include the required bottom-right watermark “AFP | 09134922013”.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible person (farmer) in the background",
+        "Image role mismatch: shows a standalone product carton instead of the required maintenance detail (emitter/connector)"
+      ],
+      "correction_prompt": "Remove the person in the background and change the view to a close-up maintenance detail of an installed drip-tape emitter or connector, keeping only one AFP carton roll visible.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 42,
+      "product_height_percent": 50,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Second commercial package visible: a loose coiled roll of drip tape is present next to the carton roll",
+        "Text artifacts: The text on the carton wrap below the main logo is gibberish (e.g., 'DIIP NIEATTA TUP')"
+      ],
+      "correction_prompt": "Remove the loose coiled roll of drip tape on the ground to the right of the main carton. Regenerate the carton label text to be sharp, legible English or standard placeholder text; remove all gibberish characters.",
+      "attempt": 6
+    }
+  ]
+}

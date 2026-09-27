@@ -1,0 +1,42 @@
+{
+  "source_id": "1050003002103-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 84,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains two large coils in the center/foreground, violating the rule against a pair wider than 60 percent of the frame.",
+        "Contains a third object (a small coiled tube on the right) which violates the 'zero third commercial package or third coil' constraint.",
+        "Contains a third object (an invented package/label in the middle foreground) which violates the constraint.",
+        "The composition includes extra items (two coils plus a smaller one) rather than the strict 'approved pair' (exactly one packaged, one bare).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 84% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Generate a scene showing only two coils on the soil: one large black coil and one smaller packaged coil. Remove all other objects, labels, and the small tube on the right. Ensure the two coils are separate and total width is under 50%. Reduce the product group from 84% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 38,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains exactly two coils (one bare black, one packaged AFP) as required",
+        "Zero people, body parts, bottles, or extra commercial products",
+        "Distant tractor treated as acceptable farm infrastructure",
+        "Required bottom-right watermark 'AFP | 09134922013' present",
+        "Products are fully visible and physically plausible",
+        "Product width (38%) falls within the 8-60% acceptable vision estimate range"
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
