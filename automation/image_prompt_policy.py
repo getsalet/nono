@@ -21,27 +21,41 @@ def product_family(item):
 
 
 TAPE_SCENES={
- 1:'wide empty city-article landscape where the agricultural field, crop rows and local irrigation context are the main subject; no tractor, vehicle, machine cabin, person or human silhouette is present',
-  2:'practical selection or comparison scene where farm requirements and the article topic are the main subject',
-  3:'technical irrigation scene where filtration, pressure control or water distribution is the main subject',
-  4:'empty post-installation technical detail of drip tape laid across soil and crop rows; show no tractor, vehicle, cabin, greenhouse activity, worker, driver, person, body part or silhouette',
-  5:'maintenance and inspection scene where the drip line, emitter area or connection detail is the main subject'
+  1:'wide city-article landscape where the agricultural field, crop rows and local irrigation context dominate while one approved drip-tape carton remains small and secondary',
+  2:'practical selection scene showing one approved carton beside visible emitter-spacing or field-requirement evidence',
+  3:'technical irrigation scene where fixed filtration, pressure control and water distribution hardware dominate while one approved carton remains secondary',
+  4:'unattended post-installation scene of drip tape laid across soil and crop beds with one approved carton retained as small off-center product evidence',
+  5:'maintenance and inspection scene where an emitter, connector or flush-point detail dominates while one approved carton remains secondary'
 }
 LAYFLAT_SCENES={
-  1:'wide city-article hero where the field and agricultural water-transfer context are the main subject',
-  2:'practical selection or measurement scene where the farm requirement and hose application are the main subject',
-  3:'technical water-transfer scene where a plausible pump, manifold or connection is the main subject',
-  4:'active field setup where laying out or connecting the collapsible hose is the main subject',
-  5:'maintenance and inspection scene where a hose connection, bend, surface or storage method is the main subject'
+  1:'wide city-article landscape where agricultural water transfer dominates while the approved two-coil pair remains small and secondary',
+  2:'practical selection scene showing the approved two-coil pair beside diameter, connector or field-requirement evidence',
+  3:'technical water-transfer scene where a fixed unattended pump, manifold or connection dominates while the approved pair remains secondary',
+  4:'unattended installed-result scene with an extended layflat connection leading into the field and the approved pair kept small at the field edge',
+  5:'maintenance scene where a connector, fold, woven surface or storage detail dominates while the approved pair remains secondary'
 }
 
-ROLE_DIRECTIVES={
- 1:'EDITORIAL HERO: a wide high-oblique view in which the local farm layout and irrigation context dominate; no close foreground product staging, tractor, vehicle, machine cabin or machinery',
- 2:'SELECTION EVIDENCE: a near-overhead close technical arrangement showing tape specification, emitter spacing or field requirement evidence; no skyline, barn, tractor or panorama',
- 3:'HEADWORKS STORY: a medium side view of an unattended filter, gauge, pressure regulator and manifold; the irrigation hardware must dominate and the field is only context',
- 4:'INSTALLATION RESULT: an empty post-installation view of aligned drip tape and crop beds, with no human action, vehicle, cabin or long centered furrow vanishing point',
- 5:'MAINTENANCE DETAIL: a tight unattended emitter, flush-point, connector or leak-prevention detail; no landscape panorama and no repeated role-3 manifold scene',
+TAPE_ROLE_DIRECTIVES={
+ 1:'EDITORIAL HERO: wide high-oblique view; the farm and irrigation context dominate; exactly one approved carton stays small, fully visible and off-center on the lower third',
+ 2:'SELECTION EVIDENCE: near-overhead technical arrangement with exactly one approved carton plus emitter-spacing or specification evidence; no skyline, barn, tractor or panorama',
+ 3:'HEADWORKS STORY: medium side view of unattended fixed filter, gauge, regulator and manifold; exactly one approved carton remains small and secondary',
+ 4:'INSTALLATION PROOF: asymmetric unattended view of installed drip tape and crop beds; exactly one approved carton remains small at a field edge; no centered vanishing point',
+ 5:'MAINTENANCE DETAIL: connector, emitter or flush-point detail dominates; exactly one approved carton remains fully visible but secondary; do not repeat role 3',
 }
+LAYFLAT_ROLE_DIRECTIVES={
+ 1:'EDITORIAL HERO: wide high-oblique water-transfer context; exactly the approved packaged coil and bare black woven coil remain small, separate and off-center',
+ 2:'SELECTION EVIDENCE: near-overhead technical comparison with exactly the approved two-coil pair plus diameter or connector evidence; no skyline or panorama',
+ 3:'HEADWORKS STORY: medium side view of a fixed unattended pump, gauge and manifold; the approved two-coil pair remains small, separate and secondary',
+ 4:'INSTALLATION PROOF: asymmetric unattended view of an extended layflat connection entering the field; the approved two-coil pair remains small at the field edge',
+ 5:'MAINTENANCE DETAIL: connector, fold or woven-surface detail dominates; the approved two-coil pair remains fully visible but secondary; do not repeat role 3',
+}
+ROLE_DIRECTIVES=TAPE_ROLE_DIRECTIVES
+
+
+def role_directive(item_or_family,kind):
+    family=item_or_family if isinstance(item_or_family,str) else product_family(item_or_family)
+    roles=LAYFLAT_ROLE_DIRECTIVES if family=='layflat' else TAPE_ROLE_DIRECTIVES
+    return roles.get(int(kind),roles[1])
 
 CAMERAS=[
  'high oblique 35mm viewpoint with visible field geometry',
@@ -140,9 +154,9 @@ def image_prompt(item,kind):
     scene=(LAYFLAT_SCENES if family=='layflat' else TAPE_SCENES).get(kind)
     correction=str((item or {}).get('_image_qa_feedback') or '').strip()
     correction_instruction=f'Previous candidate was rejected by strict visual QA. Correct every issue: {correction}. ' if correction else ''
-    role_safety=('For this role use a completely empty field detail: no tractor, vehicle, machine cabin, greenhouse activity or living being anywhere in the image. ' if int(kind)==4 else '')
+    role_safety=('For this installation-proof role use an unattended asymmetric scene. Keep the required product evidence small at the field edge; include no tractor, vehicle, cabin or living being. ' if int(kind)==4 else '')
     brief=visual_brief(item)
-    role=ROLE_DIRECTIVES.get(int(kind),ROLE_DIRECTIVES[1])
+    role=role_directive(family,kind)
     diversity=(f'Camera: {variation["camera"]}. Background: {variation["background"]}. Lighting: {variation["light"]}. Composition: {variation["composition"]}. Make this image visibly different from the other article images. Use visual variation token {variation["token"]} only as a seed and never render it.')
     if family=='layflat':
         shape=('exactly two separate related layflat-hose objects placed naturally beside each other: first, the packaged low wide black woven hose coil with the same folded printed cardboard pieces, crossing straps, center opening and package proportions; second, the unboxed black woven layflat hose coil exactly like its reference, as a low flat horizontal coil made of many tight concentric layers with a short hollow brown cardboard center, visible diagonal woven fabric texture, realistic compressed thickness and one short loose hose end')
@@ -155,7 +169,7 @@ def image_prompt(item,kind):
         scale=('Use the approved 03-compact scale: the product occupies approximately 20 to 23 percent of frame width, its top stays clearly below knee height and it sits about two metres from the camera. Keep it off-center on the lower third.')
         people_rule=('NO PEOPLE OR VEHICLES in any drip-tape image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette, distant human figure, tractor, harvester, vehicle or machine cabin. Show the article-specific field, crop, irrigation system and fixed unattended equipment without any human-associated machinery.')
     return ('Create one photorealistic 16:9 agricultural editorial photograph. The attached image is an identity and geometry reference, not a flat layer to paste. '
-      +f'Article visual brief extracted from the post: {brief}. Every background and technical detail must visibly express this brief rather than a generic farm. Mandatory role blueprint: {role}. Scene role: {scene}. {role_safety}{correction_instruction}Use a plausible Iranian agricultural environment suitable for {city}, {province}, without inventing landmarks, crops, climate facts or local infrastructure. The background and equipment must follow this article scene and remain the main subject. {people_rule} Reconstruct the product as a true three-dimensional object: {shape}. '
+      +f'Article visual brief extracted from the post: {brief}. Every background and technical detail must visibly express this brief rather than a generic farm. Mandatory role blueprint: {role}. Scene role: {scene}. {role_safety}{correction_instruction}Use a plausible Iranian agricultural environment suitable for {city}, {province}, without inventing landmarks, crops, climate facts or local infrastructure. The background and equipment must follow this article scene and remain the main subject. The required approved product evidence stays visible in every role; the role changes the technical narrative and camera, never the product identity or object count. {people_rule} Reconstruct the product as a true three-dimensional object: {shape}. '
       'Show it from a slightly different but physically plausible three-quarter angle, about 10 to 20 degrees from the reference. Preserve silhouette, packaging construction, proportions, material, printed-panel layout and brand colors. '
       +exact+' '+scale+' Enforce believable real-world scale. A drip-tape carton roll is roughly 40 to 55 cm across and 20 to 30 cm high; each layflat coil is roughly 45 to 65 cm across and 15 to 25 cm high. People must not appear. Every roll must remain clearly below implied knee height and must never look waist-high or table-sized. '
       'Use a wide environmental composition with substantial space around the product; never make the product the hero, central subject or foreground focal point. Reject forced-perspective enlargement, giant packaging, people touching or leaning on the package, and any crop that cuts through the product. Match perspective, depth of field, color cast, contact shadow, reflected light and slight soil interaction. '
