@@ -162,6 +162,11 @@ def image_prompt(item,kind):
         # variation previously contradicted the near-overhead brief and caused
         # tractors, horizons, extra connectors and oversized foreground coils.
         diversity=(f'Camera: elevated 60-degree downward near-overhead view from at least six metres away. Background: only broad empty textured soil with generous negative space; no horizon, building, crop rows, person, vehicle, machine or extra object. Composition: the exact two-coil pair alone, off-center on the lower third, with the complete pair occupying 12 to 15 percent of frame width and never more than 30 percent. Use visual variation token {variation["token"]} only as a seed and never render it.')
+    elif family=='tape20' and int(kind)==2:
+        # Keep tape selection evidence on a controlled, horizon-free patch of
+        # soil. Generic environment variation repeatedly introduced barns,
+        # tractors, centered product poses and fake specification cards.
+        diversity=(f'Camera: elevated 60-degree downward near-overhead view from at least five metres away. Background: only broad empty textured soil and one short installed drip-tape segment with physically visible emitter spacing; crop every horizon, building, barn, person, animal, tractor, vehicle, machine, box, bottle, ruler, tool and specification card out of frame. Composition: exactly one approved carton, fully visible and off-center on the lower third, occupying 15 to 22 percent of frame width; the short installed tape segment is evidence, not a second roll or package. Do not generate any extra readable text. Use visual variation token {variation["token"]} only as a seed and never render it.')
     elif int(kind)==5:
         # Maintenance must be a controlled detail shot. A generic farm
         # background repeatedly introduced people, tractors and extra products.

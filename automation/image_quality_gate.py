@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Fast image QA with hard rejection for product identity and physics failures."""
-import base64,json,os,re,urllib.request,shutil
+import base64,json,os,re,urllib.error,urllib.request,shutil,time
 from concurrent.futures import as_completed
 from pathlib import Path
 import image_prompt_policy
@@ -9,6 +9,7 @@ MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
 REVIEW_KINDS={int(x) for x in os.getenv('IMAGE_QA_REVIEW_KINDS','1,2,3,4,5').split(',') if x.strip().isdigit()}
+REVIEW_REQUEST_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_REVIEW_ATTEMPTS','4')))
 
 def _extract_json(text):
  text=(text or '').strip();text=re.sub(r'^```(?:json)?\s*|\s*```$','',text,flags=re.I|re.S).strip()
@@ -74,6 +75,26 @@ The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never 
   verdict['correction_prompt']=' '.join(x for x in [model_correction,' '.join(metric_issues)] if x)
  return verdict
 
+
+def _vision_review_with_retry(base,path,item,kind):
+ last_error=None
+ for review_attempt in range(1,REVIEW_REQUEST_ATTEMPTS+1):
+  try:
+   return _vision_review(base,path,item,kind)
+  except (TimeoutError,urllib.error.HTTPError,urllib.error.URLError,ConnectionError,OSError) as exc:
+   last_error=exc
+   print(
+    f"image_visual_review_retry source_id={item.get('source_id')} kind={kind} "
+    f"attempt={review_attempt}/{REVIEW_REQUEST_ATTEMPTS} error={type(exc).__name__}",
+    flush=True,
+   )
+   if review_attempt<REVIEW_REQUEST_ATTEMPTS:
+    time.sleep(min(12,2**review_attempt))
+ raise RuntimeError(
+  f"visual reviewer unavailable after {REVIEW_REQUEST_ATTEMPTS} retries: "
+  f"{type(last_error).__name__ if last_error else 'unknown error'}"
+ )
+
 def install(base,backend,raw_generator):
  def guarded(item,kind):
   feedback='';history=[];family=image_prompt_policy.product_family(item)
@@ -87,6 +108,23 @@ def install(base,backend,raw_generator):
     prior_history=prior.get('history') or []
     if prior.get('policy')==REVIEW_POLICY and prior_history and prior_history[-1].get('pass') and path.exists() and path.stat().st_size>10000:
      blob=path.read_bytes();return path.name,__import__('hashlib').sha256(blob).hexdigest()
+    # If only the reviewer was unavailable, review the preserved candidate
+    # again instead of spending another image-generation attempt.
+    if (prior.get('policy')==REVIEW_POLICY and prior_history
+        and prior_history[-1].get('review_unavailable')
+        and path.exists() and path.stat().st_size>10000):
+     try:
+      verdict=_vision_review_with_retry(base,path,item,kind)
+     except RuntimeError:
+      raise RuntimeError('visual reviewer unavailable after retries; candidate checkpoint preserved')
+     verdict['attempt']='checkpoint-review'
+     history=list(prior_history[-19:])+[verdict]
+     review_path.write_text(json.dumps({'source_id':item['source_id'],'family':family,'kind':kind,'policy':REVIEW_POLICY,'fast_mode':FAST_MODE,'history':history[-20:]},ensure_ascii=False,indent=2),encoding='utf-8')
+     print(f"image_quality_review_checkpoint source_id={item['source_id']} topic={item.get('topic')} kind={kind} pass={verdict['pass']} score={verdict.get('score',0)} reasons={verdict.get('reasons',[])}",flush=True)
+     if verdict['pass']:
+      blob=path.read_bytes();return path.name,__import__('hashlib').sha256(blob).hexdigest()
+     path.unlink(missing_ok=True)
+     feedback=str(verdict.get('correction_prompt') or '; '.join(verdict.get('reasons',[])))
     # A checkpointed failed role must resume with its last directional QA
     # feedback instead of repeating the same six blind attempts every hour.
     if prior.get('policy')==REVIEW_POLICY and prior_history:
@@ -99,13 +137,16 @@ def install(base,backend,raw_generator):
     candidate_item=dict(item)
     if feedback:candidate_item['_image_qa_feedback']=feedback
     name,digest=raw_generator(candidate_item,kind);path=image_dir/name
-    try:verdict=_vision_review(base,path,item,kind)
-    except Exception as exc:
-     verdict={'pass':False,'score':0,'reasons':['visual reviewer unavailable: '+type(exc).__name__],'correction_prompt':'Regenerate and retry strict visual review.'}
+    try:
+     verdict=_vision_review_with_retry(base,path,item,kind)
+    except RuntimeError as exc:
+     verdict={'pass':False,'score':0,'review_unavailable':True,'reasons':[str(exc)],'correction_prompt':'Retry visual review of the preserved candidate without regenerating it.'}
     verdict['attempt']=attempt;history.append(verdict)
     print(f"image_quality_review_fast source_id={item['source_id']} topic={item.get('topic')} kind={kind} attempt={attempt} pass={verdict['pass']} score={verdict.get('score',0)} reasons={verdict.get('reasons',[])}",flush=True)
     review_path.write_text(json.dumps({'source_id':item['source_id'],'family':family,'kind':kind,'policy':REVIEW_POLICY,'fast_mode':FAST_MODE,'history':history[-20:]},ensure_ascii=False,indent=2),encoding='utf-8')
     if verdict['pass']:return name,digest
+    if verdict.get('review_unavailable'):
+     raise RuntimeError('visual reviewer unavailable after retries; candidate checkpoint preserved')
     path.unlink(missing_ok=True);feedback=str(verdict.get('correction_prompt') or '; '.join(verdict.get('reasons',[])))
   raise RuntimeError(f'image hard gate rejected role {kind} after {MAX_IMAGE_ATTEMPTS} attempt')
  return guarded

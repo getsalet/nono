@@ -10,7 +10,7 @@ IMAGE_RETRY_POLICY='retry-after-v13-isolated-technical-role-fix'
 # Same-group workflow concurrency means any committed processing item belongs to
 # an interrupted earlier run. Return it to pending without consuming an attempt.
 if base.QUEUE.exists():
-    state=json.loads(base.QUEUE.read_text(encoding='utf-8'));recovered=0;repairable=0
+    state=json.loads(base.QUEUE.read_text(encoding='utf-8'));recovered=0;repairable=0;transient_review=0
     # Reserve most of every parallel batch for fresh pending work. Retrying all
     # quarantined failures at once previously consumed all three worker slots
     # and made successful progress appear frozen.
@@ -20,13 +20,16 @@ if base.QUEUE.exists():
         if item.get('status')=='processing':
             item['status']='pending';item['attempts']=max(0,int(item.get('attempts',0))-1)
             item.pop('started_at',None);item['last_error']='Recovered after interrupted workflow';recovered+=1
+        elif item.get('status')=='failed' and 'visual reviewer unavailable after retries' in item.get('last_error',''):
+            item['status']='pending';item['attempts']=max(0,int(item.get('attempts',0))-1)
+            item.pop('failed_at',None);item.pop('started_at',None);transient_review+=1
         elif (item.get('status')=='failed' and any(x in item.get('last_error','') for x in repaired_signals)
               and item.get('retry_policy')!=IMAGE_RETRY_POLICY and repairable<repair_limit):
             item['status']='pending';item['attempts']=0;item['retry_policy']=IMAGE_RETRY_POLICY
             item.pop('failed_at',None);item.pop('started_at',None);repairable+=1
-    if recovered or repairable:
+    if recovered or repairable or transient_review:
         state['updated_at']=base.now();base.QUEUE.write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf-8')
-        print(f'recovered_processing_items={recovered} repairable_failures_reset={repairable}',flush=True)
+        print(f'recovered_processing_items={recovered} transient_reviews_reset={transient_review} repairable_failures_reset={repairable}',flush=True)
 
 if os.getenv('RETRY_FAILED','0')=='1':
     try:

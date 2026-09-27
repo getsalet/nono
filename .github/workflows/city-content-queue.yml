@@ -26,6 +26,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[image-rebuild]') && 'navar-city-content-queue-image-rebuild-skip' || 'navar-city-content-queue' }}
@@ -56,10 +57,13 @@ jobs:
       ARTICLE_WORKERS: "3"
       IMAGE_WORKERS: "5"
       IMAGE_QA_ATTEMPTS: "6"
+      IMAGE_QA_REVIEW_ATTEMPTS: "4"
       IMAGE_SET_QA_ATTEMPTS: "3"
       IMAGE_QA_FAST_MODE: "0"
       # At most one quarantined repair may consume a three-article batch.
-      REPAIR_FAILED_LIMIT: "1"
+      # Keep production capacity on fresh cities. Quarantined repairs are
+      # handled separately after fresh throughput is healthy.
+      REPAIR_FAILED_LIMIT: "0"
       WORDPRESS_DB_NAME: navaraby_wp569
       CURRENT_IMAGE_POLICY: reference-rerender-3d-v10-atomic-city-set-reviewed
 
@@ -198,4 +202,26 @@ jobs:
           if [ "$AUX_CODE" -ne 0 ]; then
             echo "Packaging/status generation failed with exit code $AUX_CODE" >&2
             exit "$AUX_CODE"
+          fi
+
+      - name: Continue queue automatically
+        if: success()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          pending="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('artifacts/city-content-queue/status.json')
+          print(int(json.loads(path.read_text(encoding='utf-8')).get('pending',0)) if path.exists() else 0)
+          PY
+          )"
+          if [ "$pending" -gt 0 ]; then
+            echo "Queue has $pending pending items; dispatching the next controlled batch."
+            sleep 15
+            gh workflow run city-content-queue.yml --ref main
+          else
+            echo "No pending city items remain; automatic chaining is complete."
           fi
