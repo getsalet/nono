@@ -40,14 +40,14 @@ TAPE_ROLE_DIRECTIVES={
  2:'SELECTION EVIDENCE: near-overhead technical arrangement with exactly one approved carton plus emitter-spacing or specification evidence; no skyline, barn, tractor or panorama',
  3:'HEADWORKS STORY: medium side view of unattended fixed filter, gauge, regulator and manifold; exactly one approved carton remains small and secondary',
  4:'INSTALLATION PROOF: asymmetric unattended view of installed drip tape and crop beds; exactly one approved carton remains small at a field edge; no centered vanishing point',
- 5:'MAINTENANCE DETAIL: connector, emitter or flush-point detail dominates; exactly one approved carton remains fully visible but secondary; do not repeat role 3',
+ 5:'MAINTENANCE DETAIL: unattended downward close-up of exactly one installed drip-tape emitter, connector or flush-point on bare soil; exactly one approved carton remains fully visible but small and secondary; no horizon, crop-row panorama, person, vehicle, machine, second roll, box, bottle or tool; do not repeat role 3',
 }
 LAYFLAT_ROLE_DIRECTIVES={
  1:'EDITORIAL HERO: wide high-oblique water-transfer context; exactly the approved packaged coil and bare black woven coil remain small, separate and off-center',
  2:'SELECTION EVIDENCE: elevated near-overhead technical comparison on open textured soil with exactly the approved two-coil pair; show diameter difference using only the two coils themselves; no separate connector, ruler, tool, box, third object, skyline, building, crop-row horizon, person or vehicle',
  3:'HEADWORKS STORY: medium side view of a fixed unattended pump, gauge and manifold; the approved two-coil pair remains small, separate and secondary',
  4:'INSTALLATION PROOF: asymmetric unattended view of an extended layflat connection entering the field; the approved two-coil pair remains small at the field edge',
- 5:'MAINTENANCE DETAIL: connector, fold or woven-surface detail dominates; the approved two-coil pair remains fully visible but secondary; do not repeat role 3',
+ 5:'MAINTENANCE DETAIL: unattended downward close-up of one connector, fold or woven-surface detail on bare soil; the approved two-coil pair remains fully visible but small and secondary; no horizon, panorama, person, vehicle, machine, third hose, box, bottle or tool; do not repeat role 3',
 }
 ROLE_DIRECTIVES=TAPE_ROLE_DIRECTIVES
 
@@ -162,6 +162,15 @@ def image_prompt(item,kind):
         # variation previously contradicted the near-overhead brief and caused
         # tractors, horizons, extra connectors and oversized foreground coils.
         diversity=(f'Camera: elevated 60-degree downward near-overhead view from at least six metres away. Background: only broad empty textured soil with generous negative space; no horizon, building, crop rows, person, vehicle, machine or extra object. Composition: the exact two-coil pair alone, off-center on the lower third, with the complete pair occupying 12 to 15 percent of frame width and never more than 30 percent. Use visual variation token {variation["token"]} only as a seed and never render it.')
+    elif int(kind)==5:
+        # Maintenance must be a controlled detail shot. A generic farm
+        # background repeatedly introduced people, tractors and extra products.
+        product_note=('Keep exactly one carton fully visible at 15 to 22 percent of frame width.' if family=='tape20' else 'Keep exactly the approved two-coil pair fully visible at 12 to 20 percent of frame width.')
+        diversity=(f'Camera: elevated 55-degree downward close documentary view aimed at soil, with the installed maintenance detail sharp in the foreground. Background: only bare textured soil and one irrigation line; crop all horizon, buildings, people, animals, tractors, vehicles, machine cabins, boxes, bottles and tools completely out of frame. Composition: the connector, emitter, flush-point, fold or woven detail is the technical focus while the approved product evidence stays off-center and secondary. {product_note} Use visual variation token {variation["token"]} only as a seed and never render it.')
+    elif int(kind)==3:
+        diversity=(f'Camera: medium three-quarter view aimed slightly downward at one fixed unattended filter, gauge and manifold station. Background: cropped soil and irrigation hardware only; no horizon, people, vehicles, tractors, cabins, boxes or extra commercial products. Composition: fixed headworks dominate while approved product evidence stays small and off-center. Use visual variation token {variation["token"]} only as a seed and never render it.')
+    elif int(kind)==4:
+        diversity=(f'Camera: elevated asymmetric diagonal view aimed downward at installed irrigation lines and crop beds. Background: crop beds and soil only with no visible horizon, person, vehicle, tractor, cabin, box or second product. Composition: installed result dominates and approved product evidence stays small at a field edge. Use visual variation token {variation["token"]} only as a seed and never render it.')
     else:
         diversity=(f'Camera: {variation["camera"]}. Background: {variation["background"]}. Lighting: {variation["light"]}. Composition: {variation["composition"]}. Make this image visibly different from the other article images. Use visual variation token {variation["token"]} only as a seed and never render it.')
     if family=='layflat':

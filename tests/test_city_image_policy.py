@@ -222,6 +222,14 @@ class CityImagePolicyTests(unittest.TestCase):
         self.assertIn("no horizon, building, crop rows, person, vehicle", prompt)
         self.assertIn("no separate connector, ruler, tool, box, third object", prompt)
 
+    def test_tape_maintenance_role_is_isolated_from_people_and_vehicles(self):
+        item = {"source_id": "city-tape20", "topic": "tape20", "city": "لاجان"}
+        prompt = image_prompt_policy.image_prompt(item, 5)
+        self.assertIn("elevated 55-degree downward", prompt)
+        self.assertIn("crop all horizon, buildings, people, animals, tractors", prompt)
+        self.assertIn("exactly one carton fully visible", prompt)
+        self.assertIn("connector, emitter, flush-point", prompt)
+
 
 if __name__ == "__main__":
     unittest.main()
