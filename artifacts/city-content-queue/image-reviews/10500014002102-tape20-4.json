@@ -1,0 +1,53 @@
+{
+  "source_id": "10500014002102-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 18,
+      "product_height_percent": 28,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: The blue coil of drip tape coiled on the ground is a second roll/extra commercial package.",
+        "Hard reject: The visible metal connector (manifold/valve) in the foreground is treated as an extra hardware/product item conflicting with the 'exactly one approved carton' constraint."
+      ],
+      "correction_prompt": "Remove the coiled blue tape roll and the metal valve from the foreground; keep only the carton at the left edge and the line of tape disappearing into the crop rows.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "product_width_percent": 23,
+      "product_height_percent": 27,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Hard reject: A human figure (silhouette of a person) is visible in the background on the far right, which violates the zero-person constraint.",
+        "The text on the carton appears to be gibberish/fake (e.g., 'Taf igolune'), triggering a hard reject for non-legible or fake writing.",
+        "The visual brief requires the roll to be at a 'field edge', but the background shows a continuous crop field with rows extending toward the horizon, lacking the specific edge context."
+      ],
+      "correction_prompt": "Remove the human figure in the background on the far right. Replace the text on the carton with clear, legible labels (do not use gibberish). Ensure the carton is positioned at the edge of a field rather than in the middle of a crop area.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip tape carton roll is visible.",
+        "Product size is within practical limits (width ~24%, height ~35%).",
+        "Zero people or human body parts are present.",
+        "Background matches the article brief with an unattended field and crop rows.",
+        "Required watermark 'AFP | 09134922013' is present.",
+        "Product is not centered relative to the frame, fitting the 'asymmetric unattended view' role."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

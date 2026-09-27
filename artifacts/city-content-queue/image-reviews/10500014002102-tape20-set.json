@@ -1,0 +1,56 @@
+{
+  "source_id": "10500014002102-tape20",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "reasons": [
+        "Only 4 images provided instead of the required 5 (Roles 1-4 only).",
+        "Role 1 is a low-angle ground shot, not the required wide high-oblique editorial hero view.",
+        "Role 2 includes a tractor, which violates the instruction to reject repeated furrow-field plus tractor compositions.",
+        "Role 4 does not depict a close-up maintenance detail; it shows installed crops, which is incorrect for that slot.",
+        "Role 5 (Maintenance Detail) is missing entirely from the submission."
+      ],
+      "correction_prompt": "Provide 5 distinct images: high-oblique wide for Role 1, technical layout without tractor for Role 2, unattended filter manifold for Role 3, asymmetric installed drip tape for Role 4, and close-up of an emitter or connector for Role 5.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "duplicate_roles": [],
+      "reasons": [
+        "Major violation of the 'one approved carton' rule: The approved product is the white roll. Images 2 and 4 both feature a secondary, unapproved brown cardboard box with different branding, violating the strict product consistency constraint.",
+        "Composition errors: The 'Hero' image (Image 1) centers the product prominently instead of placing it 'small and off-center' on the lower third as required.",
+        "Role Mismatch: The provided images do not match the 5 specific roles requested in the brief (e.g., there is no image showing a 'HEADWORKS STORY' with a manifold/pressure gauge assembly, nor a 'MAINTENANCE DETAIL' close-up of an installed emitter).",
+        "The brief requested 5 specific editorial shots (Hero, Selection, Headworks, Installation, Maintenance), but the provided set is a generic collection of 4 field photos that do not fulfill the specific technical narrative requirements."
+      ],
+      "correction_prompt": "Generate the 5 specific editorial sets requested: (1) A wide, high-angle shot of the farm context with the white roll tucked small in the corner; (2) An elevated shot showing the white roll with visible blue drip tape emitter spacing on the soil; (3) A side view of a pressure gauge, valve, and manifold with the white roll resting nearby; (4) An asymmetric view of installed drip tape on crop rows with the roll at the field edge; and (5) A macro close-up of a blue tape connector/emitter on the ground with the white roll in the background. Ensure ONLY the white roll is visible in every frame, strictly removing any cardboard boxes or secondary products.",
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        3,
+        4
+      ],
+      "reasons": [
+        "Role 3 uses a centered vanishing point composed with tractor and crop rows in the background, violating the asymmetric, unattended, no-centered-vanishing-point requirement.",
+        "Role 4 contains a visible human figure (driver) inside the tractor, violating the zero-people mandatory constraint.",
+        "Both roles 3 and 4 reuse the same furrow-field + tractor composition and camera angle, resulting in duplicated visual narrative and structure.",
+        "The product carton remains a focal object in roles 3 and 4, instead of appearing small and secondary/off-center as required for the installation and maintenance roles.",
+        "No emitter-spacing or technical evidence is visible in role 2; the scene is a generic field with a carton and tractor, failing the SELECTION EVIDENCE technical narrative requirement."
+      ],
+      "correction_prompt": "For roles 3 & 4: remove the tractor and human figure; re-frame to an unattended, asymmetric medium/close view of installed drip-tape lines over crop beds with the AFP carton placed small and off-center at the field edge; ensure role 3 shows a side view of a fixed filter, gauge, and manifold, and role 4 shows a close detail of an emitter or connector, with distinct camera heights and no centered vanishing point.",
+      "set_attempt": 3,
+      "accepted_individual_qa_fallback": true
+    }
+  ]
+}

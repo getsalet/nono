@@ -1,0 +1,56 @@
+{
+  "source_id": "10500013002760-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 78,
+      "product_height_percent": 55,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The combined width of the layflat pair exceeds 60% of the frame (approx 78%).",
+        "The bare black woven coil is excessively large relative to the packaging, creating a severe dimensional imbalance.",
+        "The layout lacks the 'secondary' feel required for the image role; the infrastructure (pump/gauge) is not dominant enough to keep the pair small.",
+        "Placement is bottom-heavy and centered, contradicting the preference for off-center/lower-third editing.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate with the layflat pair occupying no more than 30% of the frame width. Position the two coils in the lower-third area, significantly smaller in scale. Feature a larger, prominent fixed pump with gauges and manifold as the main visual element to establish the medium side view perspective. Reduce the product group from 78% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 15,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: third commercial product present - a large black hose coil is wound onto the pump reel (the approved pair is one packaged coil + one bare coil; a wound coil on equipment acts as a third visible coil).",
+        "Hard reject: impossible object geometry - a third packaged coil appears to float/intersect with the pump assembly and the ground, violating 'no floating or merged product' and 'impossible intersection' rules.",
+        "Watermark text error - 'AFP | 09134922013' is visible but contains an extra '0', deviating from the required exact string 'AFP | 09134922013'.",
+        "The packaged coil is placed awkwardly near the pump interface, reducing clarity of the required 'two separate, fully visible coils'."
+      ],
+      "correction_prompt": "Regenerate with exactly two coils: one small packaged AFP coil and one bare black woven coil, placed separately on the soil near the unattended pump (pump must be empty, no coiled hose wound on it). Ensure the two coils are realistic, non-intersecting, and clearly distinguishable. Remove any floating or intersecting package. Use the exact watermark 'AFP | 09134922013' in the bottom-right corner. Ensure zero humans.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 28,
+      "product_height_percent": 12,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The approved pair is present: one packaged AFP coil and one bare black woven coil.",
+        "The fixed unattended pump, gauge, and manifold are visible as requested in the role.",
+        "The product pair is separate, physically plausible, and small relative to the frame.",
+        "Zero people or human body parts are visible.",
+        "The required watermark is present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

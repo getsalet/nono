@@ -1,0 +1,68 @@
+{
+  "source_id": "10500013002409-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 14,
+      "product_height_percent": 22,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: Image contains a person (worker/farmer) standing next to the equipment.",
+        "The mandatory visual role and negative constraints are violated by the presence of human body parts and a person."
+      ],
+      "correction_prompt": "Remove the person/worker from the image completely while maintaining the unattended fixed filter setup and the AFP carton roll in the foreground.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 42,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Presence of a second commercial package (an open brown box) in the frame which violates the strict rule of exactly one approved carton.",
+        "The image displays a large portable filtration system rather than the mandated 'unattended fixed filter, gauge, regulator and manifold' infrastructure.",
+        "The approved carton is depicted as a prominent foreground object instead of remaining small and secondary to the required infrastructure.",
+        "A loose beige pipe is visible lying on the soil to the left of the subject, which is rejected as 'pipe through the roll' or extraneous layout items."
+      ],
+      "correction_prompt": "Regenerate to remove the open brown cardboard box entirely. Replace the large portable green filtration unit with a low, unattended fixed concrete manifold containing a regulator and gauge. Render the single closed AFP carton as a small, secondary object in the background to satisfy the 'exactly one' and 'secondary' requirements.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 26,
+      "product_height_percent": 38,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: Visible person (male) and hands/knees interacting with equipment.",
+        "Hard reject: Second commercial package (smaller AFP box) visible in the right background.",
+        "Role Mismatch: The main feature is a person and concrete ring, not a side view of a unattended fixed filter/gauge system."
+      ],
+      "correction_prompt": "Remove the man and hands completely. Remove the small box on the right. Re-center the composition on a unattended fixed filter housing, gauge, and manifold showing a medium side view. Place one 20-centimeter drip tape roll in the foreground at 25% width, low profile, with no people.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 32,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Exactly one approved AFP white-and-blue wide low cylindrical drip-tape carton roll is visible.",
+        "Product size is within the practical acceptance range of 10-48 percent width and under 58 percent height.",
+        "Zero people or human body parts are visible.",
+        "Background matches the article visual brief with a medium side view of a fixed filter, gauge, and manifold.",
+        "Distant unattended tractor is allowed as contextually relevant infrastructure.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "source_id": "10500013002409-tape20",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "reasons": [
+        "Only 4 images provided instead of the required 5.",
+        "The images are missing the critical EDITORIAL HERO (Role 1) requirement: a wide high-oblique view where the farm context dominates and the carton is off-center on the lower third.",
+        "Roles 3 and 4 (Headworks and Installation) are not distinct enough; both depict low-angle shots of hardware sitting on the soil next to a field edge, failing to capture the medium side view and asymmetry requested.",
+        "Role 5 (Maintenance Detail) is not sufficiently unattended or close-up; the current hardware shots look too much like a generic installation (Role 4).",
+        "Images 1 and 4 are highly similar in composition (low-angle, field with tractor/barn in background), leading to repetitive furrow-field plus tractor compositions that should be rejected."
+      ],
+      "correction_prompt": "Provide a 5th image showing a high-oblique wide-angle view of the farm with the carton small and off-center; ensure each of the 5 roles has a distinct camera height and framing that strictly follows the 'EDITORIAL HERO' specification.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        3,
+        4
+      ],
+      "reasons": [
+        "Camera Angles: Roles 3 and 4 use nearly identical low-angle, centered horizon perspectives, lacking the distinct 'asymmetric' and 'no-centered vanishing point' required for Installation Proof.",
+        "Repetitive Composition: Images 3 and 4 feature the same centered vanishing point (tractor and furrows), which explicitly violates the prohibition against 'repeated furrow-field plus tractor compositions' for role 4.",
+        "Product Sizing: In all five images, the AFP carton is too large and dominant. It fails the 'small and secondary' requirement for roles 1, 3, 4, and 5."
+      ],
+      "correction_prompt": "Regenerate Roles 3 and 4 to remove the centered vanishing point; move the tractor to the periphery and significantly reduce the carton size so it appears small and secondary to the irrigation equipment and crop beds.",
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        4
+      ],
+      "reasons": [
+        "Only four images were provided instead of the required five, meaning Role 5 (MAINTENANCE DETAIL) is completely missing from the set.",
+        "Role 1 is defined as a 'wide high-oblique view' where the farm context dominates, but the provided image is a close-up ground level shot with a very shallow depth of field, which does not fit the required visual brief.",
+        "Role 4 (INSTALLATION PROOF) fails the strict requirement for an 'asymmetric unattended view... no centered vanishing point'. The provided image uses a classic center-axis composition with a strong vanishing point, making it nearly identical in composition to the first image.",
+        "The brief explicitly rejects 'repeated furrow-field plus tractor compositions'. The set contains multiple images that rely on this exact generic background and subject matter, lacking the necessary variation in camera height and technical narrative for a high-quality editorial set."
+      ],
+      "correction_prompt": "Regenerate a five-image set ensuring Role 1 is a high-angle wide shot of the farm and Role 4 avoids the central vanishing point; additionally, include a close-up of an installed drip-tape emitter and connector to fulfill the missing Role 5 requirement.",
+      "set_attempt": 3,
+      "accepted_individual_qa_fallback": true
+    }
+  ]
+}

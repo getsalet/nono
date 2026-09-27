@@ -1,0 +1,57 @@
+{
+  "source_id": "10500013002760-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 76,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The approved two-coil pair is not visible; the image shows one large coil and a flat packaged strip.",
+        "Extra commercial products are present, including a large box and a plastic-wrapped cube, violating the 'zero third commercial package' constraint.",
+        "The mandatory MAINTENANCE DETAIL role (close view of a connector or woven-surface detail) is missing.",
+        "The product pair is approximately 76% of the frame width, exceeding the 60% hard-reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 76% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate with two black woven coils: one packaged in an AFP box and one bare. Include a close-up detail of a connector or woven surface. Remove all extra boxes and packages. Reduce the width of the two coils to 25% of the frame. Reduce the product group from 76% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Detected a third commercial package (cardboard box) on the left",
+        "Detected an invented or fake small package in the center",
+        "The approved layflat pair (one packaged, one bare) is not correctly represented without extra items",
+        "Does not match the required 'maintenance detail' role",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate an unattended close-up detail view of a connector. Include only one packaged AFP coil and one bare black woven coil. Remove the cardboard box and any small packages. Ensure the 'AFP | 09134922013' watermark is in the bottom right. No people or extra commercial items allowed. Enlarge the product group from 0% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 45,
+      "product_height_percent": 28,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The image contains the required two-coil pair (one coiled hose on the left, one on the right) with a packaged connector in the middle, matching the maintenance detail role.",
+        "The pair is physically plausible and occupies a practical portion of the frame.",
+        "No people or human body parts are visible.",
+        "The exact bottom-right watermark is present.",
+        "Background context (farm, crop rows) is allowed."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
