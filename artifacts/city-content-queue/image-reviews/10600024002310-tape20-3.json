@@ -1,0 +1,95 @@
+{
+  "source_id": "10600024002310-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 35,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Visible person (farmer/worker) in image",
+        "Visible human body parts (arms, legs, face)",
+        "Violation of mandatory zero-people rule"
+      ],
+      "correction_prompt": "Remove all human figures and body parts; retain only the fixed filter, gauge, regulator, manifold, and the small secondary AFP drip-tape carton roll in a medium side view.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 40,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Visible human (farmer/worker) standing in the background - hard reject",
+        "A second commercial package (cardboard box) is present - hard reject",
+        "The mandatory image role required a 'medium side view of unattended fixed filter, gauge, regulator and manifold', which is not present; the image shows a tractor and open field"
+      ],
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 18,
+      "product_width_percent": 29,
+      "product_height_percent": 51,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Visible person standing next to the red tractor (hard reject: zero-people rule).",
+        "Second commercial package (open brown AFP carton) in the scene; brief requires exactly one AFP white-and-blue cylindrical drip-tape carton roll.",
+        "Mandatory role violation: the image does not show a medium side view of unattended fixed filter, gauge, regulator and manifold with the approved carton small and secondary."
+      ],
+      "correction_prompt": "Regenerate: no people or body parts; show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll small in frame (20–28% width) as secondary element; foreground composition = medium side view of unattended fixed filter, gauge, regulator and manifold; remove the open brown carton and second commercial package; keep 'AFP | 09134922013' bottom-right watermark; plain field, horizon, unattended farm building allowed; zero bottles/jars/canisters/buckets/fertilizer/pesticide.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 15,
+      "product_height_percent": 38,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: Human present. A man (farmer/worker) is crouching in the right foreground, violating the zero-person and zero-human-body-part rule.",
+        "Gibberish text: The text on the white drip-tape roll is unintelligible/placeholder gibberish, which is a hard reject factor."
+      ],
+      "correction_prompt": "Remove the person completely. Ensure the drip-tape roll is clean and clearly branded with 'AFP'. Keep the unattended tractor and irrigation equipment in the background as context.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 19,
+      "product_height_percent": 37,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: Human figure/face clearly visible inside the tractor cabin (violates zero people/human body parts rule).",
+        "Role Mismatch: Mandatory role is HEADWORKS STORY focusing on filter/manifolds; current image shows tractor tillage operations instead.",
+        "Missing Infrastructure: The required fixed filter, gauge, and manifold system is not the primary subject."
+      ],
+      "correction_prompt": "Remove the tractor driver/occupant. Replace the tractor background with a close-up of a stationary drip irrigation headworks setup including a fixed filter, pressure gauge, and manifold on a stand. Keep the single AFP white-and-blue roll small in the foreground.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The roll is positioned in the lower-left, which is acceptable as off-center/lower-third placement is an editorial preference and not a hard reject.",
+        "The product dimensions (30% width, 40% height) are within the accepted range (10-48% width, up to 58% height).",
+        "There are zero people or human body parts visible in the image.",
+        "The background includes fixed irrigation infrastructure (filter, gauge, regulator, manifold) which aligns with the 'HEADWORKS STORY' role and allows the carton to remain secondary.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right.",
+        "No hard reject elements (bottles, multiple rolls, pipes through the roll, gibberish text, etc.) are present."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}
