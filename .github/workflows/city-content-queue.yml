@@ -10,6 +10,8 @@ on:
       - 'automation/city_content_queue_cloudflare.py'
       - 'automation/reviewed_publish_city_queue.py'
       - 'automation/run_agnes_city_queue.py'
+      - 'automation/run_agnes_city_queue_fast.py'
+      - 'automation/run_agnes_city_queue_resilient.py'
       - 'automation/run_agnes_city_queue_seo.py'
       - 'automation/image_prompt_policy.py'
       - 'automation/image_quality_gate.py'
@@ -56,6 +58,8 @@ jobs:
       IMAGE_QA_ATTEMPTS: "6"
       IMAGE_SET_QA_ATTEMPTS: "3"
       IMAGE_QA_FAST_MODE: "0"
+      # At most one quarantined repair may consume a three-article batch.
+      REPAIR_FAILED_LIMIT: "1"
       WORDPRESS_DB_NAME: navaraby_wp569
       CURRENT_IMAGE_POLICY: reference-rerender-3d-v10-atomic-city-set-reviewed
 

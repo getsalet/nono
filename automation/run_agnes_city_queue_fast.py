@@ -11,13 +11,17 @@ IMAGE_RETRY_POLICY='retry-after-v13-isolated-technical-role-fix'
 # an interrupted earlier run. Return it to pending without consuming an attempt.
 if base.QUEUE.exists():
     state=json.loads(base.QUEUE.read_text(encoding='utf-8'));recovered=0;repairable=0
+    # Reserve most of every parallel batch for fresh pending work. Retrying all
+    # quarantined failures at once previously consumed all three worker slots
+    # and made successful progress appear frozen.
+    repair_limit=max(0,int(os.getenv('REPAIR_FAILED_LIMIT','1')))
     repaired_signals=('unexpected Latin words: AFP','PVC claim for irrigation tape','image hard gate rejected role','Image-set diversity gate rejected')
     for item in state.get('items',[]):
         if item.get('status')=='processing':
             item['status']='pending';item['attempts']=max(0,int(item.get('attempts',0))-1)
             item.pop('started_at',None);item['last_error']='Recovered after interrupted workflow';recovered+=1
         elif (item.get('status')=='failed' and any(x in item.get('last_error','') for x in repaired_signals)
-              and item.get('retry_policy')!=IMAGE_RETRY_POLICY):
+              and item.get('retry_policy')!=IMAGE_RETRY_POLICY and repairable<repair_limit):
             item['status']='pending';item['attempts']=0;item['retry_policy']=IMAGE_RETRY_POLICY
             item.pop('failed_at',None);item.pop('started_at',None);repairable+=1
     if recovered or repairable:
