@@ -1,0 +1,73 @@
+{
+  "source_id": "1050001002411-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: A person (farmer/worker) is clearly visible, crouching in the center of the frame.",
+        "Hard reject: Presence of a human silhouette and body parts (face, arms, legs).",
+        "Hard reject: Product pair is too wide (estimated ~55% of frame width), exceeding the 36% maximum limit.",
+        "Product placement is not secondary; the human subject dominates the composition alongside the product.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the man entirely. Shrink the two coils (one packaged, one bare black) to occupy 12-15% of the frame width, keeping them separate and low on the lower third. Maintain the pump and gauge on the right as the primary focus. Keep the watermark 'AFP | 09134922013' in the bottom right. Reduce the product group from 55% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Both required objects (packaged coil, bare black coil) are clearly visible and separate.",
+        "The pair is positioned in the lower third of the frame.",
+        "The mandatory HEADWORKS STORY elements (fixed pump manifold, gauge) are present.",
+        "Zero people or vehicles are present.",
+        "The required bottom-right watermark is visible and intact.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-36% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 20,
+      "product_height_percent": 60,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Coils are oriented vertically (standing on edge) instead of lying flat on the ground as required.",
+        "Large diameter of the upright coil violates the 'secondary' product sizing requirement and creates an 'impossible intersection' (coils appearing to touch or merge).",
+        "The 'fixed unattended pump' visual role is missing; the image shows a stand-alone pressure gauge without a pump or manifold.",
+        "Coils overlap significantly, violating the 'separate' constraint.",
+        "machine-enforced bounding-box check failed: Reduce product height from 60% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate to show two small, clearly separate coils of hose lying completely flat on the ground (stacked flat, not standing on edge). Include a fixed unattended pump with a manifold and gauge to the right of the coils. Ensure the coils remain small and secondary to the pump system, with no overlapping. Reduce product height from 60% to at most 42% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 78,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Exactly two required layflat products are present: a bare black coil and a packaged coil",
+        "Watermark 'AFP | 09134922013' is present in bottom-right and is not rejected",
+        "No human figures, body parts, tractors, or machines are visible",
+        "Pump/gauge setup acts as secondary context per HEADWORKS STORY role"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

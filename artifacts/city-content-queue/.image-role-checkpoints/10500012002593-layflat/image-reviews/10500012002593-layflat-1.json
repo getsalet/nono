@@ -1,0 +1,41 @@
+{
+  "source_id": "10500012002593-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 62,
+      "product_height_percent": 32,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "A tractor is clearly visible in the background (hard reject: tractor).",
+        "A third hose or wire is running through the field between the two coils (hard reject: any third hose or product).",
+        "The product pair spans approximately 62 percent of the frame width, exceeding the 36 percent limit (hard reject: pair wider than 36 percent).",
+        "Product staging is too large and not in the 'lower third' scale required for the secondary role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the background tractor and the wire running through the field. Shrink the two coils significantly (width < 15% frame) and move them to the lower-left corner. Keep them flat on the soil. Reduce the product group from 62% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 72,
+      "product_width_percent": 22,
+      "product_height_percent": 12,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Contains exactly two approved layflat objects (one packaged, one bare black).",
+        "No people, faces, or body parts present.",
+        "No tractors, vehicles, or forbidden machinery cabins in the immediate scene.",
+        "Products are located in the lower third, off-center, and on the ground.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

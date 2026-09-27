@@ -1,0 +1,97 @@
+{
+  "source_id": "1050001002411-layflat",
+  "family": "layflat",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 60,
+      "product_height_percent": 20,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The scene contains four separate coils/rolls instead of exactly two.",
+        "The layout is a wide spread-out pair/cluster (spanning 60% of the frame) rather than a compact secondary pair of 12-15%.",
+        "Includes a packaged roll on the left, violating the requirement of exactly one packaged AFP coil and one bare black coil.",
+        "The extended hose leads into the field but the base products are not properly grouped as a small secondary pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the product staging to exactly two coils: one packaged AFP and one bare black woven coil. Group them tightly together on the lower-right (off-center) occupying only 12-15% of the frame width, and extend the layflat hose from this small pair into the field. Remove any extra rolls. Reduce the product group from 60% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 30,
+      "product_height_percent": 18,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Hard reject: Missing one approved layflat object (packaged AFP coil). The image shows only one bare black coiled hose and an extended hose line, but lacks the required pair of two distinct objects.",
+        "Composition violation: The coil is not positioned in the lower third; it is located in the bottom-right corner, which deviates from the required positioning.",
+        "Missing water mark text 'حمیل' or specific branding elements in the visual field as per the brief context."
+      ],
+      "correction_prompt": "Regenerate the image to include two approved layflat objects: one packaged AFP coil and one bare black woven coil. Both must be flat on the ground, separate, and located in the lower third of the frame, occupying 12-15% of the width. Ensure the extended layflat connection remains visible as an installation proof, with the product pair staying secondary. No people, vehicles, or tractors. Keep the 'AFP | 09134922013' watermark in the bottom-right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 40,
+      "product_height_percent": 20,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: Tractor and barn visible in background (violates 'hard reject any tractor, harvester, vehicle or machine cabin, even distant' and 'zero people' safety if cabin implies presence, though cabin alone is forbidden).",
+        "Product size violation: The pair of coils is too large, occupying approximately 40% of the frame width (exceeds the hard 36% limit and target 12-15%).",
+        "Centering violation: The product pair is located on the left-center rather than the lower third/off-center as specified in the composition rules.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the tractor and barn from the background. Scale down the two coils to approximately 12-15% width to be subtle. Move the coils to the far lower right corner (off-center) to create a secondary background element. Maintain the extended layflat line entering the field. Reduce the product group from 40% to 8-36% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Missing the packaged AFP coil; only a bare black woven coil is present, violating the requirement of exactly two approved layflat objects.",
+        "The single visible coil is located partially in the bottom-right corner with an estimated width of ~25% of the frame, which exceeds the target 12-15% width (though within the 36% hard-reject limit), failing the size estimation.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to include a second, packaged AFP coil next to the bare black woven coil at the field edge, ensuring the pair is flat and secondary (width ~12-15% of frame) and strictly unattended. Enlarge the product group from 0% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 70,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Person visible in image (farmer/worker standing in the field)",
+        "Hard reject: Third product present (packaged hose reel in the center bottom is a distinct third item not matching the 'one packaged, one bare' requirement)",
+        "Product pair is excessively wide and dominates the frame instead of being secondary (estimated width > 36%)",
+        "The two main coils are not separated and flat; they appear to be part of a single wide staging setup",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to be completely unattended (zero people, zero humans). Ensure only exactly two approved layflat objects are visible: one packaged AFP coil and one bare black woven coil. Position the pair off-center in the lower third, keeping them small (approx 12-15% width of the frame) so they remain secondary to the installation view. The coil pair should be separated and clearly visible, not merged or dominating the frame. Reduce the product group from 70% to 8-36% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 21.7,
+      "product_height_percent": 16.6,
+      "product_x_center_percent": 43.5,
+      "reasons": [
+        "Hard reject due to visible blue tractor in the background (violates the ban on vehicles/machines)",
+        "Contains visible black hoses connecting to the coils, violating the rule that rejects any third hose or invented connections"
+      ],
+      "correction_prompt": "Remove the blue tractor from the background completely. Remove all visible connecting hoses, ensuring only two separate unconnected layflat coils (one packaged and one bare black) are shown without external tubing.",
+      "attempt": 6
+    }
+  ]
+}

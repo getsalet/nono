@@ -1,0 +1,58 @@
+{
+  "source_id": "1050001002411-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 75,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The visual role mandates 'MAINTENANCE DETAIL', requiring a specific close-up of a connector, fold, or woven-surface detail on bare soil without a horizon. The image displays a wide landscape shot with a full horizon, failing the role's composition requirements.",
+        "The two main approved coil objects (packaged AFP and bare black woven) are significantly wider than the 36% maximum frame width allowed for a secondary background appearance in this specific visual role.",
+        "The presence of a third commercial product (a packaged box containing hose/drip tape) in the foreground is a hard reject; the image must contain exactly two approved layflat objects.",
+        "The product pair is centered in the frame, violating the requirement to 'stay off-center on the lower third'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a close-up 'MAINTENANCE DETAIL' shot of one connector or woven-surface detail on bare soil, removing the horizon. Place the two required coils (one packaged AFP, one bare black) far in the background, off-center on the lower third, occupying less than 15% of frame width. Strictly remove the third product box. Ensure zero people or machinery. Reduce the product group from 75% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 75,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product pair is too large and primary (estimated 75% width), failing the secondary 8-16% target range.",
+        "Presence of a horizon and distant tree line violates the 'maintenance detail close-up' role requirements.",
+        "Objects are centered in the lower half rather than off-center in the lower third.",
+        "Role mismatch: required unattended downward close-up on bare soil, but image is a wide field shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-36% of frame width.; Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Close-up shot of two small irrigation coils on bare soil, viewed from directly above; coils are tiny and secondary (under 15% width), off-center lower third, flat on ground; no horizon, no trees, no crops, no people, no horizon; AFP | 09134922013 watermark bottom right. Reduce the product group from 75% to 8-36% of frame width. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 27,
+      "product_height_percent": 12,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Image contains exactly two approved layflat coils (one packaged, one bare)",
+        "Products are flat on the ground, fully visible, and separate",
+        "Position is off-center in the lower third of the frame",
+        "Product size falls within the 8-36% acceptance range, remaining secondary to the background",
+        "No people, human body parts, or forbidden vehicles are present",
+        "Required watermark is present"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
