@@ -23,14 +23,8 @@ import faq_policy
 import text_cleanup_policy
 image_prompt_policy.install(backend)
 RAW_AGNES=base.agnes
-IMAGE_ROLE_SLUGS={1:'تصویر-شاخص',2:'انتخاب-محصول',3:'جزئیات-فنی',4:'نصب-مزرعه',5:'اتصال-و-کاربرد'}
 def seo_image_name(item,kind):
- topic='layflat' if image_prompt_policy.product_family(item)=='layflat' else 'tape20'
- topic_slug='لوله-نخی-تاشو' if topic=='layflat' else 'نوار-تیپ-20-سانتی'
- raw=f"{topic_slug}-{item['slug']}-{IMAGE_ROLE_SLUGS[kind]}".replace('ي','ی').replace('ك','ک').replace('‌','-')
- safe=''.join(ch if(ch.isalnum()or ch=='-')else'-'for ch in raw)
- while '--' in safe:safe=safe.replace('--','-')
- return safe.strip('-')+'.webp'
+ return image_prompt_policy.seo_image_name(item,kind,'webp')
 ''','v8 helpers')
 a="def agnes_draft(item,links):\n    approved=links[:12];link_lines='\\n'.join(f\"- {x['title']} | {x['url']}\" for x in approved)\n"
 run_source=replace_once(run_source,a,a+"    research=city_research.research_city(item,RAW_AGNES,base.OUT)\n    research_context=city_research.prompt_context(research)\n    topic_focus=item.get('topic_focus','انتخاب و خرید نوار آبیاری ۲۰ سانتی‌متر')\n    topic_forbidden=item.get('topic_forbidden','')\n    faq_instruction=faq_policy.instruction()\n",'city research')

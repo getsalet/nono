@@ -10,6 +10,13 @@ ASSET_DIR=Path(__file__).with_name('assets')
 DRIP_TAPE_ROLL_REFERENCE='https://navar-abyari.ir/wp-content/uploads/%D9%86%D9%88%D8%A7%D8%B1-%D8%A2%D8%A8%DB%8C%D8%A7%D8%B1%DB%8C-1.webp'
 LAYFLAT_REFERENCE_PACKAGE='https://navar-abyari.ir/wp-content/uploads/%D9%84%D9%88%D9%84%D9%87-%D9%86%D8%AE%DB%8C-2-%D8%A7%DB%8C%D9%86%DA%86-1.webp'
 REFERENCE_IMAGES={'drip_tape_roll':DRIP_TAPE_ROLL_REFERENCE,'layflat_package':LAYFLAT_REFERENCE_PACKAGE}
+IMAGE_ROLE_SLUGS={
+ 1:'تصویر-شاخص',
+ 2:'راهنمای-انتخاب',
+ 3:'جزئیات-فنی',
+ 4:'نصب-در-مزرعه',
+ 5:'نگهداری-و-کاربرد',
+}
 
 
 def product_family(item):
@@ -18,6 +25,21 @@ def product_family(item):
     if sid.endswith('-layflat') or any(x in text.lower() for x in ('layflat','لوله نخی','لوله تاشو','looleh nakhi','looleh-nakhi')):
         return 'layflat'
     return 'tape20'
+
+
+def seo_image_name(item,kind,extension='webp'):
+    """Build a stable keyword-rich filename for every generated city image."""
+    item=item or {};family=product_family(item)
+    product='لوله-نخی-تاشو' if family=='layflat' else 'نوار-تیپ-20-سانتی'
+    location=str(item.get('slug') or '-'.join(
+        x for x in (str(item.get('city') or ''),str(item.get('province') or '')) if x
+    ) or str(item.get('source_id') or 'شهر'))
+    role=IMAGE_ROLE_SLUGS.get(int(kind),f'تصویر-{kind}')
+    raw=f'{product}-{location}-{role}'.replace('ي','ی').replace('ك','ک').replace('‌','-')
+    safe=''.join(ch if ch.isalnum() or ch=='-' else '-' for ch in raw)
+    safe=re.sub(r'-+','-',safe).strip('-')
+    suffix=str(extension or 'webp').lower().lstrip('.')
+    return f'{safe}.{suffix}'
 
 
 TAPE_SCENES={

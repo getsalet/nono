@@ -6,6 +6,7 @@ from concurrent.futures import ThreadPoolExecutor,as_completed
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 import city_content_queue as q
+import image_prompt_policy
 
 MODEL=os.getenv('CLOUDFLARE_IMAGE_MODEL','@cf/leonardo/lucid-origin')
 TOKEN=os.getenv('CLOUDFLARE_API_TOKEN','').strip(); ACCOUNT=os.getenv('CLOUDFLARE_ACCOUNT_ID','').strip()
@@ -59,7 +60,7 @@ def generate_image(item,kind):
  if not data.get('success') or not image:raise RuntimeError('Cloudflare image response was unsuccessful')
  blob=watermark(base64.b64decode(image))
  if len(blob)<10000:raise RuntimeError('Generated image is unexpectedly small')
- name=f"{item['source_id']}-{kind}.jpg";(q.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()
+ name=image_prompt_policy.seo_image_name(item,kind,'jpg');(q.IMAGES/name).write_bytes(blob);return name,hashlib.sha256(blob).hexdigest()
 
 def make_content(item,links):
  approved=links[:12]; link_lines='\n'.join(f"- {x['title']} | {x['url']}" for x in approved)

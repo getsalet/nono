@@ -114,7 +114,7 @@ def generate_once(item: dict, kind: int) -> dict:
     blob = output.getvalue()
     if len(blob) < 10000:
         raise RuntimeError("Generated WebP is unexpectedly small")
-    name = f"{item['source_id']}-{kind}.webp"
+    name = image_prompt_policy.seo_image_name(item, kind, "webp")
     output_dir = Path(item.get("_image_output_dir") or base.IMAGES)
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / name).write_bytes(blob)
