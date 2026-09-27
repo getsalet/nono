@@ -205,8 +205,11 @@ jobs:
             exit "$AUX_CODE"
           fi
 
+      # A batch can preserve valid partial progress while returning non-zero for
+      # one quarantined article. Keep the queue moving in that case; hard bans
+      # remain enforced by the generator and failures stay visible in STATUS.md.
       - name: Continue queue automatically
-        if: success()
+        if: always() && !cancelled()
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
