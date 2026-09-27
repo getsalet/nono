@@ -1,0 +1,42 @@
+{
+  "source_id": "1050003001262-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 75,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: visible person (worker crouching in the center).",
+        "Hard reject: visible human body parts (arms, hands, legs).",
+        "Hard reject: third commercial package present (open cardboard box containing various items).",
+        "Product width exceeds 60% threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Remove the person/worker completely and delete the open cardboard box on the right. Show only the two coiled products (one packaged AFP coil and one bare black woven coil) on the soil. Keep the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 75% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 54,
+      "product_height_percent": 20,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Both mandatory objects are present: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Both objects are fully visible, separate, and physically plausible in their arrangement on the soil.",
+        "The product pair occupies approximately 54% of the frame width, which is within the accepted practical vision range of 8 to 60%.",
+        "The required 'AFP | 09134922013' watermark is present in the bottom-right corner.",
+        "No people, human body parts, or third commercial products (bottles, jars, extra coils) are visible in the foreground or mid-ground.",
+        "The distant tractor and building are permissible background elements that do not violate the 'infrastructure only' rule."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
