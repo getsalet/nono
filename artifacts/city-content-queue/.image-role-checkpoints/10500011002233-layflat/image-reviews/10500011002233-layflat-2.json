@@ -1,0 +1,91 @@
+{
+  "source_id": "10500011002233-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 64,
+      "product_height_percent": 35,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The approved pair of coils is too large relative to the frame width, exceeding the hard 60% reject threshold",
+        "The third item, which appears to be an 'Agri-Fil' branded box of stakes, constitutes a disallowed extra commercial package, violating the two-product-only constraint",
+        "machine-enforced bounding-box check failed: Reduce the product group from 64% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Rescale the two approved layflat coils to approximately 25-30% of the frame width. Strictly remove the third 'Agri-Fil' branded package of stakes to ensure only the two mandated coils are visible. Retain the farm environment, the existing 'AFP | 09134922013' watermark, and maintain the 'SELECTION EVIDENCE' role. Reduce the product group from 64% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 75,
+      "product_height_percent": 30,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Presence of a human face and body parts (hands, arms) in the frame",
+        "Human silhouette (a boy) is actively interacting with the products",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image without any human figures, faces, or body parts. Show only the coils on the soil. Reduce the product group from 75% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 52,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Multiple people are visible in the background (at least 3-4 individuals near the tractor and equipment).",
+        "Visible hands and arms of the workers in the background constitute a hard reject for human body parts.",
+        "Presence of multiple people violates the zero-person rule."
+      ],
+      "correction_prompt": "Remove all human figures, workers, and body parts from the background. Keep only the unattended tractor and farm equipment if visible, ensuring no people are present anywhere in the image. Maintain the two coils in the foreground.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 68,
+      "product_height_percent": 40,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Contains a human figure (farmer/worker) standing near the tractors in the background",
+        "Contains a third commercial package (a white/blue coil in the front-center that does not match the required black bare woven coil)",
+        "The pair and extra objects exceed the 60% width limit for the mandatory two-coil layout",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Remove the person and the white/blue coil in the front. Show only one brown cardboard box on the left and one large black bare coil on the right. Place the two coils on the soil with tractors in the background. Ensure the two products occupy roughly 30% of the frame width. Reduce the product group from 68% to 8-60% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Visible human silhouette (driver) inside the cab of the tractor on the left, which is a hard reject for any person.",
+        "Composition does not strictly adhere to the 'approved layflat pair' brief (one packaged AFP coil and one bare black woven coil); instead it shows a cardboard box and a small component, lacking the second coil."
+      ],
+      "correction_prompt": "Remove all people and silhouettes from the tractors in the background. Replace the cardboard box and small component with the approved layflat pair: one packaged AFP coil and one bare black woven coil, ensuring both are visible, separate, and recognizable in the foreground.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human body parts (crouching person) visible in the background"
+      ],
+      "correction_prompt": "Remove the human figure in the background; keep only the two coils in the foreground, the tractor, and the farm scenery.",
+      "attempt": 6
+    }
+  ]
+}

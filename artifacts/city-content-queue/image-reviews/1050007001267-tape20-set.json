@@ -1,0 +1,55 @@
+{
+  "source_id": "1050007001267-tape20",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        3
+      ],
+      "reasons": [
+        "Role 3 (image 2) fails the required 'medium side view of unattended fixed filter, gauge, regulator, and manifold' because the irrigation system setup includes a red tractor, violating the 'unattended' condition.",
+        "Role 5 (image 4) fails the close-up detail requirement; the image shows a medium-wide field shot with the carton centered and a large blue nozzle, which is not a close-up of an installed emitter, connector, or material detail.",
+        "The 'carton' is not a carton but a roll of drip tape. While the product is consistent, the brief specifically mentions 'exactly one approved carton' as a prop. However, the bigger issue is the role mismatch. If 'carton' refers to the physical product form, the product is consistent. But the layout and camera angle do not match the specific narrative requirements for roles 2 and 5.",
+        "Role 2 (image 3) shows a wide view with crop rows but lacks the specific 'emitter-spacing or field-selection evidence' required for the 'Selection Evidence' role; it looks too similar to a standard installation shot (Role 4)."
+      ],
+      "correction_prompt": "Regenerate Role 3 as an unattended close-up of headworks (filter, gauge, regulator, manifold) with no tractor; Regenerate Role 5 as a tight macro detail shot of an installed drip tape emitter on a crop bed, removing the large blue nozzle from the wide shot.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        3,
+        5
+      ],
+      "reasons": [
+        "Role 1 (Image 1) features a tractor and farm building in the background, violating the specific 'generic farms/tractor' exclusion criteria for the Hero shot.",
+        "Role 5 (Image 3) displays a medium-wide view of a field with a single tape, which does not provide the required 'close view' or 'detail' of an emitter/flush-point. It is compositionally similar to Role 3 (Image 4) which also shows a wide crop-bed view, leading to role duplication.",
+        "The set relies heavily on wide field shots (Roles 3 & 5), lacking the technical macro perspective mandated for the maintenance detail role."
+      ],
+      "correction_prompt": "Replace Image 3 (Role 5) with an extreme close-up macro shot of an installed drip-tape emitter and connector, keeping the AFP carton small and visible in the background; ensure the crop detail distinguishes it from the wide shot in Role 3.",
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        3,
+        4
+      ],
+      "reasons": [
+        "Role 2 (SELECTION EVIDENCE) violates brief: the roll is placed large and front-and-center rather than secondary, and the technical arrangement (wheeled cart/valves) does not present clear emitter-spacing or field-selection evidence.",
+        "Role 3 (HEADWORKS STORY) fails: no unattended fixed filter, gauge, regulator, or manifold are present; the background shows crop rows and a distant tractor instead of a headworks narrative.",
+        "Role 4 (INSTALLATION PROOF) fails: it uses a centered furrow-field composition with a centered vanishing point and a tractor, which the brief explicitly rejects, and the roll is not kept small at a field edge.",
+        "Role 5 is missing: only four images are provided for five required roles.",
+        "Set-wide: three images repeat the same centered roll on open ground plus a distant tractor/generic farm, reducing camera-height/angle and narrative variety."
+      ],
+      "correction_prompt": "Reissue Role 3 as an unattended fixed headworks (filter, gauge, regulator, manifold) with one small secondary roll; replace Role 4 with an asymmetric, off-center installed drip-tape bed and crop row where the roll is small at a field edge (no centered vanishing point, no tractor); add a new Role 5 close-up of an installed emitter/connector/flush detail with one small visible roll, no people or extra containers; rescale and off-center the roll in Role 2 with visible emitter-spacing evidence.",
+      "set_attempt": 3,
+      "accepted_individual_qa_fallback": true
+    }
+  ]
+}
