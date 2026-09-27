@@ -5,6 +5,7 @@ from pathlib import Path
 import city_content_queue as base
 HERE=Path(__file__).resolve().parent
 base.MAX_ATTEMPTS=max(1,int(os.getenv('MAX_ATTEMPTS','4')))
+IMAGE_RETRY_POLICY='retry-after-v12-family-role-image-policy-fix'
 
 # Same-group workflow concurrency means any committed processing item belongs to
 # an interrupted earlier run. Return it to pending without consuming an attempt.
@@ -15,8 +16,9 @@ if base.QUEUE.exists():
         if item.get('status')=='processing':
             item['status']='pending';item['attempts']=max(0,int(item.get('attempts',0))-1)
             item.pop('started_at',None);item['last_error']='Recovered after interrupted workflow';recovered+=1
-        elif item.get('status')=='failed' and any(x in item.get('last_error','') for x in repaired_signals):
-            item['status']='pending';item['attempts']=0;item['retry_policy']='retry-after-v12-family-role-image-policy-fix'
+        elif (item.get('status')=='failed' and any(x in item.get('last_error','') for x in repaired_signals)
+              and item.get('retry_policy')!=IMAGE_RETRY_POLICY):
+            item['status']='pending';item['attempts']=0;item['retry_policy']=IMAGE_RETRY_POLICY
             item.pop('failed_at',None);item.pop('started_at',None);repairable+=1
     if recovered or repairable:
         state['updated_at']=base.now();base.QUEUE.write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf-8')

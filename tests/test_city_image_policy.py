@@ -29,6 +29,11 @@ class CityImagePolicyTests(unittest.TestCase):
             ROOT / "automation" / "rebuild_city_images_preserve_posts.py"
         ).read_text(encoding="utf-8")
         self.assertIn('== "layflat"', rebuild_source)
+        retry_source = (
+            ROOT / "automation" / "run_agnes_city_queue_fast.py"
+        ).read_text(encoding="utf-8")
+        self.assertIn("IMAGE_RETRY_POLICY", retry_source)
+        self.assertIn("item.get('retry_policy')!=IMAGE_RETRY_POLICY", retry_source)
 
     def test_layflat_references_are_scale_conditioned(self):
         refs = image_prompt_policy.reference_images(
