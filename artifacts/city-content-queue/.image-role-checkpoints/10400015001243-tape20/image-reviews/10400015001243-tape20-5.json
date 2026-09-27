@@ -1,0 +1,98 @@
+{
+  "source_id": "10400015001243-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 34,
+      "product_height_percent": 45,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: Tractor/vehicle visible in the background (upper right)",
+        "Hard reject: Crop-row panorama/horizon visible",
+        "Role Mismatch: Required 'MAINTENANCE DETAIL' (close-up of installed emitter), but image shows a standalone roll on soil",
+        "Second object rejection: Hay bales visible in the background",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Remove tractor and background bales. Focus on close-up of drip-tape emitter on soil. Show small secondary AFP carton. No horizon or vehicle. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 36,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Mandatory role violation: The brief explicitly requires an unattended close-up of an 'installed drip-tape emitter, connector or flush-point on bare soil'. The image displays only a roll of tape with no installed emitters or connectors, thus missing the primary subject of the visual brief.",
+        "Centered product staging: The product is placed directly in the center of the frame, whereas the instruction required it to be 'off-center on the lower third'.",
+        "Roll geometry violation: The product is a tall, vertical cylindrical roll, which deviates from the requirement for a 'wide low cylindrical drip-tape carton roll'.",
+        "Secondary status failure: The roll appears as the dominant main subject rather than the 'secondary' element specified in the brief."
+      ],
+      "correction_prompt": "Regenerate as an extreme close-up of a single drip-tape emitter or flush-point installed on dry soil. Include one small, secondary, wide-and-low AFP drip-tape roll positioned off-center in the lower third. The roll must not be centered or a vertical cylinder. No people or machines.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 34.0,
+      "product_height_percent": 42.0,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Product is centered rather than off-center in the lower third",
+        "Background shows a horizon and crop panorama, which violates the mandatory MAINTENANCE DETAIL role requirement of a close-up on bare soil with no horizon/crop-row panorama"
+      ],
+      "correction_prompt": "Remove the horizon and background crop panorama. Focus strictly on a close-up of the installed drip-tape emitter on bare soil. Reposition the carton roll slightly to the left or right (off-center) in the lower third, reducing its size to approximately 20-25% width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 32,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Forbidden object detected: a tractor is visible in the background.",
+        "The role required 'MAINTENANCE DETAIL: unattended downward close-up of exactly one installed drip-tape emitter, connector or flush-point', but the image shows a general field scene with a large roll instead of a downward close-up of a specific installed part.",
+        "The product is a full roll rather than the small secondary carton requested in the context of a maintenance detail shot.",
+        "Generic scenery (tractor) present."
+      ],
+      "correction_prompt": "Regenerate the image to show a downward close-up of a drip-tape emitter installed on bare soil. The background must be plain soil; strictly remove the tractor and horizon. The AFP carton roll must be visible but secondary (12-23% width) in the corner.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 20.0,
+      "product_height_percent": 55.0,
+      "product_x_center_percent": 60.0,
+      "reasons": [
+        "The product roll is vertically too tall, exceeding the strict maximum limit of 42%.",
+        "The image role required a 'MAINTENANCE DETAIL' close-up on installed equipment (emitter, connector, etc.), but this image shows a standard product roll staged in the field.",
+        "The background includes a distant tree, which is not consistent with a tight close-up maintenance detail.",
+        "The text on the carton is gibberish rather than legible branding text.",
+        "machine-enforced bounding-box check failed: Reduce product height from 55% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate as an unattended downward close-up of a drip tape connector or emitter installed on bare soil. Include exactly one small, secondary white-and-blue AFP drip-tape roll (less than 40% width, less than 35% height) off-center on the lower third. Remove all distant scenery like trees to focus on the soil detail. Reduce product height from 55% to at most 42% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 15,
+      "product_height_percent": 10,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory MAINTENANCE DETAIL: the required downward close-up of an installed drip-tape emitter, connector, or flush point on bare soil is absent.",
+        "Incorrect framing: the image shows a wide crop-row panorama with a distinct horizon line, which explicitly violates the 'no horizon' instruction.",
+        "The product is centered in the frame, which violates the instruction to keep it off-center on the lower third and hard rejects centered product staging."
+      ],
+      "correction_prompt": "Regenerate as a tight, downward close-up of a drip-tape emitter on bare soil. Include the small, white-and-blue carton roll off-center in the lower-left or lower-right. Remove the horizon and wide crop-row panorama. Keep zero people and vehicles.",
+      "attempt": 6
+    }
+  ]
+}

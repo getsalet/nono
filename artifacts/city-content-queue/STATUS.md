@@ -2,13 +2,13 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-27T15:25:51+00:00`
+- آخرین بروزرسانی: `2026-09-27T15:36:32+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **389 از 1894 (20.54٪)**
 - تکمیل‌شده: **389**
 - در حال پردازش: **0**
-- در انتظار: **1504**
-- ناموفق: **1**
+- در انتظار: **1502**
+- ناموفق: **3**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -50,7 +50,9 @@
 
 ## خطاهای اخیر
 
-- **نقده** — `layflat`: `image hard gate rejected role 3 after 6 attempt`
+- **نقده** — `layflat`: `Editorial review failed: internal link count must equal minimum`
+- **پلدشت** — `tape20`: `image hard gate rejected role 5 after 6 attempt`
+- **پلدشت** — `layflat`: `image hard gate rejected role 2 after 6 attempt`
 
 ## فایل‌های خروجی
 

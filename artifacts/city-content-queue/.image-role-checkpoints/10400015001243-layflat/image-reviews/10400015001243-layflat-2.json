@@ -99,6 +99,100 @@
       ],
       "correction_prompt": "Remove the background tractor, reduce the pair of coils to 15% width, and replace the smaller bare coil with a packaged AFP coil Reduce the product group from 65% to 8-36% of frame width.",
       "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 52.5,
+      "product_height_percent": 38.2,
+      "product_x_center_percent": 58.3,
+      "reasons": [
+        "Hard reject triggered: a tractor (vehicle/machine) is clearly visible in the background",
+        "Hard reject triggered: an invented commercial product (plastic canister/jar with label) is present",
+        "Product pair width is approximately 52.5%, which exceeds the 36% maximum absolute limit",
+        "The third object (canister) is not permitted under any circumstances",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52.5% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate strictly as SELECTION EVIDENCE on open soil. Remove the tractor and all background vehicles entirely. Remove the plastic canister and all extra objects. Show ONLY two items: one packaged AFP coil and one bare black woven coil placed side-by-side. The pair must be off-center on the lower third, fully visible, flat, and occupy between 12% and 15% of frame width. Preserve the bottom-right watermark exactly. Reduce the product group from 52.5% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 45,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The combined bounding box of the two coils spans approximately 45% of the image width, which exceeds the hard reject threshold of 36%.",
+        "The product staging is centered (x_center ~48%), violating the requirement to stay off-center on the lower third.",
+        "The image contains a distinct skyline (horizon) and background buildings (farmhouses/barns) in the upper third, which are prohibited elements for this specific 'SELECTION EVIDENCE' brief that mandates 'open textured soil' without a skyline.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Zoom in to reduce the pair's width to 15-20% of the frame. Shift the composition to the lower-right or lower-left third, ensuring the horizon and background buildings are completely cropped out to leave only textured soil. Reduce the product group from 45% to 8-36% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 68,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: presence of a tractor and vehicle cabin in the background.",
+        "Hard reject: object width is significantly greater than the 36% limit (approx 68%).",
+        "Hard reject: extra object (a hexagonal packaged product) is present between the two coils.",
+        "Hard reject: extra objects (connectors/clamps) are attached to the right coil.",
+        "Hard reject: crop-row horizon and skyline/buildings are visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with only two black hose coils on open soil. Remove all vehicles, horizon lines, hexagonal packages, and metal clamps. Ensure the coils do not exceed 36% of the frame width. Reduce the product group from 68% to 8-36% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 42,
+      "product_height_percent": 18,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains a human hand holding a tool in the bottom right corner, which is a hard reject violation.",
+        "The pair of coils occupies approximately 42% of the frame width, exceeding the maximum practical limit of 36%.",
+        "The visual staging is centered, violating the requirement to stay off-center.",
+        "The role requires one 'packaged AFP coil' and one 'bare black woven coil', but the image shows two nearly identical bare coils and an unrelated metal fitting/tool.",
+        "The metal component and hand violate the 'zero people/human body parts' rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate with a wide-angle shot of exactly two coiled hoses on the lower third of the soil: one packaged with wrapping and one bare. Ensure the pair is off-center (left or right), occupies less than 30% of the width, and completely remove the human hand and metal tool. Keep the specific watermark. Reduce the product group from 42% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains a crop-row horizon with a prominent red building/barn in the background, which is explicitly forbidden by the SELECTION EVIDENCE role requirements.",
+        "The bare coil is beige/tan in color, which fails to meet the mandatory requirement for a 'bare black woven coil'.",
+        "A single loose hose connects the two main coils, which violates the 'separate' requirement for the two approved layflat objects."
+      ],
+      "correction_prompt": "Regenerate with a plain, textured soil background and zero horizon or buildings. Replace the right-hand beige coil with a 'black' woven hose. Remove the connecting hose link to ensure the two coils are completely separate.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 68,
+      "product_height_percent": 30,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Pair width exceeds the maximum threshold of 36% (estimated 68% of frame width).",
+        "The two products are positioned as a single centered group, violating the 'stay off-center' and 'secondary element' requirements.",
+        "The pair is too prominent relative to the frame, acting as the primary subject rather than a secondary element.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Significantly shrink the scale of both coils to fit within 12-15% of the frame width. Shift the pair to the lower-right corner, off-center, so they appear secondary to the open soil texture background. Reduce the product group from 68% to 8-36% of frame width.",
+      "attempt": 6
     }
   ]
 }

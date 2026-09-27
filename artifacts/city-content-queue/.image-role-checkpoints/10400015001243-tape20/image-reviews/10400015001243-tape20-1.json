@@ -1,0 +1,91 @@
+{
+  "source_id": "10400015001243-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "A tractor is present on the left side of the frame, which is a hard reject criteria.",
+        "Exactly one roll of drip tape is present and the required AFP watermark is correctly displayed."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the tractor on the left side while keeping the background fields, city skyline, one small roll of drip tape, and the bottom-right AFP watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 25,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product is centered horizontally, violating the requirement to keep it off-center.",
+        "The background city skyline does not match the specific agricultural context of 'Paldasht' in West Azerbaijan."
+      ],
+      "correction_prompt": "Move the carton off-center to the left or right side of the frame and replace the distant city skyline with a realistic rural horizon featuring mountains or distant fields typical of West Azerbaijan.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 32,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Watermark text is missing the required pipe character (|), reading 'AFP 09134922013' instead of 'AFP | 09134922013'.",
+        "The product roll is positioned slightly high, occupying the middle-lower section rather than the bottom third.",
+        "Product is centered horizontally rather than being off-center."
+      ],
+      "correction_prompt": "Shift the large AFP roll down into the bottom 20% of the frame and move it to the right to make it off-center. Correct the bottom-right watermark to display the pipe character 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 24,
+      "product_height_percent": 46,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Presence of a human in the field (center-left), which is a hard reject.",
+        "Presence of a vehicle (tractor/machine) in the background, which is a hard reject.",
+        "Product roll is centered horizontally rather than off-center in the lower third.",
+        "Product roll height is approximately 46% of the frame, exceeding the maximum limit of 42%.",
+        "machine-enforced bounding-box check failed: Reduce product height from 46% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures and vehicles. Reposition the single AFP drip-tape carton roll to the off-center lower third (left or right). Reduce the product roll's vertical scale to ensure its height is no more than 42% of the frame. Reduce product height from 46% to at most 42% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 20,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A tractor/vehicle is present in the field on the right side of the image.",
+        "The required bottom-right watermark text is 'AFP | 09134922013', but the image displays 'AFP | 09134922013' with an incorrect leading digit (0 instead of 0)."
+      ],
+      "correction_prompt": "Remove the tractor on the right side of the field. Correct the bottom-right watermark text to exactly 'AFP | 09134922013'.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Product x-center is approximately 49% of frame width, which constitutes a centered staging",
+        "Hard reject: Centered product staging"
+      ],
+      "correction_prompt": "Reposition the drip-tape roll to the lower-left third of the frame (around x-center 25%) to maintain a high-oblique editorial view where the farm context dominates.",
+      "attempt": 6
+    }
+  ]
+}

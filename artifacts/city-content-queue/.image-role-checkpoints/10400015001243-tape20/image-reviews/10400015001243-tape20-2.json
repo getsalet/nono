@@ -1,0 +1,93 @@
+{
+  "source_id": "10400015001243-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Tractor is visible in the background (hard reject)",
+        "Barn is visible in the background (hard reject)",
+        "Product is centered in the frame (hard reject against 'off-center on lower third')",
+        "Panoramic background violates the 'no panorama' mandatory role constraint"
+      ],
+      "correction_prompt": "Regenerate the image without any tractors or barns in the background. Ensure the AFIP carton roll is positioned off-center on the lower third of the frame. The background should be a close-up of tilled soil and drip lines to serve as selection evidence, avoiding wide panoramas or building structures.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 26,
+      "product_height_percent": 41,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Mandatory Role Mismatch: The image shows a wide-angle eye-level shot, whereas the mandatory 'SELECTION EVIDENCE' role requires a 'near-overhead technical arrangement'.",
+        "Missing Technical Evidence: The brief explicitly requires 'emitter-spacing or specification evidence' to be visible, which is absent in this general product-on-dirt shot.",
+        "Background Violation: The background contains a barn and a distant tractor/silo. The mandatory role instructions explicitly forbid 'barns, tractors or panoramas' in this specific context."
+      ],
+      "correction_prompt": "Regenerate as a near-overhead technical shot. Remove all distant farm structures (barn/tractor) and replace with a clean soil background. Focus on the single carton roll to emphasize technical selection without human or machine interference. Keep the bottom-right watermark exactly as is.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 32,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "The background contains a distant red barn/silo structure, which violates the hard reject criteria for generic unrelated scenery and non-approved background elements.",
+        "The required 'SELECTION EVIDENCE' role (emitter-spacing or specification evidence, near-overhead technical arrangement) is not visible in the image.",
+        "The text on the carton label is illegible gibberish, failing the requirement for clear specification evidence."
+      ],
+      "correction_prompt": "Remove the distant barn/silo structure. Replace the background with a tight near-overhead view of the soil. Add a visible technical specification guide, measurement scale, or clear legible text on the carton showing emitter spacing to satisfy the 'SELECTION EVIDENCE' role.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 32.5,
+      "product_height_percent": 58,
+      "product_x_center_percent": 46.5,
+      "reasons": [
+        "Roll is taller than 42% of the frame",
+        "Foreground contains a second object (plastic specification tag), violating the 'exactly one approved carton' rule",
+        "Product x-center is too close to the middle",
+        "machine-enforced bounding-box check failed: Reduce product height from 58% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Reposition the AFP drip-tape roll to the lower left third and scale it down to fit within 42% height. Remove the second plastic specification tag, leaving only one roll. Ensure the background is a plain soil surface without any vehicles or machinery visible in the distance. Reduce product height from 58% to at most 42% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The background contains a tractor and an attached machine (harvester/vehicle cabin/tractor) which are hard-reject items."
+      ],
+      "correction_prompt": "Regenerate the image showing a close-up technical view of the single drip-tape roll on the soil. Completely remove the tractor, vehicles, and background scenery to focus strictly on the product and specification details.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 34,
+      "product_height_percent": 33,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The background features a barn and distant vehicles, which conflicts with the mandatory 'SELECTION EVIDENCE' role that explicitly forbids skylines, barns, and panoramas.",
+        "The product is centered within the frame (x_center 52%), violating the requirement to keep it off-center on the lower third.",
+        "The background is a generic panoramic landscape rather than a near-overhead technical arrangement with specification evidence."
+      ],
+      "correction_prompt": "Redesign the image as a near-overhead view of the single white-and-blue AFP drip-tape roll. Position the roll on the left side of the lower third of the frame. Remove the barn and distant vehicles from the background. Focus on the soil texture and the unspooled tape to provide specification evidence without showing a wide panoramic horizon.",
+      "attempt": 6
+    }
+  ]
+}
