@@ -114,7 +114,16 @@ def _produce_item(item,links,image_pool):
 
 # Tape-first production restart after v11 practical metric tolerance.
 def process(queue):
- batch=[x for x in queue['items'] if x.get('status')=='pending' and x.get('attempts',0)<q.MAX_ATTEMPTS][:q.BATCH]
+ pending=[x for x in queue['items'] if x.get('status')=='pending' and x.get('attempts',0)<q.MAX_ATTEMPTS]
+ # Keep both families moving without allowing difficult layflat generations to
+ # consume every worker slot. A three-item batch reserves two tape posts and
+ # one layflat post whenever both families are available.
+ tape=[x for x in pending if image_prompt_policy.product_family(x)=='tape20']
+ layflat=[x for x in pending if image_prompt_policy.product_family(x)=='layflat']
+ if q.BATCH>=3 and tape and layflat:
+  batch=(tape[:q.BATCH-1]+layflat[:1])[:q.BATCH]
+ else:
+  batch=pending[:q.BATCH]
  if not batch:
   result='complete_with_failures' if any(x.get('status')=='failed' for x in queue['items']) else 'complete'
   q.write_status(queue,result);return

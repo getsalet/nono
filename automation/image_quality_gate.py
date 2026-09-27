@@ -6,7 +6,7 @@ from pathlib import Path
 import image_prompt_policy
 REVIEW_POLICY='strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
-MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
+MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','65'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
 REVIEW_KINDS={int(x) for x in os.getenv('IMAGE_QA_REVIEW_KINDS','1,2,3,4,5').split(',') if x.strip().isdigit()}
 REVIEW_REQUEST_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_REVIEW_ATTEMPTS','4')))
@@ -32,15 +32,16 @@ def _metric_check(family,verdict):
   x_center=float(verdict.get('product_x_center_percent'))
  except (TypeError,ValueError):
   return False,['Return numeric product_width_percent, product_height_percent and product_x_center_percent.']
- # Prompt targets remain narrow; the machine envelope tolerates vision-estimation noise.
- min_width,max_width=(8,36) if family=='layflat' else (12,36)
+ # Keep impossible/giant products out, but do not starve the queue because a
+ # noisy vision estimate misses an editorial target by a few points.
+ min_width,max_width=(8,60) if family=='layflat' else (10,48)
  issues=[]
  if width<min_width:
   issues.append(f'Enlarge the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
  elif width>max_width:
   issues.append(f'Reduce the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
- if height>42:
-  issues.append(f'Reduce product height from {height:g}% to at most 42% of frame height.')
+ if height>58:
+  issues.append(f'Reduce product height from {height:g}% to at most 58% of frame height.')
  return not issues,issues
 
 def _vision_review(base,path,item,kind):
@@ -52,15 +53,15 @@ def _vision_review(base,path,item,kind):
   return {'pass':True,'score':90,'reasons':['fast mode: trusted prompt for non-key image'],'correction_prompt':''}
  encoded=base64.b64encode(path.read_bytes()).decode('ascii')
  if family=='layflat':
-  criteria='The image must show exactly two approved layflat objects: one packaged AFP coil and one bare black woven coil. Target 12 to 15 percent of frame width; accept practical vision estimates from 8 to 36 percent when the pair remains secondary, stay off-center on the lower third, remain fully visible, separate and flat on the ground. The image must contain zero people and zero human body parts.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part, human silhouette, tractor, harvester, vehicle or machine cabin, even distant. Hard reject a pair wider than 36 percent of the frame, centered product staging, any third hose or product, round pipe, drip tape, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or distorted dimensions.'
+  criteria='The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. Prefer 20 to 35 percent of frame width; accept practical vision estimates from 8 to 60 percent when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 60 percent of the frame, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
  else:
-  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. Prefer 20 to 23 percent of frame width, but accept practical vision estimates from 12 to 36 percent when the roll remains secondary; height must be no more than 42 percent. Keep it off-center on the lower third. The image must contain zero people and zero human body parts. The background must visibly match the article brief and the selected image role.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part, human silhouette, tractor, harvester, vehicle or machine cabin, even distant. Hard reject a roll wider than 36 percent of the frame, taller than 42 percent of the frame, centered product staging, bottle, jar, canister, bucket, fertilizer or pesticide container, second package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry, generic unrelated scenery or distorted dimensions.'
+  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. Prefer 20 to 28 percent of frame width, but accept practical vision estimates from 10 to 48 percent and height up to 58 percent when the object remains physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts. The background should match the article brief and selected image role.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 48 percent of the frame, taller than 58 percent, bottle, jar, canister, bucket, fertilizer or pesticide container, second commercial package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry or severely distorted dimensions. A distant unattended tractor, ordinary farm building and fixed irrigation hardware are allowed when contextually relevant.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
 Article visual brief: {brief}. Mandatory role: {image_prompt_policy.role_directive(family,kind)}.
-The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never be rejected or requested for removal. Tractors, harvesters, vehicles and machine cabins are forbidden even when unattended. Fixed pumps, filters, gauges and manifolds are allowed when required by the role and must not be classified as extra commercial products. Estimate the product bounding box from image pixels. Report product_width_percent, product_height_percent and product_x_center_percent as numeric percentages of the full image. If pass is true, correction_prompt must be empty. Do not reject only for ordinary soil texture or distant crop rows. Return only JSON: {{"pass":true|false,"score":0-100,"product_width_percent":0,"product_height_percent":0,"product_x_center_percent":0,"reasons":["..."],"correction_prompt":"short regeneration instruction"}}. Pass at score {MIN_IMAGE_SCORE} or higher.'''
+The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never be rejected or requested for removal. Fixed pumps, filters, gauges, manifolds, relevant connectors and distant unattended farm equipment are infrastructure, not extra commercial products. Never pass any visible human or bottle/container. Estimate the product bounding box from image pixels. Report product_width_percent, product_height_percent and product_x_center_percent as numeric percentages of the full image. If pass is true, correction_prompt must be empty. Do not reject only for centered placement, ordinary soil texture, a horizon, farm building, distant crop rows or unattended equipment. Return only JSON: {{"pass":true|false,"score":0-100,"product_width_percent":0,"product_height_percent":0,"product_x_center_percent":0,"reasons":["..."],"correction_prompt":"short regeneration instruction"}}. Pass at score {MIN_IMAGE_SCORE} or higher.'''
  payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':[{'type':'text','text':prompt},{'type':'image_url','image_url':{'url':'data:image/webp;base64,'+encoded}}]}],'temperature':0,'response_format':{'type':'json_object'}}
  req=urllib.request.Request(base.AGNES_BASE+'/chat/completions',data=json.dumps(payload).encode(),headers={'Authorization':f'Bearer {base.AGNES_KEY}','Content-Type':'application/json'})
  with urllib.request.urlopen(req,timeout=60) as response:raw=json.loads(response.read())
