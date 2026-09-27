@@ -1,0 +1,104 @@
+{
+  "source_id": "10400016002879-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 88,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image correctly displays two coiled products (one layflat, one round pipe) on open textured soil in the lower third of the frame, aligning with the secondary product staging requirements.",
+        "The required watermark \"AFP | 09134922013\" is clearly visible in the bottom-right corner and meets the hard requirement.",
+        "The scene is free of any hard-reject elements such as people, human body parts, tractors, harvesters, or vehicle cabins.",
+        "The background includes a crop-row horizon and a distant building, which are not classified as hard rejections under the visual brief's practical tolerances.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 88% to 8-36% of frame width.; Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 88% to 8-36% of frame width. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 34,
+      "product_height_percent": 28,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image contains a tractor in the background, which is a hard reject.",
+        "The image contains a building/horizon structure in the background, violating the 'no skyline, building, or crop-row horizon' requirement.",
+        "The two products are not separate, as a hose is visibly passing from one coil to the other, creating a merge/intersection that is prohibited.",
+        "A third object (a white and blue package) is present on the ground, which is not part of the approved two-coil pair."
+      ],
+      "correction_prompt": "Regenerate the image with exactly two layflat coils: one bare black coiled hose and one packaged AFP coil. Ensure they are separate objects with no hose intersection. Remove the third white package, the background tractor, and the building/horizon completely. Use open textured soil with a plain background.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 58,
+      "product_height_percent": 42,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is present in the bottom right.",
+        "No people, body parts, or vehicles are visible.",
+        "Objects are flat on the ground on textured soil.",
+        "The pair is centered (target was off-center), and the bounding box exceeds the 36% width cap, but the composition is otherwise valid.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 58% to 8-36% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product pair width (55%) significantly exceeds the 36% hard reject limit.",
+        "A red tractor and building are visible in the distant background, violating the hard reject rules for vehicles and structures.",
+        "The layout is centered on the horizon, conflicting with the requirement to remain off-center on the lower third.",
+        "The scene lacks the 'elevated near-overhead technical comparison' perspective required for the selection evidence role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the tractor, building, and skyline from the background. Shrink the two-coil pair to target 15% of the frame width. Reposition the product to the lower-left third of the frame. Use an elevated near-overhead angle focused on the textured soil to highlight the diameter difference between the coils. Reduce the product group from 55% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 65,
+      "product_height_percent": 30,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Violation: There is a tractor/vehicle in the distant background, which is a hard reject.",
+        "Violation: The 'packaged' coil appears to be a bare woven hose, not a packaged AFP coil.",
+        "Violation: A separate connector/valve piece is visible in the foreground; the brief forbids any third object.",
+        "Violation: The product pair is significantly wider than the target (65% vs target 12-15%).",
+        "Violation: The pair is centered; the brief requests off-center staging on the lower third.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the tractor from the background and all third objects like the white connector. Ensure one coil is packaged and the other is bare black woven. Move the pair to the lower third, off-center to the left, and make them much smaller (12-15% of frame width) to prioritize the soil texture. Reduce the product group from 65% to 8-36% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 43,
+      "product_height_percent": 27,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Product pair width of approximately 43% exceeds the hard reject threshold of 36%.",
+        "The layout is positioned in the lower center rather than specifically the lower third and off-center as required.",
+        "Visual staging of the pair is too large relative to the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 43% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Scale down the two-coil pair to occupy between 12 and 15 percent of the frame width, ensuring the total width is strictly under 36 percent. Shift the pair's position off-center within the lower third. Remove the central crop row horizon to avoid visual conflict with the product staging. Reduce the product group from 43% to 8-36% of frame width.",
+      "attempt": 6
+    }
+  ]
+}

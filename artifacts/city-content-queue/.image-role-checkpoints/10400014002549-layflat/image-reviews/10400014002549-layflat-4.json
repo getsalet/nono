@@ -1,0 +1,83 @@
+{
+  "source_id": "10400014002549-layflat",
+  "family": "layflat",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The pair of coils and the extended hose occupies approximately 45% of the frame width, which significantly exceeds the strict 36% maximum limit.",
+        "The visual staging is centered rather than staying strictly off-center on the lower third as required for the 'secondary' product placement.",
+        "The extended hose path is wide and prominent, failing to look like a 'small' unattended view where the pair remains secondary to the field installation.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Shrink the scale of the coil pair and the extended hose path to occupy less than 25% of the frame width. Reposition the product pair further to the right within the lower third to ensure they remain secondary and off-center. Keep the extended connection subtle. Reduce the product group from 45% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 8,
+      "product_height_percent": 14,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: The image contains multiple third hoses/products radiating from the central coil, which is forbidden (must contain exactly two layflat objects).",
+        "Hard reject: In the distant background to the right, a tractor and a vehicle are visible, which is a hard rejection trigger (even if unattended).",
+        "Hard reject: The layout shows a single central coil with extended lines, failing the requirement for 'exactly two approved layflat objects' (one packaged AFP coil and one bare black woven coil) positioned as a pair at the field edge."
+      ],
+      "correction_prompt": "Regenerate the image showing only two specific objects (one packaged AFP coil, one bare woven coil) placed small in the lower third field edge. Remove the central radiating lines and remove all background tractors or vehicles. Keep the 'AFP | 09134922013' watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 20,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: A vehicle/machine (tractor) is clearly visible in the distant field background, which is explicitly forbidden even when unattended.",
+        "Hard reject: A human operator is visible sitting on the distant vehicle, which violates the 'zero people' rule.",
+        "Hard reject: The product pair (coils) is centered in the foreground rather than 'staying off-center' on the lower third as required."
+      ],
+      "correction_prompt": "Remove the distant tractor and human from the background entirely. Shift the two coils to the left or right of the frame to make the composition asymmetric and off-center. Maintain the 'installation proof' look of the line leading into the field.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 12,
+      "product_height_percent": 8,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: Machine/tractor cabin is visible in the distant background (top center).",
+        "Hard reject: A third commercial product (a spool of drip tape or tubing) is present on the ground next to the layflat coil.",
+        "Fail: The required image role of 'asymmetric unattended view of an extended layflat connection entering the field' is not depicted; the image shows only static coils without field installation context."
+      ],
+      "correction_prompt": "Remove the distant tractor/vehicle in the background and the spool of drip tape next to the main product. Extend a single strand of black layflat hose from the coil into the crop rows to demonstrate field installation. Ensure exactly two layflat coils (one packaged, one bare) are visible.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 30,
+      "product_height_percent": 15,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Exactly two approved layflat objects (packaged and bare coils) are visible.",
+        "The pair is located in the lower third and offset from the center.",
+        "No people, human body parts, or prohibited machinery (tractors, etc.) are present.",
+        "The required watermark is correctly displayed in the bottom-right corner.",
+        "The installation role (extended layflat connection entering the field) is well represented.",
+        "Product dimensions and positioning meet the specified visual parameters."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "source_id": "10400016002879-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 70,
+      "product_height_percent": 35,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Tractor present in the background",
+        "Product pair width exceeds maximum 36% limit (estimated at 70%)",
+        "Product placement is centered rather than off-center",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the tractor from the background entirely. Reduce the size of the hose coils significantly to ensure the pair occupies less than 36% of the frame width. Shift the product pair toward the left or right side of the frame in the lower third. Reduce the product group from 70% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 50,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: visible tractor in the background (forbidden even if distant or unattended).",
+        "Product size exceeds threshold: width is estimated at 50%, which is greater than the 36% hard reject limit.",
+        "Composition mismatch: products are centered rather than 'staying off-center on the lower third'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the tractor from the background and crop in closer to make the two-coil pair occupy less than 36% of the frame width while positioning them off-center in the lower third. Reduce the product group from 50% to 8-36% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 33,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Tractor visible in the background (right side).",
+        "Product pair is centered, violating the 'stay off-center' and 'secondary' requirements.",
+        "The product pair occupies too much of the frame (~33% width), failing the '12-15% target' guideline for a secondary object in this role.",
+        "Role violation: 'Maintenance Detail' requires a downward close-up of a connector or fold on the ground; the image shows a wide shot from above/beyond with a horizon and panorama."
+      ],
+      "correction_prompt": "Regenerate as an unattended downward close-up of a single hose connector resting on bare soil. Keep the two coils (packaged AFP and bare black woven) in the background, small and secondary, positioned off-center on the lower third. Remove the tractor, barn, and horizon. Ensure the connector is the focal point.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 80,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product pair (coils + package) is far too large, occupying approximately 80% of the frame width, significantly exceeding the 36% hard reject limit.",
+        "The role required an unattended close-up of a maintenance detail (connector/fold/woven surface) with the coils small and secondary, but the coils are the dominant focus.",
+        "The background contains farm structures (barns/fences) which contradicts the MAINTENANCE DETAIL role requirement for bare soil without a horizon or panorama.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 80% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate an unattended extreme close-up of a single connector detail or folded woven surface on bare soil. The packaged AFP coil and bare black coil must appear in the background as secondary elements, occupying less than 15% of the frame width. Remove the barns and horizon, focusing strictly on the soil detail. Reduce the product group from 80% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 68,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Both required approved layflat objects are fully visible, separate, and flat on the ground: one bare black woven coil and one packaged AFP coil.",
+        "No people, human body parts, vehicles, tractors, harvesters, or machine cabins are present in the frame.",
+        "The two-coil pair remains clearly secondary and unattended; there is no third hose, drip tape, bottle, canister, bucket, or fabricated product.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted; it was not rejected or requested for removal.",
+        "Composition stays in the lower third with visible soil texture and no central staged framing that would imply a primary product showcase.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 68% to 8-36% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 78,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "No people, faces, limbs, or body parts are present.",
+        "No tractors, harvesters, vehicles, or machine cabins are visible.",
+        "No prohibited third hoses, boxes, bottles, or tools found; central object is a standard connector.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 78% to 8-36% of frame width.",
+      "attempt": 6
+    }
+  ]
+}

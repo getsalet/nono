@@ -1,0 +1,56 @@
+{
+  "source_id": "10400014002549-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 42,
+      "product_height_percent": 30,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Presence of a human person (farmer) and visible body parts (arms, hands, legs), which are hard rejects.",
+        "The two layflat coils are placed in the foreground, occupying the center-left area, violating the requirement to remain secondary in the lower third off-center.",
+        "The product pair is too large, exceeding the 36% maximum width limit.",
+        "The blue pump and gauge are positioned behind the coils, failing the role requirement where the pump should be the primary medium side-view focus with the coils as secondary.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the person and all human body parts. Shift the focus to the blue pump, gauge, and manifold in a medium side view. Move the two layflat coils (one packaged AFP, one bare black) to be small and secondary, positioned in the lower third, off-center, and fully visible on the ground. Reduce the product group from 42% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 16,
+      "product_height_percent": 10,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "The two required coils are shown side-by-side (or nearly merged) rather than 'separate', violating the layout constraint.",
+        "The pump and manifold in the foreground are massive and dominate the frame, failing the 'secondary' requirement; the product pair is overwhelmed by the machinery.",
+        "There is an impossible intersection/structural error where the hose from the pump appears to pass through or merge directly with the coil objects.",
+        "The coils are positioned in the extreme foreground, not 'stay off-center on the lower third' as a secondary background element.",
+        "The required watermark is missing (the provided placeholder text is not the required 'AFP | 09134922013')."
+      ],
+      "correction_prompt": "Generate a medium side-view of a small, unattended fixed pump and manifold in the background, set on a farm field. In the foreground, place two small, perfectly separate layflat coils (one in white packaging, one bare black) flat on the ground, clearly offset to the left (lower third). Ensure the coils are distinct, not merged with the pump, and maintain strict scale where the coils are secondary. Include the exact watermark 'AFP | 09134922013' in the bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Product pair (packaged white coil and bare black woven coil) is present, separate, and flat on the ground.",
+        "Pair stays secondary and off-center; product width is within the acceptable practical 8–36 percent range.",
+        "Mandatory HEADWORKS elements (unattended pump, gauge, manifold) are included; no people, body parts, tractors, harvesters, vehicles, cabins, round pipe, drip tape, bottle, jar, canister, bucket, fake label, or merged/floating product is present.",
+        "Watermark is preserved and correctly positioned."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

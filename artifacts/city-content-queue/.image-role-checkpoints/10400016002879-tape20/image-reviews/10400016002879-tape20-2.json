@@ -1,0 +1,96 @@
+{
+  "source_id": "10400016002879-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 31,
+      "product_height_percent": 52,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Image contains a tractor in the background, which is a hard reject.",
+        "Product height (approx 52%) exceeds the maximum threshold of 42%.",
+        "The image does not provide the required 'SELECTION EVIDENCE' (emitter-spacing or specification details).",
+        "machine-enforced bounding-box check failed: Reduce product height from 52% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Remove the tractor in the background and crop the image tighter to the drip tape roll so that its height is less than 42% of the frame. Add close-up detail or labels showing emitter spacing and specification information to the roll. Keep the product in the lower-third off-center position without a person or vehicle present. Reduce product height from 52% to at most 42% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: A red tractor is clearly visible in the background, violating the rule that forbids tractors or machines even when unattended.",
+        "Role mismatch: The image displays a generic field scene with a large horizon line, which fails the mandatory 'near-overhead technical arrangement' image role requirement.",
+        "Background conflict: The visible barn, tractor, and wide sky panorama are forbidden elements that do not match the article brief."
+      ],
+      "correction_prompt": "Regenerate the image as a near-overhead technical shot focused strictly on the drip tape carton and emitter spacing on the soil. Completely remove the horizon line, barn, and red tractor from the background to ensure zero vehicles are present.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Tractor/vehicle visible in the background (top center).",
+        "Text on the carton is gibberish/distorted (non-AFP branding visible on the side).",
+        "Product staging is centered rather than off-center on the lower third."
+      ],
+      "correction_prompt": "Remove the tractor in the background. Regenerate the scene with the AFP drip-tape carton positioned off-center in the lower third of the frame, with clear, legible 'AFP' text. Use a plain soil or crop-field background with no machinery or vehicles.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product is staged in the center of the frame (around 48%), violating the mandatory 'off-center' requirement which should keep it in the lower third (approx 15-85% x-axis).",
+        "The image depicts a standard product shot in a field rather than the 'SELECTION EVIDENCE' role, which requires a near-overhead technical arrangement with specific emitter-spacing or specification evidence visible.",
+        "The background is a generic landscape/panorama rather than matching the specific article brief technical style."
+      ],
+      "correction_prompt": "Reposition the AFP drip-tape carton roll off-center in the lower third of the frame (approx 65-70% from the left). Change the camera angle to a near-overhead view to reveal the tape laid out on the soil next to the roll, clearly showing emitter spacing or specification evidence to match the technical 'selection evidence' role.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Hard reject: Tractors and machinery (tractor with trailer, excavator) are visible in the background",
+        "Hard reject: Barn building visible in the background",
+        "Role mismatch: Brief requires 'near-overhead technical arrangement' but image is a low-angle field shot",
+        "Role mismatch: Brief forbids 'panorama' or 'skyline' but image shows wide horizon and sky"
+      ],
+      "correction_prompt": "Regenerate as a near-overhead close-up technical shot of the drip tape roll on soil with specification text. Strictly remove all background elements like tractors, excavators, and barns. Focus only on the product and soil texture.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A tractor is clearly visible in the distant background.",
+        "Hard reject: The product roll is centered in the frame rather than being off-center on the lower third.",
+        "Fail: The visual role does not match the 'SELECTION EVIDENCE' brief, which requires a near-overhead technical arrangement and emitter-spacing/specification evidence.",
+        "Fail: The image presents a centered product staging rather than the required specific role."
+      ],
+      "correction_prompt": "Regenerate a near-overhead technical shot of exactly one AFP drip-tape roll positioned in the lower-left or lower-right third. Include a clear ruler or specification tag showing emitter spacing to meet the selection evidence role. Remove the tractor from the background and ensure the product is not centered.",
+      "attempt": 6
+    }
+  ]
+}
