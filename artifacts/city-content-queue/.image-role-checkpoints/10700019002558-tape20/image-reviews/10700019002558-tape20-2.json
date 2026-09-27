@@ -7,13 +7,75 @@
   "history": [
     {
       "pass": false,
-      "score": 0,
-      "review_unavailable": true,
+      "score": 15,
+      "product_width_percent": 15,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
       "reasons": [
-        "visual reviewer unavailable after 4 retries: HTTPError"
+        "Presence of multiple people (farmers/worker visible in top-right and bottom-right panels)",
+        "Contains human body parts (hands, arms, legs, face)",
+        "Multiple product instances present (four cartons visible instead of exactly one)"
       ],
-      "correction_prompt": "Retry visual review of the preserved candidate without regenerating it.",
+      "correction_prompt": "Regenerate a single image showing one AFP drip-tape carton on a plowed field with no people, workers, or human body parts visible; keep the background simple with a distant farm building.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 27,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The required bottom-right watermark string 'AFP | 09134922013' is missing from the image.",
+        "The article visual brief specifically calls for 'elevated technical arrangement' and 'emitter-spacing or field-selection evidence', but the image is a static product shot with a simple background that does not meet this mandatory role."
+      ],
+      "correction_prompt": "Regenerate the image including the exact bottom-right watermark 'AFP | 09134922013'. Reposition the single roll into an elevated technical arrangement or place it next to visible emitter-spacing and field-selection tools to satisfy the selection evidence requirement. Keep the farm building context.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 42,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Presence of a crouching male person",
+        "Visible human body parts (head, face, arms, hands, legs)",
+        "Product bounding box height (42%) exceeds the 32% maximum limit",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the crouching person completely. Isolate the white-and-blue AFP cylindrical drip-tape roll on the field ground. Do not include any human, body part, or silhouette. Ensure the product roll is physically plausible and scaled to approximately 20% width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Watermark in bottom-right corner shows '09134922013' but the mandatory required watermark is '09134922013' with a specific format check: The prompt requires 'AFP | 09134922013'. Wait, looking closely at the image, the watermark is 'AFP | 09134922013'. However, the most critical hard reject is the presence of a tractor in the background. While 'distant unattended tractor' is allowed, the brief specifically calls for 'SELECTION EVIDENCE: elevated technical arrangement... visible emitter-spacing or field-selection evidence'. This image is a generic field shot without the specific technical arrangement or emitter spacing evidence required for the 'Selection Evidence' role. Furthermore, the object geometry is slightly off; it looks more like a standard industrial roll rather than the specific 'wide low cylindrical' shape emphasized, and the text on the side is gibberish/fake.",
+        "Missing mandatory visual brief element: 'visible emitter-spacing or field-selection evidence'.",
+        "machine-enforced bounding-box check failed: Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image showing exactly one white-and-blue wide low cylindrical drip-tape roll on soil. Background must include visible emitter-spacing markers or field-selection tools (selection evidence). Remove the tractor to keep background simpler if necessary, or ensure it is clearly unattended infrastructure. Ensure no people or containers. Keep the AFP watermark. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image displays exactly one wide, low cylindrical white-and-blue carton roll as requested.",
+        "The product's width and height fall within the specified accepted ranges (width 13-27%, height up to 32%).",
+        "The image contains zero people or body parts.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "Emitter spacing evidence is visible in the foreground, satisfying the selection evidence role requirement."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
     }
   ]
 }

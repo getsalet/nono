@@ -1,0 +1,51 @@
+{
+  "source_id": "1070006002711-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 20,
+      "product_height_percent": 30,
+      "product_x_center_percent": 15,
+      "reasons": [
+        "The image contains multiple human body parts (hands and a forearm).",
+        "The image is a collage containing multiple different scenes and products instead of a single continuous scene."
+      ],
+      "correction_prompt": "Generate a single, cohesive image of a crop field with a single white and blue drip tape roll at the edge, absolutely zero people or body parts, including a bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 26,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "A person (farmer/worker) is visible in the background standing near the hay bale, which is a hard reject.",
+        "The image role is incorrect: the brief requires 'INSTALLATION PROOF' showing asymmetric unattended view of installed drip tape and crop beds, but the image shows a product-centric shot with the roll centered and the tape trailing, not clearly installed in a row."
+      ],
+      "correction_prompt": "Remove the person in the background. Reframe the image to an asymmetric angle showing installed drip tape in crop beds with the specific carton roll small at the field edge. Ensure no humans or distant human silhouettes are visible.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 16,
+      "product_height_percent": 22,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Product dimensions are within the acceptable 13-27% width and <32% height range",
+        "Contains zero people or human body parts",
+        "Watermark 'AFP | 09134922013' is present in the bottom right corner as required",
+        "Background matches article brief showing installed drip tape in crop beds with distant unattended equipment",
+        "Asymmetric unattended view without centered vanishing point"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

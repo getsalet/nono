@@ -1,0 +1,124 @@
+{
+  "source_id": "10700022002059-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 21,
+      "product_height_percent": 30,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: A person is visible in the background on the tractor (driver). The rules specify hard reject for any person, even distant.",
+        "Hard reject: A distant tractor with a driver is visible, violating the 'zero people' and 'unattended distant farm equipment' constraint."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the person and the tractor in the background. Ensure the background consists only of the farm field, rows, and soil with no machinery or humans.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The primary product roll exceeds the hard-reject width limit of 27 percent (estimated ~28 percent).",
+        "The primary product roll exceeds the hard-reject height limit of 32 percent (estimated ~35 percent).",
+        "The presence of a second commercial package (the blue coiled tape section on the right) triggers a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image showing only a single white-and-blue drip-tape carton roll. Reduce the roll's bounding box to within 23% width and 32% height of the frame. Remove the blue coiled tape on the right to ensure exactly one commercial package is present. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 31.5,
+      "product_height_percent": 37.2,
+      "product_x_center_percent": 38.5,
+      "reasons": [
+        "Hard reject: Visible person (farmer) standing next to the tractor in the background.",
+        "Hard reject: Roll width is approximately 31.5% of frame width, exceeding the 27% maximum limit.",
+        "Hard reject: Roll height is approximately 37.2% of frame height, exceeding the 32% maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31.5% to 13-27% of frame width.; Reduce product height from 37.2% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the person and tractor from the background. Reduce the size of the drip tape roll so its width is approximately 20-23% of the frame and its height is under 30% of the frame. Ensure no human figures are visible. Reduce the product group from 31.5% to 13-27% of frame width. Reduce product height from 37.2% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Product width is approximately 33 percent of frame width, exceeding the maximum 27 percent limit",
+        "Product height is approximately 35 percent of frame height, exceeding the maximum 32 percent limit",
+        "Mandatory role 'MAINTENANCE DETAIL' not met; image shows a generic carton roll instead of an unattended close view of an installed drip-tape emitter, connector, or flush-point",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Close-up maintenance detail of installed drip-tape connector or emitter on a field, with one small unbranded white drip-tape carton roll visible in the lower-left background (13-27% width, <32% height), no text, no people, and the specific watermark 'AFP | 09134922013' in the bottom-right corner. Reduce the product group from 33% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: second commercial package (white box) is present",
+        "Hard reject: text on the packaging is gibberish",
+        "The image does not match the mandatory image role of 'MAINTENANCE DETAIL' (close view of installed drip-tape)"
+      ],
+      "correction_prompt": "Remove the white carton box from the scene. Change the visual focus to a close-up maintenance view of installed drip-tape (e.g., an emitter or flush point) on a field, leaving only the single roll visible in the background or nearby context. Ensure the product packaging text is legible and correct, and maintain the required watermark in the bottom-right corner.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 31,
+      "product_height_percent": 44,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The image contains zero people and no human body parts.",
+        "The watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "The scene matches the agricultural context (field, tractor).",
+        "The product (drip-tape roll) is too wide (31%) and tall (44%) relative to the frame, exceeding the strict upper limits of 27% and 32% specified in the hard reject criteria, but failing only on strict sizing rules.",
+        "The role of 'maintenance detail' (close-up of connector) is not the primary focus; the image shows the roll and a connector, which is acceptable, but the oversized product prevents a perfect score.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width.; Reduce product height from 44% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Scale down the drip-tape roll so its width is approximately 20% and height is under 30% of the frame width. Maintain the close-up perspective on the connector while ensuring the roll remains clearly visible but less dominant in the composition. Reduce the product group from 31% to 13-27% of frame width. Reduce product height from 44% to at most 32% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 32,
+      "product_height_percent": 28,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Product bounding box width is estimated at 32%, which exceeds the strict hard-reject limit of 27% of frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the width of the drip-tape carton roll to less than 25% of the frame width to satisfy the strict 27% maximum width requirement. Keep the watermark in the bottom-right corner and maintain the distant farm scene background. Reduce the product group from 32% to 13-27% of frame width.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Role Mismatch: The image displays a stock pile of unrolled drip tape, but the mandatory role for 'MAINTENANCE DETAIL' requires an installed emitter, connector, flush-point, or material detail on the ground.",
+        "Missing Component: No installed maintenance hardware (like an end cap or connector) is visible on the crop rows."
+      ],
+      "correction_prompt": "Replace the standalone stock roll with an installed drip tape connector or flush point at the end of an in-field crop row. Show only one small 'AFP' carton in the immediate background as reference. No people, no tractors in the foreground.",
+      "attempt": 8
+    }
+  ]
+}

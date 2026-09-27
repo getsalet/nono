@@ -1,0 +1,125 @@
+{
+  "source_id": "1070007002298-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 35,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Presence of a second roll (lay-flat drip tape) on the right, which is a hard reject.",
+        "Product width (approx. 35%) exceeds the hard reject limit of 27% of frame width.",
+        "Text on the carton is garbled/incorrect ('DRIP IRRBTON TAPE' vs 'DRIP IRRIGATION TAPE').",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the flat drip tape coil on the right. Regenerate the carton to be smaller, occupying less than 27% of the image width. Ensure the text on the carton reads clearly and correctly without gibberish. Keep the watermark. Reduce the product group from 35% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 33,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Presence of a human body part (person/worker) clearly visible in the background (standing near the red tractor). The requirement mandates zero people and zero human body parts.",
+        "Hard reject: The presence of a red tractor and building in the background suggests a 'field overview' role, whereas the mandatory role is 'MAINTENANCE DETAIL' (close view of an installed emitter/connector). The roll is sitting on the ground rather than representing a close-up detail shot of the hardware.",
+        "Product height slightly exceeds the 32% maximum limit (approx 33%).",
+        "machine-enforced bounding-box check failed: Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image as a close-up detail shot of the drip tape machinery. Place the white and blue AFP carton roll in the foreground, slightly to the left. Show the tape leading into an unattended connector or flush point in the soil. Remove all people, the red tractor, and the farm building to create a clean, isolated view of the installation. Ensure the carton roll occupies approximately 20% of the frame width and less than 30% height. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero people or human body parts are visible.",
+        "No prohibited items such as bottles, jars, canisters, or second rolls are present.",
+        "The bottom-right watermark 'AFP | 09134922013' is clearly visible as required.",
+        "Background features relevant farm context (crop rows, soil, distant farm building) without violating constraints.",
+        "Product dimensions are within the acceptable estimation noise range for a physically plausible object.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 26,
+      "product_height_percent": 29,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "The mandatory role 'MAINTENANCE DETAIL' is not satisfied; the image shows a wide shot of the field and a distant tractor rather than an unattended close-up view of an installed drip-tape emitter, connector, flush-point, or material detail.",
+        "Although the unattended tractor in the background is an allowed contextual element, it is too prominent and active (implying presence) which conflicts with the 'no person/worker' and 'unattended detail' focus of the specific role."
+      ],
+      "correction_prompt": "Generate an extreme close-up 'macro' shot of an installed drip-tape emitter or flush-point connector in a soil row. Ensure exactly one white-and-blue drip-tape carton roll is visible in the foreground, occupying approximately 20% of the frame width. No tractors, no people, and no active machinery. Keep the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 15,
+      "product_height_percent": 42,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "The carton roll is significantly taller than 32% of the frame (approx. 42%), violating the dimension constraint for a physically plausible wide low cylindrical roll.",
+        "The required watermark is missing in the bottom-right corner.",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the roll flatter (height <= 32% of frame) to represent a wide low carton roll, and add the exact watermark 'AFP | 09134922013' in the bottom-right corner. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 21,
+      "product_height_percent": 32,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: The image contains two clearly visible people (one standing in the background and one near the tractor), which violates the strict 'zero people' constraint.",
+        "Image role violation: The mandatory role is 'MAINTENANCE DETAIL' requiring a close-up of installed hardware (emitter, connector). This image is a wide landscape shot with the roll placed on the ground, not installed.",
+        "Text quality: The text 'MIRSOON' is gibberish/misspelled, and the watermark phone number differs slightly from the required string ('09134922013' vs '09134922013' - actually the prompt requires 'AFP | 09134922013' and the image has 'AFP | 09134922013', but the presence of people is the immediate fail)."
+      ],
+      "correction_prompt": "Remove all people and faces completely. Transform the scene into a close-up maintenance detail shot of an installed drip-tape connector or emitter on a plant. Ensure only the white-and-blue AFP roll is visible in the background or foreground context. Preserve the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 32,
+      "product_height_percent": 42,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Hard reject: A human figure is clearly visible in the background (top-left), violating the zero-person/zero-human policy.",
+        "Hard reject: Product dimensions are out of specification; the roll's width and height are approximately 32% and 42% of the frame respectively, exceeding the 27% width and 32% height maximums.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove all human figures or silhouettes from the background. Reduce the product size so the roll width is under 27% and height is under 32% of the frame, ensuring a close-up maintenance detail view without any person or extra commercial containers. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 21,
+      "product_height_percent": 31,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Visible human figure (worker/farmer) in the background on the right side, which is a hard reject.",
+        "Second commercial package (wooden crate) is visible on the tractor in the background."
+      ],
+      "correction_prompt": "Regenerate without any people or workers in the background. Remove the wooden crate on the tractor. Ensure the background is empty of any extra commercial containers.",
+      "attempt": 8
+    }
+  ]
+}

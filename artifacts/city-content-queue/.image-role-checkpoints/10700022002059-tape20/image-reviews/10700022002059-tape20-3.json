@@ -1,0 +1,81 @@
+{
+  "source_id": "10700022002059-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 26,
+      "product_height_percent": 38,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: The image contains a visible person standing in the background.",
+        "Hard reject: The drip tape roll is too tall relative to the frame, estimated at 38% height (limit is 32%).",
+        "The product width is at the upper limit of the tolerance range (26%), making the composition feel unbalanced.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the person from the image entirely. Rescale the carton roll to be significantly smaller and lower (height under 30%, width 18-22%). Maintain the farm context and unattended equipment but ensure no human presence. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 18,
+      "product_height_percent": 17,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "There is a second commercial package (brown cardboard box) visible on the right side of the frame.",
+        "Multiple black hoses/pipes are running through the scene and are entangled with the infrastructure."
+      ],
+      "correction_prompt": "Remove the brown cardboard box on the right. Ensure no loose pipes or hoses are running through the scene or tangled with the equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 38,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: A human farmer is clearly visible standing in the background.",
+        "Hard reject: The product roll's height (~38% of frame) exceeds the 32% maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures. Reduce the physical size of the drip-tape roll so its height is under 32% of the frame. Keep the white-and-blue AFP branding and fixed irrigation hardware. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 14,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Visible people in the image.",
+        "Hard reject: Human body parts (hands, arms) are visible."
+      ],
+      "correction_prompt": "Remove all people and human body parts from the image. Keep only the fixed irrigation infrastructure and the drip tape roll.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image correctly features a wide, low, cylindrical drip-tape carton roll with the 'AFP' branding in white and blue, matching the preferred role and product specifications.",
+        "The physical dimensions of the roll are within the acceptable estimation range (width 24%, height 31%) and remain physically plausible.",
+        "The image contains zero people, human silhouettes, or body parts.",
+        "A distant unattended tractor is present, which is explicitly permitted as contextually relevant farm equipment.",
+        "The required 'AFP | 09134922013' watermark is correctly positioned in the bottom-right corner.",
+        "The irrigation hardware (filter/gauge) is present as infrastructure, with an approved small secondary carton visible, fulfilling the 'HEADWORKS STORY' brief without violating hard rejects."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

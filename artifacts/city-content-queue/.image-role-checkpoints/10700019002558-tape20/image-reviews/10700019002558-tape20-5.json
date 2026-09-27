@@ -7,123 +7,69 @@
   "history": [
     {
       "pass": false,
-      "score": 0,
+      "score": 10,
       "product_width_percent": 0,
       "product_height_percent": 0,
       "product_x_center_percent": 0,
       "reasons": [
-        "Visible person in the background near the green tractor.",
+        "Hard reject: Image contains visible people (bottom right panel).",
+        "Hard reject: Image contains multiple separate rolls of drip tape (3 distinct rolls visible across panels).",
+        "Hard reject: The image is a composite collage containing multiple unrelated scenes and objects.",
+        "Hard reject: The bottom-right panel features a human figure and a pressure gauge, violating the 'zero people' and 'infrastructure only' constraints.",
         "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
       ],
-      "correction_prompt": "Regenerate the image ensuring zero people, human silhouettes, or body parts are visible in the entire frame, including the distant background tractors. Enlarge the product group from 0% to 13-27% of frame width.",
+      "correction_prompt": "Regenerate a single, seamless image showing exactly one white-and-blue AFP drip-tape roll sitting in a field. Remove all humans, all other rolls, and any collages. Ensure the single roll occupies approximately 20% of the frame width. Enlarge the product group from 0% to 13-27% of frame width.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 35,
-      "product_width_percent": 34,
-      "product_height_percent": 48,
-      "product_x_center_percent": 36,
+      "score": 25,
+      "product_width_percent": 28,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Product width is approximately 34% of the frame, which exceeds the 27% maximum hard reject limit (hard reject)",
-        "Product height is approximately 48% of the frame, which exceeds the 32% maximum hard reject limit (hard reject)",
-        "A second roll of drip tape is visible on the ground to the right of the main carton, which is a hard reject",
-        "Required maintenance detail (installed emitter, connector, or flush-point) is missing; the image shows an uninstalled carton rather than the required 'MAINTENANCE DETAIL' role",
-        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 13-27% of frame width.; Reduce product height from 48% to at most 32% of frame height."
+        "The product width exceeds the maximum allowable limit of 27 percent of the frame width.",
+        "The image depicts a stored carton roll rather than the required 'Maintenance Detail' role which mandates an unattended close view of an installed drip-tape emitter, connector, or flush-point material detail.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
       ],
-      "correction_prompt": "Regenerate image to show a maintenance detail view of an installed drip tape system. Remove the ground coiled roll. Shrink the AFP carton roll to a size representing ~20% of the frame width and height. Ensure no people or bottles are present. Keep the AFP | 09134922013 watermark. Reduce the product group from 34% to 13-27% of frame width. Reduce product height from 48% to at most 32% of frame height.",
+      "correction_prompt": "Regenerate the image to show a close-up maintenance detail of an installed drip-tape emitter or flush-point on the soil surface. Ensure the visible roll of drip tape (if present) has a width between 20% and 23% of the frame width. Exclude any large carton rolls or wide packaging. Keep the background field context with a distant unattended tractor. No people. Preserve the 'AFP | 09134922013' watermark. Reduce the product group from 28% to 13-27% of frame width.",
       "attempt": 2
     },
     {
       "pass": false,
-      "score": 10,
-      "product_width_percent": 21,
-      "product_height_percent": 28,
-      "product_x_center_percent": 32,
+      "score": 95,
+      "product_width_percent": 28,
+      "product_height_percent": 45,
+      "product_x_center_percent": 31,
       "reasons": [
-        "Hard reject: The image contains a visible person (a farmer wearing a hat and overalls) crouching in the middle of the field, which violates the 'zero people' requirement.",
-        "Role Mismatch: The mandatory role is 'MAINTENANCE DETAIL' requiring a close view of an installed emitter or connector. This image shows a wide landscape shot with a roll on the ground, failing the specific role requirement."
+        "Contains exactly one approved AFP drip-tape roll, which is the correct product.",
+        "The image meets the 'MAINTENANCE DETAIL' brief by showing the roll alongside an installed connector/hardware piece with the tape extending into the field, providing necessary context.",
+        "The unattended tractor in the background is allowed as 'distant unattended farm equipment'.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom right corner.",
+        "No people, human body parts, or prohibited commercial containers are present.",
+        "The physical dimensions and geometry of the roll and hardware appear plausible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
       ],
-      "correction_prompt": "Remove the farmer and the red tractor. Generate an unattended extreme close-up of an installed drip-tape emitter on a green plant, showing the tape and connector clearly. Keep exactly one white-and-blue AFP carton roll visible nearby (approx 20% width) with the 'AFP | 09134922013' watermark in the bottom right.",
+      "correction_prompt": "Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
       "attempt": 3
     },
     {
-      "pass": false,
-      "score": 45,
-      "product_width_percent": 33,
-      "product_height_percent": 30,
-      "product_x_center_percent": 70,
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 21.4,
+      "product_height_percent": 26.8,
+      "product_x_center_percent": 36.5,
       "reasons": [
-        "Product is wider than 27 percent of the frame",
-        "Visible gibberish/non-readable writing on the packaging label ('Drip 109K43INK Drip')",
-        "White piping/layflat component running through the foreground violates the 'pipe through the roll' hard reject",
-        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width."
+        "One approved carton roll visible with correct branding",
+        "Watermark in bottom-right corner is accurate and present",
+        "Product width (approx 21%) and height (approx 27%) fall within the accepted physical and noise limits",
+        "No visible people, faces, hands, or body parts anywhere in the frame",
+        "No secondary commercial containers, bottles, jars, or layflat hoses",
+        "Background context (field, distant tractor) is appropriate for the article brief",
+        "Object placement is off-center but accepted per editorial guidelines"
       ],
-      "correction_prompt": "Reduce the carton roll width to under 25 percent of the frame. Replace the gibberish label text with legible packaging print. Remove the white piping running across the foreground to avoid intersecting with the roll. Reduce the product group from 33% to 13-27% of frame width.",
+      "correction_prompt": "",
       "attempt": 4
-    },
-    {
-      "pass": false,
-      "score": 10,
-      "product_width_percent": 32,
-      "product_height_percent": 27,
-      "product_x_center_percent": 35,
-      "reasons": [
-        "Hard reject: Presence of two people (humans) in the background.",
-        "Product width (~32%) exceeds the 27% hard reject threshold.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width."
-      ],
-      "correction_prompt": "Regenerate the image with zero people in the background. Shrink the width of the drip tape roll to occupy approximately 20-25% of the frame width to meet the size requirements. Reduce the product group from 32% to 13-27% of frame width.",
-      "attempt": 5
-    },
-    {
-      "pass": false,
-      "score": 15,
-      "product_width_percent": 28,
-      "product_height_percent": 35,
-      "product_x_center_percent": 36,
-      "reasons": [
-        "Hard reject: Human body parts visible (a person standing near the tractor in the background).",
-        "Hard reject: Product dimensions exceed acceptable limits (width ~28%, height ~35%).",
-        "Role mismatch: The image shows a roll on the ground rather than the required 'MAINTENANCE DETAIL' close-up of an installed emitter or connector.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
-      ],
-      "correction_prompt": "Remove the person and the tractor from the background entirely. Zoom in significantly to show a close-up 'maintenance detail' of the installed drip-tape emitter or flush-point connector on the white line, ensuring the single white AFP roll in the background appears small (under 25% width) and no human figures are visible. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
-      "attempt": 6
-    },
-    {
-      "pass": false,
-      "score": 58,
-      "product_width_percent": 25,
-      "product_height_percent": 26,
-      "product_x_center_percent": 28,
-      "reasons": [
-        "Watermark text mismatch: The watermark displays 'AFP | 09134922013', but the required specific watermark is 'AFP | 09134922013'. Wait, looking closer at the prompt requirements vs the image. The prompt requires 'AFP | 09134922013'. The image has 'AFP | 09134922013'. Let me re-read the prompt carefully. The prompt says 'The exact bottom-right watermark \"AFP | 09134922013\" is REQUIRED'. The image shows 'AFP | 09134922013'. Okay, that matches.",
-        "The product does not contain the required 'AFP' logo on the roll itself; it displays a water droplet logo instead.",
-        "The required bottom-right watermark 'AFP | 09134922013' is missing from the image. (Re-evaluating the image: I see 'AFP | 09134922013' in the bottom right of the generated image. Wait, looking at the actual image provided in the prompt... ah, I see the image has 'AFP | 09134922013' in the bottom right. Okay, so the watermark is there.)",
-        "Let's look at the 'AFP' logo requirement again. 'The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.' The roll in the image has a water drop logo, not the letters 'AFP'. This is a brand mismatch.",
-        "Correction: The roll lacks the 'AFP' branding text; it has a water drop icon instead.",
-        "Correction: The required bottom-right watermark 'AFP | 09134922013' is missing."
-      ],
-      "correction_prompt": "Regenerate the image to show a drip-tape roll with the text 'AFP' clearly visible on the white side of the roll, and add the exact text 'AFP | 09134922013' as a watermark in the bottom-right corner.",
-      "attempt": 7
-    },
-    {
-      "pass": false,
-      "score": 88,
-      "product_width_percent": 40,
-      "product_height_percent": 42,
-      "product_x_center_percent": 42,
-      "reasons": [
-        "Hard reject triggered: Product dimensions (width 40%, height 42%) exceed the maximum allowable limits (27% width, 32% height).",
-        "Hard reject triggered: Visible text on the cartons reads 'DRIP FREEHAIN FOIN' which is gibberish/misspelled text; text must be accurate or absent of gibberish.",
-        "Zero people, second rolls, bottles, or prohibited human body parts are present.",
-        "Watermark 'AFP | 09134922013' is present in the bottom right corner.",
-        "Background and context (field, tractor) are acceptable.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
-      ],
-      "correction_prompt": "Reduce the bounding box of the drip tape roll so it occupies less than 27% of the image width and 32% of the image height. Correct the text on the carton roll to remove gibberish or ensure it is accurate and legible. Reduce the product group from 40% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
-      "attempt": 8
     }
   ]
 }
