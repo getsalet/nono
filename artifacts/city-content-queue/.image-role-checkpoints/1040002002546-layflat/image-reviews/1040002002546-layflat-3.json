@@ -90,6 +90,97 @@
       ],
       "correction_prompt": "Remove all people from the scene, reposition the pair of coils to the lower third, and ensure they remain secondary and fully visible.",
       "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 20,
+      "product_height_percent": 15,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Tractor/vehicle present in background (hard reject)",
+        "Three coiled products visible instead of exactly two (hard reject)",
+        "Coils are clustered rather than separate"
+      ],
+      "correction_prompt": "Remove tractor from background. Show exactly two layflat coils: one packaged AFP coil and one bare black woven coil. Keep coils separate, flat on ground, small and secondary in lower third.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Person and body parts present (hard reject)",
+        "Coils not separated and flat on the ground as required",
+        "Coils too large in the frame (target 12-15%, acceptable range 8-36%)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the person completely. Place two separate coils (one packaged AFP, one bare black) small and off-center in the lower third of the frame, occupying no more than 15% of the frame width. Ensure they are flat on the ground and clearly separated. The fixed pump with gauge and manifold can remain as the main visual element. Reduce the product group from 45% to 8-36% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 31,
+      "product_height_percent": 60,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Coil orientation violation: The large black woven coil is standing vertically, whereas the brief requires it to be flat on the ground (layflat).",
+        "Unapproved third object: There is a third black coil in the foreground (between the packaged coil and the vertical coil) that is not part of the approved pair.",
+        "Product size violation: The product pair is centered in the composition and significantly exceeds the target 12-15% width, appearing too dominant for the 'secondary' requirement.",
+        "Unapproved hardware: The image contains a standalone valve/handwheel and a copper pipe fitting, which are not permitted by the 'fixed unattended pump, gauge and manifold' role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 60% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Lay the large black woven coil flat on the ground. Remove the third small coil in the foreground, the valve handwheel, and the copper pipe. Reduce the size of the two-coil pair to 12-15% of the frame width, positioning them off-center on the lower third as secondary elements, with the pump and gauges as the main focal point. Reduce product height from 60% to at most 42% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 40,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Tractor visible in the background",
+        "Hard reject: Third product visible (Drip tape coil on the right)",
+        "Product pair width exceeds 36% maximum threshold",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with zero vehicles, tractors, or background machinery. Remove the drip tape coil on the right. Ensure exactly two approved layflat coils (one packaged, one bare) are visible, sized to approximately 12-15% of the frame width, positioned off-center on the lower third. Reduce the product group from 40% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Image contains two human figures (farmers/workers) in the background, which violates the zero-person constraint.",
+        "The required HEADWORKS STORY (fixed unattended pump, gauge, and manifold) is not present; instead, there is a large green pump structure integrated with the coiled hose.",
+        "The layout shows the coils as large, central elements rather than secondary, off-center elements in the lower third."
+      ],
+      "correction_prompt": "Regenerate the image with ZERO people or human body parts. Include a medium side view of a fixed, unattended green pump system with a gauge and manifold (HEADWORKS). Ensure the two approved coils (one packaged, one bare black) are secondary, small, and placed off-center in the lower third, fully visible and separate. Remove all other extraneous items.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 48,
+      "product_height_percent": 28,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Pair of layflat hoses (one bare coil, one packaged) is present and separate",
+        "Headworks role satisfied with unattended fixed pump, gauge, and manifold (note: gauge is on the pump assembly, separate from the pair)",
+        "Zero people, body parts, or forbidden vehicles/machines present",
+        "Watermark 'AFP | 09134922013' is correctly placed at bottom-right",
+        "Pair is on the lower third and fully visible",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-36% of frame width.",
+      "attempt": 6
     }
   ]
 }

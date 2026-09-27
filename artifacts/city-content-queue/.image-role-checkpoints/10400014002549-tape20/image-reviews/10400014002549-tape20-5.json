@@ -1,0 +1,99 @@
+{
+  "source_id": "10400014002549-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 22,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Image contains a person (standing in the background), which violates the requirement for zero people.",
+        "Hard reject: Image contains tractors/vehicles in the background, which are strictly forbidden.",
+        "Product staging is centered, violating the requirement to be off-center on the lower third.",
+        "The mandatory role is 'MAINTENANCE DETAIL' (close-up of an emitter/connector on soil), but the image shows a product marketing shot of the carton/roll, completely ignoring the specific visual role.",
+        "The image has gibberish/misspelled writing on the carton ('AMRANSTAN' instead of 'AGRICULTURE', and nonsensical text on the side)."
+      ],
+      "correction_prompt": "Remove all people and tractors. Strictly follow the MAINTENANCE DETAIL role: close-up of an installed drip-tape emitter on bare soil, with the carton roll appearing secondary and small on the side. Center the emitter on the lower third. Ensure carton text is correct and clearly readable.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 24.5,
+      "product_height_percent": 36,
+      "product_x_center_percent": 47.5,
+      "reasons": [
+        "Presence of a tractor and machine cabin in the background (hard reject)",
+        "Visible human figures in the background (hard reject)",
+        "Second package (loose ring/collar) present on the ground next to the roll (hard reject)",
+        "Product roll is the primary subject/foreground, violating the 'secondary' and 'close-up on emitter' mandatory image role",
+        "No visible drip-tape emitter, connector, or flush-point on bare soil"
+      ],
+      "correction_prompt": "Regenerate: Close-up low-angle shot of one unattended drip-tape emitter/connector on bare soil. One small AFP white-and-blue cylindrical drip-tape roll (approx 20% width) in lower-left third. No tractor, no people, no second ring. Background must be bare soil. Keep bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: A tractor is visible in the background (upper right), violating the requirement to hard reject vehicles and machines even when distant.",
+        "Background Mismatch: The role 'MAINTENANCE DETAIL' requires an unattended close-up of an installed emitter/connector/flush-point on bare soil. The image shows a pristine roll on the ground, not an installed system.",
+        "Role Failure: The roll is the primary focus, but the role specifies the roll should be secondary and the focus should be on a flush point or connector."
+      ],
+      "correction_prompt": "Regenerate: Close-up of a drip tape flush point on bare soil (no tractors, no people). In the blurred background (lower third, off-center), show one small AFP white-and-blue carton roll (20-23% width). Ensure zero vehicles or machines.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 29,
+      "product_height_percent": 37,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Hard reject: Human visible in the background (standing figure)",
+        "Hard reject: Tractor/vehicle visible in the background",
+        "Product roll is primary focal point, fails 'secondary' requirement",
+        "Role 'MAINTENANCE DETAIL' unmet: missing installed close-up on soil, instead features unrolled product and unrelated distant machinery"
+      ],
+      "correction_prompt": "Remove background human and tractor. Focus on a close-up of an installed drip-tape emitter/connector flush with the soil in the foreground. Show the unrolled product as a small, blurred, secondary object (15-20% width) in the periphery. Ensure no other machines or people are visible.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Presence of a tractor in the background (hard reject rule)",
+        "Presence of a second packaging component (the small grey pipe/connector) which acts as a 'second package' or 'tool' (hard reject rule)",
+        "The product is not a 'carton roll' but a direct roll; however, the presence of the extra pipe element is the primary structural failure regarding the 'exactly one' constraint."
+      ],
+      "correction_prompt": "Remove the tractor in the background completely and delete the grey pipe connector next to the roll. The image must show ONLY the single white-and-blue roll on bare soil.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 34,
+      "product_height_percent": 34,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The mandatory visual role 'MAINTENANCE DETAIL' requires a close-up of an installed drip-tape emitter, connector, or flush-point on bare soil.",
+        "The image instead shows the primary product (the carton roll) staged on bare soil, which is a prohibited 'second roll/package' relative to the required role.",
+        "The image violates the requirement to have no crop-row panorama, as the background clearly shows a wide field horizon.",
+        "The role specifies that the carton roll must be 'small and secondary,' but here it is the main focal point."
+      ],
+      "correction_prompt": "Regenerate image as a strict downward close-up of a single installed drip-tape connector on bare soil with zero horizon. Include exactly one small, secondary AFP drip-tape carton roll in the background; remove any field horizon or distant crop rows.",
+      "attempt": 6
+    }
+  ]
+}

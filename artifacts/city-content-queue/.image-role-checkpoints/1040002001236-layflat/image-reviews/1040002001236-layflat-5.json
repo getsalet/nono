@@ -1,0 +1,44 @@
+{
+  "source_id": "1040002001236-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 75,
+      "product_height_percent": 40,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: Tractor and vehicle cabin are clearly visible in the background, violating the 'zero vehicles/machines' rule.",
+        "Hard reject: Human figures (farmers) are visible inside the tractor cabin, violating the 'zero people/body parts' rule.",
+        "Product pair is centered horizontally, violating the 'stay off-center' requirement.",
+        "Product width is approximately 75% of the frame, exceeding the 36% hard reject limit.",
+        "Missing mandatory MAINTENANCE DETAIL role: The image is a general staging shot, not a close-up unattended detail of a connector or fold.",
+        "Missing mandatory watermark: The required 'AFP | 09134922013' text is not present in the bottom-right corner.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the tractor and all human figures from the background. Replace the background with a plain, unobstructed field or horizon. Move the two coils to the left (off-center) and reduce their size to occupy only 12-15% of the frame width. Add the mandatory watermark 'AFP | 09134922013' in the bottom right corner. Ensure the product pair is secondary and flat on the ground. Reduce the product group from 75% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 15,
+      "product_height_percent": 12,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The image contains exactly two approved layflat objects: one bare black woven coil and one packaged AFP coil.",
+        "The pair is located on the lower left, satisfying the 'off-center' and 'lower third' requirements.",
+        "The product pair is approximately 15% of the frame width, within the 12-15% target range.",
+        "The image is free of prohibited elements such as people, vehicles, machines, and third-party products.",
+        "The mandatory watermark 'AFP | 09134922013' is correctly present in the bottom right corner.",
+        "The foreground detail matches the 'MAINTENANCE DETAIL' requirement, showing a close-up view of the coils/folds on bare soil."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

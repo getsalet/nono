@@ -1,0 +1,87 @@
+{
+  "source_id": "1040002001236-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 42,
+      "product_height_percent": 38,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: person visible (standing farmer).",
+        "Hard reject: tractor visible in background.",
+        "Hard reject: pair width exceeds 36 percent limit.",
+        "Product pair is centered rather than off-center.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate image removing the person and tractor entirely; move the coils to the lower third off-center, keep the pair under 36% width, and ensure they remain fully visible, flat, and separate. Reduce the product group from 42% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 20,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The image is in English and the watermark text does not match the required city name 'پیرانشهر' (it says 'AFP | 09134922013' instead of the expected localized format), failing the watermark requirement.",
+        "The two layflat coils are not positioned in the lower third of the frame; they are placed in the bottom foreground, too close to the edge, which can obscure the water channel and context.",
+        "The pair of coils appears slightly merged or overlapping in perspective, violating the requirement that the two products must remain separate and distinct.",
+        "Although the image shows a water transfer context, the required localized Persian editorial style is not present."
+      ],
+      "correction_prompt": "Place the two layflat coils separately in the lower third, ensure they are not overlapping, keep the same English watermark format but ensure the city 'پیرانشهر' is subtly implied or localized if required. Keep the product pair secondary and off-center.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 48.0,
+      "product_height_percent": 25.0,
+      "product_x_center_percent": 43.0,
+      "reasons": [
+        "The image contains exactly two approved layflat objects: one packaged AFP coil and one bare black woven coil.",
+        "Both objects are placed off-center on the lower third of the frame and remain fully visible.",
+        "Zero people, tractors, or other forbidden machinery are present.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is visible.",
+        "The wide high-oblique context aligns with the required editorial hero role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-36% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 30,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product pair (packaged coil + bare black coil) is centered in the lower third rather than off-center as required by the editorial hero brief.",
+        "Coils are visually staged and prominent, competing with the water-transfer context rather than remaining secondary.",
+        "Watermark text is '09134922013' instead of the required '09134922013'."
+      ],
+      "correction_prompt": "Regenerate: Shift the two coils (one packaged, one bare black) to the lower-left corner (off-center). Reduce their size so the pair occupies less than 20% of the frame width, keeping them secondary to the wide field and water flow. Ensure the bottom-right watermark reads exactly 'AFP | 09134922013'. Keep the wide high-oblique perspective of the agricultural field with visible water channels.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 100,
+      "product_width_percent": 27.2,
+      "product_height_percent": 22.8,
+      "product_x_center_percent": 12.9,
+      "reasons": [
+        "Image successfully displays the two required layflat products (packaged coil and bare woven coil) in the bottom-left corner.",
+        "Products are separate, flat on the ground, and fully visible.",
+        "Pair is off-center and remains secondary to the wide water-transfer context.",
+        "No people, human body parts, tractors, harvesters, or vehicles are present.",
+        "Watermark is present in the bottom-right as required."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
