@@ -1,0 +1,97 @@
+{
+  "source_id": "1070005002905-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Hard reject: Two people (farmers/workers) are clearly visible in the foreground and mid-ground.",
+        "Hard reject: Human faces, hands, arms, and legs are visible, violating the 'zero people' constraint.",
+        "The presence of people makes the image unsafe for any unattended infrastructure brief."
+      ],
+      "correction_prompt": "Remove the two human figures (farmers) completely. The scene must contain zero people or body parts. Focus on the unattended fixed filter, gauge, regulator, and manifold as the primary subject with the drip tape roll as a small secondary element.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 35,
+      "product_height_percent": 38,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Two commercial packages visible (drip tape roll and large cardboard box in the background).",
+        "Hard reject: Roll is too large relative to the frame (width > 27%, height > 32%).",
+        "Failure: The mandatory 'HEADWORKS STORY' role (showing unattended filter, gauge, regulator, manifold) is not fulfilled; the image shows generic pipes on soil and a distant tractor instead of specific irrigation headworks.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the background cardboard box entirely. Regenerate with a medium side-view of fixed irrigation infrastructure (filter, gauge, manifold) as the primary focus. Include exactly one small AFP drip-tape roll (width 20-23% of frame) as a secondary element. Reduce the product group from 35% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 24,
+      "product_height_percent": 27,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image contains multiple people (two workers in the foreground, and one visible in the tractor cab), which is a hard reject based on the 'zero people' and 'zero human body parts' rule.",
+        "The article role is 'HEADWORKS STORY', which requires a medium side view of a filter, gauge, regulator, and manifold. While these are present, the required human-free state is violated."
+      ],
+      "correction_prompt": "Regenerate the image to remove all human figures and body parts entirely. Focus on a side-view composition of the irrigation manifold, gauge, and regulator with the unattended tractor in the background, keeping the AFP drip-tape carton small and secondary on the side.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 32,
+      "product_height_percent": 39,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Hard reject: Visible human figures (worker in left background, seated person on right).",
+        "Hard reject: The primary product (AFP drip-tape carton) is oversized, measuring approximately 32% of frame width and 39% of frame height, exceeding the 27% width and 32% height maximum limits.",
+        "Visual brief mismatch: The image features active human workers and manual equipment adjustment, whereas the mandatory 'HEADWORKS STORY' role required a scene of unattended fixed filter, gauge, regulator and manifold.",
+        "Text Error: The text on the carton roll is illegible gibberish (e.g., 'ARIIP KRSSIOIN') rather than correct product labeling.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 39% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate as a scene with zero people. Show a small AFP white-and-blue drip-tape carton (occupying <20% width) placed on soil next to unattended fixed irrigation hardware (filter, gauges, manifold). Ensure correct legible product text and the watermark 'AFP | 09134922013' in the bottom-right. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 39% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Presence of a person in the background (farmer holding a tool).",
+        "Presence of a second commercial package (cardboard box) in the mid-ground.",
+        "Visible human body parts."
+      ],
+      "correction_prompt": "Regenerate the image with absolutely zero people or human silhouettes. Remove the cardboard box in the background. Keep the green irrigation unit (filter/manifold) on the right and the single white-and-blue AFP drip tape roll on the bottom-left. Ensure the background shows only crops and open field.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 27,
+      "product_height_percent": 25,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "The required white-and-blue AFP drip-tape roll is clearly visible in the foreground and secondary to the fixed irrigation equipment.",
+        "The presence of the green wheeled filter/pressurizer and gauge on the right perfectly matches the 'HEADWORKS STORY' brief for a medium side view of unattended fixed hardware.",
+        "No people, human body parts, or forbidden objects (like bottles or fertilizer containers) are present in the image.",
+        "The product's estimated width of 27% is at the upper limit of the reviewer noise threshold, but the physical proportions remain plausible and it does not exceed the hard rejection limit.",
+        "The required bottom-right watermark 'AFP | 09134922013' is correctly displayed."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

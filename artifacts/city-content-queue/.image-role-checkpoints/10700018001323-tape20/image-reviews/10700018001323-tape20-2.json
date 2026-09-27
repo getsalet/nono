@@ -1,0 +1,71 @@
+{
+  "source_id": "10700018001323-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 34,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Second commercial product (loose coil of drip tape) visible on the ground to the right of the main carton roll, which is a hard reject.",
+        "The main carton roll's width (28%) and height (34%) exceed the accepted review thresholds of 27% and 32% respectively.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the loose coil of drip tape on the right. Regenerate the scene to strictly feature only a single carton roll of drip tape (width 20-23% of frame, height <32%). Keep the unattended tractor and farm building in the background. Ensure the bottom-right watermark 'AFP | 09134922013' remains present. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "product_width_percent": 25,
+      "product_height_percent": 33,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Visible human driver seated inside the tractor cabin in the background",
+        "Product bounding box height is estimated at 33%, which exceeds the maximum physical plausibility limit of 32%",
+        "Lacks mandatory 'SELECTION EVIDENCE' required by the brief; background shows a tractor in transit rather than the required elevated technical arrangement or emitter-spacing markers",
+        "machine-enforced bounding-box check failed: Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the human driver from the tractor; reduce the product height to 32% or less of the frame; rearrange the foreground to display the roll alongside visible emitter-spacing measurements or field-selection criteria while keeping the tractor stationary and unattended. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Product roll width (28%) exceeds the maximum hard-reject limit of 27%.",
+        "Product roll height (38%) exceeds the maximum hard-reject limit of 32%.",
+        "Second commercial product (loose drip tape) is visible extending from the roll to the right, violating the 'exactly one' product rule.",
+        "Required 'SELECTION EVIDENCE' (visible emitter-spacing or field-selection tools) is missing; the current arrangement lacks the necessary technical visual support.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the carton roll reduced in scale so width is under 25% and height under 30%. Ensure the roll stands alone with no loose tape extending. Add explicit selection evidence like a measuring tape showing the 20cm spec. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 27,
+      "product_height_percent": 28,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Zero people or human body parts visible.",
+        "Exactly one AFP wide low cylindrical drip-tape roll present.",
+        "Background context (tractor, farm building, field) is acceptable and relevant.",
+        "Required watermark present.",
+        "Product dimensions and placement are physically plausible.",
+        "Visible measuring tape provides necessary field-selection evidence."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

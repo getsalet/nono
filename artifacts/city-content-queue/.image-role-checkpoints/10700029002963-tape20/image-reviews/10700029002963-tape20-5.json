@@ -1,0 +1,86 @@
+{
+  "source_id": "10700029002963-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 35,
+      "product_height_percent": 37,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product width is ~35% of frame, hard-rejecting for exceeding 27% limit",
+        "Product height is ~37% of frame, hard-rejecting for exceeding 32% limit",
+        "Second commercial package visible: a coiled blue drip-tape roll on the ground next to the carton is explicitly rejected",
+        "Mandatory MAINTENANCE DETAIL role not met: the image shows a standalone product carton in a field, not a close-up of an installed emitter, connector, or flush point as required",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width.; Reduce product height from 37% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Close-up of an installed drip-tape emitter or flush-point in soil, white-and-blue AFP carton roll partially visible in the background (under 20% width/height), no coiled tape or second roll, no people, bottom-right watermark 'AFP | 09134922013' Reduce the product group from 35% to 13-27% of frame width. Reduce product height from 37% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 33,
+      "product_height_percent": 31,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Human figures (farmer) are visible in the background, violating the zero-person rule",
+        "Product width is estimated at 33%, which exceeds the maximum allowable limit of 27%",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the image. Crop or regenerate the image to reduce the product width to under 27% of the frame. Reduce the product group from 33% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 31,
+      "product_height_percent": 23,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Person visible in background (farmer on left)",
+        "Hard reject: Person visible in background (farmer by tractor)",
+        "Product width approximately 31% of frame (exceeds 27% limit)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate image removing all people from the background. Ensure the drip-tape roll is approximately 22% of the frame width to ensure physical plausibility. Reduce the product group from 31% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 33,
+      "product_height_percent": 42,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Violation of 'Zero people' rule: Two human figures are clearly visible in the background on the right side.",
+        "Dimension violation: Product width (~33%) exceeds the hard reject threshold of 27%.",
+        "Dimension violation: Product height (~42%) exceeds the hard reject threshold of 32%.",
+        "Role violation: Mandatory role 'MAINTENANCE DETAIL' requires a close view of an installed drip-tape emitter/connector; the image shows a generic roll on the ground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate to strictly remove all human figures from the background. Scale the product down so it is no wider than 23% of the frame width and no taller than 30% of the frame height. Change the composition to a macro close-up of an installed drip-tape emitter or connector as required by the role, with the product roll visible but reduced in size. Reduce the product group from 33% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 19,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "No people, faces, body parts, or human silhouettes are visible.",
+        "The roll width is approximately 22% and height 19%, both within the acceptable reviewer-estimation limits.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "The background of a crop field is contextually relevant and matches the agricultural theme of the article brief."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

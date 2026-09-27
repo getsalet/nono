@@ -1,0 +1,56 @@
+{
+  "source_id": "10700029002963-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 27.5,
+      "product_height_percent": 34.0,
+      "product_x_center_percent": 48.0,
+      "reasons": [
+        "Hard reject: A second commercial package (the brown cardboard carton) is visible in the frame alongside the required drip-tape roll.",
+        "The width of the primary drip-tape roll exceeds the strict 27% hard limit, measuring approximately 27.5% of the frame width.",
+        "The height of the roll also exceeds the 32% hard limit, measuring approximately 34% of the frame height.",
+        "The article brief mandated that any carton remain small at the field edge, but this is foregrounded as a significant secondary object.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 27.5% to 13-27% of frame width.; Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the brown cardboard carton from the foreground entirely. Regenerate the single white-and-blue AFP drip-tape roll so its width is exactly 20% of the frame width and its height is 30% of the frame height. Keep the exact bottom-right watermark 'AFP | 09134922013'. Ensure the installation tape leads off-center with a crop bed background and zero people. Reduce the product group from 27.5% to 13-27% of frame width. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Critical hard reject: The presence of a human hand in the bottom center/foreground is a mandatory rejection factor. No human body parts are allowed.",
+        "Text error: The text on the side of the roll is gibberish/garbled, which falls under the 'fake headline, caption, gibberish writing' rejection criteria.",
+        "Installation Proof: The specific role requires an 'unattended view' of installed drip tape. The presence of a hand physically interferes with the crop bed and the tape, violating the 'unattended' requirement.",
+        "Dimension/Geometry: While the width is acceptable, the product geometry is slightly distorted by the angle, and the side text contributes to the 'impossible geometry' concerns due to the lack of legible, consistent packaging."
+      ],
+      "correction_prompt": "Regenerate image completely removing the human hand. The field and crop bed must remain strictly unattended. Ensure the drip tape is laid naturally on the soil. The single AFP drip tape roll must be positioned at the field edge with clean, legible 'AFP' branding and no gibberish text. Include the watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product geometry: The white and blue AFP drip-tape roll is a wide, low cylinder. Its bounding box occupies approximately 22% of the frame width and 28% of the height, which falls strictly within the preferred and accepted ranges (13-27% width, up to 32% height).",
+        "Zero humans: There are no people, farmers, workers, or human body parts visible anywhere in the frame.",
+        "Infrastructure & Equipment: The image displays installed drip tape lines on crop beds, with no prohibited bottles, jars, canisters, or secondary commercial packages. Distant farm buildings and fixed hardware are permitted as contextual infrastructure.",
+        "Watermark: The required bottom-right watermark 'AFP | 09134922013' is present and rendered clearly.",
+        "Editorial Role: The image provides a clear 'INSTALLATION PROOF' showing the agricultural application of the product without using a centered vanishing point."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

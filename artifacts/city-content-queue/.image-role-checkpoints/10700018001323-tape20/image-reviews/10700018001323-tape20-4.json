@@ -1,0 +1,52 @@
+{
+  "source_id": "10700018001323-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The image contains a second commercial package (a cardboard box on the left), which is a hard reject for a scene requiring exactly one carton roll.",
+        "The text printed on the side of the roll contains gibberish and nonsensical writing, which is a hard reject."
+      ],
+      "correction_prompt": "Remove the cardboard box on the left. Clean up the text on the side of the roll to be clearly legible and brand-appropriate, removing any gibberish or nonsensical characters.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 17,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a person (farmer/worker) standing in the background",
+        "Violation of the 'zero people' hard reject rule"
+      ],
+      "correction_prompt": "Regenerate the image with no people in the background. Maintain the same field scene, crop rows, and equipment, but remove the worker standing on the tractor.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 25,
+      "product_height_percent": 31,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The dimensions of the roll are physically plausible and fall within the accepted noise range (width 25%, height 31%).",
+        "The background matches the article brief, showing asymmetric crop beds with no centered vanishing point.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "There are no visible people or human body parts.",
+        "The object is clearly a commercial package for drip tape, not a rejected container type."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
