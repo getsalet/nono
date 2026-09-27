@@ -84,8 +84,15 @@ def install(base,backend,raw_generator):
    if review_path.exists():
     prior=json.loads(review_path.read_text(encoding='utf-8'))
     path=image_dir/backend.seo_image_name(item,kind)
-    if prior.get('policy')==REVIEW_POLICY and prior.get('history') and prior['history'][-1].get('pass') and path.exists() and path.stat().st_size>10000:
+    prior_history=prior.get('history') or []
+    if prior.get('policy')==REVIEW_POLICY and prior_history and prior_history[-1].get('pass') and path.exists() and path.stat().st_size>10000:
      blob=path.read_bytes();return path.name,__import__('hashlib').sha256(blob).hexdigest()
+    # A checkpointed failed role must resume with its last directional QA
+    # feedback instead of repeating the same six blind attempts every hour.
+    if prior.get('policy')==REVIEW_POLICY and prior_history:
+     history=list(prior_history[-20:])
+     last=prior_history[-1]
+     feedback=str(last.get('correction_prompt') or '; '.join(last.get('reasons') or [])).strip()
   except Exception:
    pass
   for attempt in range(1,MAX_IMAGE_ATTEMPTS+1):
@@ -97,7 +104,7 @@ def install(base,backend,raw_generator):
      verdict={'pass':False,'score':0,'reasons':['visual reviewer unavailable: '+type(exc).__name__],'correction_prompt':'Regenerate and retry strict visual review.'}
     verdict['attempt']=attempt;history.append(verdict)
     print(f"image_quality_review_fast source_id={item['source_id']} topic={item.get('topic')} kind={kind} attempt={attempt} pass={verdict['pass']} score={verdict.get('score',0)} reasons={verdict.get('reasons',[])}",flush=True)
-    review_path.write_text(json.dumps({'source_id':item['source_id'],'family':family,'kind':kind,'policy':REVIEW_POLICY,'fast_mode':FAST_MODE,'history':history},ensure_ascii=False,indent=2),encoding='utf-8')
+    review_path.write_text(json.dumps({'source_id':item['source_id'],'family':family,'kind':kind,'policy':REVIEW_POLICY,'fast_mode':FAST_MODE,'history':history[-20:]},ensure_ascii=False,indent=2),encoding='utf-8')
     if verdict['pass']:return name,digest
     path.unlink(missing_ok=True);feedback=str(verdict.get('correction_prompt') or '; '.join(verdict.get('reasons',[])))
   raise RuntimeError(f'image hard gate rejected role {kind} after {MAX_IMAGE_ATTEMPTS} attempt')
@@ -158,7 +165,7 @@ def install_set_manager(base,backend,image_count=5):
     paths=[staging_images/results[kind][0] for kind in range(1,image_count+1)]
     verdict=review_image_set(base,paths,item);verdict['set_attempt']=set_attempt;history.append(verdict)
     set_review.parent.mkdir(parents=True,exist_ok=True)
-    set_review.write_text(json.dumps({'source_id':review_id,'policy':REVIEW_POLICY,'history':history},ensure_ascii=False,indent=2),encoding='utf-8')
+    set_review.write_text(json.dumps({'source_id':review_id,'policy':REVIEW_POLICY,'history':history[-20:]},ensure_ascii=False,indent=2),encoding='utf-8')
     print(f"city_image_set_qa source_id={review_id} attempt={set_attempt} pass={verdict.get('pass')} score={verdict.get('score')} duplicate_roles={verdict.get('duplicate_roles',[])} reasons={verdict.get('reasons',[])}",flush=True)
     if verdict.get('pass'):
      base.IMAGES.mkdir(parents=True,exist_ok=True);final_reviews=base.OUT/'image-reviews';final_reviews.mkdir(parents=True,exist_ok=True)

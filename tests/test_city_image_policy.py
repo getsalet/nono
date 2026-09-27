@@ -188,6 +188,40 @@ class CityImagePolicyTests(unittest.TestCase):
                 self.assertTrue((checkpoint / "image-reviews" / f"city-{kind}.json").exists())
             self.assertFalse((base.IMAGES / "city-1.webp").exists())
 
+    def test_failed_checkpoint_feedback_is_reused_on_next_run(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            image_dir = root / "images"
+            review_dir = root / "reviews"
+            image_dir.mkdir(); review_dir.mkdir()
+            review_dir.joinpath("city-2.json").write_text(
+                '{"policy":"%s","history":[{"pass":false,"reasons":["too large"],"correction_prompt":"move camera farther away"}]}' % image_quality_gate.REVIEW_POLICY,
+                encoding="utf-8",
+            )
+            seen = []
+            def seo_image_name(item, kind):
+                return f"city-{kind}.webp"
+            def raw_generator(item, kind):
+                seen.append(item.get("_image_qa_feedback"))
+                path = Path(item["_image_output_dir"]) / f"city-{kind}.webp"
+                path.write_bytes(b"x" * 12000)
+                return path.name, "hash"
+            base = SimpleNamespace(OUT=root, IMAGES=image_dir)
+            backend = SimpleNamespace(seo_image_name=seo_image_name)
+            guarded = image_quality_gate.install(base, backend, raw_generator)
+            passed = {"pass": True, "score": 90, "reasons": [], "correction_prompt": "", "product_width_percent": 20, "product_height_percent": 20, "product_x_center_percent": 30}
+            item = {"source_id": "city", "_image_output_dir": str(image_dir), "_image_review_dir": str(review_dir)}
+            with patch.object(image_quality_gate, "_vision_review", return_value=passed):
+                guarded(item, 2)
+            self.assertEqual(seen, ["move camera farther away"])
+
+    def test_layflat_selection_role_has_no_conflicting_scene_objects(self):
+        item = {"source_id": "city-layflat", "topic": "layflat", "city": "پلدشت"}
+        prompt = image_prompt_policy.image_prompt(item, 2)
+        self.assertIn("elevated 60-degree downward near-overhead", prompt)
+        self.assertIn("no horizon, building, crop rows, person, vehicle", prompt)
+        self.assertIn("no separate connector, ruler, tool, box, third object", prompt)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -44,7 +44,7 @@ TAPE_ROLE_DIRECTIVES={
 }
 LAYFLAT_ROLE_DIRECTIVES={
  1:'EDITORIAL HERO: wide high-oblique water-transfer context; exactly the approved packaged coil and bare black woven coil remain small, separate and off-center',
- 2:'SELECTION EVIDENCE: near-overhead technical comparison with exactly the approved two-coil pair plus diameter or connector evidence; no skyline or panorama',
+ 2:'SELECTION EVIDENCE: elevated near-overhead technical comparison on open textured soil with exactly the approved two-coil pair; show diameter difference using only the two coils themselves; no separate connector, ruler, tool, box, third object, skyline, building, crop-row horizon, person or vehicle',
  3:'HEADWORKS STORY: medium side view of a fixed unattended pump, gauge and manifold; the approved two-coil pair remains small, separate and secondary',
  4:'INSTALLATION PROOF: asymmetric unattended view of an extended layflat connection entering the field; the approved two-coil pair remains small at the field edge',
  5:'MAINTENANCE DETAIL: connector, fold or woven-surface detail dominates; the approved two-coil pair remains fully visible but secondary; do not repeat role 3',
@@ -157,7 +157,13 @@ def image_prompt(item,kind):
     role_safety=('For this installation-proof role use an unattended asymmetric scene. Keep the required product evidence small at the field edge; include no tractor, vehicle, cabin or living being. ' if int(kind)==4 else '')
     brief=visual_brief(item)
     role=role_directive(family,kind)
-    diversity=(f'Camera: {variation["camera"]}. Background: {variation["background"]}. Lighting: {variation["light"]}. Composition: {variation["composition"]}. Make this image visibly different from the other article images. Use visual variation token {variation["token"]} only as a seed and never render it.')
+    if family=='layflat' and int(kind)==2:
+        # Role 2 is an isolated technical comparison. Generic camera/background
+        # variation previously contradicted the near-overhead brief and caused
+        # tractors, horizons, extra connectors and oversized foreground coils.
+        diversity=(f'Camera: elevated 60-degree downward near-overhead view from at least six metres away. Background: only broad empty textured soil with generous negative space; no horizon, building, crop rows, person, vehicle, machine or extra object. Composition: the exact two-coil pair alone, off-center on the lower third, with the complete pair occupying 12 to 15 percent of frame width and never more than 30 percent. Use visual variation token {variation["token"]} only as a seed and never render it.')
+    else:
+        diversity=(f'Camera: {variation["camera"]}. Background: {variation["background"]}. Lighting: {variation["light"]}. Composition: {variation["composition"]}. Make this image visibly different from the other article images. Use visual variation token {variation["token"]} only as a seed and never render it.')
     if family=='layflat':
         shape=('exactly two separate related layflat-hose objects placed naturally beside each other: first, the packaged low wide black woven hose coil with the same folded printed cardboard pieces, crossing straps, center opening and package proportions; second, the unboxed black woven layflat hose coil exactly like its reference, as a low flat horizontal coil made of many tight concentric layers with a short hollow brown cardboard center, visible diagonal woven fabric texture, realistic compressed thickness and one short loose hose end')
         exact=('Keep the packaged object marks "AFP" and "layflat" readable. The bare black coil has no carton, logo or writing. The two references are separate objects in the same final scene, never alternatives and never fused. Both coils rest flat, horizontal and parallel to the soil. Never turn the bare coil into smooth round tubing, a tall cable spool, an upright wheel, a solid tire or a plastic pipe coil.')
