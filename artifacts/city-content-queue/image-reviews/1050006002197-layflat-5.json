@@ -1,0 +1,85 @@
+{
+  "source_id": "1050006002197-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 64,
+      "product_height_percent": 28,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Product bounding box (spanning from the left coil to the right coil) is estimated at approximately 64% of frame width, which violates the hard reject threshold of 60%.",
+        "The approved layflat pair consists of one packaged AFP coil and one bare black woven coil, but the image displays two separate bare black woven coils instead.",
+        "The presence of the incorrect coil type (missing the packaged AFP coil) is a hard reject under the specific object requirements.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 64% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate image ensuring the pair is one packaged AFP coil and one bare black woven coil, and tighten the bounding box to less than 60% of frame width. Reduce the product group from 64% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 68,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image displays two distinct commercial products: a large spool of coiled tubing on the left and a smaller black coiled pipe on the right. The spool includes its packaging carton. Both products are clearly visible and physically plausible in a field setting. There are no people, faces, or human body parts visible in the frame. The watermark 'AFP | 09134922013' is present in the bottom right. The scene is consistent with an agricultural maintenance context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 68% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 70,
+      "product_width_percent": 78,
+      "product_height_percent": 42,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "The two required coils (packaged and bare) are present, physically plausible, and separate, but they are flanked by a third commercial package (a bundle of wire/mesh) which is not one of the approved layflat pair objects.",
+        "The product group's bounding box width is estimated at 78% of the frame, which exceeds the practical acceptance maximum of 60% for this QA check.",
+        "The bottom-right watermark is present and correct.",
+        "No people, faces, or body parts are visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 78% to 8-60% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 84,
+      "product_height_percent": 62,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product group (the two coils and the packaged item) occupies approximately 84% of the frame width, which exceeds the 60% hard-reject threshold.",
+        "The mandatory role 'MAINTENANCE DETAIL' is not met as the primary focus; the image shows a wide shot of the full pair of products rather than an unattended close-up detail of a connector or fold.",
+        "The small packaged item in the foreground contains text which appears to be from a different brand ('BARTCO'), conflicting with the required 'AFP' approved layflat pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 84% to 8-60% of frame width.; Reduce product height from 62% to at most 58% of frame height."
+      ],
+      "correction_prompt": "Close-up maintenance detail of the coil surface or a connector; ensure the two coiled products take up no more than 35% of the frame width; remove any third packaging or incorrect labels. Reduce the product group from 84% to 8-60% of frame width. Reduce product height from 62% to at most 58% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 48,
+      "product_height_percent": 32,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Contains the required approved pair: one packaged AFP coil and one bare black woven coil.",
+        "Product width is approximately 48%, which is within the acceptable 8-60% range.",
+        "Zero people or body parts visible in the frame.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "Scene includes ordinary farm elements (soil, crops, distant building) which are allowed.",
+        "Objects are physically plausible and separate."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

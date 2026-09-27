@@ -1,0 +1,76 @@
+{
+  "source_id": "1050002002196-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 30,
+      "product_height_percent": 55,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Visible human silhouette (farmer/worker) in the background",
+        "Image violates the 'zero people' hard reject rule"
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the image. Maintain the field, crop beds, and the single product carton as specified.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 23,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible human (farmer) on the left side of the image",
+        "Product is placed in the foreground on a soil mound, inconsistent with the 'installation proof' role which requires the crop to be planted and the packaging to be small at a field edge"
+      ],
+      "correction_prompt": "Remove the human figure on the left. Move the AFP drip tape roll to the far background at the edge of the crop row, significantly smaller in scale. Show the drip tape line installed along the crop rows extending into the distance with an asymmetric perspective.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 11,
+      "product_height_percent": 14,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject due to presence of a person (child) in the frame, which violates the strict 'zero people' constraint."
+      ],
+      "correction_prompt": "Regenerate the image without the child or any human body parts, maintaining the focus on the white and blue AFP drip tape roll and the field environment.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: visible person (farmer) standing in the background field.",
+        "Hard reject: human silhouette is present in the mid-ground, violating the zero-human constraint."
+      ],
+      "correction_prompt": "Regenerate the image with an unattended field view, completely removing the person in the background. Keep the AFp carton small and asymmetric at the field edge, ensuring zero visible human figures or body parts.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Exactly one approved AFP drip-tape roll visible, white and blue, with appropriate cylindrical geometry.",
+        "Product size is well within the acceptable 10-48% width and height limits.",
+        "Zero people or human body parts present.",
+        "Background matches the 'INSTALLATION PROOF' brief showing crop beds and drip lines with no centered vanishing point.",
+        "Mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

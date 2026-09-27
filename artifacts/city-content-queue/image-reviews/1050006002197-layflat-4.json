@@ -1,0 +1,51 @@
+{
+  "source_id": "1050006002197-layflat",
+  "family": "layflat",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 48,
+      "product_height_percent": 18,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "The packaged AFP coil is not fully visible and recognizable; it is cut off at the bottom-left edge of the frame, failing the 'fully visible' requirement for the approved layflat pair."
+      ],
+      "correction_prompt": "Adjust the framing to ensure the entire packaged AFP coil is fully visible within the frame, not cropped at the edge.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 15,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: A person (farmer/worker) is prominently visible in the center of the frame.",
+        "Role mismatch: The mandatory role is 'unattended view', but a worker is interacting with the equipment.",
+        "The image fails the zero-persons constraint."
+      ],
+      "correction_prompt": "Remove the person completely. Recreate the scene as an unattended field view where the two layflat coils (one packaged, one bare black) lie separate on the ground at the edge of the crop rows. Ensure no human body parts, hands, or silhouettes are present.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 18,
+      "product_height_percent": 13,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains exactly two coils: one packaged (white/bright wrapper) and one bare black coil, separated and recognizable.",
+        "Zero people or body parts present in the frame.",
+        "Watermark 'AFP | 09134922013' is present and correct in the bottom right.",
+        "Infrastructure (extended hose/layflat line entering the field) is visible and physically plausible, consistent with the 'Installation Proof' role.",
+        "Product width is estimated at 18% of frame width (from ~33% to ~51% x-axis), which falls well within the 8-60% acceptable range and near the 20-35% preferred range."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
