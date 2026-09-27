@@ -1,0 +1,58 @@
+{
+  "source_id": "10500014002034-tape20",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        2,
+        4
+      ],
+      "reasons": [
+        "Count mismatch: 4 images provided, 5 required. 'MAINTENANCE DETAIL' role (5) is missing.",
+        "Image 2 and Image 4 are compositionally near-duplicates (close-up, center-framed product with tractor background), failing the 'visibly distinct' and 'no centered vanishing point' criteria.",
+        "Image 1 fails 'EDITORIAL HERO' by featuring a centered large product instead of a 'small, off-center' carton in a wide view.",
+        "Image 3 fails 'HEADWORKS STORY' by missing the mandatory 'filter, gauge, regulator and manifold' setup."
+      ],
+      "correction_prompt": "Generate a 5th image (CLOSE-UP) showing a flush-point or installed emitter without a tractor. Replace Image 4 with an asymmetric wide-angle view of crop beds (no tractor) to remove the duplication.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [
+        1,
+        4
+      ],
+      "reasons": [
+        "Role 4 (Image 4) is a centered, near-symmetric close-up of the carton with a generic furrow field and tractor background, violating the asymmetric, no-centered-vanishing-point requirement.",
+        "Role 4 fails to show the required 'installed drip tape' narrative, focusing entirely on the product itself.",
+        "The combination of roles 1 and 4 features repeated furrow-field + tractor compositions, which is explicitly listed as a rejection criterion.",
+        "Role 4 is essentially a zoomed-in variation of Role 1, moving the product into the foreground without changing the technical narrative."
+      ],
+      "correction_prompt": "Regenerate Role 4 (Image 4) with an asymmetric, unattended, medium-shot of installed drip tape running along a crop bed with the small carton placed distinctly off-center at the field edge; remove the centered composition and the distracting tractor/furrow symmetry.",
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 12,
+      "duplicate_roles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "reasons": [
+        "Only 4 images provided; Image 5 for 'MAINTENANCE DETAIL' is completely missing, resulting in zero coverage for Role 5 (close view of emitter/connector).",
+        "Image 1 (Role 1) fails to meet the 'wide high-oblique' requirement, presenting a standard low-angle view instead.",
+        "Image 2 (Role 2) duplicates the hardware setup of Image 3 (Role 3); it includes a full manifold/filter assembly rather than focusing on 'emitter-spacing or field-selection evidence' to distinguish it as a selection evidence shot.",
+        "Image 4 (Role 4) places the product in the dead center of the frame, violating the 'asymmetric' and 'no centered vanishing point' requirements."
+      ],
+      "correction_prompt": "Generate a 5th 'MAINTENANCE DETAIL' image featuring a close-up of an installed drip tape emitter or flush point with a small, unattended carton visible in the background. Additionally, replace Image 4 with a strictly asymmetric composition placing the carton off-center at a field edge.",
+      "set_attempt": 3,
+      "accepted_individual_qa_fallback": true
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "source_id": "10500014002034-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 15,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Contains a human (standing figure) in the background, which is a hard reject."
+      ],
+      "correction_prompt": "Remove the human figure in the background. Ensure no people or body parts are visible in the scene.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 33,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Missing mandatory visual element: No 'installed drip tape' or 'crop beds' showing installation proof; the image shows un-irrigated soil rows.",
+        "Role mismatch: The image role is 'INSTALLATION PROOF' (asymmetric view of installed system), but the image depicts a general landscape view with a centered vanishing point.",
+        "Watermark error: The bottom-right watermark text is 'AFP | 09134922013', which does not exactly match the mandatory format 'AFP | 09134922013' (wait, the prompt says the exact bottom-right watermark IS required and must never be rejected, but looking at the image vs text... the image text is 'AFP | 09134922013'. The prompt instruction says 'The exact bottom-right watermark \"AFP | 09134922013\" is REQUIRED'. The image actually has '09134922013'. Ah, I misread the prompt slightly. The prompt says 'AFP | 09134922013'. The image has 'AFP | 09134922013'. This matches. I will not reject for this.)",
+        "However, the image fails the 'installation proof' brief (no tape installed) and has a centered vanishing point (hard reject).",
+        "Centered composition violates the 'no centered vanishing point' instruction."
+      ],
+      "correction_prompt": "Regenerate image showing an asymmetric, off-center view of a field with drip tape already installed in crop beds (installation proof). Place the single AFP white-and-blue carton roll small at the far field edge (10-20% width). No centered vanishing point. Keep the bottom-right watermark exactly 'AFP | 09134922013'. Zero people.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 20,
+      "product_height_percent": 26,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The roll's width and height are estimated at 20% and 26% respectively, which falls within the 10-48% practical acceptance range and below the 58% height limit.",
+        "The background shows an agricultural field with crop beds and drip tape installation, matching the article brief for an installation proof.",
+        "Placement is off-center (lower-left) and asymmetric, which is an editorial preference, not a hard reject.",
+        "No people, human body parts, or disallowed objects (bottles, jars, etc.) are visible.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
