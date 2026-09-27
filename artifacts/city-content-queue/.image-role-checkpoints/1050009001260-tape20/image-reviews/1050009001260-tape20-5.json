@@ -1,0 +1,87 @@
+{
+  "source_id": "1050009001260-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 36,
+      "product_height_percent": 47,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "A visible person (worker) is present in the background, which is a hard reject for this specific visual role."
+      ],
+      "correction_prompt": "Remove the person from the background; keep only the unattended close-up of the drip tape roll and soil detail.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 38,
+      "product_height_percent": 51,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Violation of strict 'exactly one' rule: The image contains a second coiled hose/tape roll to the right of the main carton, which conflicts with the 'exactly one' requirement.",
+        "Mandatory role mismatch: The required 'MAINTENANCE DETAIL' (close-up of emitters, connectors, or flush points) is not present; the image shows a general product display instead of the requested technical detail.",
+        "Duplicate commercial packaging: The second roll visible in the frame is a commercial product, which is hard-rejected under 'second roll' rules."
+      ],
+      "correction_prompt": "Remove the second coiled hose on the right. Replace the general scene with a close-up detail shot of the drip tape's emitter points, connectors, and flush-valves on the ground to match the 'MAINTENANCE DETAIL' role.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 46,
+      "product_height_percent": 45,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Roll is positioned left of center, violating preferred centering for the hero product",
+        "A second commercial item (metal irrigation pipe/fitting) is visible in the foreground, violating the single-product constraint"
+      ],
+      "correction_prompt": "Center the roll in the frame; remove the metal irrigation pipe/fitting from the foreground",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 40,
+      "product_height_percent": 55,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Text on the drip-tape carton is gibberish (e.g., 'HATTAHON TAH'), violating the hard reject rule for gibberish writing."
+      ],
+      "correction_prompt": "Regenerate the image ensuring the text on the drip-tape carton is legible and correctly spelled.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 48,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Visible person (farmer/man) in background near tractor",
+        "Second unrolled section of drip tape visible on the ground"
+      ],
+      "correction_prompt": "Remove the person standing near the tractor and the unrolled section of drip tape on the ground. Ensure the scene contains only the main carton roll as the single product.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 36,
+      "product_height_percent": 50,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The image depicts a commercial roll of material resting on the ground rather than the 'MAINTENANCE DETAIL' role required, which must show an installed drip-tape emitter or flush-point close-up.",
+        "The visible product on the roll is a standard roll of plastic tubing, not 'drip-tape' (which is flat), violating the specific product brief.",
+        "The scene shows a complete new package rather than a maintenance or installation context, making it functionally incorrect for the requested role."
+      ],
+      "correction_prompt": "Generate a close-up macro shot of an installed drip-tape emitter or flush-point on the soil surface. Include exactly one 'AFP' white-and-blue drip-tape carton roll in the immediate background as context. Ensure the scene is unattended with zero people, showing an irrigation maintenance detail rather than a full product rollout.",
+      "attempt": 6
+    }
+  ]
+}

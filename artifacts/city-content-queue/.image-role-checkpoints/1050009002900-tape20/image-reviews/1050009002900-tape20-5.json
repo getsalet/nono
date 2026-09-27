@@ -1,0 +1,54 @@
+{
+  "source_id": "1050009002900-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Presence of a second roll/spool of white tubing",
+        "Role conflict: Mandatory role 5 (Maintenance Detail) is missing"
+      ],
+      "correction_prompt": "Remove the second spool of tubing from the foreground. Replace it with a close-up macro shot of an installed drip tape emitter and flush point to satisfy the maintenance detail role.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 34,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Two visible people in the background violate the zero-person rule",
+        "Hard reject: Visible bottle/container (black spout device) in the bottom right",
+        "Hard reject: Text on the carton ('DRIP ARREAIION TION') is gibberish/unreadable",
+        "Background contains a tractor which is acceptable, but the people disqualify the image immediately"
+      ],
+      "correction_prompt": "Regenerate without any people or human silhouettes. Remove the black container object in the bottom right. Ensure the text on the white roll is legible and reads 'Drip Irrigation Tape'. Keep the AFP watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 38,
+      "product_height_percent": 50,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image contains exactly one AFP wide low cylindrical drip-tape carton roll.",
+        "No people or body parts are present.",
+        "Background shows a relevant field with a distant unattended tractor, which is contextually permitted.",
+        "The required watermark 'AFP | 09134922013' is present and not rejected.",
+        "Estimated product bounding box falls within the acceptable width (38%) and height (50%) ranges, making it physically plausible.",
+        "Placement and perspective are fine for an editorial style."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
