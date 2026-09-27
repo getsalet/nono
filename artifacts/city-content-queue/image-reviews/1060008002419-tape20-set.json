@@ -1,0 +1,61 @@
+{
+  "source_id": "1060008002419-tape20",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "reasons": [
+        "Role 1 (EDITORIAL HERO): The image is a low-angle ground-level shot, not a wide high-oblique view, and the product carton dominates the frame center rather than remaining small and off-center.",
+        "Role 2 (SELECTION EVIDENCE): Fails the composition requirement by featuring a large tractor in the foreground instead of a simple background. The 'visible emitter-spacing or field-selection evidence' is missing.",
+        "Role 3 (HEADWORKS STORY): Completely missing the required technical hardware (filter, gauge, regulator, manifold). It is just another field shot with a tractor.",
+        "Role 4 (INSTALLATION PROOF): The product is centered in the frame, violating the asymmetric requirement. It also includes a second unapproved container (a coiled hose at the base) which is a strict violation.",
+        "Role 5 (MAINTENANCE DETAIL): Missing entirely. There are only four images provided for five required roles.",
+        "Global issue: The use of large tractors in Roles 1, 2, and 4 creates repetitive 'furrow-field plus tractor' compositions that are explicitly to be rejected."
+      ],
+      "correction_prompt": "Regenerate all five roles: 1. High-oblique view with small off-center product; 2. Elevated arrangement showing emitter spacing with no large machinery in foreground; 3. Unattended technical hardware layout (filters/gauges) with small secondary product; 4. Asymmetric low-angle view of installed tape on crops with no second container; 5. Detailed close-up of installed drip emitters or flush-points with small visible product.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        3,
+        4,
+        5
+      ],
+      "reasons": [
+        "All five images feature a large, centered AFP roll (the product carton) rather than a 'small, fully visible' carton on a lower third or field edge; the product dominates every frame.",
+        "Image 4 is not a maintenance detail (Role 5) but a centered furrow shot with a tractor vanishing point (a forbidden composition).",
+        "Images 3 and 4 are near-duplicates: both feature a single crop bed, centered perspective, and a tractor in the background (Role 3/Role 5 duplication).",
+        "Images 1 and 2 violate the 'exactly one approved carton' rule by showing multiple rolls (the main roll plus smaller rolls in the background), and Image 1 includes a tractor (forbidden for the hero shot).",
+        "None of the images are 'unattended' or 'wide high-oblique' as requested; they are all ground-level product displays."
+      ],
+      "correction_prompt": "Regenerate: 1. Wide high-oblique farm landscape, 'AFP' carton small on lower-right; 2. Low angle of emitter spacing on drip line, carton small in corner; 3. Side view of irrigation manifold/filter, carton blurred in background; 4. Asymmetric installed drip tape on crop beds, no tractor, carton at edge; 5. Extreme close-up of a single drip emitter, carton visible in background; zero people.",
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        4
+      ],
+      "reasons": [
+        "The prompt requires five images, but only four were provided; roles 1-4 are evaluated on the provided set and role 5 is missing.",
+        "Role 1 (Image 1) fails the EDITORIAL HERO requirement: the product carton/roll is placed prominently in the lower-left/center foreground rather than being 'small' and 'off-center on the lower third' while the farm context dominates.",
+        "Role 2 (Image 2) fails the SELECTION EVIDENCE requirement: it displays a second open cardboard box containing product coils, which conflicts with the 'exactly one approved carton' constraint; no clear 'emitter-spacing or field-selection evidence' is visible.",
+        "Role 4 (Image 4) fails the INSTALLATION PROOF requirement: the composition uses a symmetrical, centered vanishing point down the crop rows, which is explicitly prohibited ('no centered vanishing point')."
+      ],
+      "correction_prompt": "Regenerate all 5 images. Ensure Role 1 has a high-oblique wide shot with the product small in the lower-right third and no tractors; Role 2 shows exactly one carton (no boxes) with visible emitter spacing; Role 4 is an asymmetric shot without a centered vanishing point; and add a unique close-up emitter detail for Role 5.",
+      "set_attempt": 3,
+      "accepted_individual_qa_fallback": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "source_id": "1060008002416-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 40,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Visible human subject (farmer) in the background"
+      ],
+      "correction_prompt": "Remove the person standing in the field behind the drip tape roll to ensure no humans are visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 27,
+      "product_height_percent": 42,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "The image fails the image role 5 requirement of showing a MAINTENANCE DETAIL (close view of installed drip-tape emitter or connector). Instead, it displays the unopened carton roll as the primary subject.",
+        "Hard reject: A second commercial package (small white box) and a second loose roll of blue tube are clearly visible in the foreground, violating the 'exactly one approved carton' and 'zero second roll' constraints."
+      ],
+      "correction_prompt": "Regenerate as a close-up maintenance detail showing a single installed drip-tape emitter and connector on a tape line. The 'AFP' branded white-and-blue carton roll must be visible in the background (20-28% frame width). Strictly remove the small white box and loose blue tube roll from the foreground. Include the bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 36,
+      "product_height_percent": 50,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Zero people or human body parts are visible.",
+        "Exactly one commercial package (the AFP drip-tape roll) is present.",
+        "The background matches the article brief (irrigation, crop rows, distant farm equipment), and no secondary commercial containers or 'hard reject' objects are present.",
+        "Product dimensions are within the acceptable bounds for a visually plausible estimation."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

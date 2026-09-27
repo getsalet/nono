@@ -1,0 +1,89 @@
+{
+  "source_id": "1050007001267-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 40,
+      "product_height_percent": 20,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The approved layflat pair is missing: the image contains a large coil and a small spool/stack, which does not match the required combination of one packaged AFP coil and one bare black woven coil.",
+        "The mandatory 'HEADWORKS STORY' visual role is not met: the image shows a static, decorative pump assembly on the soil rather than a medium side view of a fixed, unattended pump installation.",
+        "A third commercial package (the small spool/stack) is present, which is a hard reject condition.",
+        "The required bottom-right watermark 'AFP | 09134922013' is missing.",
+        "Severely distorted dimensions are evident in the pump assembly and the coil on the right, with unnatural, abstract shapes and impossible intersections.",
+        "The small spool/stack appears partially cut off or floating near the bottom edge, which is a hard reject condition.",
+        "The overall image has severe AI generation artifacts, particularly in the pump, gauge, and coil structures."
+      ],
+      "correction_prompt": "Regenerate the image to strictly follow the 'HEADWORKS STORY' role: a medium side view of a realistic, fixed, unattended pump, gauge, and manifold installation in a farm field. In the foreground, place exactly two layflat coils, clearly separate and secondary to the pump: one must be a packaged AFP coil, and the other a bare black woven coil. The two coils must be small, fully visible, and not distorted. Remove any third packages, spools, or containers. Ensure all objects are physically plausible with no intersections or floating elements. Include the exact bottom-right watermark 'AFP | 09134922013'. Ensure zero people or human body parts are present.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 22,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A person (worker) is visible in the image.",
+        "Missing required object: The approved pair must include a packaged AFP coil, which is not present (only a bare coil and flat hose are visible).",
+        "Violation of 'zero people' constraint due to the presence of a worker."
+      ],
+      "correction_prompt": "Regenerate the image to remove the worker entirely, replacing him with a static view of the infrastructure. Ensure the foreground contains exactly one packaged AFP coil and one bare black woven hose coil (layflat), set small and separate near the pump.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 58,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The product (two-coil pair) is not fully visible; the bottom edge of the pair is cut off by the frame boundary, violating the 'fully visible' requirement.",
+        "A third commercial item (a packaged coil) is visible immediately behind the pair, violating the 'zero third commercial package' hard reject rule.",
+        "The approved pair occupies approximately 58% of the frame width, exceeding the preferred range and approaching the hard reject limit.",
+        "Visible human figure (silhouette or face) in the background violates the zero-persons hard reject rule."
+      ],
+      "correction_prompt": "Reframe to fully include the two approved coils (one packaged AFP, one bare black woven) within the frame; remove the third visible packaged coil; eliminate any human presence; keep pair under 50% frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 70,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains the required pair: one packaged AFP coil and one bare black woven coil.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Zero people, body parts, or human silhouettes are visible.",
+        "Pump, gauges, and manifold are present as requested for the 'HEADWORKS STORY' role.",
+        "No third commercial packages, bottles, or impossible intersections detected.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 70% to 8-60% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 45,
+      "product_height_percent": 40,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Presence of required watermark 'AFP | 09134922013' in bottom right",
+        "Approved pair present: packaged coil (left) and bare black coil (right)",
+        "Mandatory role 'HEADWORKS STORY' visible: fixed unattended pump, gauge, and manifold on the right side",
+        "No people or human body parts visible",
+        "Plausible physical placement and dimensions"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

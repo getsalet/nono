@@ -1,0 +1,96 @@
+{
+  "source_id": "1060008002419-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 35,
+      "product_height_percent": 32,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Presence of a person (farmer) in the background, which is a hard reject trigger.",
+        "A second commercial package (roll) is visible to the right, violating the 'exactly one' constraint.",
+        "A layflat hose/tube is coiled on the soil, which is a hard reject trigger."
+      ],
+      "correction_prompt": "Regenerate: remove the person and second roll entirely; remove the coiled hose from the ground; keep the single white-and-blue AFP drip-tape roll as the sole focus in a maintenance detail view.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 40,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains a visible human figure (a man) in the background, which is a hard reject criterion.",
+        "Article brief role 5 requires an unattended close view (maintenance detail); the presence of a person violates the 'zero people' constraint and the 'unattended' visual brief."
+      ],
+      "correction_prompt": "Remove the person from the background completely. Ensure the scene is strictly unattended. Maintain the foreground roll of drip tape.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains a second roll of white tubing next to the carton",
+        "Contains a second commercial package (loose roll) which is a hard reject",
+        "Carton text is gibberish and distorted ('DRIP TAPPERCOO' instead of 'DRIP TAPE')",
+        "Watermark text is misread as '09134922013' instead of the required '09134922013' (minor, but combined with gibberish product text it fails quality)"
+      ],
+      "correction_prompt": "Remove the loose roll of white tubing on the right side. Fix the text on the carton to read 'DRIP TAPE' clearly and professionally. Ensure the only visible commercial item is the single carton roll.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 45,
+      "product_height_percent": 48,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "A person (farmer) is visible in the background, which triggers a hard reject.",
+        "The required exact bottom-right watermark 'AFP | 09134922013' is missing; instead, a generic placeholder 'AFP | 09134922013' appears without the required specific code structure.",
+        "The text on the drip tape roll reads 'DRIP THRRABIN TIDE', which is gibberish/writing and triggers a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image removing the person in the background. Ensure the roll text is legible and not gibberish (e.g., 'DRIP TAPE 20'). Add the exact watermark 'AFP | 09134922013' in the bottom right corner. Focus on a close-up maintenance detail as per the role description.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The watermark text in the bottom-right corner is 'AFP | 09134922013', but the requirements explicitly mandated 'AFP | 09134922013'. Wait, the required string was 'AFP | 09134922013'. Let me double-check the prompt. The prompt says: The exact bottom-right watermark \"AFP | 09134922013\" is REQUIRED. The image has 'AFP | 09134922013'. It matches. ",
+        "The image shows a standalone roll sitting on the ground, which is not a MAINTENANCE DETAIL. The prompt requires a close view of an installed drip-tape emitter, connector, or material detail.",
+        "The roll text is gibberish ('DRIP TARGOIS 7NO' instead of 'DRIP TAPE 20CM').",
+        "The background shows an uninstalled roll rather than the installed maintenance detail requested by the specific role."
+      ],
+      "correction_prompt": "Regenerate image showing a close-up maintenance detail of an installed drip-tape emitter or connector in soil. Keep exactly one AFP white-and-blue carton roll in the background (approx 20-30% width). Ensure roll text is legible and correctly reads 'DRIP TAPE'. Keep watermark 'AFP | 09134922013'. No people.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 40,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The image displays exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll, which fits the visual brief specifications.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "The roll size is within the accepted practical vision estimates (width 10-48% and height up to 58%).",
+        "There are zero people, human body parts, bottles, jars, or second commercial packages visible in the frame.",
+        "The background context of a field with crop rows matches the article brief for an irrigation product."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}
