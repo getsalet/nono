@@ -36,12 +36,12 @@ jobs:
       IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY }}
       IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
       AGNES_IMAGE_MODEL: agnes-image-2.5-flash
-      IMAGE_WORKERS: "12"
+      IMAGE_WORKERS: "8"
       IMAGE_RETRIES: "6"
       IMAGE_QA_ATTEMPTS: "10"
       IMAGE_SET_QA_ATTEMPTS: "3"
       REBUILD_FROM_POST: "1"
-      REBUILD_POST_LIMIT: "3"
+      REBUILD_POST_LIMIT: "2"
     steps:
       - uses: actions/checkout@v7
         with: {fetch-depth: 0}
