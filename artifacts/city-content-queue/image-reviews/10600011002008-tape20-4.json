@@ -1,0 +1,65 @@
+{
+  "source_id": "10600011002008-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 12,
+      "product_height_percent": 15,
+      "product_x_center_percent": 88,
+      "reasons": [
+        "Visible human silhouette/farmer in the top-right quadrant (hard reject)",
+        "Human hand and arm visible in the inset image on the right (hard reject)"
+      ],
+      "correction_prompt": "Regenerate the image strictly as a single unattended field installation view with no people or hands. Include only one AFP drip tape carton roll (15-20% frame width) at the field edge. Ensure the bottom-right watermark 'AFP | 09134922013' is clearly present. Avoid multiple panels, inset views, or bottles.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 45,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Detected human body parts (feet and legs) in the background",
+        "Extra commercial packaging (bag) present in the mid-ground",
+        "Second roll/packaging visible in the far background"
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove all human figures, body parts, and extra packaging bags, retaining only the single drip tape roll and the installation field.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 33,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The visual brief explicitly requires an 'INSTALLATION PROOF' showing installed drip tape and crop beds, which is missing in the image.",
+        "The crop rows form a strong centered vanishing point, violating the requirement for an 'asymmetric unattended view'.",
+        "The carton roll has gibberish/incorrect writing on it instead of the expected specific product label details."
+      ],
+      "correction_prompt": "Regenerate the image showing an asymmetric view of an irrigation field with visible drip tape installed on crop beds. Remove the centered perspective. Include exactly one small AFP white and blue drip tape carton roll positioned at the side field edge. Ensure no centered vanishing point.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 23,
+      "product_height_percent": 36,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Single commercial drip-tape roll with clear 'AFP' branding and correct product geometry",
+        "Product bounding box remains within practical vision limits and appears physically plausible for an installation context",
+        "Zero people, human body parts, or human silhouettes present in frame",
+        "Watermark 'AFP | 09134922013' is visible in the bottom-right corner as required"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

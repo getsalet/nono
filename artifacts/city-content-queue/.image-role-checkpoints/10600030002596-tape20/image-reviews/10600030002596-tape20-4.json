@@ -1,0 +1,80 @@
+{
+  "source_id": "10600030002596-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 34,
+      "product_height_percent": 36,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: visible person (worker) standing in the field",
+        "Hard reject: visible human body parts (arm, leg, face)",
+        "Mandatory image role 'INSTALLATION PROOF' requires unattended view with no people",
+        "Image contains human silhouettes violating 'zero people' requirement"
+      ],
+      "correction_prompt": "Regenerate: Remove all people and human silhouettes completely. Keep exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll (20-28% frame width) at field edge in asymmetric composition. Show installed drip tape along crop beds with no centered vanishing point. Include required watermark AFP | 09134922013 in bottom-right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Hard reject: Two full-body human figures (farmers/workers) are clearly visible standing in the crop rows.",
+        "The image fails the 'INSTALLATION PROOF' role requirement which mandates an unattended view of installed drip tape.",
+        "The presence of people violates the 'zero people' constraint and disqualifies the image regardless of product placement."
+      ],
+      "correction_prompt": "Regenerate the image completely removing all people and body parts. Show only the unattended drip tape roll and crop rows. Keep the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22.5,
+      "product_height_percent": 38.0,
+      "product_x_center_percent": 46.5,
+      "reasons": [
+        "Hard reject due to visible human body parts and silhouettes (farmers) in the background, violating the 'zero people' requirement.",
+        "Presence of unapproved commercial containers (blue, green, and red tanks/buckets) in the field, violating the 'zero container' rule."
+      ],
+      "correction_prompt": "Regenerate image removing all people and commercial containers/buckets, keeping only the single AFP carton and the field context with installed drip tape.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: A person (farmer) is visible walking in the background. The brief strictly requires zero people or human body parts.",
+        "The required watermark text in the bottom right corner reads '09134922013', which does not match the required string '09134922013' (starts with 0 instead of 09)."
+      ],
+      "correction_prompt": "Regenerate image without the person in the background. Ensure the bottom-right watermark text exactly reads 'AFP | 09134922013'.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 23,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Meets the exact mandatory visual role (Installation Proof: asymmetric unattended view, single small carton at field edge, drip tape running into field).",
+        "Correct product count and type: exactly one wide, low cylindrical white-and-blue AFP drip-tape carton roll. No second roll, layflat hose, pipe through the roll, or extra commercial package is visible.",
+        "No humans or human body parts (hard-reject check passed).",
+        "Allowed contextual background elements: ordinary soil, crop beds, farm building, and a distant unattended tractor are all editorially acceptable.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correctly handled."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

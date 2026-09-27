@@ -1,0 +1,65 @@
+{
+  "source_id": "10600017001061-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: The image contains a full-body human figure (farmer/worker) standing in the background on the left side, which violates the requirement for zero people or human silhouettes."
+      ],
+      "correction_prompt": "Remove the human figure from the background completely. Ensure the scene remains a wide field with unattended tractors and a foreground drip-tape roll with infrastructure.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Second commercial package detected: The image contains a second 'AFP' carton box on the right, violating the 'exactly one' product rule.",
+        "Hard reject object detected: A white bucket/container is visible behind the second carton box.",
+        "Mandatory role failure: The image fails to present the 'HEADWORKS STORY' role, which requires the focus to be on unattended fixed infrastructure (filters, gauges, etc.) with the approved carton remaining small and secondary."
+      ],
+      "correction_prompt": "Regenerate the image to feature only a single small AFP carton box in the background. The foreground must be dominated by medium side views of unattended fixed filter, gauge, and manifold hardware. Ensure absolutely no second packages, buckets, or people are visible in the scene.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "A human (a male worker/farmer) is clearly visible in the image",
+        "The visual brief for the 'HEADWORKS STORY' role requires the image to contain zero people or human body parts",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 10-48% of frame width."
+      ],
+      "correction_prompt": "Remove the human worker from the image and shift the focus to a medium side view of unattended fixed filter, gauge, regulator, and manifold infrastructure, keeping the single carton roll small and secondary. Enlarge the product group from 0% to 10-48% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 15,
+      "product_height_percent": 35,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "The image correctly adheres to the mandatory HEADWORKS STORY role by featuring fixed irrigation infrastructure (filter, gauges, and manifold) as the primary subject.",
+        "The AFP drip-tape carton roll is correctly presented as a secondary element, remaining small and unobtrusive as specified.",
+        "The image contains zero people, human body parts, or prohibited commercial containers (like bottles or fertilizer jars).",
+        "The product bounding box falls well within the 10-48% width and up to 58% height acceptable limits.",
+        "Contextually relevant unattended farm equipment (tractors) and a farm environment are present and accepted."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

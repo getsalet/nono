@@ -1,0 +1,89 @@
+{
+  "source_id": "10600030002596-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 26,
+      "product_height_percent": 48,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: Visible person (worker/farmer) in the foreground.",
+        "Hard reject: Multiple human body parts (face, hands, legs, torso) are present."
+      ],
+      "correction_prompt": "Remove the person from the image. Regenerate the scene to show only the irrigation equipment, the AFP drip tape roll, and the agricultural field background without any human figures.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 33,
+      "product_height_percent": 44,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Second commercial package present: A cardboard box labeled 'AFP' is visible on the right, which violates the 'zero second commercial package' rule.",
+        "Prohibited text: The large roll features the text 'DAP IRJAGH TP', which is gibberish/irrelevant to the brand, constituting a hard reject.",
+        "Role mismatch: The brief calls for the roll to be small and secondary, but it is a dominant foreground subject.",
+        "Visual inconsistency: The cardboard box has 'HUNGER' printed on it, which contradicts the context."
+      ],
+      "correction_prompt": "Regenerate to remove the cardboard box on the right and ensure the large roll only displays the 'AFP' logo and 'DRIP TAPE' text without gibberish. Ensure the roll is small and secondary, positioned behind the filtration infrastructure.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Visible human body parts (arms, hands, legs, torso, and face) in the image",
+        "A person is actively interacting with the product, which violates the 'zero people' and 'zero human body parts' constraints"
+      ],
+      "correction_prompt": "Remove the man from the image, leaving only the AFP drip tape roll resting on the farm equipment, maintaining the background and watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 45,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Visible cardboard boxes (second commercial package) on the irrigation equipment",
+        "Mandatory role 'HEADWORKS STORY' not met; the carton is the primary focus rather than small/secondary",
+        "Watermark digit mismatch: image shows '09134922013' but required '09134922013' is missing one '2'"
+      ],
+      "correction_prompt": "Remove the cardboard boxes. Shrink the carton size to the background to emphasize the unattended fixed filter, gauge, regulator, and manifold (Headworks). Correct the watermark to exactly 'AFP | 09134922013'.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "gibberish writing in center overlay"
+      ],
+      "correction_prompt": "Remove all text overlays from the center of the image",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 32,
+      "product_height_percent": 42,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: A person (man) is clearly visible in the image, violating the 'zero people and zero human body parts' constraint.",
+        "Hard reject: The image role requires the carton to be 'small and secondary' with a 'medium side view of unattended fixed filter, gauge, regulator and manifold', but instead, the carton is a primary subject with a person actively interacting with it."
+      ],
+      "correction_prompt": "Regenerate the image to remove the person entirely. Show a medium side view of the unattended fixed filter, gauges, regulator, and manifold with the white-and-blue drip-tape carton roll remaining small and secondary in the background. Include the required watermark 'AFP | 09134922013' in the bottom right.",
+      "attempt": 6
+    }
+  ]
+}

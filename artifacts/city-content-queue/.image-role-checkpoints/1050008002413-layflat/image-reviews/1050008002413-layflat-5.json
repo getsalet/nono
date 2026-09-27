@@ -1,0 +1,54 @@
+{
+  "source_id": "1050008002413-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 74,
+      "product_height_percent": 82,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "The pair is wider than 60 percent of the frame, violating the hard reject threshold for oversized pairs.",
+        "The scene contains two separate black coiled hoses (bottom left and center) plus the large black coil on the right, totaling three coils; the role requires strictly one packaged AFP coil and one bare black woven coil.",
+        "The mandatory role (MAINTENANCE DETAIL close view of a connector or fold) is not met; the image shows a wide establishing shot of three products rather than a detail shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 74% to 8-60% of frame width.; Reduce product height from 82% to at most 58% of frame height."
+      ],
+      "correction_prompt": "Reduce total product width to under 60 percent by placing only one labeled AFP packaged coil on the left and one large bare black woven coil on the right. Remove the extra black coiled hose in the center foreground. Ensure the large coil's black woven texture or a connector fold is clearly visible as a maintenance detail. Keep the existing bottom-right watermark and distant tractor background. Reduce the product group from 74% to 8-60% of frame width. Reduce product height from 82% to at most 58% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 71.8,
+      "product_height_percent": 29.5,
+      "product_x_center_percent": 57.5,
+      "reasons": [
+        "The pair of hoses exceeds the maximum 60% frame width limit (estimated at ~72%), resulting in a hard reject for scale.",
+        "The role specifies an 'unattended close view' of a connector or fold, but the image displays a full wide shot with both coils visible, failing the close-up requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 71.8% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an extreme close-up focusing on a connector or hose fold detail; reduce the visible product size so the frame is not dominated by the full coils. Reduce the product group from 71.8% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Both required products are visible: a bare black woven coil and a packaged AFP coil.",
+        "Zero people or human body parts detected in the frame.",
+        "The product pair spans an appropriate portion of the frame width (approx 38%).",
+        "The mandatory watermark 'AFP | 09134922013' is present and correctly formatted in the bottom-right corner.",
+        "Background elements (farm, crops, equipment) do not introduce prohibited third commercial packages."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
