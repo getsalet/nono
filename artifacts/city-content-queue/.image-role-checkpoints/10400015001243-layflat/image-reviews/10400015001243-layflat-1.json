@@ -1,0 +1,75 @@
+{
+  "source_id": "10400015001243-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 32,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The presence of a human figure (farmer) in the background is an automatic hard reject.",
+        "A tractor/vehicle is visible in the right background, which is an automatic hard reject.",
+        "The combined width of the product pair (packaged coil and bare coil) exceeds the 36 percent maximum width limit.",
+        "The pair of products is centered or near-centered in the lower portion of the frame, failing the requirement to remain 'off-center'.",
+        "The packaged coil appears to be resting at an angle or in a box, which may not accurately represent a flat, coiled layflat hose as intended.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate the scene with zero people and zero vehicles in the background. The two layflat products (one packaged, one bare) must be clearly separated, lying completely flat on the soil in the lower third of the frame. Position the pair so the center point is off-center (either far left or far right of the frame). Ensure the total width of both products is less than 30% of the image width. Remove any standing boxes or upright containers; the coiled product must be laid flat. Reduce the product group from 38% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 48,
+      "product_height_percent": 20,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Contains exactly two approved layflat objects: one packaged AFP coil and one bare black woven coil.",
+        "Pair is secondary and off-center on the lower third, fully visible, separate and flat on the ground.",
+        "Zero people and zero human body parts present.",
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "No forbidden objects like tractors, harvesters, vehicles, or third hoses.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-36% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 43,
+      "product_height_percent": 33,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Tractor present in the background (forbidden vehicle)",
+        "Hard reject: Product pair is wider than 36 percent of the frame",
+        "Product staging is in the bottom-left foreground instead of the required lower third off-center position",
+        "machine-enforced bounding-box check failed: Reduce the product group from 43% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate image removing the background tractor entirely. Shrink the two hose coils significantly (target 12-15% width) and shift them slightly to the center-lower area to meet the layout requirements. Reduce the product group from 43% to 8-36% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 33,
+      "product_height_percent": 15,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The image contains exactly two approved layflat objects: one packaged coil and one bare black woven coil.",
+        "The products are located off-center, resting flat on the ground in the lower third of the frame.",
+        "The combined width of the product pair is approximately 33% of the frame width, which satisfies the target (12-15%) as a practical vision estimate within the 8-36% acceptable range.",
+        "Zero people, body parts, tractors, harvesters, vehicles, or machine cabins are present.",
+        "No extra commercial products (buckets, cans, drip tape) are visible; the background context (farm fields) is appropriate for the 'EDITORIAL HERO' role.",
+        "The mandatory watermark 'AFP | 09134922013' is visible in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
