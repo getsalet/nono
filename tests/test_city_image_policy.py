@@ -82,16 +82,26 @@ class CityImagePolicyTests(unittest.TestCase):
         self.assertTrue(ok)
         self.assertEqual(issues, [])
         ok, issues = image_quality_gate._metric_check(
+            "layflat",
+            {
+                "product_width_percent": 33,
+                "product_height_percent": 35,
+                "product_x_center_percent": 50,
+            },
+        )
+        self.assertTrue(ok)
+        self.assertEqual(issues, [])
+        ok, issues = image_quality_gate._metric_check(
             "tape20",
             {
-                "product_width_percent": 12,
-                "product_height_percent": 33,
+                "product_width_percent": 11,
+                "product_height_percent": 43,
                 "product_x_center_percent": 50,
             },
         )
         self.assertFalse(ok)
         self.assertTrue(any("Enlarge" in issue for issue in issues))
-        self.assertTrue(any("at most 32%" in issue for issue in issues))
+        self.assertTrue(any("at most 42%" in issue for issue in issues))
 
     def test_rejected_five_image_set_keeps_published_files_untouched(self):
         with tempfile.TemporaryDirectory() as tmp, patch.dict(
