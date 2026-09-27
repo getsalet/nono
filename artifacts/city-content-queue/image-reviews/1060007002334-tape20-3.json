@@ -1,0 +1,68 @@
+{
+  "source_id": "1060007002334-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: A person (farmer/worker) is clearly visible in the image attending to the irrigation equipment.",
+        "Mandatory role conflict: The brief requires a 'HEADWORKS STORY' showing an unattended fixed filter, gauge, regulator, and manifold with the tape roll as a secondary element. The image instead features a prominent tape roll and a human subject.",
+        "Presence of human body parts: Face, arms, hands, and legs are visible.",
+        "Watermark presence: The required watermark 'AFP | 09134922013' is correctly present, but the image fails due to the human subject."
+      ],
+      "correction_prompt": "Remove the person completely. Regenerate the scene to focus on an unattended fixed filtration system (filter, gauge, regulator, manifold) in a farm field. Place the single white-and-blue AFP drip tape roll in the background or as a secondary element, keeping it small (approx 10-20% width) to satisfy the 'HEADWORKS STORY' role. Ensure no humans, faces, or body parts are visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 20,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The product bounding box is estimated relative to the image dimensions, and while the front roll width (approx. 20%) falls within the 10-48% tolerance, the presence of a second roll in the background triggers a hard reject condition.",
+        "Hard reject condition 'second roll' is present: there is a second, smaller white carton roll visible in the background behind the front filter unit.",
+        "Article brief requires the carton to remain 'small and secondary', but the 'zero people' rule and strict rejection of 'second commercial package/roll' results in a hard fail."
+      ],
+      "correction_prompt": "Remove the second drip-tape roll in the background entirely, ensuring only the single front roll is visible. Keep the filter unit as the central focus.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Image contains visible people (two male workers present)",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 10-48% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with absolutely zero people or human body parts. Show a medium side view of unattended fixed filter, gauge, regulator, and manifold infrastructure in a farm field. Include one AFP white-and-blue wide low cylindrical drip-tape carton roll as a secondary element, positioned at 20-28% of the frame width. Enlarge the product group from 0% to 10-48% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 33,
+      "product_height_percent": 38,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Exactly one white and blue wide low cylindrical drip-tape carton roll is present.",
+        "The roll's size is within the accepted practical range (10-48% width, <58% height).",
+        "The image features zero people or human body parts.",
+        "The background contains appropriate context including a filter, gauge, regulator, and manifold (infrastructure) and a distant unattended tractor.",
+        "The required bottom-right watermark 'AFP | 09134922013' is visible and correct.",
+        "No forbidden objects like bottles, jars, or second commercial packages are present."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "source_id": "1060007002312-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 25,
+      "product_height_percent": 45,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject: Person visible in the background (a man standing in the center).",
+        "Hard reject: Second roll of hose/tape visible in the foreground (the coiled green tape on the right).",
+        "Hard reject: The role requires a 'MAINTENANCE DETAIL' (close view of an installed emitter, connector, or flush-point), but the image shows a carton on the ground."
+      ],
+      "correction_prompt": "Regenerate the image to show a close-up detail of an installed drip-tape connector or flush-point with the AFP carton visible in the background. Remove the person from the background and remove the coiled green hose from the foreground. Ensure the background is a farm field without any workers.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 35,
+      "product_height_percent": 38,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The text on the carton is gibberish (e.g., 'DRIP TFR3BCHE THAT') instead of readable branding.",
+        "The required bottom-right watermark 'AFP | 09134922013' is missing; the visible watermark has an incorrect ID.",
+        "The required image role is 'MAINTENANCE DETAIL' (close view of an installed drip-tape emitter or connector), but the image shows a full roll of drip tape."
+      ],
+      "correction_prompt": "Regenerate the image showing a close-up maintenance detail of an installed drip-tape emitter, connector, or flush-point. Ensure exactly one AFP white-and-blue drip-tape carton roll is visible in the background. Replace the gibberish text with the specific bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Critical text error: The roll label contains the gibberish/mis-spelled phrase 'ARREAGE 11IN' instead of the correct product specification 'Drip Tape 20mm'.",
+        "Object type mismatch: The image displays a loose roll of blue drip tape extending from the center, whereas the brief mandates a 'white-and-blue wide low cylindrical drip-tape carton roll'.",
+        "Missing mandatory role: The visual brief requires a 'MAINTENANCE DETAIL' (installed drip-tape emitter/connector), which is completely absent; the image shows a commercial product on the soil instead.",
+        "Visual noise: The 'blue tail' of loose tape exiting the core creates a geometry that conflicts with the specified 'carton roll' and 'white' primary color expectation."
+      ],
+      "correction_prompt": "Regenerate the image to show a specific maintenance detail: a close-up of an installed drip-tape emitter or flush point on the soil, with the main focus on the drip tape itself. Include exactly one white and blue cylindrical carton roll (labeled 'AFP') as a prop in the background. Strictly enforce that all text on the carton must be legible and correctly spelled, specifically 'AFP Drip Tape 20mm'. Ensure the scene contains no human body parts, no loose tails of blue plastic, and strictly adheres to the watermark 'AFP | 09134922013' in the bottom-right corner.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 33,
+      "product_height_percent": 36,
+      "product_x_center_percent": 74,
+      "reasons": [
+        "The product packaging text is gibberish/malformed (reads as 'DRIP TIAP TIAPE TIPE' rather than 'DRIP TAPE').",
+        "The image features a loose blue pipe/hose running through the field which triggers the 'pipe through the roll' or 'layflat hose' hard reject criteria.",
+        "The visual role requirement specifies a 'close view of an installed drip-tape emitter, connector, flush-point', which is not present in this wide shot."
+      ],
+      "correction_prompt": "Regenerate the image to show an extreme close-up of an installed drip-tape emitter and connector on the soil. The 'AFP DRIP TAPE' carton must be visible in the background with sharp, legible text. Remove all visible pipes/hoses. Maintain the bottom-right watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 40,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Multiple commercial packages visible: The image contains both a large drip tape roll and a secondary white carton box behind it. The instructions explicitly state to 'Hard reject a ... second commercial package, second roll'.",
+        "Role Mismatch: The mandatory image role is 'MAINTENANCE DETAIL', which requires a close view of an installed drip-tape emitter or connector with exactly one approved carton. The image shows two packages in a wide shot rather than a specific maintenance detail."
+      ],
+      "correction_prompt": "Regenerate the image showing ONLY a close-up maintenance detail of a drip tape connector or flush point on the ground. Ensure exactly one AFP drip tape roll (or carton) is visible in the background context, strictly removing any secondary boxes, duplicate rolls, or extra commercial packaging.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 35,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Presence of black tubing/pipe laid out in the foreground and running behind the roll, which violates the prohibition against pipes through the roll and second commercial package/hose elements.",
+        "The image fails to satisfy the mandatory 'MAINTENANCE DETAIL' role, which requires an unattended close-up of an installed emitter or connector detail, whereas this image is a wide product shot on soil.",
+        "The visible text on the carton side appears to be gibberish or distorted, which is a hard reject trigger."
+      ],
+      "correction_prompt": "Regenerate a close-up 'MAINTENANCE DETAIL' shot of an installed drip tape emitter or flush-point connector. A single AFP white-and-blue drip-tape roll must remain visible in the background or on the side. Ensure there are no loose pipes or hoses in the foreground, no people, and the text on the carton is sharp and legible.",
+      "attempt": 6
+    }
+  ]
+}

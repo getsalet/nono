@@ -1,0 +1,56 @@
+{
+  "source_id": "1060008002035-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 20,
+      "product_height_percent": 30,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Contains a prominent person (male farmer)",
+        "Shows a face",
+        "Shows hands and legs",
+        "Violates the mandatory zero people and zero body parts requirement"
+      ],
+      "correction_prompt": "Remove the man completely. Ensure the image contains only the white and blue AFP drip-tape carton roll, with no human silhouettes, farmers, or workers anywhere in the frame. Keep the background as an open field.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 24,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Second commercial product/roll detected (a coiled hose or tubing is visible on the right, which violates the 'exactly one' rule and acts as a second commercial package).",
+        "Missing mandatory 'SELECTION EVIDENCE' (no visible emitter-spacing or field-selection evidence)."
+      ],
+      "correction_prompt": "Remove the coiled hose/pipe on the right to ensure exactly one product is visible; add visible selection/spacing evidence to the carton label.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 27,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Single carton roll of drip tape is present and clearly visible.",
+        "The roll has the correct wide, low, cylindrical shape and appropriate relative scale.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The roll displays the 'AFP' logo and blue-and-white branding; text artifacts are minor and not gibberish.",
+        "The scene has zero people or human body parts.",
+        "There are no forbidden objects (bottles, cans, jars, second commercial packages, second rolls, pipes, fake headlines).",
+        "The background and layout are simple and physically plausible.",
+        "The product's size and position align with practical vision estimates and role preferences."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

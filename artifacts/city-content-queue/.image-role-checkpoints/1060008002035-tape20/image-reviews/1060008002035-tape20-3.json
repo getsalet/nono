@@ -1,0 +1,90 @@
+{
+  "source_id": "1060008002035-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 40,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: A human figure (farmer/worker) is clearly visible standing in the background on the right side of the image.",
+        "Hard reject: The article role (HEADWORKS STORY) requires the roll to be 'small and secondary' to the fixed irrigation infrastructure (filter, gauge, manifold), but the roll is the dominant foreground object.",
+        "Hard reject: The required 'filter, gauge, regulator and manifold' infrastructure is not the focus of the shot."
+      ],
+      "correction_prompt": "Regenerate image with zero humans or human silhouettes. Reframe to focus on a unattended fixed irrigation system (filter, gauge, and manifold) in the foreground, with a small AFP drip-tape roll visible as a secondary detail in the background or side.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 36,
+      "product_height_percent": 50,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: Image contains two commercial packages (a second roll of drip tape is clearly visible on the right side), violating the rule for exactly one approved carton roll.",
+        "Hard reject: The image role mismatched; the required HEADWORKS STORY role specified the main subject be an unattended fixed filter, gauge, regulator, and manifold with the roll remaining small and secondary. Instead, the primary focus is the large product roll in the foreground.",
+        "Product dimensions exceed preferred width range (36% vs 20-28%)."
+      ],
+      "correction_prompt": "Regenerate the image to feature a fixed filter, gauge, regulator, and manifold as the primary medium-sized subjects. Include exactly one AFP white-and-blue drip-tape carton roll that is small, secondary to the hardware, and located in the bottom right. Remove the second roll. Ensure zero people, no containers, and maintain the farm field context with a distant unattended tractor.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 54,
+      "reasons": [
+        "Second commercial roll/package visible in bottom-right corner",
+        "Tractor contains a visible driver/face in the distant background"
+      ],
+      "correction_prompt": "Remove the second carton roll in the bottom-right corner and empty the distant tractor cab to ensure zero people are visible. Keep the main AFP roll and the fixed irrigation equipment in the foreground.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: Presence of a human (male person crouching on the right side of the frame). The system prompt explicitly requires zero people and zero human body parts, hard rejecting any visible human.",
+        "The mandatory role 'HEADWORKS STORY' requires an 'unattended' view of fixed filter and hardware. The presence of a person interacting with the equipment contradicts the 'unattended' requirement."
+      ],
+      "correction_prompt": "Remove the human figure entirely. Re-generate the scene to show the filtration and irrigation setup in the background without any people, while keeping the AFP drip tape roll in the foreground as the primary product element.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: The image contains visible people (two men working in the background), violating the zero-people requirement.",
+        "The image includes a layflat hose/pipe, which is a hard reject per the constraints.",
+        "The image is not a 'HEADWORKS STORY' of unattended fixed hardware (filter, gauge, regulator); instead, it depicts active manual labor with people present."
+      ],
+      "correction_prompt": "Regenerate a medium side view of unattended fixed filter, gauge, regulator and manifold hardware in a farm field. Remove all visible people, human body parts, and hoses. Include exactly one small secondary AFP drip-tape carton roll. Ensure the background matches the article brief without any active workers.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 26,
+      "product_height_percent": 52,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Mandatory role violation: the required 'HEADWORKS STORY' (medium side view of unattended fixed filter, gauge, regulator, and manifold) is not present. The gauge and manifold in the image are attached to a coiled hose lying on the ground, rather than being part of a fixed, installed irrigation infrastructure setup.",
+        "The presence of the loose, coiled hose in the foreground makes it unclear if the 'one approved carton' is intended to remain small and secondary to a primary, fixed infrastructure display."
+      ],
+      "correction_prompt": "Regenerate the image to clearly show a fixed irrigation filtration unit (filter, manifold, pressure gauge, and regulator) installed on the ground. The required drip-tape carton roll should be placed small and secondary to the side, without a coiled hose attached to the manifold.",
+      "attempt": 6
+    }
+  ]
+}
