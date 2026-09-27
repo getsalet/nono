@@ -1,0 +1,53 @@
+{
+  "source_id": "10600028002314-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "A person is clearly visible in the upper-left background, which is a hard reject condition.",
+        "Although the unattended tractor is allowed, the presence of the human worker makes the image invalid for this specific article brief."
+      ],
+      "correction_prompt": "Regenerate the image with zero people or human figures. Keep the single AFP drip tape carton roll in the foreground and the unattended tractor in the distance, but remove the worker from the background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 21,
+      "product_height_percent": 28,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Contains a driver in the distant tractor, violating the hard reject rule for human body parts",
+        "Product is centered horizontally rather than off-center on the lower third as requested in the editorial brief",
+        "Watermark text '09134922013' in the image does not match the required '09134922013' specified in the prompt"
+      ],
+      "correction_prompt": "Remove the human driver from the background tractor to ensure no visible people. Regenerate the product carton to be positioned on the far-left or far-right side (off-center) of the lower third. Correct the watermark phone number to '09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Exactly one visible AFP carton roll of drip tape.",
+        "No people, faces, or body parts present.",
+        "No hard-reject containers, pipes, or gibberish text.",
+        "Farm/irrigation context dominates the image (High-oblique view).",
+        "Product is fully visible, physically plausible, and positioned in the lower-third on a crop row.",
+        "Watermark 'AFP | 09134922013' is present and correct."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

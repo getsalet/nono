@@ -1,0 +1,60 @@
+{
+  "source_id": "10600028002037-tape20",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2,
+        3,
+        5
+      ],
+      "reasons": [
+        "Only four images were provided instead of the required five editorial roles.",
+        "Image 1 includes a tractor, violating the strict 'zero people/zero tractor' rule.",
+        "Image 2 (Role 2) shows headworks hardware (gauges/filters) instead of 'selection evidence' like emitter-spacing or technical field selection, duplicating the content of Role 3.",
+        "Role 5 (Maintenance Detail) is entirely missing from the set.",
+        "The 'wide high-oblique' requirement for the hero shot was not met as the images are ground-level."
+      ],
+      "correction_prompt": "Regenerate Role 2 to show technical selection evidence (emitter spacing/field layout) and add a new Role 5 close-up of an installed emitter or flush-point. Replace the tractor in Image 1 with a static farm building to maintain a zero-human, zero-machine policy.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 18,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Missing 1 EDITORIAL HERO: No wide high-oblique view showing farm context dominating, and the required small carton placement on the lower third is absent.",
+        "Missing 4 INSTALLATION PROOF: No asymmetric unattended view of installed drip tape within crop beds; the layout lacks the required asymmetric composition.",
+        "Missing 5 MAINTENANCE DETAIL: No close-up unattended detail view of emitters, connectors, or flush points; all images are wide shots where these technical elements are invisible.",
+        "Repeated Composition: Roles 2 and 3 (and others) rely on the same 'product resting on dirt with background machinery' setup, lacking distinct camera heights and angles.",
+        "Generic/Rejection Triggers: Multiple images feature tractors and farm buildings in the background which acts as a 'generic farm' distractor; the repeated 'furrow-field plus tractor' composition is explicitly forbidden.",
+        "Role Duplication: The product is merely 'moved' across fields in roles 2, 3, and 4 without changing the technical narrative or distinct environments."
+      ],
+      "correction_prompt": "Generate 5 completely distinct macro or architectural views: (1) Aerial wide of the farm from far above, (2) Top-down technical chart of emitter spacing, (3) Macro side-view of the filter assembly without a visible product roll, (4) Asymmetric low-angle side-shot of tape running through soil, (5) Extreme close-up of a single drip emitter and flush valve, removing all background context and ensuring no two angles overlap.",
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 18,
+      "duplicate_roles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "reasons": [
+        "Only four images were provided to review instead of five.",
+        "All four provided images utilize nearly identical ground-level, centered compositions and share a repeated furrow-field plus barn/tractor background, violating the requirement for distinct camera angles and avoiding the 'repeated furrow-field plus tractor' composition.",
+        "The visual roles are not fulfilled: Image 1 lacks the 'high-oblique' view required for the Hero; Image 4 shows no technical evidence of 'emitter-spacing' required for Selection; and both Image 2 and 4 feature a barn/tractor combo that deviates from the specific 'Headworks Story' and 'Installation Proof' constraints."
+      ],
+      "correction_prompt": "Regenerate the set to provide all five distinct images: a high-oblique farm hero, a technical selection shot with visible emitters, an unattended filter/gauge assembly, an asymmetric installation view, and a close-up maintenance detail, ensuring no repeated barn/tractor scenes.",
+      "set_attempt": 3,
+      "accepted_individual_qa_fallback": true
+    }
+  ]
+}

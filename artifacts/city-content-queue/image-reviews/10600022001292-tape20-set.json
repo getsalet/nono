@@ -1,0 +1,60 @@
+{
+  "source_id": "10600022001292-tape20",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "reasons": [
+        "Only four images are provided for a requirement of five distinct editorial roles.",
+        "The provided images are heavily homogenized in composition: almost all use the same eye-level perspective, similar lighting, and a repetitive furrow-field background with a tractor.",
+        "Role 1 (Editorial Hero) requires a wide high-oblique view, which is missing.",
+        "Role 4 (Installation Proof) requires an asymmetric unattended view without a centered vanishing point, but the images lean toward centered or tractor-focused compositions.",
+        "Role 5 (Maintenance Detail) requires an unattended close view of specific hardware (emitters/connectors) which is absent."
+      ],
+      "correction_prompt": "Regenerate the set to include five distinct images: 1. A high-oblique drone view with the carton small in the lower third. 2. A technical elevated shot showing emitter spacing. 3. A side-view of headworks hardware. 4. An asymmetric field-edge shot of installed tape. 5. A macro close-up of an emitter and flush point without a tractor.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 (Image 1) fails because the product carton is large and centered in the foreground, violating the 'small, off-center, lower third' specification.",
+        "Role 3 (Image 3) fails the 'no centered vanishing point' requirement; the furrows and the blue tape line create a strong leading line to a central vanishing point.",
+        "Role 4 (Image 4) fails because the composition relies on a strong central symmetry (farmhouse and furrow lines aligned in the middle), which is explicitly prohibited for asymmetric installation proof.",
+        "Role 5 (Image 5) fails because the shot is a product portrait with the carton dominating the frame; it does not show an 'unattended close view of an installed drip-tape emitter or connector' as required."
+      ],
+      "correction_prompt": "Regenerate images: 1) Move carton to lower third/off-center and increase crop depth for hero; 2) 3) Use side-angled crop furrows with strong diagonals to break central symmetry; 4) 5) Create a macro shot of the tape/connector junction on the soil with the carton visible but secondary in the background.",
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2,
+        4
+      ],
+      "reasons": [
+        "The set only contains four images instead of the required five, making it impossible to satisfy all role requirements.",
+        "Image 2 (Selection Evidence) displays a second carton box in the background, violating the rule of having exactly one approved carton.",
+        "Image 4 (Installation Proof) uses a centered vanishing point at the horizon line, which is explicitly prohibited for that role.",
+        "Role 1 (Editorial Hero) and Role 3 (Headworks Story) are completely missing from the provided image set."
+      ],
+      "correction_prompt": "Generate the missing Role 1 (wide hero view) and Role 3 (hardware detail) images, remove the secondary box from Image 2, and replace Image 4 with an asymmetric composition that avoids a centered vanishing point.",
+      "set_attempt": 3,
+      "accepted_individual_qa_fallback": true
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "source_id": "10600020002715-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: visible people present in the image (standing figure in center, distant figures), violating the 'zero people' rule"
+      ],
+      "correction_prompt": "Regenerate image with a strictly unattended field scene. Remove all human figures completely. Ensure the 'AFP' roll is the only commercial package visible in the crop beds.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The required bottom-right watermark 'AFP | 09134922013' is missing."
+      ],
+      "correction_prompt": "Regenerate the image ensuring the exact bottom-right watermark 'AFP | 09134922013' is clearly visible.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image shows the product placed in the soil rather than 'at a field edge' as required by the role brief.",
+        "The crop bed contains a centered vanishing point (row perspective), which is explicitly rejected by the brief ('no centered vanishing point').",
+        "Second commercial package: The drip tape itself appears to be physically connected to or part of a second roll/tube, violating the 'exactly one carton' rule."
+      ],
+      "correction_prompt": "Regenerate with exactly one unattended drip-tape carton roll resting on a dry field edge or path (not in soil). The crop rows must be asymmetric with no central vanishing point. Remove the loose strip of tape attached to the carton to ensure only one commercial package is visible. Keep zero people and maintain the watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a human figure (worker/farmer) in the background right.",
+        "Centered vanishing point composition, which is prohibited by the role brief.",
+        "Missing mandatory bottom-right watermark 'AFP | 09134922013'.",
+        "Roll text is gibberish/indistinct rather than clear branding."
+      ],
+      "correction_prompt": "Remove the person in the background and the centered vanishing point. Regenerate as an asymmetric view from the crop bed edge looking toward the irrigation tape lines. Place the small AFP carton roll at the lower-left corner. Ensure correct branding text on the roll and add the watermark 'AFP | 09134922013' in the bottom-right corner.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: two rolls of drip tape are visible (one on the left, one on the right). The image must show exactly one roll.",
+        "The mandatory role required 'INSTALLATION PROOF' with an 'asymmetric unattended view', which is not fully met due to the duplicate object violating the 'exactly one' rule."
+      ],
+      "correction_prompt": "Regenerate the image showing exactly one drip tape roll at the bottom right field edge. Remove the second roll on the bottom left. Maintain the installed drip tape across the crop beds.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Hard reject: person (farmer/worker) visible in the background"
+      ],
+      "correction_prompt": "Remove the man standing in the background. Regenerate the scene with only the tractors, crops, and the unattended drip-tape installation.",
+      "attempt": 6
+    }
+  ]
+}

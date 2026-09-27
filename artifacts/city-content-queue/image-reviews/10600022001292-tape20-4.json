@@ -1,0 +1,41 @@
+{
+  "source_id": "10600022001292-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 15,
+      "product_height_percent": 22,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Visible person in the main image and a hand in the bottom-right inset, which triggers a hard reject for human presence.",
+        "Second commercial package (an unbranded white roll) is visible in the top-right inset, violating the 'exactly one approved carton' requirement.",
+        "Layflat hose is prominently visible in the top-right inset, triggering a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image to be a single-shot view with no people, hands, or human silhouettes. Include exactly one AFP white-and-blue drip-tape carton roll (roughly 20-28% width). Show it installed with drip tape extending into crop beds. Strictly exclude all bottles, containers, second packages, and layflat hoses.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Zero human presence: No people, body parts, or silhouettes are visible.",
+        "Correct object type: Exactly one AFP wide cylindrical drip-tape carton roll is present.",
+        "Compliant placement: The roll is asymmetrically placed in the lower-left foreground, not centered.",
+        "Valid infrastructure: The drip tape trailing into the crop rows is part of the irrigation system, not a rejected object.",
+        "Contextual elements: The distant unattended tractor is an allowed contextual element.",
+        "Required watermark: The 'AFP | 09134922013' watermark is present in the bottom-right corner.",
+        "Plausible proportions: Product dimensions and perspective are physically realistic."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

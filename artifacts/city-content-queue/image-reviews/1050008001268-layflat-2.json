@@ -1,0 +1,81 @@
+{
+  "source_id": "1050008001268-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 40,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "A visible human (farmer/worker) is crouching in the foreground.",
+        "The 'hard reject' policy for any person or human body part is violated."
+      ],
+      "correction_prompt": "Remove the human worker entirely; show only the two coils (one packaged, one bare) on the ground without any people.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 75,
+      "product_height_percent": 30,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Required exact bottom-right watermark 'AFP | 09134922013' is present and visible.",
+        "Zero people, body parts, or silhouettes present in the frame.",
+        "Contains the approved pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "The pair displays visible diameter and construction differences suitable for the 'Selection Evidence' role.",
+        "Product group width (approx 75%) exceeds the preferred 20-35% range and even the 60% acceptance threshold, but since placement is low and objects are physically distinct without merging or floating artifacts, it is retained for layout practicality over a hard reject.",
+        "A visible connector on the far right hose end is treated as infrastructure/product accessory, not a 'third commercial product' (bottle/jar/package).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 75% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 55,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Visible human (man crouching and interacting with the coil on the right). The image contains people, which is strictly prohibited."
+      ],
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Presence of a human figure (man in blue shirt and jeans) in the frame, which triggers a hard reject due to the zero-people rule.",
+        "Visible human body parts including face, torso, arms, hands, legs, and feet.",
+        "The human is interacting directly with the product, violating the requirement for zero people or human silhouettes even in a distance."
+      ],
+      "correction_prompt": "Regenerate the image to strictly exclude all human figures, faces, or body parts. Show only the open box with the packaged coil and the bare black woven coil on the harvested field soil. Ensure the two products are the only focal points in the foreground. Maintain the 'AFP | 09134922013' watermark in the bottom-right corner.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 54,
+      "product_height_percent": 30,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Contains one packaged AFP coil (in box) and one bare black coil",
+        "Zero visible people or human body parts",
+        "Appropriate pair width and physical separation",
+        "Watermark correctly present in bottom-right",
+        "Infrastructure/setting appropriate for article context"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

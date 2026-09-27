@@ -1,0 +1,64 @@
+{
+  "source_id": "10600022001292-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Visible person (farmer) is a hard reject",
+        "Visible human body parts (arms, legs, face) are hard rejects"
+      ],
+      "correction_prompt": "Regenerate the image showing only the AFP drip-tape roll in a close-up maintenance detail view without any people, farmers, or human silhouettes, ensuring zero visible human presence.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 43,
+      "product_height_percent": 40,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: Visible human bodies/people in the background (a farmer and a tractor operator), violating the zero-person constraint."
+      ],
+      "correction_prompt": "Remove all humans from the background and reframe as a close-up macro detail of a drip-tape emitter or connector. Maintain the single drip-tape roll as a static, unattended element with the watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 33,
+      "product_height_percent": 48,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Text on the product label is illegible and gibberish ('DRIP ARRAFON'), violating the no-gibberish-writing rule",
+        "An unattended tractor is visible in the background (top right), which, while permitted under general rules, is not contextually appropriate for a maintenance close-up brief that specifies an installed emitter or material detail",
+        "The image depicts a packaging roll sitting on the ground rather than the mandatory 'MAINTENANCE DETAIL' of an installed drip-tape emitter or flush-point",
+        "Visible water mark 'AFP | 09134922013' is a required element, but the gibberish text on the box body is a hard reject"
+      ],
+      "correction_prompt": "Regenerate with legible 'AFP' branding and 'DRIP TAPE 20' text on the white carton roll. Place the roll in a close-up maintenance setting on installed drip tape in a field row. Remove the tractor in the background. Keep the bottom-right watermark exactly as 'AFP | 09134922013'. No people or body parts visible.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 30,
+      "product_height_percent": 48,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip-tape roll is present, sized and placed in the accepted range.",
+        "The image contains zero people, human silhouettes, or body parts.",
+        "The required bottom-right watermark is present.",
+        "The background (farmed field, distant building, visible drip-tape line) is contextually appropriate for an irrigation detail image with no hard-reject elements visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

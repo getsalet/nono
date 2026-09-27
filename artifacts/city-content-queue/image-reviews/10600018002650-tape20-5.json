@@ -1,0 +1,52 @@
+{
+  "source_id": "10600018002650-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 45,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: visible human figures (people) in the background.",
+        "Role mismatch: the image shows a carton/roll in foreground, but the mandatory role is 'MAINTENANCE DETAIL' (close view of an installed emitter, connector, or flush-point)."
+      ],
+      "correction_prompt": "Regenerate an unattended close-up detail of an installed drip-tape emitter or connector flush-point. Ensure no people are visible. Keep exactly one AFP white-and-blue drip-tape carton roll visible in the background or adjacent, with the 'AFP | 09134922013' watermark in the bottom-right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The 'MAINTENANCE DETAIL' role requires an unattended close view of an installed drip-tape emitter, connector, flush-point, or material detail (e.g., tape running through soil or irrigation hardware). This image features a product showcase of a full roll standing in a field, which is inconsistent with a maintenance or flush-point close-up view.",
+        "The roll packaging text 'DRIP IARRAEEN THV' appears to be gibberish or severely distorted, violating the requirement for clean, physically plausible labels and no fake/gibberish writing."
+      ],
+      "correction_prompt": "Re-generate as a macro close-up of an installed drip-tape flush point or emitter on a field connector, with a portion of the unattended white-and-blue 'AFP' roll visible in the immediate background or adjacent to the hardware, eliminating all gibberish text on the packaging.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present.",
+        "Product dimensions are well within the acceptable bounds (10-48% width, up to 58% height).",
+        "Zero people or human body parts are visible.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Background features unattended tractors and farm infrastructure which are contextually relevant and allowed.",
+        "Connector detail is visible as per the image role requirements."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
