@@ -3,7 +3,8 @@ name: Rebuild exact product reference images
 on:
   workflow_dispatch:
   schedule:
-    - cron: "23 * * * *"
+    # First serialized production window of each hour.
+    - cron: "5 * * * *"
   push:
     branches: [main]
     paths:

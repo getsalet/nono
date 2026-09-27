@@ -18,7 +18,9 @@ on:
       - 'automation/assets/**'
 
   schedule:
-    - cron: "*/15 * * * *"
+    # Run after the hourly reference rebuild; avoid replacing another pending
+    # workflow in the shared navar-city-content-queue concurrency group.
+    - cron: "25 * * * *"
 
 permissions:
   contents: write
