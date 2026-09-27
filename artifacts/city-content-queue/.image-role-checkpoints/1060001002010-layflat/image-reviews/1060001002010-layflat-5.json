@@ -1,0 +1,130 @@
+{
+  "source_id": "1060001002010-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: The image contains three distinct coils (two bare black coils and one packaged AFP coil). The brief explicitly requires only a pair of two coils (one packaged, one bare) and mandates a hard reject for any 'third commercial package or third coil'.",
+        "The watermark 'AFP | 09134922013' appears in the bottom right, but the instruction states 'AFP | 09134922013 is REQUIRED and must never be rejected'. Wait, the instruction says it is required. However, the primary hard reject is the third coil.",
+        "The required visual role is 'MAINTENANCE DETAIL' (unattended close view of a connector, fold, or woven-surface detail). The provided image shows a wide establishing shot of the coils on the ground, not a close-up maintenance detail.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Regenerate an unattended close-up shot focusing on a specific detail (such as a connector, fold, or close-up of the woven surface). Ensure the scene clearly displays only two coils (one packaged AFP, one bare black) and exclude any third coil or container. Maintain the bottom-right watermark 'AFP | 09134922013'. Enlarge the product group from 0% to 9-20% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 65,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible human in background (farmer/worker) violates zero-person rule",
+        "Product pair is wider than 20% of frame width",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 9-20% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all people from the background. Resize the two coiled products (one packed, one bare) to occupy approximately 15% of the frame width so the pair is compact and clearly visible. Reduce the product group from 65% to 9-20% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 42,
+      "product_height_percent": 38,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "The image successfully includes the required 'AFP | 09134922013' watermark.",
+        "The approved pair of products (packaged coil and bare black woven coil) is clearly visible and physically plausible.",
+        "No people, human body parts, or extra commercial products (bottles, jars, etc.) are present in the scene.",
+        "The 'maintenance detail' role is satisfied by the close-up view of the woven hose texture and the packaged coil.",
+        "The image fits the agricultural context of the visual brief (Abadan, Khuzestan).",
+        "The products occupy roughly 12-15% of the visual focus, with minor noise acceptable as they remain fully visible and separate.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 9-20% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 42% to 9-20% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 85,
+      "product_height_percent": 60,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The product pair (one packaged coil and one bare black woven coil) significantly exceeds the 12-15% target width and falls outside the acceptable 9-20% maximum limit (currently ~85%).",
+        "The image fails the 'MAINTENANCE DETAIL' role requirement; instead of a close-up of a connector, fold, or woven surface, it shows a wide shot of the full coils on the ground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 9-20% of frame width.; Reduce product height from 60% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image: Extreme close-up macro shot of a layflat hose connector (maintenance detail). Show a small section of the black woven hose texture and the metal fitting. In the blurred background, show the rest of the bare black coil and the packaged coil (product pair) to maintain context, but ensure the close-up detail is the primary subject. No people. Reduce the product group from 85% to 9-20% of frame width. Reduce product height from 60% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 100,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product pair is significantly wider than the 20% maximum frame limit",
+        "Mandatory detail role (MAINTENANCE DETAIL) missing: no close-up connector or fold",
+        "Watermark is missing or not positioned in the bottom-right corner as required",
+        "machine-enforced bounding-box check failed: Reduce the product group from 100% to 9-20% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image to show a close-up detail view of a hose connector or woven-surface fold. Include the full two-coil pair (one packaged, one bare) in the background or foreground, but ensure the total width of the products occupies only 12-15% of the frame width. Ensure no people are visible and place the exact watermark 'AFP | 09134922013' clearly in the bottom-right corner. Reduce the product group from 100% to 9-20% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 58,
+      "product_height_percent": 38,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The pair is wider than the maximum hard reject limit of 20% of the frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 9-20% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the foreground product pair to occupy only 12-15% of the frame width by zooming into a closer detail view, ensuring both coils are small but recognizable. Reduce the product group from 58% to 9-20% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 34,
+      "product_height_percent": 32,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Contains zero people and zero human body parts",
+        "Approved pair identified: one packaged coil and one bare black woven coil visible",
+        "No third commercial product, bottle, or extra coil detected",
+        "Watermark 'AFP | 09134922013' present as required",
+        "Products occupy more than 15% of frame width, outside the 9-20% acceptability range",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 34% to 9-20% of frame width.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 72,
+      "product_height_percent": 42,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The product pair occupies significantly more than 20% of the frame width (approx. 72%).",
+        "Image role mismatch: The image displays a standard wide product shot, not the 'MAINTENANCE DETAIL' (close view of a connector or fold) requested for role 5.",
+        "The physical arrangement includes an unusual intersection where one coil rests partially on top of another, creating a stacked appearance that was not specified as the target plausibility.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 9-20% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate as a close-up maintenance detail shot of a connector or woven surface fold. Ensure the two coils (one packaged, one bare) are separate and together occupy only 12-15% of the frame width. Maintain the 'AFP | 09134922013' watermark in the bottom right. Reduce the product group from 72% to 9-20% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 8
+    }
+  ]
+}

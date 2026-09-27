@@ -1,0 +1,42 @@
+{
+  "source_id": "10700026002777-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 31,
+      "product_height_percent": 32,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Product width estimated at 31%, which exceeds the strict hard-reject threshold of 27%.",
+        "Mandatory role 'MAINTENANCE DETAIL' is not met: the image shows a full product carton roll rather than the required unattended close view of an installed drip-tape emitter, connector, or flush-point.",
+        "Presence of a second commercial package/roll (the drip tape coiled on the ground in front of the carton) which is a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Generate an unattended close-up detail shot of an installed drip-tape emitter and flush-point with a single white-and-blue carton roll in the background occupying less than 27% of the frame width. Ensure no human body parts, no bottles, and no additional commercial packages are visible. Maintain the required bottom-right watermark. Reduce the product group from 31% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 26,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll",
+        "Product dimensions fall within the preferred range (width 20-23%) and acceptable limits",
+        "Zero people or human body parts visible",
+        "Watermark 'AFP | 09134922013' present in bottom-right as required",
+        "Single small drip-tape connector visible next to roll aligns with 'Maintenance Detail' image role",
+        "Background includes unattended tractor and farm building which are allowed as infrastructure",
+        "No hard reject elements (bottles, second rolls, people) detected"
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

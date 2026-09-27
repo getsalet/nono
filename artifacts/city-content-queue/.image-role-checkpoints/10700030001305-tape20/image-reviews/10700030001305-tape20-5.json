@@ -1,0 +1,112 @@
+{
+  "source_id": "10700030001305-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 33,
+      "product_height_percent": 39,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Presence of a person/farmer standing in the background near the tractor (hard reject).",
+        "Product width (33%) exceeds the 27% maximum threshold (hard reject).",
+        "Product height (39%) exceeds the 32% maximum threshold (hard reject).",
+        "Visual role mismatch: The brief requires a 'MAINTENANCE DETAIL' of an installed emitter, but the image shows a new roll on the ground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width.; Reduce product height from 39% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate an image showing a close-up detail of an installed drip-tape emitter and connector flush-point on a field crop. The drip tape carton roll must be visible in the immediate foreground, scaled down to occupy less than 25% of the frame width and less than 30% of the frame height. Ensure zero people, zero body parts, and zero distant farm workers are visible. Include the text 'AFP | 09134922013' in the bottom right corner. Reduce the product group from 33% to 13-27% of frame width. Reduce product height from 39% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 20,
+      "product_x_center_percent": 26,
+      "reasons": [
+        "A visible human figure (farmer/person) is present on the right side of the image in the background, near the tractor.",
+        "The presence of any person or human body part is a hard reject."
+      ],
+      "correction_prompt": "Remove all human figures, workers, and silhouettes from the background. Keep only the unattended farm equipment and the field.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 29,
+      "product_height_percent": 34,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image contains exactly one primary AFP white and blue drip-tape carton roll in the foreground.",
+        "The required watermark 'AFP | 09134922013' is correctly present in the bottom right corner.",
+        "There are no people, human body parts, or prohibited items like bottles, jars, or fertilizer containers visible.",
+        "Distant unattended tractors and a farm building are visible in the background, which are permitted contextual elements.",
+        "Product dimensions (29% width, 34% height) are slightly above the preferred maximum thresholds (27% width, 32% height), but acceptable as reviewer estimation noise provided the object remains physically plausible and is not severely distorted.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width.; Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 29% to 13-27% of frame width. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 42,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Visible person (farmer) and tractor in the background",
+        "Roll size out of bounds (wider than 27%)",
+        "Text on the roll is gibberish/distrorted rather than the required product details",
+        "Hard reject: Visible human silhouette",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to show a close-up maintenance detail of an installed drip-tape or connector with zero people, zero tractors, and only one centered AFP drip-tape roll occupying less than 20% of the frame width; remove all background equipment. Reduce the product group from 42% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 26,
+      "product_height_percent": 36,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: A human figure (farmer) is visible in the background.",
+        "Hard reject: Product height (approx 36% of frame) exceeds the maximum limit of 32%.",
+        "Hard reject: Product width (approx 26% of frame) is in the rejection zone and near the physical plausibility limit.",
+        "Failure: The image does not match the mandatory 'MAINTENANCE DETAIL' role, which requires an unattended close view of an installed emitter or connector, not a wide field shot with a roll.",
+        "machine-enforced bounding-box check failed: Reduce product height from 36% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate as an extreme close-up of an installed drip-tape flush point and connector on the crop, without people or wide-angle background views. Keep only a small, out-of-focus carton roll in the background if necessary to satisfy the 'exactly one roll' rule. Reduce product height from 36% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 35,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "There are two visible rolls (one in the foreground, one in the background), which violates the 'exactly one approved carton' requirement.",
+        "The product roll is wider than the maximum allowed limit (estimated at 35% vs 27% limit).",
+        "The image depicts a wide shot of a field rather than the specified 'close view' maintenance detail role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate with a single crop on a maintenance close-up view. Remove the second roll in the background entirely. Ensure the primary roll occupies between 20-23 percent of the frame width. Reduce the product group from 35% to 13-27% of frame width.",
+      "attempt": 6
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 23,
+      "product_height_percent": 32,
+      "product_x_center_percent": 37,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 7
+    }
+  ]
+}

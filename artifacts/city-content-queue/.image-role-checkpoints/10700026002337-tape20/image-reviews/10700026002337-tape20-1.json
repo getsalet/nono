@@ -1,0 +1,79 @@
+{
+  "source_id": "10700026002337-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a person (farmer/worker) squatting in the field (hard reject).",
+        "Visible human hands and body parts.",
+        "Product width is slightly outside the preferred range, though within tolerance."
+      ],
+      "correction_prompt": "Remove all people, hands, and body parts from the image; keep only the farm infrastructure, crop rows, and the single drip-tape roll; maintain the required bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 19,
+      "product_height_percent": 34,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The vertical height of the product bounding box extends past the bottom edge of the frame, violating the 32% height maximum limit (approx 34% measured).",
+        "The roll is centered horizontally at 45% instead of being placed on the lower-third right side as required by the editorial role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reposition the roll to the right side of the lower-third (approx x 65%). Scale down the roll so the full vertical height fits entirely within the frame (max 30% of image height) without being cropped at the bottom. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 61,
+      "reasons": [
+        "Hard reject: Human body part/worker silhouette visible in the background near the irrigation line and on the tractor."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove all humans and body parts. Ensure the tractor and fields are empty of people. Maintain the farm context, the small product roll in the lower third, and the required watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 28,
+      "product_height_percent": 33,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Product width exceeds the 27% maximum hard-reject threshold (estimated 28%).",
+        "Product height exceeds the 32% maximum hard-reject threshold (estimated 33%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the carton roll positioned slightly further away or smaller in the frame to reduce width to 20-23% and height to below 30%, ensuring it fits the lower-third editorial space. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 84,
+      "product_width_percent": 21.5,
+      "product_height_percent": 24.0,
+      "product_x_center_percent": 47.0,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip-tape carton roll is present.",
+        "The object dimensions are physically plausible and fit within the 13–27% width and <32% height acceptance bounds.",
+        "Zero people or body parts are visible in the frame.",
+        "The farm context is appropriate for an irrigation product.",
+        "The required bottom-right watermark is present and correct."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

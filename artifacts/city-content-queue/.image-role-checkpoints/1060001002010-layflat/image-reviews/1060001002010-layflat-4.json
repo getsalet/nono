@@ -1,0 +1,55 @@
+{
+  "source_id": "1060001002010-layflat",
+  "family": "layflat",
+  "kind": 4,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 38,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The approved layflat pair occupies approximately 38 percent of the frame width, which exceeds the maximum 20 percent hard-reject threshold and significantly overshoots the target 12 to 15 percent requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 9-20% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product bounding box width to 12 percent by pulling the camera back 25 percent and maintaining the same field edge perspective; ensure the pair remains small, sharp, and fully visible without enlarging the frame. Reduce the product group from 38% to 9-20% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 6,
+      "product_height_percent": 5,
+      "product_x_center_percent": 26,
+      "reasons": [
+        "The image shows only two small objects on the ground that do not resemble a packaged AFP coil and a bare black woven hose coil (the black object looks like a small tape or cable spool, not a layflat hose coil).",
+        "The approved two-coil pair is missing; the required layflat hose pair is not recognizable in the frame.",
+        "No extended layflat connection entering the field is visible; only a thin black strip/lane mark is present, which does not satisfy the 'installation proof' role.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 6% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an asymmetric, unattended field-edge scene: two clearly distinguishable layflat hoses coiled on the ground (one packaged in a labeled AFP-style roll, one bare black woven coil), both small (12–15% of frame width total), with a visible extended hose running into the field as installation proof; no people, no bottles/containers, keep the bottom-right watermark 'AFP | 09134922013'. Enlarge the product group from 6% to 9-20% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 12,
+      "product_height_percent": 15,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The image clearly displays the approved layflat pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "The pair's width is estimated at approximately 12% of the frame width, falling within the ideal 12-15% range.",
+        "The placement is appropriately low and off-center, aligning with the 'asymmetric unattended view' requirement and editorial preferences.",
+        "The extended hose connection leads naturally into the field, satisfying the INSTALLATION PROOF role.",
+        "The distant tractor and farm building are correctly identified as relevant, unattended farm infrastructure rather than prohibited extra commercial products.",
+        "There are zero visible people or human body parts.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is present and intact."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
