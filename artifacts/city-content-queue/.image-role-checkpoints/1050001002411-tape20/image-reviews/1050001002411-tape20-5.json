@@ -1,0 +1,98 @@
+{
+  "source_id": "1050001002411-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 31,
+      "product_height_percent": 42,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The background contains two tractors, which is a hard reject condition per the brief (no tractors, harvesters, vehicles or machine cabins allowed even when distant).",
+        "The image role (MAINTENANCE DETAIL) strictly requires an unattended close-up of an installed drip-tape emitter on bare soil, but the image is a product display shot with the roll on the ground.",
+        "The roll is centered in the frame (x_center 50%) rather than being off-center in the lower third as required.",
+        "The roll is not small and secondary; it occupies the foreground prominently, conflicting with the visual brief."
+      ],
+      "correction_prompt": "Remove all background tractors and vehicles. Change the scene to a low-angle close-up of a drip-tape emitter installed in bare soil. Place one small, secondary AFP white and blue drip-tape carton roll off-center in the lower third. Ensure the product is not centered.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 33,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Tractor and machine vehicle are visible in the background (hard reject).",
+        "The product is centered horizontally, violating the 'off-center' requirement.",
+        "The image shows a product staging shot on bare soil rather than the required 'MAINTENANCE DETAIL' role which demands a close-up of an installed emitter or connector."
+      ],
+      "correction_prompt": "Regenerate: Close-up maintenance detail of an installed drip-tape flush point on bare soil. Include a single small AFP roll in the background. No tractors, no vehicles, no horizon.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 33,
+      "product_height_percent": 47,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Two carton rolls are visible, violating the 'exactly one' and 'zero second roll' requirements.",
+        "Hard reject: A tractor/vehicle is visible in the background, which is explicitly forbidden.",
+        "Hard reject: A drip tape strip (layflat hose) is unrolled on the soil, violating the 'no layflat hose' rule.",
+        "Fail: Product height exceeds the 42% limit (approx 47%).",
+        "Fail: Role mismatch; image shows product staging rather than the required 'MAINTENANCE DETAIL' of an installed emitter/connector close-up.",
+        "machine-enforced bounding-box check failed: Reduce product height from 47% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate image showing only one small AFP carton roll (secondary) next to a close-up of an installed drip-tape connector on bare soil. Remove the second roll, the unrolled tape strip, and the tractor in the background. Ensure the main focus is the maintenance detail, with the roll kept off-center in the lower third and under 42% height. Reduce product height from 47% to at most 42% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 27,
+      "product_height_percent": 34,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Contains a person (human figure) in the background",
+        "Contains tractors (vehicles and machine cabins) in the background",
+        "Role mismatch: Image shows a product roll on the ground, not an unattended downward close-up of an installed drip-tape emitter, connector or flush-point on bare soil as required by the 'MAINTENANCE DETAIL' role"
+      ],
+      "correction_prompt": "Remove all people and vehicles/machines from the background. Reframe to an unattended downward close-up of exactly one installed drip-tape emitter, connector or flush-point on bare soil. The single approved white-and-blue AFP carton roll must remain visible in the shot but secondary to the detail. Ensure the background is plain soil matching the article brief, with no horizon, crop rows, or clutter. Maintain the bottom-right watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 26,
+      "product_height_percent": 32,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: Multiple tractors and a vehicle are visible in the background.",
+        "Hard reject: A person is visible in the background.",
+        "Background does not match the mandatory 'MAINTENANCE DETAIL' role; it is a wide-angle field scene with equipment and people instead of an unattended downward close-up.",
+        "Role violation: The required unattended downward close-up of an installed emitter on bare soil is not the primary composition of the frame."
+      ],
+      "correction_prompt": "Generate a tight downward close-up of bare soil showing exactly one installed drip-tape emitter with one small AFP carton roll secondary. Remove all background tractors, vehicles, and people. Ensure a clean soil texture environment.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Second AFP roll is present (hard reject: second roll/second package)",
+        "Drip tape is laid flat on the ground instead of showing an installed emitter/connector (role violation: MAINTENANCE DETAIL not followed)",
+        "Product is centered rather than off-center on the lower third"
+      ],
+      "correction_prompt": "Regenerate with exactly one small AFP drip-tape roll as a secondary background element; show a close-up of a single installed drip-tape emitter or connector on bare soil in the foreground; remove the second roll and the loose tape; keep the roll off-center in the lower third, small (20-23% width max), with no people, vehicles, or second packages.",
+      "attempt": 6
+    }
+  ]
+}

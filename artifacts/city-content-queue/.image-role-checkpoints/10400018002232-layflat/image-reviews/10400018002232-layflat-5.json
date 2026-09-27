@@ -1,0 +1,75 @@
+{
+  "source_id": "10400018002232-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 78,
+      "product_height_percent": 48,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Tractor visible in the background",
+        "Hard reject: Product pair spans 78% of the frame width, exceeding the 36% limit",
+        "The object in the center is a coiled rope or cable, not a packaged AFP coil",
+        "Product pair is centered, which is forbidden",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-36% of frame width.; Reduce product height from 48% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to remove the tractor and background panorama. Replace the center rope object with a packaged AFP coil. Rescale both coils to be significantly smaller (target 12-15% frame width). Position the pair off-center on the lower third of the frame. Focus on a downward close-up of a connector or woven surface detail on the ground, keeping the coils visible but secondary. Reduce the product group from 78% to 8-36% of frame width. Reduce product height from 48% to at most 42% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 38,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Tractor and vehicle cabin are visible in the background",
+        "Product pair size is approximately 38% of frame width, exceeding the maximum 36% limit",
+        "Mandatory role 'MAINTENANCE DETAIL' (close-up on connector/fold) is not followed; instead shows wide field view",
+        "Watermark required and present",
+        "Coils are positioned correctly on the lower third",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the tractor/vehicle in the background. Shrink the two coils to approximately 25% width and make them smaller/more secondary. Transition to an extreme close-up macro shot focusing on a connector or fold detail of one coil, hiding the horizon and wide landscape to match the 'MAINTENANCE DETAIL' role. Reduce the product group from 38% to 8-36% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 39,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product pair width is estimated at 39% of frame width, exceeding the hard reject threshold of 36%",
+        "Background contains a tractor or vehicle cabin, which is forbidden even when distant",
+        "Product pair is located near the vertical center of the frame rather than the lower third",
+        "machine-enforced bounding-box check failed: Reduce the product group from 39% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate with the two-coil pair positioned firmly in the lower third, reduced to under 30% of the frame width, and remove the tractor/vehicle from the background, replacing it with plain open farmland. Reduce the product group from 39% to 8-36% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 27,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Contains exactly two approved layflat objects: one packaged AFP coil and one bare black woven coil.",
+        "Product pair is fully visible, separate, and resting flat on the soil.",
+        "Pair is off-center (left side) and positioned in the lower third of the frame.",
+        "Product width is estimated at 27%, which is within the 8-36% practical vision estimate limit, though it exceeds the ideal 12-15% target. This is accepted because the pair remains secondary to the overall field context.",
+        "Zero people, body parts, or silhouettes are present.",
+        "No forbidden machinery, vehicles, or third hoses are visible.",
+        "Mandatory watermark 'AFP | 09134922013' is present in the bottom right."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

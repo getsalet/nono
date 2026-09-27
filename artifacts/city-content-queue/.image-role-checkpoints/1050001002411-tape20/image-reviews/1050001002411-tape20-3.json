@@ -1,0 +1,99 @@
+{
+  "source_id": "1050001002411-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Multiple tractors and vehicles are visible in the background, which are strictly forbidden regardless of distance.",
+        "Hard reject: Presence of human body parts or faces is not detected, but the machinery violation is critical.",
+        "The product placement is slightly off-center but within the lower third, yet the background violation prevents a pass."
+      ],
+      "correction_prompt": "Regenerate the image strictly without any tractors, vehicles, or machines in the background. Show only the soil, the filter assembly, and the single drip-tape roll.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Image contains a person (farmer/worker) which is a hard reject",
+        "Image contains tractors/vehicles in the background which is a hard reject",
+        "Image contains pipes and equipment on a wheeled cart which conflicts with the 'fixed' filter requirement in the brief",
+        "Product roll is too tall (exceeds 42% height limit)",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Remove the person, tractors, and wheeled cart. Show only a static, fixed irrigation manifold and filter system on the ground in a field. Keep the single white and blue AFP drip-tape roll small (12-23% width) in the lower-left foreground. Ensure the roll's height is under 42% of the frame. Maintain the bottom-right watermark. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 13,
+      "product_height_percent": 19,
+      "product_x_center_percent": 18,
+      "reasons": [
+        "Hard reject: Tractor visible in background (forbidden vehicle).",
+        "Hard reject: Machine cabin visible on the trailer behind the tractor.",
+        "Role mismatch: The scene features a wheeled irrigation reel (machine) rather than the specified 'unattended fixed filter, gauge, regulator and manifold'.",
+        "Multiple product instances: The approved carton roll is accompanied by a large, mounted spool on the machine, violating the 'exactly one' constraint."
+      ],
+      "correction_prompt": "Remove the tractor, trailer, and wheeled irrigation reel. Replace with a ground-based, unattended blue irrigation manifold with gauges and regulators. Place exactly one white AFP carton roll on the ground to the right, off-center in the lower third. Ensure no machinery or human figures are present.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 19,
+      "product_height_percent": 22,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "The image contains a tractor and harvester in the distant background.",
+        "The product roll is a white cylinder with vertical branding, which is a typical presentation for a hose or layflat reel, not a low wide 'drip-tape' carton.",
+        "The mandatory 'HEADWORKS STORY' role required an unattended fixed filter system, but the image shows a mobile wheeled filter unit instead."
+      ],
+      "correction_prompt": "Regenerate with no background vehicles or tractors. Change the product to a low, wide cylindrical carton of drip tape lying flat. Replace the wheeled filter with a static fixed manifold, gauge, and filter assembly in the soil.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The background contains a tractor in the mid-ground, which is explicitly forbidden by the hard reject criteria.",
+        "The green water cart on the right contains wheels and a tank/canister, which falls under forbidden vehicle/machine parts and 'bucket, fertilizer or pesticide container' rules.",
+        "The product roll is not low enough relative to its width; it appears as a standard vertical cylinder rather than a 'wide low cylindrical' roll.",
+        "Product height (approx 45%) slightly exceeds the 42% limit.",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image strictly excluding any tractors, wheels, or carts. Remove the green machine on the right. The background should feature a fixed filter, gauge, and manifold set on a wooden stand, with a large, wide, low-profile white and blue AFP drip tape roll on the ground in the lower-left foreground. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 27,
+      "product_height_percent": 23,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Product is significantly oversized at ~27% width, far exceeding the 'exactly one... small and secondary' requirement (target <20%)",
+        "Product placement on the bottom-left foreground is too prominent, violating the 'lower third' off-center secondary positioning",
+        "Second commercial product present: an additional, unapproved 'AFP' printed wooden crate/container is visible on the stand, which acts as a 'second package'",
+        "Watermark is present and acceptable, and no human/body-part elements are present (good)"
+      ],
+      "correction_prompt": "Reduce the size of the main white drip-tape roll on the left to be strictly 'small and secondary' (under 18% of frame width). Remove the unapproved 'AFP' branded wooden crate/container from the wooden stand entirely, keeping only the fixed filter, gauge, regulator and manifold. Keep the primary roll slightly off-center on the lower third, maintaining the existing field background, unattended state and the required 'AFP | 09134922013' watermark.",
+      "attempt": 6
+    }
+  ]
+}

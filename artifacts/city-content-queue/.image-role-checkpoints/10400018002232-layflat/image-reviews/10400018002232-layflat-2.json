@@ -1,0 +1,101 @@
+{
+  "source_id": "10400018002232-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 78,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image shows three separate layflat products, but the requirement is for exactly two (one packaged AFP coil and one bare black woven coil).",
+        "The product pair significantly exceeds the 36% width hard-reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the extra layflat product and reduce the overall product width to 12-15% of the frame width, keeping only one packaged AFP coil and one bare black coil on the lower third of the frame. Reduce the product group from 78% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 58,
+      "product_height_percent": 30,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image contains exactly two approved layflat coils: a packaged AFP coil (left) and a bare black woven coil (right).",
+        "Zero people, body parts, vehicles, tractors, or machine cabins are present.",
+        "Zero forbidden third products, tools, buckets, or fake labels are visible.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Both objects remain fully visible, separate, and flat on the ground in the lower third.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 58% to 8-36% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 75,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Tractor and vehicle visible in the background",
+        "Hard reject: Human silhouette/farmer visible in the background near the tractor",
+        "Hard reject: Third product type present (drip tape roll in the center)",
+        "Hard reject: Product pair is centered",
+        "Hard reject: Product pair is wider than 36 percent of the frame",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-36% of frame width.; Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with a plain textured soil background. Remove all tractors, vehicles, and people. Place exactly two coils: one packaged white/black AFP coil and one bare black woven coil. Ensure they are separate, fully visible, stay off-center in the lower third, and total width is under 36%. Reduce the product group from 75% to 8-36% of frame width. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The total width of the two-coil pair significantly exceeds the 36% hard-reject threshold, occupying nearly half the frame width.",
+        "The product pair is centered horizontally, which violates the instruction to 'stay off-center' and 'hard reject centered product staging'.",
+        "Both objects are lying completely flat on the ground, whereas the role explicitly requires an 'elevated near-overhead technical comparison' where the diameter difference is shown between the two coils.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with the pair of coils elevated on a stand or held up by a mechanism to show the diameter difference, rather than lying flat. Keep the total width of the pair well under 36% of the frame and position it to the far left or right, ensuring it is not centered. Reduce the product group from 55% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 70,
+      "product_height_percent": 75,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: A tractor is visible in the background, violating the zero vehicle/tractor rule.",
+        "Hard reject: The two coils are not positioned 'flat on the ground' as required; one is elevated on a wooden stand with a pole mechanism.",
+        "Hard reject: The pair is too wide, exceeding the 36% limit for practical vision estimates.",
+        "Hard reject: The presence of the wooden stand/pole infrastructure violates the requirement for only the approved two-coil pair without extra third objects.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-36% of frame width.; Reduce product height from 75% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate with two layflat coils (one packaged, one bare) lying completely flat on open soil. Remove the tractor from the background. Remove the wooden stand and pole. Ensure the pair stays off-center (lower right) and occupies a smaller area of the frame. Reduce the product group from 70% to 8-36% of frame width. Reduce product height from 75% to at most 42% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 30,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Role violation: Image shows a ground-level perspective rather than the required 'elevated near-overhead technical comparison'.",
+        "Horizon violation: A distinct crop-row horizon and sky are visible in the background, which are explicitly forbidden for this role."
+      ],
+      "correction_prompt": "Regenerate with a top-down, near-overhead camera angle. Remove the horizon line, sky, and distant landscape. Focus exclusively on the textured soil and the two coils to allow for diameter comparison.",
+      "attempt": 6
+    }
+  ]
+}
