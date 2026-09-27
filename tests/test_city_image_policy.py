@@ -18,6 +18,18 @@ import image_quality_gate
 
 
 class CityImagePolicyTests(unittest.TestCase):
+    def test_failed_image_qa_is_quarantined_instead_of_starving_queue(self):
+        queue_source = (ROOT / "automation" / "city_content_queue_cloudflare.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("image_qa_deferred", queue_source)
+        self.assertIn("deferred_image_qa_items", queue_source)
+        self.assertNotIn("item['attempts']=max(0,int(item.get('attempts',0))-1)", queue_source)
+        rebuild_source = (
+            ROOT / "automation" / "rebuild_city_images_preserve_posts.py"
+        ).read_text(encoding="utf-8")
+        self.assertIn('== "layflat"', rebuild_source)
+
     def test_layflat_references_are_scale_conditioned(self):
         refs = image_prompt_policy.reference_images(
             1, {"source_id": "city-layflat", "title": "لوله نخی"}

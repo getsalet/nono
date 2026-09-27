@@ -118,7 +118,7 @@ def process(queue):
   q.write_status(queue,result);return
  for item in batch:item.update(status='processing',attempts=item.get('attempts',0)+1,started_at=q.now())
  queue['updated_at']=q.now();q.QUEUE.write_text(json.dumps(queue,ensure_ascii=False,indent=2),encoding='utf-8');q.write_status(queue,'processing')
- failures=[];successes=0;article_workers=min(ARTICLE_WORKERS,len(batch))
+ failures=[];deferred=[];successes=0;article_workers=min(ARTICLE_WORKERS,len(batch))
  with ThreadPoolExecutor(max_workers=IMAGE_WORKERS,thread_name_prefix='city-image') as image_pool:
   with ThreadPoolExecutor(max_workers=article_workers,thread_name_prefix='city-article') as article_pool:
    future_items={article_pool.submit(_produce_item,item,queue['link_index'],image_pool):item for item in batch}
@@ -136,9 +136,11 @@ def process(queue):
      else:error=exc
      msg=str(error)[:1200];qa_retry=stage=='image' and 'image hard gate rejected role' in msg
      if qa_retry:
-      item.update(status='pending',last_error=msg,failed_stage='image_qa')
-      item['attempts']=max(0,int(item.get('attempts',0))-1)
-      item.pop('started_at',None);item.pop('failed_at',None)
+      # Quarantine a visually impossible item instead of resetting its
+      # attempt counter and selecting it forever on every scheduled run.
+      item.update(status='failed',last_error=msg,failed_stage='image_qa_deferred',failed_at=q.now())
+      item.pop('started_at',None)
+      deferred.append(str(item.get('source_id') or ''))
      else:
       item.update(status='failed',failed_at=q.now(),last_error=msg,failed_stage=stage);item.pop('started_at',None)
      failures.append(f"{item['source_id']} ({stage}): {type(error).__name__}: {error}")
@@ -146,7 +148,8 @@ def process(queue):
  (q.OUT/'create-all-completed.sql').write_text('\n'.join(['-- Editorially reviewed generated posts.',q.sql_preamble()]+[path.read_text(encoding='utf-8') for path in sorted(q.SQL.glob('*.sql'))]),encoding='utf-8')
  (q.OUT/'rollback-all-completed.sql').write_text('\n'.join([q.sql_preamble()]+[path.read_text(encoding='utf-8') for path in sorted(q.ROLLBACK.glob('*.sql'))]),encoding='utf-8')
  result='ready_with_failures' if any(x.get('status')=='failed' for x in queue['items']) else 'ready';q.write_status(queue,result)
- if failures and not successes:raise RuntimeError('All queue items failed: '+' | '.join(failures))
+ if failures and not successes and not deferred:raise RuntimeError('All queue items failed: '+' | '.join(failures))
+ if deferred:print('deferred_image_qa_items='+','.join(deferred),flush=True)
  if failures:print('partial_success failures='+' | '.join(failures),flush=True)
 
 

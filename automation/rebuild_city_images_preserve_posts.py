@@ -348,7 +348,18 @@ def main() -> int:
         return 0
 
     failed_before = previously_failed_ids()
-    selected_ids = sorted(records, key=lambda source_id: (source_id in failed_before, source_id))[:POST_LIMIT]
+    # The image provider currently renders layflat pairs with persistent human
+    # staging. Keep the healthy drip-tape rebuild moving and leave layflat
+    # records for a later dedicated policy instead of alternating back to the
+    # same impossible references.
+    selected_ids = sorted(
+        records,
+        key=lambda source_id: (
+            image_prompt_policy.product_family({**records[source_id][0], **records[source_id][2]}) == "layflat",
+            source_id in failed_before,
+            source_id,
+        ),
+    )[:POST_LIMIT]
     records = {source_id: records[source_id] for source_id in selected_ids}
     results = {source_id: {} for source_id in records}
     failures = []
