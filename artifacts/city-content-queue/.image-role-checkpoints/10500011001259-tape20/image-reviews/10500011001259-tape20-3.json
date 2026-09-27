@@ -1,0 +1,91 @@
+{
+  "source_id": "10500011001259-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 48,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Image contains multiple visible people (farmers) in the background, which triggers a hard reject criterion for any human silhouette.",
+        "Mandatory role 'HEADWORKS STORY' requires exactly one approved carton to remain small and secondary to the irrigation infrastructure, but the drip tape roll is shown as the dominant primary subject, occupying a significant portion of the foreground."
+      ],
+      "correction_prompt": "Regenerate the image with zero people or human silhouettes. Reposition the AFP white-and-blue drip tape roll to the background or a far corner to be a small, secondary detail (approx. 15% width), making the unattended fixed filter, gauge, and manifold the primary subject in the foreground. Maintain the required bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Mandatory 'HEADWORKS STORY' role required a medium side view of fixed infrastructure (filter, gauge, regulator, manifold) with the carton remaining small and secondary; the image instead focuses on the carton in the foreground.",
+        "Visible second commercial package (carton) in the background constitutes a 'second roll' hard reject.",
+        "Coiled drip tape visible in the frame contradicts the requirement for exactly one unrolled/approved carton roll.",
+        "Required AFP watermark text appears as gibberish/garbled characters rather than the exact string 'AFP | 09134922013'."
+      ],
+      "correction_prompt": "Recompose as a side view of a fixed irrigation manifold and filter with the blue drip-tape carton small in the background; remove the coiled tape and the second carton; ensure the bottom-right watermark is sharp and legible.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 33,
+      "product_height_percent": 45,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Hard reject: Multiple commercial packages are visible. In addition to the main roll, there is a smaller blue roll behind it and open cardboard boxes on the right containing parts.",
+        "Hard reject: The 'AFF | 09134922013' watermark is missing from the bottom-right corner. A different string with a typo ('09134922013') is visible."
+      ],
+      "correction_prompt": "Remove the smaller blue roll and the open cardboard box on the right. Ensure exactly one carton roll is visible. Place the exact watermark text 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The image contains a human figure standing in the field",
+        "The image contains a tractor with a driver visible in the seat"
+      ],
+      "correction_prompt": "Regenerate the image with zero people and zero human silhouettes. Ensure the tractor is unattended with no driver visible. Keep the AFP drip-tape roll as the primary product object with the required watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: multiple people are visible in the foreground and background.",
+        "Hard reject: human body parts including faces, hands, arms, and legs are clearly visible.",
+        "The image contains at least three visible individuals, violating the zero-person and zero-human-body-part requirement."
+      ],
+      "correction_prompt": "Remove all visible people, faces, and body parts from the scene. Keep only the AFP drip-tape carton roll in a medium side view of unattended farm infrastructure such as fixed filters, gauges, regulators, or manifolds, with no human silhouettes, hands, or workers anywhere in frame.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 26,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Violation of zero people rule: A full-body figure of a man (farmer/worker) is sitting in the foreground right, occupying a significant portion of the frame.",
+        "Violation of zero human body parts rule: The worker's face, head, and hands are clearly visible.",
+        "Violation of single object rule: A second identical drip tape roll is visible in the background on the far right."
+      ],
+      "correction_prompt": "Regenerate the image with no people or body parts in frame. Remove the second drip tape roll in the background to show only a single primary carton. Maintain the unattended irrigation infrastructure and bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 6
+    }
+  ]
+}

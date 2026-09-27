@@ -1,0 +1,83 @@
+{
+  "source_id": "1050005001265-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 12,
+      "product_height_percent": 40,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "The image contains a third commercial package (two extra packaged coils visible between the main two coils).",
+        "The two main coils are not the approved layflat pair as described (the left one is a flat ribbon coiled up rather than an AFP coil, and the right is a thick pipe rather than a bare black woven layflat).",
+        "The two coils have a visually awkward physical interaction where they appear merged or too close, violating the separate and physically plausible requirement."
+      ],
+      "correction_prompt": "Remove the two small packaged coils in the middle. Ensure only two coils are present: one rolled packaged layflat coil and one unrolled bare black woven hose laid in a loop, clearly separated from each other.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 65,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Visible person (farmer/worker) squatting and interacting with the products, including face, hands, legs, and full body.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Remove the man entirely. The two coils (one woven, one packaged) must remain as the primary products, with the pump and manifold acting as a background secondary element to the left or right. Reduce the product group from 65% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 70,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains the required zero people and zero human body parts.",
+        "The mandatory HEADWORKS STORY role of a fixed unattended pump and manifold is clearly visible and central.",
+        "The required 'AFP | 09134922013' watermark is correctly placed in the bottom-right corner.",
+        "The image features two relevant coils: a packaged coil and a bare black woven coil, satisfying the visual brief requirements.",
+        "The image does not contain any third commercial package, invented label, or impossible intersections.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 70% to 8-60% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: presence of multiple people (faces, hands, and full bodies visible in the foreground).",
+        "The approved layflat pair (one packaged AFP coil and one bare black woven coil) is missing or obscured; instead, a small metallic package and a loose hose segment are present.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with zero people. Show the specified approved layflat pair: one packaged AFP coil and one bare black woven coil. Place them on the ground in a medium side view next to a fixed unattended pump, gauge, and manifold. The product pair must occupy 20-35% of the frame width. Retain the bottom-right watermark 'AFP | 09134922013'. Enlarge the product group from 0% to 8-60% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 35,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Image contains the approved pair of one packaged AFP coil and one bare black woven coil.",
+        "No people or human body parts are visible.",
+        "A fixed unattended pump, gauge, and manifold are present as requested by the editorial role.",
+        "The product pair is appropriately sized and placed (secondary and small relative to the main pump).",
+        "Watermark is present in the bottom right."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

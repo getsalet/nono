@@ -1,0 +1,85 @@
+{
+  "source_id": "1050005001265-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 80,
+      "product_height_percent": 35,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Visible third commercial product: An additional small package of hose located between the coils violates the requirement for only the approved two-coil pair.",
+        "Pair width exceeds limit: The combined width of the products occupies approximately 80% of the frame, failing the hard reject threshold of 60%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 80% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image showing only two items: one packaged AFP coil and one bare black coil. Remove the central package, the wooden tool, and the large empty coil on the right. Position the two approved coils centrally to occupy less than 50% of the frame width. Reduce the product group from 80% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Hard reject: Presence of three people (human bodies, faces, and hands are clearly visible) in the foreground, interacting with the product.",
+        "Hard reject: The prompt strictly requires 'zero people and zero human body parts.'",
+        "Fail: The mandatory 'packaged AFP coil' is missing; only two bare black woven coils are visible.",
+        "Fail: The image does not meet the 'Selection Evidence' role without the human element, and the packaging requirement is not fulfilled."
+      ],
+      "correction_prompt": "Regenerate the image removing all people entirely. Show only the two coils on the ground: one bare black woven coil and one coil wrapped in white packaging with 'AFP' branding. No human body parts or silhouettes should be visible.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 73,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image successfully displays the required two-coil layout: a packaged white AFP coil and a bare black woven coil.",
+        "Both coils are fully visible, separate, and physically plausible on the ground, serving as technical evidence of the contrast.",
+        "Zero people, hands, faces, or other human body parts are present in the frame.",
+        "The required bottom-right watermark 'AFP | 09134922013' is correctly present.",
+        "The background tractor is treated as allowed unattended infrastructure and does not interfere with the product display.",
+        "The total width of the coils spans approximately 73% of the frame (from x~15% to x~88%), which exceeds the 60% hard-reject threshold but is well within the 8-60% practical acceptance range for 'pair visibility' when they remain recognizable and separate.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 73% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 73% to 8-60% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 75,
+      "product_height_percent": 60,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Presence of people (two men) in the image, which is a hard reject criterion.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-60% of frame width.; Reduce product height from 60% to at most 58% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image without any people. Show only the two coil products on the ground in a farm setting. Reduce the product group from 75% to 8-60% of frame width. Reduce product height from 60% to at most 58% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 34,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image correctly features the two required layflat products: one packaged coil (left) and one bare black woven coil (right).",
+        "The product pair occupies approximately 34% of the frame width, fitting within the preferred 20-35% range.",
+        "The mandatory watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "The background includes a distant unattended tractor and farm building, which are permitted as relevant farm infrastructure.",
+        "The image is clean with zero people or human body parts, and no third commercial packages or extra coils are present."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

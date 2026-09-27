@@ -1,0 +1,70 @@
+{
+  "source_id": "1050005001265-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 100,
+      "product_width_percent": 66,
+      "product_height_percent": 37,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Includes both required product forms: the wrapped layflat coil on the left and the bare woven hose on the right, along with the necessary connector detail.",
+        "No people, human body parts, or human silhouettes are visible in the image.",
+        "No prohibited items such as bottles, cans, or extra third commercial packages are present.",
+        "The exact watermark 'AFP | 09134922013' is correctly displayed in the bottom right corner.",
+        "The visual context (soil, crop rows, distant unattended tractor) aligns with the requested 'Maintenance Detail' role and city location.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 66% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 66% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 58,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of a human body (farmer/worker) in the background (crouching figure) which is a hard reject condition.",
+        "Third commercial product detected: A small, distinct packaged coil (with white and blue wrapping) is placed between the two main large coils, violating the 'exactly two objects' and 'no third package' rules.",
+        "The image does not match the required 'MAINTENANCE DETAIL' role; it is a wide field shot showing the entire coils rather than a close-up detail of a connector or woven surface."
+      ],
+      "correction_prompt": "Regenerate the image strictly for 'Maintenance Detail' role. Close-up view of the woven texture and a connector of the black coil. The background should show a small portion of the two approved coils (one packaged, one bare black) for context, but must be physically plausible and unattended. Remove ALL human figures and silhouettes. Ensure there are exactly two coil objects visible, with no third small package or box present. Include the watermark 'AFP | 09134922013' in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 78,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product pair exceeds 60 percent width hard limit",
+        "Fails MAINTENANCE DETAIL role: shows full coils instead of required unattended close-up connector or woven-surface detail",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate as extreme close-up of hose weave texture and end connector only, with no full coils visible, pair under 35 percent frame width, no third product. Reduce the product group from 78% to 8-60% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 55,
+      "product_height_percent": 45,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Contains the required two-coil pair: one bare black woven coil and one packaged AFP coil.",
+        "No people or human body parts visible.",
+        "No prohibited third commercial packages, bottles, or extra coils.",
+        "Watermark 'AFP | 09134922013' is correctly placed in the bottom right.",
+        "Objects are physically plausible and separate, with appropriate size relative to the frame."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
