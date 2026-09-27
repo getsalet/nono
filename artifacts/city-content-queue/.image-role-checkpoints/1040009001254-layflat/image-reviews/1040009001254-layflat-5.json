@@ -1,0 +1,107 @@
+{
+  "source_id": "1040009001254-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 70,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains a forbidden tractor in the background",
+        "Product pair width is estimated at 70%, exceeding the 36% hard reject threshold",
+        "Does not contain exactly two approved layflat objects (shows a round tape roll instead of one bare black woven coil)",
+        "Product staging is centered rather than placed on the lower third and off-center",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the tractor and building from the background. Remove the round tape roll. Place one packaged AFP layflat coil and one bare black woven layflat coil off-center on the lower third of the frame. Shrink the product pair to occupy only 12-15 percent of the frame width. Focus the camera on an unattended close-up of a connector or woven-surface detail on the bare soil, keeping the coils visible but secondary in the frame. Retain the exact watermark 'AFP | 09134922013' in the bottom right. Reduce the product group from 70% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 85,
+      "product_height_percent": 50,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Product pair is centered horizontally and positioned too high (centered staging), violating the 'lower third' and 'off-center' requirements.",
+        "Product pair width covers approximately 85% of the frame width, far exceeding the 36% maximum limit.",
+        "Role mismatch: The image shows a wide product display rather than the mandatory 'MAINTENANCE DETAIL' role (close-up of a single connector or fold with the pair remaining small and secondary in the background).",
+        "Third commercial object detected: There is a white packaged product (hexagonal carton) between the two coils, which violates the 'zero third product' rule.",
+        "The pair is not 'secondary' or 'small' as requested; they are the primary subject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 8-36% of frame width.; Reduce product height from 50% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate with 'MAINTENANCE DETAIL' role: Extreme close-up of a single connector or coil fold on the foreground soil. The two-coil pair (excluding the third box) must be far in the background, very small (<15% width), and secondary. Remove the white carton box. Keep pair off-center on the lower third of the horizon. Ensure zero people or machines in the background. Reduce the product group from 85% to 8-36% of frame width. Reduce product height from 50% to at most 42% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 26,
+      "product_height_percent": 20,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Human body parts and people (two workers) are clearly visible in the background.",
+        "Hard reject: Machinery (tractor) and vehicles are visible in the background.",
+        "Hard reject: Contains forbidden items: a blue bucket and red bottles/canisters on the ground.",
+        "Layout violation: The two-coil pair is not on the lower third as required; they are located in the lower-left quadrant.",
+        "Role violation: The image is not a close-up detail shot of a connector or fold as required for 'MAINTENANCE DETAIL'."
+      ],
+      "correction_prompt": "Remove all people, tractors, vehicles, buckets, and bottles. Keep only the packaged coil and bare black coil on the ground. Move the coil pair to the lower third of the frame. Zoom in on one connector for a close-up detail view on bare soil. Keep the two coils secondary and fully visible. Ensure the watermarks are present.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 47,
+      "product_height_percent": 38,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Product pair width is significantly larger than the maximum allowed 36% of frame width",
+        "Image contains a tractor/vehicle in the distant background, which is a hard reject condition",
+        "Mandatory role 'MAINTENANCE DETAIL' (unattended downward close-up of one connector, fold or woven-surface detail) is completely missing",
+        "machine-enforced bounding-box check failed: Reduce the product group from 47% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image as a downward unattended close-up of a single connector, fold, or woven-surface detail on bare soil, making the two-coil product pair very small, secondary, off-center on the lower third, with NO tractor, NO vehicle, NO machine cabin, and no horizon or background elements visible. Reduce the product group from 47% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains a tractor (machine) in the background on the right, which is a hard reject.",
+        "Contains a vehicle (truck or red machine) in the background on the left, which is a hard reject.",
+        "Contains a horizon and distant landscape elements (barn, field lines) rather than being a tight maintenance detail close-up.",
+        "The product pair is wider than 36 percent of the frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove all background vehicles, tractors, and the horizon line. Create an unattended, tight downward close-up of a single connector detail on bare soil. Show the layflat coils as small, secondary objects in the background, fully visible and flat, with no machines or horizon. Reduce the product group from 38% to 8-36% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 45,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Presence of a tractor in the background violates the hard reject criteria",
+        "The pair of coils is centered product staging rather than on the lower third",
+        "The product pair takes up significantly more than the 36 percent of frame width limit",
+        "The two coils are not sufficiently separated as required",
+        "The role 5 requirement for a close-up detail is not met",
+        "The approved two-coil pair is too large and primary rather than small and secondary",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the tractor from the background. Position the two coils on the lower third, off-center. Ensure the coils are clearly separated from each other. The pair should be secondary, occupying 12-15% of frame width. Focus on a close-up detail of one coil or connector on bare soil as per the MAINTENANCE DETAIL role. Keep the AFP watermark visible. Reduce the product group from 45% to 8-36% of frame width.",
+      "attempt": 6
+    }
+  ]
+}
