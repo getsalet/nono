@@ -1,0 +1,82 @@
+{
+  "source_id": "10500010002414-layflat",
+  "family": "layflat",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 52,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Extra commercial package present: a third coiled object in the middle wearing a white/purple label is visible, which is a hard reject (invented/fake label package).",
+        "Visible human silhouette: a driver is clearly visible in the yellow tractor in the background, which is a hard reject (face/person).",
+        "Watermark OCR mismatch: The visible watermark text reads 'AFP | 09134922013', missing a '3' compared to the required exact string 'AFP | 09134922013'."
+      ],
+      "correction_prompt": "Remove the third white-labeled package in the middle so only the two black coils remain. Remove the driver from the background tractor to ensure zero human presence. Correct the bottom-right watermark to read exactly 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Missing required paired product set: image shows only one bare coiled layflat hose and lacks the mandated 'approved layflat pair' consisting of one packaged AFP coil and one bare black woven coil.",
+        "Visual brief requires an 'asymmetric unattended view' where the two-coil pair remains small at the field edge, but only a single coiled product is present in the foreground."
+      ],
+      "correction_prompt": "Regenerate to include both required coils at the field edge: one packaged AFP coil and one bare black woven layflat hose, both remaining small and clearly separate as part of the installation proof.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 63,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The pair of coils is too wide, exceeding the 60% hard reject threshold for frame width.",
+        "A third commercial package/spool is visible in the center, which is a hard reject (only the approved two-coil pair is allowed).",
+        "There is a visible human hand/arm holding the center package, which is an immediate hard reject.",
+        "The product group is merged with the hand and includes an extra spool.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 63% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 63% to 8-60% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 30,
+      "product_x_center_percent": 18,
+      "reasons": [
+        "The image contains a person, which is a hard reject. The brief explicitly requires zero people or human body parts.",
+        "The mandatory role is 'INSTALLATION PROOF: asymmetric unattended view'. The presence of a worker handling the hose violates the 'unattended' requirement."
+      ],
+      "correction_prompt": "Regenerate the image to remove the person entirely. Focus on the field edge where the two coils (one packaged AFP, one bare black) are placed small and unattended. Show the extended layflat hose receding into the field without anyone handling it. Ensure the 'AFP | 09134922013' watermark is present in the bottom right.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Zero people, body parts, or silhouettes detected.",
+        "Zero bottles, jars, or extra commercial containers found.",
+        "The approved two-coil pair is fully visible, separate, and physically plausible.",
+        "The pair is located in the lower-left region with practical width (approx. 24% frame width), well within the 8-60% acceptable range.",
+        "Scene effectively demonstrates the 'INSTALLATION PROOF' role with an extended layflat connection entering the field.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

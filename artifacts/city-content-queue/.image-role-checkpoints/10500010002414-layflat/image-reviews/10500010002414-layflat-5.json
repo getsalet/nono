@@ -1,0 +1,41 @@
+{
+  "source_id": "10500010002414-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 82,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains a visible human figure (a person sitting on the distant tractor) in the background, which is a hard reject condition.",
+        "The pair of coils occupies approximately 82 percent of the frame width, exceeding the maximum limit of 60 percent.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 82% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate with no humans or silhouettes in the background; ensure the two coils together span less than 60 percent of the image width; keep the AFP | 09134922013 watermark. Reduce the product group from 82% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image accurately displays the mandatory layflat pair: one black bare woven coil on the left and one packaged AFP coil on the right.",
+        "The composition strictly adheres to the 8-60% width acceptance range; the bounding box estimated at approximately 55% width fits the 'practical vision estimate' requirement while keeping both objects distinct and physically plausible.",
+        "The image contains zero people, zero human body parts, zero faces, or hand/arm silhouettes.",
+        "There are no extra commercial products, bottles, jars, cans, buckets, or invented packages.",
+        "The bottom-right watermark 'AFP | 09134922013' is present exactly as required.",
+        "The background (distant farm building, empty field, soil texture) is permitted context and does not trigger a reject.",
+        "The products are separated and not merged, with no impossible intersections."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
