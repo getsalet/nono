@@ -1,4 +1,4 @@
-# Restarted after migration and layflat failure quarantine.
+# Controlled parallel mode: three articles per run with a shared five-image worker pool.
 name: Generate missing city posts and images
 
 on:
@@ -48,8 +48,10 @@ jobs:
       AGNES_IMAGE_MODEL: agnes-image-2.5-flash
       IMAGE_MODEL: agnes-image-2.5-flash
 
-      BATCH_SIZE: "1"
-      ARTICLE_WORKERS: "1"
+      # Three articles advance together. Keep image concurrency capped at five
+      # to avoid API bursts; all fifteen role tasks share this one worker pool.
+      BATCH_SIZE: "3"
+      ARTICLE_WORKERS: "3"
       IMAGE_WORKERS: "5"
       IMAGE_QA_ATTEMPTS: "6"
       IMAGE_SET_QA_ATTEMPTS: "3"
