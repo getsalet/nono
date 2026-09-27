@@ -1,0 +1,83 @@
+{
+  "source_id": "10500012002593-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 41,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Tractor visible in the background (top right).",
+        "Hard reject: The product roll is centered horizontally (50%), violating the 'off-center' and 'secondary' requirements.",
+        "Hard reject: The product scale is too large relative to the scene, dominating the lower-center rather than acting as a small editorial element."
+      ],
+      "correction_prompt": "Remove the tractor from the background. Move the large white roll to the lower left or lower right off-center. Shrink the roll to be secondary and small (approx 20% width). Ensure the roll is placed low in the frame while keeping the required watermark visible in the bottom right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 12,
+      "product_height_percent": 15,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Tractors are visible in the far left and far right background, which is a hard reject condition.",
+        "The bottom-right watermark ID ('09134922013') does not exactly match the required ID ('09134922013' -> '09134922013', specifically the extra 2 in the image).",
+        "The product roll appears to be positioned centrally in the frame rather than off-center on the lower third."
+      ],
+      "correction_prompt": "Remove all tractors and vehicles from the background. Shift the white and blue carton roll significantly to the left or right so it is off-center in the lower third. Correct the bottom-right watermark to exactly 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a human farmer standing in the field (hard reject)",
+        "Visibility of a tractor in the background (hard reject)",
+        "Product roll is centered horizontally instead of off-center on the lower third",
+        "Roll appears larger than the preferred range and is not sufficiently 'secondary' due to placement"
+      ],
+      "correction_prompt": "Regenerate the image with no people and no tractors/vehicles. Reposition the AFP drip-tape roll to the left side of the lower third (around 30% width) as a secondary element. Ensure the irrigation field context dominates.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "The product is a roll of drip tape laid flat on the soil (a 'layflat hose'), which is explicitly listed as a hard reject criterion.",
+        "The background contains tractors/vehicles (visible in the distance on the left and right sides), which are strictly forbidden even when unattended.",
+        "Product x-center is approximately 29%, which fails the requirement to keep it on the lower third (lower third center should generally be right-of-center or at least clearly 'lower third' relative to the composition, but the 29% marks it as 'left-center' which contradicts the 'lower third' emphasis combined with the other hard rejects)."
+      ],
+      "correction_prompt": "Regenerate image: Remove all vehicles and tractors from the background. Place a single white-and-blue cylindrical drip tape carton roll upright (do not lay it flat) on the soil. Position the roll in the bottom-right area of the frame (x > 45%). Ensure the background is a clean farm field with no machinery.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 33,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Product is exactly one white-and-blue wide low cylindrical drip-tape carton roll",
+        "Product dimensions are within preferred and accepted limits (width: 24%, height: 33%)",
+        "Product is off-center on the lower third as required",
+        "Zero people, body parts, tractors, or machines visible in the frame",
+        "Background matches the editorial farm/irrigation context of the article brief",
+        "Watermark is present and correct"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "source_id": "10500012002977-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 45,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The pair of products (packaged coil and bare coil) together spans too wide, exceeding 36% of frame width",
+        "The products are positioned too close to the bottom edge, with significant portions appearing cut off or touching the boundary",
+        "The bare black coil on the right has a long hose tail extending out of frame, violating the 'fully visible' and 'separate' constraint",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the width of the product pair to between 12% and 15% of frame width. Move both coils slightly upward to ensure they are fully visible and off-center on the lower third of the frame. Remove the long trailing hose from the bare coil so both objects are complete, compact, and clearly separate. Reduce the product group from 45% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 68,
+      "product_height_percent": 38,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: Tractor and vehicle cabin visible in the background.",
+        "Product pair exceeds the 36% width limit, measuring approximately 68% of the frame width.",
+        "Products are centered in the bottom third rather than off-center.",
+        "Products are not fully separate; the packaged AFP coil is resting on top of the black woven coil, causing them to merge.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Remove the tractor from the background. Move the two product coils significantly to the bottom-left third of the frame, keeping them at least 50 pixels apart on the soil so they are clearly separate. Shrink the scale of the coils to occupy between 12% and 20% of the total image width. Reduce the product group from 68% to 8-36% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 18,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "The image shows a black flat hose being unspooled and extending into the crop row, which violates the hard reject for 'any third hose' and 'object passing through a coil'.",
+        "The required bottom-right watermark is 'AFP | 09134922013' but the image contains 'AFP | 09134922013' with the digits reversed/incorrect.",
+        "The two required products (the coil and the spool) are touching and merged rather than being 'separate' as mandated."
+      ],
+      "correction_prompt": "Remove the unspooled hose section so only the coiled product and the packaged AFP coil are visible. Ensure they are separate and not touching. Correct the bottom-right watermark to exactly 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 46,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The width of the combined pair (from the left edge of the bare coil to the right edge of the packaged coil) is estimated at 46% of the frame width. This significantly exceeds the maximum hard reject limit of 36 percent.",
+        "The pair is centered in the frame (x_center is approximately 45-50%), whereas the brief requires the pair to remain off-center on the lower third.",
+        "The packaged coil is not a 'flat' rolled coil; it appears as a cylindrical or hexagonal block, which may be considered a non-standard shape or 'invented package' that deviates from the standard layflat look.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Scale down the pair of coils to be 12-15% of the frame width, shift the position to the lower-left third to be off-center, and ensure the packaged coil looks like a standard flat roll rather than a block. Reduce the product group from 46% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 16,
+      "product_height_percent": 11,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Correctly displays exactly two products: a packaged coil and a bare black woven coil.",
+        "Products are placed off-center in the lower-left third, maintaining a secondary visual role relative to the editorial context.",
+        "No people, human body parts, or forbidden machinery (tractors, harvesters, vehicles) are present.",
+        "Watermark is correctly displayed and not rejected.",
+        "No invalid product intersections or floating objects detected."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
