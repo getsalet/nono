@@ -1,0 +1,54 @@
+{
+  "source_id": "10500013001255-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject: Visible person (farmer) in the frame.",
+        "Hard reject: Presence of human body parts (face, hands, legs, torso).",
+        "Hard reject: Presence of a second commercial package (empty cardboard box next to the roll)."
+      ],
+      "correction_prompt": "Regenerate the image removing the man, the equipment he is holding, and the open cardboard box. Ensure only the single white and blue AFP drip tape roll remains at the field edge, maintaining the installation context without any human presence.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 31,
+      "product_height_percent": 32,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The label on the roll displays gibberish text (\"Orap treztaotarr tape\" instead of \"Oxy drip tape\"), which is a hard reject criterion.",
+        "The central hole of the roll has an unnatural black geometric ring that falls under impossible geometry/distorted dimensions.",
+        "The product is placed in the lower center rather than the asymmetric field edge required for the INSTALLATION PROOF role."
+      ],
+      "correction_prompt": "Regenerate the image with the exact label text 'AFP' and 'Oxy drip tape' without any gibberish letters. Remove the unnatural black ring from the central core of the roll. Shift the roll's position to an asymmetric angle (left or right) at the field edge to avoid a centered composition.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 27,
+      "product_height_percent": 28,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll",
+        "Zero people or human body parts visible",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right as required",
+        "Background matches the visual brief with crop beds and irrigation context",
+        "Product dimensions (width ~27%, height ~28%) fall within the accepted 10-48% width and up to 58% height practical vision estimate ranges",
+        "Placement is slightly off-center, which is editorially acceptable and not a hard reject"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
