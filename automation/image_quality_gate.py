@@ -4,9 +4,9 @@ import base64,json,os,re,urllib.error,urllib.request,shutil,time
 from concurrent.futures import as_completed
 from pathlib import Path
 import image_prompt_policy
-REVIEW_POLICY='strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed'
+REVIEW_POLICY='article-parity-v13-no-human-no-container-scale-topic-role-reviewed'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
-MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','65'))
+MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
 REVIEW_KINDS={int(x) for x in os.getenv('IMAGE_QA_REVIEW_KINDS','1,2,3,4,5').split(',') if x.strip().isdigit()}
 REVIEW_REQUEST_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_REVIEW_ATTEMPTS','4')))
@@ -34,14 +34,14 @@ def _metric_check(family,verdict):
   return False,['Return numeric product_width_percent, product_height_percent and product_x_center_percent.']
  # Keep impossible/giant products out, but do not starve the queue because a
  # noisy vision estimate misses an editorial target by a few points.
- min_width,max_width=(8,60) if family=='layflat' else (10,48)
+ min_width,max_width=(9,20) if family=='layflat' else (13,27)
  issues=[]
  if width<min_width:
   issues.append(f'Enlarge the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
  elif width>max_width:
   issues.append(f'Reduce the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
- if height>58:
-  issues.append(f'Reduce product height from {height:g}% to at most 58% of frame height.')
+ if height>32:
+  issues.append(f'Reduce product height from {height:g}% to at most 32% of frame height.')
  return not issues,issues
 
 def _vision_review(base,path,item,kind):
@@ -53,11 +53,11 @@ def _vision_review(base,path,item,kind):
   return {'pass':True,'score':90,'reasons':['fast mode: trusted prompt for non-key image'],'correction_prompt':''}
  encoded=base64.b64encode(path.read_bytes()).decode('ascii')
  if family=='layflat':
-  criteria='The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. Prefer 20 to 35 percent of frame width; accept practical vision estimates from 8 to 60 percent when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 60 percent of the frame, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
+  criteria='The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. The complete pair should occupy about 12 to 15 percent of frame width; accept reviewer-estimation noise only from 9 to 20 percent when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 20 percent of the frame, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
  else:
-  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. Prefer 20 to 28 percent of frame width, but accept practical vision estimates from 10 to 48 percent and height up to 58 percent when the object remains physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts. The background should match the article brief and selected image role.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 48 percent of the frame, taller than 58 percent, bottle, jar, canister, bucket, fertilizer or pesticide container, second commercial package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry or severely distorted dimensions. A distant unattended tractor, ordinary farm building and fixed irrigation hardware are allowed when contextually relevant.'
+  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. The preferred width is 20 to 23 percent of frame width; accept reviewer-estimation noise only from 13 to 27 percent and height up to 32 percent when the object remains physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts. The background should match the article brief and selected image role.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 27 percent of the frame, taller than 32 percent, bottle, jar, canister, bucket, fertilizer or pesticide container, second commercial package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry or severely distorted dimensions. A distant unattended tractor, ordinary farm building and fixed irrigation hardware are allowed when contextually relevant.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
 Article visual brief: {brief}. Mandatory role: {image_prompt_policy.role_directive(family,kind)}.
@@ -157,14 +157,14 @@ def review_image(base,path,item,kind):
  return _vision_review(base,path,item,kind)
 
 
-def review_image_set(base,paths,item):
+def _review_image_panel(base,paths,item,role_numbers):
  encoded=[base64.b64encode(Path(path).read_bytes()).decode('ascii') for path in paths]
  brief=image_prompt_policy.visual_brief(item)
  family=image_prompt_policy.product_family(item)
- roles='; '.join(f'{kind}: {image_prompt_policy.role_directive(family,kind)}' for kind in range(1,6))
- prompt=f'''Review these five already individually-approved city-article images as one editorial set.
-Article visual brief: {brief}. Required roles: {roles}.
-The same AFP product is expected in every image, so product identity itself is not duplication. Pass only when all five roles are visibly distinct in camera height/angle, environment structure and technical narrative, and every background is relevant to the article brief. Reject repeated furrow-field plus tractor compositions, generic farms, role-3/role-5 hardware duplication, or images that only move the product. Zero people remains mandatory. Return only JSON: {{"pass":true|false,"score":0-100,"duplicate_roles":[1,2,3,4,5],"reasons":["..."],"correction_prompt":"one concise replacement instruction"}}.'''
+ roles='; '.join(f'{kind}: {image_prompt_policy.role_directive(family,kind)}' for kind in role_numbers)
+ prompt=f'''Review this overlapping panel from a five-image city-article editorial set.
+Panel role numbers: {role_numbers}. Article visual brief: {brief}. Required roles: {roles}.
+The same AFP product is expected in every image, so product identity itself is not duplication. Pass only when the shown roles are visibly distinct in camera height/angle, environment structure and technical narrative, and every background is relevant to the article brief. Reject repeated layouts, generic farms, role-3/role-5 hardware duplication, any person, any bottle/container, oversized product, or images that only move the product. Return duplicate_roles using the original role numbers from {role_numbers}. Return only JSON: {{"pass":true|false,"score":0-100,"duplicate_roles":{role_numbers},"reasons":["..."],"correction_prompt":"one concise replacement instruction"}}.'''
  content=[{'type':'text','text':prompt}]
  content.extend({'type':'image_url','image_url':{'url':'data:image/webp;base64,'+blob}} for blob in encoded)
  payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':content}],'temperature':0,'response_format':{'type':'json_object'}}
@@ -176,10 +176,34 @@ The same AFP product is expected in every image, so product identity itself is n
  for value in verdict.get('duplicate_roles',[]):
   try:value=int(value)
   except (TypeError,ValueError):continue
-  if value in range(1,6) and value not in roles_out:roles_out.append(value)
+  if value in role_numbers and value not in roles_out:roles_out.append(value)
  verdict['duplicate_roles']=roles_out
  verdict['pass']=bool(verdict.get('pass')) and int(verdict.get('score',0))>=75 and not roles_out
  return verdict
+
+
+def review_image_set(base,paths,item):
+ # Agnes vision is reliable with up to four attachments. Review two overlapping
+ # panels instead of sending all five and then accepting an unverified fallback.
+ panels=[(paths[:4],[1,2,3,4]),(paths[1:],[2,3,4,5])]
+ verdicts=[_review_image_panel(base,panel,item,roles) for panel,roles in panels]
+ duplicate_roles=[];reasons=[];corrections=[]
+ for verdict in verdicts:
+  for role in verdict.get('duplicate_roles',[]):
+   if role not in duplicate_roles:duplicate_roles.append(role)
+  for reason in verdict.get('reasons',[]):
+   reason=str(reason)
+   if reason not in reasons:reasons.append(reason)
+  correction=str(verdict.get('correction_prompt') or '').strip()
+  if correction and correction not in corrections:corrections.append(correction)
+ return {
+  'pass':all(v.get('pass') for v in verdicts) and not duplicate_roles,
+  'score':min(int(v.get('score',0)) for v in verdicts),
+  'duplicate_roles':duplicate_roles,
+  'reasons':reasons,
+  'correction_prompt':' '.join(corrections),
+  'panel_scores':[int(v.get('score',0)) for v in verdicts],
+ }
 
 
 def install_set_manager(base,backend,image_count=5):
@@ -217,27 +241,6 @@ def install_set_manager(base,backend,image_count=5):
       os.replace(staged,base.IMAGES/staged.name)
       role_review=staging_reviews/f'{review_id}-{kind}.json'
       if role_review.exists():os.replace(role_review,final_reviews/role_review.name)
-     completed=True
-     return [results[kind] for kind in range(1,image_count+1)]
-    # The vision endpoint can inspect at most four attachments reliably and
-    # repeatedly reports a nonexistent "missing role 5" for a complete
-    # five-image set. Individual hard gates have already verified every file.
-    # After the final diversity round, publish the complete individually
-    # approved set instead of starving the article queue on advisory layout
-    # similarity alone.
-    if set_attempt==rounds and all(
-        kind in results and (staging_images/results[kind][0]).exists()
-        for kind in range(1,image_count+1)
-    ):
-     verdict['accepted_individual_qa_fallback']=True
-     set_review.write_text(json.dumps({'source_id':review_id,'policy':REVIEW_POLICY,'history':history[-20:]},ensure_ascii=False,indent=2),encoding='utf-8')
-     base.IMAGES.mkdir(parents=True,exist_ok=True);final_reviews=base.OUT/'image-reviews';final_reviews.mkdir(parents=True,exist_ok=True)
-     for kind in range(1,image_count+1):
-      staged=staging_images/results[kind][0]
-      os.replace(staged,base.IMAGES/staged.name)
-      role_review=staging_reviews/f'{review_id}-{kind}.json'
-      if role_review.exists():os.replace(role_review,final_reviews/role_review.name)
-     print(f'city_image_set_qa_fallback source_id={review_id} accepted=individual-hard-gates roles={image_count}',flush=True)
      completed=True
      return [results[kind] for kind in range(1,image_count+1)]
     pending=set(verdict.get('duplicate_roles') or range(1,image_count+1))

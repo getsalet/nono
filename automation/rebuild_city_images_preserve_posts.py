@@ -23,10 +23,10 @@ import city_content_queue_cloudflare as backend
 import image_prompt_policy
 import image_quality_gate
 
-POLICY = "reference-rerender-3d-v10-atomic-city-set-reviewed"
-MODE = "reference-conditioned-3d-rerender-approved-scales-topic-first"
+POLICY = "article-parity-v13-no-human-no-container-scale-topic-role-reviewed"
+MODE = "article-parity-reference-conditioned-3d-rerender-topic-first"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
-MARKER = OUT / "image-rebuild-reference-rerender-3d-v10-atomic-city-set-reviewed.json"
+MARKER = OUT / "image-rebuild-article-parity-v13.json"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")
 API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
     "AGNES_API_BASE", "https://apihub.agnes-ai.com/v1"
@@ -73,7 +73,7 @@ def generate_once(item: dict, kind: int) -> dict:
         data=json.dumps(payload).encode("utf-8"),
         method="POST",
         headers={
-            "Authorization": "Bearer " + KEY,
+            "Authorization": "Bearer " + (base.next_agnes_key() if hasattr(base, "next_agnes_key") else KEY),
             "Content-Type": "application/json",
             "Accept": "application/json",
             "User-Agent": "navar-exact-product-rebuild/1.0",

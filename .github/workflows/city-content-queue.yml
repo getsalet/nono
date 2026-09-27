@@ -58,13 +58,13 @@ jobs:
       AGNES_IMAGE_MODEL: agnes-image-2.5-flash
       IMAGE_MODEL: agnes-image-2.5-flash
 
-      # Operational setting after the eight-key benchmark: eight articles share sixteen image workers
-      # to avoid API bursts; all fifteen role tasks share this one worker pool.
-      BATCH_SIZE: "8"
-      ARTICLE_WORKERS: "8"
-      IMAGE_WORKERS: "16"
+      # Controlled full-power ramp for the shared eight-key pool: each repository receives
+      # half of the tested combined budget while both queues are active.
+      BATCH_SIZE: "12"
+      ARTICLE_WORKERS: "12"
+      IMAGE_WORKERS: "24"
       IMAGE_QA_ATTEMPTS: "6"
-      IMAGE_QA_MIN_SCORE: "65"
+      IMAGE_QA_MIN_SCORE: "70"
       IMAGE_QA_REVIEW_ATTEMPTS: "4"
       IMAGE_SET_QA_ATTEMPTS: "3"
       IMAGE_QA_FAST_MODE: "0"
@@ -73,7 +73,7 @@ jobs:
       # handled separately after fresh throughput is healthy.
       REPAIR_FAILED_LIMIT: "0"
       WORDPRESS_DB_NAME: navaraby_wp569
-      CURRENT_IMAGE_POLICY: reference-rerender-3d-v10-atomic-city-set-reviewed
+      CURRENT_IMAGE_POLICY: article-parity-v13-no-human-no-container-scale-topic-role-reviewed
 
     steps:
       - name: Checkout repository
