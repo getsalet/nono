@@ -150,6 +150,44 @@ class CityImagePolicyTests(unittest.TestCase):
                 self.assertEqual((base.IMAGES / name).read_bytes(), expected)
             self.assertFalse(any(base.OUT.glob(".image-staging-*")))
 
+    def test_individually_approved_roles_survive_one_role_failure(self):
+        with tempfile.TemporaryDirectory() as tmp, patch.dict(
+            os.environ, {"IMAGE_SET_QA_ATTEMPTS": "1"}
+        ):
+            root = Path(tmp)
+            base = SimpleNamespace(
+                OUT=root / "artifacts",
+                IMAGES=root / "artifacts" / "images",
+                AGNES_MODEL="test",
+                AGNES_BASE="https://example.invalid",
+                AGNES_KEY="test",
+            )
+
+            def fake_generate(item, kind):
+                image_dir = Path(item["_image_output_dir"])
+                review_dir = Path(item["_image_review_dir"])
+                name = f"city-{kind}.webp"
+                if kind == 3:
+                    raise RuntimeError("role 3 exhausted")
+                image_dir.joinpath(name).write_bytes((f"approved-{kind}" * 2000).encode())
+                review_dir.joinpath(f"city-{kind}.json").write_text(
+                    '{"policy":"%s","history":[{"pass":true}]}' % image_quality_gate.REVIEW_POLICY,
+                    encoding="utf-8",
+                )
+                return name, f"hash-{kind}"
+
+            backend = SimpleNamespace(generate_image=fake_generate)
+            manager = image_quality_gate.install_set_manager(base, backend, 5)
+            with ThreadPoolExecutor(max_workers=5) as pool:
+                with self.assertRaises(RuntimeError):
+                    manager({"source_id": "city"}, pool)
+            checkpoint = base.OUT / ".image-role-checkpoints" / "city"
+            self.assertTrue(checkpoint.exists())
+            for kind in (1, 2, 4, 5):
+                self.assertTrue((checkpoint / "images" / f"city-{kind}.webp").exists())
+                self.assertTrue((checkpoint / "image-reviews" / f"city-{kind}.json").exists())
+            self.assertFalse((base.IMAGES / "city-1.webp").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

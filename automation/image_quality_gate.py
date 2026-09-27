@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Fast image QA with hard rejection for product identity and physics failures."""
-import base64,json,os,re,urllib.request,tempfile,shutil
+import base64,json,os,re,urllib.request,shutil
 from concurrent.futures import as_completed
 from pathlib import Path
 import image_prompt_policy
@@ -137,10 +137,13 @@ def install_set_manager(base,backend,image_count=5):
  def manager(item,pool):
   review_id=str(item.get('source_id') or 'unknown')
   base.OUT.mkdir(parents=True,exist_ok=True)
-  staging_root=Path(tempfile.mkdtemp(prefix=f'.image-staging-{review_id}-',dir=base.OUT))
+  # Preserve individually approved roles between scheduled runs. Publication
+  # stays atomic: checkpointed files move to base.IMAGES only after set approval.
+  staging_root=base.OUT/'.image-role-checkpoints'/review_id
   staging_images=staging_root/'images';staging_reviews=staging_root/'image-reviews'
-  staging_images.mkdir(parents=True);staging_reviews.mkdir(parents=True)
+  staging_images.mkdir(parents=True,exist_ok=True);staging_reviews.mkdir(parents=True,exist_ok=True)
   results,feedback={},{};pending=set(range(1,image_count+1));history=[]
+  completed=False
   set_review=base.OUT/'image-reviews'/f'{review_id}-set.json'
   try:
    rounds=max(1,int(os.getenv('IMAGE_SET_QA_ATTEMPTS','3')))
@@ -165,6 +168,7 @@ def install_set_manager(base,backend,image_count=5):
       os.replace(staged,base.IMAGES/staged.name)
       role_review=staging_reviews/f'{review_id}-{kind}.json'
       if role_review.exists():os.replace(role_review,final_reviews/role_review.name)
+     completed=True
      return [results[kind] for kind in range(1,image_count+1)]
     pending=set(verdict.get('duplicate_roles') or range(1,image_count+1))
     correction=str(verdict.get('correction_prompt') or '; '.join(verdict.get('reasons',[])))
@@ -175,5 +179,14 @@ def install_set_manager(base,backend,image_count=5):
      (staging_reviews/f'{review_id}-{kind}.json').unlink(missing_ok=True)
    raise RuntimeError(f'Image-set diversity gate rejected the five-image editorial set after {rounds} rounds')
   finally:
-   shutil.rmtree(staging_root,ignore_errors=True)
+   if completed:
+    shutil.rmtree(staging_root,ignore_errors=True)
+   else:
+    # Keep approved role images/reviews for the next run. Empty checkpoints
+    # (for example, an all-role diversity rejection) are safe to remove.
+    try:
+     if not any(staging_images.iterdir()) and not any(staging_reviews.iterdir()):
+      shutil.rmtree(staging_root,ignore_errors=True)
+    except OSError:
+     pass
  return manager
