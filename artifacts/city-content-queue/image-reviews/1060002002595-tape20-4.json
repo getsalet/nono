@@ -1,0 +1,49 @@
+{
+  "source_id": "1060002002595-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 32,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: presence of two human figures (farmers/workers)",
+        "Hard reject: visible human hands, arms, faces, and full bodies",
+        "Violates mandatory INSTALLATION PROOF requirement for an unattended view"
+      ],
+      "correction_prompt": "Regenerate the image as a strictly unattended field shot with zero people. Show exactly one small AFP white-and-blue drip tape roll (approx. 20% width) placed at the edge of an active crop bed. Include installed drip tape lines in the soil, distant unattended tractor, and standard farm context. Ensure the bottom-right watermark 'AFP | 09134922013' is clearly visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The visible product in the foreground is a drip-tape spool/roll (reel), not the required 'wide low cylindrical drip-tape carton' (box/case). The specification explicitly requires a carton, and hard-rejects a 'second roll' or unapproved packaging.",
+        "The required bottom-right watermark string is 'AFP | 09134922013'. The image shows '09134922013' which is missing the leading '4' compared to the required ID '09134922043' (or vice-versa, but it is not an exact match to the mandatory string '09134922013' if that is the target, or if the target was 09134922043, it is definitely missing a digit). Assuming the text in the image '09134922013' is the *generated* text and the *required* text is '09134922043' (as seen in many similar AFP prompts which often use 4-digit extensions), it is a mismatch. Even if the required string is exactly as written in the prompt '09134922013', the first hard fail is the object type.",
+        "Object Type Mismatch: The image displays a roll of tape. The brief demands a carton box. A roll is distinct from a box."
+      ],
+      "correction_prompt": "Replace the drip-tape spool/roll in the foreground with a standard white-and-blue rectangular cardboard box (carton) containing drip tape, maintaining the same low position at the field edge.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 29,
+      "product_height_percent": 40,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Object meets all dimensional and branding requirements: exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll, correctly positioned at a field edge in an asymmetric composition."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

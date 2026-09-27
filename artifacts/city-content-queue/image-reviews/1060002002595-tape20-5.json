@@ -1,0 +1,53 @@
+{
+  "source_id": "1060002002595-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 34,
+      "product_height_percent": 42,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Multiple people (farmer and workers) are clearly visible in the background.",
+        "Hard reject: Product label contains gibberish and distorted text (e.g., 'OK10', 'NITWOTI', 'TAN').",
+        "Hard reject: Text on the product label is not the required 'AFP' or legible."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove all human figures and silhouettes from the background. Ensure the 'AFP' logo and any product text on the drip-tape roll are sharp, legible, and strictly English/standard characters.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 40,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains a clearly visible person (a man standing in the center background), which is an automatic hard reject.",
+        "The mandatory role 'MAINTENANCE DETAIL' (close view of an installed emitter or connector) is not fulfilled; the image shows a generic full-field setup instead.",
+        "There are visible coil hoses or pipes lying on the ground in the bottom right foreground, which violates the hard reject for 'pipe through the roll' or unrelated coiled hardware."
+      ],
+      "correction_prompt": "Regenerate a close-up unattended maintenance detail shot of an installed drip-tape emitter or connector on the ground. Include exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll in the background. Ensure zero people, zero human body parts, and zero visible loose coiled hoses or pipes. The bottom-right watermark 'AFP | 09134922013' must remain.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 40,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains the required AFP white-and-blue drip-tape roll",
+        "Zero people or body parts visible",
+        "Background context matches the agricultural brief with unattended tractors",
+        "Watermark is present as required",
+        "No prohibited objects like bottles or second packages visible"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
