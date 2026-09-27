@@ -14,6 +14,101 @@
       ],
       "correction_prompt": "Retry visual review of the preserved candidate without regenerating it.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Presence of a person (woman) in the frame.",
+        "The watermark 'AFP | 09134922013' is located in the bottom-right corner.",
+        "The image contains only one visible coil (a bare black coil), not the approved pair of one packaged AFP coil and one bare black coil.",
+        "The primary subject is a person working with a hose, which is a hard reject due to zero-person policy."
+      ],
+      "correction_prompt": "Remove the person entirely. Show only the unattended two-coil pair (one packaged AFP coil and one bare black woven coil) on the soil in the foreground. Maintain the close-up 'Maintenance Detail' view of a connector or woven surface. Ensure the pair occupies 20-35% of the frame width. Keep the watermark 'AFP | 09134922013' in the bottom-right corner. Maintain the agricultural background with the red barn visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 78,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Image correctly displays the approved layflat pair (one packaged AFP coil and one bare black woven coil) resting on soil.",
+        "Contains zero people, human body parts, or silhouettes.",
+        "Background elements (barn, hay, fence) are permitted infrastructure/scenery and do not violate the 'no third commercial product' rule.",
+        "Watermark 'AFP | 09134922013' is present and correctly formatted in the bottom-right.",
+        "Placement and size are within acceptable practical vision estimates for recognizability and plausibility.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 78% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 70,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The exact bottom-right watermark \"AFP | 09134922013\" is clearly visible and correctly formatted.",
+        "The image contains exactly two distinct coils: a packaged layflat coil on the left and a bare black coil on the right, matching the required pair.",
+        "The scene contains no people, human body parts, or silhouettes.",
+        "Background elements (soil, crop rows, distant unattended building) are permitted agricultural context and do not violate hard reject rules.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 70% to 8-60% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 58,
+      "product_height_percent": 60,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Required pair visible: packaged coil (left) and large bare black woven coil (right) are fully visible and physically plausible.",
+        "Zero visible people, human body parts, or silhouettes.",
+        "Watermark 'AFP | 09134922013' present in bottom-right as required.",
+        "Scene features unattended infrastructure and farm background without prohibited third commercial packages.",
+        "machine-enforced bounding-box check failed: Reduce product height from 60% to at most 58% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 60% to at most 58% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 55,
+      "product_height_percent": 30,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The image is a general hero shot, not the required 'MAINTENANCE DETAIL' close view. The prompt explicitly demands an unattended close view of a connector, fold, or woven-surface detail.",
+        "The visual composition repeats role 3 (standard two-coil display) which is explicitly forbidden for role 5.",
+        "The required close-up detail of the surface/connector is missing; the image shows the coils from a medium distance."
+      ],
+      "correction_prompt": "Regenerate as a close-up macro detail shot focusing on the surface texture or a connector/joint of the hose. The full pair of coils (packaged and bare) must remain physically plausible in the background or framing, but the primary focus must be a maintenance detail (fold or woven texture), not a wide view of the whole coil.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 50,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The image clearly displays the required two-coil layflat pair: one bare black woven coil on the left and one packaged AFP coil on the right.",
+        "Product pair size is approximately 50% of the frame width, which falls within the practical acceptance range of 8% to 60%.",
+        "The scene contains zero people, human body parts, or human silhouettes.",
+        "Required watermark 'AFP | 09134922013' is correctly visible in the bottom right corner.",
+        "Background elements including the farm building, soil texture, and dry landscape are permitted and do not constitute hard rejects.",
+        "No third commercial product, bottle, canister, or physically impossible intersection is present."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
     }
   ]
 }

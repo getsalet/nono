@@ -7,78 +7,35 @@
   "history": [
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 30,
-      "product_height_percent": 42,
-      "product_x_center_percent": 42,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
       "reasons": [
-        "Hard reject: Second commercial package (carton) is visible in the background left.",
-        "Product geometry is flat/cylindrical (disc shape) rather than the 'wide low cylindrical drip-tape carton roll' which implies a 3D carton box shape; instead it looks like a roll of tape laid on its side.",
-        "Watermark phone number is 09134922013, but the required watermark in the prompt is 09134922013. (Actually, the prompt says '09134922013', the image has '09134922013'. Wait, let me re-read. Prompt: '09134922013'. Image: '09134922013'. They match. My mistake in reasoning. I will remove that.)",
-        "The primary reason for rejection is the 'second commercial package' visible in the background.",
-        "Installation proof requires the carton to remain 'small at a field edge', but the main subject is a large roll of tape in the foreground, not the carton."
+        "Hard reject: The image features a symmetrical, centered vanishing point, explicitly violating the 'no centered vanishing point' and 'asymmetric view' requirements.",
+        "Hard reject: There are multiple visible rolls of drip tape extending into the distance along the crop rows. The requirement mandates 'exactly one approved carton'.",
+        "Hard reject: The visual brief specifies 'drip tape' in the foreground, but the image displays a thick, flat, hose-like white pipe rather than a drip tape carton roll.",
+        "Fail: Watermark 'AFP | 09134922013' is in the bottom-right corner instead of the required bottom-left position."
       ],
-      "correction_prompt": "Remove the white AFP box in the background completely. Ensure only one white and blue drip-tape carton roll is present in the scene.",
+      "correction_prompt": "Regenerate the scene to show an asymmetric crop bed layout without a centered vanishing point. Ensure there is exactly one white and blue drip-tape carton roll on the field edge. Remove all other rolls or pipes running into the distance. Move the watermark to the bottom-left corner.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 10,
-      "product_width_percent": 25,
-      "product_height_percent": 35,
-      "product_x_center_percent": 46,
-      "reasons": [
-        "Presence of multiple people (farmers/workers) in the background, violating the zero-human hard reject criteria.",
-        "Background is not 'unattended' as required by the INSTALLATION PROOF role, due to the visible figures.",
-        "Contains gibberish/unclear writing on the carton (below the AFP logo)."
-      ],
-      "correction_prompt": "Regenerate the image completely removing all human figures from the background to make the scene unattended. Ensure the text on the white carton is clearly legible English, not gibberish. Keep the watermarked text in the bottom right corner exactly as is.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 20,
-      "product_width_percent": 24,
-      "product_height_percent": 30,
-      "product_x_center_percent": 38,
-      "reasons": [
-        "Hard reject: a visible person (male figure in blue shirt) is present in the background on the right.",
-        "Fail: mandatory role requires 'exactly one approved carton remains small at a field edge', but the roll is placed in the foreground.",
-        "Fail: The article specifies 'tape20' (20cm width) but the roll dimensions relative to the visible crop plants appear too thick/overstocked for the specific product context."
-      ],
-      "correction_prompt": "Remove the person in the background entirely. Reposition the white and blue AFP drip tape roll to the edge of the field where it looks like a small unattended carton, rather than the foreground. Ensure the roll thickness visually matches a 20cm drip tape specification.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 58,
-      "product_width_percent": 24,
-      "product_height_percent": 32,
-      "product_x_center_percent": 47,
-      "reasons": [
-        "The visual brief required 'asymmetric unattended view of installed drip tape and crop beds; exactly one approved carton remains small at a field edge; no centered vanishing point', but the image instead features a strong centered vanishing-point perspective down the crop rows with the carton placed prominently in the lower-center foreground rather than small at a field edge.",
-        "No irrigation/drip tape installation is visible running through the crop beds, so the mandatory INSTALLATION PROOF role is not satisfied even though the carton and field context are present and no hard-reject elements (people, extra packages, bottles) appear.",
-        "The required bottom-right watermark is present and correctly formatted, and the carton size/placement percentages are within the allowed practical range, so the only failures are role-composition issues rather than hard product rejects."
-      ],
-      "correction_prompt": "Reframe as an asymmetric, off-axis wide shot from the side of a crop row showing drip tape visibly installed in the beds with small plants along the tape; place exactly one small white-and-blue AFP carton at the far field edge rather than lower-center, remove the centered vanishing-point perspective, keep zero people, and retain the bottom-right watermark 'AFP | 09134922013'.",
-      "attempt": 4
-    },
-    {
       "pass": true,
-      "score": 92,
+      "score": 75,
       "product_width_percent": 22,
       "product_height_percent": 28,
-      "product_x_center_percent": 31,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Single AFP white-and-blue cylindrical carton roll present and clearly identifiable",
-        "Product size is within the preferred range (width ~22%)",
-        "Zero people or human body parts",
-        "Appropriate field installation context with crop beds and drip tape",
-        "Watermark 'AFP | 09134922013' is present and correctly placed in the bottom right",
-        "No prohibited containers, secondary rolls, or geometric distortions"
+        "The image features exactly one AFP white-and-blue drip-tape carton roll.",
+        "The roll dimensions (approx. 22% width) fit within the preferred range of 20 to 28 percent.",
+        "The image contains zero people, human body parts, or forbidden containers (bottles, jars, buckets).",
+        "The background successfully depicts an asymmetric, unattended view of installed drip tape and crop beds with a distant tractor, matching the article visual brief.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and clearly visible.",
+        "The roll is positioned at the field edge, acting as the 'small carton' required by the installation proof role."
       ],
       "correction_prompt": "",
-      "attempt": 5
+      "attempt": 2
     }
   ]
 }

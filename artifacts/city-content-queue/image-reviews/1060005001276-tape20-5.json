@@ -1,0 +1,55 @@
+{
+  "source_id": "1060005001276-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 34,
+      "product_height_percent": 40,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "A person (farmer) is visible seated on the tractor in the background, which is a hard reject trigger for any human presence.",
+        "The required text on the visible carton is 'DRIP IRRIGATION' instead of the specified tape width '20'.",
+        "A second coiled item of blue tape is visible to the right, violating the 'exactly one roll' constraint."
+      ],
+      "correction_prompt": "Regenerate: Remove the person from the tractor completely. Add only a single white and blue AFP carton roll (no loose tape spools). Update the carton text to feature '20' clearly. Maintain the required watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 46,
+      "product_height_percent": 54,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Role 5 requires a close-up 'MAINTENANCE DETAIL' view of an installed emitter or connector, but the image shows the product in commercial packaging (a large carton roll) sitting in a field.",
+        "The 'MAINTENANCE DETAIL' role is explicitly not met because the roll is not installed and no emitters/connectors are the focus.",
+        "Text on the tape roll ('DRIP CHIGMOS TUP') contains gibberish/unreadable characters.",
+        "Visible packaging label contains gibberish text ('DOPERTANDE').",
+        "Presence of gibberish text on the product roll violates the hard reject criteria."
+      ],
+      "correction_prompt": "Close-up shot of an installed drip tape emitter and connector with a small flush point detail in the soil, no packaging visible. Ensure all text on the tape is legible English.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 38,
+      "product_height_percent": 38,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Product dimensions (width ~38%, height ~38%) are well within the 10-48% width and <58% height acceptance limits.",
+        "Watermark 'AFP | 09134922013' is clearly present in the bottom-right corner.",
+        "No people, human body parts, or silhouettes are visible.",
+        "Background context (unattended tractor, farm building, crops) aligns with the article brief without violating hard rejects."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -7,33 +7,47 @@
   "history": [
     {
       "pass": false,
-      "score": 30,
-      "product_width_percent": 30,
-      "product_height_percent": 45,
-      "product_x_center_percent": 40,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 48,
+      "product_x_center_percent": 44,
       "reasons": [
-        "The article role requires a 'MAINTENANCE DETAIL' close-up of an installed emitter or connector, but this image is a 'PRODUCT PACKAGING' shot showing the carton and a loose coil.",
-        "The visual role mismatch makes this image inappropriate for a close-up installation guide. The carton is not installed as required by the prompt."
+        "Hard reject: The image contains a full human figure (farmer/worker) standing next to the product.",
+        "Strict visual brief violation: The image lacks the required 'MAINTENANCE DETAIL' (close-up of installed drip-tape emitter/connector).",
+        "Missing mandatory watermark: The required watermark 'AFP | 09134922013' is not present in the image."
       ],
-      "correction_prompt": "Change the scene to a close-up detail view of an installed drip tape line, showing a specific flush point or connector on the soil, with the white-and-blue AFP carton roll placed nearby as context, not as the main focus.",
+      "correction_prompt": "Regenerate with zero people or body parts. Show a close-up maintenance detail of an installed drip-tape emitter or connector. Include exactly one white-and-blue AFP carton roll. Add the text 'AFP | 09134922013' in the bottom-right corner.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 37,
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 45,
       "product_height_percent": 45,
-      "product_x_center_percent": 68,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Visually matches the AFP white-and-blue wide low cylindrical drip-tape carton roll specification.",
-        "Product dimensions (37% width, 45% height) are within the 10-48% width and <58% height acceptable range.",
-        "Zero people and zero human body parts are visible.",
-        "Background matches the farm/soil context and includes relevant maintenance detail (installed connector/flush-point).",
+        "Contains a visible person (farmer) in the background near the tractor, which is a hard reject.",
+        "Mandatory image role 'MAINTENANCE DETAIL' (close view of installed emitter, connector, or flush point) is not met; the image shows a general field scene with a roll on the ground."
+      ],
+      "correction_prompt": "Remove the person and tractor from the background. Change the scene to a close-up detail shot of an installed drip-tape emitter or connector on the ground, with a single white-and-blue AFP carton roll visible but not the primary focus of the detail shot.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 34,
+      "product_height_percent": 46,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Roll dimensions are well within the preferred 20-28% width range (estimated 34%) and height limit.",
+        "Background includes allowed distant unattended tractors and farm buildings.",
+        "No people or human body parts are visible.",
         "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Text on the carton is gibberish ('RIK HIEALOWN 7i0E') but is not a hard reject condition; the overall role and brand elements are preserved."
+        "No prohibited items such as bottles, jars, canisters, or multiple rolls are visible."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }
