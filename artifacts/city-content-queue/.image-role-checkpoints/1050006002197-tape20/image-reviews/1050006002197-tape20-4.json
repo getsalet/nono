@@ -1,0 +1,65 @@
+{
+  "source_id": "1050006002197-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 40,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Hard reject: Human person/farmer is visible in the center background of the field (standing near the tractor).",
+        "Hard reject: Human silhouette and body parts violate the zero-person rule."
+      ],
+      "correction_prompt": "Remove the man standing in the middle ground near the tractor; keep the unattended tractor and field context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 27.0,
+      "product_height_percent": 34.0,
+      "product_x_center_percent": 44.0,
+      "reasons": [
+        "Gibberish writing on the product packaging (text below 'AFP' is corrupted).",
+        "Mandatory role 'INSTALLATION PROOF' not met: The roll is the foreground focal point rather than a small object at the field edge in an asymmetric unattended view of the installed tape."
+      ],
+      "correction_prompt": "Regenerate with an asymmetric wide shot where the roll is small at the field edge, focus on the installed drip tape and crop beds, and ensure all packaging text is sharp, readable, and in Persian/English.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 24,
+      "product_height_percent": 40,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "The roll of tape is excessively large, positioned as a hero subject rather than 'small at a field edge' as required by the INSTALLATION PROOF role.",
+        "Hard reject: A person (operator) is clearly visible driving the tractor in the background, violating the 'zero people' constraint."
+      ],
+      "correction_prompt": "Regenerate the image to remove the person driving the tractor and reduce the size of the drip tape roll so it appears small and peripheral at the field edge, consistent with an installation proof shot.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 20,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "No humans or body parts visible",
+        "Distant tractor and farm building are acceptable context",
+        "Watermark present exactly as required",
+        "Approved AFP carton is the only commercial package visible",
+        "Installation proof matches brief with asymmetric layout",
+        "Object size is well within allowed practical bounds"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

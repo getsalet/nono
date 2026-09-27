@@ -1,0 +1,52 @@
+{
+  "source_id": "10500010001257-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: visible person present in the frame",
+        "Hard reject: human body parts visible (arms, hands, face)"
+      ],
+      "correction_prompt": "Remove all visible people and human silhouettes; ensure only the single unattended drip-tape roll remains as the product focus in a medium side view.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 40,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "A human (man sitting) is visible in the background, which violates the hard reject rule requiring zero people or body parts.",
+        "The visual role is 'HEADWORKS STORY' which requires the product to be small and secondary, but the roll is currently large and dominant in the foreground.",
+        "The mandatory bottom-right watermark text is garbled/incorrect ('09134922013' instead of '09134922013' - actually checking the prompt, the prompt says '09134922013' is REQUIRED, but the image shows '09134922013'. Wait, looking closely at image vs prompt text: Prompt requires 'AFP | 09134922013'. Image has 'AFP | 09134922013'. They match. The issue is strictly the person.)"
+      ],
+      "correction_prompt": "Remove the man sitting in the background. Shrink the drip-tape roll significantly and move it to the side so it appears small and secondary behind the filter and manifold assembly.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Image contains exactly one AFP white-and-blue wide cylindrical drip-tape carton roll.",
+        "Product bounding box and aspect ratio are physically plausible and fit within the accepted 10-48% width range.",
+        "No people or human body parts are present in the frame.",
+        "Infrastructure (filter, gauge, regulator, manifold) and unattended background equipment (tractor, barn) are acceptable per the article brief.",
+        "Required watermark 'AFP | 09134922013' is present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
