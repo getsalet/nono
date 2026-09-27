@@ -1,0 +1,71 @@
+{
+  "source_id": "10700016002780-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The object is positioned almost exactly in the center of the frame, violating the mandatory 'asymmetric' layout requirement.",
+        "The perspective uses a strong centered vanishing point on the crop rows, which contradicts the brief's instruction to 'not have a centered vanishing point'.",
+        "The text on the carton (specifically the sub-text under the logo) appears to be gibberish/low-resolution noise rather than clear, legible text."
+      ],
+      "correction_prompt": "Move the carton to the bottom-left of the frame and shift the crop rows to the right to eliminate the central vanishing point. Ensure the text on the carton is sharp and legible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 15,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: The image contains two commercial carton rolls in the foreground, violating the strict 'exactly one approved carton' constraint.",
+        "The visual brief mandates exactly one roll, but the presence of multiple identical packages triggers an automatic rejection based on the 'second commercial package/second roll' rule."
+      ],
+      "correction_prompt": "Regenerate the image to feature exactly one AFP white-and-blue drip-tape carton roll placed at the field edge, removing the second duplicate roll from the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 98,
+      "product_width_percent": 20,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains exactly one approved AFP white-and-blue cylindrical drip-tape carton roll.",
+        "Zero people or human body parts visible.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Matches the INSTALLATION PROOF role: asymmetric view of crop beds with installed drip tape and a small carton at the edge.",
+        "No prohibited objects (bottles, jars, cans, buckets, fertilizer) or hard rejects detected.",
+        "machine-enforced bounding-box check failed: Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "The image contains exactly one wide, low cylindrical drip-tape roll, matching the specified product type.",
+        "The roll is positioned asymmetrically in the lower-third, avoiding a centered vanishing point.",
+        "The installed drip tape and crop beds provide the required 'Installation Proof' context.",
+        "No people, faces, or human body parts are present.",
+        "No other commercial packages, bottles, or layflat hoses are visible.",
+        "The required watermark 'AFP | 09134922013' is correctly displayed in the bottom-right corner.",
+        "The estimated product dimensions (width ~20%, height ~22%) fall within the preferred and acceptable ranges."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

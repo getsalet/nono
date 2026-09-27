@@ -1,0 +1,41 @@
+{
+  "source_id": "1070003002014-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Product height exceeds the 32% hard reject threshold",
+        "Gibberish and impossible text on the product label",
+        "Watermark number mismatch (prompt required 09134922013, image shows 091349220127)",
+        "machine-enforced bounding-box check failed: Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product roll height to under 32% of the frame, ensure all label text is legible and accurate, and correct the bottom-right watermark to exactly 'AFP | 09134922013'. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 18,
+      "product_height_percent": 21,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The image displays exactly one AFP white-and-blue drip-tape carton roll, matching the required object description.",
+        "The product placement is correctly in the lower-third with a slightly off-center position, adhering to the editorial hero role without being a hard reject.",
+        "The background is contextually relevant for the article, showing agricultural crop rows and a distant unattended tractor, which are permitted elements.",
+        "There are zero people or human body parts in the image, avoiding a hard reject.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner and was not rejected.",
+        "Product bounding box estimates fall within the preferred width range (20-23%) and acceptable height range."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

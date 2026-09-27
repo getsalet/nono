@@ -1,0 +1,53 @@
+{
+  "source_id": "1070001002198-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 30,
+      "product_height_percent": 33,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Presence of a human figure (farmer/worker) in the scene, which is a hard reject criterion",
+        "Contains a secondary commercial package (box containing gauges) that violates the single-product focus requirement",
+        "The main product roll exceeds the maximum acceptable width threshold (30% vs 27% limit)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the human figure and all secondary containers/packaging. Reframe the shot to reduce the visible width of the main drip-tape roll to under 27% of the frame. Ensure the background contains only unattended fixed irrigation infrastructure (filters, gauges) without any workers or extra boxes. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 14,
+      "product_height_percent": 20,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "Hard reject: The image contains a prominent human (worker/farmer) standing in the foreground and another person visible inside the distant tractor.",
+        "The article brief requires 'zero people and zero human body parts' which is violated by the main subject of the image."
+      ],
+      "correction_prompt": "Remove the worker standing next to the equipment and remove the driver from the distant tractor. Ensure no human silhouettes are visible in the background.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The image features a white and blue carton roll (AFB white-and-blue wide low cylindrical drip-tape carton roll) positioned in the lower-left/center, satisfying the editorial preference for off-center placement.",
+        "The mandatory role of 'HEADWORKS STORY' is met, showing a medium side view of an unattended fixed filter, gauge, regulator, and manifold on a mobile frame.",
+        "There are zero people, faces, or human body parts visible in the scene.",
+        "The product (drip-tape carton roll) is within the acceptable width range (13-27%), with an estimated width of 25%.",
+        "The background matches the article brief with a plowed field and horizon, and the required watermark 'AFP | 09134922013' is present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

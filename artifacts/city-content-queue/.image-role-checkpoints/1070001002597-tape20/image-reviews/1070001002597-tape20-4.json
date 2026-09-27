@@ -1,0 +1,81 @@
+{
+  "source_id": "1070001002597-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The crop and unspooled drip tape lines in the foreground create a symmetrical perspective that leads directly to the center of the frame (centered vanishing point), violating the 'no centered vanishing point' requirement of the INSTALLATION PROOF role.",
+        "The carton roll is placed slightly left-of-center rather than at the far field edge.",
+        "The label text on the side of the roll is gibberish/unclear."
+      ],
+      "correction_prompt": "Regenerate with a strictly asymmetric composition where the crop rows and drip lines lead to an off-center vanishing point. Move the white-and-blue 'AFP' drip-tape carton roll to a small scale at the far field edge (lower-left or right). Ensure the crop planting direction is diagonal, not parallel to the frame. Fix the label text to be legible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 11,
+      "product_height_percent": 8,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "The product is a standard cylindrical roll, not a wide and low carton roll as specified in the brief.",
+        "The roll is placed near the center of the image on the crop bed rather than at a distant field edge, failing the 'asymmetric unattended view' requirement.",
+        "The overall scene uses a highly symmetrical, centered vanishing point composition, which is explicitly forbidden by the 'no centered vanishing point' constraint.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 11% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Generate an asymmetric, off-center view of a wide, flat drip-tape carton roll sitting on a distant field edge. The background must show crop beds and installation proof without a symmetrical vanishing point. Ensure the carton is the only commercial object and the watermark 'AFP | 09134922013' is positioned in the bottom right. Enlarge the product group from 11% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 34.5,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Object size exceeds hard limit (width > 27% of frame, height > 32% of frame)",
+        "Brief requires 'exactly one approved carton remains small at a field edge' but object is prominent in the foreground",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34.5% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Shrink the AFP drip-tape roll to approximately 20% of the frame width and place it smaller at the edge of the crop bed, maintaining the unattended installation proof context. Reduce the product group from 34.5% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 8,
+      "product_height_percent": 10,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "The image includes an open cardboard box with the 'AFP' logo in the center-right, which violates the hard reject criteria for a 'second commercial package'.",
+        "The installation proof is insufficient; the visible dripper tape does not clearly run into crop beds, and the required 'small at a field edge' context is missing.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 8% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the cardboard box entirely. Ensure the white-and-blue carton roll is positioned clearly at a distant field edge. Extend the dripper tape to visibly thread into a row of green crop seedlings to confirm installation. Enlarge the product group from 8% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 18,
+      "product_height_percent": 21,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "One AFP white-and-blue drip-tape carton roll present and physically plausible",
+        "Required bottom-right watermark present and intact",
+        "No people, body parts, bottles, or foreign containers visible",
+        "Installation context and field-edge product placement match the role"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

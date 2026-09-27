@@ -1,0 +1,53 @@
+{
+  "source_id": "10700036001046-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 34.4,
+      "product_height_percent": 41.1,
+      "product_x_center_percent": 44.0,
+      "reasons": [
+        "Product bounding box dimensions exceed the maximum allowed thresholds (width 34.4% > 27% limit, height 41.1% > 32% limit).",
+        "The drip tape extending outward from the roll creates a second visual commercial element, violating the strict 'exactly one roll' and 'no second commercial package' constraints.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34.4% to 13-27% of frame width.; Reduce product height from 41.1% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the main carton roll significantly smaller and more distant, ensuring the bounding box dimensions fall under 27% width and 32% height. Ensure the drip tape lies flat against the soil and remains subtle to avoid being interpreted as a second prominent commercial object. Reduce the product group from 34.4% to 13-27% of frame width. Reduce product height from 41.1% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 24.2,
+      "product_height_percent": 22.5,
+      "product_x_center_percent": 40.8,
+      "reasons": [
+        "Hard reject: Human silhouettes are visible in the background (one seated, one standing near a tractor). The image strictly requires zero people and zero human body parts.",
+        "Hard reject: A large tractor is prominently visible in the background. While unattended equipment can sometimes be allowed if distant, a prominent machine directly conflicts with the specific 'MAINTENANCE DETAIL' macro/close-up role for the image."
+      ],
+      "correction_prompt": "Regenerate with a tight macro shot of the irrigation tape and connector on the soil. Completely remove all people and the background tractor to ensure the image contains no humans and fits the specific maintenance detail role.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 26,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Image contains exactly one wide, low cylindrical drip-tape carton roll matching the physical description and color scheme (white and blue).",
+        "Zero people, farmers, workers, or human body parts are present in the frame.",
+        "No prohibited commercial containers (bottles, jars, buckets, fertilizers) are visible.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and unobstructed.",
+        "Product dimensions and placement align with the preferred 20-23% width range and remain physically plausible within the 32% height limit.",
+        "Contextual background (farm, tractors, soil) is allowed and relevant to the agricultural brief without violating hard reject criteria."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

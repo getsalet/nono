@@ -1,0 +1,65 @@
+{
+  "source_id": "1070002002177-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: Image contains a large human hand in the foreground holding a connector, which violates the zero-person rule.",
+        "Hard reject: Image contains multiple human silhouettes (farmers/worker) working in the background, which violates the zero-person rule."
+      ],
+      "correction_prompt": "Remove the foreground hand completely. Remove all human figures and silhouettes from the background. Keep the white and blue AFP drip tape roll as a small, isolated product on the soil in the lower third. Keep the 'AFP | 09134922013' watermark exactly as is.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The article brief specifies a location context of 'Roniz' (a city/farm area), but the image features a dense, tall urban skyscraper skyline that is contextually inappropriate and visually conflicting with the agricultural brief.",
+        "The background city elements do not match the 'selected image role' of an agricultural field; the skyline creates a surreal and incoherent environment."
+      ],
+      "correction_prompt": "Regenerate the image with an agricultural background matching the brief. Remove the urban skyscraper skyline and replace it with natural landscape elements (hills, open sky, or agricultural boundaries) to fit the Roniz farming context.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible person standing in the background (right side of the field).",
+        "Visible person silhouette inside the unattended tractor cabin.",
+        "Violation of the 'zero people' hard reject criteria."
+      ],
+      "correction_prompt": "Remove the standing person and the driver silhouette in the tractor cabin to ensure zero humans in the scene.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains exactly one white and blue cylindrical drip-tape carton roll matching the 'AFP' branding requirement.",
+        "No people, human body parts, or faces are visible in the image.",
+        "The product dimensions (width ~22%, height ~22%) fall within the preferred range of 13-27% width and under 32% height.",
+        "The background shows a farm and irrigation context (crop rows, distant buildings) which aligns with the article brief.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "source_id": "1070001002335-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 27,
+      "product_height_percent": 36,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Second commercial package present (loose coiled drip tape to the right).",
+        "Product height and width exceed acceptable maximum bounds (roll is too large).",
+        "Watermark text is partially cut off at the bottom right edge.",
+        "machine-enforced bounding-box check failed: Reduce product height from 36% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the loose coiled tape on the right to ensure only one commercial package is visible. Shrink the main carton to roughly 18-20% of frame width. Adjust framing or regenerate to ensure the bottom-right watermark is fully legible and not cropped. Reduce product height from 36% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 16,
+      "product_height_percent": 27,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "The image contains a large green tractor in the background that clearly has a visible cab and operator seat; given the context of agricultural equipment, this is highly likely to be a person (operator), which triggers a hard reject for visible humans/body parts.",
+        "The product bounding box is located in the extreme lower-left corner (roughly 28% from the left edge and 80% down the frame), which is an off-frame crop violation. The product is not 'centered' or 'lower-third' in a standard sense; it is physically half-off the canvas, making it impossible to accurately estimate its true width without guessing.",
+        "The background contains multiple complex elements (tractors, machinery, buildings) that may violate the 'simple background' rule, though the primary rejection is the human silhouette in the tractor.",
+        "Image contains one commercial package; the watermark is present but partially obscured by a UI element in the bottom right corner."
+      ],
+      "correction_prompt": "Regenerate the image with the full drip-tape roll clearly visible and not cut off by the frame edges. Remove all human silhouettes; ensure tractors in the background are strictly unattended without visible cabs or operators. Keep the background clean and simple. Ensure the watermark 'AFP | 09134922013' is fully legible.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 29,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "Exactly one AFP white-and-blue cylindrical drip-tape carton roll is visible.",
+        "Zero people, faces, hands, or body parts present.",
+        "The distant unattended tractor and field context are acceptable under the guidelines.",
+        "Visible irrigation hardware (tape, manifold) supports the 'SELECTION EVIDENCE' brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 29% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 24,
+      "product_height_percent": 26,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "exactly one white-and-blue wide low cylindrical drip-tape carton roll",
+        "preferred width (20-23%) accepted within noise range (13-27%)",
+        "zero people, zero human body parts",
+        "lower-third and slightly off-center placement allowed",
+        "emitter spacing/tape line visible, matching SELECTION EVIDENCE role",
+        "simple background with field edge, farm building, and distant unattended tractors (allowed)",
+        "no prohibited bottles, jars, containers, or fake headlines",
+        "required watermark 'AFP | 09134922013' present bottom-right"
+      ],
+      "attempt": 4
+    }
+  ]
+}

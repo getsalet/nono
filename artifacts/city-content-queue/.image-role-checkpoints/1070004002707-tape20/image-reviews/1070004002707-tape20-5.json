@@ -1,0 +1,99 @@
+{
+  "source_id": "1070004002707-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 31,
+      "product_height_percent": 48,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Second commercial package (cardboard box) is present, violating the hard reject criteria for a second roll or unrelated container.",
+        "Product width exceeds the 27% maximum limit (estimated at 31%).",
+        "Product height exceeds the 32% maximum limit (estimated at 48%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width.; Reduce product height from 48% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the cardboard box to the right of the roll. Resize the drip-tape roll to be narrower (approx. 20% frame width) and shorter (approx. 30% frame height). Reduce the product group from 31% to 13-27% of frame width. Reduce product height from 48% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 28,
+      "product_height_percent": 33,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Product width (~28%) slightly exceeds the preferred 20-23% and exceeds the 27% hard reject limit by a margin of 1%.",
+        "Product height (~33%) slightly exceeds the 32% hard reject limit by a margin of 1%.",
+        "Watermark 'AFP | 09134922013' present in the bottom-right corner.",
+        "Object is the correct white-and-blue wide low cylindrical drip-tape carton roll.",
+        "No people, faces, or body parts visible in the image.",
+        "Background matches the agricultural context (crop field, distant unattended tractor).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 45,
+      "product_height_percent": 32,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Presence of two people (sitting and standing figures) in the background violates the 'zero people' requirement",
+        "Drip-tape roll is positioned in the center rather than the preferred lower-third editorial placement",
+        "Product width significantly exceeds the preferred and acceptable range (45% observed vs. 27% max)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate image removing all human figures and tractors; shift the single white-and-blue drip-tape roll to the lower-right third of the frame to reduce its visual width relative to the image. Reduce the product group from 45% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 26,
+      "product_height_percent": 26,
+      "product_x_center_percent": 61,
+      "reasons": [
+        "Contains a second commercial package (the cardboard box to the left of the roll).",
+        "Fails mandatory image role: The brief requires a close-up maintenance detail (emitter, connector, flush-point), but the image shows a wide environmental shot of the crop field."
+      ],
+      "correction_prompt": "Regenerate as an extreme close-up of an irrigation emitter and connector on the ground. A single AFP white-and-blue drip-tape carton roll must be visible in the background (20-23% width). Remove the brown cardboard box and any visible people. Retain the watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 34,
+      "product_height_percent": 38,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Contains two commercial rolls (drip tape and paper/pulp core), violating the 'exactly one' and 'no second roll' constraints",
+        "Primary product exceeds the maximum accepted width threshold of 27 percent",
+        "Primary product exceeds the maximum accepted height threshold of 32 percent",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to show exactly one white and blue AFP wide low cylindrical drip-tape carton roll placed on the soil next to an unattended maintenance connector detail; remove the second roll and the white paper core; scale the single carton down so its width is roughly 20 percent of the frame width. Reduce the product group from 34% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 23,
+      "product_height_percent": 27,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The visible text below the 'AFP' logo on the carton is gibberish, which is a hard reject condition.",
+        "The 'drip-tape' emerging from the roll appears to be a rigid, solid pipe rather than flexible plastic drip tape, representing impossible geometry or severely distorted dimensions.",
+        "The image depicts a roll of tape placed on the soil rather than the specific 'MAINTENANCE DETAIL' (installed emitter/connector detail) requested by the role."
+      ],
+      "correction_prompt": "Regenerate to feature a clear close-up of an installed drip-tape emitter or flush-point connector. Remove the gibberish text from the carton label. Ensure the tape emerging from the roll looks like flexible, thin plastic drip tape, not a solid metal or plastic pipe.",
+      "attempt": 6
+    }
+  ]
+}

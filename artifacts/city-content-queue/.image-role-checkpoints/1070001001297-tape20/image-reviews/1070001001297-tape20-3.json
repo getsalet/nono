@@ -1,0 +1,56 @@
+{
+  "source_id": "1070001001297-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 100,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "AFP watermark visible in bottom-right.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject due to visible human subject (farmer) in the scene",
+        "Product bounding box width is approximately 38% of frame width, exceeding the maximum 27% limit",
+        "Product bounding box height is approximately 45% of frame height, exceeding the maximum 32% limit",
+        "The required mandatory role (HEADWORKS STORY) is not met, which required the roll to be small and secondary while the filter/gauge system was the focus",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate a medium side view of an unattended fixed filter, gauge, regulator, and manifold system. Ensure the AFP white-and-blue drip-tape roll is small (15-20% width), placed secondary in the scene. Remove all human figures from the image. Keep the bottom-right watermark 'AFP | 09134922013' exactly as is. Reduce the product group from 38% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 19.5,
+      "product_height_percent": 28,
+      "product_x_center_percent": 30.5,
+      "reasons": [
+        "Image correctly features exactly one AFP wide, low cylindrical drip-tape carton roll as a secondary element in the foreground.",
+        "Carton dimensions fall within the preferred width range (19.5%) and acceptable height limit (28% < 32%).",
+        "HEADWORKS STORY requirement met: medium side view of unattended fixed filter, gauge, regulator, and manifold is clearly visible.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right.",
+        "Zero people or human body parts are visible in the frame.",
+        "Distant unattended tractors and farm building are contextually relevant and allowed per instructions.",
+        "No hard reject elements such as bottles, cans, second rolls, or pipes running through the roll are present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
