@@ -1,0 +1,60 @@
+{
+  "source_id": "10600012002792-tape20",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (EDITORIAL HERO) fails: The farm context is overwhelmed by heavy machinery (tractors) rather than dominating the scene; the product carton is large and prominent rather than small/off-center; multiple tractors violate the 'exactly one approved carton' rule and dilute the editorial focus.",
+        "Role 2 (SELECTION EVIDENCE) fails: The product carton is oversized relative to the frame, violating the requirement for it to be small/secondary; the composition is a standard ground-level shot rather than the required 'elevated technical arrangement'.",
+        "Role 3 (HEADWORKS STORY) fails: The crop carton is large and centered in the foreground rather than small/secondary; the framing does not sufficiently emphasize the unattended filter system as the primary subject.",
+        "Role 4 (INSTALLATION PROOF) fails: The crop carton is significantly larger than it should be relative to the crop rows, violating the 'small and secondary' instruction; the tractor in the background repeats the machinery focus seen in Role 1.",
+        "Overall: All images fail to correctly execute the 'small carton' instruction, with the product appearing too large and dominant in every frame, failing the specific role requirements."
+      ],
+      "correction_prompt": "Scale down the 'AFP' crop carton in all images to less than 10% of the frame height to satisfy the 'small' requirement; replace the background tractors in Images 1 and 4 with static farm structures (like a barn or irrigation valve box) to maintain editorial focus on the irrigation context and environment.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "duplicate_roles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "reasons": [
+        "Only four images were provided but the brief requires five; role 5 (Maintenance Detail) is missing entirely.",
+        "Role 1 (Editorial Hero) violates composition: the product carton is centered in the foreground rather than being small and off-center on the lower third as specified.",
+        "Role 4 (Installation Proof) violates composition: the product is placed centrally in the foreground rather than being small at a field edge.",
+        "Image 2 (Role 2) features a red tractor in the background, and image 4 also features a red tractor, triggering the 'repeated furrow-field plus tractor compositions' rejection criteria.",
+        "Image 3 (Role 3) shows drip tape installed in the field, which overlaps with Role 4 (Installation Proof) in narrative and visual content, failing to maintain a distinct technical focus on just the fixed headworks hardware.",
+        "Image 1 (Role 1) shows installed drip tape in the foreground, diluting the 'farm and irrigation context' dominance and looking more like an installation shot than a high-oblique hero shot."
+      ],
+      "correction_prompt": "Provide the missing Role 5 (close-up of an installed emitter or connector with the small carton visible, no hardware box) and retake Roles 1, 3, and 4 with the product positioned small and off-center; remove all tractors from the background of Roles 2 and 4 to avoid the furrow-field/tractor cliché.",
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "reasons": [
+        "Role 1 (Editorial Hero) fails the 'off-center' and 'high-oblique' requirements; the product is centered and the view is eye-level.",
+        "Role 2 (Selection Evidence) lacks the required 'field-selection evidence' and visible emitter spacing.",
+        "Role 3 (Headworks) and Role 5 (Maintenance Detail) are duplicates; both use a silver flush-point/emitter device placed in the soil, violating the rule against repeating hardware details.",
+        "The set relies heavily on 'furrow-field plus tractor' compositions that appear in multiple roles, violating the uniqueness requirement."
+      ],
+      "correction_prompt": "Regenerate role 1 with a high-angle shot and off-center product; for role 2, clearly show emitter spacing; for role 3, replace the current flush-point detail with a wide side-view of the full headworks assembly (filter, gauge, manifold) to make role 5 the only close-up detail.",
+      "set_attempt": 3,
+      "accepted_individual_qa_fallback": true
+    }
+  ]
+}

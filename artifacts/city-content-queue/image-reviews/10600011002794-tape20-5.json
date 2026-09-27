@@ -1,0 +1,77 @@
+{
+  "source_id": "10600011002794-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 34,
+      "product_height_percent": 48,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Human figures visible in background (two workers standing near the tractor).",
+        "Hard reject: Second commercial package/roll visible (black coil of tape in bottom right)."
+      ],
+      "correction_prompt": "Remove all human figures from the background; remove the black coil of tape in the bottom right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 43,
+      "product_height_percent": 48,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image shows a full roll of drip tape instead of the required 'MAINTENANCE DETAIL' role (close view of installed emitter, connector, flush-point, or material detail).",
+        "The scene depicts a general field setting with a distant tractor, which does not align with the specific 'maintenance detail' role mandated for this image."
+      ],
+      "correction_prompt": "Regenerate as an unattended close-up maintenance view of an installed drip-tape emitter or connector with the white 'AFP' branded roll lying partially in the foreground. Exclude the full roll standing in the field and any tractor. Include the required bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 78,
+      "product_width_percent": 32,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Product is in retail carton packaging rather than an installed/activated state (e.g. cut, connected to hardware, or extended into the field)."
+      ],
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 37,
+      "product_height_percent": 42,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: Visible person (farmer/worker) present in the background.",
+        "Hard reject: Second roll of drip tape (loose coil) is visible on the ground next to the main carton, violating the 'exactly one roll' constraint."
+      ],
+      "correction_prompt": "Regenerate with a completely empty field background (no people, no tractor, no loose coiled tape). Show only the single upright white AFP drip-tape carton in the foreground on soil. Maintain the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Exactly one AFP white-and-blue cylindrical drip-tape roll is present and clearly visible.",
+        "Zero people or human body parts in the frame.",
+        "No forbidden containers, second rolls, or layflat hoses.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "Distant unattended tractors and farm equipment are contextually allowed and do not violate the single-product rule.",
+        "Product dimensions are within accepted practical ranges (10–48% width, up to 58% height).",
+        "Composition is editorially acceptable; lower-third/off-center placement is not a hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

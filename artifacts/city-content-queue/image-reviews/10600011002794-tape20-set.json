@@ -1,0 +1,53 @@
+{
+  "source_id": "10600011002794-tape20",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        2,
+        4
+      ],
+      "reasons": [
+        "The set contains only 4 images, but the brief requires a review of five distinct roles (1-5).",
+        "Image 1 (Role 1 Hero) features a large roll of pipe rather than the required 'approved carton' and fails the 'small' size constraint.",
+        "Image 2 (Role 2 Evidence) violates the 'no tractor' restriction and places the product (roll, not carton) centrally rather than in a technical arrangement of spacing.",
+        "Image 3 appears to be a duplicate execution for Role 4 (Installation Proof) as it shows installed tape on crop beds, leaving Role 5 (Maintenance Detail) missing entirely.",
+        "Image 4 shows a roll, not a carton, and the background includes vehicles/trucks which violates the 'farm and irrigation context' without unrelated commercial elements."
+      ],
+      "correction_prompt": "Generate 5 distinct images: 1) Wide high-oblique farm view with small approved carton off-center lower third; 2) High angle technical crop spacing shot with carton; 3) Medium side view of unattended headworks (filter/gauge) with small carton; 4) Asymmetric view of installed tape on beds with carton at edge; 5) Extreme close-up macro detail of an emitter/connector with carton in background.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        3,
+        4
+      ],
+      "reasons": [
+        "Only four images were provided for the required five roles.",
+        "Role 3 (Headworks Story) is completely missing; no image shows fixed filters, gauges, or manifold components.",
+        "Role 4 (Installation Proof) is represented by the 3rd image, which features a straight, centered vanishing point through the field rows, explicitly violating the requirement to avoid centered compositions.",
+        "Role 1 and Role 5 are visually redundant, both depicting a static roll in a barren field with a tractor in the background rather than a high-oblique hero shot or a technical maintenance close-up.",
+        "All provided images fail to include 'exactly one approved carton' as a small element in the background, as they all feature the roll as the dominant foreground subject."
+      ],
+      "correction_prompt": "Replace all five images with distinct editorial shots: 1) High-oblique farm shot with a small carton on the lower third; 2) Elevated technical view showing emitter spacing; 3) Unattended hardware (filter/gauge) side-view; 4) Asymmetric close-up of installed tape in a crop bed; 5) Macro detail of an emitter/connector.",
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [],
+      "reasons": [
+        "The provided images appear to be in the wrong order, with Role 3 (Headworks/Hardware) appearing second and Role 4 (Installation) appearing third.",
+        "Image 4 is completely missing from the set.",
+        "Image 3 (Role 4) displays a distinct 'tractor + crop rows' composition which violates the strict rejection criteria for 'repeated furrow-field plus tractor compositions'."
+      ],
+      "correction_prompt": "Resubmit the sequence in the correct order (Hero -> Evidence -> Hardware -> Installation -> Maintenance) and regenerate the crop/tractor installation shot to remove the tractor background and utilize an asymmetric, no-vanishing-point composition.",
+      "set_attempt": 3,
+      "accepted_individual_qa_fallback": true
+    }
+  ]
+}

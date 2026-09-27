@@ -1,0 +1,70 @@
+{
+  "source_id": "10600012002792-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 27,
+      "product_height_percent": 41,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Presence of a person (farmer) in the background, violating the zero-human rule.",
+        "Hard reject: Visible buckets, jugs, and open cardboard boxes identified as containers/second commercial packages.",
+        "Hard reject: The required bottom-right watermark 'AFP | 09134922013' is missing.",
+        "Role mismatch: The image is a product hero shot, not the required 'HEADWORKS STORY' showing unattended fixed filters and gauges with the carton as secondary."
+      ],
+      "correction_prompt": "Regenerate a medium side view of unattended fixed irrigation infrastructure (filter, gauge, regulator, manifold) with exactly one small AFP carton in the background. Ensure the scene is completely free of people, bottles, jugs, and other commercial containers. Add the mandatory bottom-right watermark text 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "product_width_percent": 27,
+      "product_height_percent": 35,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Second commercial package (open carton) is visible in the frame, which is a hard reject",
+        "Text on the main carton roll is gibberish ('Orip Allrodert Tyro') and not a real headline/caption, which is a hard reject",
+        "Watermark text is missing"
+      ],
+      "correction_prompt": "Remove the open carton and regenerate. Fix all text on the main roll to be crisp, legible, and in English. Ensure the watermark 'AFP | 09134922013' is clearly visible in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Visible human figure (man crouching in the foreground), which is a hard reject requirement.",
+        "The required image role 'HEADWORKS STORY' (showing fixed filters, gauges, regulators, and manifolds with the carton as secondary) is not met; the image shows a person manually handling a hose and gauge."
+      ],
+      "correction_prompt": "Remove the human figure completely. Reframe the scene to focus on a medium side view of a fixed infrastructure cluster including a filter, gauge, and manifold, with the small white-and-blue AFP drip-tape carton positioned as a secondary element. Maintain the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Required AFP white-and-blue drip-tape carton roll is clearly present, isolated, and in correct color scheme.",
+        "Roll size and framing are within the 10–48% width and ≤58% height practical window.",
+        "Headworks context (filter, gauge, manifold) is visible and supports the brief; the roll remains appropriately secondary.",
+        "No people, hands, faces, body parts, human silhouettes, or human-related elements are present.",
+        "Exactly one commercial roll is shown; no second package, bottle, jar, canister, bucket, fertilizer/pesticide container, layflat hose, or pipe through the roll.",
+        "No fake or gibberish headline/caption; visible text is limited to acceptable labeling and the required watermark.",
+        "Watermark “AFP | 09134922013” is present exactly as required at bottom-right and retained.",
+        "Distant unattended tractor and farm infrastructure are contextual and allowed."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
