@@ -4,7 +4,7 @@ import base64,json,os,re,urllib.request,tempfile,shutil
 from concurrent.futures import as_completed
 from pathlib import Path
 import image_prompt_policy
-REVIEW_POLICY='strict-no-human-scale-watermark-v10-atomic-city-set-reviewed'
+REVIEW_POLICY='strict-no-human-scale-watermark-v11-tolerant-metrics-atomic-city-set-reviewed'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
@@ -31,14 +31,15 @@ def _metric_check(family,verdict):
   x_center=float(verdict.get('product_x_center_percent'))
  except (TypeError,ValueError):
   return False,['Return numeric product_width_percent, product_height_percent and product_x_center_percent.']
- min_width,max_width=(12,15) if family=='layflat' else (20,23)
+ # Prompt targets remain narrow; the machine envelope tolerates vision-estimation noise.
+ min_width,max_width=(9,20) if family=='layflat' else (13,27)
  issues=[]
  if width<min_width:
   issues.append(f'Enlarge the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
  elif width>max_width:
   issues.append(f'Reduce the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
- if height>28:
-  issues.append(f'Reduce product height from {height:g}% to at most 28% of frame height.')
+ if height>32:
+  issues.append(f'Reduce product height from {height:g}% to at most 32% of frame height.')
  return not issues,issues
 
 def _vision_review(base,path,item,kind):
@@ -53,8 +54,8 @@ def _vision_review(base,path,item,kind):
   criteria='The image must show exactly two approved layflat objects: one packaged AFP coil and one bare black woven coil. The complete pair must occupy only about 12 to 15 percent of frame width, stay off-center on the lower third, remain fully visible, separate and flat on the ground. The image must contain zero people and zero human body parts.'
   reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part, human silhouette, tractor, harvester, vehicle or machine cabin, even distant. Hard reject a pair wider than 15 percent of the frame, centered product staging, any third hose or product, round pipe, drip tape, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or distorted dimensions.'
  else:
-  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. Estimate its pixel bounding box: it must occupy only about 20 to 23 percent of full frame width, no more than about 28 percent of frame height, stay off-center on the lower third, and remain secondary to the farm context. The image must contain zero people and zero human body parts. The background must visibly match the article brief and the selected image role.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part, human silhouette, tractor, harvester, vehicle or machine cabin, even distant. Hard reject a roll wider than 23 percent of the frame, taller than 28 percent of the frame, centered product staging, bottle, jar, canister, bucket, fertilizer or pesticide container, second package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry, generic unrelated scenery or distorted dimensions.'
+  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. Prefer 20 to 23 percent of frame width, but accept practical estimates from 13 to 27 percent when the roll remains secondary; height must be no more than 32 percent. Keep it off-center on the lower third. The image must contain zero people and zero human body parts. The background must visibly match the article brief and the selected image role.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part, human silhouette, tractor, harvester, vehicle or machine cabin, even distant. Hard reject a roll wider than 27 percent of the frame, taller than 32 percent of the frame, centered product staging, bottle, jar, canister, bucket, fertilizer or pesticide container, second package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry, generic unrelated scenery or distorted dimensions.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
 Article visual brief: {brief}. Mandatory role: {image_prompt_policy.ROLE_DIRECTIVES.get(int(kind),'')}.

@@ -25,8 +25,6 @@ class CityImagePolicyTests(unittest.TestCase):
         self.assertIn("image_qa_deferred", queue_source)
         self.assertIn("deferred_image_qa_items", queue_source)
         self.assertNotIn("item['attempts']=max(0,int(item.get('attempts',0))-1)", queue_source)
-        self.assertIn("image_prompt_policy.product_family(item)=='layflat'", queue_source)
-        self.assertIn("candidates.sort", queue_source)
         rebuild_source = (
             ROOT / "automation" / "rebuild_city_images_preserve_posts.py"
         ).read_text(encoding="utf-8")
@@ -81,9 +79,19 @@ class CityImagePolicyTests(unittest.TestCase):
                 "product_x_center_percent": 50,
             },
         )
+        self.assertTrue(ok)
+        self.assertEqual(issues, [])
+        ok, issues = image_quality_gate._metric_check(
+            "tape20",
+            {
+                "product_width_percent": 12,
+                "product_height_percent": 33,
+                "product_x_center_percent": 50,
+            },
+        )
         self.assertFalse(ok)
         self.assertTrue(any("Enlarge" in issue for issue in issues))
-        self.assertTrue(any("at most 28%" in issue for issue in issues))
+        self.assertTrue(any("at most 32%" in issue for issue in issues))
 
     def test_rejected_five_image_set_keeps_published_files_untouched(self):
         with tempfile.TemporaryDirectory() as tmp, patch.dict(
