@@ -1,0 +1,53 @@
+{
+  "source_id": "10500013002409-layflat",
+  "family": "layflat",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Presence of human figures: There are two people visible in the image (one crouching near the product and one standing in the background near a tractor). The brief strictly requires zero people or body parts.",
+        "Placement and role failure: The image is a medium shot of a person inspecting the product, not the required 'INSTALLATION PROOF' which calls for an 'asymmetric unattended view' of an extended connection entering the field with the coil pair remaining small at the field edge."
+      ],
+      "correction_prompt": "Remove all people and tractors completely. Redo the scene as a wide, unattended landscape shot. Show the two coils (one packaged, one bare) very small in the bottom foreground. An extended section of the hose must snake away from the coils deep into the middle ground to prove installation. No humans allowed.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 82,
+      "product_height_percent": 55,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The layflat hose extending into the field is extremely wide and violates the constraint that the pair should be 20-35% (max 60%) of the frame width.",
+        "The image contains three product items at the foreground (two black coils and one packaged coil), violating the 'zero third commercial package or third coil' hard reject rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 82% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate with the laid-out hose and the two coils (one packaged, one bare) occupying a much smaller portion of the frame, positioned at the far edge of the field. Strictly include only two product items: one packaged coil and one bare black woven coil. Do not include any additional packages or bottles. Reduce the product group from 82% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 42,
+      "product_height_percent": 20,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "The image correctly displays the required approved layflat pair: one packaged coil (AFP) and one bare black woven coil.",
+        "The two objects are separate, fully visible, physically plausible, and maintain a safe distance from each other.",
+        "The product scale (occupying roughly 42% of the frame width) is within the acceptable practical vision estimate range of 8% to 60%.",
+        "The mandatory bottom-right watermark \"AFP | 09134922013\" is present.",
+        "The image fulfills the \"INSTALLATION PROOF\" role by showing an extended layflat hose traveling into the field.",
+        "There are zero people, human body parts, or forbidden third commercial packages (like bottles or buckets) visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
