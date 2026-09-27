@@ -1,0 +1,88 @@
+{
+  "source_id": "1060002002803-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 27,
+      "product_height_percent": 43,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Hard reject: Visible human silhouettes/persons present in the background field"
+      ],
+      "correction_prompt": "Regenerate with an empty field background, removing all visible people or human silhouettes from the horizon/distant crop rows.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 34,
+      "product_height_percent": 36,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Multiple rolls: The image clearly shows two separate rolls of drip tape (one large, one small) in the foreground.",
+        "Hard reject triggered: The rule explicitly forbids a 'second roll'.",
+        "Role mismatch: The brief required a 'MAINTENANCE DETAIL' (emitter/connector close-up), but the image is a wide landscape shot showing rolls on the ground."
+      ],
+      "correction_prompt": "Regenerate the image as a macro close-up shot of a drip-tape connector or emitter detail for a maintenance role. Ensure only one single small carton roll is visible in the background. Remove the second small roll and the tractor from the foreground composition.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "The image contains a second commercial container (the cardboard box on the right) that violates the 'exactly one approved carton' requirement.",
+        "Hard reject triggered due to the presence of a second commercial package."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right side of the frame. Ensure only the single roll of drip tape is present as the primary product subject.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 40,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Image contains multiple visible people (human silhouettes/figures) in the background, which violates the requirement for zero people or body parts.",
+        "Hard reject: The image role does not match the mandatory 'MAINTENANCE DETAIL' brief which requires an unattended close view of an emitter or material detail; this image shows a wide shot with the roll and people."
+      ],
+      "correction_prompt": "Regenerate image showing exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll on the soil in close-up. Remove all people, workers, and human silhouettes. Show a maintenance detail context (installed emitter or flush-point) without the roll being a second object. Include the required watermark 'AFP | 09134922013' in the bottom-right.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Product is too large; width ~58% exceeds the hard reject limit of 48%",
+        "Product is too large; height ~35% exceeds the hard reject limit of 28%",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 10-48% of frame width."
+      ],
+      "correction_prompt": "Reduce the size of the white-and-blue AFP drip-tape carton roll so it occupies approximately 25% of the frame width and 20% of the frame height. Keep the unattended close view context. Enlarge the product group from 0% to 10-48% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Presence of a person (farmer standing in the background) is a hard reject.",
+        "Visible open cardboard box in the background violates the 'exactly one approved carton' constraint and acts as a second package."
+      ],
+      "correction_prompt": "Regenerate the image with zero people and remove the open cardboard box in the background, leaving only the single drip-tape roll and the farm equipment.",
+      "attempt": 6
+    }
+  ]
+}
