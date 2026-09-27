@@ -2,13 +2,13 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-27T07:41:42+00:00`
+- آخرین بروزرسانی: `2026-09-27T08:51:00+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **389 از 1894 (20.54٪)**
 - تکمیل‌شده: **389**
 - در حال پردازش: **0**
-- در انتظار: **1498**
-- ناموفق: **7**
+- در انتظار: **1497**
+- ناموفق: **8**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -57,6 +57,7 @@
 - **لاجان** — `layflat`: `image hard gate rejected role 3 after 10 attempt`
 - **پیرانشهر** — `tape20`: `image hard gate rejected role 4 after 10 attempt`
 - **پیرانشهر** — `layflat`: `image hard gate rejected role 5 after 10 attempt`
+- **آواجیق** — `tape20`: `image hard gate rejected role 3 after 10 attempt`
 
 ## فایل‌های خروجی
 
