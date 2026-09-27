@@ -25,6 +25,8 @@ class CityImagePolicyTests(unittest.TestCase):
         self.assertIn("image_qa_deferred", queue_source)
         self.assertIn("deferred_image_qa_items", queue_source)
         self.assertNotIn("item['attempts']=max(0,int(item.get('attempts',0))-1)", queue_source)
+        self.assertIn("image_prompt_policy.product_family(item)=='layflat'", queue_source)
+        self.assertIn("candidates.sort", queue_source)
         rebuild_source = (
             ROOT / "automation" / "rebuild_city_images_preserve_posts.py"
         ).read_text(encoding="utf-8")
