@@ -58,11 +58,11 @@ jobs:
       AGNES_IMAGE_MODEL: agnes-image-2.5-flash
       IMAGE_MODEL: agnes-image-2.5-flash
 
-      # Three articles advance together. Keep image concurrency capped at five
+      # Operational setting after the eight-key benchmark: eight articles share sixteen image workers
       # to avoid API bursts; all fifteen role tasks share this one worker pool.
-      BATCH_SIZE: "4"
-      ARTICLE_WORKERS: "4"
-      IMAGE_WORKERS: "8"
+      BATCH_SIZE: "8"
+      ARTICLE_WORKERS: "8"
+      IMAGE_WORKERS: "16"
       IMAGE_QA_ATTEMPTS: "6"
       IMAGE_QA_MIN_SCORE: "65"
       IMAGE_QA_REVIEW_ATTEMPTS: "4"
