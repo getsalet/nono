@@ -1,0 +1,91 @@
+{
+  "source_id": "1050008001268-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The required bottom-right watermark is incorrect; the image displays \"09134922013\" instead of the mandatory \"0913492201\".",
+        "The article brief for the HEADWORKS STORY role specifically calls for a medium side view of a fixed filter, gauge, regulator, and manifold with the carton remaining small and secondary, but this image features the carton as a large, prominent primary object.",
+        "The label text on the carton, particularly \"D R I P\", is misspelled as gibberish (\"D R I P T T\"), which violates the hard reject criteria.",
+        "The object's dimensions are slightly too large for a 'small and secondary' role, occupying roughly 30% of the frame width.",
+        "Background and placement are otherwise acceptable, but these specific deviations lead to a hard reject."
+      ],
+      "correction_prompt": "Regenerate with a medium side view of a fixed irrigation filter, gauge, and manifold setup in a field. Include one small, secondary AFP carton roll as the background. Correct the label spelling. Change the bottom-right watermark text to 'AFP | 0913492201'. Ensure zero people and no extra commercial products.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 38,
+      "product_height_percent": 48,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Hard reject: A person is visible in the image (sitting in the center), violating the 'zero people' constraint.",
+        "Hard reject: The image contains a second roll and a second commercial cardboard package, violating the 'exactly one AFP... carton roll' constraint."
+      ],
+      "correction_prompt": "Regenerate the image showing a medium side view of unattended fixed irrigation hardware (filter, gauge, manifold) with exactly one AFP white-and-blue drip-tape roll. Remove all people and secondary product packaging.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: A human figure is clearly visible in the background."
+      ],
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 40,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: The image contains two visible human figures (one in the background standing, one in the foreground crouching), which violates the 'zero people' rule."
+      ],
+      "correction_prompt": "Remove all human figures and workers from the image; keep only the AFP drip-tape roll in the foreground and unattended background farm equipment.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 42,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Presence of a person (farmer) in the background: hard reject.",
+        "Presence of a cardboard box (second commercial package): hard reject.",
+        "Presence of a red fertilizer/pesticide container on the ground: hard reject.",
+        "Role mismatch: Image shows a drip-irrigation filtration unit, but the brief requires a 'medium side view of unattended fixed filter, gauge, regulator and manifold' where the product roll is small/secondary; here the roll is the primary foreground subject and the required background infrastructure is obscured or replaced by the filtration unit.",
+        "The object is not physically plausible as a drip tape roll (dimensions look too large/thick and lack visible tape layering at the top), resembling a giant roll of paper or fabric instead."
+      ],
+      "correction_prompt": "Regenerate to remove all human figures, cardboard boxes, and red plastic containers. In the background, show a medium side view of a fixed filter, gauge, and manifold setup (drip infrastructure) that is unattended. In the foreground, place the single AFP white-and-blue drip tape carton roll but keep it small and secondary (approx 20% frame width) rather than the dominant subject. Ensure the roll clearly resembles thin drip tape, not a thick paper roll.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 35,
+      "product_height_percent": 35,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "The drip-tape carton roll is standing upright (vertical orientation) instead of the required wide, low, cylindrical horizontal orientation.",
+        "The text 'Drip Irrigation Tape' on the carton is visible but appears distorted and illegible, bordering on 'gibberish writing' or 'fake headline' strictness.",
+        "The product height (~35%) is too tall relative to its width for a 'wide low' roll, failing the physical plausibility check for the specific 'wide low' descriptor."
+      ],
+      "correction_prompt": "Regenerate with the AFP carton roll lying flat or standing as a wide, low horizontal cylinder (stacked horizontally), ensuring the text is sharp, legible, and correctly oriented. Keep the roll smaller (20-28% width).",
+      "attempt": 6
+    }
+  ]
+}
