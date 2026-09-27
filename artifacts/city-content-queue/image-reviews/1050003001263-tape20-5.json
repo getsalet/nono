@@ -1,0 +1,51 @@
+{
+  "source_id": "1050003001263-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The image contains a person (a farmer sitting in the field in the background), which is a hard reject.",
+        "The product is a drip tape roll (Role 1), but the mandatory role for this brief is MAINTENANCE DETAIL (Role 5), which requires an unattended close view of an installed emitter, connector, or material detail. This image is not a close-up detail shot."
+      ],
+      "correction_prompt": "Remove the person from the background and change the image to an unattended close-up detail of an installed drip-tape emitter or connector, keeping one visible AFP carton roll in the background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 33,
+      "product_height_percent": 44,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Image contains gibberish writing on the carton ('Drtp ANTAplOn') instead of the required Persian text.",
+        "Hard reject: Roll geometry is not wide; height is disproportionately similar to width, violating the 'wide' shape requirement."
+      ],
+      "correction_prompt": "Regenerate with a strictly wide, short cylindrical roll (width 2.5x height) that is physically plausible. Ensure the text on the carton is legible Persian/Farsi instead of gibberish. Keep the unattended agricultural context.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 34,
+      "product_height_percent": 45,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "The single white-and-blue AFP drip-tape roll is clearly visible and matches the brand and physical description (wide, low cylinder).",
+        "No people, human body parts, or unrelated commercial containers are present in the image.",
+        "The bottom-right watermark matches the required string exactly: \"AFP | 09134922013\".",
+        "Placement and scale are practical and within accepted thresholds; object is physically plausible and not distorted.",
+        "Context matches article brief: crop field, drip irrigation, farm infrastructure, and no duplicate or prohibited items."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

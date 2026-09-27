@@ -1,0 +1,41 @@
+{
+  "source_id": "10500010001257-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 62,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The image contains a standing human figure in the upper-left background (worker/farmer), which violates the mandatory zero-people rule.",
+        "Hard reject: The bounding box for the product pair exceeds the 60% maximum width limit for a practical hero shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Remove the standing human figure in the background. Reduce the scale of the two coils to occupy no more than 30% of the image width. Maintain the wide editorial high-oblique perspective of the farm field and the required bottom-right watermark. Reduce the product group from 62% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 45,
+      "product_height_percent": 38,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Contains exactly one packaged coil and one bare black woven coil, both fully visible and physically plausible",
+        "Zero people, human body parts, or silhouettes detected",
+        "Approved watermark present in bottom right corner",
+        "Product pair is clearly identifiable within the acceptable 8–60% frame width range",
+        "Editorial layout places products off-center and lower-third, which is acceptable",
+        "No extra commercial products or containers present",
+        "Background farm elements are relevant to the context and not hard rejects"
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "source_id": "1050003001261-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 42,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Presence of a person and full human body parts (face, hands, legs) which are hard rejects.",
+        "Role conflict: Mandatory role 5 requires an unattended close view of an installed detail, but the image shows a wide scene with a person interacting with the product."
+      ],
+      "correction_prompt": "Regenerate as a close-up detail shot of an installed drip tape emitter and connector in the soil. The background must be an unattended white and blue AFP carton roll. Ensure the frame contains absolutely no people, hands, or body parts.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 33,
+      "product_height_percent": 38,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The image role is specified as 'MAINTENANCE DETAIL' (unattended close view of an installed drip-tape emitter, connector, flush-point or material detail). This image shows a product overview (the roll sitting on the ground) rather than a close-up maintenance detail.",
+        "The presence of scissors/trimming tools next to the roll adds an extra item that distracts from the 'no person, second roll, box, bottle or unrelated commercial container' rule, although they are tools, not containers.",
+        "The background shows a wide field view rather than a close-up detail view required by the role."
+      ],
+      "correction_prompt": "Generate a close-up detail shot of an installed drip-tape emitter or flush point in the soil. Include exactly one AFP white-and-blue carton roll in the background (blurred) or visible edge, but focus on the maintenance detail. Do not include tools, people, or second rolls.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 45,
+      "product_height_percent": 48,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Second commercial roll visible in the background (hard reject for 'second roll')."
+      ],
+      "correction_prompt": "Regenerate the image showing exactly one AFP white-and-blue drip-tape roll, strictly removing the second roll from the background, ensuring the background only contains unattended farm infrastructure and soil.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 37,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: A person is clearly visible crouching in the background on the left side",
+        "Hard reject: A second unattended drip tape roll is visible on the far right side of the frame",
+        "Visible human silhouette and body parts present in the background violate the 'zero people' constraint"
+      ],
+      "correction_prompt": "Regenerate the image to show only the AFP drip-tape roll in the foreground on the soil. Remove the crouching person from the background and remove the second drip-tape roll from the right side. Keep the tractor and farm building as distant background context but ensure no other products or people are visible. Retain the bottom-right watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image fails to meet the mandatory visual brief requirement for the 'MAINTENANCE DETAIL' role, which requires an unattended close view of an installed drip-tape emitter, connector, flush-point, or material detail.",
+        "The current image only shows a generic roll of drip tape in an open field, which does not align with the specific maintenance/technical detail context requested."
+      ],
+      "correction_prompt": "Regenerate the image to show an unattended close-up view of an installed drip-tape connector or flush-point on the soil (maintenance detail), with the specific AFP roll visible in the background or foreground as the only commercial package. Ensure the required bottom-right watermark 'AFP | 09134922013' remains visible. Do not include any people or other bottles/containers.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 70,
+      "product_width_percent": 33,
+      "product_height_percent": 35,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "The image contains gibberish and illegible writing on the side of the AFP roll, which is a hard reject condition."
+      ],
+      "attempt": 6
+    }
+  ]
+}
