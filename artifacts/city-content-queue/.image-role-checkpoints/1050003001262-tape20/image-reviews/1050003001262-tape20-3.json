@@ -1,0 +1,89 @@
+{
+  "source_id": "1050003001262-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: presence of a visible human (farmer/worker) in the image."
+      ],
+      "correction_prompt": "Remove the person entirely. Show only the static drip tape roll on the soil next to the fixed irrigation pump, filter, and manifold. Keep the tractors and farm building in the background but remove any human silhouettes or body parts.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "A second commercial package (an open cardboard box) is present next to the roll.",
+        "A coiled black tube/pipe is visible near the filtration hardware and inside the box, which conflicts with the hard reject criteria for 'pipe through the roll' and 'second roll'.",
+        "The mandatory image role 'HEADWORKS STORY: medium side view of unattended fixed filter, gauge, regulator and manifold' is not met; instead, the product roll is the primary subject in the foreground."
+      ],
+      "correction_prompt": "Regenerate to strictly follow the 'HEADWORKS STORY' role: focus on a medium side view of the unattended fixed filter, gauge, regulator, and manifold on the ground. Remove the open cardboard box and the coiled black pipe entirely. Keep the single white and blue AFP drip tape roll small and secondary in the background or side. Ensure zero people.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 41,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Hard reject: visible human silhouette in the background, near the red barn and tractor.",
+        "Text on the carton roll contains gibberish/mangled characters rather than the required exact watermark; the 'AFP' logo is present but other printed text is distorted."
+      ],
+      "correction_prompt": "Remove the human figure from the background entirely. Keep the white and blue AFP drip tape carton roll small and secondary on the left. Ensure all background elements are inanimate. Remove all gibberish text on the product packaging; the exact bottom-right watermark 'AFP | 09134922013' must remain.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Visible human driver inside the green tractor cabin",
+        "Second commercial roll/carton visible in the background to the left (near the pipe)",
+        "Mandatory image role 'HEADWORKS STORY' requires the carton to be small and secondary; here it is the primary large subject",
+        "Visible gibberish/phonetically spelled text on the carton label instead of clear readable text"
+      ],
+      "correction_prompt": "Regenerate without any people or drivers in the tractor. Remove the background carton to ensure only one product roll is present. Make the main roll smaller and secondary to the foreground irrigation infrastructure (filter, gauge, manifold). Fix the text on the roll to be clear English or Persian without phonetic gibberish.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Visible person",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 10-48% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with zero people or human body parts Enlarge the product group from 0% to 10-48% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 26,
+      "product_height_percent": 48,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Person in image",
+        "Manifolds/filters not visible"
+      ],
+      "correction_prompt": "Remove the man. Add a visible filter unit, pressure gauge, and manifold assembly in the midground. Ensure the scene depicts unattended irrigation infrastructure.",
+      "attempt": 6
+    }
+  ]
+}

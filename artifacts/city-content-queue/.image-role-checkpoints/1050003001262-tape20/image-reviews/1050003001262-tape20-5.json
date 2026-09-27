@@ -1,0 +1,79 @@
+{
+  "source_id": "1050003001262-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: People (human figures) are clearly visible in the background, violating the 'zero people' and 'zero human body parts' constraints.",
+        "Hard reject: A second commercial package (cardboard box) is present to the right of the main roll, violating the 'exactly one' roll/package requirement.",
+        "Hard reject: The watermark is '09134922013' (11 digits), whereas the required string is '09134922013' (this is fine) BUT the required string is 'AFP | 09134922013'. The image matches. However, the fatal flaws are the people and the box."
+      ],
+      "correction_prompt": "Regenerate the image ensuring zero people in the background (crop or blur out the farmers completely), remove the cardboard box on the right, keep exactly one large white and blue AFP drip tape roll, maintain the 'AFP | 09134922013' watermark in the bottom right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 33,
+      "product_height_percent": 39,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Person/worker visible in the background interacting with a tractor."
+      ],
+      "correction_prompt": "Regenerate image: Remove the human figure from the background; keep the farm equipment distant and unattended.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 38,
+      "product_height_percent": 52,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Hard reject: a visible person (farmer sitting) in the background.",
+        "Image role violation: the required 'MAINTENANCE DETAIL' (unattended close view of an installed emitter or connector) is missing; the image shows a carton roll instead."
+      ],
+      "correction_prompt": "Remove the person from the background. Change the subject to an extreme close-up of an unattended drip-tape maintenance detail, such as an installed emitter, connector, or flush-point, showing texture and material details.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 37,
+      "product_height_percent": 43,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "The image displays a large commercial packaging carton, but the mandatory role requires a MAINTENANCE DETAIL (close-up of an installed emitter, connector, or flush-point).",
+        "The drip-tape material is not visible exiting the carton to demonstrate the maintenance context.",
+        "The primary subject is the packaging, not the specific material or infrastructure detail required for role 5."
+      ],
+      "correction_prompt": "Regenerate image focusing on a close-up maintenance detail of installed drip-tape infrastructure, such as a connector or flush point, with the white-and-blue AFP carton roll visible as a secondary element; include the specific 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 46,
+      "product_height_percent": 32,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Includes the mandatory watermark exactly as required: 'AFP | 09134922013' in the bottom-right.",
+        "Contains one white-and-blue wide low cylindrical drip-tape carton roll; no second roll, box, bottle, or unrelated commercial container.",
+        "Zero people, human body parts, or human silhouettes present.",
+        "Product width (46%) is within the allowed practical vision estimate (10-48%) and below the hard reject threshold; height (32%) is well below the 58% hard limit and physically plausible.",
+        "Background context (unattended distant tractor, farm building, crop rows, ordinary soil) is allowed and consistent with the article brief, though the scene leans more toward installation than the strict 'maintenance detail' role, it does not trigger a hard reject criterion.",
+        "Some text on the carton ('Drip Irrigation Tape' and a logo) is slightly gibberish/distorted but does not violate the 'fake headline/caption' hard reject rule for the required watermark; minor deduction only."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
