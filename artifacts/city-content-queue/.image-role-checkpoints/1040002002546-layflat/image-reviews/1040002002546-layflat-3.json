@@ -1,0 +1,95 @@
+{
+  "source_id": "1040002002546-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Image contains a human subject (crouching man), which is a strict hard reject.",
+        "A hand and arm are visible, further violating the zero-human rule.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with zero people. Place exactly two layflat coils (one black woven, one white packaged AFP) on bare soil. Position a fixed pump, gauge, and manifold in the background. The product pair must be small, flat, on the lower third of the frame, with no human presence anywhere in the image. Enlarge the product group from 0% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 34,
+      "product_height_percent": 28,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "The 'packaged' coil is a box with illegible gibberish text, failing the 'approved package' requirement and lacking clear 'AFP' identification.",
+        "The black coil is unrolled, failing the 'layflat' and 'flat on the ground' requirement; it is standing in a ring shape.",
+        "The product pair is positioned in the immediate foreground, making it the primary subject rather than 'secondary' as required by the role."
+      ],
+      "correction_prompt": "Redraw the image to feature a fixed blue pump assembly in the mid-ground as the main subject. Place exactly two small coils in the lower-left foreground: one is a packaged box clearly labeled 'AFP', and the second is a flat-lying black hose coil (laid flat, not standing). Keep both products secondary and off-center.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "visual reviewer unavailable: HTTPError"
+      ],
+      "correction_prompt": "Regenerate and retry strict visual review.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 55,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Exactly two approved layflat objects are visible: one bare black woven coil and one packaged coil.",
+        "Zero people or human body parts are present.",
+        "Zero tractors, harvesters, vehicles, or machine cabins are present.",
+        "The required bottom-right watermark 'AFP | 09134922013' is visible.",
+        "The fixed pump, gauge, and manifold assembly is correctly identified as 'HEADWORKS STORY' role and not as an extra commercial product.",
+        "The product pair remains in the lower third and is fully visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 58,
+      "product_height_percent": 45,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Round pipe is present (rusty pipe on the left side of the frame).",
+        "Hard reject: The pair of layflat hoses is centered in the lower half (product staging).",
+        "Hard reject: The product pair (coils) is too large, spanning approximately 58% of the frame width, exceeding the 36% maximum limit.",
+        "Hard reject: Three layflat coils are visible (two bare, one packaged), violating the 'exactly two' rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-36% of frame width.; Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Remove the rusted pipe on the left. Remove the bare layflat coil on the left to ensure exactly two coils remain (one packaged, one bare). Scale the two coils down to approximately 15% of the frame width and move the pair to the lower-left third of the frame so it is not centered. Keep the pump, gauge, and manifold on the right. Reduce the product group from 58% to 8-36% of frame width. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 10,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Presence of a person in the image is a hard reject.",
+        "Product is not positioned on the lower third as required.",
+        "The pair is not secondary; the presence of the person distracts from the product pair.",
+        "The product is not fully visible, with part of it obscured by the packaging and the person."
+      ],
+      "correction_prompt": "Remove all people from the scene, reposition the pair of coils to the lower third, and ensure they remain secondary and fully visible.",
+      "attempt": 6
+    }
+  ]
+}

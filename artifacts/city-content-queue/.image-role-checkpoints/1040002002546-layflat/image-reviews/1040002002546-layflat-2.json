@@ -1,0 +1,64 @@
+{
+  "source_id": "1040002002546-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 62,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product width 62 percent exceeds the 36 percent hard reject limit",
+        "Third object (canister/filter) present next to the pair, violating 'exactly two approved layflat objects' rule",
+        "Building visible in background, violating 'no building' constraint",
+        "Round pipe/hose (right coil) present instead of a second layflat coil",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-36% of frame width.; Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate with two flat layflat coils only, total pair width 20 percent of frame, positioned off-center on the lower third, zero canisters or third objects, no buildings or skyline in background, open textured soil only. Reduce the product group from 62% to 8-36% of frame width. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Pair exceeds the 36 percent maximum width limit (estimated at 45 percent).",
+        "Pair is centered in the frame rather than staying off-center on the lower third.",
+        "Contains a third object (the packaged coil in the foreground) when only exactly two coils are permitted.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Reduce the size of the coil pair to 15 percent of frame width, shift the composition to the lower-left, and remove the third packaged coil to ensure exactly two coils are visible. Reduce the product group from 45% to 8-36% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "visual reviewer unavailable: HTTPError"
+      ],
+      "correction_prompt": "Regenerate and retry strict visual review.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 72,
+      "product_width_percent": 35,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product pair is slightly wide (35%) but within the acceptable 8-36% range for secondary placement.",
+        "Staging is slightly lower-right rather than the strict lower-third off-center, but objects remain fully visible and secondary.",
+        "Zero people, vehicles, or forbidden objects detected.",
+        "Watermark is correctly positioned and present."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

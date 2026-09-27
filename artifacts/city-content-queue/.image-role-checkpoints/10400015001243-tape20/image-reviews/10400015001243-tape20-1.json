@@ -86,6 +86,52 @@
       ],
       "correction_prompt": "Reposition the drip-tape roll to the lower-left third of the frame (around x-center 25%) to maintain a high-oblique editorial view where the farm context dominates.",
       "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 17,
+      "product_height_percent": 34,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: The image contains multiple people (farmers/workers) standing in the field on the right side.",
+        "Hard reject: The image contains a tractor and a spraying machine in the background on the left side.",
+        "Role mismatch: The presence of vehicles and people violates the mandatory requirement for a background dominated by the farm/irrigation context without specific machinery or human elements."
+      ],
+      "correction_prompt": "Remove all humans and the tractor/machine from the field. Keep the AFP drip tape roll in the foreground lower-left area. Show an open agricultural field with irrigation rows under a clear sky.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 23,
+      "product_height_percent": 26,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: Product text 'Dsigp 11-Cigpe/clevs 1lge' is gibberish/fake writing.",
+        "Hard reject: Watermark 'AFP | 09134922013' does not exactly match the required 'AFP | 09134922013' (contains an extra '2' in the phone number).",
+        "Hard reject: Product packaging does not clearly read as 'AFP' (reads as 'APF') and lacks required white-and-blue color scheme for the label.",
+        "Hard reject: Product staging in foreground feels too prominent/large relative to the 'EDITORIAL HERO' brief which requests the carton be 'secondary'."
+      ],
+      "correction_prompt": "Regenerate with a correctly spelled 'AFP' logo on the white and blue carton, fixing the gibberish text on the label. Ensure the required watermark is exactly 'AFP | 09134922013'. Make the carton appear more distant and secondary to the irrigation field context.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Exact match for AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Product is off-center on the lower third, positioned slightly left of center.",
+        "Product dimensions are within the preferred range (width ~18%, height ~22%).",
+        "Background clearly shows farm and irrigation context (crop rows) with no forbidden vehicles or people.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Zero human body parts or silhouettes visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
     }
   ]
 }

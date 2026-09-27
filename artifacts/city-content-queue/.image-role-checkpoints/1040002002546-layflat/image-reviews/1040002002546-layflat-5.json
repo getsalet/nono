@@ -1,0 +1,75 @@
+{
+  "source_id": "1040002002546-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "visual reviewer unavailable: HTTPError"
+      ],
+      "correction_prompt": "Regenerate and retry strict visual review.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "visual reviewer unavailable: HTTPError"
+      ],
+      "correction_prompt": "Regenerate and retry strict visual review.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 68,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The product pair (packaged coil, flat coil, and bare coil) occupies approximately 68 percent of the frame width, significantly exceeding the 36 percent maximum limit.",
+        "Hard reject: A third product type is visible in the center (an open box of small coils/rolls), violating the 'exactly two approved layflat objects' rule.",
+        "Hard reject: A tractor/vehicle cabin is visible in the background on the right side.",
+        "Hard reject: Centered product staging; the products span the full width and are centered rather than secondary on the lower third.",
+        "Role violation: The image shows a wide group shot, not the required MAINTENANCE DETAIL close-up of one connector on bare soil.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate with exactly two layflat objects: one packaged AFP coil and one bare black woven coil. The pair should occupy less than 20% of the frame width, placed on the left in the lower third (secondary). No third product (remove box). No vehicles/tractors in the background. Focus on a close-up maintenance detail of a connector on bare soil. Reduce the product group from 68% to 8-36% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 78.0,
+      "product_height_percent": 38.0,
+      "product_x_center_percent": 51.0,
+      "reasons": [
+        "Product pair width (approx 78%) significantly exceeds the maximum acceptable threshold of 36 percent of frame width",
+        "The scene is center-staged; the products are the dominant main subject rather than a secondary detail element",
+        "The mandatory 'MAINTENANCE DETAIL' role (unattended downward close-up of a connector, fold, or woven-surface detail) is not achieved",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a low-angle, unattended close-up maintenance detail on bare soil, focusing on a specific connector joint or woven texture. The two required coils must be kept small, secondary, and positioned in the lower third, with a combined width strictly under 36% of the frame. Ensure no large product staging or centered compositions. Reduce the product group from 78% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 36,
+      "product_height_percent": 28,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The image accurately features the two required layflat objects: a bare black woven coil and a packaged coil (with 'LAJAN' branding visible).",
+        "Both coils are positioned in the lower third of the frame, appearing secondary to the foreground soil detail which fulfills the 'MAINTENANCE DETAIL' role requirement.",
+        "No people, human body parts, vehicles, or machines are present, strictly adhering to the hard reject criteria.",
+        "The product pair remains fully visible and separate on the ground.",
+        "The required watermark 'AFP | 09134922013' is correctly present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

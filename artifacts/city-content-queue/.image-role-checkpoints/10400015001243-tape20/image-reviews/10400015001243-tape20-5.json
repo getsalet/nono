@@ -93,6 +93,94 @@
       ],
       "correction_prompt": "Regenerate as a tight, downward close-up of a drip-tape emitter on bare soil. Include the small, white-and-blue carton roll off-center in the lower-left or lower-right. Remove the horizon and wide crop-row panorama. Keep zero people and vehicles.",
       "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image clearly contains two rolls of drip tape, which violates the requirement to show exactly one carton roll and triggers the hard reject rule for a 'second roll'.",
+        "The mandatory image role requires 'MAINTENANCE DETAIL' showing an unattended downward close-up of an installed emitter, connector, or flush-point, but the provided image depicts product packaging on soil instead.",
+        "The main roll is centered horizontally in the frame, which violates the requirement to keep it off-center and avoids 'centered product staging'."
+      ],
+      "correction_prompt": "Regenerate the image to show exactly one small AFP drip-tape roll (12-23% frame width) in the lower-left. The main focus must be a close-up of an installed drip-tape connector or flush point on the soil. Remove the second roll and the horizon line. Ensure the roll is not centered.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: Background contains a tractor (vehicle/machine), which is explicitly forbidden even when distant or unattended.",
+        "Hard reject: Background contains a horizon and crop-row panorama, which violates the constraint for role 5 (MAINTENANCE DETAIL)."
+      ],
+      "correction_prompt": "Remove the tractor from the background and remove the horizon/crop-rows. Replace the background with a close-up of bare soil only. Keep the drip-tape roll and the single blue emitter as the sole subjects.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 34,
+      "product_height_percent": 32,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The image contains a metallic flush rod/stick lying on the soil, which acts as a 'tool' or 'pipe through the roll' (in the context of the drip system) that is strictly forbidden under the 'Hard reject' constraints.",
+        "The visual role 'MAINTENANCE DETAIL' is not met; the brief demands an 'unattended downward close-up of exactly one installed drip-tape emitter' with the carton being 'secondary', whereas this image is a medium-shot product display where the carton is the primary focus.",
+        "The background includes a crop-row panorama and horizon, which is explicitly forbidden for this specific role.",
+        "The roll's width (34%) is at the absolute upper limit of rejection and its height (32%) is too dominant for the requested 'secondary' presentation."
+      ],
+      "correction_prompt": "Re-generate as a top-down macro shot of a single white drip-tape emitter connected to blue tape on bare soil. Include a small (12-15% width), blurred white and blue AFP carton in the periphery. Completely remove the metallic flush rod, horizon, and crop-row background. Ensure the soil is the primary focus with no visible people or vehicles.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 34,
+      "product_height_percent": 48,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The mandatory visual role 'MAINTENANCE DETAIL' requires the primary focus to be an installed drip-tape emitter, connector, or flush-point on bare soil; the image instead focuses on a carton roll.",
+        "There is a visible second package (carton) in the background, which is a hard reject condition ('second package').",
+        "The bounding box of the primary roll exceeds the height limit at approximately 48% of the frame height (limit is 42%).",
+        "The product is centered horizontally and in the middle of the frame, violating the 'off-center on the lower third' requirement.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Reframed close-up on an installed drip-tape emitter on bare soil with a small secondary carton roll in the background. Reduce product height from 48% to at most 42% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Background contains a tractor and vehicle cabin (distant field)",
+        "Hard reject: Second package (cardboard carton) is present next to the roll",
+        "Hard reject: Mandatory role 'MAINTENANCE DETAIL' not met; image is not a close-up of an installed emitter, connector, or flush-point on bare soil",
+        "Product staging is centered rather than off-center in the lower third"
+      ],
+      "correction_prompt": "Regenerate as a close-up maintenance detail of a single installed drip-tape emitter or flush-point on bare soil. Remove all tractors and machinery from the background. Remove the cardboard carton; show only one small, secondary white-and-blue AFP drip-tape roll. Position the roll off-center in the lower third (approx 20% width).",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: forbidden tractor/vehicle visible in background",
+        "Role mismatch: shows staged roll on soil instead of required 'MAINTENANCE DETAIL' (installed emitter/flush-point)",
+        "Missing required bottom-right watermark 'AFP | 09134922013'",
+        "Contains gibberish/fake headline text on carton"
+      ],
+      "correction_prompt": "Generate close-up MAINTENANCE DETAIL on bare soil of installed drip-tape flush point; secondary small AFP carton (12-23% width, low/slit, off-center, lower third); NO tractor/vehicle/horizon/gibberish text; add bottom-right watermark 'AFP | 09134922013'",
+      "attempt": 6
     }
   ]
 }

@@ -1,0 +1,86 @@
+{
+  "source_id": "1040002001236-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 31,
+      "product_height_percent": 42,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The background contains a tractor/vehicle in the upper-right area, which is a hard reject condition",
+        "Product is nearly centered rather than distinctly off-center"
+      ],
+      "correction_prompt": "Remove the tractor from the background entirely and shift the product roll slightly to the right to ensure it is clearly off-center.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "visual reviewer unavailable: HTTPError"
+      ],
+      "correction_prompt": "Regenerate and retry strict visual review.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Multiple people (farmers) are visible in the field on the left side of the image.",
+        "Hard reject: A tractor/vehicle is visible in the background on the right side.",
+        "The product (drip-tape roll) is positioned in the bottom-center rather than off-center on the lower third as required.",
+        "The product appears to have a floating, artificial shadow that does not match the lighting of the high-oblique sun, making it look like a bad composite."
+      ],
+      "correction_prompt": "Regenerate the image without any people or tractors. Move the white and blue drip-tape roll to the lower-left or lower-right third (off-center) so it is not central. Ensure the roll casts a realistic shadow consistent with the golden hour lighting on the farmland.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Tractor/vehicle is visible in the background (upper right), which is explicitly forbidden even when unattended.",
+        "Product staging is centered horizontally (x_center ~50%), violating the 'off-center' requirement.",
+        "The text on the product carton appears to be gibberish/placeholder text rather than the required specific watermark text or legible branding context."
+      ],
+      "correction_prompt": "Remove the tractor and any other vehicles from the background completely. Move the carton roll to the bottom-right third of the image (off-center). Ensure the product is small relative to the field. Keep the text on the carton legible or minimal.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 12,
+      "product_height_percent": 20,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Presence of a person (farmer) in the background is a hard reject requirement."
+      ],
+      "correction_prompt": "Regenerate image without any people. Ensure the field is empty of human figures. Keep the carton roll off-center and small.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: multiple tractors and vehicles visible in the background (left, middle, and right), violating the rule against vehicles and machine cabins.",
+        "Hard reject: The product is centered on the lower third rather than being off-center as required for the EDITORIAL HERO role.",
+        "Hard reject: A pipe visibly passes through the roll and extends towards the camera, violating the rule against pipes through the roll and impossible geometry."
+      ],
+      "correction_prompt": "Remove all background vehicles and tractors. Reposition the roll to the bottom-right or bottom-left (off-center). Replace the central white pipe with a subtle white line of drip tape running away from the roll's center hole into the field rows.",
+      "attempt": 6
+    }
+  ]
+}

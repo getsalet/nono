@@ -1,0 +1,103 @@
+{
+  "source_id": "1040002001236-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains vehicles (tractors) in the background, which are a hard reject trigger.",
+        "Missing the required 'MAINTENANCE DETAIL' role: no unattended installed drip-tape emitter, connector, or flush-point on bare soil is visible.",
+        "The background shows a generic horizon and field panorama, violating the mandatory role constraints.",
+        "Product height exceeds the 42% limit.",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate as a downward close-up of a bare soil patch with an installed drip-tape emitter. Keep the AFP roll secondary (approx. 20% width). Remove tractors, vehicles, and the horizon/panorama background. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: The image contains tractors and vehicle cabins in the background, which are explicitly forbidden even if unattended.",
+        "Hard reject: The image contains visible people (operators) in the tractor cabins.",
+        "Role mismatch: The brief requires an 'unattended downward close-up of exactly one installed drip-tape emitter... with no horizon,' but the image shows a wide shot with a clear horizon and distant tractors.",
+        "Role mismatch: The product is presented as a staged roll in the foreground rather than a secondary object in a maintenance detail close-up."
+      ],
+      "correction_prompt": "Remove all vehicles, machinery, and people from the background. Generate a downward close-up shot of a drip-tape connector and flush-point on bare soil. Include one small, unobtrusive AFP drip-tape carton roll as a secondary element. Exclude any horizon line.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 37,
+      "product_height_percent": 45,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Presence of two people in the background (top right), which triggers a hard reject for human figures.",
+        "The drip tape carton roll is too large relative to the frame, measuring approximately 37% of the width, exceeding the 36% hard limit.",
+        "The product roll is positioned too large and vertically centered, conflicting with the requirement to be a small, secondary element in the lower third.",
+        "The image shows a roll plus a long line of installed tape stretching across the frame, rather than the requested 'MAINTENANCE DETAIL' of a close-up on a single unattended emitter.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 37% to 12-36% of frame width.; Reduce product height from 45% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures and vehicles from the background completely. Significantly reduce the scale of the white AFP drip-tape roll so its width is between 12 and 23 percent of the frame, placing it low and secondary on the left. Tighten the framing into an extreme close-up 'maintenance detail' view of a single emitter and connector on bare soil, ensuring the background is entirely free of people and the horizon is not clearly visible. Reduce the product group from 37% to 12-36% of frame width. Reduce product height from 45% to at most 42% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 27,
+      "product_height_percent": 30,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "TRACTOR present in background (Hard reject)"
+      ],
+      "correction_prompt": "Regenerate the image completely. Strictly remove the tractor and any other vehicles or machinery from the background. Ensure the background consists only of bare soil and distant horizon with zero human or machine silhouettes.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 55,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Product width exceeds the 36% limit",
+        "Product height exceeds the 42% limit",
+        "Product staging is too central/prominent instead of secondary in the lower third",
+        "Fails the mandatory role requirements (no installed drip-tape emitter, connector, or flush-point shown)",
+        "Background is a generic empty field rather than a close-up of a maintenance point on bare soil",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-36% of frame width.; Reduce product height from 55% to at most 42% of frame height."
+      ],
+      "correction_prompt": "Regenerate an unattended close-up of a single installed drip-tape emitter, connector, or flush-point on bare soil. The AFP white-and-blue drip-tape carton roll must be small and secondary (under 36% width, under 42% height), positioned off-center in the lower third. No horizon, no people, no vehicles, and no second roll or container. Reduce the product group from 38% to 12-36% of frame width. Reduce product height from 55% to at most 42% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: Human figure (farmer) is clearly visible in the background on the right.",
+        "Hard reject: Two tractors are visible in the background, violating the 'no vehicle/machine' constraint.",
+        "Hard reject: The 'MAINTENANCE DETAIL' role requires a close-up of an emitter or flush-point on bare soil, which is missing.",
+        "Hard reject: A second package (disc-shaped component) is present on the ground.",
+        "Hard reject: The background scenery (barn, tractors) contradicts the specific maintenance/soil focus of the role.",
+        "Failed check: The product width appears to be approximately 24%, which is in the acceptable range, but this is moot due to the fatal background rejections.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate image to strictly follow role 5: macro/medium shot focused on an installed drip-tape emitter, connector, or flush-point on bare soil. Remove all people, tractors, and vehicles from the frame. Include exactly one AFP drip-tape roll in the mid-ground; the roll must be 20-23% of frame width, off-center to the lower third, and secondary to the maintenance detail. Do not include any second components, bottles, or unrelated scenery. Enlarge the product group from 0% to 12-36% of frame width.",
+      "attempt": 6
+    }
+  ]
+}

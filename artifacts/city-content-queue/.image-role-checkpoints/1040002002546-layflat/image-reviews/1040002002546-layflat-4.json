@@ -1,0 +1,95 @@
+{
+  "source_id": "1040002002546-layflat",
+  "family": "layflat",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Person detected in the center frame",
+        "Multiple people (human silhouettes) detected in the background"
+      ],
+      "correction_prompt": "Regenerate image with zero people or human body parts. Keep the two layflat coils (packaged and bare) small, unattended, and on the lower-left ground; show an extended hose leading toward a fixed installation point in the distance.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 36,
+      "product_height_percent": 20,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Hard reject: Tractor and human driver are present in the scene, which are explicitly forbidden.",
+        "Hard reject: A single long hose (drip tape/line) is visible running down the crop row, violating the 'zero extra hose/product' and 'only two objects' constraints.",
+        "The scene fails the 'asymmetric unattended view' requirement due to the presence of the active tractor and the long extension line."
+      ],
+      "correction_prompt": "Remove the tractor, the driver, and the extended hose line running through the crop. Show only the two small layflat coils (one bare black, one packaged) positioned in the bottom-left. Ensure the field is unattended and empty of any other equipment or lines.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 11.0,
+      "product_height_percent": 22.0,
+      "product_x_center_percent": 19.0,
+      "reasons": [
+        "Distant tractor/sprayer machine visible in the center field horizon, violating the hard reject rule for vehicles and machine cabins.",
+        "Centered product staging violation: The two approved coils are clustered together in the same bottom-left location, rather than appearing as separate items at the edge of the frame."
+      ],
+      "correction_prompt": "Remove the distant tractor or vehicle from the horizon. Separate the packaged coil and the bare woven coil; move the bare black coil to the far bottom-right edge while keeping the packaged coil at the bottom-left, ensuring both remain small (under 15% width), separate, and flat on the ground.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 45,
+      "product_height_percent": 10,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Distant farm worker (human) visible on the machine in the background (hard reject).",
+        "Distant vehicle/tractor visible in the background (hard reject).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image without any people, farm workers, tractors, or vehicles in the background. Ensure only the two approved coils are visible on the field edge, keep them off-center and secondary. Reduce the product group from 45% to 8-36% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 12,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The image hard-rejects due to the presence of a tractor and a visible human operator (farmer) in the background.",
+        "The presence of a human body (face/head and arms of the operator) is a hard rejection criterion.",
+        "Tractors and vehicle cabins are explicitly forbidden in the brief even when unattended."
+      ],
+      "correction_prompt": "Remove the tractor and the human farmer/worker from the background entirely. The field must remain unattended and free of any vehicles or machinery. Keep the two layflat coils in the foreground exactly as they are.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 36,
+      "product_height_percent": 22,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "meets asymmetric unattended installation proof requirement with extended layflat hose entering field",
+        "exactly two approved layflat objects present: one bare black coiled hose and one packaged AFP coiled product",
+        "product pair is fully visible, flat on ground, separate and unmerged, positioned low and off-center in the lower left third",
+        "zero people, zero human body parts, no tractors, harvesters, vehicles, or machine cabins anywhere in frame",
+        "no forbidden extra products, no round pipe, drip tape, bottle, jar, canister, or invented packaging",
+        "mandatory bottom-right watermark 'AFP | 09134922013' is present and correctly rendered",
+        "product bounding box fits the acceptable 8–36% width band with the pair remaining secondary to the extended hose layout"
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

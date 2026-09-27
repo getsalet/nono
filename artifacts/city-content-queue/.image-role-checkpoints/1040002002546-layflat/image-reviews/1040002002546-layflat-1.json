@@ -1,0 +1,90 @@
+{
+  "source_id": "1040002002546-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 65,
+      "product_height_percent": 40,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Two full human figures standing in the field (hard reject for persons/workers)",
+        "Product pair bounding box is too wide (estimated 65% of frame width) relative to the 12-15% target and 36% maximum hard limit",
+        "Products are positioned in the center rather than staying off-center on the lower third",
+        "Products are excessively large and dominate the foreground, failing the 'secondary' and 'small' role requirements",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Completely remove all people from the field. Resize the packaged AFP coil and the bare black woven coil to be small (occupying approx 15% of frame width) and reposition them in the lower-left or lower-right corner to stay off-center. Reduce the product group from 65% to 8-36% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "visual reviewer unavailable: HTTPError"
+      ],
+      "correction_prompt": "Regenerate and retry strict visual review.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 56,
+      "product_height_percent": 33,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The combined bounding box of the two product objects is approximately 56% of the frame width, which violates the hard reject rule for any pair wider than 36%.",
+        "The packaged coil and the bare black coil are close to the center of the frame, failing to meet the 'off-center' requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 56% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Move both the packaged coil and the bare black coil significantly toward the bottom-left corner of the frame to achieve an off-center composition. Scale both products down so their combined width is less than 36% of the frame width. Ensure the bottom-right watermark 'AFP | 09134922013' remains intact and clearly visible. Reduce the product group from 56% to 8-36% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Human figures (workers/farmers) are present in the background, which triggers a hard reject condition.",
+        "Animal (cow/bull) is present in the background, violating the visual requirements."
+      ],
+      "correction_prompt": "Regenerate the image strictly removing all people, animals, and tractors from the background. Ensure the scene contains only the landscape, water transfer, and the two product coils on the ground.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 55,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The combined width of the two objects is estimated at 55% of the frame width, which exceeds the strict 36% maximum limit.",
+        "The product pair is positioned in a centered staging layout rather than being off-center on the lower third as required by the role.",
+        "Background elements, including tractors and potential human silhouettes in the mid-ground, violate the hard reject criteria for distant machinery and people.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Shrink the product pair to less than 35% of the frame width, position them strictly in the lower third off-center, and replace the background tractors and silhouettes with a clean wide-angle high-oblique crop row context. Reduce the product group from 55% to 8-36% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 42,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product bounding box width is estimated at 42%, which exceeds the strict 36% maximum hard reject threshold.",
+        "The two layflat coils appear to be touching/merged rather than strictly separated.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-36% of frame width."
+      ],
+      "correction_prompt": "Shrink the two layflat coils to be approximately 15% of the frame width. Increase the distance between the packaged and bare coils to ensure they are clearly separated and not touching. Maintain the bottom-right position and preserve the watermark. Reduce the product group from 42% to 8-36% of frame width.",
+      "attempt": 6
+    }
+  ]
+}
