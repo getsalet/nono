@@ -6,7 +6,6 @@ from concurrent.futures import ThreadPoolExecutor,as_completed
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 import city_content_queue as q
-import image_prompt_policy
 
 MODEL=os.getenv('CLOUDFLARE_IMAGE_MODEL','@cf/leonardo/lucid-origin')
 TOKEN=os.getenv('CLOUDFLARE_API_TOKEN','').strip(); ACCOUNT=os.getenv('CLOUDFLARE_ACCOUNT_ID','').strip()
@@ -112,13 +111,9 @@ def _produce_item(item,links,image_pool):
  except Exception as exc:raise StageFailure('image',exc) from exc
  return obj,[row[0] for row in rows],[row[1] for row in rows]
 
+# Tape-first production restart after v11 practical metric tolerance.
 def process(queue):
- candidates=[x for x in queue['items'] if x.get('status')=='pending' and x.get('attempts',0)<q.MAX_ATTEMPTS]
- # Layflat references remain unreliable with the current image provider.
- # Process healthy tape20 records first so repeated layflat quarantine does
- # not consume every hourly production slot.
- candidates.sort(key=lambda item:(image_prompt_policy.product_family(item)=='layflat',str(item.get('source_id') or '')))
- batch=candidates[:q.BATCH]
+ batch=[x for x in queue['items'] if x.get('status')=='pending' and x.get('attempts',0)<q.MAX_ATTEMPTS][:q.BATCH]
  if not batch:
   result='complete_with_failures' if any(x.get('status')=='failed' for x in queue['items']) else 'complete'
   q.write_status(queue,result);return
