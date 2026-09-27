@@ -1,0 +1,62 @@
+{
+  "source_id": "1050008002413-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 27,
+      "product_height_percent": 38,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject: presence of a human body part (man standing in the background) and a second commercial package (blue roll of tape on the right side of the frame)."
+      ],
+      "correction_prompt": "Regenerate the image to strictly include only one AFP drip tape carton roll in the foreground. Remove the man in the background entirely. Remove the second blue roll of tape. Focus on a close-up maintenance view of the single white carton on the field soil, keeping the bottom-right watermark visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 38,
+      "product_height_percent": 25,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "The mandatory role is 'MAINTENANCE DETAIL' which requires an unattended close view of an installed drip-tape emitter, connector, or material detail. The current image shows a new roll on open ground, which corresponds to 'Role 3' (packaged product).",
+        "The prompt explicitly instructs 'do not repeat role 3', making the current subject a hard reject based on the mandatory visual brief requirements."
+      ],
+      "correction_prompt": "Show an unattended close-up maintenance detail of the installed drip tape (e.g., a connector or flush-point) with the AFP white-and-blue carton roll remaining visible in the background or foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: visible human figure standing in the background on the left side of the image."
+      ],
+      "correction_prompt": "Remove the distant human figure on the left background; keep the unattended field, distant tractors, and the single AFP drip-tape carton roll unchanged.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 30,
+      "product_height_percent": 42,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue drip-tape carton roll.",
+        "No people, body parts, or human silhouettes are visible in the frame.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Product dimensions are within the acceptable 10-48% width range.",
+        "A drip-tape connector and pipe segment are visible on the right, consistent with the mandatory 'MAINTENANCE DETAIL' role."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

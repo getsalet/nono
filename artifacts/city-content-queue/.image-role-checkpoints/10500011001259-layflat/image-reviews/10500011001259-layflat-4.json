@@ -1,0 +1,52 @@
+{
+  "source_id": "10500011001259-layflat",
+  "family": "layflat",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: A human hand is clearly visible on the right side of the image holding the large coil, violating the 'zero people and zero human body parts' rule.",
+        "Rejection: The image fails to show the required 'approved layflat pair' in a packaged and bare state; instead, it shows one held coil and one loose coil.",
+        "Placement: The objects are not small at the field edge as requested; one is held prominently in the foreground.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to show a field with an extended layflat hose. Include exactly two coils at the bottom left: one small packaged AFP coil and one bare black woven coil. Ensure zero human presence or body parts. Add the required 'AFP | 09134922013' watermark in the bottom right. Enlarge the product group from 0% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 14,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "A third commercial package (white/blue wrapped coil) is visible in the bottom-left foreground alongside the two required coils, which violates the 'zero third commercial package' rule.",
+        "The required watermark 'AFP | 09134922013' is missing from the image."
+      ],
+      "correction_prompt": "Regenerate the image to remove the third white/blue wrapped coil from the bottom left, leaving only the black coiled hose and the packaged coil. Add the exact text watermark 'AFP | 09134922013' to the bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 33,
+      "product_height_percent": 25,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "The image successfully includes the mandatory bottom-right watermark 'AFP | 09134922013'.",
+        "The scene correctly depicts the 'installation proof' role with an extended layflat hose entering the field, while the product pair (one bare black coil, one packaged AFP coil) remains at the edge.",
+        "The image contains zero people or human body parts, adhering to all hard reject constraints.",
+        "The product pair's width (approx 33%) falls within the accepted 8-60% vision estimate range, keeping both objects separate and physically plausible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "source_id": "1050008002413-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: A person (farmer) and human body parts (hands, arms, legs, face) are visible and interacting with the product.",
+        "Hard reject: A second commercial package (a smaller carton) is visible on the right side."
+      ],
+      "correction_prompt": "Remove the person and the second small carton. Regenerate the scene to show only the single large AFP drip tape roll placed on the soil with no human interaction.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Presence of a commercial plastic bottle containing blue liquid, which is a hard reject as per the 'bottle, jar, canister' rule.",
+        "Secondary commercial packaging (a large brown carton box and a second small white roll) are visible, violating the 'second commercial package' rule.",
+        "Visual brief mismatch: The mandatory role for a HEADWORKS STORY is a 'medium side view of unattended fixed filter, gauge, regulator and manifold', but the image shows loose hose coils and general irrigation equipment rather than the specific fixed assembly described."
+      ],
+      "correction_prompt": "Remove all plastic bottles and secondary packaging (cartons, extra rolls). Reframe the shot to show a close-up, unattended fixed irrigation assembly (filter, manifold, and gauge). Place the single small white-and-blue drip-tape roll in the background, out of focus or secondary.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 33,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "A second commercial drip-tape roll is visible in the background, which violates the 'exactly one' requirement and the hard reject rule for a 'second roll'.",
+        "The primary product is not positioned as 'small and secondary' relative to the fixed filter infrastructure; it is depicted as the co-dominant subject, violating the 'HEADWORKS STORY' mandatory visual role."
+      ],
+      "correction_prompt": "Regenerate the image so it features exactly one AFP drip-tape roll. The roll must appear small and in the background or as a secondary element, while the fixed filter, regulator, and manifold infrastructure are the primary focus. Ensure there are no people, containers, or duplicate rolls.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 78,
+      "product_width_percent": 28,
+      "product_height_percent": 41,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The required image role (HEADWORKS STORY) demands a medium side view of a filter, gauge, regulator, and manifold with the carton as secondary. This image is composed as a foreground product shot where the roll is the dominant subject.",
+        "The text printed on the front of the product carton is gibberish/unclear ('Dhp lifetanie tep' style artifacts) rather than clean legible packaging, which falls under the hard reject for 'gibberish writing'.",
+        "The product is placed in the immediate foreground rather than as a small secondary object in a medium shot of irrigation infrastructure."
+      ],
+      "correction_prompt": "Regenerate as a medium side view of unattended fixed irrigation infrastructure including a filter, gauges, regulator, and manifold. The AFP drip tape roll must be smaller in the frame (10-15% width), placed in the background or mid-ground as a secondary context element, with clear legible text on the packaging.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "A prominent human figure (male farmer) is crouching immediately next to the main product roll in the foreground, which is a hard reject.",
+        "The image contains a visible second commercial package (a smaller white cylindrical roll) in the distant background.",
+        "The composition is dominated by the person rather than the specific irrigation infrastructure context required."
+      ],
+      "correction_prompt": "Remove the human figure from the foreground entirely. Remove the second roll in the distance. Place the AFP drip-tape carton roll as a secondary element next to a medium side-view of fixed irrigation infrastructure including a filter, gauge, regulator, and manifold in a cornfield setting.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Image features exactly one AFP drip-tape carton roll matching the required visual role.",
+        "Product width is approximately 28 percent of the frame, falling within the preferred range of 20 to 28 percent.",
+        "Product height is approximately 42 percent of the frame, within the accepted maximum of 58 percent.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "No people, human body parts, or hard-reject objects (bottles, second rolls, etc.) are visible.",
+        "Infrastructure (gauges, manifold, regulator) is present and unattended, consistent with the role's secondary context requirements."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

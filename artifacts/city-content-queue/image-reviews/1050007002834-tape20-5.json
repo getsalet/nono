@@ -1,0 +1,85 @@
+{
+  "source_id": "1050007002834-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 18,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains a person, which is a hard reject criterion.",
+        "The required bottom-right watermark is present as 'AFP | 09134922013', but the hard reject of any human or body part takes precedence.",
+        "The image shows a man actively handling the roll, violating the 'unattended' and 'zero people' requirements for a maintenance detail role."
+      ],
+      "correction_prompt": "Regenerate the image to remove the person entirely. Show an unattended close-up of the AFP white and blue drip-tape roll installed on the ground. Ensure no hands, faces, or human silhouettes are visible. Keep the watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 42,
+      "product_height_percent": 52,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: visible human figures in the background (distant farmers).",
+        "Second commercial package: an open brown cardboard box is clearly visible in the scene."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Remove the open cardboard box behind the main roll. Retain the white AFP drip-tape roll and the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject due to the presence of multiple people (farmers) visible in the background",
+        "The required text watermark 'AFP | 09134922013' is missing from the bottom right corner"
+      ],
+      "correction_prompt": "Remove all human figures from the background entirely. Add the specific text watermark 'AFP | 09134922013' in the bottom right corner. Maintain the close-up view of the single drip tape roll and emitter.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 40,
+      "product_height_percent": 50,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a human silhouette in the background: There is a visible person standing in the crop rows in the distance (center-left of the horizon).",
+        "Role violation: The image shows a product roll in a field rather than a close-up 'MAINTENANCE DETAIL' view of an installed emitter or connector."
+      ],
+      "correction_prompt": "Remove the human silhouette in the background completely; replace with distant trees or empty field; maintain the unattended tractor as context.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Missing the required 'Maintenance Detail' role; the image shows a standalone roll rather than a close view of an installed emitter, connector, or flush point.",
+        "Watermark text is 'AFP | 09134922013', but the system prompt explicitly requires 'AFP | 09134922013' to never be rejected or requested for removal; however, standard image generation models often hallucinate or slightly alter text, and the visual quality of the text in the bottom right corner may not meet the strict 'REQUIRED' legibility standard for a high-fidelity watermark, though the main failure here is the role."
+      ],
+      "correction_prompt": "Close-up view of a drip-tape connector and flush point on a white-and-blue AFP carton roll in a field. No people. Exact watermark 'AFP | 09134922013' in bottom right.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

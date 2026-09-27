@@ -1,0 +1,63 @@
+{
+  "source_id": "1050008002413-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 21.2,
+      "product_height_percent": 34.5,
+      "product_x_center_percent": 27.8,
+      "reasons": [
+        "Hard reject: Image contains multiple visible humans (two men in the foreground/right and a third in the distance). The installation role explicitly requires an 'unattended view' with zero people."
+      ],
+      "correction_prompt": "Regenerate the image by completely removing all people and human figures. Ensure the scene shows only the installed drip tape, crop beds, and the single AFP white-and-blue carton roll. Keep the unattended farm equipment and background infrastructure.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 35,
+      "product_height_percent": 34,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "A visible person (farmer/worker) is standing in the background next to the tractor, which is a hard reject.",
+        "The bottom-right watermark displays '09134922013', but the mandatory required watermark is '09134922013' (missing digit '1' at the start of the number).",
+        "The product text on the carton is gibberish/illegible, which is a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image removing the person and tractor in the background to show an unattended field. Correct the bottom-right watermark to exactly 'AFP | 09134922013'. Ensure the product label text is legible and clear.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 42,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Missing mandatory bottom-right watermark text 'AFP | 09134922013'."
+      ],
+      "correction_prompt": "Add the specific watermark 'AFP | 09134922013' to the bottom-right corner of the image.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image displays exactly one white-and-blue wide cylindrical drip-tape carton roll (AFP brand) that fits within the 20-28 percent preferred width.",
+        "The product is located in the lower third of the frame, which aligns with the 'asymmetric unattended view' requirement without being centered.",
+        "The background shows installed drip tape on crop beds with a distant unattended tractor and field hardware, matching the 'INSTALLATION PROOF' role.",
+        "Zero people, human body parts, or prohibited commercial containers (bottles, jars, etc.) are visible.",
+        "The mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner as required."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

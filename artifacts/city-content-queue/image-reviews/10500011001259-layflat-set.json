@@ -1,0 +1,41 @@
+{
+  "source_id": "10500011001259-layflat",
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        3,
+        4,
+        5
+      ],
+      "reasons": [
+        "Only 4 images provided for 5 required roles.",
+        "Role 3 is incorrectly fulfilled by Image 2: It shows an active tractor in the background, violating the 'unattended' and 'zero people/vehicles' constraint.",
+        "Role 4 is incorrectly fulfilled by Image 3: The coil pair remains large and center-stage, violating the 'small at field edge' requirement and lacking an extended layflat connection.",
+        "Role 5 is missing: There is no unattended close-up of a connector or woven-surface detail.",
+        "Role 1 (Image 1) is acceptable but the product remains slightly too large for the 'small, off-center' hero context.",
+        "Repeated furrow-field plus tractor composition is present in Image 2, which is explicitly forbidden."
+      ],
+      "correction_prompt": "Remove the tractor from Role 3 to ensure it is unattended. Shrink the coil pair in Role 4 to the field edge and add an extended layflat line. Add a new 5th image showing an unattended close-up of a connector/woven detail with the coil pair in the background.",
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        3,
+        5
+      ],
+      "reasons": [
+        "Role 3 'HEADWORKS STORY' fails because there is no visible fixed pump or manifold; it is represented by an inexplicable bottle with a gauge, which fails the 'unattended' and 'no bottle' constraints.",
+        "Role 5 'MAINTENANCE DETAIL' is missing from the set (only 4 images provided), and the available layout fails to show a close-up detail of the woven surface or connector as required.",
+        "Role 2 'SELECTION EVIDENCE' is missing; there is no technical comparison or construction difference shown between the two coils.",
+        "All images are composed on a flat, generic plowed field, violating the 'relevant to the article brief' requirement (Harsin/Kermanshah implies a distinct topography or specific water-transfer context rather than generic open flatland)."
+      ],
+      "correction_prompt": "Regenerate the set to include a distinct headworks structure (pump/gauge/manifold) without bottles, a technical comparison shot, and a close-up macro detail of the hose construction, moving the background to a specific canal or irrigation infrastructure context.",
+      "set_attempt": 2
+    }
+  ]
+}

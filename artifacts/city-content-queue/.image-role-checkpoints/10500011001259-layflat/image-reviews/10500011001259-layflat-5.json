@@ -1,0 +1,67 @@
+{
+  "source_id": "10500011001259-layflat",
+  "family": "layflat",
+  "kind": 5,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 68,
+      "product_height_percent": 45,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The image displays a black coiled pipe to the left and a large metallic/white pipe spool to the right, rather than the required 'packaged AFP coil'.",
+        "The pair of objects spans approximately 68% of the frame width, violating the maximum 60% width constraint.",
+        "The visual presentation of a coiled strip versus a metal spool suggests two different product types rather than the required 'AFP coil and bare black woven coil' pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate image showing two distinct black coils on the ground: one flat (layflat) hose with a white package sleeve and one round woven hose. Both must be clearly visible, separate, and fit within 35% of the frame width. Reduce the product group from 68% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 75,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product pair (both coils and the packaged coil) occupies significantly more than the maximum 60 percent of the frame width.",
+        "The presence of a third commercial package (the small hexagonal wrapped coil) in the foreground is a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the overall size of the coil pair to less than 60 percent of frame width. Remove the small hexagonal wrapped package in the foreground, keeping only one packaged AFP coil and one bare black woven coil. Maintain the maintenance detail focus. Reduce the product group from 75% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 42,
+      "product_height_percent": 38,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Role violation: The image displays the layflat pair (one black coil, one packaged coil) but lacks the required 'Maintenance Detail' close-up of a connector, fold, or woven-surface. It is a standard wide shot of the product resting on the soil."
+      ],
+      "correction_prompt": "Change the shot to a close-up macro view of a connector or the woven surface of the coils. Keep both the black coil and the white packaged coil within the frame to maintain the pair, but focus on the material detail as requested. Do not add any human elements or extra bottles.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 50,
+      "product_height_percent": 40,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The approved pair of a packaged AFP coil and a bare black woven coil is clearly visible, physically plausible, and separate.",
+        "The product pair occupies approximately 50% of the frame width, which is within the 8-60% practical vision estimate.",
+        "The image contains zero people or human body parts.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "A distant unattended tractor and farm building are present in the background, which are acceptable infrastructure/equipment and not treated as third commercial products.",
+        "The scene aligns with a maintenance/detail context for agricultural piping."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
