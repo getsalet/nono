@@ -12,7 +12,7 @@ image_prompt_policy.install(backend)
 
 MODEL=os.getenv('AGNES_IMAGE_MODEL','agnes-image-2.5-flash')
 TEXT_API=os.getenv('AGNES_API_BASE','https://apihub.agnes-ai.com/v1').rstrip('/')
-KEY=(os.getenv('IMAGE_API_KEY') or os.getenv('AGNES_API_KEY','')).strip()
+KEY=base.AGNES_KEY
 API=os.getenv('IMAGE_ENDPOINT') or TEXT_API+'/images/generations'
 TARGET_WORDS=max(base.MIN_WORDS+200,1250)
 RAW_AGNES=base.agnes
@@ -81,7 +81,7 @@ def agnes_generate_image(item,kind):
     payload={'model':MODEL,'prompt':backend.image_prompt(item,kind),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':image_prompt_policy.reference_images(kind,item)}}
     last=None
     for attempt in range(1,6):
-        req=urllib.request.Request(API,data=json.dumps(payload).encode(),method='POST',headers={'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Accept':'application/json','User-Agent':'navar-city-content-queue/3.0'})
+        req=urllib.request.Request(API,data=json.dumps(payload).encode(),method='POST',headers={'Authorization':'Bearer '+base.next_agnes_key(),'Content-Type':'application/json','Accept':'application/json','User-Agent':'navar-city-content-queue/3.0'})
         try:
             with urllib.request.urlopen(req,timeout=600) as response:data=json.loads(response.read())
             break
