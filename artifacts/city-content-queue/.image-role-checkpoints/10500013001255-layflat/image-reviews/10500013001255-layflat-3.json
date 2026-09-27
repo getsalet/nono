@@ -1,0 +1,94 @@
+{
+  "source_id": "10500013001255-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 80,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Two people (a man and a woman) are clearly visible in the image.",
+        "Hard reject: The product pair width exceeds 60% of the frame (estimated at 80%).",
+        "Violation: The mandatory 'unattended' role for infrastructure (pump) is not met due to the presence of a person operating it.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 80% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate with absolutely no people, human body parts, or faces in the image. Reduce the width of the two-coil product pair to between 20-35% of the frame. Keep the pump, gauge, and manifold completely unattended with no humans interacting with them. Retain the exact bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 80% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Presence of a person (male farmer/worker) in the foreground, which is a hard reject.",
+        "The subject matter is a pump and a single coil; the required 'approved layflat pair' (one packaged AFP coil and one bare black woven coil) is not clearly present as a secondary pair.",
+        "Human body parts (arms, legs, face) are visible.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate image to remove all people. Show a medium side view of a fixed, unattended pump, gauge, and manifold in a farm field. In the foreground, include two small, separate coils (one black, one packaged) clearly distinct from the pump. Keep the coils physically plausible and recognizable. No human presence. Enlarge the product group from 0% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 65,
+      "product_height_percent": 45,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Approved pair present: one packaged AFP coil and one large bare black woven coil.",
+        "No human presence or body parts detected.",
+        "Watermark 'AFP | 09134922013' is correctly placed in the bottom-right corner.",
+        "Fixed unattended pump and gauges in the background fit the mandatory 'HEADWORKS STORY' role and are correctly identified as infrastructure rather than extra commercial products.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 65% to 8-60% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 48,
+      "product_height_percent": 45,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Person detected (face/hand/body part) in image",
+        "Bottle/container detected (unattended equipment violation)"
+      ],
+      "correction_prompt": "Regenerate image with zero people/human parts and no bottles/containers; keep fixed pump and two coils (packaged + bare black) small and separate on soil",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 65,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains a third commercial package (a blue and white circular spool/reel of tubing) in addition to the required packaged AFP coil and bare black woven coil.",
+        "The two required coils are not immediately adjacent, separated by the pump unit and the third package, violating the 'separate and physically plausible' proximity expectation for a layflat pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to remove the blue and white circular spool/reel from the foreground. Ensure only two products are visible: one packaged AFP coil (left) and one bare black woven coil (right). Place them side-by-side near the unattended pump, gauge, and manifold, keeping the pair compact and clearly visible. Reduce the product group from 65% to 8-60% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: image contains a full human figure (farmer/worker) which violates the 'zero people and zero human body parts' rule."
+      ],
+      "correction_prompt": "Remove the person entirely. Keep the fixed pump, gauge, and the two coils (packaged and bare) in the foreground. Ensure no human silhouettes or body parts are visible in the scene.",
+      "attempt": 6
+    }
+  ]
+}

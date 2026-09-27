@@ -1,0 +1,71 @@
+{
+  "source_id": "10500013001255-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 72,
+      "product_height_percent": 32,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Third commercial package detected: a wrapped coil on a cardboard spool (center) is present in addition to the required two-coil pair, violating the 'zero third commercial package' hard reject rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Remove the wrapped spool coil in the center. Retain only the packaged AFP coil (left) and the bare black woven coil (right) to satisfy the two-coil pair requirement. Reduce the product group from 72% to 8-60% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 65,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Image displays the approved pair: one packaged AFP coil on the left and one bare black woven coil on the right.",
+        "Zero human figures or body parts are present.",
+        "Required watermark 'AFP | 09134922013' is correctly placed in the bottom-right corner.",
+        "Pair width is 65% of frame; this is a practical estimate that falls within the accepted range (8-60% range for estimation, with objects fully recognizable, separate, and physically plausible) rather than the 20-35% ideal.",
+        "Background elements (corn field, farm building) are appropriate infrastructure/context and do not violate hard reject rules.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-60% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 65% to 8-60% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 55,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: a person (male farmer/worker) is visible in the image, occupying the right half of the frame.",
+        "Hard reject: a third commercial package (a smaller white and blue box) is visible on the ground between the two coils, violating the 'approved two-coil pair' rule.",
+        "The presence of a third commercial product is a standalone hard reject regardless of the people present."
+      ],
+      "correction_prompt": "Remove the person and the third white box package. Keep only one packaged coil and one bare black coil. Reposition coils to occupy 20-35% of the frame width. Maintain the bottom-right watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 40,
+      "product_height_percent": 25,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains the approved layflat pair: one packaged coil and one bare black woven coil",
+        "No visible people or body parts",
+        "Required watermark 'AFP | 09134922013' is present",
+        "Infrastructure like the distant tractor and farm building is present and allowed",
+        "Product placement is off-center and within the accepted range",
+        "Pair is separate and physically plausible",
+        "No third commercial package, bottle, canister, or invented object"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "source_id": "1050005002594-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 30,
+      "product_height_percent": 48,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: presence of a human/worker",
+        "Hard reject: visible hands and body parts",
+        "Hard reject: bottle/container (blue cup) present"
+      ],
+      "correction_prompt": "Regenerate image removing all humans, body parts, and bottles/containers; retain only unattended fixed filter infrastructure with one small secondary carton roll.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 30,
+      "product_height_percent": 42,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: The image contains multiple people (one crouching in the foreground and three standing in the background), which is explicitly forbidden by the prompt.",
+        "Hard reject: The presence of human body parts (face, hand, arm, leg) violates the 'zero people' constraint."
+      ],
+      "correction_prompt": "Regenerate the image with no people or human body parts present. Show a static medium side view of the irrigation infrastructure (filter, gauge, regulator, manifold) with the AFP drip-tape carton remaining small and secondary. Maintain the required 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 30,
+      "product_height_percent": 44,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present and matches the required product type.",
+        "Product dimensions (width ~30%, height ~44%) fall well within the preferred and acceptable bounds and are physically plausible.",
+        "The required HEADWORKS STORY role is fulfilled, showing an unattended fixed manifold with a gauge and regulator in a medium side view.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "No hard-reject elements (people, bottles, containers, layflat hose, or gibberish writing) are visible in the image."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
