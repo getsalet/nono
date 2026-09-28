@@ -1,0 +1,53 @@
+{
+  "source_id": "11000014002122-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 23,
+      "product_height_percent": 29,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: The image contains a visible human (a man squatting), violating the mandatory 'zero people' rule.",
+        "Hard reject: A coiled layflat hose is visible in the foreground, which is a forbidden object."
+      ],
+      "correction_prompt": "Remove the man and the coiled layflat hose. Ensure the scene contains only the AFP drip-tape roll, the filter unit, and the background farm elements. Maintain the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 34,
+      "product_height_percent": 38,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The product bounding box width (34%) significantly exceeds the 27% maximum hard reject threshold.",
+        "The product bounding box height (38%) exceeds the 32% maximum hard reject threshold.",
+        "The secondary object to the right is a vertical filter, which is structurally distinct from the allowed 'fixed pumps' or 'gauge' infrastructure in a 'simple background' context, adding clutter.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with the AFP drip-tape carton roll scaled down to approximately 22% of the frame width and 25% of the frame height. Remove the vertical cylindrical filter unit next to the roll to simplify the background and focus on the product. Keep the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 34% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 21,
+      "product_height_percent": 27,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present.",
+        "The bounding box of the roll is within the preferred width range and physically plausible height.",
+        "Zero people, human body parts, or human silhouettes are visible.",
+        "Required bottom-right watermark is present and unaltered.",
+        "Background matches the article brief with a simple field edge and distant farm building."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

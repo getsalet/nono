@@ -1,0 +1,94 @@
+{
+  "source_id": "11000014002122-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The bottom-right watermark is completely wrong (displays 'AFP | 09134922013' instead of 'AFP | 09134922013').",
+        "The presence of the green irrigation machine on the right counts as a 'second commercial package' or 'bottle' equivalent under hard reject rules."
+      ],
+      "correction_prompt": "Regenerate the image using the exact bottom-right watermark 'AFP | 09134922013'. Remove the green irrigation machine from the right side and ensure only the single white-and-blue AFP drip-tape roll remains in the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Placement violation: The 'EDITORIAL HERO' role explicitly requires the product to be 'off-center on the lower third', but the product is centered horizontally in the foreground, acting as the main subject which conflicts with the role's demand for the farm/irrigation context to dominate."
+      ],
+      "correction_prompt": "Regenerate a high-oblique wide-angle view of the crop rows to dominate the frame; keep the white and blue AFP drip-tape roll small, fully visible, and strictly placed in the off-center lower third (not centered), matching the article's editorial hero brief.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 9,
+      "product_height_percent": 12,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains exactly one approved AFP drip-tape carton roll, which is fully visible and situated in the lower third of the frame.",
+        "Zero people or human body parts are present, meeting the hard reject requirements.",
+        "The background correctly matches the editorial hero brief with a wide high-oblique view of a farm context that dominates the scene.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is clearly visible and correctly formatted.",
+        "The product width (9%) is slightly smaller than the preferred 20-23% range but is well within the 13-27% reviewer-estimation noise limit and physically plausible.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 9% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 9% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 26,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "A full human body is visible standing in the field, which is a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image without any people or human body parts. Ensure the single AFP drip-tape roll is placed on the lower third off-center, with the agricultural and irrigation context dominating the frame.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 19,
+      "product_height_percent": 22,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Visible human/person (farmer) present in the field (left-center) which violates the 'zero people' rule.",
+        "Product placement is centered (approx 49%) rather than the requested off-center editorial placement.",
+        "Watermark required 'AFP | 09134922013' is present."
+      ],
+      "correction_prompt": "Regenerate removing the farmer/walker from the field entirely. Shift the drip tape roll to the bottom-left or bottom-right third (off-center) to allow the farm context to dominate. Keep the AFP watermark and high-oblique view.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 23,
+      "product_height_percent": 18,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "The product (drip-tape roll) is clearly visible in the bottom-right lower third, off-center as requested.",
+        "The bounding box measurements are within the preferred width range (23%) and acceptable height range (<32%).",
+        "There are no people, faces, or human body parts visible in the image.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The background successfully depicts a wide high-oblique farm view with irrigation context (distant tractor allowed).",
+        "The object is a single roll without prohibited items like bottles or second packages."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

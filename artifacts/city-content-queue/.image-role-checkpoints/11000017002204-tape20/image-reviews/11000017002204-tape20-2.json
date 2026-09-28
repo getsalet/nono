@@ -1,0 +1,97 @@
+{
+  "source_id": "11000017002204-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 25,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Hard reject: visible human (crouching male farmer/worker).",
+        "Hard reject: visible second roll of tubing on the ground.",
+        "Presence of a person in the image violates the strict requirement for zero people and zero body parts."
+      ],
+      "correction_prompt": "Remove the human figure and the loose roll of tubing from the ground. Ensure the scene contains only the single white-and-blue carton roll in the foreground with a clean field or farm infrastructure background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Contains exactly one white-and-blue drip-tape carton roll.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Zero people, body parts, or human silhouettes are visible.",
+        "Background matches the brief with farm buildings and distant tractors (allowed infrastructure).",
+        "Product width is slightly above the preferred 23% but within the 27% noise threshold (approx 28%), and height is slightly above the 32% threshold due to perspective.",
+        "A short section of tape/pipe is extending from the roll, which is physically plausible for this product and does not contain forbidden containers.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 26,
+      "product_height_percent": 31,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "The image displays a pipe-through-roller or inline drip-lay system extending into the background, which is a hard reject (pipes through the roll / second package).",
+        "The product box text appears to be gibberish or distorted (e.g., 'CHP Hweno'), triggering a hard reject for writing.",
+        "Visible tractors in the background (far-left and far-right) may be interpreted as active farm equipment rather than 'unattended' or 'distant' contextually, pushing toward a reject."
+      ],
+      "correction_prompt": "Regenerate the image to show a single AFP white-and-blue cylindrical drip-tape carton roll on soil without any extending pipes or hards, ensuring the text on the box is legible or absent, and keeping the background simple with only distant unattended equipment.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 48,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product bounding box exceeds hard reject thresholds: width is approximately 28% of the frame (limit 27%) and height is approximately 48% (limit 32%).",
+        "The roll appears disproportionately large and tall relative to the soil and distant machinery, lacking physical plausibility for a 20cm tape.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 48% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reshoot with a longer lens (telephoto) to compress the perspective and reduce the apparent size of the tape roll. Ensure the roll's width is under 27% of the frame width and height is under 32% while maintaining the 'SELECTION EVIDENCE' context of a farm field. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 48% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 15,
+      "product_height_percent": 21,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Human present (standing person with face, body parts) in the right half of the image.",
+        "Second commercial package/container (bags) held by the person."
+      ],
+      "correction_prompt": "Regenerate with no humans or workers in the frame. Focus on a close-up technical arrangement of the drip tape roll on the ground, with a measuring tool or ruler visible in the foreground to demonstrate the 20cm selection evidence. Keep the farm background simple.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 20,
+      "product_height_percent": 26,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Product dimensions are within the acceptable range: the roll's width and height satisfy the geometric and physical plausibility constraints.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The background context (open field, farm building) and the visible measuring tape align with the required 'SELECTION EVIDENCE' image role.",
+        "Zero people, zero human body parts, and no prohibited commercial containers are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}
