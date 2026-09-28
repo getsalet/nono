@@ -1,0 +1,54 @@
+{
+  "source_id": "12300020001051-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 28,
+      "product_height_percent": 33,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Hard reject: There is a second commercial package and layflat hose spool visible on the right side of the image",
+        "Hard reject: A pipe/hose loop is threading through the product area"
+      ],
+      "correction_prompt": "Remove all objects on the right side (including the second roll and hose loops) to ensure the image contains exactly one AFP tape roll and no commercial packaging.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 26,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product width (26%) and height (34%) are slightly outside the 'best' 20-33% range but within tolerance",
+        "Severe gibberish/placeholder writing visible on the side of the carton label",
+        "Watermark in the bottom right corner is too large and visually intrusive",
+        "Distant unattended equipment (tractors) are present in the background"
+      ],
+      "correction_prompt": "Regenerate with gibberish text corrected to sharp professional English, a smaller, less distracting watermark, and remove the distant tractors from the background.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 26,
+      "product_height_percent": 34,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard requirement for the specific 'AFP | 09134922013' watermark is satisfied in the bottom-right.",
+        "Contains exactly one wide, low, cylindrical carton roll of drip tape.",
+        "Contains zero people, body parts, or human silhouettes.",
+        "Background matches the article visual brief, featuring a field edge and ordinary farm infrastructure.",
+        "The tape unspooled to the right provides the mandatory 'field-selection evidence' required by the image role.",
+        "Product dimensions and horizontal placement fall within the accepted estimation range."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
