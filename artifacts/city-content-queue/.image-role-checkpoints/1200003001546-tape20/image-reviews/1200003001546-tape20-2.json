@@ -1,0 +1,66 @@
+{
+  "source_id": "1200003001546-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 34,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Second commercial package (loose coil of drip tape) is visible next to the main carton, violating the 'exactly one carton' and 'zero second commercial package' rules.",
+        "The product carton width is estimated at 38% of the frame, exceeding the hard reject threshold of 27%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width.; Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the loose coil of drip tape from the ground to ensure only one commercial product is present. Shrink the main carton roll significantly to fit within 20-23% of the frame width, and reduce its height to ensure it is under 32% of the frame height. Reduce the product group from 38% to 13-27% of frame width. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 21,
+      "product_height_percent": 25,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: Visible person/farmer standing in the center of the frame",
+        "Hard reject: Zero people requirement violated"
+      ],
+      "correction_prompt": "Regenerate image removing all people and human silhouettes. Keep the AFP white-and-blue drip-tape carton roll in the foreground and the field/tractor context in the background.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The image contains two visible people (one standing near the barn and one near the tractor), which is a hard reject.",
+        "The product roll dimensions appear to exceed the maximum allowed limits (width > 27%, height > 32%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to remove all people/humans from the background (tractor and barn area). Ensure the product roll is smaller (less than 25% of frame width) to strictly meet the technical requirements. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 23,
+      "product_height_percent": 29,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Product bounding box estimated to be within the 13-27% width and <32% height plausibility limits.",
+        "No visible humans, body parts, or faces.",
+        "No forbidden commercial containers (bottles, cans) or multiple rolls.",
+        "Watermark 'AFP | 09134922013' is present and correctly positioned in the bottom-right.",
+        "Scene includes required infrastructure (tractor, barn) and drip lines visible in the field, consistent with the selection evidence role."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

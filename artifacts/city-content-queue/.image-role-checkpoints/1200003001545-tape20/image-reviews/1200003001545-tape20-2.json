@@ -1,0 +1,57 @@
+{
+  "source_id": "1200003001545-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The product has severe perspective distortion, rendering it into a flat white disc rather than a physically plausible wide low cylindrical roll.",
+        "The image uses a fisheye or heavy wide-angle lens, causing visible curvature in the drip tape lines and the horizon, which fails the 'impossible geometry or severely distorted dimensions' rejection criteria.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate with a standard 50mm lens without distortion. Ensure the drip tape carton roll has a proper cylindrical volume and 3D depth rather than looking flat or pancake-like. Do not use any extreme wide-angle effects. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 30,
+      "product_height_percent": 33,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The image contains exactly one AFP branded white and blue drip-tape carton roll in the foreground.",
+        "No people, human faces, hands, or body parts are visible in the scene; the tractor in the distance is clearly unattended and acts as contextual background equipment rather than a hard reject.",
+        "The required 'AFP | 09134922013' watermark is present in the bottom-right corner.",
+        "The background shows a field and farm equipment, which aligns with the visual brief for 'SELECTION EVIDENCE'.",
+        "Width is at 30% and height is at 33%, which exceeds the preferred range (width up to 27%, height up to 32%) but remains physically plausible for a large agricultural tape roll and does not trigger a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 19,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Object meets dimensional constraints: width 19% is within the preferred 20-23% range (and acceptable 13-27% range), height 28% is within the 32% limit.",
+        "Zero people, faces, or human body parts are visible.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Image features exactly one wide white-and-blue cylindrical roll with 'AFP' branding.",
+        "Field edge and farm building in the background provide contextually relevant environmental evidence for a selection article.",
+        "Slightly below the preferred width of 20-23%, hence score is capped below 90."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

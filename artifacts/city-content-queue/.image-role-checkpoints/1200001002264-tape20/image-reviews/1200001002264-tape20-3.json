@@ -1,0 +1,96 @@
+{
+  "source_id": "1200001002264-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Dried-out crop rows visible in the background contradict the 'irrigation' context of the drip-tape product.",
+        "The required bottom-right watermark 'AFP | 09134922013' is missing.",
+        "The object bounding box exceeds the maximum allowed width (32%) and height (45%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Redraw the image with a clear, green, healthy crop field to establish the irrigation context. Ensure the blue-and-white drip-tape carton roll is clearly smaller (width under 30%, height under 40%) and re-add the mandatory 'AFP | 09134922013' watermark in the bottom-right corner. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image hard-rejects because it contains a 'second commercial package' or 'bottle/container' (the blue/white cylindrical filter canister located between the main roll and the gauges).",
+        "The main image role specifies a 'medium side view of unattended fixed filter, gauge, regulator and manifold,' but the image shows a handheld or loose assembly of gauges on the ground rather than the required fixed infrastructure."
+      ],
+      "correction_prompt": "Regenerate to show a fixed irrigation manifold system (filter, gauges, regulator) on a stand in a crop field. Remove all loose gauge assemblies and any extra cylindrical filter cans. Leave only one small AFP carton roll on the ground. Ensure zero humans are visible.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a second commercial product (second carton roll) which is a hard reject."
+      ],
+      "correction_prompt": "Remove the second carton roll in the foreground and reposition the main filter housing and manifold system so that the approved carton roll appears secondary and small in the frame. Ensure the background field and distant tractors remain visible.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Contains two visible people (workers), which is a hard reject based on the zero-human rule.",
+        "The central filter assembly has a blue cap/gauge which does not match the visual brief requirement of white-and-blue drip tape components.",
+        "Product width (estimated ~30%) and height (estimated ~40%) exceed the maximum limits of 27% and 32% respectively.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image removing all humans. Replace the blue-capped filter body with a standard grey PVC valve to match the brief. Shrink the foreground drip tape roll to approximately 20-22% of the frame width and 25-28% of the frame height. Keep the watermarks and tractors. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: visible human person (man crouching)",
+        "Hard reject: human face, hands, arms and legs present",
+        "Hard reject: bottle or container present in the carton",
+        "Hard reject: the primary image role 'HEADWORKS STORY' is missing (fixed filter, gauge, regulator and manifold are not the focus)",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people and containers. Regenerate to feature fixed filter, gauge, regulator, and manifold from a medium side view. Ensure the single white and blue AFP drip-tape carton roll appears small and secondary, not the main subject. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Zero people or human body parts visible",
+        "Watermark 'AFP | 09134922013' present and correct",
+        "Primary product is a single AFP white-and-blue carton roll of acceptable size (18% width)",
+        "Infrastructure (unattended filter rig/gauges) and drip lines are contextually relevant and allowed",
+        "Image aligns with the 'HEADWORKS STORY' visual brief (filter/gauge/manifold focus with secondary carton)"
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}
