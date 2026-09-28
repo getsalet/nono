@@ -1,0 +1,85 @@
+{
+  "source_id": "1120009002205-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The drip tape roll appears disproportionately large compared to the background elements (tracors and barn), violating physical plausibility in the distance (hard reject for impossible geometry or severely distorted dimensions).",
+        "The roll width (~35%) and height (~40%) exceed the strict review limits of 27% width and 32% height.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Scale down the carton roll by 40% to fit within the 20-23% width target (or strictly under 27% max). Ensure the roll is physically plausible relative to the distant tractors and farm buildings. Reduce the product group from 35% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 19,
+      "product_height_percent": 28,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "The image is rejected because the drip tape roll is oriented vertically (standing on its edge) rather than 'wide low cylindrical', failing the specific geometric layout requirement.",
+        "The role 'SELECTION EVIDENCE' is not met; while emitter spacing is visible on the ground, the product is not arranged as an elevated technical display to support selection criteria."
+      ],
+      "correction_prompt": "Regenerate with the drip tape roll lying flat on the ground in a horizontal 'wide low' cylindrical orientation (like a donut). Place the roll elevated in the lower-left third. Remove the vertical center hole. Add visible, close-up technical markers on the tape or a small technical overlay card to emphasize emitter spacing for selection evidence.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 31,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The image contains multiple instances of the product, whereas the mandatory role requires exactly one approved carton roll.",
+        "The main carton roll width exceeds the hard reject limit of 27 percent of the frame.",
+        "Excessive 'fake writing' and gibberish labeling are visible on the product surfaces.",
+        "A second, smaller commercial package (drip tape roll) is present in the foreground, constituting a hard reject for multiple products.",
+        "The layout includes a second item (label card) that distracts from the single-object 'selection evidence' role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate to show exactly one large white-and-blue drip-tape carton roll on the soil. Remove the smaller roll and the extra label card. Reduce the main roll width to 20-23% of the frame. Ensure all text on the roll is legible or standard branding, not gibberish. Keep the bottom-right watermark. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product width exceeds the hard reject threshold of 27 percent",
+        "The role for SELECTION EVIDENCE (elevated technical arrangement) is not met, as the roll is lying flat on the ground",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate to show an elevated technical arrangement of the drip tape roll (e.g., on a stand) and reduce the roll's width to less than 27 percent of the frame. Keep the background field context and the required bottom-right watermark. Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 20,
+      "product_height_percent": 20,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The image features exactly one wide, cylindrical drip-tape roll as required.",
+        "The product is white and blue with the AFP logo clearly visible.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The background shows an agricultural field with visible drip lines and crop rows, consistent with the 'SELECTION EVIDENCE' brief.",
+        "No people, faces, hands, or other human body parts are visible in the scene.",
+        "The bounding box width and height are within the acceptable 13-27% and <32% ranges.",
+        "Distanced farm hardware (tractor) and building are permitted as contextual elements."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

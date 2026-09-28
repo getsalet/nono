@@ -1,0 +1,120 @@
+{
+  "source_id": "11200010001460-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Person visible in the background (sitting near the tractor)"
+      ],
+      "correction_prompt": "Regenerate the image removing all visible people. Keep the AFP drip tape roll in the foreground and the required watermark, but ensure the background farm scene contains no human figures or body parts.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 36,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Product height (approx 36%) exceeds the hard reject limit of 32% of the frame.",
+        "Role mismatch: The image is missing 'SELECTION EVIDENCE' (visible emitter-spacing or field-selection evidence) required by the brief. The drip tape lies flat without showing the emitter spacing or technical arrangement needed for selection.",
+        "Text gibberish: The label on the carton reads 'DRIP IRRGANT TUN' which is nonsensical gibberish, triggering a hard reject condition.",
+        "machine-enforced bounding-box check failed: Reduce product height from 36% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the vertical height of the carton to 30% of the frame. Add technical selection evidence such as a close-up detail of emitter spacing on the unrolled tape or a measurement tape. Fix the label text to be legible and accurate, removing gibberish words. Ensure the background includes farm equipment to set context. Reduce product height from 36% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: Human body parts (arms/legs) visible on the implement attached to the tractor in the mid-ground."
+      ],
+      "correction_prompt": "Remove the human figures from the tractor implement in the background, ensuring a strictly unattended equipment scene.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 30,
+      "product_height_percent": 44,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The product bounding box is slightly larger than the preferred 20-23% width and 32% height constraints.",
+        "The image successfully meets the required visual role by showing an elevated arrangement with visible drip tape layout in the field.",
+        "The background context (tractor and farm building) is acceptable and not a standalone reject factor.",
+        "Required watermarks and branding are present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 44% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 44% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 35,
+      "product_height_percent": 35,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Product width is estimated at approximately 35% of the frame, exceeding the hard reject threshold of 27%.",
+        "Product height is estimated at approximately 35% of the frame, exceeding the hard reject threshold of 32%.",
+        "A loose coil of drip tape is present next to the carton, which constitutes a 'second commercial package' or 'second roll', violating the requirement for exactly one roll.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the loose coil of drip tape. Scale down the AFP carton roll to be approximately 20-23% of the frame width. Reduce the product group from 35% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Visible human body: A man is clearly visible in the center of the image, violating the hard reject for people.",
+        "Layflat hose visible: The image shows the tape unrolled on the ground, which is a prohibited object according to the constraints."
+      ],
+      "correction_prompt": "Remove the man and any unrolled drip tape/hose from the foreground. Keep only the single upright carton roll on the left. Ensure no human figures or body parts are visible in the scene.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 20,
+      "product_height_percent": 30,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Hard reject: A human figure (farmer/worker) is clearly visible in the background near the tractor.",
+        "Hard reject: Human silhouettes are present, violating the strict 'zero people' requirement."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the human figure and any visible person from the background; ensure no people or body parts are present.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 27,
+      "product_height_percent": 33,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The image contains a second coiled roll or hose on the ground next to the main carton roll, which is explicitly listed as a hard reject ('second roll').",
+        "There is gibberish writing (unreadable labels) on the side of the carton roll, which is a hard reject criterion.",
+        "The product (the main carton roll) is sized at the very edge of the allowed tolerance; its width is estimated at roughly 27% and its height slightly exceeds the 32% upper bound when accounting for perspective, causing it to fail the physical plausibility and dimension checks.",
+        "machine-enforced bounding-box check failed: Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image showing exactly one carton roll with 'no' second coiled roll or hose on the ground, ensure clear 'AFP' and 'DRIP' text on the carton (no gibberish), and ensure the carton height remains physically under 32% of the frame height. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 8
+    }
+  ]
+}

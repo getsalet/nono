@@ -1,0 +1,55 @@
+{
+  "source_id": "1120007001459-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 42,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Presence of two people (farmers/workers) in the foreground.",
+        "Hard reject: Product (roll) width is approximately 42% of frame, exceeding the maximum 27% limit.",
+        "Hard reject: Image does not match the mandatory role (missing 'medium side view of unattended fixed filter, gauge, regulator and manifold') and instead features manual labor.",
+        "Hard reject: Visible layflat hose unrolled in the foreground (forbidden object type).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate as medium side view of a fixed irrigation station including a filter, pressure gauge, and manifold. The AFP drip tape roll must be small and secondary (width < 20% of frame). Ensure zero humans and no unrolled hoses in the shot. Reduce the product group from 42% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 5,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Visible person (farm worker) in the foreground.",
+        "Violation of mandatory image role: The image features the worker prominently instead of an unattended side view of the equipment with the carton being secondary."
+      ],
+      "correction_prompt": "Remove the worker entirely. Show an unattended side view of the fixed irrigation filter and manifold infrastructure in a field. The white and blue AFP drip-tape carton must be placed small and secondary relative to the filter hardware. Include the required watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 100,
+      "product_width_percent": 23,
+      "product_height_percent": 29,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Image meets the mandatory image role of 'HEADWORKS STORY' (medium side view of unattended filter, gauge, regulator and manifold).",
+        "Exhibits exactly one white-and-blue wide low cylindrical drip-tape carton roll.",
+        "No people, farmers, workers, or human body parts are visible.",
+        "Dimensions are within acceptable limits (Width 23%, Height 29%).",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "Context (field with irrigation infrastructure) matches the article visual brief."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
