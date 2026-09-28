@@ -1,0 +1,54 @@
+{
+  "source_id": "10800014002110-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 27,
+      "product_height_percent": 33,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Placement is centered, but the mandatory role requires off-center placement on the lower third",
+        "The product roll's dimensions (estimated at ~27% width and ~33% height) exceed the physical plausibility limits specified in the hard reject criteria",
+        "Roll is not physically plausible relative to the crop rows in a high-oblique editorial shot",
+        "machine-enforced bounding-box check failed: Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the roll placed on the lower right or lower left (off-center), ensuring the width is under 23% of the frame width and height is under 32% of the frame height to maintain physical plausibility in the editorial high-oblique view. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Visible man standing in the crop rows",
+        "Visible face and full body parts",
+        "Image contains humans, violating the 'zero people' and 'hard reject any person' rule"
+      ],
+      "correction_prompt": "Remove all visible people and human body parts from the image.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image displays exactly one wide low cylindrical drip-tape carton roll, fitting the editorial hero role while staying small and visible in the lower third.",
+        "The roll's dimensions (24% width) fall within the acceptable tolerance range of 13 to 27 percent.",
+        "Zero people or human body parts are present in the scene.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required, though it partially overlaps the farm context.",
+        "The background provides the necessary high-oblique irrigation and farm context."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

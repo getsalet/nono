@@ -1,0 +1,48 @@
+{
+  "source_id": "1090005002341-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 14,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: The image contains two distinct people (one standing, one crouching).",
+        "Rule violation: The brief explicitly states 'zero people and zero human body parts' and 'Hard reject any person, farmer, worker'."
+      ],
+      "correction_prompt": "Regenerate the image with exactly zero people and zero human body parts. Keep the white and blue AFP carton roll in the lower-left foreground, showing the farm and irrigation context with crops and a wide angle view.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Hard reject: Human worker visible in the field (violates zero-person rule)",
+        "Hard reject: Bottle or container visible near the worker's hand",
+        "The roll in the foreground is too close to the bottom edge and partially cropped in a way that makes the full object less clear than preferred"
+      ],
+      "correction_prompt": "Regenerate image with no people and no small containers. Ensure the white and blue drip-tape carton roll is fully visible, not cut off, and placed off-center in the lower-left third of the frame, with a wide farm landscape background.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "The image meets the role requirement with a wide high-oblique farm context and a single, small, off-center roll on the lower third. No people, body parts, or hard-reject objects are visible. The required watermark is present. Minor deduction is for the slight gibberish text on the roll and a height that reaches the maximum allowed limit."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "source_id": "10900031002610-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Presence of a person (farmer) in the foreground interacting with the equipment, which is a hard reject according to the 'zero people' constraint.",
+        "Visible hands, arms, and body parts are present in the frame."
+      ],
+      "correction_prompt": "Remove all human figures, hands, and body parts from the image. Retain only the fixed irrigation hardware (filter, gauge, manifold), the small secondary AFP drip tape roll, and the distant unattended tractor/farm background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 32,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Presence of a human (crouching man) and body parts (face, hands, arms, legs)",
+        "Contains multiple commercial product rolls (a large roll and a smaller roll), violating the single roll requirement",
+        "Second commercial package / roll present in frame",
+        "Product roll appears wider than the permitted 27% hard reject threshold",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to remove the crouching man completely and remove the small secondary roll. The scene must show only a single large white-and-blue AFP drip-tape roll (approx. 20-23% frame width) on a fixed irrigation manifold or farm infrastructure (filters, gauges) with no people or extra packages. Keep the 'AFP | 09134922013' watermark. Reduce the product group from 35% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Exhibits exactly one white-and-blue wide low cylindrical drip-tape carton roll as requested.",
+        "Product width (24%) and height (22%) fall within the acceptable estimation noise ranges of 13-27% and up to 32% respectively.",
+        "Zero people, faces, or human body parts are visible in the frame.",
+        "Scene correctly displays irrigation infrastructure including a filter, gauges, and manifold, aligning with the 'HEADWORKS STORY' brief.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Distant tractor and farm building are unattended and contextually relevant, which is allowed."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

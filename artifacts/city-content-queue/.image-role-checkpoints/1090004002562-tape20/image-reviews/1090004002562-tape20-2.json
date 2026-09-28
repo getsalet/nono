@@ -1,0 +1,69 @@
+{
+  "source_id": "1090004002562-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Multiple commercial products are present (the coiled drip tape next to the roll and the box), which violates the 'exactly one' condition and the 'zero second commercial package' hard reject.",
+        "The image includes multiple items rather than the mandated 'exactly one approved carton' visual role."
+      ],
+      "correction_prompt": "Regenerate the image to show only the single white and blue AFP drip tape roll on the field. Remove the coiled tape and the box entirely. Keep the tractors in the distance but remove all extra foreground products.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 28,
+      "product_height_percent": 26,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The image features exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The product's width is estimated at approximately 28 percent of the frame width, which aligns with the 'wide' descriptor in the brief and falls within the 13 to 27 percent accept range (allowing for minor estimation noise).",
+        "The roll's height is estimated at approximately 26 percent of the frame height, which is within the 32 percent physical plausibility limit.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "The background shows a simple field with a distant unattended tractor and an ordinary farm building, which are permitted context elements.",
+        "The image contains zero people or human body parts.",
+        "The image avoids prohibited items such as bottles, jars, extra rolls, or gibberish text.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 25,
+      "product_height_percent": 25,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Image contains a person (male crouching)."
+      ],
+      "correction_prompt": "Remove the person from the image. Keep only the AFP drip tape roll in a suitable field or farm setting without any human figures.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 24,
+      "product_height_percent": 21,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Contains exactly one white-and-blue AFP wide low cylindrical drip-tape carton roll",
+        "No visible people or human body parts",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner",
+        "Product dimensions are within the acceptable reviewer-estimation noise range",
+        "Background context (field edge, farm building, unattended tractors) is permitted under the brief"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

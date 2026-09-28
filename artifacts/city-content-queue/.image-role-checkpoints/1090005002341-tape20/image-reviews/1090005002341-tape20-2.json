@@ -1,0 +1,90 @@
+{
+  "source_id": "1090005002341-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 34,
+      "product_x_center_percent": 26,
+      "reasons": [
+        "Hard reject: Image contains people (two men)",
+        "Hard reject: Multiple human body parts visible (faces, hands, arms, legs)",
+        "Hard reject: Second commercial package/roll of drip tape visible on the ground",
+        "Product exceeds height limit (34% > 32%) and width limit (30% > 27%)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with zero people or human body parts. Remove the small roll of tape on the ground. Ensure the single large white and blue drip-tape carton roll occupies roughly 20-23% of the frame width and is not taller than 32%. Keep the farm background but remove workers. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 30,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product is a single AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Background matches article brief with tractors and farm building contextually relevant.",
+        "Watermark 'AFP | 09134922013' is present in bottom-right corner.",
+        "Zero people or human body parts visible.",
+        "Product dimensions are slightly wider than the preferred 20-23% range, falling within the accepted 13-27% noise limit with plausible physical proportions.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Hard reject: Visible person (standing figure on tractor and second figure) in the background violates the zero-human constraint."
+      ],
+      "correction_prompt": "Regenerate image completely removing all humans, faces, and body parts. Keep the AFP drip-tape roll and irrigation hardware, but replace the people on the tractor with empty machinery or move the tractor fully out of frame. Ensure only the unattended tractor and farm building remain in the background.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Exactly one AFP drip-tape roll is visible in the foreground.",
+        "Zero people or human body parts are present in the scene.",
+        "A distant unattended tractor and a farm building are visible, which are permitted contextual elements.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "The object's physical shape is plausible despite minor deviations in bounding box dimensions, and it is placed in the lower-third.",
+        "The background matches the brief with a field and farm context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 27,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll",
+        "Product width is approximately 24% of frame width, within preferred 20-23% range",
+        "Product height is approximately 27%, within acceptable 32% limit",
+        "No people or human body parts visible",
+        "Background includes ordinary farm elements (tractor, building) which are contextually relevant",
+        "Required bottom-right watermark 'AFP | 09134922013' is present",
+        "Coiled tubing visible, providing field-selection/emitter-spacing context"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

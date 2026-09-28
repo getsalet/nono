@@ -1,0 +1,66 @@
+{
+  "source_id": "10900029002656-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 14,
+      "product_height_percent": 16,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Image contains a person (man) standing in the field.",
+        "Hard reject: Image contains human body parts (arms, face, legs).",
+        "Product dimensions are too small (14% width) compared to the preferred 20-23% range for the hero role."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the person and the tractor. Increase the size of the drip tape carton roll so it occupies approximately 22% of the frame width. Ensure no human silhouettes or body parts are visible anywhere in the scene.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Watermark 'AFP | 09134922013' is missing from the bottom-right corner (critical requirement).",
+        "Placement fails the 'off-center' requirement specified in the editorial brief.",
+        "Placement fails the 'lower third' vertical requirement specified in the editorial brief."
+      ],
+      "correction_prompt": "Add the exact bottom-right watermark 'AFP | 09134922013' using a bold white sans-serif font. Reposition the white and blue 'AFP Drip Irrigation Tape' carton to the lower-left third of the frame, approximately 30% from the left edge.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: Visible person (male farmer) standing next to a machine in the background."
+      ],
+      "correction_prompt": "Regenerate image with zero people. Remove the man and the red farm machine, keeping only the unattended field context.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Meets EDITORIAL HERO requirements: farm context dominates with wide high-oblique view",
+        "Exactly one white-and-blue cylindrical drip-tape carton roll, clearly visible and proportionate",
+        "Placement is off-center on the lower third, matching editorial preference",
+        "Zero people or human body parts visible",
+        "Correct bottom-right watermark \"AFP | 09134922013\" present and unobtrusive",
+        "No disallowed objects (bottles, extra rolls, containers, etc.)"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

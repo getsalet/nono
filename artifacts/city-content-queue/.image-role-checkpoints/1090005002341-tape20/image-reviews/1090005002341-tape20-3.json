@@ -1,0 +1,120 @@
+{
+  "source_id": "1090005002341-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 31,
+      "product_height_percent": 22,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Hard reject: A person (farmer) is clearly visible in the foreground, violating the 'zero people' rule.",
+        "Hard reject: The product is wider than 27% of the frame width (estimated at 31%), exceeding the maximum allowed size.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people. Regenerate image with a single AFP drip-tape roll (width 20-23% of frame) positioned on the soil without people, ensuring the product is physically plausible and not oversized. Reduce the product group from 31% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Presence of a person (standing male figure) is a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the person completely. Ensure zero visible people or body parts. Make the AFP roll significantly smaller (width < 23%) and secondary to the irrigation infrastructure. Reduce the product group from 35% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 15,
+      "product_height_percent": 12,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Human subject (male farmer) present in foreground",
+        "Manually held gauge/filter",
+        "Roll is not the primary subject (hidden/shadowed)"
+      ],
+      "correction_prompt": "Regenerate image with no people. Show a medium side view of an unattended irrigation manifold system with a large white-and-blue AFP drip-tape roll on the ground.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 28.5,
+      "product_height_percent": 21.0,
+      "product_x_center_percent": 35.0,
+      "reasons": [
+        "The main object is the correct wide white cylindrical AFP drip tape roll.",
+        "The object is unattended and no human figures are present.",
+        "The mandatory 'AFP | 09134922013' watermark is present.",
+        "The product width of 28.5% is slightly above the preferred limit of 27%, but is considered acceptable under reviewer-estimation noise.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28.5% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 28.5% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 5,
+      "product_width_percent": 31,
+      "product_height_percent": 43,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Two people (farmers/workers) are visible in the image, which is a hard reject condition.",
+        "The object is a standard industrial roll, not a 'carton roll' as specified in the preferred role.",
+        "The product dimensions (approx 31% width, 43% height) exceed the maximum allowed bounds (27% width, 32% height).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width.; Reduce product height from 43% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all humans. Replace the large white roll with a small, white-and-blue wide low cylindrical drip-tape carton roll (width ~20% of frame). Ensure the required bottom-right watermark 'AFP | 09134922013' is present. Reduce the product group from 31% to 13-27% of frame width. Reduce product height from 43% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 15,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: image contains two visible people/farmers and human body parts."
+      ],
+      "correction_prompt": "Regenerate with zero people and zero human body parts; show only unattended farm infrastructure, crops, and one small secondary AFP drip-tape carton roll.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 5,
+      "product_width_percent": 25,
+      "product_height_percent": 27,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: Visible human (kneeling worker) in the foreground",
+        "Hard reject: Visible human (worker standing in the background)",
+        "Hard reject: Second commercial package (open cardboard box) present",
+        "Failure: Mandatory role 'HEADWORKS STORY' not met (should show unattended fixed filter/gauge)"
+      ],
+      "correction_prompt": "Generate an image of an unattended field setup with a fixed irrigation filter, gauge, and manifold in a medium side view. Include exactly one small, secondary AFP white-and-blue wide low cylindrical drip-tape carton roll. No people, no open boxes, no other commercial packages.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: A person (farmer) is clearly visible in the image, which violates the requirement for zero people or human body parts."
+      ],
+      "correction_prompt": "Remove the person from the image. The scene should contain only the drip-tape roll and the fixed irrigation infrastructure (filter, gauge, regulator, manifold) in an unattended field.",
+      "attempt": 8
+    }
+  ]
+}

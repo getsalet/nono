@@ -1,0 +1,119 @@
+{
+  "source_id": "10800024002822-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 23,
+      "product_height_percent": 18,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Human presence detected in the background (person standing near the tractor) which is a hard reject condition."
+      ],
+      "correction_prompt": "Regenerate the image ensuring zero people are present in the scene. Remove the person standing near the green tractor in the background while maintaining the field context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 33,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The product (carton roll) is located in the lower-left, violating the preference for a lower-third or off-center placement.",
+        "The product width (approx 38%) and height (approx 33%) exceed the reviewer-estimation noise limits of 27% and 32% respectively.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is missing.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width.; Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Re-center the AFP carton roll and reduce its size so width is under 27% and height under 32%. Place it in the lower-right third. Add the mandatory watermark 'AFP | 09134922013' at the bottom right. Ensure no human body parts are visible. Reduce the product group from 38% to 13-27% of frame width. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 19,
+      "product_height_percent": 24,
+      "product_x_center_percent": 61,
+      "reasons": [
+        "The image fails the 'Mandatory role: SELECTION EVIDENCE' criteria. While the single roll is present, there is no 'elevated technical arrangement' or 'visible emitter-spacing or field-selection evidence' to guide the selection process as required for this specific image role."
+      ],
+      "correction_prompt": "Regenerate the image to focus on the roll as 'selection evidence'. Include visible technical context such as a close-up of the tape's emitter spacing on the roll or the product's packaging details alongside the roll in an elevated or clean technical setting, rather than just sitting on a field.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product bounding box exceeds 27% width limit (approx 38% due to unrolled tape extension)",
+        "Product bounding box exceeds 32% height limit (approx 35%)",
+        "Watermark at bottom-right displays '09134922013' instead of required '09134922013'",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the drip tape fully coiled inside the carton (no unrolled tape extending outside the bounding box) to reduce width and height percentages to below 27% and 32% respectively. Correct the watermark text to '09134922013'. Reduce the product group from 38% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 15,
+      "product_height_percent": 28,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Extra text overlay '07134922013' appearing above the object violates the rule against fake headlines or gibberish writing",
+        "Visible layflat hose connected to the roll (which is a commercial package) violates the hard reject for layflat hoses",
+        "Missing required visual evidence of emitter spacing or field selection (only a hose strip is visible, which is not the specified evidence type)"
+      ],
+      "correction_prompt": "Remove the text overlay '07134922013' and the visible layflat hose connection. Ensure the single white and blue AFP drip-tape roll is displayed alone on a simple field edge or plain soil background. Add a small, clear visual element (like a small ruler, measurement mark, or a close-up inset) that explicitly indicates the '20cm' emitter spacing or field selection dimension without using extra hoses or complex machinery. Keep the AFP watermark in the bottom-right.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 74,
+      "product_width_percent": 32,
+      "product_height_percent": 24,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Product bounding box width is estimated at 32% of frame width, which exceeds the hard reject limit of 27% for object width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reshoot or scale down the product. Reframe to make the drip tape roll occupy 20-23% of the frame width while maintaining the measurement scale and 'Selection Evidence' role. Reduce the product group from 32% to 13-27% of frame width.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 31.5,
+      "product_height_percent": 36.5,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Human figure standing next to the tractor in the background is a hard reject.",
+        "Roll width is estimated at 31.5%, which exceeds the 27% hard reject threshold.",
+        "Roll height is estimated at 36.5%, which exceeds the 32% hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31.5% to 13-27% of frame width.; Reduce product height from 36.5% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all people and workers from the image. Reduce the bounding box size of the drip tape roll to ensure its width is between 20-23% of the frame width and its height is less than 32%. Reduce the product group from 31.5% to 13-27% of frame width. Reduce product height from 36.5% to at most 32% of frame height.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 16,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: A person (human figure) is clearly visible standing in the background on the left side of the image.",
+        "Hard reject: A person (worker) is standing next to the tractor in the background on the right side of the image.",
+        "The role required 'SELECTION EVIDENCE' (technical arrangement/visible emitter-spacing), but the image only shows a single roll in the field without the required selection context."
+      ],
+      "correction_prompt": "Remove all humans from the scene. Focus on the single carton roll in the foreground and add visible emitter-spacing or field-selection evidence (e.g., a close-up detail or a second arrangement showing spacing) to satisfy the 'SELECTION EVIDENCE' role. Keep the background simple with only the farm building and tractor, but ensure no workers are present.",
+      "attempt": 8
+    }
+  ]
+}
