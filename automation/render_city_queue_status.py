@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Render a human-readable live dashboard for the city-content queue."""
-import datetime as dt,json
+import datetime as dt,json,os
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'artifacts/city-content-queue'
@@ -10,6 +10,10 @@ items=queue.get('items',[])
 completed=[x for x in items if x.get('status')=='completed']
 failed=[x for x in items if x.get('status')=='failed']
 processing=[x for x in items if x.get('status')=='processing']
+pending=[x for x in items if x.get('status')=='pending']
+max_attempts=max(1,int(os.getenv('MAX_ATTEMPTS','4')))
+eligible_pending=[x for x in pending if int(x.get('attempts',0))<max_attempts]
+saturated_pending=[x for x in pending if int(x.get('attempts',0))>=max_attempts]
 total=max(1,int(status.get('total',len(items))))
 done=int(status.get('completed',len(completed)))
 percent=done*100/total
@@ -27,14 +31,14 @@ if packages_manifest.exists():
         package_lines.append(f'- خطا در خواندن بسته‌ها: `{type(exc).__name__}`')
 else:
     package_lines.append(f'- هنوز بسته {batch_size}تایی آماده نشده است.')
-lines=['# وضعیت زنده صف تولید پست‌های شهری','', '> این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.','', f'- آخرین بروزرسانی: `{now}`',f'- وضعیت صف: **{status.get("result","unknown")}**',f'- پیشرفت: **{done} از {total} ({percent:.2f}٪)**',f'- تکمیل‌شده: **{done}**',f'- در حال پردازش: **{status.get("processing",len(processing))}**',f'- در انتظار: **{status.get("pending",0)}**',f'- ناموفق: **{status.get("failed",len(failed))}**',f'- مسدودشده توسط مدل تصویر: **{status.get("blocked_image_model",0)}**',f'- مدل متن و بازبینی: `agnes-3.0-flash`',f'- مدل تصویر: `{status.get("image_model","agnes-image-2.5-flash")}`',f'- فاصله شروع پست بعدی: **۳۰ ثانیه**','', '## بسته‌های آماده آپلود',''] + package_lines + ['', '## آخرین پست‌های تکمیل‌شده','']
+lines=['# وضعیت زنده صف تولید پست‌های شهری','', '> این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.','', f'- آخرین بروزرسانی: `{now}`',f'- وضعیت صف: **{status.get("result","unknown")}**',f'- پیشرفت: **{done} از {total} ({percent:.2f}٪)**',f'- تکمیل‌شده: **{done}**',f'- در حال پردازش: **{status.get("processing",len(processing))}**',f'- در انتظار: **{status.get("pending",len(pending))}**',f'- آماده انتخاب در اجرای بعدی: **{len(eligible_pending)}**',f'- در انتظار ولی قفل‌شده در سقف تلاش: **{len(saturated_pending)}**',f'- ناموفق: **{status.get("failed",len(failed))}**',f'- مسدودشده توسط مدل تصویر: **{status.get("blocked_image_model",0)}**',f'- مدل متن و بازبینی: `agnes-3.0-flash`',f'- مدل تصویر: `{status.get("image_model","agnes-image-2.5-flash")}`',f'- فاصله شروع پست بعدی: **۱۰ ثانیه**','', '## بسته‌های آماده آپلود',''] + package_lines + ['', '## آخرین پست‌های تکمیل‌شده','']
 if completed:
  for item in sorted(completed,key=lambda x:x.get('completed_at',''),reverse=True)[:20]:
   lines.append(f'- **{item.get("city","—")}** — {item.get("province","—")} — `{item.get("topic","—")}` — {item.get("word_count","—")} کلمه — `{item.get("completed_at","—")}`')
 else: lines.append('- هنوز پستی کنترل کیفیت را با موفقیت نگذرانده است.')
 lines+=['','## خطاهای اخیر','']
 if failed:
- for item in failed[:10]:lines.append(f'- **{item.get("city","—")}** — `{item.get("topic","—")}`: `{str(item.get("last_error","نامشخص"))[:300]}`')
+ for item in sorted(failed,key=lambda x:x.get('failed_at',''),reverse=True)[:10]:lines.append(f'- **{item.get("city","—")}** — `{item.get("topic","—")}`: `{str(item.get("last_error","نامشخص"))[:300]}`')
 else: lines.append('- خطای فعالی ثبت نشده است.')
 lines+=['','## فایل‌های خروجی','','- [وضعیت ماشینی](./status.json)','- [صف کامل](./queue.json)','- [SQL تجمیعی انتشار](./create-all-completed.sql)','- [SQL تجمیعی بازگشت](./rollback-all-completed.sql)',f'- [پوشه بسته‌های {batch_size}تایی](./packages/)','']
 (OUT/'STATUS.md').write_text('\n'.join(lines),encoding='utf-8')

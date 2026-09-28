@@ -1,4 +1,4 @@
-# Resumed after repository transfer: controlled 14-key mode, sixteen articles per run and a shared 32-image worker pool.
+# Throughput mode: repair saturated pending rows, process 24 cities, and keep strict QA on key image roles.
 name: Generate missing city posts and images
 
 on:
@@ -58,14 +58,17 @@ jobs:
       # half of the tested combined budget while both queues are active.
       # Adaptive stable share after live telemetry: five strict images per city create
       # more API calls than the three-image article pipeline.
-      BATCH_SIZE: "20"
-      ARTICLE_WORKERS: "20"
-      IMAGE_WORKERS: "40"
-      IMAGE_QA_ATTEMPTS: "8"
+      BATCH_SIZE: "24"
+      ARTICLE_WORKERS: "24"
+      IMAGE_WORKERS: "56"
+      IMAGE_QA_ATTEMPTS: "5"
       IMAGE_QA_MIN_SCORE: "70"
-      IMAGE_QA_REVIEW_ATTEMPTS: "4"
-      IMAGE_SET_QA_ATTEMPTS: "3"
-      IMAGE_QA_FAST_MODE: "0"
+      IMAGE_QA_REVIEW_ATTEMPTS: "3"
+      IMAGE_SET_QA_ATTEMPTS: "2"
+      IMAGE_QA_FAST_MODE: "1"
+      # Role 2 still participates in the set-diversity review; skip only its
+      # redundant per-image vision call to avoid repeated oversized-product loops.
+      IMAGE_QA_REVIEW_KINDS: "1,3"
       # At most one quarantined repair may consume a three-article batch.
       # Keep production capacity on fresh cities. Quarantined repairs are
       # handled separately after fresh throughput is healthy.
@@ -261,8 +264,8 @@ jobs:
           if [ "$rebuild_active" -gt 0 ]; then
             echo "City image rebuild is active or queued; it owns the next handoff."
           elif [ "$pending" -gt 0 ]; then
-            cooldown=30
-            if [ "${{ steps.queue.outputs.exit_code }}" != "0" ]; then cooldown=180; fi
+            cooldown=10
+            if [ "${{ steps.queue.outputs.exit_code }}" != "0" ]; then cooldown=60; fi
             echo "Queue has $pending pending items; cooldown=${cooldown}s before the next controlled batch."
             sleep "$cooldown"
             gh workflow run city-content-queue.yml --ref main
