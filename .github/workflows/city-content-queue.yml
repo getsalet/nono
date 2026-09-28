@@ -1,4 +1,4 @@
-# Controlled parallel mode: three articles per run with a shared five-image worker pool.
+# Controlled 14-key mode: sixteen articles per run with a shared 32-image worker pool.
 name: Generate missing city posts and images
 
 on:
@@ -51,6 +51,12 @@ jobs:
       AGNES_API_KEY6: ${{ secrets.AGNES_API_KEY6 }}
       AGNES_API_KEY7: ${{ secrets.AGNES_API_KEY7 }}
       AGNES_API_KEY8: ${{ secrets.AGNES_API_KEY8 }}
+      AGNES_API_KEY9: ${{ secrets.AGNES_API_KEY9 }}
+      AGNES_API_KEY10: ${{ secrets.AGNES_API_KEY10 }}
+      AGNES_API_KEY11: ${{ secrets.AGNES_API_KEY11 }}
+      AGNES_API_KEY12: ${{ secrets.AGNES_API_KEY12 }}
+      AGNES_API_KEY13: ${{ secrets.AGNES_API_KEY13 }}
+      AGNES_API_KEY14: ${{ secrets.AGNES_API_KEY14 }}
       IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY }}
       IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
 
@@ -62,9 +68,9 @@ jobs:
       # half of the tested combined budget while both queues are active.
       # Adaptive stable share after live telemetry: five strict images per city create
       # more API calls than the three-image article pipeline.
-      BATCH_SIZE: "12"
-      ARTICLE_WORKERS: "12"
-      IMAGE_WORKERS: "20"
+      BATCH_SIZE: "16"
+      ARTICLE_WORKERS: "16"
+      IMAGE_WORKERS: "32"
       IMAGE_QA_ATTEMPTS: "8"
       IMAGE_QA_MIN_SCORE: "70"
       IMAGE_QA_REVIEW_ATTEMPTS: "4"

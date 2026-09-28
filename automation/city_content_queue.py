@@ -48,7 +48,7 @@ if not re.fullmatch(r'[A-Za-z0-9_]+',DB_NAME):raise RuntimeError('WORDPRESS_DB_N
 
 AGNES_BASE=os.getenv('AGNES_API_BASE','https://apihub.agnes-ai.com/v1').rstrip('/')
 AGNES_KEYS=[]
-for _name in ['AGNES_API_KEY',*[f'AGNES_API_KEY{i}' for i in range(2,9)]]:
+for _name in ['AGNES_API_KEY',*[f'AGNES_API_KEY{i}' for i in range(2,15)]]:
  _value=os.getenv(_name,'').strip()
  if _value and _value not in AGNES_KEYS:AGNES_KEYS.append(_value)
 AGNES_KEY=AGNES_KEYS[0] if AGNES_KEYS else ''

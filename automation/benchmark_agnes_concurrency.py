@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'artifacts'/'benchmarks'
 TEXT_BASE=(os.getenv('AGNES_API_BASE') or 'https://apihub.agnes-ai.com/v1').rstrip('/')
 TEXT_KEYS=[]
-for _name in ['AGNES_API_KEY',*[f'AGNES_API_KEY{i}' for i in range(2,9)]]:
+for _name in ['AGNES_API_KEY',*[f'AGNES_API_KEY{i}' for i in range(2,15)]]:
     _value=(os.getenv(_name) or '').strip()
     if _value and _value not in TEXT_KEYS:TEXT_KEYS.append(_value)
 TEXT_KEY=TEXT_KEYS[0] if TEXT_KEYS else ''
