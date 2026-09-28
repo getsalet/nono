@@ -1,0 +1,54 @@
+{
+  "source_id": "1270002001156-tape20",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Image 1) fails the 'small and off-center' constraint: the product carton is large and centered in the foreground, not 'exactly one approved carton stays small, fully visible and off-center'.",
+        "Role 3 (Image 3) fails the 'HEADWORKS DETAIL' specification: the image shows a concrete pad but completely lacks the required 'fixed filter, gauge, regulator and manifold' equipment, containing only the product carton and background tractors.",
+        "Role 3 (Image 3) fails the 'no farm activity' constraint: visible tractors and farm vehicles in the background constitute farm activity."
+      ],
+      "correction_prompt": "In Image 1, move the product to the lower-right third to make it appear smaller and off-center; in Image 3, remove all background vehicles and add a technical irrigation manifold (filter, gauge, regulator) on the concrete pad, keeping the product small and secondary.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 (image 3) fails the 'no farm activity' constraint by including an active tractor and farm buildings in the background; the brief requires an empty concrete pad with only the specific filter/gauge/manifold assembly shown (not a large pump/spool unit).",
+        "Role 2 (image 2) fails the 'technical arrangement' constraint by showing generic field edges and farm buildings instead of a simple background with visible emitter-spacing or field-selection evidence.",
+        "The hardware in Role 3 is not the specified 'one fixed filter, gauge, regulator and manifold' but a different pump/reel assembly."
+      ],
+      "correction_prompt": "Regenerate image 3 as an isolated record photograph on an empty concrete pad showing only a fixed filter, gauge, regulator, and manifold with one small secondary carton (no farm activity or background); regenerate image 2 with a simple background showing clear emitter-spacing or field-selection evidence (no farm buildings).",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 significantly deviates from the brief by omitting the required hardware (filter, gauge, regulator, manifold) and instead showing a single product on concrete with farm activity in the background.",
+        "Roles 2 and 3 share an identical background environment (red barn, tractors, plowed field) with minor shifts in camera angle, resulting in repeated layouts.",
+        "The background in Role 3 violates the 'no farm activity' constraint for the HEADWORKS DETAIL role."
+      ],
+      "correction_prompt": "Replace Role 3 with a close-up technical shot of a filter, gauge, regulator, and manifold on an empty concrete pad with a solid, neutral background to strictly distinguish it from Role 2.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

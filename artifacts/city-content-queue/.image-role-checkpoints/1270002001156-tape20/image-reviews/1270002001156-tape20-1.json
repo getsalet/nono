@@ -1,0 +1,54 @@
+{
+  "source_id": "1270002001156-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Second small commercial roll of drip tape is visible on the left",
+        "Fake headline and gibberish text on the main product packaging"
+      ],
+      "correction_prompt": "Regenerate the image containing exactly one large AFP drip-tape roll and remove the smaller roll on the left. Rewrite the text on the main carton to be legible English or Persian to remove gibberish and fake headlines.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product exceeds the strict hard-reject threshold of 35 percent for height.",
+        "The required 'EDITORIAL HERO' role specifies a wide high-oblique view where the farm context dominates and the roll stays small; in this image, the roll occupies too much of the foreground to be considered 'small'.",
+        "The roll is centered horizontally (approx. 48%) instead of the editorial preference for off-center placement on the lower third.",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reposition the AFP roll to be strictly off-center on the lower third and significantly smaller (approx. 20% width). Use a wider shot to emphasize the farm background and irrigation infrastructure, keeping the roll as a minor element in the foreground. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 15,
+      "product_height_percent": 12,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue cylindrical drip-tape carton roll.",
+        "The roll is positioned on the lower third of the frame, which aligns with editorial preferences.",
+        "The product dimensions are well within the acceptable range (width < 30%, height < 35%).",
+        "There are no people, human body parts, or prohibited containers (bottles, buckets, etc.) visible.",
+        "The background shows a farm context with irrigation lines, matching the article brief.",
+        "The required watermark 'AFP | 09134922013' is present and clearly visible in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
