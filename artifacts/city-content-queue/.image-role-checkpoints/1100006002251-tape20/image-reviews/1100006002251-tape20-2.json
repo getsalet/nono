@@ -1,0 +1,57 @@
+{
+  "source_id": "1100006002251-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The image contains a second, unrolled commercial package of drip tape next to the main carton, violating the rule against 'second commercial package' or 'second roll'.",
+        "The unrolled tape on the right is identified as a 'layflat hose', which is a specific hard reject.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image showing only the single carton roll of drip tape. Remove the unrolled blue tape lying on the soil next to the carton. Keep the background and the unattended tractor in the distance. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 29,
+      "product_height_percent": 32,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue drip tape roll.",
+        "Zero people, human body parts, or human silhouettes are present.",
+        "The background (plowed field, unattended tractor, farm building) is contextually relevant and matches the article brief for selection evidence.",
+        "The required bottom-right watermark \"AFP | 09134922013\" is present.",
+        "The product width (29%) is slightly above the preferred range (20-23%) but falls within the acceptable reviewer-estimation noise (up to 27% width / 32% height) given that the object remains physically plausible and no hard rejects (like a second roll or container) are present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 29% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Zero people or body parts visible",
+        "Roll dimensions are within acceptable range (width ~24%, height ~30%)",
+        "Watermark 'AFP | 09134922013' is present and correct",
+        "No prohibited containers, pipes, or second rolls",
+        "Distant tractor and farm building are allowed context",
+        "Background matches field selection role with visible irrigation tape emitter-spacing evidence"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "source_id": "11000012002788-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product (the roll) is positioned in the lower center, not off-center on the lower third as requested.",
+        "The product height is approximately 42 percent of the frame, which significantly exceeds the 32 percent maximum limit for physical plausibility.",
+        "The image lacks the required wide high-oblique perspective; it is taken from a low eye-level angle.",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate from a wide high-oblique angle so the farm and irrigation context dominate the frame. Move the single small AFP roll to an off-center position on the lower third, significantly reducing its visual scale so it appears roughly 20 percent of the frame width and no taller than 32 percent of the frame height. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 14,
+      "product_height_percent": 17,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Image contains a visible human (a man standing in the center of the field).",
+        "Hard reject: The product is placed in the lower center rather than the requested off-center position.",
+        "Hard reject: Product height (17%) and width (14%) are below the recommended target range (20-23% width).",
+        "Hard reject: The image composition does not match the editorial hero role, as the human subject and centered product take priority over the farm context."
+      ],
+      "correction_prompt": "Remove all humans from the scene. Re-position the drip-tape roll to the bottom right corner of the frame. Increase the size of the roll to approximately 20-23% of the frame width while maintaining the high-oblique view of the farm.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 25,
+      "product_height_percent": 31,
+      "product_x_center_percent": 75,
+      "reasons": [
+        "Hard reject: The image contains a man standing in the field (center-left) with a full body visible, which violates the zero people / zero human body parts requirement."
+      ],
+      "correction_prompt": "Remove the man and the metal frame from the center of the field. Keep the wide high-oblique farm context and the single AFP white-and-blue drip-tape carton roll in the lower-right, ensuring no human figures are visible.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 15,
+      "product_height_percent": 20,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Exactly one white-and-blue AFP drip-tape roll is visible.",
+        "Product dimensions (width ~15%, height ~20%) fall within accepted limits.",
+        "No people, body parts, or human silhouettes present.",
+        "Watermark 'AFP | 09134922013' is present and correct.",
+        "Background context matches the editorial brief with farm rows and distant tractor.",
+        "Placement is off-center and lower-third, consistent with editorial preference."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "source_id": "11000012002112-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: A person is visible inside the cab of the large red tractor in the background, violating the zero-person requirement.",
+        "Hard reject: The image contains a second commercial product (the open carton box) alongside the roll; only one roll of tape is permitted.",
+        "Hard reject: The image contains multiple bottles and containers (gauge, regulator, valve, strainer) in the foreground.",
+        "Product size: The product height (~35%) exceeds the hard reject limit of 32%.",
+        "Role Mismatch: The selected role was 'HEADWORKS STORY' which focuses on the filter/gauge/manifold setup, but this image places the roll as the primary subject.",
+        "machine-enforced bounding-box check failed: Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the driver from the tractor in the background to ensure zero people. Remove the open carton box, gauge, regulator, and valve from the foreground. Leave only the single white and blue AFP drip-tape roll on the soil. Shrink the roll slightly so its height is under 30% of the frame. Place the unattended irrigation manifold/filter system in the mid-ground to match the 'HEADWORKS STORY' role. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 17,
+      "product_height_percent": 19,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The product dimensions are within the acceptable range (13-27% width, <32% height).",
+        "The product is placed in the lower-left (lower-third), which is an editorial preference and not a hard reject.",
+        "Zero people or body parts are visible.",
+        "The background includes a distant unattended tractor and fixed irrigation hardware (pump/filter unit), which are contextually relevant.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "The approved carton remains small and secondary to the primary story (the filter/gauge/manifold system)."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

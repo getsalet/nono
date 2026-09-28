@@ -1,0 +1,64 @@
+{
+  "source_id": "1100008002252-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 21,
+      "product_height_percent": 30,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: The mandatory image role requires an 'EDITORIAL HERO' composition featuring a wide high-oblique view where the farm and irrigation context dominate, with the product small and off-center in the lower third. The image displays an eye-level composition where the product is centered in the lower third rather than off-center, violating the mandatory role constraints."
+      ],
+      "correction_prompt": "Regenerate image as a wide high-oblique aerial shot where the vast farm context and irrigation layout dominate the frame. The drip-tape roll must be significantly smaller, placed off-center in the lower third, with the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 10,
+      "product_height_percent": 15,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product is centered, violating the 'off-center on the lower third' requirement",
+        "Roll appearance is not consistent with the specified 'wide low cylindrical' carton; it appears as a standard tall vertical roll",
+        "Reviewer estimation notes the product size is well below the preferred width range",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 10% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with the white and blue drip-tape roll placed in the lower right corner (off-center). The roll must be horizontally oriented or wide/low profile to match the 'wide low cylindrical' description, occupying roughly 20% of the image width and positioned on the lower third of the frame. Enlarge the product group from 10% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Hard reject: Human figures are clearly visible standing in the field, violating the 'zero people and zero human body parts' rule."
+      ],
+      "correction_prompt": "Remove all visible people and human silhouettes from the farm scene.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 19,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "No people, body parts, or extra commercial packages present.",
+        "Background matches article context (farm/irrigation) for the editorial hero role.",
+        "Product size and placement (small, lower-third, slightly off-center) are within acceptable bounds.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

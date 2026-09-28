@@ -2,25 +2,55 @@
   "source_id": "1050003002761-tape20",
   "family": "tape20",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 72,
-      "product_width_percent": 31,
-      "product_height_percent": 47,
-      "product_x_center_percent": 34,
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 18,
+      "product_x_center_percent": 25,
       "reasons": [
-        "The image shows exactly one white and blue cylindrical drip-tape carton roll as required, with the visible 'AFP' branding.",
-        "The roll's dimensions are within the acceptable 10-48% width and up to 58% height limits.",
-        "The drip tape extends from the roll toward a metallic gauge with no visible piping, which fits the brief's allowance for relevant connectors and does not constitute a hard reject.",
-        "The required bottom-right watermark 'AFP | 09134922013' is present and intact.",
-        "The background contains a red farm building and a distant unattended tractor, both of which are explicitly allowed contextual elements, with zero people or human body parts visible.",
-        "The scene successfully depicts a practical field selection evidence setting that aligns with the article brief for a 20cm drip tape product."
+        "Hard reject: visible person (man) in the image",
+        "Hard reject: second commercial package (second drip tape roll) held by the person",
+        "Hard reject: second roll on the ground in the foreground"
+      ],
+      "correction_prompt": "Remove all people, body parts, the second drip tape roll in the hand, and the extra roll on the ground. Leave only a single AFP white-and-blue wide low cylindrical drip-tape carton roll, width 20–23% of frame, in an elevated technical arrangement with visible emitter-spacing or field-selection evidence. Simple background with ordinary farm building and distant unattended tractor allowed. Ensure the bottom-right watermark 'AFP | 09134922013' is present.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 31,
+      "product_height_percent": 26,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Zero people and zero human body parts visible.",
+        "Exactly one AFP white-and-blue drip-tape carton roll present.",
+        "Background includes an ordinary farm building and distant unattended tractor, which are permissible context.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "The roll appears slightly below the recommended width of 23%, but the geometry is plausible and the image effectively demonstrates the selected image role (selection evidence).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 23,
+      "product_height_percent": 26,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Features exactly one AFP white-and-blue drip-tape roll positioned on the left with a width of approximately 23% of the frame, meeting the preferred range.",
+        "Includes the mandatory selection evidence (looped blue tape with visible emitters and stakes) placed on the field.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "Zero human subjects or body parts are visible; the distant tractor and farm building provide acceptable contextual background.",
+        "No forbidden commercial items (bottles, cans, or extra rolls) or gibberish text are detected."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

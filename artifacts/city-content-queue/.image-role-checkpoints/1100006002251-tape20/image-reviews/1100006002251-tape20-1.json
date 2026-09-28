@@ -1,0 +1,52 @@
+{
+  "source_id": "1100006002251-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Contains multiple people (two men visible in the field), one is sitting on the ground handling the hose, the other is operating a small tiller.",
+        "Strict prohibition against any human presence is violated."
+      ],
+      "correction_prompt": "Regenerate the image showing only the field, irrigation lines, and the AFP carton roll. Ensure zero people, workers, or body parts are visible. Keep the background farm context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 21.0,
+      "product_height_percent": 30.0,
+      "product_x_center_percent": 49.0,
+      "reasons": [
+        "Editorial role breach: the brief mandates the carton be placed off-center on the lower third, but the product is centered horizontally (49% x-axis).",
+        "Visual inconsistency: a pipe is shown passing through the center of the tape roll, which violates the hard reject for 'pipe through the roll' or 'impossible geometry'.",
+        "Object proportion: the roll appears taller (30% of frame) than the typical 1:1 to 1:1.5 aspect ratio for a drip tape carton, suggesting distortion."
+      ],
+      "correction_prompt": "Regenerate with the carton roll placed in the lower-left or lower-right (off-center). Remove the pipe passing through the roll center so the roll is sitting on the ground. Maintain the wide farm context.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 21,
+      "product_height_percent": 28,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The product is a single, clearly visible white-and-blue cylindrical carton roll matching the 'drip-tape' description.",
+        "The farm and irrigation context (crop rows, distant equipment) dominates the frame as required by the editorial hero role.",
+        "Zero people or human body parts are visible in the image.",
+        "The exact required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Product dimensions (width ~21%, height ~28%) fall within the preferred and acceptable range without geometric distortion."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
