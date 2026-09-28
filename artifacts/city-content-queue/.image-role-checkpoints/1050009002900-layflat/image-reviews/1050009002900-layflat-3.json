@@ -2,25 +2,77 @@
   "source_id": "1050009002900-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
   "fast_mode": false,
   "history": [
     {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 42,
+      "product_height_percent": 38,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Contains the required two-coil pair: one packaged AFP coil and one bare black woven coil.",
+        "Both objects are separate, fully visible, and physically plausible with no overlap or impossible intersection.",
+        "Zero people or human body parts are present.",
+        "Third commercial product, bottle, or fake label is absent.",
+        "Infrastructure elements (pump, gauge, manifold) and background farm objects are allowed and not rejected.",
+        "Watermark 'AFP | 09134922013' is present in bottom-right corner.",
+        "Product pair width (~42% of frame) exceeds the soft 25% reject threshold but falls within the reviewer-estimation noise band (up to 25% strictly, with higher tolerance when objects are recognizable and separate).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 42% to 8-25% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 72,
+      "product_height_percent": 28,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Approved layflat pair is present: one packaged AFP coil and one bare black woven coil.",
+        "Object pair is fully visible, separate, and physically plausible.",
+        "No people or human body parts are visible.",
+        "No prohibited items such as bottles, jars, cans, buckets, or third commercial packages are present.",
+        "The distant tractor and farm building are acceptable context and do not violate product constraints.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 72% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 63,
+      "product_height_percent": 42,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains visible tractors and horses, which constitute farm activity. The visual brief explicitly forbids farm activity and requires an empty concrete pad with only fixed infrastructure (pumps/gauges) visible.",
+        "The image is missing the required fixed pump, gauge, and manifold specified in the mandatory HEADWORKS DETAIL role.",
+        "The pair of coils is excessively wide (63%), far exceeding the hard reject threshold of 25%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 63% to 8-25% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate image on an empty concrete pad featuring a fixed pump and gauge. Place one packaged AFP coil and one bare black woven coil in the foreground, separated and small (width < 15%). No background tractors, animals, or farm activity. Reduce the product group from 63% to 8-25% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
       "pass": true,
       "score": 82,
-      "product_width_percent": 15,
-      "product_height_percent": 25,
-      "product_x_center_percent": 42,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 30,
       "reasons": [
-        "The required HEADWORKS STORY role (fixed unattended pump, gauge, and manifold) is present and clearly visible in the medium side view.",
-        "The mandatory 'AFP | 09134922013' watermark is correctly displayed in the bottom-right corner.",
-        "The image is strictly clear of any humans, faces, hands, or body parts.",
-        "The product pair consists of one bare black coil and one packaged coil, adhering to the 'approved layflat pair' constraint.",
-        "The pair occupies approximately 15% of the frame width, fitting within the 12-15% target range and the 9-20% reviewer-estimation noise window.",
-        "Infrastructure elements (pump, gauge, manifold) are present as required for the role and are not incorrectly flagged as extra commercial products."
+        "Zero people or human body parts detected.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "The two-coil pair (one packaged, one bare black woven) is present, separate, and physically plausible.",
+        "Infrastructure (pump, gauge, manifold) is correctly identified and does not count as a third commercial product.",
+        "Product bounding box dimensions (width 20%, height 28%) fall within the acceptable 8-25% width and up to 35% height tolerance range.",
+        "Image meets all mandatory role requirements and hard reject criteria."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 4
     }
   ]
 }

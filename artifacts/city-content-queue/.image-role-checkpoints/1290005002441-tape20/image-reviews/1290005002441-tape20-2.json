@@ -1,0 +1,112 @@
+{
+  "source_id": "1290005002441-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 34,
+      "product_height_percent": 32,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Roll width exceeds 30% hard limit",
+        "Second commercial package visible on ground (coil of tape)",
+        "Text gibberish and fake on carton label",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate a single AFP white-blue drip tape carton roll; remove any second package or tape coil from the scene; ensure clean, legible carton label; keep width under 25%. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "A human figure is clearly visible in the background standing next to the tractor, violating the zero-people requirement.",
+        "The label text on the product is partially gibberish/illegible and lacks the required 'emitter-spacing or field-selection evidence' for the selection-evidence role."
+      ],
+      "correction_prompt": "Regenerate with zero people visible in the background; ensure the roll is in sharp focus with a clean, legible '20mm drip tape' label and visible field measurements or emitter spacing to support the 'selection evidence' role.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: human figure/person visible in the mid-ground between the crop and the tractor.",
+        "Product bounding box height (~38%) exceeds the maximum limit of 35%.",
+        "Product width (~32%) exceeds the maximum limit of 30%.",
+        "Visible writing on the carton is gibberish/unreadable.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the human figure in the mid-ground. Regenerate the AFP drip-tape roll to be physically smaller, with width under 30% and height under 35% of the frame. Ensure all text on the carton is sharp and legible, not gibberish. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: Image contains a human person (standing in the background center).",
+        "Product is missing: The image contains a white cylinder in the foreground, but it appears to be a generic plastic bucket or container, not the mandated wide, low cylindrical drip-tape carton roll.",
+        "The required product (white-and-blue wide low cylindrical drip-tape carton) is not present in the image.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and silhouettes. Replace the foreground object with a wide, low, cylindrical white and blue carton roll of 20cm drip tape, ensuring it occupies approximately 25% of the frame width. Keep the rural field background but ensure no people are visible. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 34,
+      "product_height_percent": 36,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Product width exceeds the 30 percent hard reject threshold (estimated ~34%).",
+        "Product height exceeds the 35 percent hard reject threshold (estimated ~36%).",
+        "Missing mandatory SELECTION EVIDENCE (no visible emitter-spacing or field-selection evidence).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the carton roll scaled down to 20 percent width and 25 percent height; strictly remove all human figures; add visible drip-line emitter spacing markers or a field map layout next to the roll; preserve bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 34% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Exactly one approved AFP drip-tape carton roll is visible.",
+        "Zero people or human body parts detected.",
+        "The watermarked label 'AFP' is present and legible.",
+        "The background features appropriate farm infrastructure (tractors, barns, field) without conflicting commercial products or hard rejects.",
+        "The loose tape coil acts as the required field-selection/emitter-spacing evidence.",
+        "Product dimensions are within acceptable physical plausibility ranges."
+      ],
+      "correction_prompt": "",
+      "attempt": 7
+    }
+  ]
+}

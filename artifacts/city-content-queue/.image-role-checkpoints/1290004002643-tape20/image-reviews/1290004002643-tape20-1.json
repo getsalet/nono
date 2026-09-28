@@ -1,0 +1,61 @@
+{
+  "source_id": "1290004002643-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Hard reject: A person is clearly visible in the center of the image, violating the 'zero people' and 'zero human body parts' constraints."
+      ],
+      "correction_prompt": "Remove the man standing in the field and keep only the unattended farm context, ensuring no humans are visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 17,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The image contains a clearly visible red tractor on the right side of the frame. Although unattended, the prominent presence of this farm vehicle in the foreground-to-midground conflicts with the strict 'EDITORIAL HERO' role requirement where the farm context should dominate without distracting focal elements like a large, close tractor.",
+        "The required bottom-right watermark text is 'AFP | 09134922013'. The image displays 'AFP | 09134922013', which matches the requirement exactly, but the prompt instruction 'must never be rejected' is overridden by the standard QA check that 'fake headline, caption, gibberish writing' are hard rejects if they don't match the brief. However, the primary failure is the tractor distracting from the 'hero' role of the field/irrigation context, which implies a cleaner landscape or more distant equipment."
+      ],
+      "correction_prompt": "Remove the red tractor from the right side of the field to ensure the farm and irrigation context dominates without distraction, strictly adhering to the editorial hero role. Keep the drip-tape roll exactly as is.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 20,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Visible human (standing male figure in left background) - violates strict 'zero people' requirement."
+      ],
+      "correction_prompt": "Regenerate the image with a fully unattended farm scene. Remove the standing man in the background completely. Keep the AFP drip-tape roll in the lower-left/off-center foreground, ensuring no humans, faces, or body parts are present anywhere in the frame.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 78,
+      "product_width_percent": 18,
+      "product_height_percent": 34,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "The image displays exactly one AFP drip-tape roll positioned off-center on the lower third, matching the 'EDITORIAL HERO' role description where the field context dominates.",
+        "Zero people or human body parts are visible, satisfying the hard reject criteria.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The background of a wide agricultural field with crop rows aligns with the article brief for 20cm drip tape in a farming context."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
