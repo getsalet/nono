@@ -119,13 +119,13 @@ class CityImagePolicyTests(unittest.TestCase):
         ok, issues = image_quality_gate._metric_check(
             "layflat",
             {
-                "product_width_percent": 43,
+                "product_width_percent": 66,
                 "product_height_percent": 35,
                 "product_x_center_percent": 50,
             }, 3,
         )
         self.assertFalse(ok)
-        self.assertTrue(any("8-42%" in issue for issue in issues))
+        self.assertTrue(any("8-65%" in issue for issue in issues))
         queue_source = (ROOT / "automation" / "city_content_queue_cloudflare.py").read_text(encoding="utf-8")
         self.assertIn("layflat[:q.BATCH-len(selected)]", queue_source)
         ok, issues = image_quality_gate._metric_check(
