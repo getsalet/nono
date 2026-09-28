@@ -1,0 +1,93 @@
+{
+  "source_id": "10900043002344-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Visible 'OD' text on the front of the roll contradicts the mandatory '20cm' label specification for this specific product brief.",
+        "The uncoiled drip tape section on the right side is a second visual representation of the product, risking the 'exactly one approved carton roll' hard reject criteria.",
+        "Hard reject triggered by text mismatch (OD vs 20).",
+        "Hard reject triggered by the uncoiled section."
+      ],
+      "correction_prompt": "Regenerate with the front of the roll clearly labeled '20cm' instead of 'OD'. Ensure only the coiled roll is present, completely removing the uncoiled section on the right. Keep the same field background, lighting, and bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 22,
+      "product_height_percent": 22,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The product label contains gibberish/misspelled text (e.g., 'CRP RREBGA 7LM') which violates the hard rejection rule for illegible or nonsense writing.",
+        "The image lacks the required 'selection evidence' (visible emitter spacing, spec sheet, or comparison material) mandated for the SELECTION EVIDENCE role."
+      ],
+      "correction_prompt": "Regenerate the image with the product label clearly showing legible text 'Drip Tape 20cm' and 'AFP'. Include a ruler or visible emitter spacing pattern on the tape to indicate technical specification. Ensure the background remains a simple farm field.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The required visual role 'SELECTION EVIDENCE' is not met: the image shows the product in isolation on a field with no visible emitter-spacing or field-selection evidence (e.g., measuring tape against emitters, or a close-up of the tape showing spacing).",
+        "Watermark text contains a numerical typo: it displays '09134922013' whereas the required identifier is '09134922013' (extra '1' in the sequence)."
+      ],
+      "correction_prompt": "Regenerate image to include visible drip tape extended from the roll showing emitter spacing (selection evidence). Correct the watermark in the bottom right to exactly 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 33,
+      "product_height_percent": 38,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: Multiple people are visible in the background (near the tractors and farm building)",
+        "Hard reject: Distant tractors are visible in the background",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to ensure the background is completely empty of all people, body parts, and distant equipment (tractors, farm buildings). Show only the white-and-blue AFP drip-tape roll and the extended tape on bare soil. Reduce the product group from 33% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 18,
+      "product_height_percent": 14,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Missing mandatory visual brief evidence: the image lacks visible emitter-spacing or field-selection details required for the SELECTION EVIDENCE role.",
+        "The unspooled section of the tape extends off-frame to the right, which is less suitable for an elevated technical arrangement brief that implies a more contained and demonstrative composition."
+      ],
+      "correction_prompt": "Keep the single AFP drip-tape carton roll in the foreground but reduce or fold back the unspooled tape to remain fully within the frame. Add visible technical indicators of emitter spacing, such as a clear ruler or marked measurement gaps on the tape, to fulfill the SELECTION EVIDENCE role. Ensure the background remains simple with the farm context.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 28,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Object is a single, clearly identifiable AFP brand drip tape roll (white with blue accents), matching the requested role and physical form factor.",
+        "Bounding box dimensions are within the acceptable 13–27% width and under 32% height limits.",
+        "Zero human figures, faces, or body parts are visible in the frame.",
+        "Required 'AFP | 09134922013' watermark is clearly visible in the bottom-right corner.",
+        "Background is a simple, contextual farm field with a distant building and tractor, adhering to the SELECTION EVIDENCE role without prohibited clutter."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

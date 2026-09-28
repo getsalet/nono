@@ -2,33 +2,37 @@
   "source_id": "10500014002102-layflat",
   "family": "layflat",
   "kind": 1,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 0,
-      "product_width_percent": 45,
-      "product_height_percent": 28,
-      "product_x_center_percent": 52,
+      "score": 35,
+      "product_width_percent": 42,
+      "product_height_percent": 30,
+      "product_x_center_percent": 46,
       "reasons": [
-        "The image contains a full-body person standing in the center of the frame, which is an automatic hard reject.",
-        "The image includes a water meter and pump assembly on the right side, which constitutes a third commercial device/product that is not explicitly allowed in this editorial role context."
+        "Product pair occupies ~42% of frame width, far exceeding the 20% hard-reject threshold (spec target 12-15%).",
+        "Products are in the lower-left/center rather than off-center; combined with the scale violation, they dominate the frame instead of sitting in a high-oblique wide context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 9-20% of frame width."
       ],
-      "correction_prompt": "Remove the standing person and the water meter/pump assembly. Regenerate the image to show only the two specified coiled hoses (one packaged, one bare) on the field soil with a wide high-oblique perspective.",
+      "correction_prompt": "Re-render with the wide high-oblique farm view dominant: scale the packaged AFP coil and bare black woven coil down so the pair occupies only 12-15% of frame width, place them together as small off-center foreground elements, keep zero people, and retain the exact bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 42% to 9-20% of frame width.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 90,
-      "product_width_percent": 58,
-      "product_height_percent": 30,
-      "product_x_center_percent": 45,
+      "score": 95,
+      "product_width_percent": 14,
+      "product_height_percent": 18,
+      "product_x_center_percent": 46,
       "reasons": [
-        "Contains the two required objects: one packaged AFP coil and one bare black woven coil",
-        "No people, human body parts, or faces are present",
-        "No third commercial products or bottles visible",
-        "Watermark 'AFP | 09134922013' is correctly placed in the bottom-right corner"
+        "Approved product pair (packaged coil and bare black coil) is present, separate, and physically plausible.",
+        "Combined product width estimated at ~14% of frame, which falls within the 12-15% target range.",
+        "Placement is off-center and lower-third, consistent with the editorial hero role.",
+        "Zero people or body parts present.",
+        "Watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "Context includes a water channel (irrigation) and crop rows, aligning with the water-transfer article brief.",
+        "City skyline in the distance provides context suitable for the location (city/field context)."
       ],
       "correction_prompt": "",
       "attempt": 2

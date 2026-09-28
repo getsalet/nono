@@ -1,0 +1,101 @@
+{
+  "source_id": "10900013001041-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Person visible in the background (standing next to the tractor), violating the hard reject rule.",
+        "Product width (38%) exceeds the maximum acceptable limit of 27%.",
+        "Product height (42%) exceeds the maximum acceptable limit of 32%.",
+        "Text on the carton label is gibberish/unclear rather than being clean or realistic.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate without any people. Shrink the carton roll to width 20% and height 28%. Ensure the label text is clean and clearly readable. Reduce the product group from 38% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 5,
+      "product_width_percent": 15,
+      "product_height_percent": 15,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "Presence of a full-body person (farmer/worker) crouching in the frame (Hard reject)",
+        "Visible hands and face of the human subject (Hard reject)",
+        "Human silhouette is prominent and clearly not distant (Hard reject)"
+      ],
+      "correction_prompt": "Remove the man and all human body parts; keep the filter manifold and the 'AFP' drip-tape roll in the unattended field scene.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 32,
+      "product_height_percent": 30,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Hard reject: Presence of two people in the image (one standing in the background, one bending near the box), which is a strict requirement violation (zero people allowed).",
+        "Hard reject: A second commercial package (open box) is visible in the background, violating the 'exactly one' object constraint.",
+        "Product bounding box estimated width (~32%) exceeds the maximum allowed frame width of 27%.",
+        "Image role mismatch: The visual brief required a 'HEADWORKS STORY' showing fixed irrigation infrastructure (filters, gauges, manifolds), but the image shows a product-focused ground level view of the roll.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate image: Show a medium side view of a fixed irrigation setup (filter, gauge, manifold) in a farm. Place exactly one AFP white-and-blue drip-tape roll (width 20-23% of frame) as a secondary element nearby. Ensure absolutely zero people, no additional boxes or containers, and keep the required bottom-right watermark. Reduce the product group from 32% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 27,
+      "product_height_percent": 35,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: visible person (farmer with hat and plow) in the background.",
+        "Hard reject: product height appears to exceed the 32% maximum limit.",
+        "Product contains gibberish writing instead of clear labeling.",
+        "machine-enforced bounding-box check failed: Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image removing all human figures. Ensure the drip tape roll is physically plausible and does not exceed 32% of the frame height. Replace the product text with 'نوار تیپ ۲۰' and '20cm Drip Tape'. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 38,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Product (drip tape roll) width (~30%) and height (~38%) exceed the hard reject thresholds of 27% and 32%, respectively.",
+        "Violation of Mandatory Role: The image features a wheeled, robotic-looking pump unit rather than the 'unattended fixed filter, gauge, regulator and manifold' required by the specific brief context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Generate a wide low cylindrical drip-tape roll that occupies only ~20% of the frame width and ~25% of the height. In the background, show a static, fixed irrigation manifold unit with gauges and filters resting on the soil. No wheeled or robotic equipment. Maintain the exact bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 21,
+      "product_height_percent": 26,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "All hard reject criteria are satisfied.",
+        "Image contains zero people, human body parts, or silhouettes.",
+        "The product is a single white-and-blue cylindrical drip-tape roll with the 'AFP' label, matching the brief.",
+        "The background accurately reflects the required 'HEADWORKS STORY' role, featuring a fixed filter, gauges, and manifold.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The roll's dimensions are within the accepted 13-27% width and 32% height thresholds."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}
