@@ -1,0 +1,55 @@
+{
+  "source_id": "12300012001585-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 26,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The primary product is centered horizontally at 50%, violating the requirement for off-center placement on the lower third.",
+        "The 'editorial hero' role requires the farm context to dominate with the carton staying small; here the product is disproportionately large (26% width).",
+        "The crop and building on the far right appear to have a distorted, melted texture, which is a geometry/reality error.",
+        "A person or animal silhouette is visible in the distance near the tractor."
+      ],
+      "correction_prompt": "Reposition the single drip-tape roll to the lower-right third of the frame and reduce its size to 18% width. Clean up the texture on the right-side greenhouse and ensure no silhouettes are visible in the background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The image contains a visible human figure (a person standing in the crop rows), which violates the hard reject rule against people and human body parts.",
+        "The product in the bottom-right corner is not a cylindrical drip-tape roll but appears to be a flat, rectangular cardboard container or box with an 'AFP' logo, failing to match the required 'cylindrical drip-tape carton roll' description.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to remove the person entirely. Replace the rectangular box in the bottom-right with a single white and blue cylindrical drip-tape roll (a roll of tape inside a cylindrical box) in the lower third, keeping the farm context and 'AFP | 09134922013' watermark. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Product is exactly one AFP white and blue wide low cylindrical drip-tape carton roll.",
+        "Product dimensions (width 23%, height 28%) fall within the requested acceptance range of 12-30% width and 35% height.",
+        "Zero people or human body parts are visible in the image.",
+        "The image features a wide high-oblique view with a prominent farm and irrigation context that dominates the scene.",
+        "The product is positioned low and slightly off-center (at 52% x-center), fitting the editorial hero role.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

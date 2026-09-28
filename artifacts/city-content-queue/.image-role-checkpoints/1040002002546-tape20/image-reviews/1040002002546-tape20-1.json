@@ -6,20 +6,88 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 88,
-      "product_width_percent": 22,
-      "product_height_percent": 20,
-      "product_x_center_percent": 78,
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 16,
+      "product_height_percent": 14,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Exact required watermark 'AFP | 09134922013' is visible in the bottom right corner.",
-        "Zero people, body parts, or silhouettes are present.",
-        "Product is a white cylindrical roll with blue accents, positioned off-center on the lower third.",
-        "Dimensions are within the accepted estimation noise (width 22%, height 20%).",
-        "Editorial hero context of a farm with irrigation lines is correctly established."
+        "The image contains white objects to the left of the drip-tape roll that resemble jars or canisters, which are hard rejects according to the constraints.",
+        "The product is not placed in the lower-third; it is positioned in the center of the image.",
+        "The high-oblique perspective (looking down the crop rows) is not maintained; the camera is at ground level."
+      ],
+      "correction_prompt": "Remove all white jar-like objects and canisters to the left of the drip-tape. Move the single roll to the bottom-right corner (lower-third) and shift the camera angle to a high-oblique view looking down the farm rows. Ensure the bottom-right watermark remains.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 22,
+      "product_height_percent": 22,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Contains visible people (two human silhouettes) in the distant field background, violating the strict zero-person rule.",
+        "The drip-tape roll is positioned in the bottom foreground, whereas the required EDITORIAL HERO role specifies an off-center placement on the lower third."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Reposition the white-and-blue drip-tape roll to the middle of the lower third to align with the editorial hero framing requirements.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 19,
+      "product_height_percent": 24,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: visible human figure standing next to the tractor in the background",
+        "Hard reject: human silhouette/person detected in the upper right area of the image",
+        "Product placement violates 'off-center' directive; the carton is horizontally centered (x_center=49%)"
+      ],
+      "correction_prompt": "Remove all people and human figures from the background tractor area. Regenerate the image with the drip tape carton placed off-center (e.g., bottom right or bottom left) to strictly adhere to the EDITORIAL HERO role requirements.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 15,
+      "product_height_percent": 15,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product is centered in the frame, violating the mandatory 'off-center' and 'lower-third' editorial hero requirement.",
+        "Product height is too small relative to the scene, failing to match the specified 30-35% target dimension.",
+        "Watermark font/weight does not match the standard bold specification."
+      ],
+      "correction_prompt": "Move the carton roll to the bottom-left third, increase its vertical height to 30-35% of the frame, and use a bold sans-serif font for the bottom-right watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 25,
+      "product_height_percent": 25,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Presence of a human person (farmer/worker) in the image, which is a hard reject"
+      ],
+      "correction_prompt": "Remove the man kneeling in the field and replace with an empty agricultural context or distant farm building. Keep the AFP drip-tape roll as the sole product focus.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 94,
+      "product_width_percent": 21,
+      "product_height_percent": 16,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Meets the EDITORIAL HERO role with a wide high-oblique view where the farm and irrigation context dominate.",
+        "Shows exactly one white-and-blue wide low cylindrical drip-tape carton roll with the AFP branding.",
+        "The product is located fully within the lower-third and is appropriately small relative to the scene.",
+        "Contains zero people and zero human body parts.",
+        "The required watermark \"AFP | 09134922013\" is present in the bottom-right corner and is correctly not flagged for removal.",
+        "No hard-reject elements (bottles, extra commercial packages, fake text, impossible geometry, or people) are present."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 6
     }
   ]
 }

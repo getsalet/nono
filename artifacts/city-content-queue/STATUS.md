@@ -2,13 +2,13 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-28T13:04:38+00:00`
+- آخرین بروزرسانی: `2026-09-28T13:45:15+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **527 از 1894 (27.82٪)**
-- تکمیل‌شده: **527**
+- پیشرفت: **529 از 1894 (27.93٪)**
+- تکمیل‌شده: **529**
 - در حال پردازش: **0**
-- در انتظار: **853**
-- ناموفق: **514**
+- در انتظار: **845**
+- ناموفق: **520**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -30,6 +30,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **گلستان** — تهران — `tape20` — 1133 کلمه — `2026-09-28T13:33:17+00:00`
+- **باقرشهر** — تهران — `tape20` — 1535 کلمه — `2026-09-28T13:26:29+00:00`
 - **خمیر** — هرمزگان — `tape20` — 1312 کلمه — `2026-09-28T12:16:46+00:00`
 - **گروک** — هرمزگان — `tape20` — 1251 کلمه — `2026-09-28T12:09:33+00:00`
 - **منتظران** — خوزستان — `tape20` — 1277 کلمه — `2026-09-28T09:18:00+00:00`
@@ -48,21 +50,19 @@
 - **انارستان** — بوشهر — `tape20` — 1376 کلمه — `2026-09-28T07:35:40+00:00`
 - **وحدتیه** — بوشهر — `tape20` — 1205 کلمه — `2026-09-28T07:32:39+00:00`
 - **دالکی** — بوشهر — `tape20` — 1208 کلمه — `2026-09-28T07:32:13+00:00`
-- **بیدروبه** — خوزستان — `tape20` — 1704 کلمه — `2026-09-28T07:31:50+00:00`
-- **دیشموک** — کهگیلویه و بویراحمد — `tape20` — 1481 کلمه — `2026-09-28T07:23:42+00:00`
 
 ## خطاهای اخیر
 
 - **نقده** — `layflat`: `image hard gate rejected role 3 after 8 attempt`
 - **پلدشت** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
 - **پلدشت** — `layflat`: `image hard gate rejected role 3 after 8 attempt`
-- **لاجان** — `tape20`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
-- **لاجان** — `layflat`: `image hard gate rejected role 3 after 6 attempt`
+- **لاجان** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
+- **لاجان** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
 - **پیرانشهر** — `tape20`: `Editorial review failed: internal link count must equal minimum`
-- **پیرانشهر** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
 - **آواجیق** — `tape20`: `Image-set diversity gate rejected the five-image editorial set after 3 rounds`
 - **آواجیق** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
 - **حاجیلار** — `tape20`: `Image-set diversity gate rejected the five-image editorial set after 3 rounds`
+- **حاجیلار** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
 
 ## فایل‌های خروجی
 
