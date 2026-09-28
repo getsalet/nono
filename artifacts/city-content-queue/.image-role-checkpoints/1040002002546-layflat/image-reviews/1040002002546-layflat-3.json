@@ -2,56 +2,66 @@
   "source_id": "1040002002546-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
-  "fast_mode": false,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
   "history": [
     {
       "pass": false,
       "score": 85,
-      "product_width_percent": 38,
-      "product_height_percent": 28,
-      "product_x_center_percent": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 55,
+      "product_x_center_percent": 54,
       "reasons": [
-        "Product pair is clearly visible and physically plausible.",
-        "Contains the required third commercial item (packaging box) between the coils, which does not constitute a hard reject but slightly reduces the score.",
-        "Watermark is correctly present in the bottom right.",
-        "The concrete pad setting is consistent with the infrastructure context.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-25% of frame width."
+        "machine-enforced bounding-box check failed: Reduce product height from 55% to at most 45% of frame height."
       ],
-      "correction_prompt": "Reduce the product group from 38% to 8-25% of frame width.",
+      "correction_prompt": "Reduce product height from 55% to at most 45% of frame height.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 50,
-      "product_height_percent": 30,
-      "product_x_center_percent": 45,
+      "score": 35,
+      "product_width_percent": 55,
+      "product_height_percent": 38,
+      "product_x_center_percent": 52,
       "reasons": [
-        "Mandatory visual role not met: The brief requires 'equipment-only elevated record photograph of one fixed pump, gauge and manifold', which are completely missing.",
-        "Prohibited content: A tractor with a driver (visible human figure in the cabin) is clearly visible in the background, triggering the hard reject for any human presence.",
-        "Composition violation: The coil pair is too large and central, conflicting with the requirement that they remain 'small, separate and secondary' to the missing pump infrastructure.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-25% of frame width."
+        "Mandatory role 'HEADWORKS DETAIL' requires an equipment-only elevated record photograph of a fixed pump, gauge, and manifold; the image is a flat-eye-level ground shot.",
+        "Image completely lacks the required fixed pump, gauge, and manifold on an empty concrete pad.",
+        "Product pair is significantly wider than the preferred 12-20% window (approx. 55%).",
+        "The bare black coil has a prominent orange connector in the center, which appears as an extraneous part that is not standard for a basic coil and violates the 'impossible intersection/object passing through' guidelines."
       ],
-      "correction_prompt": "Regenerate as a low-angle close-up of a fixed irrigation pump, pressure gauge, and manifold on an empty concrete pad. Place the packaged AFP coil and bare woven coil as small secondary elements in the foreground. Remove the tractor and all human figures completely. Reduce the product group from 50% to 8-25% of frame width.",
+      "correction_prompt": "Generate an elevated 'over-the-shoulder' or top-down angle photograph of a concrete pad featuring a fixed pump unit, pressure gauge, and manifold as the primary subject. Place the approved two-coil pair (one packaged AFP coil, one bare black coil with no orange parts) small in the lower-third background. No human activity.",
       "attempt": 2
     },
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 18.0,
-      "product_height_percent": 24.0,
-      "product_x_center_percent": 35.0,
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "The image correctly features the required two-coil pair: one packaged AFP coil and one bare black woven coil.",
-        "The pair is small, separate, and physically plausible, occupying a combined width of approximately 18%, which is within the acceptable 8-25% range.",
-        "There are zero people, human body parts, or human silhouettes visible in the frame.",
-        "The fixed pump/gauge/manifold is absent from the shot, allowing the two-coil pair to serve as the secondary object on the empty concrete pad.",
-        "The mandatory watermark 'AFP | 09134922013' is clearly present in the bottom-right corner.",
-        "No extra commercial packages, bottles, or impossible intersections are detected."
+        "The required watermark 'AFP | 09134922013' is not visible in the image",
+        "There are extra commercial packages not allowed in this role",
+        "The equipment-only headworks detail role requires specific fixed pump, gauge, and manifold on an empty concrete pad, which are not fully present or properly isolated",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Add the watermark 'AFP | 09134922013' in the bottom-right corner and ensure only the approved two-coil pair with a fixed pump, gauge, and manifold are shown on an empty concrete pad Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 55,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image correctly displays the approved two-coil pair: one packaged coil (blue and white) and one bare black woven coil.",
+        "Zero people or human body parts are visible.",
+        "The bottom-right watermark 'AFP | 09134922013' is present as required.",
+        "Product width is approximately 55%, which falls within the acceptable noisy reviewer estimate range of 8 to 65%.",
+        "The objects are separate, fully visible, and physically plausible on the concrete pad."
       ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 4
     }
   ]
 }

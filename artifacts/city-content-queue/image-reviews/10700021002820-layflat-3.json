@@ -1,0 +1,40 @@
+{
+  "source_id": "10700021002820-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 61,
+      "product_height_percent": 57,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The product bounding box width estimate (61%) is outside the preferred 12-20% target ratio, leaving the approved two-coil pair excessively prominent relative to the background and the mandatory fixed-pump equipment",
+        "The image completely lacks the mandatory HEADWORKS DETAIL: there is no visible fixed pump, gauge, or manifold installed on a concrete pad, which were required for this specific image role",
+        "machine-enforced bounding-box check failed: Reduce product height from 57% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Shift the camera focus and composition to make the mandatory fixed pump, gauge, and manifold on the concrete pad the primary subject. Regenerate with the two-coil pair (AFP coil and woven coil) significantly smaller, further away, and acting as a secondary background element; completely remove the cardboard-wrapped coil. Reduce product height from 57% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 42,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The required two-coil pair (packaged AFP and bare black woven) is present, recognizable, fully visible, separate, and physically plausible.",
+        "Product pair width estimate (~42%) is well within the accepted noisy range of 8–65%.",
+        "Zero people and zero human body parts are visible.",
+        "The bottom-right watermark “AFP | 09134922013” is present and required; it was not rejected.",
+        "Concrete pad, horizon, distant field and farm infrastructure context are acceptable and not standalone hard rejects.",
+        "Minor penalty only for a slightly centered rather than lower-third/off-center composition, which is a soft editorial preference."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

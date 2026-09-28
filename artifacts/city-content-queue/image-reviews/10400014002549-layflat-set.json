@@ -1,40 +1,67 @@
 {
   "source_id": "10400014002549-layflat",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 25,
+      "score": 42,
       "duplicate_roles": [
         1,
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Role 1 (Editorial Hero) is a low-angle ground shot with the product in the foreground, failing the requirement for a 'wide high-oblique' camera perspective.",
-        "Role 1 contains a tractor and city buildings in the background, whereas the brief specifies an environment relevant to 'Avarajig and Chaldoran' (likely rural/northern terrain, not generic farmland with urban skyline).",
-        "Roles 1 and 2 are nearly identical in camera height, angle, and composition (low angle, two coils side-by-side in the foreground), resulting in repeated layouts and lacking distinct technical narratives.",
-        "Role 2 (Selection Evidence) fails to clearly show a diameter or construction difference through the pair itself as requested; instead, it simply repeats the static product shot of Role 1."
+        "Role 1 fails the 'EDITORIAL HERO' requirement as the product is too large in the foreground rather than small and off-center.",
+        "Role 2 lacks the required 'elevated technical comparison' and does not clearly distinguish diameter/construction differences through the coil pair itself.",
+        "Role 3 fails the 'equipment-only' mandate; the required pump, gauge, and manifold are missing, and the foreground product is too prominent rather than being secondary.",
+        "Roles 1 and 2 feature nearly identical foreground product layouts in agricultural soil, violating the requirement for visibly distinct environments and narratives."
       ],
-      "correction_prompt": "Role 1: Reframe to a high-oblique wide shot showing the water-transfer context with the two coils small and off-center, removing the urban skyline and tractor. Role 2: Reframe to a close-up, elevated technical shot of the two coils specifically highlighting the diameter/construction difference, changing the camera angle and composition to distinctively differ from Role 1.",
+      "correction_prompt": "Restructure Role 1 as a high-oblique wide shot with small, off-center coils; adjust Role 2 to an elevated comparative view emphasizing product specs; and replace Role 3's foreground with a fixed pump, gauge, and manifold on a concrete pad with the coils reduced to background elements.",
       "panel_scores": [
-        25
+        42
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 30,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Image 1) is not a wide high-oblique shot; it is an eye-level ground shot, and the product is in the foreground, not off-center.",
-        "Role 2 (Image 2) shows a third commercial object in the background (a haystack/bale), which violates the rule of 'no third commercial package... or extra coil'.",
-        "Role 3 (Image 3) does not show the required 'empty concrete pad' and instead includes a generic farm environment with a red barn and tractor, violating the 'equipment-only' instruction."
+      "score": 25,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "Regenerate Role 1 as a wide high-oblique view with products small and off-center; regenerate Role 2 strictly showing only the two coils on the ground with no background farm objects; regenerate Role 3 showing the pump and gauge on a plain, empty concrete pad.",
+      "reasons": [
+        "The three images are nearly identical in layout, presenting the packaged coil and bare black coil as a side-by-side pair on a concrete pad in each shot, with only trivial object swaps (e.g., a wheelbarrow replaced by a gauge/valve) and minor background changes.",
+        "No distinct camera height or angle is used: role 1 is not a wide high-oblique water-transfer context with the coils small/off-center, and roles 2 and 3 do not introduce visibly different perspectives or technical narratives.",
+        "Role 3 fails to show the required equipment-only elevated record of a fixed pump, gauge, and manifold on an empty concrete pad; instead, the coil pair remains the central subject with only small auxiliary items added.",
+        "All backgrounds are essentially the same concrete slab in an open field, with no relevant variation tied to the article brief (e.g., no headworks, water-transfer infrastructure, or comparative technical scene).",
+        "The required bottom-right watermark 'AFP | 09134922013' is present in every image, which is acceptable and not a rejection reason on its own."
+      ],
+      "correction_prompt": "Redesign the three panels to be visually distinct: role 1 as a wide high-oblique water-transfer scene with the two coils small and off-center; role 2 as an elevated technical comparison showing the coils' diameter/construction difference without extra packages or people; role 3 as a crop-free, equipment-only shot of a fixed pump, gauge, and manifold on an empty concrete pad with the two coils present but small and secondary.",
       "panel_scores": [
-        30
+        25
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 violates the 'exactly the approved packaged coil and bare black woven coil' rule by failing to clearly show the required bare coil or specific packaging; instead, it shows a generic field with a tractor, making the product identity ambiguous.",
+        "Role 2 includes a person (the man bending over), which is an explicit rejection criterion ('any person'), and displays a complex scene with multiple extraneous objects (wheelchairs, containers, hoses) that disrupts the 'elevated technical comparison' of the two-coil pair.",
+        "Role 3 displays a 'wheelchair' object, which contradicts the 'equipment-only' requirement and represents role-3/role-5 hardware duplication (improper use of mobility devices as industrial manifold components).",
+        "Role 3 contains a small brick inside the hose coil, which acts as an object obstruction and visual distraction not permitted in the technical record."
+      ],
+      "correction_prompt": "Regenerate all three images strictly: Role 1 as a high-oblique wide shot with the specific packaged and bare coils small and off-center; Role 2 as a clean elevated shot of only the two coil pair for comparison without people; Role 3 as a sterile concrete pad with only the pump, gauge, and manifold (remove wheelchairs and bricks) with coils kept small in the background.",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 3
     }
   ]
 }

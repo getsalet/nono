@@ -1,26 +1,40 @@
 {
   "source_id": "10400015001243-tape20",
-  "policy": "article-parity-v16-layflat-throughput-safe-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 25,
+      "score": 42,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 is contaminated by farm context: the background displays active farmland/tilled soil rather than the required 'empty concrete pad' with no farm activity.",
+        "Role 2 contains unapproved foreground elements: a large irrigation pipe and reel are present and visually compete with the 'technical arrangement' focus.",
+        "Role 3 layout is cluttered with a complex pump/filter manifold assembly, failing to isolate the specific 'single fixed filter, gauge, regulator and manifold' clearly as required."
+      ],
+      "correction_prompt": "Isolate Role 3 on an empty concrete pad completely devoid of field/soil background; simplify Role 2 foreground to strictly required emitters/pipes.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
       "duplicate_roles": [
-        1,
         2,
         3
       ],
       "reasons": [
-        "Role 3 (Image 3) explicitly violates the 'no farm activity' constraint by featuring two large tractors and a shed directly in the background.",
-        "The product carton in Role 1 (Image 1) is positioned near the center of the frame rather than the required 'lower third, off-center'.",
-        "Role 1 contains 'any person' (visible in the distance), which is an automatic rejection factor.",
-        "The 'technical narrative' for Role 3 is broken as the specified hardware is a loose assembly on a pad rather than an 'equipment-only' fixed record setup."
+        "Image 2 contains a person, which is explicitly forbidden.",
+        "Image 3 features unattended tractors and farm equipment in the background, violating the 'no farm activity' rule for the Role 3 hardware detail shot.",
+        "Role 3 (Image 3) fails the 'equipment-only' requirement; it shows a carton and a bulk roll, not a fixed filter, gauge, regulator, and manifold.",
+        "Role 1 (Image 1) fails the 'exactly one approved carton' rule; the product is shown as a loose roll, not a carton."
       ],
-      "correction_prompt": "Remove all persons and background farm machinery from Role 3; move the Role 1 product to the off-center lower third; replace Role 3 background with a clean, empty concrete pad and fixed irrigation hardware.",
+      "correction_prompt": "For Role 2, remove the person entirely and focus on the technical arrangement with the carton. For Role 3, remove all background tractors and farm equipment, strictly displaying only the filter, gauge, regulator, and manifold with a small secondary carton on a clean concrete pad.",
       "panel_scores": [
-        25
+        35
       ],
-      "set_attempt": 1
+      "set_attempt": 2
     }
   ]
 }

@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-28T23:18:36+00:00`
+- آخرین بروزرسانی: `2026-09-28T23:28:31+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **544 از 1894 (28.72٪)**
-- تکمیل‌شده: **544**
+- پیشرفت: **548 از 1894 (28.93٪)**
+- تکمیل‌شده: **548**
 - در حال پردازش: **0**
-- در انتظار: **605**
-- آماده انتخاب در اجرای بعدی: **605**
+- در انتظار: **585**
+- آماده انتخاب در اجرای بعدی: **585**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **745**
+- ناموفق: **761**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,10 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **فاروق** — فارس — `layflat` — 1394 کلمه — `2026-09-28T23:25:17+00:00`
+- **اکبرآباد** — فارس — `layflat` — 1707 کلمه — `2026-09-28T23:24:53+00:00`
+- **کامفیروز** — فارس — `layflat` — 1488 کلمه — `2026-09-28T23:24:21+00:00`
+- **خوزی** — فارس — `layflat` — 1256 کلمه — `2026-09-28T23:24:18+00:00`
 - **زاووت** — خوزستان — `tape20` — 1672 کلمه — `2026-09-28T20:07:14+00:00`
 - **دینور** — کرمانشاه — `layflat` — 1570 کلمه — `2026-09-28T18:12:55+00:00`
 - **سنقر** — کرمانشاه — `tape20` — 1833 کلمه — `2026-09-28T17:13:56+00:00`
@@ -48,23 +52,19 @@
 - **باغستان** — تهران — `tape20` — 1109 کلمه — `2026-09-28T14:13:04+00:00`
 - **ارجمند** — تهران — `tape20` — 1224 کلمه — `2026-09-28T13:58:57+00:00`
 - **گلستان** — تهران — `tape20` — 1133 کلمه — `2026-09-28T13:33:17+00:00`
-- **باقرشهر** — تهران — `tape20` — 1535 کلمه — `2026-09-28T13:26:29+00:00`
-- **خمیر** — هرمزگان — `tape20` — 1312 کلمه — `2026-09-28T12:16:46+00:00`
-- **گروک** — هرمزگان — `tape20` — 1251 کلمه — `2026-09-28T12:09:33+00:00`
-- **منتظران** — خوزستان — `tape20` — 1277 کلمه — `2026-09-28T09:18:00+00:00`
 
 ## خطاهای اخیر
 
-- **آواجیق** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **پلدشت** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **لاجان** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
+- **قطرویه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **کنارتخته** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **طسوج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **لاجان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **بابامنیر** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
 - **پلدشت** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **نقده** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **افزر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
-- **سیدان** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **میمند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
-- **بنارویه** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **دهکویه** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **آواجیق** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **خشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **نقده** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **پیرانشهر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

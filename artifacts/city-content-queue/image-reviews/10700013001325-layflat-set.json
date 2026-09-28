@@ -1,0 +1,58 @@
+{
+  "source_id": "10700013001325-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 (SELECTION EVIDENCE) contains an open cardboard box (AFP packaging) which is explicitly rejected as a 'bottle/container' or 'extra commercial package' not approved in the brief.",
+        "Role 3 (HEADWORKS DETAIL) is a pure product photograph on a concrete floor showing only two coils; it completely fails to depict the required equipment (pump, gauge, manifold) and does not show the coils as 'secondary' to hardware.",
+        "The images lack the distinct technical narrative required for an editorial article: they are repetitive product shots on the ground rather than distinct 'editorial hero' and 'equipment record' scenes."
+      ],
+      "correction_prompt": "Regenerate role 2 to remove the cardboard box and show only the coils; regenerate role 3 to feature a fixed pump and gauge with the coils placed in the background as secondary elements on a concrete pad.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 (Panel 3) includes a prominent red tractor in the background, which directly violates the 'no farm activity' requirement; the prompt explicitly prohibits rejecting 'distant unattended' tractors, so a prominent, working-context tractor is a failure.",
+        "Role 2 (Panel 2) includes a person, which is a strict rejection reason listed in the brief.",
+        "Role 1 (Panel 1) places the coils centrally in the immediate foreground on a pad, failing the 'small, separate and off-center' requirement for an EDITORIAL HERO shot which should have a wide high-oblique context."
+      ],
+      "correction_prompt": "Regenerate all panels: Role 1 must be a wide high-oblique aerial of the water field with coils small and off-center; Role 2 must remove the person and focus on the two coils; Role 3 must show equipment-only on a concrete pad with no background tractors or farm activity.",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 (SELECTION EVIDENCE) contains a prohibited extra technical component (a blue pump/manifold unit on a concrete pad on the right side) that violates the requirement to show only the two-coil pair; this also duplicates the Role 3 hardware narrative.",
+        "Role 3 (HEADWORKS DETAIL) features the two coils as foreground main subjects rather than 'small, separate and secondary,' failing the visual hierarchy constraint and duplicating the Role 2 layout (two coils + hardware setup)."
+      ],
+      "correction_prompt": "Replace Role 2 with a close-up technical comparison of the two coils showing diameter differences without any extra hardware; replace Role 3 with an equipment-only close-up of the pump and gauge where the coils are clearly small, secondary background elements on the concrete pad.",
+      "panel_scores": [
+        38
+      ],
+      "set_attempt": 3
+    }
+  ]
+}
