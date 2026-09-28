@@ -1,0 +1,61 @@
+{
+  "source_id": "10000010002378-tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 18,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "HARD REJECT: Image contains a person (male farmer/worker kneeling on field) — violates zero-people requirement.",
+        "Hard reject: human body parts present (hands, arms, legs, face, torso)."
+      ],
+      "correction_prompt": "Regenerate image with zero people — show only the AFP white-and-blue cylindrical drip-tape carton roll in an agricultural field setting with background farm infrastructure.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "product_width_percent": 29,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Second commercial package present: a smaller coiled roll of drip tape sits adjacent to the main carton roll, violating the 'exactly one AFP carton roll' and 'no second roll/second commercial package' hard-reject rules.",
+        "Product width (≈29%) exceeds the 27% hard-reject ceiling.",
+        "The background depicts an American-style red barn and equipment rather than an Iranian field context, though distant unattended farm infrastructure is otherwise permitted.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate with exactly one AFP white-and-blue drip-tape carton roll only (no secondary coil or second roll beside it). Keep the roll width between 13-27% of frame width. Maintain the AFP watermark in the bottom-right corner. Show the carton in a simple agricultural setting appropriate to Razqan, Zarandiyeh, Markazi. Reduce the product group from 29% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "product_width_percent": 26,
+      "product_height_percent": 18,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The AFP carton roll width is approximately 26% of frame width (within acceptable 13-27% range). However, the text printed on the carton below 'AFP' is gibberish/illegible writing ('Ph8 HREEHAF Dvt'), which is a hard reject criterion per the brief.",
+        "The roll's packaging text does not appear to be legitimate product labeling, failing the gibberish writing rule."
+      ],
+      "correction_prompt": "Regenerate with a clean AFP white-and-blue drip-tape carton roll showing only legible, realistic branding text and the mandatory AFP watermark in the bottom-right corner. Ensure zero human figures and an ordinary field edge or farm building in the background matching the brief.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 19,
+      "product_height_percent": 24,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip-tape carton roll present with visible emitter spacing on the unrolled section. Width ~19% (within 13-27% range), height ~24% (within 32% limit). Zero people or body parts. Required bottom-right watermark present. Background shows ordinary farm field and distant barn consistent with article context. Role SELECTION EVIDENCE fulfilled via technical arrangement with exposed tape showing emitter pattern."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
