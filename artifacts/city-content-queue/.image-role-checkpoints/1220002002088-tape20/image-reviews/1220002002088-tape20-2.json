@@ -1,0 +1,89 @@
+{
+  "source_id": "1220002002088-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 32,
+      "product_height_percent": 29,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains exactly one approved AFP white-and-blue drip-tape carton roll.",
+        "Zero people, body parts, or human silhouettes visible.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Background includes allowed farm infrastructure (building, tractor, soil).",
+        "The unrolled blue coil is the actual irrigation tape, not a prohibited 'second roll'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Visible second commercial roll of tape lying on the ground to the right of the carton.",
+        "Person standing in the background near the tractors.",
+        "Gibberish and corrupted text on the product carton label",
+        "Text on the product carton does not match the mandatory 'AFN' branding"
+      ],
+      "correction_prompt": "Remove the person from the background and the loose roll of tape on the ground. Ensure only the single carton roll is visible. Correct the carton text to clearly read 'AFN' with legible, non-garbled technical details. Keep the AFP | 09134922013 watermark in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 31,
+      "product_height_percent": 38,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The product bounding box (width ~31%, height ~38%) exceeds the maximum acceptance thresholds (27% width and 32% height).",
+        "The text on the drip tape label is gibberish ('DRP ARTIEN TUN') rather than readable technical evidence.",
+        "The mandatory role 'SELECTION EVIDENCE' requiring visible emitter-spacing or field-selection evidence is missing; the roll is shown in isolation on soil without technical selection tools.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a smaller, low-profile cylindrical white-and-blue drip tape roll (width < 27% of frame) placed on a technical table or soil with visible ruler/measuring tape showing emitter spacing. Keep the background farm field and distant tractor. Ensure clear 'AFP' branding and clean labels. Reduce the product group from 31% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 26,
+      "product_height_percent": 34,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Visible human (driver) inside the tractor cabin in the background.",
+        "Hard reject: The required bottom-right watermark is missing.",
+        "Text error: The text on the product carton below the logo is gibberish.",
+        "Measurement failure: The physical dimensions of the object are likely distorted to exceed the 32% height limit.",
+        "Requirement failure: Missing explicit 'emitter-spacing' visual evidence.",
+        "machine-enforced bounding-box check failed: Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the person from the tractor, keep the tractor empty and unattended. Add a clear, sharp bottom-right watermark 'AFP | 09134922013'. Correct the gibberish text on the carton to clear English or Arabic. Shrink the object bounding box to strictly under 32% height. Add visible emitters or spacing markers to satisfy selection evidence. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Product matches the AFP white-and-blue wide low cylindrical drip-tape carton roll specification",
+        "No people, human body parts, or human silhouettes are visible",
+        "Placement and scale (22% width, 30% height) are within the acceptable physical plausibility range",
+        "The required bottom-right watermark 'AFP | 09134922013' is present",
+        "The background includes an ordinary field edge and distant unattended farm equipment, which are contextually allowed"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

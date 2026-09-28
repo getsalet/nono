@@ -1,0 +1,128 @@
+{
+  "source_id": "10600016002420-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 65,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The pair exceeds the hard reject threshold of 20% frame width, covering roughly 65% of the image.",
+        "A third commercial item, specifically a small packaged box, is visible between the two main coils.",
+        "The coils and package are not physically separate and are merged into a single cluttered grouping.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Regenerate showing only the two coils (one packaged, one bare black) with no third box. Ensure the pair occupies 12-15% of the frame width, keeping them separate and physically plausible on the soil. Reduce the product group from 65% to 9-20% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 62,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Pair is wider than 20 percent of the frame width",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 9-20% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Shrink the layflat pair so the combined width is about 12–15 percent of the frame, keep both coils separate and fully visible, maintain the same perspective and soil, remove the extra connector end if not needed, keep zero people and the bottom-right watermark. Reduce the product group from 62% to 9-20% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "A person (farmer/worker) is visible in the image, which is a hard reject condition.",
+        "The human hand is physically interacting with the product, violating the rule against visible human body parts.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 25% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Remove the person completely from the frame. Show only the two hose coils lying on the soil without any human presence, hands, or body parts. Reduce the product group from 25% to 9-20% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 60,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image features the required 'layflat' hose pair: a coil of black woven hose on the left and a packaged AFP coil in the center, allowing for technical comparison.",
+        "A bare black coiled hose is present on the right side, creating three distinct objects instead of the mandatory 'approved two-coil pair' (one packaged, one bare). The prompt explicitly defines the pair as two objects, making the third object a hard reject based on 'third coil' or 'extra coil' rules.",
+        "The watermark 'AFP | 09134922013' is present and correctly positioned in the bottom right.",
+        "Background elements include a distant unattended tractor and a barn, which are permissible under the rules for infrastructure/equipment.",
+        "No people, faces, or human body parts are visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 60% to 9-20% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 58,
+      "product_height_percent": 32,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Visible person (woman) and human body parts (hands, face, legs) present in the image.",
+        "Hard reject: A person is interacting with the product, which violates the requirement for zero people and zero body parts.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Remove the woman completely. Regenerate the scene to show only the two coils (one packaged, one bare) on the soil. Keep the farm equipment in the background but ensure no humans are present. Reduce the product group from 58% to 9-20% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 40,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains required two-coil pair: one packaged AFP coil and one bare black woven coil. Both are separate, fully visible, and physically plausible on the soil.",
+        "Zero people or human body parts present.",
+        "Distant unattended tractor is allowed as background context and not treated as an extra commercial product.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Pair placement (lower-third) is an editorial preference and not a standalone hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 9-20% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 40% to 9-20% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 60,
+      "product_height_percent": 35,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Visible person (farmer) on the left side of the image.",
+        "Hard reject: Product size exceeds limits; the coils occupy approximately 60% of the frame width (Target: 12-15%, Max: 20%).",
+        "Hard reject: Contains three visible coils (two black, one white/patterned), violating the strict two-coil limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 9-20% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with no people or body parts. Replace the white/patterned coil with a packaged AFP coil to form a pair of exactly two coils (one AFP, one black woven). Scale the pair down to 12-15% of the frame width, placed at the bottom center. Keep the bottom-right watermark 'AFP | 09134922013' and the background tractor/farm scene. Reduce the product group from 60% to 9-20% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 41,
+      "product_height_percent": 21,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The image contains two visible human figures (farmers/workers) in the background, which is a hard reject trigger.",
+        "The approved pair of coils (packaged AFP and bare black woven) occupies approximately 41% of the frame width, significantly exceeding the 20% hard reject limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 41% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with two small agricultural layflat hose coils in the foreground, strictly eliminating all human figures from the scene. The coils must occupy less than 15% of the total frame width to meet the required size specifications. Reduce the product group from 41% to 9-20% of frame width.",
+      "attempt": 8
+    }
+  ]
+}

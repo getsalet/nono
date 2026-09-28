@@ -1,0 +1,53 @@
+{
+  "source_id": "1220003002266-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 28,
+      "product_height_percent": 33,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Placement hard reject: The product is located directly in the horizontal center of the frame (50% x-center). The editorial brief explicitly mandates an off-center placement on the lower third.",
+        "Dimension hard reject: The roll is estimated at 28% of the frame width and 33% of the height. This exceeds the strict upper limit of 27% width and 32% height (which accounts for reviewer-estimation noise), making the object disproportionately large.",
+        "Missing visual requirement: The required watermark text 'AFP | 09134922013' is not visible in the image.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Shift the roll to the lower-right third (off-center) and reduce its scale to fit within 25% width/30% height. Add the watermark 'AFP | 09134922013' in the bottom right corner. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 15,
+      "product_height_percent": 16,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "A person (farmer) is clearly visible in the center of the image, which is a hard reject requirement (zero people/face/arm/leg)."
+      ],
+      "correction_prompt": "Remove the farmer from the scene. Keep the tractor, farm context, and the carton roll in the bottom-right. The roll should be approximately 20% width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Product is a wide, low, white-and-blue cylindrical drip-tape carton roll.",
+        "Placement is off-center and within the lower third as per editorial preference.",
+        "Dimensions fall within the acceptable review range (width 13-27%, height up to 32%).",
+        "Zero people or body parts are present in the frame.",
+        "The required watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner.",
+        "The background farm and irrigation context dominate the frame appropriately."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
