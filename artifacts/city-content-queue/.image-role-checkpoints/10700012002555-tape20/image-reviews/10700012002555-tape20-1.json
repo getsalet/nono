@@ -1,0 +1,68 @@
+{
+  "source_id": "10700012002555-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 28.5,
+      "product_height_percent": 41.2,
+      "product_x_center_percent": 51.0,
+      "reasons": [
+        "Hard reject: The image contains multiple human figures, including a man crouching in the left foreground and a man standing in the center, which violates the 'zero people' requirement.",
+        "Hard reject: The crouching person is holding a blue and white roll of tape, constituting a 'second commercial package' or 'second roll'.",
+        "Hard reject: The primary product carton is wider than 27 percent of the frame width and taller than 32 percent of the frame height, violating the size constraints.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28.5% to 13-27% of frame width.; Reduce product height from 41.2% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all humans and the blue roll of tape. Shrink the foreground AFP carton roll to 20% width and 25% height, ensuring it is the only product visible and fits the 13-27% width tolerance. Reduce the product group from 28.5% to 13-27% of frame width. Reduce product height from 41.2% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 18,
+      "product_height_percent": 10,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Presence of a person in the background (worker standing near the tree on the left).",
+        "Presence of a person operating the red tractor (driver silhouette/upper body visible inside the cab)."
+      ],
+      "correction_prompt": "Regenerate the image with no human figures, farmers, or workers in the field, and an empty or unattended tractor.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject due to a visible person (operator) in the tractor, which violates the rule against any human presence.",
+        "Hard reject due to product height (38%) exceeding the 32% physical plausibility limit.",
+        "Roll is nearly centered rather than being off-center on the lower third as per the editorial hero role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the person from the tractor to ensure zero human presence. Shrink the drip-tape roll to be under 30% of the image height. Shift the roll to the bottom-left lower-third to meet the editorial hero requirements. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 21,
+      "reasons": [
+        "Image features exactly one AFP drip-tape carton roll in the lower-left quadrant",
+        "Product dimensions and placement fall within all required acceptance tolerances",
+        "Zero people, face, body parts, or silhouettes are present",
+        "No extraneous commercial products, bottles, or containers are visible",
+        "Required bottom-right watermark is present and legible"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

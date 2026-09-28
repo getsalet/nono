@@ -1,0 +1,66 @@
+{
+  "source_id": "10700023002783-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 21,
+      "product_height_percent": 28,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: Image contains a person (crouching man/farmer) and visible human body parts (face, arms, legs).",
+        "Hard reject: Image contains an unapproved commercial object (black plastic reel/spool) next to the carton."
+      ],
+      "correction_prompt": "Remove the man and the black plastic reel entirely. Keep only the single white-and-blue carton roll in the foreground of the field context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 35,
+      "product_height_percent": 48,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Roll width is approximately 35%, exceeding the 27% hard reject limit",
+        "Roll height is approximately 48%, exceeding the 32% hard reject limit",
+        "Text on the roll reads 'DRIP IRRIGATION TAPE' instead of the required carton labeling standards",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width.; Reduce product height from 48% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the scale of the roll so it occupies approximately 20-23% of the frame width and stays under 32% height, ensuring the text reads standard carton labeling without gibberish. Reduce the product group from 35% to 13-27% of frame width. Reduce product height from 48% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 15,
+      "product_height_percent": 25,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Hard reject: A human figure (male) is clearly visible in the right-center frame handling the product."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove all human figures and body parts; show only the product and the background (tractor and barn).",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The product dimensions are physically plausible, with the width estimated at 20% and height at 28% of the frame, falling within the specified acceptance limits (width 13-27%, height up to 32%).",
+        "There are zero people or human body parts visible in the image, including the background and the unattended tractor.",
+        "The background features an ordinary farm building and a distant unattended tractor, which are allowed contextually relevant elements.",
+        "The required watermark 'AFP | 09134922013' is correctly displayed in the bottom-right corner.",
+        "The scene includes visible drip irrigation tape on the ground, supporting the 'field-selection evidence' required by the role."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
