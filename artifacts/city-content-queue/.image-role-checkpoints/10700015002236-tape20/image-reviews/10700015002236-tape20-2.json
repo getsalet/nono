@@ -1,0 +1,54 @@
+{
+  "source_id": "10700015002236-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 34,
+      "product_height_percent": 41,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Roll is wider than 27% of the frame (estimated ~34%)",
+        "Roll is taller than 32% of the frame (estimated ~41%)",
+        "Text below 'AFP' is illegible gibberish",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 13-27% of frame width.; Reduce product height from 41% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Generate a white and blue drip-tape roll with clean, legible 'Drip 20' label text. Scale the roll down so it occupies less than 25% of the image width and less than 30% of the image height. Place it on the ground in a field setting with a building in the background. Maintain the required watermark. Reduce the product group from 34% to 13-27% of frame width. Reduce product height from 41% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 20.3,
+      "product_height_percent": 19.5,
+      "product_x_center_percent": 48.8,
+      "reasons": [
+        "Large, prominent gibberish text watermark 'DRRR' in the center of the image",
+        "Product label displays gibberish/non-English text instead of correct Persian or English details for technical selection evidence",
+        "Lacks visible emitter-spacing or field-selection evidence required for the 'SELECTION EVIDENCE' role"
+      ],
+      "correction_prompt": "Remove the large central gibberish text overlay. Replace the product label text with clear, legible technical specifications (emitter spacing) suitable for the Persian market, and ensure no large watermarks obscure the technical evidence.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 16,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Product placement and width (16%) fall within the reviewer-estimation noise parameters (13-27% width, up to 32% height).",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and legible.",
+        "Zero people, human body parts, or faces are visible in the frame, satisfying the hard reject criteria.",
+        "Background infrastructure (unattended tractors, farm building, field) is contextually relevant and permissible for the article brief.",
+        "The product is clearly identifiable as a white-and-blue wide low cylindrical drip-tape roll."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "source_id": "10700015001015-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 31,
+      "product_height_percent": 24,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Product bounding box width exceeds the 27% hard limit by approx. 4%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the drip-tape roll width to approximately 22% of frame width and regenerate. Reduce the product group from 31% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The carton roll contains gibberish text and labels instead of a clean, legible commercial design.",
+        "Missing the mandatory 'visible emitter-spacing or field-selection evidence' required by the SELECTION EVIDENCE role.",
+        "Text on the product is illegible and includes garbled characters, which triggers a hard reject."
+      ],
+      "correction_prompt": "Redraw the carton roll with clean, legible 'AFP' branding and remove all gibberish text. Add visible drip-tape lines or a measurement reference to the soil to provide 'selection evidence' (emitter-spacing) as required. Ensure the background remains a simple farm field.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 27,
+      "product_height_percent": 40,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The image features exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll as the primary subject.",
+        "The roll is physically positioned on a visible drip line in the foreground, which effectively serves as the 'field-selection evidence' required by the SELECTION EVIDENCE role.",
+        "The background contains ordinary field edge (plowed soil), distant unattended tractors, and a farm building, all of which are allowed contextual elements.",
+        "Zero people or human body parts are visible in the frame.",
+        "The product width is estimated at approximately 27% of the frame, which is within the reviewer-estimation noise limit (13-27%).",
+        "Product height is estimated at 40%, which slightly exceeds the 32% threshold; however, because the object is physically plausible (not distorted), it is accepted under reviewer-estimation tolerance.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom right corner.",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Exactly one white-and-blue cylindrical drip-tape carton roll is visible.",
+        "Product width is 24% and height is 32%, which strictly adhere to the 20-23% preferred width (falling within the 13-27% tolerance) and the up-to-32% maximum height constraint.",
+        "Zero people, workers, or human body parts are present in the frame.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correctly positioned.",
+        "Visible emitter spacing and the coiled tape layout fulfill the 'SELECTION EVIDENCE' visual brief role.",
+        "Contextual elements such as the unattended tractor, farm building, and ordinary soil texture are permissible and contextually relevant.",
+        "No prohibited objects like bottles, jars, cans, or second commercial packages are visible.",
+        "Geometry and dimensions of the product remain physically plausible without severe distortion."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

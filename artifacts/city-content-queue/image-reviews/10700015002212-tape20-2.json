@@ -1,0 +1,51 @@
+{
+  "source_id": "10700015002212-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 27,
+      "product_height_percent": 31,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "product width exceeds 25 percent of frame width",
+        "product height exceeds 27 percent of frame height"
+      ],
+      "correction_prompt": "Reduce the product bounding box width to below 25 percent of frame width and height to below 27 percent of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 31,
+      "product_height_percent": 38,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Hard reject: Human figure (farmer/worker) is clearly visible in the background near the tractor.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the human figure in the background. Ensure the tractor is completely unattended. Regenerate. Reduce the product group from 31% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "All required elements are present and correctly formatted",
+        "The required watermark is present as specified",
+        "The product dimensions are within the acceptable range",
+        "The scene perfectly illustrates the 'SELECTION EVIDENCE' role with visible emitter spacing and a simple background",
+        "No disallowed human figures or conflicting objects are visible"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

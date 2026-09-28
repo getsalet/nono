@@ -2,32 +2,38 @@
   "source_id": "10400016002879-layflat",
   "family": "layflat",
   "kind": 1,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 25,
-      "product_width_percent": 54.5,
-      "product_height_percent": 31.2,
-      "product_x_center_percent": 44.5,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 52,
       "reasons": [
-        "Hard reject: Tractor and vehicle visible in the background (mid-right field).",
-        "Hard reject: Total width of the layflat pair exceeds 36% of the frame width.",
-        "Hard reject: Objects are not off-center; they are positioned in the central lower third rather than the left/right lower thirds.",
-        "Watermark text displays 'AFP | 09134922013' which does not match the required '09134922013' format exactly (extra characters or spacing).",
-        "machine-enforced bounding-box check failed: Reduce the product group from 54.5% to 8-36% of frame width."
+        "The product bounding box includes at least three distinct objects (two bare coils and one package) instead of exactly two.",
+        "The pair of products occupies a combined width significantly larger than the 20% maximum threshold.",
+        "Visible presence of a third commercial coil/product violates the hard reject criteria.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 9-20% of frame width."
       ],
-      "correction_prompt": "Remove the tractor from the background completely. Reduce the size of the two coils significantly to appear secondary (occupying approx 12-15% of the frame width). Move the pair to the lower-left or lower-right third of the image. Ensure the watermark exactly reads 'AFP | 09134922013' in the bottom-right corner. Reduce the product group from 54.5% to 8-36% of frame width.",
+      "correction_prompt": "Reduce the number of objects to only one packaged AFP coil and one bare black woven coil. Rescale and position these two items on the far left of the bottom third so their combined width occupies no more than 15% of the frame width. Reduce the product group from 38% to 9-20% of frame width.",
       "attempt": 1
     },
     {
       "pass": true,
       "score": 82,
-      "product_width_percent": 31.3,
-      "product_height_percent": 33.5,
-      "product_x_center_percent": 47.6,
-      "reasons": [],
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "The image correctly displays the two required products: one packaged coil (left) and one bare black woven coil (right).",
+        "The products are small, separate, and positioned off-center in the lower-left, consistent with the editorial hero role for a wide water-transfer context.",
+        "The product pair width is approximately 18% of the frame, which falls within the accepted range of 9-20% for reviewer-estimation noise.",
+        "There are no visible people or human body parts.",
+        "The background context (crops, water channel, distant city) is appropriate for the agricultural theme without introducing forbidden commercial elements."
+      ],
       "correction_prompt": "",
       "attempt": 2
     }
