@@ -1,0 +1,38 @@
+{
+  "source_id": "10000013002941-tape20",
+  "kind": 2,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 27,
+      "product_height_percent": 43,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Second roll present: a flat coiled blue-and-white drip-tape coil lies on the soil to the right of the carton, violating the 'exactly one approved carton' rule and the hard-reject for a second roll.",
+        "Product height exceeds the 35 percent upper bound (estimated ~43 percent), making the carton physically too tall.",
+        "machine-enforced bounding-box check failed: Reduce product height from 43% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the flat coiled blue tape on the right so only the single white-and-blue AFP carton roll remains; reduce the carton's vertical footprint to at most 35 percent of frame height while keeping the AFP branding and the bottom-right watermark intact. Reduce product height from 43% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 22.5,
+      "product_height_percent": 18.3,
+      "product_x_center_percent": 43.1,
+      "reasons": [
+        "Image shows exactly one AFP white-and-blue cylindrical drip-tape carton roll, placed lower-third and slightly off-center.",
+        "Product width is approximately 22.5% (within 12–30% acceptable range); height is ~18.3% (well under 35% limit).",
+        "Zero people, body parts, or human silhouettes present; background contains only ordinary soil, crop rows, and a distant farm building—consistent with the agricultural field-selection context.",
+        "Mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner and correctly rendered.",
+        "Image fulfills the SELECTION EVIDENCE role: elevated technical arrangement of the carton with unrolled tape extending toward emitter-spacing evidence in the field."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
