@@ -15,17 +15,13 @@ on:
       - 'automation/text_cleanup_policy.py'
       - 'automation/repair_completed_city_sql.py'
 
-  schedule:
-    # Hourly watchdog. Normal production self-chains after each persisted batch;
-    # this entry point only recovers the queue if a chain was interrupted.
-    - cron: "25 * * * *"
 
 permissions:
   contents: write
   actions: write
 
 concurrency:
-  group: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[image-rebuild]') && 'navar-city-content-queue-image-rebuild-skip' || 'navar-city-content-queue' }}
+  group: navar-city-content-pipeline
   cancel-in-progress: false
 
 jobs:
@@ -39,21 +35,19 @@ jobs:
       GIT_TERMINAL_PROMPT: "0"
 
       AGNES_API_BASE: https://apihub.agnes-ai.com/v1
-      AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
-      AGNES_API_KEY2: ${{ secrets.AGNES_API_KEY2 }}
-      AGNES_API_KEY3: ${{ secrets.AGNES_API_KEY3 }}
-      AGNES_API_KEY4: ${{ secrets.AGNES_API_KEY4 }}
-      AGNES_API_KEY5: ${{ secrets.AGNES_API_KEY5 }}
-      AGNES_API_KEY6: ${{ secrets.AGNES_API_KEY6 }}
-      AGNES_API_KEY7: ${{ secrets.AGNES_API_KEY7 }}
-      AGNES_API_KEY8: ${{ secrets.AGNES_API_KEY8 }}
-      AGNES_API_KEY9: ${{ secrets.AGNES_API_KEY9 }}
-      AGNES_API_KEY10: ${{ secrets.AGNES_API_KEY10 }}
-      AGNES_API_KEY11: ${{ secrets.AGNES_API_KEY11 }}
-      AGNES_API_KEY12: ${{ secrets.AGNES_API_KEY12 }}
-      AGNES_API_KEY13: ${{ secrets.AGNES_API_KEY13 }}
-      AGNES_API_KEY14: ${{ secrets.AGNES_API_KEY14 }}
-      IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY }}
+      AGNES_API_KEY: ${{ secrets.AGNES_API_KEY14 }}
+      AGNES_API_KEY2: ${{ secrets.AGNES_API_KEY15 }}
+      AGNES_API_KEY3: ${{ secrets.AGNES_API_KEY16 }}
+      AGNES_API_KEY4: ${{ secrets.AGNES_API_KEY17 }}
+      AGNES_API_KEY5: ${{ secrets.AGNES_API_KEY18 }}
+      AGNES_API_KEY6: ${{ secrets.AGNES_API_KEY19 }}
+      AGNES_API_KEY7: ${{ secrets.AGNES_API_KEY20 }}
+      AGNES_API_KEY8: ${{ secrets.AGNES_API_KEY21 }}
+      AGNES_API_KEY9: ${{ secrets.AGNES_API_KEY22 }}
+      AGNES_API_KEY10: ${{ secrets.AGNES_API_KEY23 }}
+      AGNES_API_KEY11: ${{ secrets.AGNES_API_KEY24 }}
+      AGNES_API_KEY12: ${{ secrets.AGNES_API_KEY25 }}
+      IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY14 }}
       IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
 
       AGNES_MODEL: agnes-3.0-flash
@@ -64,9 +58,9 @@ jobs:
       # half of the tested combined budget while both queues are active.
       # Adaptive stable share after live telemetry: five strict images per city create
       # more API calls than the three-image article pipeline.
-      BATCH_SIZE: "16"
-      ARTICLE_WORKERS: "16"
-      IMAGE_WORKERS: "32"
+      BATCH_SIZE: "20"
+      ARTICLE_WORKERS: "20"
+      IMAGE_WORKERS: "40"
       IMAGE_QA_ATTEMPTS: "8"
       IMAGE_QA_MIN_SCORE: "70"
       IMAGE_QA_REVIEW_ATTEMPTS: "4"
@@ -152,6 +146,7 @@ jobs:
           python automation/render_city_queue_status.py
 
       - name: Run next queue item
+        id: queue
         shell: bash
         run: |
           set +e
@@ -161,6 +156,7 @@ jobs:
             2>&1 | tee -a artifacts/city-content-queue/run.log
           QUEUE_CODE=${PIPESTATUS[0]}
           echo "queue_exit_code=$QUEUE_CODE" | tee -a artifacts/city-content-queue/run.log
+          echo "exit_code=$QUEUE_CODE" >> "$GITHUB_OUTPUT"
 
           AUX_CODE=0
           python automation/repair_completed_city_sql.py || AUX_CODE=$?
@@ -168,17 +164,28 @@ jobs:
           python automation/package_city_content_batches.py || AUX_CODE=$?
           python automation/render_city_queue_status.py || AUX_CODE=$?
           if [ "$AUX_CODE" -eq 0 ]; then
-            signal_path="artifacts/city-content-queue/.new-batch-signal"
-            before_signal="$(sha256sum "$signal_path" 2>/dev/null | cut -d' ' -f1 || true)"
             python automation/write_new_batch_signal.py || AUX_CODE=$?
-            after_signal="$(sha256sum "$signal_path" 2>/dev/null | cut -d' ' -f1 || true)"
-            if [ -n "$after_signal" ] && [ "$after_signal" != "$before_signal" ]; then
-              echo "NEW_BATCH_READY=1" >> "$GITHUB_ENV"
-              echo "new_batch_signal_changed=true" | tee -a artifacts/city-content-queue/run.log
-            else
-              echo "NEW_BATCH_READY=0" >> "$GITHUB_ENV"
-              echo "new_batch_signal_changed=false" | tee -a artifacts/city-content-queue/run.log
-            fi
+            ready="$(python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          root=Path('artifacts/city-content-queue');signal=root/'.new-batch-signal';packages=root/'packages';state=root/'ftps-upload-state.json'
+          try: tracked=json.loads(state.read_text(encoding='utf-8')).get('files',{})
+          except Exception: tracked={}
+          pending=0
+          if signal.exists():
+            for raw in signal.read_text(encoding='utf-8').splitlines():
+              name=Path(raw.strip()).name
+              if not name: continue
+              if not name.endswith('.zip'): name+='.zip'
+              path=packages/name
+              if not path.exists(): continue
+              digest=hashlib.sha256(path.read_bytes()).hexdigest();previous=tracked.get(name,{})
+              if previous.get('sha256')!=digest or int(previous.get('size',-1))!=path.stat().st_size: pending+=1
+          print(1 if pending else 0)
+          PY
+          )"
+            echo "NEW_BATCH_READY=$ready" >> "$GITHUB_ENV"
+            echo "city_ftps_dispatch_ready=$ready" | tee -a artifacts/city-content-queue/run.log
           fi
           echo "auxiliary_exit_code=$AUX_CODE" | tee -a artifacts/city-content-queue/run.log
 
@@ -250,9 +257,14 @@ jobs:
           print(int(json.loads(path.read_text(encoding='utf-8')).get('pending',0)) if path.exists() else 0)
           PY
           )"
-          if [ "$pending" -gt 0 ]; then
-            echo "Queue has $pending pending items; dispatching the next controlled batch."
-            sleep 15
+          rebuild_active="$(gh run list --workflow rebuild-reference-images.yml --limit 20 --json status --jq '[.[] | select(.status == "queued" or .status == "in_progress" or .status == "waiting" or .status == "pending" or .status == "requested")] | length')"
+          if [ "$rebuild_active" -gt 0 ]; then
+            echo "City image rebuild is active or queued; it owns the next handoff."
+          elif [ "$pending" -gt 0 ]; then
+            cooldown=30
+            if [ "${{ steps.queue.outputs.exit_code }}" != "0" ]; then cooldown=180; fi
+            echo "Queue has $pending pending items; cooldown=${cooldown}s before the next controlled batch."
+            sleep "$cooldown"
             gh workflow run city-content-queue.yml --ref main
           else
             echo "No pending city items remain; automatic chaining is complete."

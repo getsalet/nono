@@ -1,0 +1,33 @@
+name: City pipeline hourly watchdog
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 * * * *'
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: city-pipeline-watchdog
+  cancel-in-progress: true
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Dispatch only when generation and rebuild are idle
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          active=0
+          for workflow in city-content-queue.yml rebuild-reference-images.yml; do
+            count="$(gh run list --workflow "$workflow" --limit 30 --json status --jq '[.[] | select(.status == "queued" or .status == "in_progress" or .status == "waiting" or .status == "pending" or .status == "requested")] | length')"
+            active=$((active + count))
+          done
+          if [ "$active" -eq 0 ]; then
+            echo "City pipeline is idle; dispatching production recovery."
+            gh workflow run city-content-queue.yml --ref main
+          else
+            echo "City pipeline already has $active active/queued run(s); watchdog is a no-op."
+          fi
