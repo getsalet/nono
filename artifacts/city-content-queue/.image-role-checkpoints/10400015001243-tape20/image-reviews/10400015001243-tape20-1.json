@@ -2,50 +2,46 @@
   "source_id": "10400015001243-tape20",
   "family": "tape20",
   "kind": 1,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
-  "fast_mode": false,
+  "policy": "article-parity-v16-layflat-throughput-safe-metrics",
+  "fast_mode": true,
   "history": [
     {
       "pass": false,
       "score": 35,
-      "product_width_percent": 28,
-      "product_height_percent": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 26,
       "product_x_center_percent": 48,
       "reasons": [
-        "Roll has an open center revealing a dark material instead of a solid carton core; this fails the requirement for an 'AFP white-and-blue wide low cylindrical drip-tape carton roll'.",
-        "The product is placed almost directly in the center of the frame rather than the lower-third/off-center position required for the 'EDITORIAL HERO' role.",
-        "The product's height reaches the limit of the acceptance threshold (35%), making it look disproportionately large for the 'small' hero requirement.",
-        "Missing the required bottom-right watermark 'AFP | 09134922013'."
+        "Missing the required watermark text 'AFP | 09134922013' in the bottom-right corner (the visible text is gibberish).",
+        "The product placement is in the bottom center rather than the required off-center lower-third position for an Editorial Hero shot.",
+        "The object appears to be a cylinder (drum) rather than a wide, low rectangular carton roll, which is less consistent with standard drip-tape packaging."
       ],
-      "correction_prompt": "Regenerate the image. The subject must be a closed, solid white-and-blue carton roll (no visible dark hole in the center). Place the roll in the lower third, positioned off-center to the left or right. Ensure the roll is small relative to the wide landscape. Remove the text overlay from the bottom right.",
+      "correction_prompt": "Regenerate the image as a wide high-oblique Editorial Hero shot of a farm field. Place a single white and blue rectangular drip-tape carton roll off-center in the lower third. Ensure the text 'AFP | 09134922013' is clearly visible in the bottom-right corner. Keep the background as a plausible farm context with zero people.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 14,
-      "product_height_percent": 16,
-      "product_x_center_percent": 42,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
       "reasons": [
-        "The image fails the hard reject criteria due to the visible presence of a human figure (a person standing near the green tractor on the right side of the frame). The instructions explicitly mandate zero people and zero human body parts, even in the distance. Additionally, the product roll is positioned in the lower-center rather than the required 'off-center' placement in the lower third.",
-        "Secondary issue: The background skyline features a high-density urban city center (skyscrapers) that strongly conflicts with the specified location of 'پلدشت, آذربایجان غربی' (a rural area) and the 'farm and irrigation context' brief, which typically implies an agricultural or semi-arid landscape without a major city skyline immediately on the horizon."
+        "The image contains two distinct human figures (farmers) working in the middle ground, which is a hard reject."
       ],
-      "correction_prompt": "Remove the visible person standing near the green tractor on the right. Place the single AFP drip-tape roll off-center in the lower third (e.g., to the far left). Replace the distant city skyline with a natural horizon or distant low hills consistent with the West Azerbaijan province to match the rural brief.",
+      "correction_prompt": "Remove the two human farmers in the background; keep the tractors and the field context.",
       "attempt": 2
     },
     {
       "pass": true,
-      "score": 92,
-      "product_width_percent": 18,
-      "product_height_percent": 22,
+      "score": 88,
+      "product_width_percent": 26,
+      "product_height_percent": 32,
       "product_x_center_percent": 48,
       "reasons": [
-        "Product matches the brief: white and blue wide low cylindrical drip-tape carton roll.",
-        "Size is within preferred width (20-23%) and accepted range (12-30%), and height is well below the 35% limit.",
-        "Positioned in the lower third and slightly off-center, fitting the 'EDITORIAL HERO' role.",
-        "Background shows a wide high-oblique view of a farm with irrigation context (crop rows), which is mandatory.",
-        "Zero visible people, human body parts, or unrelated commercial containers (bottles, jugs, etc.).",
-        "Required watermark is present in the bottom-right corner."
+        "Object dimensions are physically plausible with width within the 12-30% tolerance and height under the 35% hard limit.",
+        "Contains zero people or human body parts.",
+        "Watermark is present exactly as required in the bottom-right.",
+        "Farm context dominates the scene, matching the editorial hero role."
       ],
       "correction_prompt": "",
       "attempt": 3

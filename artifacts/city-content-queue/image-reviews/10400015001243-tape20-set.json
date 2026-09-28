@@ -1,37 +1,26 @@
 {
   "source_id": "10400015001243-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v16-layflat-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (EDITORIAL HERO) required a 'wide high-oblique view' where the farm context dominates, but the image is a low-angle eye-level shot that makes the oversized product the main focus rather than the field.",
-        "Role 3 (HEADWORKS DETAIL) is required to be an equipment-only photograph of a filter, gauge, regulator, and manifold on an empty concrete pad, but the image shows an active field irrigation system (sprinkler/pipe) with the product placed directly on the dirt soil.",
-        "The product carton is significantly oversized in all three images, failing the requirement that it must be small and secondary to the scene."
+      "score": 25,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "",
+      "reasons": [
+        "Role 3 (Image 3) explicitly violates the 'no farm activity' constraint by featuring two large tractors and a shed directly in the background.",
+        "The product carton in Role 1 (Image 1) is positioned near the center of the frame rather than the required 'lower third, off-center'.",
+        "Role 1 contains 'any person' (visible in the distance), which is an automatic rejection factor.",
+        "The 'technical narrative' for Role 3 is broken as the specified hardware is a loose assembly on a pad rather than an 'equipment-only' fixed record setup."
+      ],
+      "correction_prompt": "Remove all persons and background farm machinery from Role 3; move the Role 1 product to the off-center lower third; replace Role 3 background with a clean, empty concrete pad and fixed irrigation hardware.",
       "panel_scores": [
-        45
+        25
       ],
       "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 58,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Hero) places the product on a rigid concrete table in the foreground, disrupting the required high-oblique farm-dominant composition.",
-        "Role 3 (Headworks) fails to display the required technical hardware (fixed filter, gauge, regulator, manifold) and instead shows an empty concrete pad, which conflicts with the 'equipment-only' narrative.",
-        "Role 2 (Selection Evidence) shows a generic ring rather than the specific 'emitter-spacing or field-selection evidence' required for the 20cm drip tape brief.",
-        "Backgrounds in Role 1 and 2 depict North American-style farms (red barns, large tractors), which are culturally and geographically irrelevant to the 'West Azerbaijan, Poldasht' article brief."
-      ],
-      "correction_prompt": "Re-shoot to match West Azerbaijan regional context: Role 1 as a high-oblique field shot with a small carton on the ground; Role 2 showing 20cm tape unrolled for spacing; Role 3 as a close-up of filter/regulator hardware on the concrete pad.",
-      "panel_scores": [
-        58
-      ],
-      "set_attempt": 2
     }
   ]
 }

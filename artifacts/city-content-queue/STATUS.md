@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-28T20:17:28+00:00`
+- آخرین بروزرسانی: `2026-09-28T20:26:26+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **544 از 1894 (28.72٪)**
 - تکمیل‌شده: **544**
 - در حال پردازش: **0**
-- در انتظار: **602**
-- آماده انتخاب در اجرای بعدی: **602**
+- در انتظار: **603**
+- آماده انتخاب در اجرای بعدی: **603**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **748**
+- ناموفق: **747**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -55,6 +55,9 @@
 
 ## خطاهای اخیر
 
+- **لاجان** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
+- **پلدشت** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **نقده** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
 - **افزر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
 - **سیدان** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
 - **میمند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
@@ -62,9 +65,6 @@
 - **دهکویه** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
 - **الهایی** — `layflat`: `Editorial review failed: internal link count must equal minimum`
 - **اهل** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **رامجرد** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **بیرم** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **علامرودشت** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 

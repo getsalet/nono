@@ -1,38 +1,36 @@
 {
   "source_id": "1040002002546-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v16-layflat-throughput-safe-metrics",
   "history": [
-    {
-      "pass": false,
-      "score": 42,
-      "duplicate_roles": [
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 2 (Image 2) fails to show the 'elevated technical arrangement' or 'visible emitter-spacing' evidence requested; instead, it displays a flat ground-level layout with a product carton placed on the soil, which does not serve as selection evidence.",
-        "Role 3 (Image 3) fails completely: the requirement for an 'equipment-only' shot of a fixed filter, gauge, regulator, and manifold on an empty concrete pad is not met. The image shows only the product carton on a walkway with active farm machinery (tractors and a water tank) in the background, violating the 'no farm activity' constraint for this role.",
-        "Roles 2 and 3 both suffer from active farm machinery (tractors) in the background, which creates visual redundancy and conflicts with the specific isolation required for Role 3 and the technical focus required for Role 2."
-      ],
-      "correction_prompt": "Regenerate Role 2 as a high-angle close-up showing the physical spacing of emitters on the tape without the product carton; regenerate Role 3 as a studio-style shot of the filtration and regulator assembly on a clean concrete surface with no tractors or animals in the background.",
-      "panel_scores": [
-        42
-      ],
-      "set_attempt": 1
-    },
     {
       "pass": false,
       "score": 30,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails the brief: The 'editorial hero' must feature a farm/irrigation context that dominates the frame, but the image is filled with a distant industrial city skyline, which conflicts with the agricultural rural setting of 'Lajan'.",
-        "Role 1 layout error: The brief strictly requires the carton to be 'small' and 'off-center'; here, the carton is oversized and placed in the bottom right, functioning as the primary subject rather than a secondary context element.",
-        "Role 3 duplication error: The brief for the 'Headworks Detail' requires a background of an 'empty concrete pad' with 'no farm activity'; the image shows a large green tank and a red tractor in the background.",
-        "Role 3 subject violation: The instruction explicitly states 'equipment-only... of one fixed filter'; the image displays a manifold assembly with two gauges, multiple valves, and complex plumbing, violating the simplified technical description."
+        "Role 1: The carton is placed centrally on the primary irrigation line, making it look like a component of the system rather than a small, off-center product inclusion on the lower third.",
+        "Role 3: Tractors and farm equipment are clearly visible in the background, violating the strict requirement for 'no farm activity' in the hardware detail shot."
       ],
-      "correction_prompt": "Remove the distant city skyline from the hero shot and reduce the carton size; for the headworks detail, erase the background tractor and green tank to reveal a bare concrete pad and simplify the foreground equipment to a single filter.",
+      "correction_prompt": "Reposition the carton in Role 1 to be off-center and smaller relative to the field; re-shoot Role 3 with a clean concrete pad background, completely removing tractors and background machinery.",
       "panel_scores": [
         30
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1: The product (carton) is placed in the foreground center-bottom and is disproportionately large relative to the wide high-oblique field view, failing the 'carton stays small' constraint. The background farm context is too generic.",
+        "Role 2: The image shows only the product on a concrete pad against a simple field background. It lacks the 'elevated technical arrangement' and critical 'visible emitter-spacing or field-selection evidence' required for SELECTION EVIDENCE. It functions as a generic hero shot, visually overlapping with Role 3's simple setup.",
+        "Role 3: The role requires 'no farm activity', but the background shows distinct active farm equipment (tractors, bales), violating the 'empty concrete pad' context. The hardware (gauge/regulator) is placed separately on the ground rather than being an 'equipment-only elevated record photograph' of the assembly. The lack of clear technical separation from Role 2 leads to role ambiguity."
+      ],
+      "correction_prompt": "Resize the carton to be 30% of current scale in Role 1 to ensure the irrigation field dominates. Rebuild Role 2 with a close-up, high-angle technical view of the drip tube unrolled to clearly show emitter spacing. Rebuild Role 3 with a clean empty concrete pad background (no tractors/bales) and an elevated close-up composition of the filter and regulator assembly on a stand.",
+      "panel_scores": [
+        38
       ],
       "set_attempt": 2
     }
