@@ -1,0 +1,84 @@
+{
+  "source_id": "1110006002455-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25.0,
+      "product_height_percent": 38.0,
+      "product_x_center_percent": 22.0,
+      "reasons": [
+        "Presence of a human figure (man crouching) in the foreground; strictly prohibited by brief.",
+        "Product (drip tape roll) height exceeds the 32% maximum limit.",
+        "Image violates 'zero people' constraint.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image without any human figures. Ensure the drip tape roll occupies a more compact area within the frame (height under 32%). Keep the 'AFP | 09134922013' watermark in the bottom right. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 22.5,
+      "product_height_percent": 28.0,
+      "product_x_center_percent": 42.0,
+      "reasons": [
+        "Hard reject: Presence of multiple people (three visible men, one holding the product) violates the zero-person constraint.",
+        "Hard reject: Human hand touching the product violates the zero-body-part constraint.",
+        "Mandatory Role Mismatch: Brief requires 'medium side view of unattended fixed filter, gauge, regulator and manifold' but image shows a drip tape roll in a field with machinery and people."
+      ],
+      "correction_prompt": "Regenerate image without any people or body parts. Show a medium side view of an unattended fixed filter, gauge, and regulator manifold in a farm context. The AFP drip tape carton must be small and secondary in the frame, not the main focus.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 29,
+      "product_height_percent": 38,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Presence of a human (farmer/worker) interacting with the equipment (Hard Reject)",
+        "Presence of visible human body parts: face, hands, arms, and legs (Hard Reject)",
+        "Product width exceeds the maximum 27% frame width limit",
+        "Product height exceeds the maximum 32% frame height limit",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all people and human body parts completely. Shrink the AFP white-and-blue drip-tape carton roll to occupy approximately 20% of the frame width. Ensure no humans or farmers are present. Reduce the product group from 29% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: multiple people visible (main subject in foreground, and two others in the background), violating the zero-people rule.",
+        "Hard reject: a blue bucket (banned container) is visible on the right side of the image."
+      ],
+      "correction_prompt": "Remove all people and the blue bucket. Retain the AFP drip-tape roll, the background tractor, farm building, and the bottom-right watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 26,
+      "product_height_percent": 24,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "The required exact bottom-right watermark 'AFP | 09134922013' is present and correctly retained.",
+        "Contains zero visible people, human body parts, or silhouettes.",
+        "Exactly one wide, low cylindrical drip-tape carton roll is visible and is the primary subject.",
+        "Product dimensions are within the acceptable tolerance range (width approx. 26% and height approx. 24%, staying under the 27% and 32% limits).",
+        "The secondary 'HEADWORKS STORY' elements (filters, gauges, manifold, pipes) are present as allowed infrastructure context.",
+        "Product bounding box is visually plausible with no impossible geometry or distortion."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "source_id": "11100022001029-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 20,
+      "product_height_percent": 32,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Contains a person (worker/farmer) and human body parts, which are hard rejects"
+      ],
+      "correction_prompt": "Regenerate the image to remove all people and body parts, showing only the single drip tape carton roll, the water hose reel, and the background farm equipment (tractor, building) in an unattended field setting.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Second commercial package present: blue drip tube coil on the ground constitutes a second commercial product and layflat hose/pipe, which are hard rejects.",
+        "Product roll exceeds maximum allowed width: estimated ~28% of frame width, above the 27% hard-reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the blue drip tube coil/hose from the scene. Regenerate so only the single white-and-blue AFP wide cylindrical drip-tape carton roll is shown, with the roll width within 20-23% of frame width (max 27%), in a field setting with no humans or other commercial containers. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 32,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "Zero people, human body parts, or silhouettes are visible in the frame.",
+        "The background context (tractor, building, tilled soil) aligns with the agricultural article brief and is accepted as relevant infrastructure/environment.",
+        "The product width is slightly above the preferred 20-23% range and near the 27% limit, but remains physically plausible.",
+        "Product is wide and low, appearing cylindrical, but does not clearly match the strict 'exactly one ... carton roll' description required by the brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 24,
+      "product_height_percent": 20,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll present.",
+        "Product width (24%) falls within the preferred 20-23% range and is well inside the 13-27% acceptance window.",
+        "Product height (20%) is within the 32% maximum limit.",
+        "Zero people, human body parts, or human silhouettes are visible.",
+        "No hard-reject items such as bottles, jars, extra rolls, pipes, or gibberish text are present.",
+        "Required watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner.",
+        "Background context (distant unattended tractor and farm building) is permissible and aligns with the brief."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

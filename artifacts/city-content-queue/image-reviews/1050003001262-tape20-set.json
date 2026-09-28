@@ -1,22 +1,61 @@
 {
   "source_id": "1050003001262-tape20",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "history": [
     {
       "pass": false,
       "score": 25,
       "duplicate_roles": [
         1,
+        2,
         3
       ],
       "reasons": [
-        "The provided image set is incomplete, containing only 4 images instead of the required 5.",
-        "Role 3 (Headworks Story) is missing from the sequence; Image 2 depicts a wheel-driven machine/roller in a furrow field, which violates the brief's explicit instruction to reject 'repeated furrow-field plus tractor compositions' and does not match the 'unattended fixed filter, gauge, regulator' requirement.",
-        "Roles 1 and 3 (Image 2 and 4) both feature a 'furrow field + tractor' background composition, which is specifically flagged for rejection.",
-        "Role 4 (Installation Proof) in Image 3 uses a centered vanishing point, which is explicitly prohibited by the brief ('no centered vanishing point')."
+        "All three roles present the nearly identical large foreground reel of the AFP drip tape, resulting in a repeated layout and lack of the required distinct camera narratives.",
+        "The product carton in every panel is excessively oversized and central, directly violating the specific requirement that it be 'small, fully visible, and off-center' in roles 1 and 3.",
+        "The technical narrative for roles 2 and 3 (selection evidence and headworks story) is insufficiently distinct from the generic product display shown in all images."
       ],
-      "correction_prompt": "Provide the 5th image and replace the 2nd and 4th images to eliminate tractor/furrow-field backgrounds; specifically, make Image 3 an unattended fixed headworks system and ensure Image 4 is an asymmetric installation proof without a centered vanishing point.",
+      "correction_prompt": "Reduce the product size to a small, off-center element and distinctly separate the technical focus of each image (wide hero view vs. specific emitter spacing vs. headworks assembly) to prevent layout repetition.",
+      "panel_scores": [
+        25
+      ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 2 (second image) fails the 'visible emitter-spacing or field-selection evidence' requirement; it shows generic irrigation lines and a building background but lacks technical details such as filter, gauges, or manifold that distinguish it from a generic farm scene.",
+        "Role 2 is too similar to Role 1 in terms of the 'oversized product' issue; the carton in image 2 appears larger and closer to the camera than it should in an 'elevated technical arrangement' compared to image 1, making the product identity a duplicate focus rather than distinct narratives.",
+        "Role 3 (third image) correctly displays the 'HEADWORKS STORY' hardware (filter, gauges, manifold), but image 2 lacks the technical narrative required to differentiate it clearly from the hero shot."
+      ],
+      "correction_prompt": "In the Role 2 image, add visible technical hardware such as a drip filter and pressure gauge next to the small carton, and show clear emitter spacing on the lines in the foreground to fulfill the 'SELECTION EVIDENCE' role.",
+      "panel_scores": [
+        75
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "All three images present an identical low-angle product-centered composition that violates the required camera height/angle hierarchy: role 1 fails to make the field context dominate with an off-center lower-third product, role 2 offers no visible emitter-spacing evidence to support the technical narrative, and role 3 incorrectly renders the required fixed filter as a temporary handheld assembly with the product centered rather than small and secondary.",
+        "The visual narratives across the panels rely on the same generic farm environment and repeated foreground framing rather than distinct, purposeful structural shifts. The bottom-right watermarks are valid and are not a rejection factor."
+      ],
+      "correction_prompt": "Separate the panels structurally: shoot role 1 as a dominant wide field with the carton tiny and off-center lower-third, role 2 as a clean technical layout clearly exposing drip emitters and spacing rules with only an edge/barn in the background, and role 3 as a side-view of a permanent filter and manifold setup with the carton de-emphasized.",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 3
     }
   ]
 }

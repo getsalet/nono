@@ -1,0 +1,40 @@
+{
+  "source_id": "1050003002761-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 75,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The pair of coils and the pump infrastructure occupies approximately 75% of the frame width, which significantly exceeds the maximum hard reject threshold of 20%.",
+        "The products are dominant in the composition rather than the required 'secondary' role.",
+        "A large portion of the product coil on the left is heavily cut off at the bottom edge of the frame, making the product 'not fully visible' as required. The required pair should remain small (12-15% width).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 9-20% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate to show the pump/gauge infrastructure as the primary medium view. The two coils (one bare, one packaged) must be placed in the distant foreground, occupying no more than 15% of the image width, fully visible and not cropped. Reduce the product group from 75% to 9-20% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 14,
+      "product_height_percent": 16,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "The image displays the required two-coil pair: one packaged coil and one bare black woven coil, which occupy approximately 14% of the frame width, well within the 12-15% target.",
+        "The mandatory 'HEADWORKS STORY' elements are present: a medium side view of a fixed, unattended pump, gauge, and manifold.",
+        "Zero people or human body parts are visible.",
+        "The bottom-right watermark 'AFP | 09134922013' is correctly included and legible.",
+        "The coils are separate, physically plausible, and secondary to the central pump infrastructure."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
