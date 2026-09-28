@@ -1,0 +1,57 @@
+{
+  "source_id": "10600012002036-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 60,
+      "product_height_percent": 42,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The bottom-right watermark 'AFP | 09134922013' is clearly visible and present.",
+        "The scene is completely free of people, human silhouettes, or body parts.",
+        "The product pair consists of exactly one packaged coil and one bare black woven coil as requested.",
+        "No third commercial products, bottles, or containers are present in the frame.",
+        "The background city skyline provides the necessary urban/city context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-25% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 60% to 8-25% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 62.0,
+      "product_height_percent": 38.0,
+      "product_x_center_percent": 44.0,
+      "reasons": [
+        "Product pair is too wide, occupying ~62% of frame, exceeding the 25% hard rejection threshold.",
+        "Product pair is too tall, occupying ~38% of frame, exceeding the 35% hard rejection threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-25% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with much smaller coil scale. The two coils together should occupy only about 12–15% of the frame width and under 30% of frame height, appearing as a distant detail within a wide high-oblique field scene, while keeping the far-distance tractor and required bottom-right watermark. Reduce the product group from 62% to 8-25% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 22,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains both required elements: a packaged coil (left) and a bare black woven coil (right).",
+        "Correct placement: off-center and in the lower-third as per the role requirements.",
+        "No people or body parts visible.",
+        "The distant tractor is correctly identified as unattended farm equipment/infrastructure, not a third commercial product.",
+        "Product bounding box dimensions are within acceptable limits (width < 25% and height < 35%).",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

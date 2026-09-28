@@ -1,0 +1,89 @@
+{
+  "source_id": "1060009001283-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 65,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product pair is too wide, occupying approximately 65% of the frame width, which significantly exceeds the hard reject threshold of 25%.",
+        "The image fails to include the mandatory 'HEADWORKS DETAIL' elements (fixed pump, gauge, and manifold) which are required for this specific image role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-25% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate to show one packaged AFP coil and one bare black woven coil at a combined width of 15% of the frame. The scene must be an elevated record shot on an empty concrete pad, including a fixed pump, gauge, and manifold as the primary focus, with the coils positioned small and secondary. No people or third-party products. Reduce the product group from 65% to 8-25% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 48,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Product pair correctly identifies a packaged coil and a bare black coil.",
+        "Zero people, faces, or body parts are visible in the image.",
+        "The watermark 'AFP | 09134922013' is correctly present in the bottom right.",
+        "The scene matches the 'HEADWORKS DETAIL' role, showing a fixed pump, gauge, and manifold on a concrete pad without farm activity.",
+        "The product pair is physically plausible, separate, and recognizable.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 40,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Human body part violation: A worker's leg and arm are visible standing next to the tractor in the background, which is a hard reject as the image must contain zero people or human body parts.",
+        "Mandatory role violation: The brief explicitly requires a 'HEADWORKS DETAIL' showing a fixed pump, gauge, and manifold. The current image features a tractor and worker instead of the required equipment-only infrastructure.",
+        "Product visibility: While the two approved coil types are present, the presence of the human figure disqualifies the image from passing QA.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 8-25% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 40% to 8-25% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 53,
+      "reasons": [
+        "The image displays the correct pair: one packaged coil and one bare black woven coil.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and legible.",
+        "No people, human body parts, or third commercial containers are visible.",
+        "The objects are separate, physically plausible, and fully visible on the concrete pad.",
+        "Minor deduction for the wide spread of the coils relative to the preferred narrow width band.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 48,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image successfully features the approved layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "Both objects are physically plausible, separate, fully visible, and recognizable.",
+        "No human body parts, people, or disallowed commercial items (like bottles or extra packages) are present.",
+        "The unattended tractor in the distance is correctly identified as context (infrastructure/equipment) and does not trigger a hard reject.",
+        "The required 'AFP | 09134922013' watermark is correctly displayed in the bottom-right corner.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-25% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

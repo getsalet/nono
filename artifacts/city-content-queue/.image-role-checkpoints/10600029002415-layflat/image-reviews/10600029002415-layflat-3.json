@@ -1,0 +1,40 @@
+{
+  "source_id": "10600029002415-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 42,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The pair is significantly wider than 25% of the frame (approx 42%); this is a hard reject.",
+        "Required watermark string mismatch: image shows 'AFP | 09134922013' but required 'AFP | 09134922013'. (This was just a typo in my thought process, actually the required string is in the image. The main reject is the width).",
+        "Missing 'headworks detail' visual element: no fixed pump, gauge, or manifold visible on the concrete pad as mandatory for this role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate to shrink the product pair so combined width is under 20% of frame. Add a small fixed pump, gauge, and manifold assembly on the concrete pad to match the 'headworks detail' role. Ensure the specific text 'AFP | 09134922013' is clearly visible in the bottom right. Reduce the product group from 42% to 8-25% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image displays the required water infrastructure (pump and manifold) on a concrete pad as specified in the role brief.",
+        "The approved pair of hoses (one packaged coil on the left and one bare black coiled hose next to the pump) is visible and physically plausible.",
+        "The bounding box for the product pair is approximately 22% of the frame width, which is within the acceptable noise limit of 8-25%.",
+        "The exact required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The scene contains zero people or human body parts, satisfying the hard reject criteria."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
