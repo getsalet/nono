@@ -1,0 +1,71 @@
+{
+  "source_id": "1210001002623-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 70,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Product width is approximately 28% of the frame, exceeding the 27% hard limit",
+        "Product height is approximately 42% of the frame, exceeding the 32% hard limit",
+        "Second commercial package detected: an independent coiled roll of drip tape lies on the ground to the right, violating the 'exactly one roll' requirement",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image featuring only the single drip tape carton roll. Remove the coiled tape from the background. Adjust the camera perspective to reduce the bounding box size to less than 27% width and 32% height. Ensure the watermark 'AFP | 09134922013' remains in the bottom right corner. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 31,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Second commercial package (wooden spool of tape) is visible in the foreground, violating the 'exactly one carton' and 'zero second package' rules.",
+        "Mandatory 'selection evidence' (emitter-spacing or field-selection data) is missing from the image."
+      ],
+      "correction_prompt": "Regenerate the image containing only one white and blue wide cylindrical drip-tape carton roll, positioned on the field edge, with visible emitter spacing labels on the carton. Remove the wooden spool of tape and the second container completely. Maintain the AFP watermark and distant farm equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 38,
+      "product_height_percent": 29,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Product width is estimated at 38%, which exceeds the 27% hard-reject limit.",
+        "Visible text on the roll reads 'DRIP ARGAN TON', which constitutes gibberish writing (hard reject).",
+        "Visible text reads 'EFFECTIVE DRYING / STIMULATION', which is non-functional gibberish.",
+        "Object is not an AFP branded carton (hard reject).",
+        "Visible quadruped animal in the background acts as an unintended subject distraction.",
+        "Article brief mandates 'SELECTION EVIDENCE' (emitter spacing or field data) which is completely absent.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate with a strictly AFP-branded white and blue drip-tape carton. Ensure the roll is small (less than 27% of frame width) and physically accurate. Remove gibberish text. Include visible emitter-spacing data or a selection guide to fulfill the 'Selection Evidence' role. Ensure a clean background with no animals or distracting equipment. Reduce the product group from 38% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 15,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The product dimensions are within the preferred and acceptable ranges (width ~22%, height ~15%).",
+        "Zero people or body parts are present; the distant tractor is unattended infrastructure and is allowed.",
+        "The required bottom-right watermark is present.",
+        "The image includes field-selection evidence (visible drip tape leading from the roll), satisfying the SELECTION EVIDENCE role."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
