@@ -1,0 +1,122 @@
+{
+  "source_id": "1300003001586-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 42,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Visible people and full human silhouettes in the background (standing and sitting), which are hard rejects.",
+        "Product roll is too wide (~32%) and too tall (~42%), exceeding the maximum tolerances of 30% width and 35% height.",
+        "The image role requires the approved carton to be 'small and secondary' behind fixed infrastructure, but here it is the dominant subject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with no visible people or human silhouettes anywhere in the frame. Reduce the relative scale of the AFP drip tape roll so it is smaller and positioned behind fixed infrastructure (filter/gauge) as secondary. Ensure the roll's bounding box is less than 30% width and 35% height. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 17,
+      "product_height_percent": 25,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Presence of a large commercial tanker/tractor in the background violates the 'zero commercial packages' and 'no extra commercial products' rule (the brief allows unattended equipment, but a large branded or generic tank/sprayer truck is a distinct heavy commercial item that detracts from the product-only role).",
+        "The presence of a second commercial package (the brown box) explicitly violates the rule 'second commercial package' - hard reject."
+      ],
+      "correction_prompt": "Remove the brown 'AFP' box and the background tractor/tanker truck; keep only the single drip-tape roll and the fixed filter/gauge hardware on the concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human figure (farmer in hat) is visible in the background between the tractors",
+        "Hard reject: The text on the carton label is partially gibberish/illegible ('DRIP HYIEOAT TAPE')",
+        "Mandatory role violation: The image is missing the required 'equipment-only elevated record photograph' of a filter, gauge, regulator, and manifold on an empty pad"
+      ],
+      "correction_prompt": "Remove the human figure in the background. Correct the gibberish text on the label to legible English. In the foreground on the concrete pad, add a cluster of fixed infrastructure hardware (one filter, one pressure gauge, one regulator, and one manifold) that dominates the frame, keeping the AFP drip-tape carton as a small secondary object.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Image contains a second commercial package (smaller AFP carton roll).",
+        "Hard reject: Image contains hose/coil infrastructure not matching 'one fixed' filter/gauge brief.",
+        "The article brief specifies 'exactly one approved carton remains small and secondary', but the main large roll violates the 'secondary' status and the small roll violates the 'exactly one' count."
+      ],
+      "correction_prompt": "Regenerate the image to show exactly one small AFP white-and-blue drip-tape carton roll on a concrete pad, with one fixed filter, gauge, and regulator. Remove the large roll, the small secondary roll, and the hose coiling. Keep the distant unattended tractors.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 33,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: The image contains multiple visible people (a farmer in a high-vis vest on the left, and a worker on the right) and a person operating a tractor. The image requirements explicitly mandate 'zero people and zero human body parts' and 'no farm activity', whereas this image shows a busy agricultural setting with active human presence and machinery operation."
+      ],
+      "correction_prompt": "Regenerate the image showing only the equipment on the concrete pad: one fixed filter, gauge, regulator, and manifold with the small AFP drip-tape carton in the background. Completely remove all people, tractors, and farm activity from the scene.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 38,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The mandatory image role is 'HEADWORKS DETAIL', requiring a record photograph of filters, gauges, and a manifold on a concrete pad. This image is a generic product shot of rolls on a ground surface, failing to meet the specific visual brief.",
+        "The image contains two rolls of tape, whereas the brief explicitly requires exactly one carton/roll.",
+        "The required infrastructure (filters, gauges, manifold) is completely absent from the scene.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image showing a high-angle close-up of fixed irrigation equipment (filter, gauge, manifold) on a concrete pad. Include exactly one small AFP drip tape roll in the background as a secondary element. Ensure the scene contains no people or active farm equipment. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Visible person and human body part in the background (hard reject)",
+        "Second roll/carton present in the image (hard reject)",
+        "Product is not the mandatory 'fixed filter, gauge, regulator and manifold' equipment",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate showing an empty concrete pad with only one fixed filter unit, gauge, regulator, and manifold. Include a small, secondary drip-tape carton roll. Ensure zero people or body parts are visible. Include the exact bottom-right watermark 'AFP | 09134922013'. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 55,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: image contains visible humans (workers standing near the tractor in the background).",
+        "Hard reject: contains a second commercial package (a smaller white roll to the right of the main product).",
+        "The main product is too large, violating the preferred 20-23% width and exceeding the 30% max width limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the background. Remove the second smaller white roll on the right. Rescale the main white-and-blue drip-tape carton roll to be approximately 20% of the image width to match the 'secondary' visual brief requirement. Reduce the product group from 55% to 12-30% of frame width.",
+      "attempt": 8
+    }
+  ]
+}
