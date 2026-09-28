@@ -1,0 +1,52 @@
+{
+  "source_id": "10900019002605-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 31,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: Two people are present in the image (one standing on the left, one crouching on the right), which violates the requirement for zero people or human body parts."
+      ],
+      "correction_prompt": "Regenerate the image removing all human figures to show only the static irrigation infrastructure and the single product roll in the field.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25.0,
+      "product_height_percent": 40.0,
+      "product_x_center_percent": 38.0,
+      "reasons": [
+        "Hard reject: multiple people visible in the background (two men standing in the middle-ground and one person near the tractor).",
+        "Hard reject: product height is estimated at 40% of the frame, exceeding the 32% maximum limit for physical plausibility.",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all people and human figures from the background entirely. Shrink the white-and-blue carton roll so its height is under 32% of the frame width. Ensure the background contains only empty fields, a distant unattended tractor, and irrigation pipes without any visible workers or faces. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 18,
+      "product_height_percent": 17,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "Correctly displays the mandatory fixed irrigation hardware (gauge, regulator, manifold) as the primary focus.",
+        "Exactly one AFP drip-tape carton roll is present, sized appropriately (approx 18% width) and positioned in the lower-left.",
+        "Zero people or human body parts are visible.",
+        "The distant unattended tractor is allowed as contextual background equipment.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and clear.",
+        "No prohibited containers, second commercial packages, or text artifacts are present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

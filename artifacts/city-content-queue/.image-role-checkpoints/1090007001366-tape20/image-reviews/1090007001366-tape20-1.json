@@ -1,0 +1,53 @@
+{
+  "source_id": "1090007001366-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Human figure (man) is visible on the left side of the frame.",
+        "Product height is estimated at 38% of frame height, exceeding the 32% limit.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the human figure completely from the left side. Reduce the vertical height of the irrigation roll so it occupies no more than 32% of the image height. Maintain the bottom-right watermark 'AFP | 09134922013'. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: Human body parts (drivers) are visible inside the tractors on both the left and right sides of the image.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image ensuring that no humans are visible inside the tractor cabs; the cabs must be empty and the vehicles unattended. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 21,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains exactly one approved white-and-blue AFP drip-tape carton roll.",
+        "The product is placed on the lower third and off-center, matching the editorial preference.",
+        "The tractor in the background is distant and unattended, with no visible operator, satisfying the no-people requirement.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The object's dimensions (width ~21%, height ~24%) are well within the acceptable limits (13-27% width, up to 32% height).",
+        "No extra commercial products, people, or human body parts are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

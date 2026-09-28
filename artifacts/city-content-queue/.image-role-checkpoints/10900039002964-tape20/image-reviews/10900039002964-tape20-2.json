@@ -1,0 +1,55 @@
+{
+  "source_id": "10900039002964-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 45,
+      "product_height_percent": 38,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The product bounding box exceeds the maximum allowed width of 27% of the frame width.",
+        "The product bounding box exceeds the maximum allowed height of 32% of the frame height.",
+        "Visible gibberish writing (non-legible text) on the coiled tape in the foreground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the roll width set to 20-23% of the frame width and height under 32%. Remove the gibberish text from the coiled tape, ensuring all markings are clean and legible or absent. Reduce the product group from 45% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 17,
+      "product_height_percent": 24,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Hard reject: A male farmer/worker is crouching in the foreground, violating the zero-people requirement.",
+        "Hard reject: Human body parts (face, hands, arms, legs) are clearly visible."
+      ],
+      "correction_prompt": "Remove the crouching man entirely. The scene must contain exactly one AFP drip-tape roll in the foreground on the dirt field with visible tape spools, but strictly zero people.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 20,
+      "product_height_percent": 26,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image displays exactly one white-and-blue wide low cylindrical drip-tape carton roll with the required brand logo.",
+        "The product width (approx. 20%) and height (approx. 26%) are within the preferred and acceptable ranges.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "The background is a simple field with a distant unattended tractor and farm building, which are allowed contextual elements.",
+        "There are zero people or human body parts in the image.",
+        "The visible white tubing on the ground is part of the same product, providing the necessary field-selection evidence without constituting a 'second roll' or 'second commercial package'.",
+        "No hard rejects such as bottles, cans, or gibberish writing are present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

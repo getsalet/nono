@@ -1,0 +1,50 @@
+{
+  "source_id": "10900019002605-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: The image contains a human (a farmer/worker), which is strictly prohibited by the guidelines."
+      ],
+      "correction_prompt": "Remove the person entirely. Keep the AFP drip tape roll in the foreground. Add a hand-free selection context, such as a clear view of the field layout or emitter spacing, to satisfy the 'selection evidence' role requirement without including any human figures.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Hard reject: multiple visible human figures (silhouettes of workers) in the mid-ground and background near the buildings and tractors.",
+        "The image shows a cylindrical white roll that appears to be solid or a filter element rather than a 'drip-tape carton roll' with visible tape emitters (the article brief specifies 'tape 20' with emitters).",
+        "The required watermark 'AFP | 09134922013' is present, but the presence of people violates the zero-person rule."
+      ],
+      "correction_prompt": "Regenerate image: Remove all human figures and workers from the background. Ensure the foreground object is clearly an AFP drip-tape carton roll (white and blue, cylindrical) with visible perforated tape emerging from the carton, not a solid plastic cylinder. Keep the field background and tractors but remove people.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 21,
+      "product_height_percent": 23,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present.",
+        "The emitter-spacing of the unrolled tape provides the required visible field-selection evidence.",
+        "No people, human body parts, bottles, or secondary commercial containers are visible.",
+        "The bottom-right watermark 'AFP | 09134922013' is correctly and clearly present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
