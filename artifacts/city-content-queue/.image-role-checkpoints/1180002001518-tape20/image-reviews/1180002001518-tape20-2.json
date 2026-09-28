@@ -1,0 +1,54 @@
+{
+  "source_id": "1180002001518-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 24,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains a second commercial package (a loose coiled roll of drip tape to the right of the main carton).",
+        "The AFP carton roll is too wide, estimated at roughly 28% of the frame width, exceeding the hard reject threshold of 27%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with only one AFP white-and-blue drip-tape carton roll in the foreground and completely remove the coiled drip tape on the right. Scale the carton down to occupy approximately 20-23% of the frame width. Ensure there are absolutely no second rolls or commercial packages present. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 5,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "Hard reject: The image contains two visible human beings (a worker in the foreground and another in the background), which violates the mandatory 'zero people' rule.",
+        "Hard reject: A second commercial package (a blue box) is visible on the ground, violating the 'exactly one approved carton' requirement.",
+        "Hard reject: A coiled irrigation tube is visible on the ground, which conflicts with the strict requirement for 'exactly one' roll."
+      ],
+      "correction_prompt": "Regenerate the image with a completely unattended field setting. Remove all human figures (both in foreground and background). Remove the blue box and the coiled tube on the ground. Keep only the single AFP white-and-blue wide low cylindrical drip-tape carton roll positioned on the bare soil in a rural agricultural environment.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 19,
+      "product_height_percent": 16,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible AFP white-and-blue wide low cylindrical drip-tape carton roll matches product requirements.",
+        "Zero people and zero human body parts present in the image.",
+        "Product width is approximately 19%, which is within the preferred 20-23% range and acceptable estimation noise range (13-27%).",
+        "Product height is approximately 16%, which is well below the 32% hard reject limit and physically plausible.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Background context (distant unattended tractor, farm building, open field) aligns with the permitted environmental elements for the article brief."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "source_id": "1180001001516-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Human body parts and a full person are visible on the right side of the image.",
+        "Hard reject: A bottle/sprayer container (white canister) is visible being held by the person, which is a prohibited object.",
+        "Multiple commercial/industrial packages (cylindrical filters/canisters) are visible, violating the 'exactly one roll' requirement."
+      ],
+      "correction_prompt": "Regenerate the image strictly removing the human figure and any spray cans or filters; show only the single AFP white-and-blue drip-tape roll in a farm setting with no people.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product is positioned exactly in the horizontal center, whereas the visual brief requires it to be placed off-center in the lower third.",
+        "The object is centered rather than following the requested editorial placement on the side."
+      ],
+      "correction_prompt": "Move the white and blue cylindrical carton roll to the left side (approximately 35% x-center) in the lower third of the frame to satisfy the off-center placement requirement.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 22,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: Visible person (driver) inside the tractor in the background.",
+        "Hard reject: The central white drip line traversing the field is interpreted as a layflat hose/piping which violates the 'zero second roll/piping' constraint for a clean product shot.",
+        "Style mismatch: The image lacks the 'wide high-oblique' perspective required by the editorial hero role."
+      ],
+      "correction_prompt": "Regenerate the image from a high, wide oblique angle overlooking the farm. Ensure the single small white AFP drip tape roll is in the lower third. Crucially, the tractor in the background must be completely empty/unmanned with no driver visible. Remove any visible white drip hose lines from the field; show only rows of crops and soil texture. Ensure the AFP watermark remains bottom-right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 17,
+      "product_height_percent": 19,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "A clear human silhouette (driver) is visible inside the unattended tractor, which violates the strict rule to hard reject any person or human body part, even distant."
+      ],
+      "correction_prompt": "Remove the driver silhouette from the tractor cabin in the background to ensure zero visible people.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 20,
+      "product_height_percent": 26,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Exact watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Image contains exactly one approved AFP wide cylindrical drip-tape carton roll, matching the visual brief.",
+        "Product dimensions (width ~20%, height ~26%) are within acceptable bounds (width 13-27%, height <= 32%).",
+        "Zero visible people, human body parts, or silhouettes.",
+        "Background context (crop rows, distant tractor, farm building) is physically plausible and appropriate for an editorial hero shot.",
+        "The single roll is placed in the lower third of the frame."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

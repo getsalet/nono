@@ -1,0 +1,42 @@
+{
+  "source_id": "1180001001516-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Hard reject: A person (farmer) is clearly visible in the image, which violates the zero-person rule.",
+        "The mandatory role 'HEADWORKS STORY' was not met; instead of focusing on fixed irrigation infrastructure (filter, gauge), the image centers on the drip tape roll and a person interacting with it.",
+        "The product (drip tape roll) exceeds the height limit, occupying roughly 42% of the frame height rather than the allowed maximum of 32%.",
+        "Gibberish text appears on the carton beneath the 'AFP' brand logo.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the person from the image entirely. Re-center the composition to focus on unattended fixed irrigation hardware (filter, manifold, gauge). Shrink the drip-tape carton roll so it occupies a maximum of 20% of the frame width and 25% of the frame height. Ensure all text on the carton is legible and in Persian or English, without gibberish. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 20,
+      "product_height_percent": 24,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Mandatory bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "Product (drip-tape roll) is a single white-and-blue cylindrical roll with no prohibited items (bottles, jars, extra rolls) nearby.",
+        "Product dimensions are within the preferred and acceptable ranges: width ~20% and height ~24%.",
+        "No human figures, silhouettes, or body parts are visible in the image.",
+        "Context matches the article brief: includes unattended irrigation infrastructure (manifold, regulator, gauge, filter) with a distant tractor and farm building, which are explicitly allowed.",
+        "The commercial roll is placed in the foreground/lower third as a secondary element, complying with the 'HEADWORKS STORY' role where it should remain small and secondary."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

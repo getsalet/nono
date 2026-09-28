@@ -1,0 +1,69 @@
+{
+  "source_id": "1170006002828-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 33,
+      "product_height_percent": 38,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: The image contains multiple human figures (one main subject crouching, two people in the background) which violates the zero people/face/hand/arm rule.",
+        "Hard reject: The object dimensions are too large; the roll is approximately 33% wide and 38% high, exceeding the maximum allowed thresholds of 27% width and 32% height.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image without any human figures, workers, or people (background or foreground). Reduce the size of the white and blue AFP drip-tape roll so it occupies less than 25% of the frame width and less than 30% of the height, keeping it centered but physically smaller. Reduce the product group from 33% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 18,
+      "product_height_percent": 20,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Visible humans in the image (one crouching on the left, one standing on the right).",
+        "Hard reject: Presence of human body parts (hands, faces, limbs).",
+        "Hard reject: Visible human silhouettes."
+      ],
+      "correction_prompt": "Remove all people and human figures from the scene. Ensure only the white-and-blue drip tape roll, the irrigation equipment (filter, gauge, regulator), and the distant tractor remain in the field context.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 30,
+      "product_height_percent": 32,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Product width is approximately 30%, which exceeds the hard reject limit of 27% of frame width.",
+        "The mandatory image role 'HEADWORKS STORY' requires the approved carton roll to remain small and secondary, but it is the dominant focal object in the composition.",
+        "A second commercial package (brown cardboard box) is visible in the scene, which is a hard reject condition.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Shrink the AFP white and blue drip tape roll significantly to be approximately 15% of frame width and reposition it to the far periphery to be secondary to the fixed filtration infrastructure. Remove the brown cardboard box entirely. Ensure the fixed filter, gauges, and manifold are the primary focus. Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "The image successfully features the required water-and-blue wide low cylindrical drip-tape carton roll in the foreground, fulfilling the visual target.",
+        "The background clearly displays the mandatory 'HEADWORKS STORY' elements: a medium side view of an unattended fixed filter, gauges, regulator, and manifold setup.",
+        "Zero people, human body parts, or human silhouettes are visible in the scene, adhering to the hard reject criteria.",
+        "The product's bounding box is estimated at 20% width and 22% height, falling perfectly within the preferred 20-23% width range and the 32% height limit.",
+        "Lower-third and off-center placement of the roll is respected as an editorial preference rather than a reject criterion.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner as specified, and its correct inclusion was not rejected."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

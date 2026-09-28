@@ -5004,7 +5004,77 @@ COMMIT;
 SET NAMES utf8mb4;
 USE `navaraby_wp569`;
 START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='1170002001514-tape20' WHERE p.post_name='دهدشت-کهگیلویه-و-بویراحمد-navar-tip-20cm' AND p.post_type='kohgiluyeh' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='1170002002480-tape20' WHERE p.post_name='دیشموک-کهگیلویه-و-بویراحمد-navar-tip-20cm' AND p.post_type='kohgiluyeh' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='1170003001515-tape20' WHERE p.post_name='دوگنبدان-کهگیلویه-و-بویراحمد-navar-tip-20cm' AND p.post_type='kohgiluyeh' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
 SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='1170005002368-tape20' WHERE p.post_name='لیکک-کهگیلویه-و-بویراحمد-navar-tip-20cm' AND p.post_type='kohgiluyeh' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='1170006002828-tape20' WHERE p.post_name='سرفاریاب-کهگیلویه-و-بویراحمد-navar-tip-20cm' AND p.post_type='kohgiluyeh' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='1170008002129-tape20' WHERE p.post_name='لنده-کهگیلویه-و-بویراحمد-navar-tip-20cm' AND p.post_type='kohgiluyeh' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='1170009002477-tape20' WHERE p.post_name='مارگون-کهگیلویه-و-بویراحمد-navar-tip-20cm' AND p.post_type='kohgiluyeh' LIMIT 1);
+DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
+DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
+DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;
+DELETE FROM `ha_posts` WHERE ID=@rollback_post_id;
+COMMIT;
+
+SET NAMES utf8mb4;
+USE `navaraby_wp569`;
+START TRANSACTION;
+SET @rollback_post_id=(SELECT p.ID FROM `ha_posts` p JOIN `ha_postmeta` marker ON marker.post_id=p.ID AND marker.meta_key='_navar_city_queue_generated' AND marker.meta_value='1180001002481-tape20' WHERE p.post_name='چغادک-بوشهر-navar-tip-20cm' AND p.post_type='bushehr' LIMIT 1);
 DELETE pm FROM `ha_postmeta` pm JOIN `ha_posts` a ON a.ID=pm.post_id WHERE a.post_parent=@rollback_post_id AND a.post_type='attachment';
 DELETE FROM `ha_posts` WHERE post_parent=@rollback_post_id AND post_type='attachment';
 DELETE FROM `ha_postmeta` WHERE post_id=@rollback_post_id;

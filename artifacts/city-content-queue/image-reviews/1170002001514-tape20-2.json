@@ -1,0 +1,53 @@
+{
+  "source_id": "1170002001514-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: The image contains two human figures (farmers/workers), which explicitly violates the 'zero people' rule.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the scene. Keep only the single white-and-blue AFP drip-tape roll placed on the field with a simple background. Ensure the roll occupies 20-23% of the frame width and the required bottom-right watermark is present. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 30,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains a visible person (farmer) standing in the left background, which is a hard reject.",
+        "A second commercial product (green fertilizer bag) is visible on the far right edge.",
+        "Product width estimated at 30% exceeds the maximum 27% limit and height estimated at 32% is at the absolute maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the standing farmer in the background and the green fertilizer bag on the right. Resize the drip tape roll to be smaller, approximately 20-23% of the frame width. Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 22,
+      "product_height_percent": 26,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Object matches brief: One AFP white-and-blue wide cylindrical drip-tape carton roll is clearly visible.",
+        "Dimensions are within acceptable thresholds: Product width (22%) falls within the preferred range; height (26%) is well below the hard reject limit.",
+        "Zero human presence: No people, body parts, or silhouettes are visible in the frame.",
+        "Watermark integrity: The mandatory bottom-right watermark 'AFP | 09134922013' is present and legible.",
+        "Contextual fit: Background includes unattended irrigation infrastructure and farm equipment (tractor/building), consistent with the city field brief without violation of hard rejects."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
