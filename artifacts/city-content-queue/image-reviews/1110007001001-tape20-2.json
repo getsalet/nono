@@ -1,0 +1,70 @@
+{
+  "source_id": "1110007001001-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Visible human (person) in the background",
+        "Second unapproved commercial object present (second coil/roll of tape to the right)"
+      ],
+      "correction_prompt": "Remove the person in the background and the second tape roll to the right; regenerate with only the single AFP carton roll on the field.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 26.4,
+      "product_height_percent": 28.7,
+      "product_x_center_percent": 35.6,
+      "reasons": [
+        "The coiled drip tape spool located to the right of the carton constitutes a 'second roll', which is a hard reject according to the instructions.",
+        "Required watermark text is incorrectly spelled as '09134922013' instead of the mandated '09134922013'."
+      ],
+      "correction_prompt": "Remove the second coiled drip tape spool on the right. Regenerate the bottom-right watermark to exactly match 'AFP | 09134922013'. Keep the single AFP carton roll in the lower-left area against a field background.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "The product is an AFP white and blue wide low cylindrical drip-tape carton roll, clearly matching the 20mm spec.",
+        "The image contains zero people or body parts.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The background includes a plausible field with visible drip lines, which serves as selection evidence for emitter-spacing/field context.",
+        "Despite the product being slightly below the 27% width hard reject threshold, the visual clarity and relevance are high. However, technically, the width exceeds the 27% limit slightly, but given the 'reviewer-estimation noise' allowance and the prominence, it remains a valid asset for the brief's context of a field-side shot. Correction: The object is a wide roll, and the prompt specifies a 'hard reject' for width > 27%. In my estimation, the roll is approximately 31% width. Therefore, I must reject it based on the hard constraint.",
+        "Wait, re-evaluating the hard reject rule: 'Hard reject a roll wider than 27 percent of the frame'. The roll in the image is significantly wider than 1/4 of the frame width. It looks close to 1/3. This is a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the drip tape roll positioned further back in the scene so that its width is no more than 27% of the total image width. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Exactly one approved AFP white-and-blue wide low cylindrical drip-tape carton roll is present.",
+        "Product width (~23%) and height (~28%) are within the accepted limits of 13–27% and up to 32%.",
+        "Zero people and zero human body parts detected in the scene.",
+        "Background contains an ordinary field, distant unattended tractor, and farm buildings, which are contextually allowed infrastructure.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and intact.",
+        "Product text is somewhat stylized and not perfectly legible, but it is not gibberish or an impossible geometry, so it does not trigger a hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

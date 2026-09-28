@@ -1,39 +1,61 @@
 {
   "source_id": "1050003002103-layflat",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "history": [
     {
       "pass": false,
-      "score": 15,
+      "score": 45,
       "duplicate_roles": [
-        3,
-        4
+        2,
+        3
       ],
       "reasons": [
-        "Only 4 images provided, so role 5 is entirely missing.",
-        "Role 1 (Image 1) is a flat, ground-level angle rather than a 'wide high-oblique' view, and the product coils are prominent and centered rather than small and off-center.",
-        "Role 2 (Image 4) shows two large woven coils rather than the 'approved two-coil pair' (package + bare) described in the brief.",
-        "Image 3 violates the 'zero people' rule and role 4's 'unattended' requirement due to the presence of a tractor."
+        "Role 3 (Image 3) fails the specific hardware requirement: the pump is depicted as a mobile cart-mounted device rather than the requested 'fixed unattended pump' on a static base.",
+        "The background environment in Role 3 (a green crop field with a barn) is a generic farm setting, violating the mandate for a relevant water-transfer context like the canal seen in Role 1.",
+        "The two-coil pair in Role 3 appears oversized and prominent, failing to remain 'secondary' and small as instructed, effectively changing the technical narrative to a hardware showcase."
       ],
-      "correction_prompt": "Provide a 5th image for role 5 (maintenance close-up). Reshoot role 1 as a high-oblique wide angle with small off-center products. Replace Image 3 with an unattended installation scene and swap the second coil in Image 4 for the approved bare black package.",
+      "correction_prompt": "Regenerate Role 3 with a stationary, permanently mounted pump and static manifold; remove the wheel; place it beside a static water-transfer channel or concrete infrastructure; shrink the two-coil pair to a small secondary scale in the corner; replace the crop-field background with a consistent irrigation context.",
+      "panel_scores": [
+        45
+      ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 30,
+      "score": 45,
       "duplicate_roles": [
-        3,
-        4,
-        5
+        2,
+        3
       ],
       "reasons": [
-        "Role 3 (HEADWORKS STORY): The scene is missing the required 'fixed unattended pump' and 'manifold.' The hardware appears generic and floats without proper installation context. Furthermore, the coils are too prominent and central rather than 'small, separate, and secondary.'",
-        "Role 4 (INSTALLATION PROOF): The image fails to show an 'asymmetric unattended view of an extended layflat connection entering the field.' It presents two large coils side-by-side on a static tilled surface, lacking the narrative of installation or flow into the field.",
-        "Role 5 (MAINTENANCE DETAIL): The image is a macro shot of coiled tubing rather than a close-up of a 'connector, fold, or woven-surface detail' (e.g., an elbow or coupler). It does not fulfill the specific technical narrative of maintenance.",
-        "General: The sequence feels repetitive with multiple static product-on-ground shots rather than distinct environmental or technical camera angles."
+        "Role 2 fails to meet the 'elevated technical comparison' requirement; instead, it repeats a near-ground static shot that offers no visible difference in diameter or construction through the pair.",
+        "Roles 2 and 3 are duplicative in visual narrative; both rely on the exact same 'pair of coils' subject placed horizontally next to each other in the foreground of a farm, lacking the technical hardware focus or elevation required.",
+        "Role 3 does not clearly showcase the required 'fixed unattended pump, gauge and manifold' hardware story; it only shows a generic pipe fitting without clear technical context."
       ],
-      "correction_prompt": "Regenerate Role 3 with a visible pump unit and manifold, with coils as secondary background elements. For Role 4, show a layflat pipe actively running into the furrows (asymmetric angle). For Role 5, focus on a specific connector, elbow, or woven-surface texture rather than full coils.",
+      "correction_prompt": "Regenerate Role 2 as a high-angle close-up showing diameter differences, and regenerate Role 3 as a medium shot featuring a clear pump unit with a pressure gauge and manifold hardware, where the coils are small and secondary.",
+      "panel_scores": [
+        45
+      ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 (Panel 1): The two coiled hoses are placed in the immediate foreground, making them the dominant visual subject, which violates the requirement that they remain 'small, separate and off-center' within a wide high-oblique context.",
+        "Role 2 (Panel 2): The product placement is in the bottom-left foreground and does not appear 'elevated' for a technical comparison. Additionally, it fails to clearly show a diameter or construction difference between the coils through the pair itself.",
+        "Role 3 (Panel 3): The two coiled hoses are too large and centrally placed, failing the requirement to be 'small, separate and secondary' to the pump and gauge."
+      ],
+      "correction_prompt": "Scale down the coiled hoses significantly to make the pump/gauge the clear subject in Panel 3; in Panel 1, move the hoses to the mid-ground (away from the bottom edge) to ensure the water channel context is primary; in Panel 2, elevate the product placement to the mid-ground to create a distinct visual layer separate from the foreground.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 3
     }
   ]
 }
