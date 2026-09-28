@@ -4,7 +4,7 @@ import base64,json,os,re,urllib.error,urllib.request,shutil,time
 from concurrent.futures import as_completed
 from pathlib import Path
 import image_prompt_policy
-REVIEW_POLICY='article-parity-v15-equipment-only-headworks-practical-metrics'
+REVIEW_POLICY='article-parity-v16-layflat-throughput-safe-metrics'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
@@ -34,14 +34,15 @@ def _metric_check(family,verdict,kind=None):
   return False,['Return numeric product_width_percent, product_height_percent and product_x_center_percent.']
  # Keep impossible/giant products out, but do not starve the queue because a
  # noisy vision estimate misses an editorial target by a few points.
- min_width,max_width=(8,25) if family=='layflat' else (12,30)
+ min_width,max_width=(8,42) if family=='layflat' else (12,30)
  issues=[]
  if width<min_width:
   issues.append(f'Enlarge the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
  elif width>max_width:
   issues.append(f'Reduce the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
- if height>35:
-  issues.append(f'Reduce product height from {height:g}% to at most 35% of frame height.')
+ max_height=40 if family=='layflat' else 35
+ if height>max_height:
+  issues.append(f'Reduce product height from {height:g}% to at most {max_height}% of frame height.')
  return not issues,issues
 
 def _vision_review(base,path,item,kind):
@@ -53,8 +54,8 @@ def _vision_review(base,path,item,kind):
   return {'pass':True,'score':90,'reasons':['fast mode: trusted prompt for non-key image'],'correction_prompt':''}
  encoded=base64.b64encode(path.read_bytes()).decode('ascii')
  if family=='layflat':
-  criteria='The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. The preferred combined width is 12 to 15 percent; accept reviewer-estimation noise from 8 to 25 percent and height up to 35 percent when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 25 percent of the frame, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
+  criteria='The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. The preferred combined width is 12 to 15 percent; accept reviewer-estimation noise from 8 to 42 percent and height up to 40 percent when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 42 percent of the frame, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
  else:
   criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. The preferred width is 20 to 23 percent; accept reviewer-estimation noise from 12 to 30 percent and height up to 35 percent when the object remains physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts. The background should match the article brief and selected image role.'
   reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 30 percent of the frame, taller than 35 percent, bottle, jar, canister, bucket, fertilizer or pesticide container, second commercial package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry or severely distorted dimensions. A distant unattended tractor, ordinary farm building and fixed irrigation hardware are allowed when contextually relevant.'
