@@ -2,103 +2,101 @@
   "source_id": "10400014002549-layflat",
   "family": "layflat",
   "kind": 5,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 72,
-      "product_height_percent": 48,
-      "product_x_center_percent": 52,
+      "score": 10,
+      "product_width_percent": 62,
+      "product_height_percent": 50,
+      "product_x_center_percent": 34,
       "reasons": [
-        "Hard reject: The image contains a tractor in the background, which violates the ban on vehicles and machinery.",
-        "Hard reject: The product pair is centered in the frame, violating the off-center staging requirement.",
-        "Dimension rejection: The product width covers approximately 72% of the frame, far exceeding the 36% maximum limit and the 12-15% target for secondary role.",
-        "Hard reject: The image shows a centered product staging on a large field with a horizon, which does not match the 'MAINTENANCE DETAIL' visual brief (required: unattended downward close-up on bare soil with no horizon).",
-        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-36% of frame width.; Reduce product height from 48% to at most 42% of frame height."
+        "Presence of a human figure",
+        "Pair width exceeds the hard limit (62% > 20%)",
+        "Objects are too close or merged, lacking physical separation",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 9-20% of frame width.; Reduce product height from 50% to at most 32% of frame height."
       ],
-      "correction_prompt": "Strictly regenerate with a downward unattended close-up on bare soil. Show only one small packaged AFP coil and one small bare black woven coil. No tractor, vehicle, or horizon. Pair must be off-center, secondary, and under 15% of frame width. Keep 'AFP | 09134922013' watermark. Reduce the product group from 72% to 8-36% of frame width. Reduce product height from 48% to at most 42% of frame height.",
+      "correction_prompt": "Remove all people and human body parts. Ensure the coil pair occupies only 12-15% of the frame width. Maintain clear physical separation between the coils and the environment. Reduce the product group from 62% to 9-20% of frame width. Reduce product height from 50% to at most 32% of frame height.",
       "attempt": 1
     },
     {
       "pass": false,
       "score": 30,
-      "product_width_percent": 42,
-      "product_height_percent": 20,
-      "product_x_center_percent": 48,
+      "product_width_percent": 52,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Hard reject: Tractor and trailer visible in the background",
-        "Hard reject: Human figures (farmers) visible inside the red trailer in the background",
-        "Product pair width (42%) exceeds the maximum 36% limit",
-        "Product staging is centered rather than off-center on the lower third",
-        "Scene does not match the 'MAINTENANCE DETAIL' role: No close-up of a connector or woven-surface detail",
-        "Visible horizon and background panorama are present (role requires no horizon/panorama)",
-        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-36% of frame width."
+        "The pair of products (packaged coil and bare coil) occupies approximately 52% of the frame width, significantly exceeding the hard reject threshold of 20%.",
+        "The required role is a 'MAINTENANCE DETAIL' (close view), but the image shows a medium shot of the product pair on the ground, failing to provide the requested detail on a connector or fold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 9-20% of frame width."
       ],
-      "correction_prompt": "Remove tractor and all humans from background. Crop to a downward close-up of a woven surface detail or connector. Make the two coils smaller (max 35% width) and place them off-center on the lower third on bare soil. No horizon or landscape visible. Reduce the product group from 42% to 8-36% of frame width.",
+      "correction_prompt": "Extreme close-up of the end of the black woven coil showing the connector detail. The rest of the coil and the white packaged coil must be visible in the background, but they must be significantly smaller relative to the frame (occupying under 20% of width). Keep the 'AFP | 09134922013' watermark in the bottom right. Reduce the product group from 52% to 9-20% of frame width.",
       "attempt": 2
     },
     {
       "pass": false,
-      "score": 35,
-      "product_width_percent": 50,
-      "product_height_percent": 40,
-      "product_x_center_percent": 35,
+      "score": 42,
+      "product_width_percent": 82,
+      "product_height_percent": 48,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Excessive product width: the pair spans approximately 50% of the frame width, significantly exceeding the 36% hard reject threshold.",
-        "Incorrect role: The image shows a general product shot on the ground rather than the required 'MAINTENANCE DETAIL' unattended downward close-up of a connector or woven-surface detail.",
-        "Horizon present: The image includes a horizon line and distant landscape (trees, sky), which is explicitly forbidden for the mandatory role.",
-        "Product size too large: The coils are the primary subject of the image rather than remaining secondary as required by the target size (12-15%).",
-        "Centering issue: The product staging is too prominent and nearly centered in the lower half, failing the 'off-center' and 'secondary' requirements.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-36% of frame width."
+        "The product pair width (approx 82%) exceeds the maximum hard reject limit of 20 percent.",
+        "The product pair height (approx 48%) significantly exceeds the target range of 12 to 15 percent.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 82% to 9-20% of frame width.; Reduce product height from 48% to at most 32% of frame height."
       ],
-      "correction_prompt": "Regenerate as a macro close-up of the bare coil's woven surface or a connector on bare soil. Remove the horizon and background; make the background just soil texture. The two coils (one packaged, one bare) must be visible in the distant background, extremely small (occupying less than 15% of frame width), and off-center. Reduce the product group from 50% to 8-36% of frame width.",
+      "correction_prompt": "Scale down the two layflat coils significantly so their combined width occupies only 12-15 percent of the image frame width. Reduce the product group from 82% to 9-20% of frame width. Reduce product height from 48% to at most 32% of frame height.",
       "attempt": 3
     },
     {
       "pass": false,
-      "score": 75,
-      "product_width_percent": 58,
+      "score": 88,
+      "product_width_percent": 43,
       "product_height_percent": 35,
-      "product_x_center_percent": 50,
+      "product_x_center_percent": 35,
       "reasons": [
-        "The combined width of the two coils spans approximately 58% of the frame width, which exceeds the 36% maximum limit and fails the secondary staging criteria for Role 5.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-36% of frame width."
+        "Image displays the approved layflat pair: one packaged AFP coil and one bare black woven coil",
+        "Zero people, zero body parts, zero human silhouettes present in the image",
+        "No third commercial packages, extra coils, bottles, jars, canisters, or invented items visible",
+        "Distant tractor and farm building are acceptable as unattended infrastructure and not commercial products",
+        "Exact bottom-right watermark 'AFP | 09134922013' is present and correctly formatted",
+        "Placement is lower-third and off-center, which are editorial preferences not hard rejects",
+        "Product objects are separate, physically plausible, and not merged or distorted",
+        "Product bounding box size exceeds the 20% hard reject threshold, but under editorial guidance not rejected for width alone when objects are recognizable and plausible",
+        "machine-enforced bounding-box check failed: Reduce the product group from 43% to 9-20% of frame width.; Reduce product height from 35% to at most 32% of frame height."
       ],
-      "correction_prompt": "Significantly reduce the visual size of the two coils so their combined width is less than 36% of the frame, positioning them small and secondary in the lower third, while maintaining a close-up detail perspective. Reduce the product group from 58% to 8-36% of frame width.",
+      "correction_prompt": "Reduce the product group from 43% to 9-20% of frame width. Reduce product height from 35% to at most 32% of frame height.",
       "attempt": 4
     },
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 55,
-      "product_height_percent": 40,
-      "product_x_center_percent": 35,
+      "score": 40,
+      "product_width_percent": 88,
+      "product_height_percent": 50,
+      "product_x_center_percent": 50,
       "reasons": [
-        "Hard reject: Image contains a tractor in the background (top right), which is strictly forbidden.",
-        "Hard reject: Image contains a machine cabin or vehicle structure associated with the tractor.",
-        "Size violation: The product pair occupies approximately 55% of the frame width, significantly exceeding the 36% hard reject limit.",
-        "Role violation: Mandatory role 5 requires an 'unattended downward close-up of one connector', but this image shows a wide shot of the coil pair on soil with a horizon and background scenery.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-36% of frame width."
+        "The image contains three distinct product packages (one large black coil, one small black coil, and one large white/blue coil) instead of exactly two, which triggers the 'extra coil' hard reject.",
+        "The total width of the product arrangement occupies approximately 88% of the frame, far exceeding the 12-15% target and the 20% absolute maximum limit.",
+        "Required specific pairing (packaged AFP + bare black woven) is not clearly distinguished due to the extra third item and generic coil appearances.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 88% to 9-20% of frame width.; Reduce product height from 50% to at most 32% of frame height."
       ],
-      "correction_prompt": "Regenerate as an extreme close-up, downward-looking shot of a single connector detail on bare soil. The two coils must be visible in the background but very small (under 15% width). Strictly exclude all vehicles, tractors, cabins, buildings, and horizons. Reduce the product group from 55% to 8-36% of frame width.",
+      "correction_prompt": "Regenerate image showing ONLY one packaged AFP coil and one bare black woven coil (2 objects total). The pair should be small, occupying about 12-15% of the frame width, positioned on the soil with a farm background. Keep the 'AFP | 09134922013' watermark in the bottom right. No people. Reduce the product group from 88% to 9-20% of frame width. Reduce product height from 50% to at most 32% of frame height.",
       "attempt": 5
     },
     {
-      "pass": false,
-      "score": 45,
-      "product_width_percent": 72,
-      "product_height_percent": 32,
-      "product_x_center_percent": 58,
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 15,
+      "product_height_percent": 14,
+      "product_x_center_percent": 50,
       "reasons": [
-        "The combined width of the two coils is estimated at 72% of the frame, significantly exceeding the 36% maximum limit for a secondary product pair.",
-        "The product is the primary focus and occupies the central area, violating the requirement for the pair to remain secondary (8-15% target).",
-        "The visual brief requires a 'MAINTENANCE DETAIL' close-up of a connector or fold, which is missing; instead, the full coils are shown.",
-        "A horizon line and distant trees are visible, violating the specific constraint 'no horizon' for this role.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-36% of frame width."
+        "Approved layflat pair present: one packaged coil and one bare black woven coil, separate and physically plausible.",
+        "Product pair occupies approximately 15% of frame width, within the required 12–15% target range.",
+        "Zero people, body parts, or human silhouettes visible.",
+        "Exact required watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Distant unattended farm equipment and building are acceptable and not treated as extra commercial products."
       ],
-      "correction_prompt": "Regenerate with a close-up detail shot of a connector or woven surface on bare soil. Show the two coils (one packaged, one bare) very small in the lower third, occupying less than 30% of the width, with no horizon line or distant landscape visible. Reduce the product group from 72% to 8-36% of frame width.",
+      "correction_prompt": "",
       "attempt": 6
     }
   ]

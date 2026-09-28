@@ -1,0 +1,75 @@
+{
+  "source_id": "1070009001314-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Person (farmer) is visible in the center of the image",
+        "Multiple rolls of drip tape are visible (at least two in the foreground)",
+        "A white pipe/line is running through the smaller roll, acting as structural support or pipe-through-roll",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes. Keep exactly one standalone white-and-blue AFP drip-tape carton roll in the lower third, off-center. Remove the pipe through the roll. Ensure the roll is not wider than 27% of the frame and not taller than 32%. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 31,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: visible people (human figures) present in the background near the tractor."
+      ],
+      "correction_prompt": "Remove all human figures and faces from the background. Retain the farm context, distant equipment, and the single drip tape roll in the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 31,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: The image contains multiple people (human body parts/figures) in the field, including one standing near the tractor on the right side and another operating machinery in the distance.",
+        "The required bottom-right watermark 'AFP | 09134922013' is missing."
+      ],
+      "correction_prompt": "Remove all human figures and people from the scene. Add the exact text 'AFP | 09134922013' as a white watermark in the bottom-right corner. Ensure the crop remains high-oblique with the single AFP drip-tape roll centered on the lower third.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: multiple human figures are visible (one crouching in the foreground and others standing in the distance), violating the strict 'zero people' requirement.",
+        "Product placement is centered in the frame instead of the required off-center on the lower third."
+      ],
+      "correction_prompt": "Remove all human figures and silhouettes from the field. Reposition the single AFP drip-tape carton roll to an off-center location on the lower third of the frame while maintaining the wide high-oblique farm context.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 21,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains exactly one white-and-blue drip-tape carton roll, which matches the required product description and brand (AFP).",
+        "The product is fully visible in the lower third and fits comfortably within the acceptable dimension ranges (width approx 21%, height approx 24%)."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

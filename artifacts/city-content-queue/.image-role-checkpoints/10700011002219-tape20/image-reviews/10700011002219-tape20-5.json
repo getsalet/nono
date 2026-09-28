@@ -1,0 +1,70 @@
+{
+  "source_id": "10700011002219-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Visible persons (farmers/tractor operators) in the background are hard rejects",
+        "Second roll of blue drip tape visible in the foreground violates the single-package rule",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with exactly one white-and-blue AFP carton roll (width 20-23% of frame) in the foreground. Remove all people and the second blue roll of tape from the image. Maintain the farm setting with distant equipment and the bottom-right watermark. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 42,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Image shows a complete retail carton roll of drip tape rather than the mandatory 'MAINTENANCE DETAIL' role (unattended close view of an installed drip-tape emitter, connector, flush-point or material detail).",
+        "The product (carton roll) is vertically too tall, occupying roughly 42% of the frame height, which exceeds the maximum threshold of 32%.",
+        "The presence of a blue hose/pipe running through the structure violates the hard reject criteria.",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate as an unattended macro close-up of an installed drip-tape material detail or emitter connector on the ground (Role 5). Show exactly one small white and blue AFP cartons in the background; absolutely no complete retail rolls in the foreground. Ensure no hose or pipe passes through the object. Include the bottom-right watermark 'AFP | 09134922013'. Keep the farm background context with no people. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 19,
+      "product_height_percent": 33,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Visible second commercial package (carton box) in the background",
+        "Hard reject: Wrong visual role; brief requires a close-up detail view of an installed emitter or connector, not a product-in-market shot",
+        "Visible text on the main roll is gibberish/damaged (reads 'JARRINNE STAGE' instead of clear product details)",
+        "Watermark required by prompt is missing or not clearly legible",
+        "machine-enforced bounding-box check failed: Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate as a macro close-up of an installed drip-tape emitter and connector. Show only the material detail with no carton or box visible. Remove all people and extra commercial packaging. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 26,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Approved white and blue cylindrical drip-tape carton roll is present and clearly visible.",
+        "Product dimensions are within the target width range (21%) and acceptable height range (26%).",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "Image contains zero people or human body parts, satisfying all hard-reject conditions.",
+        "Background context (dirt field, distant tractor, crop rows) aligns with the article visual brief for an unattended maintenance/field detail view."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

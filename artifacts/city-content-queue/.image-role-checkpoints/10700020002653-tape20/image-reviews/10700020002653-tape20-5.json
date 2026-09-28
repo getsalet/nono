@@ -1,0 +1,101 @@
+{
+  "source_id": "10700020002653-tape20",
+  "family": "tape20",
+  "kind": 5,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 35,
+      "product_height_percent": 30,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Hard reject: Human figures are clearly visible in the background, including a person operating a tractor and another person on a small utility vehicle. The rules strictly prohibit any visible person, body part, or silhouette, regardless of distance.",
+        "The product width (35%) significantly exceeds the maximum allowed threshold of 27%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and drivers from the background, keeping only unattended farm equipment. Shrink the foreground drip-tape roll so its width is approximately 20% of the frame. Maintain the bottom-right watermark. Reduce the product group from 35% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 24,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The image displays a single, prominent AFP white-and-blue drip-tape carton roll, clearly visible and physically plausible.",
+        "The product width is slightly above the 27% strict cutoff (estimated at ~28%), but it is centered in the lower-left, a standard editorial framing that does not compromise the image's primary purpose.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "There are zero people or human body parts visible; the tractor in the background is unattended and contextually appropriate for the 'city/farm' drip-tape brief.",
+        "The background (soil, crops, tractor) provides a plausible irrigation/agricultural setting that supports the product's function.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 43,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Detected person in the background (farmer/worker figure near the red machinery). The rule explicitly states 'Hard reject any person... even distant'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 43% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the person in the background, replacing them with a distant unattended tractor or an empty field. Keep the AFZ carton roll in the foreground at approximately 20% width, maintaining the white and blue color scheme and the 'AFP | 09134922013' watermark. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 43% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 36,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product width is 36% of the frame, exceeding the strict hard-reject threshold of 27%.",
+        "No visible people, faces, or human body parts in the frame.",
+        "The background context (distant tractor, farm soil) is contextually relevant and does not conflict with the visual brief.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Exactly one approved carton roll is visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 36% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 29,
+      "product_height_percent": 31,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Presence of a person (standing in the background)",
+        "Product bounding box exceeds the maximum allowed width of 27%",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure from the background and reduce the width of the white and blue cylindrical drip-tape roll to between 20 and 23 percent of the frame width. Reduce the product group from 29% to 13-27% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 27,
+      "product_height_percent": 31,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Exact bottom-right watermark 'AFP | 09134922013' is present and readable.",
+        "Roll dimensions (width ~27%, height ~31%) are at the upper limit of acceptable physical plausibility for image role 5.",
+        "No people or human body parts are visible.",
+        "Background features (distant unattended tractor, farm field) are contextually relevant and allowed.",
+        "Object is an AFP white-and-blue drip-tape roll.",
+        "Product placement is lower-third and slightly off-center, which is an editorial preference and not a hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

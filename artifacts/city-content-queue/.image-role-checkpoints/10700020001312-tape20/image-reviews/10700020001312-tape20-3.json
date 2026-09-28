@@ -1,0 +1,54 @@
+{
+  "source_id": "10700020001312-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 28,
+      "product_height_percent": 45,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: Visible human (worker crouching on the right side of the frame).",
+        "Hard reject: Human body parts (arms, legs, face, and head) are clearly visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the man from the right side of the image. Adjust the framing so the white and blue drip-tape roll is smaller (approx. 20-23% width) and secondary to the filter, gauge, and manifold setup. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 12,
+      "product_height_percent": 17,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: A standing person is clearly visible in the left mid-ground.",
+        "Hard reject: The large box under the filter system in the foreground serves as a base, visually acting as a 'second commercial package'.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 12% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the standing person on the left. Replace the large box in the foreground (supporting the gauge/filter) with solid concrete blocks or a wooden support structure. Ensure only the small drip tape roll is present as the commercial product in the foreground. Enlarge the product group from 12% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 28,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll",
+        "Zero people, human body parts, or human silhouettes present",
+        "Product dimensions are within the acceptable limits (width 21%, height 28%)",
+        "Required watermark 'AFP | 09134922013' is visible in the bottom-right corner",
+        "Background and infrastructure (unattended filter, gauge, manifold, distant tractor) match the HEADWORKS STORY brief",
+        "No hard-reject items (bottles, extra containers, or fake headlines) are visible"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

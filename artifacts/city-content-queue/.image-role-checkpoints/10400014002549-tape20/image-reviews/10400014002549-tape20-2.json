@@ -2,39 +2,54 @@
   "source_id": "10400014002549-tape20",
   "family": "tape20",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 12,
-      "product_height_percent": 22,
-      "product_x_center_percent": 48,
+      "score": 65,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Product is centered, violating the off-center requirement",
-        "Background contains a barn, which is explicitly forbidden by the visual brief",
-        "The arrangement is not a near-overhead technical view; it is a low-angle field view",
-        "Lacks required emitter-spacing or specification evidence for the SELECTION EVIDENCE role"
+        "Violation of physical plausibility: The white tubing extends far past the edge of the roll and runs into a separate flat circular disk on the ground.",
+        "Hard reject: Presence of a second 'coiled disk' or 'spool' next to the main carton roll, which conflicts with the strict 'exactly one roll' requirement and resembles a prohibited 'second commercial package' or 'second roll'.",
+        "Mandatory image role 'SELECTION EVIDENCE' is not met; the current visual is simply a roll on the ground rather than an elevated technical arrangement with visible emitter-spacing or field-selection evidence.",
+        "machine-enforced bounding-box check failed: Reduce product height from 35% to at most 32% of frame height."
       ],
-      "correction_prompt": "Regenerate the image with a near-overhead angle. Remove the barn from the background. Move the AFP drip tape carton roll to the lower-left or lower-right third of the frame (off-center). Keep the roll small (approx 15-20% width) and ensure it is a wide, low cylindrical shape.",
+      "correction_prompt": "Regenerate the image to show a single, isolated AFP wide low cylindrical drip-tape carton roll. Completely remove the second flat coiled spool/disk and the long white tubing running from the center of the roll to the right. Ensure the roll stands alone, displaying 'SELECTION EVIDENCE' via a clean, elevated technical arrangement. Reduce product height from 35% to at most 32% of frame height.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 75,
-      "product_width_percent": 15,
-      "product_height_percent": 20,
-      "product_x_center_percent": 49,
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
       "reasons": [
-        "The image contains a single white and blue AFP drip tape roll as required.",
-        "The roll is positioned in the lower half, off-center to the left of the main perspective lines, acting as a secondary element relative to the field.",
-        "No human figures, farm machinery, or forbidden containers are present.",
-        "The watermark is present in the bottom right corner.",
-        "The background shows a crop field consistent with the article's visual brief for drip tape."
+        "Hard reject: Human figure visible in the background on the tractor.",
+        "Product width exceeds the 27% maximum limit (estimated at 28%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image ensuring no people are visible anywhere in the frame, including background. Shrink the carton roll so its width is approximately 22% of the frame width. Keep the AFP branding and bottom-right watermark 'AFP | 09134922013' intact. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The image displays exactly one wide, low cylindrical drip-tape carton roll with the required white and blue AFP branding.",
+        "The roll's width (24% of frame) and height (31% of frame) are within the acceptable 13-27% and up-to-32% reviewer noise limits.",
+        "Placement in the lower-left third aligns with the editorial preference, and the composition includes visible technical evidence (emitters/connections) on the ground next to the roll.",
+        "The background features an ordinary field edge, farm buildings, and a distant unattended tractor, all of which are explicitly allowed and contextually relevant.",
+        "No people, faces, or human body parts are present in the frame.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }
