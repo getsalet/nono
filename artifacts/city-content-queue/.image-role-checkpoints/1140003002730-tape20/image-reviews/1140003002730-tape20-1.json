@@ -1,0 +1,53 @@
+{
+  "source_id": "1140003002730-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product roll is centered in the frame instead of being placed off-center in the lower third as required by the editorial brief",
+        "There is no required bottom-right watermark 'AFP | 09134922013' present in the image",
+        "The roll appears slightly wider than the preferred 20-23 percent of the frame width"
+      ],
+      "correction_prompt": "Reposition the roll to the lower right or lower left off-center, reduce its width to 22% of the frame, and add the watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 11,
+      "product_height_percent": 14,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Presence of a human (farmer standing in the field)",
+        "Product (carton roll) width and height are below the required 13-27% dimensions",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 11% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the scene. Scale up the 'AFP' drip-tape carton roll to meet the minimum 13% width and 13% height requirement. Keep it centered on the lower third, off-center. Enlarge the product group from 11% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains exactly one wide low cylindrical drip-tape carton roll, which is white and blue and visually consistent with the required AFP product.",
+        "No people, human body parts, or human silhouettes are present in the image.",
+        "The roll dimensions are within the accepted range, and the geometry is physically plausible.",
+        "The background shows an irrigation farm context with crop rows and a distant tractor, which is allowed and editorially appropriate.",
+        "The required bottom-right watermark 'AFP | 09134922013' is visible and correctly formatted."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

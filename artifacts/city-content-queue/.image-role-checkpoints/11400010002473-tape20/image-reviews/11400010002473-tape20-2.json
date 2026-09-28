@@ -1,0 +1,66 @@
+{
+  "source_id": "11400010002473-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The product is positioned as a standard 'hero shot' rather than the required 'elevated technical arrangement'.",
+        "Lack of visible 'emitter-spacing or field-selection evidence'; it does not show the specific internal layout or spacing markers required by the image role.",
+        "Missing the specific 'AFP | 09134922013' watermark in the bottom-right corner (the visible watermark has the incorrect digits 09134922013 vs the mandatory 09134922013)."
+      ],
+      "correction_prompt": "Create an elevated technical flat-lay image of the AFP 20cm drip-tape roll. The roll must be unrolled to reveal the specific emitter spacing and field selection markers. Include a 'Selection Evidence' detail showing the tape's internal structure. Place the roll on the left side against a plain background with a simplified farm horizon in the distance. Ensure zero people are visible. Add the mandatory watermark 'AFP | 09134922013' in the bottom-right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 33,
+      "product_height_percent": 45,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "The product bounding box dimensions are out of the acceptable limits (width > 27%, height > 32%), making the roll disproportionately large and distorted.",
+        "The image contains gibberish text and fake labels (e.g., 'dīlorvroī-thō's', 'Giaheurisbôog'), which constitutes a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all gibberish text and fake labels. Make the drip tape roll smaller so its width is between 13-27% of the frame width and height is under 32%. Keep the AFP branding, watermark, and farm background intact. Reduce the product group from 33% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 15,
+      "product_height_percent": 21,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Hard reject: Multiple people (human silhouettes/figures) are clearly visible standing in the background field.",
+        "Hard reject: Visible human body parts (arms, legs, torsos, faces) are present, violating the strict zero-person constraint."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove all people, farmers, workers, and human silhouettes from the background. Ensure the scene contains only the AFP carton roll, the field, and the farm building/tractor without any human figures.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 27,
+      "product_height_percent": 20,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip-tape roll is present.",
+        "No people or human body parts are visible.",
+        "Bottom-right watermark 'AFP | 09134922013' is present.",
+        "Image context (farm field, tractor, and buildings) matches the 'selection evidence' requirement for drip tape article.",
+        "Roll dimensions are within acceptable estimation noise (width approx 27%, height approx 20%)."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

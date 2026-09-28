@@ -1,0 +1,54 @@
+{
+  "source_id": "1140003002730-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 31,
+      "product_height_percent": 40,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Hard reject: Visible human present (male farmer crouching in the center).",
+        "Hard reject: Human body parts visible (head, face, torso, arms, legs, hands).",
+        "Hard reject: Second commercial package present (open cardboard box on the right).",
+        "Hard reject: Product dimensions too large (approx 31% width, 40% height) compared to the 20-23% target and max 27% width limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all humans and the cardboard box completely. Regenerate a medium side view of unattended fixed irrigation infrastructure (filter, gauge, manifold) with the single white-and-blue AFP carton roll placed small (20-23% width) as a secondary element. Ensure the 'AFP | 09134922013' watermark is present in the bottom-right. Reduce the product group from 31% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 26,
+      "product_height_percent": 38,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: Image contains a person (a man operating the equipment in the background).",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures completely; keep only the unattended irrigation infrastructure and the single carton roll. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Zero people or human body parts detected, including the distant tractor which is unattended.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "The mandatory role of a 'HEADWORKS STORY' is fulfilled by the prominent unattended filter, gauge, and manifold infrastructure.",
+        "The required AFP white-and-blue drip-tape carton is present as exactly one roll, physically plausible, and proportioned within the 13-27% width tolerance.",
+        "Background contextually matches the agricultural brief for the specified region."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
