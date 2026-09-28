@@ -1,0 +1,89 @@
+{
+  "source_id": "10700036001046-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 48,
+      "product_height_percent": 40,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: multiple people are visible in the image (near the tractor and walking in the distance), which strictly violates the zero-people rule.",
+        "Hard reject: the combined product pair is excessively wide, spanning nearly half the frame, far exceeding the 25% maximum width limit.",
+        "The watermark and product labels are correctly present, but the fatal inclusion of humans disqualifies the image from being a pass.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-25% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures and the tractor. Shrink the coil pair to 12% width and shift them to the lower-right third of the frame so they appear small and separate. Retain the exact bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 48% to 8-25% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 42,
+      "product_height_percent": 30,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "The image contains exactly the two required objects: one packaged AFP coil and one bare black woven coil.",
+        "Both objects are fully visible, physically plausible, and not merged or intersecting.",
+        "No people, human body parts, or prohibited items (like third commercial packages or bottles) are present.",
+        "The distant tractor is unattended and correctly classified as background infrastructure, not a prohibited element.",
+        "Zero people and zero human body parts detected.",
+        "Watermark 'AFP | 09134922013' is present in the required bottom-right position.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 42% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Image correctly displays the approved layflat pair: one packaged coil and one bare black woven coil, placed in a wide editorial context of water transfer.",
+        "Zero visible people, faces, or body parts are present.",
+        "The 'AFP | 09134922013' watermark is correctly positioned in the bottom-right corner.",
+        "Contextual elements such as the distant tractor and farm buildings are appropriately identified as unattended infrastructure and not rejected.",
+        "The pair is small, separate, and off-center, fitting the 'EDITORIAL HERO' brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 28% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 47,
+      "product_height_percent": 33,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The product pair width (approx. 47%) exceeds the 25% hard rejection threshold.",
+        "Visible human figures (silhouettes) are present in the mid-ground along the field, which is a hard reject condition.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 47% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate image: 1. Remove all human figures from the field. 2. Scale down the two hoses significantly (to ~12-15% width) so they appear small in the foreground. 3. Keep the 'AFP | 09134922013' watermark in the bottom-right corner. Reduce the product group from 47% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Exact watermark 'AFP | 09134922013' is present.",
+        "Context correctly shows a water-transfer channel with distant farm equipment.",
+        "Zero people or body parts are visible.",
+        "Approved layflat pair (packaged and bare black coils) are clearly present and separate.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 38% to 8-25% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

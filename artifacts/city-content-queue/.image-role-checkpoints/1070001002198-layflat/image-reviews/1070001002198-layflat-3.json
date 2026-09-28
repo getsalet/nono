@@ -1,0 +1,85 @@
+{
+  "source_id": "1070001002198-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 60,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Major brief violation: The scene is not an 'equipment-only elevated record photograph of one fixed pump, gauge and manifold on an empty concrete pad' as mandated by the HEADWORKS DETAIL role. The image instead shows a ground-level product display in a wide field.",
+        "Pair width out of range: The combined width of the two coils spans significantly more than the maximum 25% of the frame (approx. 60%).",
+        "Missing infrastructure: The required fixed pump, gauge, and manifold are not visible in the foreground; only a distant unattended tractor is present, which fails to satisfy the specific 'HEADWORKS DETAIL' context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Elevated record shot: One fixed pump, gauge, and manifold mounted on an empty concrete pad. The two coils (packaged and bare) are placed in the far background as small, separate secondary elements (total width < 15%). No field view. Ensure no people or bottles are visible. Reduce the product group from 60% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 48,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The pair of approved coils is significantly wider than the 25% hard-reject threshold.",
+        "The image contains two additional duplicate sets of coils in the background, which triggers a hard reject for a third commercial package/coil.",
+        "The image does not show the required HEADWORKS DETAIL role (fixed pump, gauge, and manifold) requested for the elevated record photograph.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-25% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate to remove the duplicate coils in the background, ensuring only one packaged coil and one bare black coil are visible. Shrink the product pair to under 25% width. Introduce the mandatory equipment-only infrastructure: a fixed pump, gauge, and manifold on an empty concrete pad to fulfill the HEADWORKS DETAIL role. Maintain the required 'AFP | 09134922013' watermark. Reduce the product group from 48% to 8-25% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 52,
+      "product_height_percent": 42,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The combined width of the two coils (approx 52% of the frame) significantly exceeds the hard reject threshold of 25%.",
+        "The image lacks the mandatory headline equipment: a fixed pump, gauge, and manifold are not visible on the concrete pad.",
+        "There is no elevation or equipment-only context to satisfy the brief's role requirements.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-25% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Scale the two-coil pair down to occupy a maximum of 15% of the frame width. Add a fixed pump, a gauge, and a manifold assembly on the concrete pad in the background or foreground to satisfy the mandatory headline equipment role. Reduce the product group from 52% to 8-25% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 44,
+      "product_height_percent": 28,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Contains one packaged coil and one bare black coil pair as required",
+        "Includes fixed pump, gauge, and manifold on a concrete pad",
+        "No people or human body parts present",
+        "No third commercial packages or containers detected",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 44% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 58,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a person in the background violates the hard reject requirement",
+        "Coil pair is wider than 25% of the frame (estimated at ~58%)",
+        "Mandatory role 'HEADWORKS DETAIL' (pump, gauge, manifold) is completely missing from the image",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with an elevated record photograph of a fixed pump, gauge, and manifold on a concrete pad. Include a small, secondary, packaged AFP coil and a bare black woven coil (total width < 25% of frame). Ensure the background contains ZERO people, workers, or farm workers. Include the watermark 'AFP | 09134922013' in the bottom right corner. Reduce the product group from 58% to 8-25% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

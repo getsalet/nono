@@ -1,0 +1,39 @@
+{
+  "source_id": "1070004002707-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product bounding box width is approximately 38% of the frame, which exceeds the hard reject threshold of 25% (limit for reviewer-estimation noise).",
+        "Product bounding box height is approximately 45%, which exceeds the 35% limit for acceptable height when objects are recognizable.",
+        "The visual role 'HEADWORKS DETAIL' requires the equipment to be elevated or focused on a concrete pad with a fixed pump and manifold, which is not the primary focus here; the image is a wide shot of coils on a pad.",
+        "The coils are merged with the ground plane, and the overall composition places the product pair too large relative to the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-25% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Shrink the bounding box of the layflat coil pair to approximately 12-15% width and 20% height; place them in the foreground bottom center or lower third; ensure the pair is small and separate; add a blurred fixed pump, gauge, and manifold in the background to satisfy the 'HEADWORKS DETAIL' role; keep the 'AFP | 09134922013' watermark in the bottom right. Reduce the product group from 38% to 8-25% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 12,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Approved layflat pair present (packaged AFP coil and black woven coil)",
+        "Zero people or body parts",
+        "Distant unattended pump equipment and field infrastructure allowed"
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "source_id": "1070003002014-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Visible human figures (people) in the background, which is a hard reject.",
+        "The product bounding box exceeds the maximum allowed width of 25 percent (estimated at 38 percent).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and farm equipment from the background to focus on a clean water channel context. Reduce the relative size of the two product coils so their combined width occupies no more than 25% of the frame width while maintaining legibility. Reduce the product group from 38% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 44,
+      "product_height_percent": 30,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: A visible human (person/worker) is riding the red tractor on the left side of the image, violating the zero-people rule.",
+        "Hard reject: The product pair width is estimated at 44% of the frame width, significantly exceeding the maximum hard-reject threshold of 25%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove the person from the tractor on the left side, keeping the tractor distant and unattended. Reduce the size of the foreground coils so their combined width is between 12% and 15% of the frame, ensuring they remain separate and fully visible. Reduce the product group from 44% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The approved layflat pair (one packaged AFP coil and one bare black woven coil) is present, separate, and physically plausible.",
+        "The required bottom-right watermark 'AFP | 09134922013' is visible.",
+        "The scene contains no people or human body parts.",
+        "Background elements such as the tractor and farm building are allowed and do not constitute hard rejects.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 50,
+      "product_height_percent": 30,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: visible human body parts (person operating the tractor in the background).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove the person and the tractor completely. Regenerate the background to show the wide agricultural context with water channels without any human silhouettes, workers, or operators. Keep the two coils (one packaged AFP and one bare black) small, separate, and off-center in the lower third. Reduce the product group from 50% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 31.0,
+      "product_height_percent": 22.0,
+      "product_x_center_percent": 35.0,
+      "reasons": [
+        "Contains both required layflat coil types: one packaged AFP coil (left) and one bare black woven coil (right)",
+        "Zero human figures or body parts visible",
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom right",
+        "Scene context matches the editorial hero requirement (irrigation field/water transfer channel)",
+        "Product bounding box width (31.0%) exceeds the 25% hard reject threshold but falls within the 25% absolute limit of review tolerance, with both objects fully visible and physically plausible",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 8-25% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

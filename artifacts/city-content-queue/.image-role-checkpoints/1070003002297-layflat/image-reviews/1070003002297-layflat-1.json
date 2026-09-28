@@ -1,0 +1,83 @@
+{
+  "source_id": "1070003002297-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 42,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Presence of a human figure (farmer/worker) which triggers a hard reject condition.",
+        "Product pair width is estimated at 42%, exceeding the maximum allowable limit of 25%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to remove the human figure entirely. Reduce the visual scale of the packaged coil and black hose coil so that the combined bounding box width does not exceed 15% of the frame width. Reduce the product group from 42% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 45,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product width is approximately 45% of the frame, significantly exceeding the hard reject threshold of 25%.",
+        "The product is centrally located, whereas the visual brief specifically requires off-center placement.",
+        "The image fails the layout requirement for the objects to be 'small' and in a lower-third placement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Recompose the image with a significantly wide field of view. Reduce the relative scale of the packaged coil and bare black coil so their combined width is under 25% of the frame. Position the pair low and off-center, maintaining the wide high-oblique farm context and the required bottom-right watermark. Reduce the product group from 45% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 44,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains exactly the approved pair: one packaged AFP coil and one bare black woven coil.",
+        "Zero people, hands, or human silhouettes present.",
+        "Watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner.",
+        "Objects are small relative to the frame and separate, fitting the editorial hero requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 44% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 48,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Image contains a human (male figure standing in the background), which is a hard reject for image role 1.",
+        "The combined product width (~48%) exceeds the maximum allowed threshold of 25%.",
+        "The products are centered rather than off-center.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure entirely. Rescale the AFP packaged coil and bare black woven coil to occupy a combined width of 12-15% of the frame. Reposition the pair off-center (e.g., bottom-left or bottom-right) to fit the editorial preference, maintaining the wide high-oblique water-transfer context. Reduce the product group from 48% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Contains a person walking in the distant left field, which is a hard reject condition.",
+        "The combined width of the product pair is estimated at 45% of the frame, which far exceeds the hard limit of 25%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image removing the distant person walking in the field and making the two coils significantly smaller to fit within a 25% total width. Reduce the product group from 45% to 8-25% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

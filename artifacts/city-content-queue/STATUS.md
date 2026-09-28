@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-28T19:41:23+00:00`
+- آخرین بروزرسانی: `2026-09-28T19:51:31+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **543 از 1894 (28.67٪)**
 - تکمیل‌شده: **543**
 - در حال پردازش: **0**
-- در انتظار: **668**
-- آماده انتخاب در اجرای بعدی: **668**
+- در انتظار: **646**
+- آماده انتخاب در اجرای بعدی: **646**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **683**
+- ناموفق: **705**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -55,16 +55,16 @@
 
 ## خطاهای اخیر
 
-- **جایزان** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **جایزان** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
-- **چغامیش** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **شهیون** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **میانرود** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **ابوحمیظه** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **صیدون** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **سالند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
-- **منتظران** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
-- **شرافت** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **صغاد** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **ترکالکی** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **مزایجان** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **الوان** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **بهمن** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **دوزه** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **زهره** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **دژکرد** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **میانکوه** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **سده** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
 
 ## فایل‌های خروجی
 

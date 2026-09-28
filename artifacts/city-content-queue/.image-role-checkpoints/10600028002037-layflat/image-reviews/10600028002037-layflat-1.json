@@ -1,0 +1,82 @@
+{
+  "source_id": "10600028002037-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Visible person (farmer) standing in the field, hard reject",
+        "Product pair spans approximately 45% of frame width, exceeding the 25% hard-reject threshold",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove the person in the background completely. Reduce the product pair to occupy only 12-15% of frame width, keeping the packaged coil and bare black coil small, separate, and off-center in the foreground. Reduce the product group from 45% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 42,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: A person is clearly visible walking on the left side of the field in the background.",
+        "Hard reject: A driver is visible inside the tractor on the left.",
+        "Product pair width (~42%) exceeds the maximum allowable threshold of 25% of the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image removing all human figures (pedestrians and tractor drivers) to ensure zero people are visible. Scale down the two product coils to make them appear smaller and further apart, reducing their combined width to less than 15% of the frame. Reduce the product group from 42% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 20,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Visible human subject (farmer/worker) is present in the frame, violating the zero-person constraint.",
+        "Product pair is slightly too large in frame width relative to preferred size, though the primary failure is the presence of the person.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove the human subject completely. Keep only the packaged coil and bare black woven coil in the foreground. Ensure the field is empty of people, with a wide high-oblique perspective of the water-transfer context and crops. Reduce the product group from 30% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 42,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Visible human (worker) standing next to the tractor in the mid-ground background.",
+        "Hard reject: Third commercial package (bottle/jar) is visible on the field next to the standing worker.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate to remove the standing worker, the bottle next to them, and the tractor in the mid-ground, keeping only the two coils in the lower foreground, the corn rows, the bare soil, and the red tractor on the far right as distant background. Reduce the product group from 42% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 72,
+      "product_width_percent": 32,
+      "product_height_percent": 25,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Zero people and zero human body parts confirmed (no hard reject).",
+        "Required watermark is present.",
+        "Water, tractor, and distant building are compliant context/infrastructure.",
+        "The pair of products is too wide relative to frame (32% combined), exceeding the strict limit, resulting in a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Significantly reduce the total width of the two coils (both packaged and bare) so they occupy less than 15 percent of the frame. Keep the coils small and distinct in the foreground, and maintain the wide high-oblique agricultural context and water-transfer layout. Reduce the product group from 32% to 8-25% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

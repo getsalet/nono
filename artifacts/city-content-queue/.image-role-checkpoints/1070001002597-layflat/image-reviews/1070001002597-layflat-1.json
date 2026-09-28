@@ -1,0 +1,44 @@
+{
+  "source_id": "1070001002597-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 53,
+      "product_height_percent": 32,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The image contains exactly the two approved products: the left-hand packaged AFP coil and the right-hand bare black woven coil.",
+        "The combined width of the products is roughly 53%, which violates the 12-15% preferred width and the 25% hard reject limit, but the user prompt states 'accept reviewer-estimation noise' and 'hard reject a pair wider than 25 percent'. In this context, the product bounding box is a hard visual constraint, so the image technically fails the 25% width limit.",
+        "However, looking at the hard reject instructions again: 'Hard reject a pair wider than 25 percent of the frame'. My estimated 53% is a hard fail based on the prompt's specific width constraints.",
+        "Wait, I must strictly follow the JSON schema requirements. If I must return valid JSON and the image violates the 25% width rule, I must mark it as false.",
+        "Actually, let me re-evaluate the bounding box. The width of the combined product area is from x=183 to x=673 (490 pixels out of 1000 width). 490/1000 = 49%. This is wider than 25%.",
+        "Therefore, the image is a hard fail due to the width constraint, even though it successfully has zero humans and correct products.",
+        "If I must output strictly valid JSON, I will report a hard fail on the width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 53% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Shrink the bounding box of the two coils significantly. They should occupy only 12-15% of the frame width (or at most 25%) rather than taking up over half the width. Keep them small, separate, and off-center in the lower third. Reduce the product group from 53% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 33,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Approved pair present: one packaged AFP coil and one bare black woven coil",
+        "Both objects are separate, physically plausible, and fully visible",
+        "Zero people or human body parts detected",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right as required",
+        "Contextual water-transfer field setting aligns with the editorial hero role"
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
