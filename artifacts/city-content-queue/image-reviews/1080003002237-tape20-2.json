@@ -1,0 +1,59 @@
+{
+  "source_id": "1080003002237-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 29,
+      "product_height_percent": 24,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "The primary object is an AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The image contains exactly one commercial package.",
+        "There are zero people, human body parts, or silhouettes.",
+        "The mandatory watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "Fixed infrastructure (gauges, filters, manifold) and unattended farm equipment are contextually relevant.",
+        "The product width is 29% of the frame; although slightly outside the preferred 20-23% range, it falls within the strict hard-reject boundary (which is >27% for 'wider than 27 percent' - a slight interpretation issue here as 29% is > 27%, but looking closer at the prompt: 'Hard reject a roll wider than 27 percent of the frame' - wait, if 29% is hard reject, the image should fail. Let me re-evaluate the width. The roll spans from roughly 19% to 48% of the width. That is 29%. 29% is definitely wider than 27%. This is a hard reject.",
+        "Re-evaluating strictness: The prompt says 'Hard reject a roll wider than 27 percent of the frame'. My estimation is ~29-30%. This triggers the hard reject condition.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Scale down the drip tape carton roll to a maximum of 20-23% of the frame width to strictly comply with the 'hard reject' criteria for objects wider than 27%. Reduce the product group from 29% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 24,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The image contains a human figure (a person walking) in the background, which is a hard reject rule.",
+        "The product roll appears slightly wider than the maximum allowed 27 percent of the frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the person walking in the background completely. Resize the drip tape carton roll so it occupies approximately 20 percent of the frame width. Maintain the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 84,
+      "product_width_percent": 15,
+      "product_height_percent": 16,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Single AFP drip tape carton roll present in white and blue.",
+        "Roll dimensions fall within acceptable estimation noise range (width 15% is >13%, height 16% is <32%).",
+        "Zero people or human body parts visible.",
+        "Watermark 'AFP | 09134922013' correctly present in bottom right corner.",
+        "Background contains permitted elements (farm building, distant unattended tractors).",
+        "Placement is slightly off-center to the left, which is an acceptable editorial preference."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

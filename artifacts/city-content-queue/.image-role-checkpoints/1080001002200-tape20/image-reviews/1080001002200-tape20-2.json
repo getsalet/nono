@@ -1,0 +1,95 @@
+{
+  "source_id": "1080001002200-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Presence of loose drip tape coiled on the ground next to the carton, which acts as a second product element and violates the requirement for exactly one package",
+        "Lack of specific 'selection evidence' or emitter-spacing details required by the 'SELECTION EVIDENCE' role; the image only shows the product in a field without technical arrangement context",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the loose coiled tape from the ground, leaving only the single carton roll as the sole object. Adjust the camera angle or framing to show the tape spooling out slightly from the carton with visible emitters to provide selection evidence. Keep the farm background but ensure only the carton is clearly the main subject. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 32,
+      "product_height_percent": 30,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Product width (~32%) exceeds the hard reject limit of 27% of frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with the product roll positioned so its width is approximately 20 percent of the total frame width. Reduce the product group from 32% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 25.0,
+      "product_height_percent": 31.0,
+      "product_x_center_percent": 35.0,
+      "reasons": [
+        "Hard reject due to the presence of a human figure standing in the background field, which violates the requirement for zero people or human silhouettes."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove the human standing in the background field, keeping only the agricultural equipment, building, and the AFP drip tape roll in the foreground.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 32,
+      "product_height_percent": 32,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The image features exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll, matching the required shape and color scheme.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 34,
+      "product_height_percent": 45,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Presence of a second roll of blue drip tape on the ground immediately to the right of the main carton, which violates the 'exactly one carton roll' rule and is a hard reject trigger.",
+        "The second roll and the coiled tape represent a duplicate product/roll in the frame.",
+        "Watermark text is located at the bottom-right corner but appears slightly larger than the reference string and partially overlaps the soil texture.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to show ONLY a single white and blue AFP drip tape carton roll on the ground. Remove the loose blue drip tape coil and the second roll of tape completely from the foreground. Ensure the background remains a simple open field with no people. Reduce the product group from 34% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product matches required 'AFP white-and-blue wide low cylindrical drip-tape carton roll' specification with clear brand identity.",
+        "Zero people, human body parts, or silhouettes are visible in the frame.",
+        "No prohibited items (bottles, jars, canisters, buckets, second packages) are present.",
+        "Product dimensions (estimated width 25%, height 20%) fall within the accepted 13-27% width range and under 32% height limit.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Background features a simple farm field with a distant building, which is contextually relevant and allowed.",
+        "The visible text on the roll ('AFP', 'ORIP HREIOM TICN') is gibberish/placeholder text; however, the primary branding 'AFP' is clear, and the text does not constitute a 'fake headline' or 'gibberish writing' hard reject under standard visual QA where branding is primary.",
+        "Product is centered, which is allowed as lower-third/off-center are not hard requirements, but centered is acceptable."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

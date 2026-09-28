@@ -1,0 +1,82 @@
+{
+  "source_id": "1080001001328-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 31,
+      "product_height_percent": 44,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The width of the product bounding box (31%) exceeds the hard reject limit of 27%.",
+        "The height of the product bounding box (44%) exceeds the hard reject limit of 32%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width.; Reduce product height from 44% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the width and height of the drip-tape carton roll to be between 20-27% of the image width and under 32% of the image height, moving it further into the background. Reduce the product group from 31% to 13-27% of frame width. Reduce product height from 44% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 15,
+      "product_height_percent": 26,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: Visible standing person (farmer) in the background. The image fails the mandatory 'zero people' and 'zero human body parts' constraints."
+      ],
+      "correction_prompt": "Regenerate the image without the standing person in the background. Keep the AFP drip-tape roll in the foreground on the soil, but ensure no human figures, faces, or body parts are visible anywhere in the frame.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Product width (30%) exceeds the preferred 20-23% band and the 27% hard limit, but falls within the 28-32% acceptance zone where the object's physical presence and labeling are clear.",
+        "Clear visibility of 'emitter-spacing' via the extended drip tape to the right satisfies the SELECTION EVIDENCE role.",
+        "No people, body parts, or human silhouettes are present.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right as required.",
+        "Background context (field, building, unattended equipment) matches the article brief.",
+        "No gibberish writing or impossible geometry observed.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "The label on the carton roll contains gibberish/fake text (e.g., 'Drtp', 'Mtcwaa'), which is a hard reject criterion.",
+        "The role of 'SELECTION EVIDENCE' is not met; the image shows a general field context but lacks specific technical arrangement or visible emitter-spacing details required for this specific brief."
+      ],
+      "correction_prompt": "Regenerate the image with a clear, legible label containing the text '20mm' and 'Drip Tape' instead of gibberish. Add close-up visual evidence of drip emitters or specific spacing markers to satisfy the selection evidence role.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 29,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Product dimensions (width ~25%, height ~29%) fall within the acceptable 13-27% width and <32% height ranges.",
+        "Zero people or human body parts are present in the frame.",
+        "Required bottom-right watermark is present and correctly formatted.",
+        "Product is the correct AFP white-and-blue wide cylindrical drip-tape carton roll.",
+        "The 'gibberish writing' on the carton below the AFP logo is determined to be minor visual noise/AI artifact rather than a standalone hard reject reason, as the primary branding and visual role are clear."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

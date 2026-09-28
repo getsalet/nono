@@ -1,0 +1,42 @@
+{
+  "source_id": "1080001001008-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: A person (farmer) is clearly visible standing in the image.",
+        "Hard reject: Human body parts including head, arms, legs, and hands are present.",
+        "Hard reject: The product roll appears too large, exceeding the 27% width limit and the 32% height limit.",
+        "Watermark text '09134922013' does not match the required string '09134922013' (correct string is '09134922013', but I must check the prompt again: required is '09134922013' vs present '09134922013' - wait, the prompt says '09134922013' is required. The image has '09134922013'. Actually, looking at the prompt: '09134922013' is required. The image has '09134922013'. Wait, the prompt says '09134922013' is required. The image has '09134922013'. Let me re-read carefully. Prompt: '09134922013'. Image: '09134922013'. They are the same. So the watermark text is fine, but the presence of the person is the fatal flaw.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the man standing in the field entirely; keep the white and blue cylindrical drip tape roll in the foreground, but slightly reduce its size so it fits within the 27% width limit. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 26.5,
+      "product_height_percent": 26.4,
+      "product_x_center_percent": 28.5,
+      "reasons": [
+        "Product size is within the accepted noise range (width 26.5% <= 27%, height 26.4% <= 32%).",
+        "Contains exactly one AFP drip-tape carton roll with no second roll or extra commercial packaging.",
+        "Zero people or human body parts are present.",
+        "Background includes a simple field edge and distant farm equipment (unattended tractor) which is contextually relevant and acceptable.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Geometry and proportions of the roll are physically plausible."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
