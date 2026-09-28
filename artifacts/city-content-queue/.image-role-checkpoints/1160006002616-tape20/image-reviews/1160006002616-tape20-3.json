@@ -1,0 +1,127 @@
+{
+  "source_id": "1160006002616-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Visible person (crouching male) and another person in the background.",
+        "Hard reject: Human body parts (face, hands, legs, torso) are clearly visible.",
+        "Hard reject: The product roll is wider than 27% of the frame (estimated 28%).",
+        "Hard reject: The product roll is taller than 32% of the frame (estimated 40%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all people from the scene completely. Crop or zoom out the frame to ensure the drip tape roll width is 20-23% of the frame and height is below 32%. Maintain the farm infrastructure background without any humans. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Human figures (a person standing and a person in the tractor) are visible in the background near the vehicle.",
+        "Hard reject: The image contains a second, large open commercial cardboard box on the right side.",
+        "The drip tape roll is positioned too prominently in the foreground, conflicting with the 'secondary' role requirement for the headline image."
+      ],
+      "correction_prompt": "Remove all people from the background. Delete the open cardboard box on the right. Ensure the scene contains only the unattended fixed filter and pump infrastructure with a small drip tape roll in the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Human present in image",
+        "Product exceeds size limits",
+        "Wrong visual role specified in brief",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Generate a medium side view of unattended fixed filter, gauge, regulator and manifold with a small secondary AFP carton roll. Ensure the roll's width is 20-23% of the frame and height is under 32%. Remove all human figures or body parts. Maintain the required watermark in the bottom right. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Missing required bottom-right watermark 'AFP | 09134922013'.",
+        "Gibberish/inconsistent text on the carton 'Drip HREH 20' violates the requirement for clear/legible commercial packaging or acceptable rendering.",
+        "Filter cart assembly on wheels may be interpreted as a second commercial package (trolley) rather than just fixed infrastructure."
+      ],
+      "correction_prompt": "Regenerate image: Add exact text 'AFP | 09134922013' to bottom right. Fix carton text to be legible or remove gibberish. Ensure the irrigation unit is on static terrain or clearly fixed, not a wheelbarrow/trolley.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 32,
+      "product_height_percent": 46,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Image contains multiple people in the background (farmer and worker), which is a hard reject.",
+        "The drip tape roll is too large, exceeding the maximum allowed width (27%) and height (32%).",
+        "Text on the roll and watermark is gibberish/incorrect; the required watermark '09134922013' is present but the roll text is nonsensical.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 46% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with zero people in the background. Make the single drip tape roll significantly smaller (approx 20% width) so it fits within the acceptable bounding box. Ensure the required watermark 'AFP | 09134922013' remains in the bottom right corner and that all text on the roll is coherent or generic to avoid gibberish. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 46% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 17,
+      "product_height_percent": 17,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains multiple people and hands, which are hard rejects.",
+        "Multiple people are visible in the scene (hard reject).",
+        "Multiple people are visible in the scene (hard reject)."
+      ],
+      "correction_prompt": "Remove all people, hands, and human silhouettes from the image. Keep the one AFP roll and the unattended irrigation infrastructure (filter, gauge, manifold) as secondary elements.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Presence of a human figure (farmer/worker) kneeling in the field",
+        "The main roll is too wide (32%) and tall (45%), exceeding the maximum 27% width and 32% height limits",
+        "Visible gibberish text on the main roll ('DRIP IRYGHATION')",
+        "The 'AFP' product is not the small secondary roll but a large primary object, violating the role brief",
+        "Presence of a second commercial package (box) next to the roll",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all humans and workers. Reduce the main white-and-blue roll to 20% of the frame width and keep it secondary. Place the main focus on a medium side view of a fixed filter/gauge manifold. Remove gibberish text from the roll. Retain the 'AFP | 09134922013' watermark in the bottom right. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 18,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "The image contains two distinct human figures standing in the background, which violates the hard reject rule for zero people.",
+        "The image contains a large red tractor in the background, which may be considered a hard reject under 'second commercial package' or 'impossible geometry' rules, but primarily the presence of humans is a critical failure."
+      ],
+      "correction_prompt": "Regenerate the image with no humans and no tractor in the background. Maintain the medium side view of the unattended fixed filter, gauge, regulator, and manifold. Ensure exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present, small and secondary, at approximately 20-23% frame width. The bottom-right watermark 'AFP | 09134922013' must remain.",
+      "attempt": 8
+    }
+  ]
+}

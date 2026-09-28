@@ -1,0 +1,55 @@
+{
+  "source_id": "1160006002616-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Off-center placement not met: The carton roll is positioned in the exact center of the frame (x=50%), whereas the mandatory editorial role requires it to be off-center in the lower third.",
+        "Watermark error: The required bottom-right watermark is 'AFP | 09134922013', but the image displays 'AFP | 09134922013' (note the missing 2 before the 0 in the 7th digit, making it 2013 instead of 20130)."
+      ],
+      "correction_prompt": "Move the tape roll significantly to the left or right so it is clearly off-center. Correct the bottom-right watermark text to read exactly 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 21,
+      "product_height_percent": 27,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: A human (farmer) is clearly visible in the right-center foreground.",
+        "Hard reject: Visible human body parts (head, face, arms, legs) are present.",
+        "Hard reject: The 'EDITOIRAL HERO' role requirements for a wide high-oblique view are not met due to the foreground perspective.",
+        "The product is not 'small' and 'off-center on the lower third' as specified; it is centered and relatively large in the foreground.",
+        "The required water mark is 'AFP | 09134922013' but the image contains 'AFP | 09134922013', which matches. However, the human presence is the primary reason for rejection."
+      ],
+      "correction_prompt": "Remove the person entirely. Regenerate a wide high-oblique aerial view of the farm. Position a small AFP white-and-blue cylindrical drip-tape carton roll in the lower-left or lower-right third of the frame, off-center. Ensure no people are visible. Maintain the 'AFP | 09134922013' watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 18,
+      "product_height_percent": 16,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product correctly identified as a single AFP white-and-blue drip-tape carton roll.",
+        "Roll dimensions (approx 18% width) fall within the preferred 20-23% range and accept noise thresholds.",
+        "Zero people or human body parts detected in the frame.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Background shows a high-oblique farm context with distant tractors and irrigation rows, fitting the 'EDITORIAL HERO' role.",
+        "No hard rejects found (no second rolls, bottles, or impossible geometry)."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

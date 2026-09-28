@@ -1,0 +1,51 @@
+{
+  "source_id": "11500010002362-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human body part detected in the background (a person standing near the farm structure).",
+        "Role mismatch: The product roll is placed in the extreme foreground at the bottom center, whereas the brief requires it to be small, fully visible, and off-center on the lower third."
+      ],
+      "correction_prompt": "Remove all human figures and body parts. Regenerate the drip tape roll so it is smaller, placed off-center on the lower third, and ensure the farm and irrigation context dominates the composition.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The mandatory EDITORIAL HERO role requires the carton to be off-center on the lower third, but this image places the roll directly in the center.",
+        "The drip-tape roll is physically impossible because the tape leads directly into the roll from above instead of extending along the crop rows as it would in a functioning irrigation system."
+      ],
+      "correction_prompt": "Move the drip-tape carton off-center to the lower third to follow the editorial hero layout. Fix the geometry so the drip tape extends outward from the roll along the crop rows rather than coming out from the top.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 19,
+      "product_height_percent": 25,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Zero people and body parts detected in the scene, including distant tractor areas.",
+        "Product bounding box is physically plausible, with a width of ~19% (preferred 20–23) and height of ~25% (limit 32%).",
+        "Product is placed in the lower-left third and is off-center, aligning with editorial-hero requirements.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly present and legible.",
+        "The wide high-oblique view is consistent with the brief, and farm/irrigation context is visible through crop rows and unattended tractors."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

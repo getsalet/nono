@@ -1,0 +1,64 @@
+{
+  "source_id": "1160007002476-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 22,
+      "product_height_percent": 31,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Watermark format mismatch: the image displays 'AFP | 09134922013', but the required fixed watermark is 'AFP | 09134922013'. The missing digits cause a hard reject for identity verification.",
+        "Editorial composition: The carton is placed on the left-center rather than the off-center right (or explicitly lower third as preferred) to balance the high-oblique hero shot."
+      ],
+      "correction_prompt": "Remove any digits from the bottom right watermark leaving only 'AFP | 09134922013' exactly as specified. Move the white and blue AFP drip tape carton to the right-side lower third of the frame to create an off-center composition against the irrigation furrows.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 25,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "The required watermark string 'AFP | 09134922013' in the bottom-right corner is partially cut off and illegible, failing the strict text requirement.",
+        "The product label 'Drip' suggests a general drip tape product rather than the specific '20 cm' product required by the brief."
+      ],
+      "correction_prompt": "Regenerate to clearly display the full, unclipped watermark 'AFP | 09134922013' in the bottom right corner, and ensure the product label is generic or explicitly references the 20 cm width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 15,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The required bottom-right watermark text is illegible and appears as gibberish characters instead of the specified 'AFP | 09134922013' (hard reject for gibberish writing).",
+        "The carton is placed too close to the center (near-center) whereas the editorial hero role required it to be off-center on the lower third.",
+        "The roll's width is near the lower bound of the acceptable range (15%), but combined with the central placement and watermark errors, it fails the strict requirements."
+      ],
+      "correction_prompt": "Regenerate with a legible, standard sans-serif watermark 'AFP | 09134922013' in the bottom right. Shift the white and blue drip-tape carton roll horizontally to the right or left to place it clearly off-center within the lower third. Keep the crop width within 20-25% of the frame width. Maintain the wide high-oblique farm view.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 13.5,
+      "product_height_percent": 18,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "No people or human body parts visible.",
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present.",
+        "Product size and placement are within acceptable estimation ranges.",
+        "Watermark 'AFP | 09134922013' is clearly present at the bottom-right as required.",
+        "Background matches the agricultural/irrigation context from the article brief."
+      ],
+      "attempt": 4
+    }
+  ]
+}

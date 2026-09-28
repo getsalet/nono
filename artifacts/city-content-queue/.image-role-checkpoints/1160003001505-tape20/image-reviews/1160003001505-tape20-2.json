@@ -1,0 +1,84 @@
+{
+  "source_id": "1160003001505-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 21,
+      "product_height_percent": 17,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Detected human figure (man crouching)",
+        "Detected human body parts (face, arms, hands, legs)"
+      ],
+      "correction_prompt": "Remove the man and all human elements. Retain the white-and-blue AFP drip-tape carton roll on the soil. Add a close-up of the tape's emitter spacing or a selection chart to act as selection evidence. Ensure the background remains a simple farm field context with no people.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 34,
+      "product_height_percent": 38,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Roll is too wide (34%) compared to the maximum allowed of 27%",
+        "Roll is too tall (38%) compared to the maximum allowed of 32%",
+        "Contains a 'fake headline' or gibberish text on the bottom-right chart overlay",
+        "Product label text is gibberish/distorted ('IARIE...')",
+        "The bottom-right chart/table graphic is not a simple background element but a complex visual overlay that violates the 'simple background' and 'no fake headline/caption' rules",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a larger frame distance so the white and blue cylindrical drip tape carton roll occupies exactly 20% to 23% of the frame width and less than 32% of the height. Ensure the roll features crisp, readable 'AFP' and 'DRIP' text. Remove all bottom-right chart overlays and gibberish text. Keep the AFP | 09134922013 watermark exactly in the bottom right. Reduce the product group from 34% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 10,
+      "product_height_percent": 28,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: The image contains multiple people (a man crouching in the foreground, a man standing in the background, and another distant figure).",
+        "Product size: The carton roll width is estimated at approximately 10% of the frame width, which falls below the absolute hard-reject threshold of 13%.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 10% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to remove all human figures. Increase the width of the white AFP carton roll so it occupies at least 20% of the image frame width. Enlarge the product group from 10% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 31,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product width (31%) exceeds the preferred 13-27% range, violating width guidelines.",
+        "The label text on the product ('Drip REGIONS') appears as gibberish or unrecognizable font, which is a hard reject criterion.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with the product roll width reduced to exactly 20% of the frame width. Ensure the label text is legible and correctly spelled (no gibberish). Maintain the exact bottom-right watermark 'AFP | 09134922013'. Do not include any people or extraneous containers. Reduce the product group from 31% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Watermark present in bottom right as required",
+        "Single white and blue drip tape roll visible",
+        "Zero people or body parts",
+        "Emitter spacing clearly visible on tape",
+        "Farm context appropriate"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

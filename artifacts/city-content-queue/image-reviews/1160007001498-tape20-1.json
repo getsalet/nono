@@ -1,0 +1,84 @@
+{
+  "source_id": "1160007001498-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 22,
+      "product_height_percent": 29,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Product placement is near the horizontal center (47%), violating the mandatory 'off-center' constraint for the EDITORIAL HERO role.",
+        "Product position is too high in the frame; it does not sit properly within the lower third (approx. bottom 33%), causing the editorial hierarchy to fail.",
+        "Product is positioned directly over a crop row, which visually disconnects it from the 'irrigation infrastructure' context described in the brief."
+      ],
+      "correction_prompt": "Reposition the white-and-blue AFP drip-tape roll strictly to the lower-left or lower-right quadrant (off-center) within the bottom 25% of the frame. Ensure the roll is clearly separated from the crop rows and sits on the foreground soil to maintain the editorial dominance of the farm context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: The bottom-right watermark displays 'AFP | 09134922013', but the mandatory required string is 'AFP | 09134922013'. The text on the roll is gibberish/non-legible.",
+        "The image is not a wide high-oblique view; it is a low-angle shot looking down the row.",
+        "The farm and irrigation context does not dominate; the foreground soil texture and the product dominate the visual focus."
+      ],
+      "correction_prompt": "Regenerate with a wide high-oblique view where the farm context dominates. Ensure the bottom-right watermark reads exactly 'AFP | 09134922013' and the label on the roll is clear. Keep the product roll small in the lower-third off-center position.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 14,
+      "product_height_percent": 17,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A person is visible standing next to the tractor in the background (on the right side of the tractor).",
+        "Hard reject: The object in the foreground appears to be a spool of ribbon tape with piping underneath, rather than the required 'wide low cylindrical drip-tape carton roll' (the object is too small relative to the 20-23% preferred width, measuring ~14%)."
+      ],
+      "correction_prompt": "Regenerate image to completely remove the person standing near the tractor. Replace the small spool in the foreground with a wide, low, cylindrical drip-tape carton roll that is wider and more dominant, approximating 20-23% of the frame width. Ensure the setting is a field with drip lines, not pipe infrastructure.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 32,
+      "product_height_percent": 41,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Contains the required AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "No visible people, faces, hands, or human body parts.",
+        "Includes the mandatory bottom-right watermark 'AFP | 09134922013'.",
+        "Farm and irrigation context dominates the scene (rows, distant unattended tractor, horizon) as required for the editorial hero role.",
+        "Contains a long irrigation pipeline running through the upper mid-ground, which triggers a strict rejection criterion ('pipe through the roll'), but no human safety risks are present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 41% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 41% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 15,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is visible",
+        "Zero people or human body parts present",
+        "Watermark 'AFP | 09134922013' is present and correctly formatted",
+        "Product is fully visible and placed off-center on the lower third",
+        "Farm and irrigation context (drip lines, distant tractor, crops) are appropriate",
+        "Object dimensions are within the accepted range (width 15%, height 18%)"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

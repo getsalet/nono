@@ -1,0 +1,72 @@
+{
+  "source_id": "1160007001498-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 32.5,
+      "product_height_percent": 28.0,
+      "product_x_center_percent": 42.5,
+      "reasons": [
+        "The AFP drip-tape roll exceeds the hard reject width threshold of 27 percent (estimated at ~32.5 percent of frame width).",
+        "The image role specifies a 'HEADWORKS STORY' with medium side view of a filter/manifold where the carton roll must remain small and secondary. The roll here is too large and dominates the foreground, failing the secondary role requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32.5% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the drip-tape roll size to approximately 20 percent of frame width and position it in the lower-left or background. Ensure the fixed manifold and gauge are the primary focal point in the center or right to satisfy the HEADWORKS STORY role. Reduce the product group from 32.5% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Visible humans (two men/farmers) are present, violating the zero-person rule",
+        "Hard reject: Visible hand and arm in direct contact with the product",
+        "Hard reject: Product width (28%) and height (30%) exceed the 27% and 32% physical plausibility limits",
+        "Violation of 'HEADWORKS STORY' role: The image shows a product-focused scene rather than a medium side view of unattended fixed filter, gauge, and manifold",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an 'unattended' scene featuring a medium side view of a fixed filter, gauge, regulator, and manifold. Include the exact watermark 'AFP | 09134922013' in the bottom-right. The single AFP drip-tape roll must be small, secondary, and placed off-center (width < 25%). Ensure there are absolutely zero people, hands, or human silhouettes in the frame. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "A person (worker/farmer) is present in the image, which is a hard reject criterion",
+        "The image role is not 'unattended fixed hardware' as it includes a man squatting next to the equipment",
+        "The cardboard box in the background is a second commercial package",
+        "The product roll is not white-and-blue; it is white with blue text, and the box is brown, causing confusion about which is the 'carton' roll",
+        "machine-enforced bounding-box check failed: Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image without any people or workers. Remove the cardboard box. Show a single white and blue drip-tape roll on the ground near an unattended filter and manifold system in a field. Ensure the roll is small and secondary to the fixed hardware. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Product size and aspect ratio fall within acceptable parameters (approx. 20% width).",
+        "Mandatory role (HEADWORKS STORY) satisfied: clearly shows unattended fixed filter, gauge, and manifold.",
+        "Exactly one AFP carton roll present as a small secondary element.",
+        "Zero human presence detected.",
+        "Required watermark 'AFP | 09134922013' present and correctly positioned in the bottom-right.",
+        "Background context (unattended tractor, hay bales, crop rows) aligns with irrigation narrative."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
