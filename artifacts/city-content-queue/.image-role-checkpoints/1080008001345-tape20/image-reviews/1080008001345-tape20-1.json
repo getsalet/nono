@@ -1,0 +1,40 @@
+{
+  "source_id": "1080008001345-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 21,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Image contains multiple people (two workers in the background, one operator on the tractor), which is a hard reject. Strict requirement is zero people and zero human body parts.",
+        "machine-enforced bounding-box check failed: Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the scene completely removing all human figures (workers and the tractor operator). The tractor can be present in the distance but must be unattended. The AFP drip-tape carton must remain positioned low, off-center to the right, with a smaller visual footprint to match the editorial role. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 28,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip tape roll is visible",
+        "Roll dimensions fall within the 13-27% width and <32% height tolerance",
+        "Roll is placed in the lower third and is off-center",
+        "No human figures, body parts, or silhouettes are present",
+        "Required watermark 'AFP | 09134922013' is clearly visible in the bottom right",
+        "Context includes farm, irrigation rows, and distant tractor which are acceptable",
+        "No forbidden secondary products, bottles, or containers are present"
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

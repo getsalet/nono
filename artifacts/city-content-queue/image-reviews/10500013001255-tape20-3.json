@@ -1,0 +1,56 @@
+{
+  "source_id": "10500013001255-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 16,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of two people in the frame (right foreground).",
+        "Visible human body parts (faces, arms, legs, hands) violating the zero-person rule.",
+        "Second commercial roll of drip tape visible beneath the main carton roll (hard reject for multiple rolls).",
+        "Two human silhouettes/faces clearly identifiable."
+      ],
+      "correction_prompt": "Remove the two men standing on the right. Remove the second roll of drip tape located directly under the main carton. Keep the unattended tractor and irrigation infrastructure in the background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "The product width is estimated at 32% of the frame, which exceeds the hard reject limit of 27%.",
+        "The product height is estimated at 45% of the frame, which exceeds the hard reject limit of 32%.",
+        "The image fails to follow the mandatory visual brief which requires a medium side view of fixed irrigation infrastructure (filter, gauge, manifold) with the carton appearing small and secondary; instead, the carton is the dominant foreground subject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to show a medium side view of a fixed irrigation manifold and filter system in a field. The AFP white and blue drip-tape carton must be visible but significantly smaller and secondary to the infrastructure. Ensure the carton is strictly under 27% of the frame width and under 32% of the frame height. Remove any visible people. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The image successfully depicts a 'HEADWORKS STORY' with a prominent side view of a filter, gauge, and manifold system on a wheeled frame.",
+        "The AFP drip-tape carton is present and is white and blue with a cylindrical shape.",
+        "The required watermark 'AFP | 09134922013' is visible in the bottom right corner.",
+        "The product dimensions are well within the preferred and acceptable ranges (width ~22%, height ~28%).",
+        "There are no people or human body parts in the image.",
+        "The background includes relevant agricultural context (tractor and crop rows) without being a distractor.",
+        "The product is secondary to the irrigation equipment as per the role."
+      ],
+      "attempt": 3
+    }
+  ]
+}

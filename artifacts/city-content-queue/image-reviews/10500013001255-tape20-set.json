@@ -1,58 +1,43 @@
 {
   "source_id": "10500013001255-tape20",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "history": [
     {
       "pass": false,
-      "score": 25,
+      "score": 45,
       "duplicate_roles": [
         1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "reasons": [
-        "Missing images: The article requires a set of five distinct images, but only four are provided.",
-        "Wrong Product Form (All images): The images feature large agricultural rolls of drip line, not the requested 'carton' of 20cm drip tape. This fails the product identity requirement.",
-        "Role 1 & 2 Mismatch: The brief explicitly requests a 'truck carton', but the images show a large roll of tape.",
-        "Role 3 & 4 Mismatch: The brief requests 'small, unattended cartons', but the images show large rolls.",
-        "Generic Backgrounds: The backgrounds (tractors in wide fields) are generic and do not show the specific technical evidence (filter/gauge/manifold for role 3, or emitter details for role 5) requested."
-      ],
-      "correction_prompt": "Replace the large rolls of tape with small 'approved cartons' of 20cm drip tape; add the missing fifth image; and retake roles 3 and 5 to specifically show the fixed filter/gauge headworks and a close-up detail of an installed emitter/flush point, respectively, ensuring the backgrounds are distinct for each role.",
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 55,
-      "duplicate_roles": [
-        3,
-        4
-      ],
-      "reasons": [
-        "The set contains only four images for the five required roles, so one narrative slot is missing.",
-        "Image 1 explicitly uses the prohibited 'tractor' composition in the background, violating the rejection criteria for the hero shot.",
-        "Images 3 and 4 are nearly identical in composition, angle, and content, resulting in duplicated roles.",
-        "Image 2 shows a technical arrangement but is not 'elevated' as required for Selection Evidence; it appears to be at ground level.",
-        "The required wide high-oblique Editorial Hero view is absent from the set."
-      ],
-      "correction_prompt": "Replace Image 3 with a distinct 'Headworks Story' medium side view showing a filter, gauge, and manifold, and add a new Image 5 for the 'Maintenance Detail' role.",
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 20,
-      "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Zero people constraint violated (Image 2).",
-        "Tractor and implement in Image 2 are the central focus, violating the 'selecion evidence' requirement and matching the 'reject tractor' rule.",
-        "The furrow-field perspective of Image 3 is highly repetitive with Images 1 and 4, failing to establish distinct technical narratives for the maintenance or installation proof roles."
+        "Role 1 violation: The AFP product is oversized and centered in the foreground, failing the 'small, off-center' and 'farm-dominant' requirements for an Editorial Hero.",
+        "Role 2 violation: The 'technical evidence' is a generic coiled metal pipe rather than the required drip tape or emitter-spacing; layout overlaps Role 1.",
+        "Role 3 violation: The product is oversized and foreground-centric, failing the 'small and secondary' requirement; hardware overlaps with Role 2.",
+        "The camera angles, environment structures, and product dominance are repetitive across the panel set."
       ],
-      "correction_prompt": "Regenerate Image 2 removing the person and moving the tractor to a distant background. For Image 3, shift the camera to a low, tight side-view of drip tape emitters along a crop bed, removing the straight furrow horizon.",
-      "set_attempt": 3
+      "correction_prompt": "Resize the AFP product to be small and off-center on the lower third of Role 1, swap the metal coil in Role 2 with a spliced drip tape end showing emitter spacing, and ensure the Role 3 filter cart is the clear focal point with the product as a small background detail.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "duplicate_roles": [],
+      "reasons": [
+        "All three roles maintain visually distinct camera angles and narratives, successfully avoiding generic farm repetition.",
+        "Role 1 correctly executes the EDITORIAL HERO with a high-oblique view where the farm context dominates and the product is appropriately small and off-center.",
+        "Role 3 adheres to the HEADWORKS STORY brief by showcasing unattended hardware (filter, gauges, manifold) in a medium side view.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly preserved across all panels.",
+        "The visual identity of the 'Drig Irrigation Tape' product remains consistent throughout the set as required by the editorial brief."
+      ],
+      "correction_prompt": "Re-render Role 2 to ensure the coiled tape loop in the foreground clearly demonstrates 'emitter-spacing evidence' rather than appearing as a generic hose, and verify the background remains simple.",
+      "panel_scores": [
+        92
+      ],
+      "set_attempt": 2
     }
   ]
 }

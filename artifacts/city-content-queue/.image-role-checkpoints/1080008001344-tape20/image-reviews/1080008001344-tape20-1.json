@@ -1,0 +1,117 @@
+{
+  "source_id": "1080008001344-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: Human figure (male farmer) is present in the center of the frame, occupying a significant portion of the visual space. The instructions explicitly forbid any person, face, or body parts.",
+        "Placement violation: The required image role is 'EDITORIAL HERO' where the carton must be small and off-center on the lower third. Here, the carton is large (approx 24% width) and centered, acting as the main subject rather than a supporting element in a high-oblique farm context."
+      ],
+      "correction_prompt": "Regenerate image: wide high-oblique farm view, crop rows dominant, zero people. Place the white AFP drip-tape carton roll (width 18-20% of frame) in the bottom-left foreground, angled slightly, keeping the farm horizon and sky visible. Watermark 'AFP | 09134922013' bottom-right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 30,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "The product carton is cut off at the bottom edge of the frame and is not fully visible, violating the requirement that it must remain fully visible. Although the farm context is strong and the placement is off-center on the lower-left third, the lack of the product's full structure makes it a hard reject for an editorial hero shot where the product must be clearly identifiable."
+      ],
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains a standing person (a man in the center of the field), which is a hard reject for zero people.",
+        "The object's height appears to exceed the 32 percent threshold.",
+        "The roll appears somewhat off-center or low to the left rather than clearly integrated into the lower-third composition relative to the wide field perspective.",
+        "machine-enforced bounding-box check failed: Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image without any people or body parts. Maintain the wide, high-oblique perspective of the farm field. Keep the AFP white-and-blue drip-tape roll small (width 20-23% of frame) in the lower-third off-center position. Ensure the farm and irrigation context dominate the scene. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 15,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a person (farmer) in the background (center-right), violating the hard reject rule for any human or body part.",
+        "The image contains a farmer/worker, which is explicitly prohibited.",
+        "Although the single drip-tape roll is correctly sized (width ~15%) and branded, the presence of the human figure forces a rejection.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and correct."
+      ],
+      "correction_prompt": "Remove the person/farmer standing in the field to comply with the 'zero people' hard reject rule.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product is too wide (approximately 38% of the frame width) and exceeds the 27% hard reject limit.",
+        "The product is placed in the center (x ~ 50%), which conflicts with the 'off-center' requirement for an editorial hero shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate with a much wider perspective or make the carton significantly smaller so it occupies less than 27% of the frame width, and move it clearly to the left or right off-center on the lower third. Reduce the product group from 38% to 13-27% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 20,
+      "product_height_percent": 18,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Presence of a person (farmer/worker) standing in the crop rows.",
+        "The product carton roll is partially cropped at the bottom edge of the frame and is not fully visible.",
+        "The product is positioned low and center-left, rather than distinctly off-center in the lower third with high-oblique view context dominance."
+      ],
+      "correction_prompt": "Regenerate a wide high-oblique view of a farm irrigation field with distant crop rows and unattended equipment. Place a single white and blue AFP drip-tape carton roll on the soil in the lower-right third of the frame. The roll must be fully visible, unclipped, and smaller relative to the scene (approx 20% frame width). Ensure zero people are present. Retain the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 15,
+      "product_height_percent": 15,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Hard reject: The image contains a human (a farmer standing next to the tractor in the background), which violates the 'zero people and zero human body parts' rule."
+      ],
+      "correction_prompt": "Remove the human standing next to the tractor in the background. Keep the AFP drip-tape roll and the bottom-right watermark exactly as they are. Ensure no other people are present.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 21,
+      "product_height_percent": 25,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Watermark text is '09134922013' (11 digits), but required watermark is '09134922013' (12 digits - note the difference).",
+        "Product x_center_percent is 49%, which is nearly centered. The brief requires 'off-center on the lower third' and 'lower-third and off-center placement are editorial preferences, not standalone hard rejects' but the 'MANDATORY' hero description says 'off-center'. The image is centered horizontally.",
+        "The brief specifies 'wide high-oblique view'. This image is a standard frontal perspective, not a high-oblique view."
+      ],
+      "correction_prompt": "Regenerate with the exact watermark 'AFP | 09134922013'. Shift the carton roll to the left or right third (off-center x-axis). Change perspective to a high-oblique view.",
+      "attempt": 8
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "source_id": "10800014001336-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The image contains human silhouettes (faces visible) inside the distant tractor cabs, which is a hard reject.",
+        "The image contains a second commercial product (a loose roll of drip tape next to the main carton), which is a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image removing the driver figures from the distant tractors and deleting the loose strip of drip tape next to the main carton roll. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 33,
+      "product_height_percent": 31,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Product is correctly identified as an AFP white-and-blue drip-tape carton roll with clear '20' designation visible.",
+        "Zero people or human body parts are visible in the frame.",
+        "Background features an appropriate farm context with a barn and unattended tractor.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Product width (33%) exceeds the preferred range (20-23%) and the reviewer-estimation tolerance (13-27%), but remains physically plausible and not a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 33% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 27,
+      "product_height_percent": 28,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "The visible emitter spacing or field-selection evidence in the foreground appears to be a mechanical tillage harrow bar rather than drip-tape emitters, which contradicts the specific image role of 'SELECTION EVIDENCE'.",
+        "The width of the carton roll appears to be at the maximum limit (27%), reducing the 'preferred' aesthetic quality of the composition."
+      ],
+      "correction_prompt": "Regenerate with the foreground object clearly showing the white-and-blue drip tape with visible emitters or a close-up of the tape end extending from the carton, rather than a metal agricultural tool.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 23.5,
+      "product_height_percent": 21.0,
+      "product_x_center_percent": 27.5,
+      "reasons": [
+        "Hard reject due to the presence of a human (worker) standing next to the tractor in the background.",
+        "The text on the product roll appears to be gibberish/hallucinated characters rather than coherent branding, which violates the 'zero fake/gibberish writing' constraint.",
+        "The image depicts a usage scene rather than the 'Selection Evidence' role (elevated technical arrangement)."
+      ],
+      "correction_prompt": "Remove all people and tractors from the background. Place a single AFP drip tape roll on a clean table or white surface in a studio setting. Ensure the text on the roll reads 'AFP Drip Tape' clearly and legibly.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product is wider than 27 percent of the frame, exceeding the maximum physical plausibility threshold.",
+        "Product is taller than 32 percent of the frame, violating the height constraint.",
+        "Missing required selection evidence: The image shows the product on a generic white surface without visible emitter-spacing details, maps, or field-selection materials. The role requires an 'elevated technical arrangement' with visible evidence of the 20mm specification context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product width to approximately 20% and height to under 30% of the frame. Add visible selection evidence next to the roll, such as a technical spacing ruler, a field map, or measuring tape. Ensure the background remains a natural farm context without human presence. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Product is a single wide, low, cylindrical drip-tape carton roll with the correct white-and-blue AFP branding.",
+        "Product dimensions are within the preferred (width) and acceptable (height) ranges, with no distortion or impossible geometry.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "The scene clearly shows field-selection evidence, including a printed field plan/map and a measuring tape.",
+        "No people, faces, hands, arms, legs, or other human silhouettes are visible.",
+        "Background context (plowed soil, distant unattended tractors, farm building) is contextually appropriate and does not contain extra commercial containers or rolls."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}
