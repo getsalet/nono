@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-28T00:37:10+00:00`
+- آخرین بروزرسانی: `2026-09-28T00:47:36+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **425 از 1894 (22.44٪)**
 - تکمیل‌شده: **425**
@@ -58,8 +58,8 @@
 - **لاجان** — `layflat`: `image hard gate rejected role 3 after 6 attempt`
 - **پیرانشهر** — `tape20`: `Editorial review failed: internal link count must equal minimum`
 - **پیرانشهر** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
-- **آواجیق** — `tape20`: `Image-set diversity gate rejected the five-image editorial set after 3 rounds`
-- **آواجیق** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
+- **آواجیق** — `tape20`: `image hard gate rejected role 5 after 8 attempt`
+- **آواجیق** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
 - **حاجیلار** — `tape20`: `image hard gate rejected role 2 after 6 attempt`
 
 ## فایل‌های خروجی
