@@ -18,8 +18,10 @@ SIGNAL = OUT / ".new-batch-signal"
 
 def main() -> int:
     if not MANIFEST.exists():
-        SIGNAL.unlink(missing_ok=True)
-        print("No packages/manifest.json yet; .new-batch-signal cleared")
+        # Never delete the durable signal on an ordinary article commit.
+        # A deletion is itself a path change and used to trigger a useless
+        # upload workflow immediately after every real batch upload.
+        print("No packages/manifest.json yet; signal left unchanged")
         return 0
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     new_batches = {p.get("batch") for p in manifest.get("packages", []) if p.get("batch")}
@@ -32,11 +34,15 @@ def main() -> int:
             already = set()
     truly_new = sorted(b for b in new_batches if b not in already)
     if truly_new:
-        SIGNAL.write_text("\n".join(truly_new) + "\n", encoding="utf-8")
+        SIGNAL.write_text(
+            "\n".join(f"{name}.zip" for name in truly_new) + "\n",
+            encoding="utf-8",
+        )
         print(f"New batch(es) ready: {truly_new} - wrote {SIGNAL.name}")
     else:
-        SIGNAL.unlink(missing_ok=True)
-        print("No new batch this run; .new-batch-signal cleared")
+        # Leave the previous value untouched. With no file diff, a normal
+        # generated-post commit cannot trigger the FTPS push workflow.
+        print("No new batch this run; signal left unchanged")
     return 0
 
 

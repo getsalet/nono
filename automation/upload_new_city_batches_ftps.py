@@ -11,6 +11,7 @@ from upload_city_batches_ftps import PACKAGES, connect
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE_PATH = ROOT / "artifacts" / "city-content-queue" / "ftps-upload-state.json"
+SIGNAL_PATH = ROOT / "artifacts" / "city-content-queue" / ".new-batch-signal"
 
 
 def sha256(path: Path) -> str:
@@ -35,12 +36,34 @@ def now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
+def signaled_packages() -> list[Path]:
+    """Return only ZIPs named by the durable new-batch signal."""
+    if not SIGNAL_PATH.exists():
+        return []
+    names = []
+    for raw in SIGNAL_PATH.read_text(encoding="utf-8").splitlines():
+        name = Path(raw.strip()).name
+        if not name:
+            continue
+        if not name.endswith(".zip"):
+            name += ".zip"
+        if name not in names:
+            names.append(name)
+    packages = []
+    for name in names:
+        path = PACKAGES / name
+        if not path.exists():
+            raise FileNotFoundError(f"Signaled package is missing: {name}")
+        packages.append(path)
+    return packages
+
+
 def main() -> int:
-    packages = sorted(PACKAGES.glob("*.zip"))
+    packages = signaled_packages()
     state = load_state()
     tracked = state.setdefault("files", {})
     if not packages:
-        print("No ZIP batches are currently available; nothing to upload.")
+        print("No newly signaled ZIP batch is available; nothing to upload.")
         return 0
 
     ftp = connect()
@@ -49,8 +72,8 @@ def main() -> int:
     missing_remote = []
     uploaded = 0
     try:
-        # Local state alone is not proof that a remote file still exists.
-        # Compare the actual FTPS object size before skipping a package.
+        # Only signaled packages are considered. Older ZIPs are never scanned
+        # or uploaded again during a normal new-batch delivery.
         for path in packages:
             digest = sha256(path)
             size = path.stat().st_size

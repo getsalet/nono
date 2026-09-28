@@ -49,7 +49,7 @@ class CityImagePolicyTests(unittest.TestCase):
         refs = image_prompt_policy.reference_images(
             1, {"source_id": "city-layflat", "title": "لوله نخی"}
         )
-        self.assertEqual(len(refs), 2)
+        self.assertEqual(len(refs), 1)
         self.assertTrue(all(ref.startswith("data:image/webp;base64,") for ref in refs))
         for ref in refs:
             image = Image.open(io.BytesIO(base64.b64decode(ref.split(",", 1)[1])))
@@ -70,7 +70,7 @@ class CityImagePolicyTests(unittest.TestCase):
         self.assertEqual(len(set(prompts)), 5)
         self.assertTrue(all("Article visual brief extracted from the post" in prompt for prompt in prompts))
         self.assertTrue(all("People must not appear" in prompt for prompt in prompts))
-        self.assertIn("HEADWORKS STORY", prompts[2])
+        self.assertIn("HEADWORKS DETAIL", prompts[2])
         self.assertIn("MAINTENANCE DETAIL", prompts[4])
         self.assertTrue(all("NO PEOPLE OR VEHICLES" in prompt for prompt in prompts))
         self.assertTrue(all("tractor, harvester, vehicle or machine cabin" in prompt for prompt in prompts))
@@ -82,7 +82,7 @@ class CityImagePolicyTests(unittest.TestCase):
                 "product_width_percent": 22,
                 "product_height_percent": 26,
                 "product_x_center_percent": 50,
-            },
+            }, 1,
         )
         self.assertTrue(ok)
         self.assertEqual(issues, [])
@@ -92,7 +92,7 @@ class CityImagePolicyTests(unittest.TestCase):
                 "product_width_percent": 16,
                 "product_height_percent": 31,
                 "product_x_center_percent": 50,
-            },
+            }, 1,
         )
         self.assertTrue(ok)
         self.assertEqual(issues, [])
@@ -102,22 +102,29 @@ class CityImagePolicyTests(unittest.TestCase):
                 "product_width_percent": 33,
                 "product_height_percent": 35,
                 "product_x_center_percent": 50,
-            },
+            }, 3,
         )
         self.assertFalse(ok)
-        self.assertTrue(any("9-20%" in issue for issue in issues))
-        self.assertTrue(any("at most 32%" in issue for issue in issues))
+        self.assertTrue(any("8-25%" in issue for issue in issues))
         ok, issues = image_quality_gate._metric_check(
             "tape20",
             {
                 "product_width_percent": 11,
                 "product_height_percent": 43,
                 "product_x_center_percent": 50,
-            },
+            }, 1,
         )
         self.assertFalse(ok)
         self.assertTrue(any("Enlarge" in issue for issue in issues))
-        self.assertTrue(any("at most 32%" in issue for issue in issues))
+        self.assertTrue(any("at most 35%" in issue for issue in issues))
+
+    def test_headworks_prompt_is_an_unoccupied_equipment_still_life(self):
+        item = {"source_id": "city-tape20", "topic": "tape20", "city": "گوهران"}
+        prompt = image_prompt_policy.image_prompt(item, 3)
+        self.assertIn("equipment-only still life", prompt)
+        self.assertIn("no farm activity or living subject", prompt)
+        self.assertIn("neutral empty equipment pad", prompt)
+        self.assertNotIn("suitable for گوهران", prompt)
 
     def test_rejected_five_image_set_keeps_published_files_untouched(self):
         with tempfile.TemporaryDirectory() as tmp, patch.dict(

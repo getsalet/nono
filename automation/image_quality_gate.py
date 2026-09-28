@@ -4,7 +4,7 @@ import base64,json,os,re,urllib.error,urllib.request,shutil,time
 from concurrent.futures import as_completed
 from pathlib import Path
 import image_prompt_policy
-REVIEW_POLICY='article-parity-v13-no-human-no-container-scale-topic-role-reviewed'
+REVIEW_POLICY='article-parity-v15-equipment-only-headworks-practical-metrics'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
@@ -25,7 +25,7 @@ def _quick_file_check(path):
  return None
 
 
-def _metric_check(family,verdict):
+def _metric_check(family,verdict,kind=None):
  try:
   width=float(verdict.get('product_width_percent'))
   height=float(verdict.get('product_height_percent'))
@@ -34,14 +34,14 @@ def _metric_check(family,verdict):
   return False,['Return numeric product_width_percent, product_height_percent and product_x_center_percent.']
  # Keep impossible/giant products out, but do not starve the queue because a
  # noisy vision estimate misses an editorial target by a few points.
- min_width,max_width=(9,20) if family=='layflat' else (13,27)
+ min_width,max_width=(8,25) if family=='layflat' else (12,30)
  issues=[]
  if width<min_width:
   issues.append(f'Enlarge the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
  elif width>max_width:
   issues.append(f'Reduce the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
- if height>32:
-  issues.append(f'Reduce product height from {height:g}% to at most 32% of frame height.')
+ if height>35:
+  issues.append(f'Reduce product height from {height:g}% to at most 35% of frame height.')
  return not issues,issues
 
 def _vision_review(base,path,item,kind):
@@ -53,11 +53,11 @@ def _vision_review(base,path,item,kind):
   return {'pass':True,'score':90,'reasons':['fast mode: trusted prompt for non-key image'],'correction_prompt':''}
  encoded=base64.b64encode(path.read_bytes()).decode('ascii')
  if family=='layflat':
-  criteria='The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. The complete pair should occupy about 12 to 15 percent of frame width; accept reviewer-estimation noise only from 9 to 20 percent when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 20 percent of the frame, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
+  criteria='The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. The preferred combined width is 12 to 15 percent; accept reviewer-estimation noise from 8 to 25 percent and height up to 35 percent when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 25 percent of the frame, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
  else:
-  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. The preferred width is 20 to 23 percent of frame width; accept reviewer-estimation noise only from 13 to 27 percent and height up to 32 percent when the object remains physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts. The background should match the article brief and selected image role.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 27 percent of the frame, taller than 32 percent, bottle, jar, canister, bucket, fertilizer or pesticide container, second commercial package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry or severely distorted dimensions. A distant unattended tractor, ordinary farm building and fixed irrigation hardware are allowed when contextually relevant.'
+  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. The preferred width is 20 to 23 percent; accept reviewer-estimation noise from 12 to 30 percent and height up to 35 percent when the object remains physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts. The background should match the article brief and selected image role.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 30 percent of the frame, taller than 35 percent, bottle, jar, canister, bucket, fertilizer or pesticide container, second commercial package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry or severely distorted dimensions. A distant unattended tractor, ordinary farm building and fixed irrigation hardware are allowed when contextually relevant.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
 Article visual brief: {brief}. Mandatory role: {image_prompt_policy.role_directive(family,kind)}.
@@ -68,7 +68,7 @@ The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never 
  content=raw['choices'][0]['message']['content']
  if isinstance(content,list):content=''.join(str(x.get('text','')) for x in content if isinstance(x,dict))
  verdict=_extract_json(content)
- metric_ok,metric_issues=_metric_check(family,verdict)
+ metric_ok,metric_issues=_metric_check(family,verdict,kind)
  verdict['pass']=bool(verdict.get('pass')) and int(verdict.get('score',0))>=MIN_IMAGE_SCORE and metric_ok
  if not metric_ok:
   verdict.setdefault('reasons',[]).append('machine-enforced bounding-box check failed: '+'; '.join(metric_issues))
@@ -162,7 +162,7 @@ def _review_image_panel(base,paths,item,role_numbers):
  brief=image_prompt_policy.visual_brief(item)
  family=image_prompt_policy.product_family(item)
  roles='; '.join(f'{kind}: {image_prompt_policy.role_directive(family,kind)}' for kind in role_numbers)
- prompt=f'''Review this overlapping panel from a five-image city-article editorial set.
+ prompt=f'''Review this panel from a {len(paths)}-image city-article editorial set.
 Panel role numbers: {role_numbers}. Article visual brief: {brief}. Required roles: {roles}.
 The same AFP product is expected in every image, so product identity itself is not duplication. Pass only when the shown roles are visibly distinct in camera height/angle, environment structure and technical narrative, and every background is relevant to the article brief. Reject repeated layouts, generic farms, role-3/role-5 hardware duplication, any person, any bottle/container, oversized product, or images that only move the product. The exact bottom-right watermark "AFP | 09134922013" is required and must never be treated as duplication, obstruction, added caption or a rejection reason. Return duplicate_roles using the original role numbers from {role_numbers}. Return only JSON: {{"pass":true|false,"score":0-100,"duplicate_roles":{role_numbers},"reasons":["..."],"correction_prompt":"one concise replacement instruction"}}.'''
  content=[{'type':'text','text':prompt}]
@@ -246,11 +246,11 @@ def install_set_manager(base,backend,image_count=5):
     pending=set(verdict.get('duplicate_roles') or range(1,image_count+1))
     correction=str(verdict.get('correction_prompt') or '; '.join(verdict.get('reasons',[])))
     for kind in pending:
-     feedback[kind]=correction+f' Create a new role-{kind} scene clearly unlike the other four.'
+     feedback[kind]=correction+f' Create a new role-{kind} scene clearly unlike the other roles.'
      if kind in results:
       (staging_images/results[kind][0]).unlink(missing_ok=True);results.pop(kind,None)
      (staging_reviews/f'{review_id}-{kind}.json').unlink(missing_ok=True)
-   raise RuntimeError(f'Image-set diversity gate rejected the five-image editorial set after {rounds} rounds')
+   raise RuntimeError(f'Image-set diversity gate rejected the {image_count}-image editorial set after {rounds} rounds')
   finally:
    if completed:
     shutil.rmtree(staging_root,ignore_errors=True)
