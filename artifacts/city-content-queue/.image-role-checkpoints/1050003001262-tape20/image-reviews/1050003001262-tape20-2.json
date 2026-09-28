@@ -2,27 +2,41 @@
   "source_id": "1050003001262-tape20",
   "family": "tape20",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 88,
-      "product_width_percent": 33,
-      "product_height_percent": 46,
-      "product_x_center_percent": 40,
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 42,
+      "product_x_center_percent": 45,
       "reasons": [
-        "Exact required single AFP white and blue wide low cylindrical drip tape roll is clearly present and dominates the foreground.",
-        "Product dimensions (roughly 33% frame width, 46% frame height, centered at x=40%) remain physically plausible and comfortably within the practical acceptance range.",
-        "Lower-third and slightly left of center placement is editorially acceptable and not a standalone rejection reason.",
-        "Zero people and zero human body parts are visible anywhere in the frame, including in the distance.",
-        "No bottles, jars, canisters, buckets, or extra commercial packages appear; the adjacent unspooled tape belongs to the same product and does not count as a second roll.",
-        "Unattended red tractor and farm building in the distance are explicitly allowed contextual infrastructure for a field-selection brief.",
-        "The watermark 'AFP | 09134922013' is correctly present in the bottom-right corner and was not flagged for removal.",
-        "Some minor gibberish / garbled label text is visible on the side of the roll, but it does not rise to the level of a hard reject under the given criteria."
+        "Product width (~32%) and height (~42%) are outside the acceptable limits (width >27%, height >32%).",
+        "The background contains a distinct second coiled object (pipe/cable) next to the main product, violating the constraint of exactly one commercial package/roll.",
+        "The visible text on the carton ('Drip Irrigaton Taye') contains gibberish/typos (misspellings) which is a hard reject.",
+        "Missing the required 'elevated technical arrangement' or 'field-selection evidence' specified in the SELECTION EVIDENCE role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a single AFP drip tape carton roll that is smaller relative to the frame (width ~20%). Remove the secondary coiled object. Ensure all text on the carton is sharp, legible, and correctly spelled. Maintain the farm context but remove distant tractor/building to keep background simple. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24.5,
+      "product_height_percent": 26.0,
+      "product_x_center_percent": 32.5,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is visible.",
+        "Product width is 24.5% of frame width, within the preferred 20-23% range and the 13-27% acceptance tolerance.",
+        "Product height is 26%, which is below the 32% maximum limit and physically plausible for this product type.",
+        "Zero people or human body parts are visible in the image.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Background features an ordinary farm building and field edge, which are allowed contextually."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

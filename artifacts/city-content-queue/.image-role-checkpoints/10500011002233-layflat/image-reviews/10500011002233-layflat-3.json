@@ -2,24 +2,71 @@
   "source_id": "10500011002233-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 55,
-      "product_height_percent": 35,
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 33,
+      "product_height_percent": 30,
       "product_x_center_percent": 55,
       "reasons": [
-        "The image correctly displays the required two-coil pair: one packaged AFP coil (in the carton packaging) and one bare black woven coil, keeping both separate, fully visible, and physically plausible on the soil.",
-        "The layout satisfies the HEADWORKS STORY role, with a medium side-view shot of the fixed unattended pump assembly (gauge and manifold) acting as the supporting infrastructure element, leaving the coil pair as the secondary focus.",
-        "The approved bottom-right watermark 'AFP | 09134922013' is clearly present and not obscured.",
-        "The scene contains zero people or human body parts, and the distant farm building and field context do not violate the product restrictions.",
-        "Product framing width is within the practical 8-60 percent vision estimate and maintains clear separation between the coils and the pump infrastructure."
+        "Hard reject due to the presence of a human (woman crouching on the left side of the frame).",
+        "Product group is too large, spanning 33% of the frame width, significantly exceeding the maximum allowed 20%.",
+        "Multiple coiled products are visible rather than the required single pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Remove all people/humans from the image. Regenerate to show a small, secondary pair of coils (one packaged, one bare black) in the lower-right area, occupying no more than 15% of the total frame width, positioned next to a fixed unattended pump and manifold setup. Ensure the 'AFP | 09134922013' watermark remains visible in the bottom-right corner. Reduce the product group from 33% to 9-20% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 52.0,
+      "product_height_percent": 41.0,
+      "product_x_center_percent": 55.0,
+      "reasons": [
+        "Product pair occupies ~52% of frame width, far exceeding the 20% hard-reject threshold.",
+        "The approved two-coil pair is physically merged with fixed pump, gauge, and manifold into a single complex unit, violating the 'separate' requirement.",
+        "Composition fails to present the coils as small, secondary, and separate objects as required by the visual brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 9-20% of frame width.; Reduce product height from 41% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Scale down the coil pair to occupy 15% of the frame width and position it as a separate object on the soil, clearly distinct from the fixed pump and manifold infrastructure. Reduce the product group from 52% to 9-20% of frame width. Reduce product height from 41% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 48,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Multiple persons (faces, hands, arms, legs) are visible in the foreground and background.",
+        "Reject: A bottle or container (filter) is visible in the equipment array.",
+        "Reject: A third commercial package (a packaged spray nozzle) is visible alongside the two coils, violating the 'two-coil pair' requirement.",
+        "Reject: The product pair (two coils) is not the primary focus; the pump and humans dominate the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 9-20% of frame width.; Reduce product height from 48% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to show ONLY a static pump and hose pair in a field. Ensure zero people, faces, or hands are visible. Remove any bottle, jar, or extra commercial packages like the nozzle bag. Keep the pump, gauge, and the two small coils as the only visible objects in a wide shot. Reduce the product group from 32% to 9-20% of frame width. Reduce product height from 48% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 15,
+      "product_height_percent": 23,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Both required layflat coil components (one packaged, one bare) are present, separate, and physically plausible.",
+        "Product width is approximately 15%, which falls within the 12-15% target and 9-20% acceptance range.",
+        "The mandated 'HEADWORKS STORY' infrastructure (unattended pump, gauge, manifold) is correctly featured in the composition.",
+        "Bottom-right watermark 'AFP | 09134922013' is clearly visible and meets the specification.",
+        "Zero people, human body parts, or prohibited third commercial products are visible in the frame.",
+        "Composition successfully integrates the secondary product pair with the primary infrastructure subject in a realistic agricultural context."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 4
     }
   ]
 }

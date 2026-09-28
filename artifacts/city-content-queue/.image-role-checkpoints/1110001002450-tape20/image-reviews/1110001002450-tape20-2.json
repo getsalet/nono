@@ -1,0 +1,86 @@
+{
+  "source_id": "1110001002450-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 17,
+      "product_height_percent": 18,
+      "product_x_center_percent": 23,
+      "reasons": [
+        "Hard reject: visible male farmer/worker operating equipment",
+        "Hard reject: visible human face, hands, arms, and legs",
+        "Multiple humans/visible body parts are present in the frame"
+      ],
+      "correction_prompt": "Regenerate image with a completely unattended field scene containing only the white and blue 'AFP' drip-tape carton roll, removing the man, his hands, and all visible body parts, while retaining the exact required bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 98,
+      "product_width_percent": 30,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "The product is physically plausible and centered with a clear emitter spacing/tape trail, satisfying the SELECTION EVIDENCE role.",
+        "No humans or prohibited objects are present.",
+        "Product dimensions are slightly larger than the ideal width/height range but remain physically plausible for the object type.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Contains a visible person (farmer/worker) kneeling next to the product",
+        "Hard reject: Visible human body parts (face, hands, arms, legs)",
+        "Product width estimated at 30%, which exceeds the 27% hard reject threshold",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image without the man. Show only the AFP carton roll on the field with the correct watermark. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Visible human: A man is crouching next to the irrigation equipment.",
+        "Second commercial package: There is a second roll of tape on the ground next to the main carton.",
+        "machine-enforced bounding-box check failed: Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the crouching man and the secondary tape roll on the ground. Ensure only the single upright white-and-blue carton remains in the foreground. Keep the field and distant tractor/building as background context. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 27,
+      "product_height_percent": 22,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape roll.",
+        "Product width is at the 27% upper limit, but the shape is physically plausible and not distorted.",
+        "No people, human body parts, bottles, jars, or second commercial packages are visible.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The background (field, unattended tractors, farm building) is contextually relevant to the irrigation brief.",
+        "Visible field tape line provides necessary 'field-selection evidence' for the image role."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

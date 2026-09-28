@@ -1,0 +1,68 @@
+{
+  "source_id": "11000020002352-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 26,
+      "product_height_percent": 30,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: Multiple human figures are clearly visible in the background (standing next to the tractors and farm building).",
+        "Hard reject: A second roll of drip tape is present on the ground to the right of the primary carton roll.",
+        "The mandatory text on the primary roll is gibberish ('ORIP IITRIEDEK'), which violates the hard reject criteria."
+      ],
+      "correction_prompt": "Remove all human figures and the second roll of tape. Ensure the primary roll has clean, legible 'AFP' branding. Regenerate with zero people and zero extra commercial products.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 29,
+      "product_height_percent": 43,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Roll width is 29% of frame, exceeding the 27% hard-reject threshold.",
+        "Roll height is 43% of frame, exceeding the 32% hard-reject threshold.",
+        "The object in the bottom right (grey plastic grid) appears to be a second commercial package or unapproved object.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width.; Reduce product height from 43% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the roll's dimensions so width is ~20% and height is ~25% of the frame. Ensure the roll appears physically plausible. Remove the grey plastic grid object from the bottom right corner. Keep the distant farm equipment and field background. Reduce the product group from 29% to 13-27% of frame width. Reduce product height from 43% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24.5,
+      "product_height_percent": 30.0,
+      "product_x_center_percent": 25.0,
+      "reasons": [
+        "Visible human operator (driver) inside the tractor cabin in the background, which is a hard reject (human silhouette/face visible).",
+        "Layflat hose/drip line is visibly extending from the side of the roll across the foreground, which is a hard reject (layflat hose through/near the roll)."
+      ],
+      "correction_prompt": "Regenerate the image strictly without any people or tractor drivers. Remove the unspooled drip line so that only a single roll of drip tape is visible, positioned centrally or lower-third.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 21,
+      "product_height_percent": 29,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The image features a single, correctly identified AFP white-and-blue cylindrical drip-tape carton roll as required.",
+        "The bounding box dimensions are well within the preferred 20-23% width range and under the 32% height limit.",
+        "There are zero people, human body parts, or human silhouettes present in the frame.",
+        "The background is contextually relevant to the article brief, showing a farm field and a distant barn/tractor which are explicitly allowed elements.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is present and correctly positioned.",
+        "No prohibited objects (bottles, cans, pipes, second rolls) are visible in the image."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

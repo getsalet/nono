@@ -1,0 +1,42 @@
+{
+  "source_id": "11000028002248-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Presence of a person (farmer) in the image, which is a hard reject condition",
+        "Visual role conflict: The brief requires a medium side view of unattended fixed infrastructure (filter, gauge, regulator, manifold), but the image shows a tractor and a person standing by a secondary carton.",
+        "The primary product (the roll in the foreground) is too large (width exceeds preferred 23% limit and is near the 27% hard reject threshold).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people, human parts, and the tractor. Remove the cardboard box. Replace the foreground roll with a medium side view of unattended fixed irrigation infrastructure including a filter, gauge, and manifold. Show a single, small, secondary carton of drip tape roll. Maintain the 'AFP | 09134922013' watermark in the bottom right. Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip-tape carton roll is visible and clearly identifiable.",
+        "Product width (~22%) and height (~28%) are within the acceptable range (13-27% width, up to 32% height).",
+        "The image contains zero people and zero human body parts.",
+        "The background matches the 'HEADWORKS STORY' role: a medium side view of unattended fixed irrigation infrastructure (filter, gauge, manifold) with the approved carton positioned as a secondary element.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Hard reject criteria are not met (no humans, no prohibited containers, no fake text, physically plausible geometry).",
+        "Lower-third placement is an editorial preference and not a hard reject factor."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
