@@ -1,0 +1,52 @@
+{
+  "source_id": "1220004002627-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 29,
+      "product_height_percent": 36,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The product bounding box height is approximately 36% of the image frame, which exceeds the hard reject threshold of 35%.",
+        "The background shows a green irrigated crop field, which conflicts with the mandatory visual brief for Qeshm/Hormozgan where the background should be an ordinary field edge or farm building without extensive green vegetation.",
+        "machine-enforced bounding-box check failed: Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the drip tape roll positioned lower and further away to reduce its frame height to under 35 percent. Change the background to a dry brown tilled soil field or distant farm building to match the Qeshm/Hormozgan article brief, removing the green crops. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22.5,
+      "product_height_percent": 30.0,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Missing mandatory visual role: The article brief explicitly requires 'SELECTION EVIDENCE: elevated technical arrangement... plus visible emitter-spacing or field-selection evidence'. The current image shows only the product isolated on bare soil without any diagrams, markers, or context of emitter spacing.",
+        "The background (red barn, green tractor, hay bales) does not match the specific geographical context of Qeshm/Hormozgan (Desert/Coastal) as specified in the article title 'دەرگهان | قشم | هرمزگان'."
+      ],
+      "correction_prompt": "Regenerate the image keeping the single AFP white-and-blue drip-tape roll in the foreground. Modify the background to a desert agricultural setting appropriate for Qeshm or Hormozgan (e.g., arid landscape, salt pans, or simple desert irrigation rows) instead of a red barn. In the background or beside the roll, add a simple visual of irrigation drip lines or a selection chart indicating emitter spacing to fulfill the 'SELECTION EVIDENCE' role. Ensure the text on the roll is 'OHP drip-tape 20'. Keep the bottom-right watermark exactly as 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Product is a single wide low cylindrical carton matching the brief.",
+        "No people or body parts present.",
+        "Watermark is present and legible in the bottom right.",
+        "Layout includes field edge and farm buildings as permitted.",
+        "Visible selection grid provides context for field evidence."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

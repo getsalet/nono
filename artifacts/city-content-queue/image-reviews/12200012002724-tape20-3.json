@@ -1,0 +1,39 @@
+{
+  "source_id": "12200012002724-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 41,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The roll of drip tape appears wider than 30% of the frame and taller than 35% of the frame",
+        "The cardboard box with gauges attached to it looks like a commercial package or a container, which conflicts with the requirement to reject containers and secondary commercial products",
+        "machine-enforced bounding-box check failed: Reduce product height from 41% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to make the white-and-blue AFP drip-tape roll smaller (width < 30%, height < 35%). Remove the cardboard box entirely; replace it with loose, disconnected equipment parts (gauges, manifold, regulator) placed directly on the concrete pad. Reduce product height from 41% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 24,
+      "product_height_percent": 25,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "No people or human body parts are visible in the image.",
+        "The AFP drip-tape carton roll is clearly visible and remains secondary to the irrigation equipment.",
+        "The equipment (filter, gauge, manifold) is present as required by the HEADWORKS DETAIL role.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The background (empty concrete pad, farm building, crop rows) is contextually relevant and allowed."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
