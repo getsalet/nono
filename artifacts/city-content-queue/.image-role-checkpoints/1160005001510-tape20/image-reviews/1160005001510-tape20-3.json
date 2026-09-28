@@ -1,0 +1,80 @@
+{
+  "source_id": "1160005001510-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 29,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Presence of a man crouching next to the roll in the foreground.",
+        "Presence of a farmer holding equipment in the background.",
+        "Visible second commercial package (box labeled TAPOT) on the left.",
+        "Visible red bucket next to the box, which violates the zero container rule."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the image. Remove the TAPOT box and the red bucket. Keep the small white AFP roll as the secondary element in a medium shot focused on unattended fixed filters, gauges, and irrigation manifolds.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 36,
+      "product_height_percent": 48,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject: Tractor in the background contains a visible driver/occupant (human silhouette in the cabin), violating the zero-people rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 13-27% of frame width.; Reduce product height from 48% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image ensuring the tractor cabin is empty to comply with the zero-people rule. The background human silhouette is a hard reject. Reduce the product group from 36% to 13-27% of frame width. Reduce product height from 48% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: A person (farmer) is clearly visible in the foreground.",
+        "Hard reject: The product roll is too large, exceeding the maximum width and height limits.",
+        "Hard reject: A tractor is being actively operated by a person (visible through the window), violating the 'unattended equipment' rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the human farmer and the tractor completely. Shrink the drip tape roll to a much smaller size (width ~15-20% of frame). Ensure the roll is the only commercial product visible. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 16,
+      "product_height_percent": 17,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Second commercial package present: a cardboard box bearing the 'AFP' logo is visible immediately to the right of the main product roll",
+        "The primary product roll is excessively small relative to the scene composition, failing to meet the medium side-view emphasis required by the role where it should remain distinct yet secondary to the manifold"
+      ],
+      "correction_prompt": "Remove the large cardboard box on the right; keep only the single AFP drip-tape roll on the soil in the foreground left, maintaining the gauge and manifold setup in the mid-ground",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "The single white-and-blue AFP drip-tape carton roll is visible in the lower-left and fits within the specified width and height constraints.",
+        "The scene is a farm environment (crop rows, distant building) with unattended agricultural infrastructure, which is contextually relevant to the article.",
+        "Zero people or human body parts are present.",
+        "The 'AFP | 09134922013' watermark is present in the bottom-right as required."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

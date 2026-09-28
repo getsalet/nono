@@ -1,0 +1,68 @@
+{
+  "source_id": "11600012001499-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30.0,
+      "product_height_percent": 35.0,
+      "product_x_center_percent": 40.0,
+      "reasons": [
+        "Hard reject: Presence of a person (man) crouching in the image, violating the zero people/body parts rule.",
+        "Hard reject: Roll dimensions exceed allowed limits (width 30% > 27%, height 35% > 32%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the crouching man from the image. Resize the AFP drip-tape roll to fit within 27% width and 32% height constraints. Maintain the 'HEADWORKS STORY' infrastructure context without any human figures. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Human operator is visible in the unattended tractor, which is a hard reject.",
+        "The image contains a second commercial package (the brown cardboard carton), which is a hard reject.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to show the drip tape roll and filtration equipment with an empty tractor in the background (no operator). Remove the cardboard carton from the scene to ensure only the drip tape roll is present. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 32,
+      "product_height_percent": 30,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Product bounding box estimated width is approximately 32% of frame width, exceeding the hard reject limit of 27%.",
+        "Image contains an active human operator (visible hands on steering wheel and legs in the tractor seat), which is a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with a smaller drip-tape roll (width < 20% of frame). Remove the human driver from the tractor seat; the tractor must be unattended with hands, faces, and bodies completely hidden. Keep the fixed filter and manifold infrastructure visible. Reduce the product group from 32% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 21,
+      "product_height_percent": 31,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image contains exactly one approved AFP white-and-blue cylindrical drip-tape carton roll.",
+        "The product width is approximately 21% of the frame width, which falls within the preferred 20-23% range.",
+        "The product height is approximately 31%, well within the 32% maximum.",
+        "Zero people or human body parts are present.",
+        "The 'AFP | 09134922013' watermark is present in the bottom-right corner.",
+        "The background infrastructure (filter, manifold, gauge) aligns with the 'HEADWORKS STORY' visual brief and is contextually relevant without disqualifying the image."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

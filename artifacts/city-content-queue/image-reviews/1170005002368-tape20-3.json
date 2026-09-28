@@ -1,0 +1,55 @@
+{
+  "source_id": "1170005002368-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Contains multiple visible people/figures in the background",
+        "Second commercial package present (blue and white box on the right)",
+        "Bottle/jar/container present (glass bottle and gauge assembly)",
+        "Product width exceeds 27% limit",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with zero people/humans in the scene. Remove all background figures. Remove the second cardboard box on the right. Remove the glass bottle and standalone gauge. Ensure exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present and occupies between 20-23% of frame width. Maintain the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 35,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Presence of multiple human figures (farmers/workers) in the background constitutes a hard reject",
+        "The single product roll is not sufficiently small/secondary compared to the humans, failing the 'exactly one approved carton remains small and secondary' role requirement",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image ensuring zero people or human body parts are visible. Make the single AFP drip-tape carton significantly smaller and secondary, with a clear medium side view of the unattended fixed filter, gauge, regulator, and manifold as the primary focus of the shot. Reduce the product group from 35% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 18,
+      "product_height_percent": 24,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue drip-tape roll positioned in the lower-left, matching the secondary role in the story.",
+        "Zero people, human body parts, or human silhouettes are visible.",
+        "No hard-reject items such as bottles, fertilizer containers, or a second roll are present.",
+        "The fixed filter, gauge, regulator, and manifold are unattended infrastructure, consistent with the visual brief.",
+        "The required watermark 'AFP | 09134922013' is visible in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
