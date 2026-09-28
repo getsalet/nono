@@ -1,0 +1,102 @@
+{
+  "source_id": "1140007002729-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: presence of a man (human subject) in the foreground.",
+        "Hard reject: visible human body parts (hands, arms, legs, face).",
+        "Mandatory role violation: image shows a person actively interacting with equipment instead of an unattended fixed filter/gauge scene with the carton remaining secondary."
+      ],
+      "correction_prompt": "Remove the man and all human body parts. Keep the unattended filter/gauge hardware in the foreground. Retain the single white-and-blue drip-tape carton roll (width ~20-23% of frame, height up to 32%). Keep the farm/crop-row background and the bottom-right 'AFP | 09134922013' watermark intact.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Product 'AFP' carton roll and gauge unit are in the extreme foreground, occupying a dominant primary visual role rather than being small and secondary.",
+        "The composition places the commercial roll on equal visual footing with the mandatory infrastructure (filter/gauge), violating the 'HEADWORKS STORY' requirement that the equipment be the main subject and the roll be minor/background."
+      ],
+      "correction_prompt": "Reposition the irrigation filter, gauge, and manifold to the center of the frame in the mid-ground to make it the primary subject; move the AFP carton roll to the far background or a small corner to be secondary; maintain the watermark 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 24,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: The image contains two visible human workers (farmers) sitting in the field.",
+        "Hard reject: A pipe is threaded directly through the center of the main drip-tape roll, violating the 'pipe through the roll' rule.",
+        "Hard reject: A second commercial package (blue and white box) is visible in the background to the left, violating the 'exactly one approved carton' and 'zero second commercial package' rules.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate with zero humans. Ensure the main drip-tape roll is unobstructed by pipes or hoses. Remove all other boxes, jars, or containers from the scene, leaving only the single AFP wide cylindrical roll. Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 40,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: Visible human faces, bodies, arms, and legs (the foreground farmer and background workers).",
+        "Hard reject: The subject roll is not a white-and-blue carton; it is a white spool with a visible hole in the center, violating the 'carton roll' description.",
+        "Hard reject: The product bounding box exceeds the maximum height of 32 percent and the width tolerance (estimated ~33 percent).",
+        "Visual mismatch: The brief requires a 'medium side view of unattended fixed filter', but the image shows a person manually holding a hose attached to a handle.",
+        "Text artifact: The label on the roll contains 'gibberish' placeholder text rather than clear product branding.",
+        "Watermark presence: The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all people and background activity. Replace the central object with a white and blue cardboard drip-tape carton roll placed on the soil. Add a small, unattended fixed filtration system (filter, gauge, manifold) as the primary focus. Ensure the carton roll is small and secondary to the filtration hardware. Keep the image free of human silhouettes. Reduce the product group from 33% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: Two distinct carton rolls are present in the image; the brief mandates exactly one.",
+        "Hard reject: Visible human figures (farmers/workers) are present in the background, which is strictly prohibited.",
+        "Role conflict: The mandatory role required a medium side view of unattended fixed filter/gauge/regulator infrastructure as the primary focus, with the roll remaining small and secondary. The roll in this image is the primary foreground subject.",
+        "Dimensional variance: The product height and total composition appear overly large relative to the preferred 20-23% width requirement.",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Remove the large roll on the right, leaving only one small, secondary AFP carton roll on the left. Shift focus to a medium side view of unattended fixed irrigation hardware (filter, gauge, regulator, manifold). Ensure the single roll is small relative to the frame. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 15,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product is a single white-and-blue wide low cylindrical carton roll",
+        "Placement is lower-third and off-center, which is acceptable",
+        "No people or body parts visible",
+        "Background matches article brief (irrigation infrastructure, farm context)",
+        "Required watermark present",
+        "Dimensions fall within accepted ranges"
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

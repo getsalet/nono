@@ -1,0 +1,121 @@
+{
+  "source_id": "1140003002806-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 30,
+      "product_height_percent": 38,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Presence of two human workers",
+        "Visible human body parts (legs, torso, arms)",
+        "Drip-tape roll exceeds maximum acceptable width and height constraints (30% width vs. 27% limit)",
+        "Multiple secondary commercial cartons visible in the scene",
+        "Watermark text is incorrect (shows 09134922013 instead of 0913492201)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with zero people, a single small drip-tape roll centered lower-left, and correct bottom-right watermark 'AFP | 0913492201'. Include fixed filter and manifold, exclude extra cartons and containers. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 15,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The image contains three visible humans (workers), which is a hard reject.",
+        "The image role conflicts with the specific instruction to show an 'unattended fixed filter' as the main subject; instead, the main subject is a wheeled machine.",
+        "The required role specified 'exactly one approved carton', but this image shows a large roll of tape.",
+        "Multiple commercial products/hoses are visible on the wheeled unit.",
+        "Visible humans violate the 'zero people' constraint."
+      ],
+      "correction_prompt": "Remove all humans. Regenerate a medium side view of an unattended fixed irrigation filter unit (including gauge and manifold). Include one small AFP white-and-blue drip-tape roll as a secondary object. Ensure the roll is unattended and no other people are present.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: Contains a prominent full-body person (farmer/worker) interacting with the equipment.",
+        "Role violation: The brief strictly requires an 'unattended' medium side view of fixed filter infrastructure with exactly one small/secondary roll; the current image depicts an active scene with human operation.",
+        "Infrastructure mismatch: The filter unit is mounted on a mobile wheeled cart, whereas the brief specifies 'fixed' infrastructure."
+      ],
+      "correction_prompt": "Regenerate without any people. Show an unattended, static medium side view of fixed irrigation infrastructure (filter, gauge, regulator, manifold). The single white-and-blue cylindrical drip-tape carton roll must be small and secondary in the composition (width approx 20% of frame).",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 15,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: A second commercial package (a large open cardboard box) is clearly visible next to the roll."
+      ],
+      "correction_prompt": "Remove the cardboard box, leaving only the single AFP drip-tape roll.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 22.5,
+      "product_height_percent": 24.0,
+      "product_x_center_percent": 36.2,
+      "reasons": [
+        "Visible humans: The image contains two people (a man crouching and a man standing), which is a hard reject requirement as the image must contain zero people and zero human body parts."
+      ],
+      "correction_prompt": "Regenerate the image with no people, no human silhouettes, and no hands visible, focusing only on the static infrastructure and the drip-tape roll.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 26,
+      "product_height_percent": 31,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject: Image contains a person (male, crouching) next to the product. The brief strictly forbids any visible people or body parts.",
+        "Hard reject: Product (the roll) is wider than 27 percent of the frame width. Visual estimation places the width at approximately 26-28%, which violates the hard limit for the object."
+      ],
+      "correction_prompt": "Regenerate the image completely excluding any people or workers. Scale down the AFP drip tape roll so its width is strictly under 20% of the frame width. Maintain a side-view angle with irrigation hardware visible in the background.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 12.5,
+      "product_height_percent": 15,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Two people present in the scene",
+        "A second commercial package (brown cardboard box) is visible",
+        "The image role does not match the required 'HEADWORKS STORY' view of unattended infrastructure",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 12.5% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people and the brown cardboard box. Reframe the image to focus on unattended fixed filters, gauges, and manifolds, with the white drip tape roll kept small and secondary in the background. Enlarge the product group from 12.5% to 13-27% of frame width.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 27,
+      "product_height_percent": 30,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "The image contains two people (a man crouching in the foreground and a woman in the background), which violates the hard reject rule requiring zero people and zero human body parts.",
+        "The article brief mandates a 'medium side view of unattended fixed filter, gauge, regulator and manifold', but the image shows an attended mobile pump system with human subjects rather than a fixed, unattended infrastructure setup."
+      ],
+      "correction_prompt": "Regenerate the image showing a medium side view of a fixed unattended irrigation manifold and filters with a small AFP white-and-blue wide low cylindrical drip-tape carton roll in the foreground, with zero people and zero human body parts visible in the scene.",
+      "attempt": 8
+    }
+  ]
+}

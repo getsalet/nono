@@ -2,25 +2,67 @@
   "source_id": "1050002002412-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 88,
-      "product_width_percent": 46,
-      "product_height_percent": 26,
-      "product_x_center_percent": 27,
+      "pass": false,
+      "score": 100,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
       "reasons": [
-        "Correct pair of products is visible: one packaged AFP coil and one bare black woven coil.",
-        "The pair is separate, physically plausible, and fully visible without merging or floating artifacts.",
-        "Product width is approximately 46 percent of the frame, which is within the acceptable 8 to 60 percent range, though above the preferred 20 to 35 percent window.",
-        "Mandatory role elements are present: a fixed, unattended pump, gauge, and manifold are clearly visible and treated as infrastructure rather than a third commercial product.",
-        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
-        "Zero people or human body parts are present in the image."
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 9-20% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 9-20% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 42,
+      "product_height_percent": 52,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: The image contains a person (a worker/farmer) squatting and looking at the equipment, which violates the zero-person rule.",
+        "The product pair occupies too much of the frame width (~42%), exceeding the maximum allowed 20%.",
+        "There are two visible coils of black woven hose (one on the ground, one on the stand), meaning the required 'one bare black woven coil' is not met.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 9-20% of frame width.; Reduce product height from 52% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures and body parts completely. Ensure the image contains exactly two hoses: one packaged AFP coil and one bare black woven coil. Scale down the product pair so it occupies 12-15% of the frame width. Reduce the product group from 42% to 9-20% of frame width. Reduce product height from 52% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 84,
+      "product_height_percent": 36,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Pair too wide: The two coiled products occupy approximately 84% of the frame width, drastically exceeding the 20% hard-reject limit.",
+        "Visual Hierarchy Violation: The coil pair is the dominant foreground element (primary subject), whereas the visual brief mandates it remains 'small, separate and secondary' to the HEADWORKS STORY (pump/gauge).",
+        "Placement: The products are anchored at the very bottom edge (lower-third/bottom-heavy) rather than acting as a secondary element to the headworks story.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 84% to 9-20% of frame width.; Reduce product height from 36% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Scale down the two coiled products to occupy only 12–15% of the frame width, moving them into the mid-ground to keep them secondary. Promote the fixed pump, gauge, and manifold to the primary foreground/mid-ground focus to strictly follow the 'Headworks Story' brief. Reduce the product group from 84% to 9-20% of frame width. Reduce product height from 36% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 17,
+      "product_height_percent": 24,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image features the two required coils (one bare black, one white packaged) in the lower-left quadrant, which correctly functions as a secondary element to the primary 'HEADWORKS' infrastructure (pump, gauge, manifold).",
+        "Zero people or human body parts are visible in the frame.",
+        "No forbidden commercial containers (bottles, cans, jars) or third coils are present.",
+        "Product pair width is approximately 17%, falling within the 9-20% acceptable range.",
+        "The watermark 'AFP | 09134922013' is correctly present and legible in the bottom-right corner.",
+        "Infrastructure elements like the wooden post, brass gauge, and teal manifold remain static and plausible."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 4
     }
   ]
 }

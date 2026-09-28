@@ -1,0 +1,65 @@
+{
+  "source_id": "1140007002358-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 12,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Person (face, torso, arm) is clearly visible pushing the cart on the right side of the frame.",
+        "Hard reject: Unapproved object present (metal cart/chute device) which is not listed as allowed fixed infrastructure or distant equipment.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 12% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people and the metal cart. Place a single AFP white-and-blue drip-tape roll on the soil in the lower-left third. Keep the roll small (approx 20% width) and fully visible. Maintain the wide field background and AFP watermark. Enlarge the product group from 12% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 16.5,
+      "product_height_percent": 13.0,
+      "product_x_center_percent": 29.0,
+      "reasons": [
+        "A visible human (male figure standing in the field) is present in the image, which is a hard reject for this product role.",
+        "Watermark text 'AFP | 09134922013' is present in the bottom-right corner, which is explicitly prohibited ('fake headline, caption, gibberish writing')."
+      ],
+      "correction_prompt": "Remove the person standing in the field completely. Regenerate the image as a high-oblique wide shot of the crop rows with the AFP drip-tape carton roll placed in the lower-left foreground, with no text overlays or watermarks.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Article visual brief mandates 'four corners and Bactria' city context and 'editorial hero' composition with a 'high oblique view' where the farm context dominates and the product stays small. The image instead displays a distant modern city skyline.",
+        "The roll does not appear to be a wide cylindrical carton roll; it visually resembles a narrow spool or bucket (hard reject for wrong object type/dimensions)."
+      ],
+      "correction_prompt": "Reframe as a high-oblique wide shot of a rural farm field with a distant small village (no city skyline). Include a single wide, white-and-blue cylindrical drip-tape carton roll on the ground in the bottom-left, small in the frame, with 'AFP | 09134922013' watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 24,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "Zero people or body parts detected",
+        "Watermark 'AFP | 09134922013' present in bottom right",
+        "Single roll, white and blue color scheme",
+        "Roll size within acceptable bounds",
+        "Editorial farm background matches brief"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

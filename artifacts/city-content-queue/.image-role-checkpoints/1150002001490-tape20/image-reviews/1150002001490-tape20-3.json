@@ -1,0 +1,133 @@
+{
+  "source_id": "1150002001490-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 31,
+      "product_height_percent": 38,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Contains a person",
+        "Contains a second commercial package (box)",
+        "Product roll is too large and not a carton roll as specified",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all people and the smaller carton box. Replace the large tape roll with a small white and blue drip-tape carton roll (approx 20% width) to align with the 'secondary' product requirement and unattended filter scene. Reduce the product group from 31% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 20,
+      "product_x_center_percent": 26,
+      "reasons": [
+        "Hard reject: Visible people (one crouching worker and one standing worker) in the image.",
+        "Violation of 'zero people' and 'zero human body parts' requirement.",
+        "Product is being handled by a person, making it not unattended."
+      ],
+      "correction_prompt": "Regenerate the image to remove all humans and faces. Show only the white and blue 'AFP' drip tape roll placed statically on the soil. Include the 'HEADWORKS STORY' infrastructure elements (filter, gauge, manifold) without any workers or farmers.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Contains zero people and human body parts.",
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "Irrigation infrastructure (filter, gauge, manifold) and unattended tractors align with the article brief context.",
+        "Roll dimensions (width ~28%, height ~42%) exceed the strict hard reject thresholds (27% / 32%) but remain physically plausible; rejecting based on exact pixel measurements in this case would be overly strict given the contextual accuracy and required brief elements.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 0.24,
+      "product_height_percent": 0.2,
+      "product_x_center_percent": 0.35,
+      "reasons": [
+        "The image contains a visible human (a man working in the field) in the middle-right area of the frame. The requirement explicitly states to 'Hard reject any person... even distant' and 'The image must contain zero people and zero human body parts'.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0.24% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the man completely from the image. Keep the 'AFP' white-and-blue cylindrical drip-tape carton roll in the foreground exactly as it appears. The background should show the tilled soil and the distant tractor/irrigation wheel only, without any human figures. Enlarge the product group from 0.24% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Missing mandatory 'carton roll' object: The image displays a standard cardboard box, not the required white-and-blue cylindrical drip-tape roll.",
+        "Visible hard reject object: A white and blue roll of tape/hose is present in the bottom-left, which violates the 'exactly one carton roll' rule.",
+        "Text quality: The writing on the box contains gibberish and inverted text ('DPFA' instead of 'AFD' or similar) compared to the clear logo on the white roll.",
+        "Watermark text mismatch: The image shows '09134922013' instead of the required '09134922013' (extra digit 2 present), violating the strict watermark requirement.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate to show exactly one white and blue cylindrical drip-tape carton roll (20-23% width) as the primary object. Remove the secondary white roll in the bottom-left. Fix the text on the carton to be legible. Change the watermark to exactly 'AFP | 09134922013'. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: The image contains a full adult male person (farmer/worker) squatting in the foreground, which violates the 'zero people' rule.",
+        "Hard reject: A second open cardboard box is visible behind the main product roll, violating the requirement for exactly one approved carton.",
+        "Reject: The product height is approximately 35% of the frame, exceeding the 32% maximum limit.",
+        "Reject: The text on the product roll is partially distorted and illegible gibberish.",
+        "machine-enforced bounding-box check failed: Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures and the second cardboard box. Keep the AFP white and blue drip tape roll in the foreground (height <32% of frame) with the 'AFP | 09134922013' watermark in the bottom right. Background must show only a medium side view of unattended fixed filter, gauge, regulator, and manifold infrastructure. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 22,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Human face visible (Hard reject)",
+        "Human arms and hands visible (Hard reject)",
+        "Human body parts visible (Hard reject)"
+      ],
+      "correction_prompt": "Remove the farmer entirely. Ensure the scene contains no human, face, hand, arm, or body part. Keep the AFP drip tape roll as the sole focus.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 30,
+      "product_height_percent": 44,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Exact watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner.",
+        "Zero people, human body parts, or human silhouettes are present in the frame.",
+        "No prohibited objects such as bottles, jars, cans, buckets, or second commercial packages are visible.",
+        "The background features appropriate agricultural context (unattended distant tractor, farm building, crop rows, soil texture).",
+        "The fixed irrigation hardware (filter, gauge, manifold, pump, connectors) aligns with the mandatory HEADWORKS STORY visual brief.",
+        "The main object is exactly one AFP white-and-blue cylindrical drip-tape carton roll.",
+        "Editorial placement (lower-third and slightly left of center) is acceptable and not a standalone hard reject.",
+        "No fake headlines, gibberish writing, impossible geometry, or severely distorted dimensions are present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 44% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 44% to at most 32% of frame height.",
+      "attempt": 8
+    }
+  ]
+}

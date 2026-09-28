@@ -1,0 +1,56 @@
+{
+  "source_id": "1140006002839-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Visible person (farmer/worker) sitting in the background",
+        "Hard reject: Second commercial package (box) containing gauges and filters is visible",
+        "Product aspect ratio and dimensions are physically implausible (too tall)",
+        "Mandatory visual brief violation: Failed to show medium side view of unattended fixed filter, gauge, regulator, and manifold as the primary subject",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the person and the secondary box. Regenerate a medium side-view of an unattended fixed irrigation setup (filter, gauge, regulator, manifold). Add one AFP drip-tape roll in the background that is small and secondary. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The 'image role 3' requirement for a 'wide low cylindrical drip-tape carton roll' is not met. The two rolls visible in the image (one small in the background, one large in the foreground) are both vertically oriented cylinder rolls (like a bedsheet or paper roll), not wide low drip-tape cartons.",
+        "The specific 'headworks story' requirement for a 'medium side view of unattended fixed filter, gauge, regulator and manifold' is not met. The irrigation setup shown is a complex mobile filtration unit with a large pump/blower component, not the fixed infrastructure described in the brief.",
+        "The product width/height percentages are 0 because the specified product object (wide low cylindrical drip-tape carton) is absent from the image.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate to replace the vertically oriented cylinder rolls with a single wide, low cylindrical drip-tape carton roll. Modify the irrigation setup to show a medium side view of a fixed filter, gauge, regulator, and manifold, removing the large mobile pump/blower unit. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20.3,
+      "product_height_percent": 25.8,
+      "product_x_center_percent": 30.5,
+      "reasons": [
+        "Product width is within the optimal 20-23% range",
+        "Product placement is in the lower-left, which is acceptable",
+        "Background includes fixed filters, gauges, and manifold as requested for the HEADWORKS STORY role",
+        "No people or human body parts are visible",
+        "Required watermark is present and clearly visible"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
