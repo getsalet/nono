@@ -1,0 +1,56 @@
+{
+  "source_id": "1220005002003-tape20",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1: The product is 'oversized'. The brief requires the carton to stay 'small' and 'off-center on the lower third'. The current image places the roll in the center bottom and it dominates the foreground, failing the 'farm dominates' requirement.",
+        "Role 3: Fails 'no farm activity'. The background shows a tractor and farm machinery, violating the restriction on equipment-only scenes.",
+        "Role 2: The background contains a tractor and farm structures, which conflicts with the requirement to keep the background simple (allowing only 'ordinary field edge or farm building')."
+      ],
+      "correction_prompt": "1. Scale down the product to ~10% of frame width in an off-center position for Role 1. 2. Remove the tractor from Role 2's background to ensure only a simple field edge or farm building is visible. 3. Crop out the tractor and machinery from Role 3, showing only the filter and manifold on the pad with a clean background.",
+      "panel_scores": [
+        60
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1: The product (tube) is placed in the center of the frame, violating the requirement to keep it 'off-center on the lower third'.",
+        "Role 3: There is clear farm activity in the background (tractor and operator), which violates the 'no farm activity' constraint for this role.",
+        "Role 3: The product is not 'secondary' or small; it occupies a significant portion of the foreground, competing with the technical hardware for attention."
+      ],
+      "correction_prompt": "Regenerate Role 1 with the product positioned clearly off-center (left or right) in the lower third. For Role 3, crop out the background tractor to ensure 'no farm activity' and reduce the product's scale to keep the equipment as the primary focus.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 fails the EDITORIAL HERO specification: the farm and irrigation context do not sufficiently dominate the frame; the product carton is centered and oversized rather than off-center on the lower third.",
+        "Role 1 includes farm machinery (tractors) in the background, violating the rule against any person or unrelated farm activity that distracts from the irrigation context.",
+        "Role 2 does not meet the SELECTION EVIDENCE criteria: there is no visible emitter-spacing or technical field-selection evidence, and the product is placed centrally and large rather than as part of a technical arrangement.",
+        "Roles 1 and 2 are visually too similar in camera height, product placement, and generic farm background, resulting in a duplicate layout that lacks distinct narrative progression.",
+        "Role 3 violates the HEADWORKS DETAIL specification: while it features a concrete pad and filtration system, the background includes a tractor and active field farming, which explicitly contradicts the 'no farm activity' requirement."
+      ],
+      "correction_prompt": "Regenerate Role 1 with a wide high-oblique view where the 20cm drip tape is small and off-center lower third against a dominant irrigation landscape, removing all tractors. Regenerate Role 2 to focus on a technical arrangement showing emitter spacing on a single line of tape. Regenerate Role 3 to show only the filtration headwork on a concrete pad with a completely empty, blurred background, removing all machinery and crops.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

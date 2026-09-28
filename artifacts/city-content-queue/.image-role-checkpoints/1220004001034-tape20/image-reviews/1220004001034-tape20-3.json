@@ -1,0 +1,66 @@
+{
+  "source_id": "1220004001034-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 26,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible person (farmer) in the background violates the hard reject rule for any human body parts or silhouettes."
+      ],
+      "correction_prompt": "Regenerate the image with a completely empty background; remove the person, tractors, and other machinery to strictly match the 'equipment-only' and 'zero people' brief, retaining only the single product on the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 35,
+      "product_height_percent": 28,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Mandatory visual brief violation: The image shows only a drip tape roll on a concrete pad and lacks the required 'fixed filter, gauge, regulator, and manifold' for the HEADWORKS DETAIL role.",
+        "Product width exceeds the 30% hard reject threshold (estimated at ~35%).",
+        "Gibberish/unclear writing on the carton label rather than the required 'دو' text.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reframe the image to include a fixed irrigation manifold, gauge, and filter on the concrete pad to satisfy the brief, making the 'دو' roll smaller (under 30% width) and secondary. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Human body parts visible: Two people/farmers are present in the background.",
+        "Geometry violation: The image displays two carton rolls, whereas the brief strictly requires exactly one."
+      ],
+      "correction_prompt": "Regenerate the scene with only a single AFP drip-tape carton roll in the foreground. Completely remove the people from the background; keep only the tractor and static farm environment. Maintain the concrete pad setting with irrigation infrastructure. Retain the 'AFP | 09134922013' watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 98,
+      "product_width_percent": 26,
+      "product_height_percent": 32,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Roll dimensions (width 26%, height 32%) fall within the required ranges (width 12-30%, height up to 35%).",
+        "Zero people, human body parts, or silhouettes are present.",
+        "Watermark 'AFP | 09134922013' is correctly positioned in the bottom right.",
+        "Background shows a concrete pad with infrastructure (pipes, gauges, distant tractor) that aligns with the 'HEADWORKS DETAIL' role and allows 'distant unattended farm equipment'.",
+        "The carton roll is small and secondary relative to the infrastructure hardware in the mid-ground."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

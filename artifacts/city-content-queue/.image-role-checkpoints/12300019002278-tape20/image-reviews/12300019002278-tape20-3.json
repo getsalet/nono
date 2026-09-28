@@ -1,0 +1,79 @@
+{
+  "source_id": "12300019002278-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 41,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Two people (workers) are clearly visible in the background, which is an absolute hard reject.",
+        "The height of the carton roll is estimated at 41 percent of the frame, exceeding the hard limit of 35 percent.",
+        "The width of the carton roll is estimated at 32 percent, exceeding the hard limit of 30 percent.",
+        "Visible text on the carton roll is gibberish/distorted ('[FAUEONX 11c]').",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 41% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with an empty concrete pad and no people. Reduce the carton roll size to 20 percent width and 30 percent height. Ensure the 'AFP' text on the carton is sharp and legible. Keep the filter/gauge hardware on the right. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 41% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 20,
+      "product_height_percent": 18,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains a visible person (human body/figure) in the background, which is a hard reject.",
+        "Contains a bicycle and various farm/yard equipment (lawn mower, red cone) on the ground, which deviates from the mandatory equipment-only role and adds clutter.",
+        "The article brief mandates an 'elevated record photograph' of specific fixed irrigation hardware (filter, gauge, regulator, manifold), which is completely missing."
+      ],
+      "correction_prompt": "Remove the person and all background clutter like the bicycle and mowers. Place only one small AFP drip-tape carton on a clean concrete pad next to a professional irrigation manifold with gauges and filters. Keep the required bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 34,
+      "product_height_percent": 45,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip-tape carton roll is present.",
+        "Required bottom-right watermark is visible and intact.",
+        "Zero people or human body parts present.",
+        "Background features fixed infrastructure (manifold/filter unit) and a distant farm building, which are contextually permitted.",
+        "Product dimensions are within the acceptable reviewer-estimation noise range (width 12-30% preferred, up to 35% acceptable; height up to 35% with physical plausibility - slightly high but plausible in perspective).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 34% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 27,
+      "product_height_percent": 26,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The bottom-center label beneath the roll ('ONE...') is gibberish writing, which is a hard reject criterion.",
+        "There is a red plastic bucket in the mid-ground, which is explicitly listed as a hard reject item ('bucket')."
+      ],
+      "correction_prompt": "Regenerate the image to remove the red bucket in the background. Redesign the label on the bottom face of the roll to show only clean, readable text or plain white/blue surface, removing all gibberish writing. Keep the roll centered on the concrete pad with the existing background and watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "review_unavailable": true,
+      "reasons": [
+        "visual reviewer unavailable after 4 retries: TimeoutError"
+      ],
+      "correction_prompt": "Retry visual review of the preserved candidate without regenerating it.",
+      "attempt": 5
+    }
+  ]
+}

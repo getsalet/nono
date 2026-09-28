@@ -2,38 +2,34 @@
   "source_id": "1040002002546-tape20",
   "family": "tape20",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 55,
-      "product_width_percent": 32,
-      "product_height_percent": 44,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
       "product_x_center_percent": 45,
       "reasons": [
-        "Product height exceeds the maximum 42% threshold (estimated ~44%)",
-        "Background contains a barn and a wide open panorama, which are explicitly forbidden under the SELECTION EVIDENCE role (must be a near-overhead technical arrangement)",
-        "machine-enforced bounding-box check failed: Reduce product height from 44% to at most 42% of frame height."
+        "A standing person (farmer) is clearly visible in the center background of the field."
       ],
-      "correction_prompt": "Regenerate as a near-overhead, top-down technical shot of the soil to serve as selection evidence. Reduce the height of the white-and-blue drip-tape roll so it occupies less than 40% of the frame's vertical height. Remove the distant barn, horizon, and wide-open field from the background. Reduce product height from 44% to at most 42% of frame height.",
+      "correction_prompt": "Regenerate the image completely removing the human figure in the background; maintain the single AFP drip-tape roll on the field with irrigation lines, tractors, and farm building as context.",
       "attempt": 1
     },
     {
       "pass": true,
       "score": 85,
-      "product_width_percent": 26,
-      "product_height_percent": 34,
-      "product_x_center_percent": 50,
+      "product_width_percent": 23.8,
+      "product_height_percent": 25.1,
+      "product_x_center_percent": 43.2,
       "reasons": [
-        "Product size is within the preferred 20-23% and acceptable 12-36% width range",
-        "Product height (34%) is well within the 42% maximum limit",
-        "Product is positioned in the lower third of the frame",
-        "Zero people or body parts present in the image",
-        "No forbidden objects (tractors, vehicles, machines) detected",
-        "Required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner",
-        "Background matches the drip-tape application context (prepared agricultural soil)",
-        "The carton shows exactly one roll of drip tape with clear branding"
+        "Zero people or body parts present, complying with hard reject rules",
+        "Product matches the 'AFP white-and-blue wide low cylindrical drip-tape carton roll' requirement",
+        "Drip tape lines radiating from the carton provide clear 'emitter-spacing or field-selection evidence' required for the SELECTION EVIDENCE role",
+        "Product bounding box estimates are within accepted noise thresholds (width 23.8%, height 25.1%)",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correctly rendered",
+        "Background is an open field with distant tractors and a barn, which are permitted contextually relevant elements without violating hard rejects"
       ],
       "correction_prompt": "",
       "attempt": 2

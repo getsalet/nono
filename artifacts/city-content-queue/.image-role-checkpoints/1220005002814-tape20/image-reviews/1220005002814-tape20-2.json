@@ -1,0 +1,67 @@
+{
+  "source_id": "1220005002814-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Hard reject: The image contains a second roll (the coiled black tape on the ground), which is a hard reject condition.",
+        "The text on the carton is gibberish ('ONP ... 600') rather than clean legible branding.",
+        "The required role is 'SELECTION EVIDENCE' (visible emitter-spacing or field-selection evidence), but the coiled tape on the ground is generic and does not provide clear field-selection evidence."
+      ],
+      "correction_prompt": "Remove the coiled tape roll on the ground entirely. Display the single white and blue AFP carton with clean legible text only. Add visible drip tape emitter spacing or measurement tools nearby to show selection evidence. Keep the watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Presence of second commercial package (loose drip line coils) next to the carton",
+        "Product width exceeds the 23% preferred maximum and reaches the 28% review limit",
+        "Missing required emitter-spacing or field-selection evidence for the SELECTION EVIDENCE role"
+      ],
+      "correction_prompt": "Regenerate with only one white AFP carton on bare soil. Remove the loose line coils and any hardware. Reduce the carton width to 20-22% and add clear technical evidence like visible tape emitters or a measuring scale to indicate the 20cm selection.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 32,
+      "product_height_percent": 35,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The image contains two distinct objects (the main roll and the coiled tape), which violates the 'exactly one' roll constraint.",
+        "A second commercial package or roll is present, which is a hard reject trigger.",
+        "The main product width is estimated at 32% of the frame, which exceeds the 30% hard reject limit for width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the coiled white tape on the ground to ensure only one roll is visible; reduce the width of the main carton roll so it occupies less than 30% of the frame width while keeping it in the same position. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 26,
+      "product_height_percent": 22,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "The image displays a single AFP white-and-blue drip-tape roll matching the product description",
+        "No people or human body parts are visible",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right",
+        "The layout includes infrastructure and farm equipment consistent with the brief, and the product dimensions fall within accepted tolerances"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
