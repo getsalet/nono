@@ -1,0 +1,120 @@
+{
+  "source_id": "1230009001588-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 27,
+      "product_height_percent": 22,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Detected a person (human) in the background",
+        "Detected an animal (horse) in the background",
+        "Detected a second commercial package (second roll of tape) in the background",
+        "Detected a second human body part (arm/hand) in the background",
+        "Detected a second commercial package (blue container on trailer)"
+      ],
+      "correction_prompt": "Regenerate image showing exactly one AFP white-and-blue drip-tape roll on a concrete pad with a fixed filter and gauge. Remove all people, horses, extra rolls, and extra commercial containers from the background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Product roll width is 32% of the frame, which exceeds the hard reject threshold of >30%.",
+        "Product roll height is 38% of the frame, which exceeds the hard reject threshold of >35%.",
+        "Image role mismatch: The brief mandates an 'elevated record photograph' (close-up detail view), but the image is a wide shot with the product on the ground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate an elevated close-up photograph of the AFP drip tape carton on a concrete pad. Ensure the carton is small and secondary to the main subject (fixed filter/gauge manifold). The carton width must be under 30% of the frame and height under 35%. The background must show distant farm infrastructure, not a wide open field. Keep the bottom-right watermark exactly as 'AFP | 09134922013'. No people or containers. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 27,
+      "product_height_percent": 28,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Mandatory visual brief violation: Image role 3 specifies a HEADWORKS DETAIL shot featuring a fixed filter, gauge, regulator, and manifold on a concrete pad. The image shows a single roll on a plain pad without the required irrigation infrastructure.",
+        "Failure to include the required 'exactly one approved carton remains small and secondary' element in the context of the infrastructure shot."
+      ],
+      "correction_prompt": "Regenerate to show a close-up of an irrigation headworks setup on a concrete pad, featuring a filter, pressure gauge, and manifold. Place the small drip-tape roll as a secondary element in the foreground, maintaining the AFP watermark in the bottom right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "A second commercial package (smaller roll) is visible in the bottom-right corner, which is a hard reject for a single-item shot.",
+        "A small black bottle/container is visible attached to the irrigation manifold, which is strictly prohibited.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the second roll at the bottom right and any small bottles/containers from the manifold. Ensure only one large drip-tape roll is shown on the concrete pad with the fixed filter and gauge infrastructure. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 26,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "A standing person is visible in the background",
+        "Mandatory visual brief requires an equipment-only shot with fixed filters, gauges, and a manifold on a concrete pad, which is missing"
+      ],
+      "correction_prompt": "Regenerate an elevated detail shot of an empty concrete pad featuring only fixed drip irrigation infrastructure (filter, gauge, regulator, and manifold). A small, secondary AFP white-and-blue drip-tape roll should be visible on the pad. Ensure the background has zero people, faces, or body parts.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 35,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Two people/farmers visible in the background (one on the left, one near the red tractor). Hard reject for any human presence.",
+        "Two rolls are present instead of exactly one. The second smaller roll is a 'second commercial package' or 'second roll', which is a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 31,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Background contains multiple large animals (horses) and a large piece of farm equipment, which are not allowed under the 'zero people or human parts' and 'fixed irrigation hardware' constraints (animals are not hardware).",
+        "Image shows a standalone roll on the ground instead of the mandatory 'elevated record photograph' on a concrete pad with visible filter/gauge/regulator/manifold infrastructure.",
+        "The image role does not match the 'HEADWORKS DETAIL' brief which requires the roll to be secondary and small, whereas here it is the primary subject."
+      ],
+      "correction_prompt": "Regenerate as a close-up elevated record photograph on a concrete pad of a drip irrigation setup (filter, gauge, manifold). Place the AFP carton roll small and in the background (secondary). Remove all animals and large farm equipment. Maintain the bottom-right watermark.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 8
+    }
+  ]
+}

@@ -2,25 +2,42 @@
   "source_id": "1040002001236-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 88,
-      "product_width_percent": 16,
-      "product_height_percent": 30,
-      "product_x_center_percent": 35,
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 48,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
       "reasons": [
-        "Contains the required approved pair: one packaged coil and one bare black woven coil.",
-        "Product width is estimated at approximately 16% of the frame, within the acceptable 12-15% target and 9-20% noise window.",
-        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
-        "Role 3 (medium side view of fixed unattended pump, gauge, and manifold) is clearly visible and correctly positioned.",
-        "No people, body parts, or human silhouettes are present in the image.",
-        "No third commercial packages, bottles, or containers are visible."
+        "Required watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "Mandatory role is satisfied with a detailed equipment setup (pump, gauge, manifold) on a concrete pad/flat surface.",
+        "The two approved layflat coils are visible, separate, fully visible, and physically plausible.",
+        "No human body parts, faces, or silhouettes are present.",
+        "No extraneous commercial packages or bottles found.",
+        "The 'wider than 25 percent' constraint was interpreted as the relative scale of the layflat pair within the scene (which is small), while the bounding box includes the required fixed pump infrastructure.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 22.5,
+      "product_height_percent": 14.2,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Contains exactly the required approved layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "Coils are clearly visible, separate, and physically plausible without any overlapping or merged state.",
+        "Zero people, human silhouettes, or body parts are present in the frame.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "Distant unattended farm buildings and fields are appropriately treated as background rather than rejections."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

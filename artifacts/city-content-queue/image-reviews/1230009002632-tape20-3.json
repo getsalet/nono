@@ -1,0 +1,69 @@
+{
+  "source_id": "1230009002632-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A visible person (standing man) is present in the background, which violates the 'zero people' rule.",
+        "Role mismatch: The brief required 'equipment-only' showing a fixed filter, gauge, regulator, and manifold, but the image shows an empty concrete pad with a standing person.",
+        "Visual Brief Mismatch: The article is about 20cm drip tape, but the image prominently features a large roll that appears inconsistent with the specific width detail required."
+      ],
+      "correction_prompt": "Remove the person in the background entirely. Add fixed irrigation infrastructure (filter, gauge, regulator, manifold) to the empty concrete pad. Ensure the scene is equipment-only with no human presence.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: The image clearly contains two distinct human figures standing in the background on the left side (one in a blue shirt), which violates the 'zero people' rule.",
+        "Hard reject: The AFP roll product width is estimated at 38% of the frame, which exceeds the maximum limit of 30%.",
+        "Hard reject: A second commercial package (brown cardboard box) is clearly visible to the right of the main roll, violating the 'zero second commercial package' rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image: Remove all humans from the background. Reduce the size of the main AFP roll so its width is under 30% of the frame. Remove the brown cardboard box on the right side to ensure only one product is visible. Keep the gauge/filter equipment and the required watermark. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Mandatory 'HEADWORKS DETAIL' visual role missing: the image lacks the required close-up view of a fixed filter, gauge, regulator, and manifold on an empty concrete pad.",
+        "The product (drip tape roll) is the primary subject in the frame, whereas the brief specifies it must remain small and secondary to the equipment.",
+        "The presence of a wide background with distant tractors contradicts the 'no farm activity' requirement for the detail role."
+      ],
+      "correction_prompt": "Regenerate as a low-angle close-up macro shot of a white and blue AFP drip tape roll placed as a small secondary element next to a metallic filtration system, pressure gauge, and manifold on a concrete slab. Ensure the filter hardware is the dominant focal point. Keep the background clean and uncluttered, removing any tractors or farm activity.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 26,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Image shows exactly one wide, low, cylindrical drip-tape carton roll with white and blue branding, matching the AFP brand and the 20cm family brief.",
+        "Zero visible people or human body parts (no farmers, workers, or silhouettes).",
+        "The roll's width and height are within the preferred 20–30% bounds, and the object has no distorted geometry.",
+        "The background contains a fixed irrigation manifold/filter assembly on a concrete pad, which aligns with the mandatory 'HEADWORKS DETAIL' role (secondary commercial pack with primary focus on equipment).",
+        "The required watermark 'AFP | 09134922013' is present and correctly positioned in the bottom-right corner.",
+        "No other commercial containers, bottles, or second rolls are present."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

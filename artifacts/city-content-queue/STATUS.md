@@ -2,13 +2,13 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-28T13:45:15+00:00`
+- آخرین بروزرسانی: `2026-09-28T14:25:08+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **529 از 1894 (27.93٪)**
-- تکمیل‌شده: **529**
+- پیشرفت: **531 از 1894 (28.04٪)**
+- تکمیل‌شده: **531**
 - در حال پردازش: **0**
-- در انتظار: **845**
-- ناموفق: **520**
+- در انتظار: **832**
+- ناموفق: **531**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -30,6 +30,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **باغستان** — تهران — `tape20` — 1109 کلمه — `2026-09-28T14:13:04+00:00`
+- **ارجمند** — تهران — `tape20` — 1224 کلمه — `2026-09-28T13:58:57+00:00`
 - **گلستان** — تهران — `tape20` — 1133 کلمه — `2026-09-28T13:33:17+00:00`
 - **باقرشهر** — تهران — `tape20` — 1535 کلمه — `2026-09-28T13:26:29+00:00`
 - **خمیر** — هرمزگان — `tape20` — 1312 کلمه — `2026-09-28T12:16:46+00:00`
@@ -48,8 +50,6 @@
 - **سیراف** — بوشهر — `tape20` — 1235 کلمه — `2026-09-28T07:55:15+00:00`
 - **خورموج** — بوشهر — `tape20` — 1372 کلمه — `2026-09-28T07:43:14+00:00`
 - **انارستان** — بوشهر — `tape20` — 1376 کلمه — `2026-09-28T07:35:40+00:00`
-- **وحدتیه** — بوشهر — `tape20` — 1205 کلمه — `2026-09-28T07:32:39+00:00`
-- **دالکی** — بوشهر — `tape20` — 1208 کلمه — `2026-09-28T07:32:13+00:00`
 
 ## خطاهای اخیر
 
@@ -59,8 +59,8 @@
 - **لاجان** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
 - **لاجان** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
 - **پیرانشهر** — `tape20`: `Editorial review failed: internal link count must equal minimum`
-- **آواجیق** — `tape20`: `Image-set diversity gate rejected the five-image editorial set after 3 rounds`
-- **آواجیق** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
+- **پیرانشهر** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
+- **آواجیق** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **حاجیلار** — `tape20`: `Image-set diversity gate rejected the five-image editorial set after 3 rounds`
 - **حاجیلار** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
 

@@ -1,0 +1,63 @@
+{
+  "source_id": "1230003002488-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: The image contains multiple visible people (workers and farmers) and a human hand holding the product, which violates the 'zero people' rule.",
+        "Hard reject: A second commercial package (cardboard carton box) is visible in the scene.",
+        "Hard reject: The image shows hands directly interacting with the product, whereas the brief requires an elevated record photograph of a fixed filter, gauge, and manifold on an empty concrete pad.",
+        "Mismatch: The image does not match the mandatory role of 'HEADWORKS DETAIL' showing irrigation infrastructure (filter, gauge, manifold)."
+      ],
+      "correction_prompt": "Regenerate as a high-angle detail shot of fixed irrigation infrastructure (filter, gauge, manifold) on a clean concrete pad. Include one small secondary AFP drip-tape carton. Ensure zero people, zero hands, and no other commercial containers.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Multiple commercial drip-tape rolls are visible, but the brief requires exactly one.",
+        "The main roll's width and height exceed the maximum hard-reject thresholds (33% > 30% width, 45% > 35% height).",
+        "A red tractor is clearly visible in the background, which falls under the hard reject of any person or human silhouette, or potentially an unattended machine in a way that contradicts a clean 'no activity' shot; specifically, the hard reject list includes 'farmer, worker, face, hand, arm, leg, body part or human silhouette' — and often these images are rejected for clutter that distracts from the 'empty pad' requirement.",
+        "The image shows a large roll on the ground rather than an elevated infrastructure shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate image showing only a single AFP white-and-blue drip-tape carton roll that is small and secondary (occupying <20% width). The primary focus should be an elevated record photograph of a fixed filter, gauge, regulator, and manifold on an empty concrete pad. The background must be clean with no people, tractors, or other farm machinery. No commercial packaging or additional rolls should be visible. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject: Visible people (three distinct figures and a driver in the background tractor) violate the zero-human constraint.",
+        "Hard reject: The background contains active farm equipment and workers, violating the 'empty concrete pad' and 'no farm activity' requirement."
+      ],
+      "correction_prompt": "Remove all people and the background tractor entirely; replace the background with a clean, empty concrete pad and distant horizon to match the 'HEADWORKS DETAIL' brief.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "review_unavailable": true,
+      "reasons": [
+        "visual reviewer unavailable after 4 retries: TimeoutError"
+      ],
+      "correction_prompt": "Retry visual review of the preserved candidate without regenerating it.",
+      "attempt": 4
+    }
+  ]
+}
