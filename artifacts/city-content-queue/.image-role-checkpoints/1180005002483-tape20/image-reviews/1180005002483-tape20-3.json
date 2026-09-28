@@ -1,0 +1,47 @@
+{
+  "source_id": "1180005002483-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Hard reject: visible person (farmer) in the foreground operating the equipment.",
+        "Hard reject: multiple human body parts (head, arms, hands, legs) clearly visible."
+      ],
+      "correction_prompt": "Remove the farmer from the image. Leave the unattended fixed irrigation equipment (filter, manifold, gauge) and the small AFP carton roll in the foreground. Ensure the background tractor remains distant and no humans are present.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 32,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Roll wider than 27 percent of frame",
+        "Roll taller than 32 percent of frame",
+        "Headworks role (filter/gauge/regulator) is missing; primary role is the roll",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with medium side view of unattended fixed filter, gauge, regulator, and manifold as the primary visual; keep the AFP white-and-blue roll small and secondary (width 15–20%, height <=25%), maintaining the bottom-right watermark 'AFP | 09134922013' and zero people. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 30,
+      "product_x_center_percent": 28,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

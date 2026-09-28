@@ -1,0 +1,55 @@
+{
+  "source_id": "1180006002620-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 27,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product height exceeds the maximum plausibility threshold of 32 percent",
+        "Drip lines visible on the ground and threading through the roll composition, triggering a hard reject for pipe/lattice structure",
+        "Text on the carton wrapper ('DRIP IRYEGON F3N') contains gibberish and distorted letters",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with a standard horizontal drip tape carton roll that is visually flatter. Reduce the vertical height of the carton to approximately 20-25 percent of the frame height. Remove any lattice structure or pipe threading the roll. Ensure the text on the carton is sharp and clean without distorted characters. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: The image contains multiple people (two men standing in the background) and human silhouettes, which is strictly forbidden.",
+        "Hard reject: The image contains human body parts (faces, arms, legs) associated with the distant figures.",
+        "Fail: The mandatory visual role of 'SELECTION EVIDENCE' (elevated technical arrangement) is missing; the roll is placed on the ground instead of being presented with visible emitter-spacing evidence."
+      ],
+      "correction_prompt": "Completely remove all people and human silhouettes from the background. Reposition the single white-and-blue AFP drip-tape roll onto an elevated technical surface or display stand to clearly represent the 'Selection Evidence' role. Ensure the background shows a simple, clean farm context without any livestock or tractors to maintain focus on the product. Preserve the bottom-right watermark 'AFP | 09134922013' exactly as is.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Zero people, body parts, or silhouettes present in the frame.",
+        "Exactly one white and blue cylindrical drip-tape carton roll is visible.",
+        "Product dimensions are well within the preferred width range of 20-23% (slightly higher at 24% but well within the 13-27% tolerance).",
+        "Placement on a flatboard provides the required 'elevated technical arrangement' evidence of field selection.",
+        "Background features a simple soil field and distant unattended farm building, which are contextually allowed.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

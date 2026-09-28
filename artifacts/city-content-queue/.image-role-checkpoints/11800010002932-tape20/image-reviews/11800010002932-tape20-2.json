@@ -1,0 +1,56 @@
+{
+  "source_id": "11800010002932-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 18,
+      "product_height_percent": 20,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Human presence: two men are visible in the foreground.",
+        "Multiple people are present, violating the 'zero people' rule.",
+        "A second commercial package (open box containing equipment) is visible."
+      ],
+      "correction_prompt": "Remove all human figures and the open equipment box. Generate a close-up of a single white and blue AFP drip-tape carton roll on the soil, showing the product's label details clearly, without any people or additional boxes.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 37,
+      "product_height_percent": 43,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product roll is wider than the maximum 27 percent limit",
+        "Product roll is taller than the maximum 32 percent limit",
+        "Product is centered in the frame, conflicting with the editorial preference for lower-third and off-center placement",
+        "Text on the product roll appears as gibberish/watermarked placeholders rather than standard packaging",
+        "machine-enforced bounding-box check failed: Reduce the product group from 37% to 13-27% of frame width.; Reduce product height from 43% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the white and blue drip-tape roll significantly smaller (approx 20-23% width, max 27% width) and placed in the lower-left or lower-right off-center third. Ensure the roll height is under 32% of the frame. Keep the background field simple with a distant tractor or farm building allowed, but no people or other products. Reduce the product group from 37% to 13-27% of frame width. Reduce product height from 43% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Exactly one AFP white-and-blue cylindrical drip-tape carton roll present",
+        "Product width is approximately 20% of frame, falling within the preferred 20-23% range",
+        "Product height is 22%, well under the 32% limit and physically plausible",
+        "Required bottom-right watermark 'AFP | 09134922013' is visible and legible",
+        "Zero people or human body parts visible in the frame",
+        "Background context (tractor, farm building, field) matches the SELECTION EVIDENCE brief without violating hard rejects"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -7,43 +7,43 @@
   "history": [
     {
       "pass": false,
-      "score": 55,
-      "product_width_percent": 22,
-      "product_height_percent": 28,
-      "product_x_center_percent": 50,
+      "score": 30,
+      "product_width_percent": 9,
+      "product_height_percent": 12,
+      "product_x_center_percent": 48,
       "reasons": [
-        "The product is centered in the lower third, whereas the mandatory EDITORIAL HERO role explicitly requires the object to be off-center.",
-        "The object is not a 'carton roll'; it is a soft plastic roll of drip tape placed directly on the soil, failing the specified packaging requirement."
+        "Hard reject: A visible human (farmer/worker) is present in the image",
+        "Product size (width 9%) is below the acceptable minimum of 13%",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 9% to 13-27% of frame width."
       ],
-      "correction_prompt": "Move the white and blue drip-tape carton roll off-center to the left or right side of the lower third. Replace the soft plastic roll with a rigid cardboard carton-style roll. Ensure the farm and crop rows remain the dominant context.",
+      "correction_prompt": "Remove the human from the scene. Increase the size of the AFP drip-tape roll to approximately 18-20% of the frame width, keeping it in the bottom foreground. Enlarge the product group from 9% to 13-27% of frame width.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 20,
-      "product_width_percent": 15,
-      "product_height_percent": 18,
-      "product_x_center_percent": 41,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 24,
+      "product_x_center_percent": 22,
       "reasons": [
-        "Presence of a second commercial package (large brown carton) which violates the 'exactly one AFP... carton roll' requirement and the 'second commercial package' hard reject rule",
-        "The required 'wide low cylindrical drip-tape carton roll' shape is not accurately depicted as the sole subject; instead, a roll and a box are shown"
+        "Hard reject: Visible humans (farm workers) in the image violate the zero-people rule",
+        "Hard reject: Second roll/hose (black flexible tubing) running through the field violates the single-object constraint"
       ],
-      "correction_prompt": "Remove the large brown carton box completely. Keep only the white drip tape roll. Position the roll off-center in the lower third. Keep the farm background context.",
+      "correction_prompt": "Regenerate with zero human presence; remove the black tubing from the field to ensure only the white AFP carton roll is visible; keep the carton roll small and off-center in the lower third",
       "attempt": 2
     },
     {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 20,
-      "product_height_percent": 23,
-      "product_x_center_percent": 50,
+      "score": 92,
+      "product_width_percent": 18,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Product bounding box dimensions (20% width, 23% height) fall within the preferred (20-23%) and acceptable ranges (13-27%, up to 32%).",
-        "The placement of the roll is centered rather than off-center on the lower third, which is a minor editorial preference miss but does not constitute a hard reject.",
-        "The image contains no people or human body parts.",
-        "Zero forbidden commercial containers, bottles, jars, or additional rolls are present.",
-        "The mandatory bottom-right watermark \"AFP | 09134922013\" is correctly present.",
-        "Background context (farm field, distant unattended tractor) aligns with the visual brief for irrigation context."
+        "The image correctly displays exactly one white-and-blue AFP wide low cylindrical drip-tape carton roll.",
+        "The product dimensions (18% width, 24% height) fall well within the preferred 20-23% width range and below the 32% height limit, making it physically plausible.",
+        "Zero people or human body parts are visible in the frame.",
+        "The background matches the editorial hero brief with a wide high-oblique view of a farm and irrigation context that dominates the scene.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and unaltered."
       ],
       "correction_prompt": "",
       "attempt": 3

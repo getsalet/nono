@@ -1,44 +1,59 @@
 {
   "source_id": "10600015002720-tape20",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "history": [
-    {
-      "pass": false,
-      "score": 45,
-      "duplicate_roles": [
-        3,
-        4,
-        5
-      ],
-      "reasons": [
-        "Image 1: Contains a tractor in the background, violating the 'reject tractor compositions' rule.",
-        "Image 2: Contains a tractor in the background, violating the 'reject tractor compositions' rule.",
-        "Image 3: Contains a centered vanishing point along the crop rows, violating the Role 4 requirement for an asymmetric view.",
-        "Image 5: The close-up hardware detail (flush-point/pipe) overlaps with Role 3 (Headworks Story) requirements.",
-        "Only 4 images were provided for the 5 required roles.",
-        "All images feature a static watermark, which conflicts with the 'unattended' aesthetic of the brief."
-      ],
-      "correction_prompt": "Regenerate the set with 5 distinct images. Remove all tractors from backgrounds. Ensure Role 4 has an asymmetric, off-center composition without a centered vanishing point. Differentiate Role 5 as a macro shot of a tape emitter (unlike the hardware in Role 3). Remove all watermarks.",
-      "set_attempt": 1
-    },
     {
       "pass": false,
       "score": 55,
       "duplicate_roles": [
         1,
         2,
-        4,
-        5
+        3
       ],
       "reasons": [
-        "Role 1 (Editorial Hero) fails the 'wide high-oblique' requirement; it is a low-angle shot with the carton centered, while the brief requires the carton to be small and off-center.",
-        "Role 2 (Selection Evidence) is too similar to Role 1; both feature a low-angle perspective and a centered/foreground product composition that lacks distinct technical narrative.",
-        "Role 3 (Headworks) is completely missing from the provided set, as no image displays the filter, gauge, regulator, and manifold cluster required for that narrative.",
-        "Role 4 (Installation Proof) fails the 'asymmetric' requirement; it uses a centered composition with a symmetrical vanishing point down the furrow.",
-        "Role 5 (Maintenance Detail) is not a close-up; it is a mid-shot of a crop field, making it visually redundant with Role 4."
+        "Role 1 (Editorial Hero) is not 'wide high-oblique' as required; it uses a low eye-level perspective.",
+        "Role 1 features a tractor with a visible driver, which violates the 'no person' rule.",
+        "Role 3 includes a cardboard carton box; the brief explicitly restricts the product to the 'approved carton' and prohibits generic containers or boxes.",
+        "Role 3 fails to show 'fixed' headworks as required; instead, it displays a portable gauge/regulator setup coiled on the ground."
       ],
-      "correction_prompt": "Regenerate Role 1 as a wide high-oblique drone shot and provide a distinct Role 3 showing headworks hardware, then swap Role 4 for an asymmetric view and Role 5 for a macro close-up of an emitter to eliminate furrow-field duplication.",
+      "correction_prompt": "Recompose Role 1 as a high-oblique wide shot without a driver in the tractor; replace the generic cardboard box in Role 3 with a fixed headworks unit and ensure only the single approved product carton is present.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 violates the 'fully visible' and 'lower third' placement constraint by rendering the product on the center line where the vertical irrigation pipe obscures its base.",
+        "Role 3 includes a large brown cardboard box that violates the 'exactly one approved carton' rule and introduces an unapproved generic object."
+      ],
+      "correction_prompt": "Reposition the product in Role 1 to the clear off-center lower third without center-line obstruction, and remove the generic brown cardboard box from Role 3 to leave only the approved carton.",
+      "panel_scores": [
+        45
+      ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 72,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 1 violates role 1 requirements: The crop rows appear as a green crop (likely wheat/barley) rather than drip irrigation context; the product carton is placed directly in the center of the foreground (violating 'off-center on the lower third'); the crop rows obscure the intended 'irrigation context' and the background is not simple.",
+        "Panel 2 has text rendering errors (garbled characters) on the product carton, failing visual quality standards.",
+        "Role 2 and Role 3 backgrounds are highly similar (green crop fields with similar row perspective), failing the requirement that environments must be visibly distinct."
+      ],
+      "correction_prompt": "Regenerate Panel 1 with a wide high-oblique view, an empty tilled field background, and the AFP carton placed specifically in the lower right off-center. Regenerate Panel 2 with clear, legible text '20cm AFP' on the carton, showing clear emitter spacing on a bare field. Regenerate Panel 3 with a simpler, distinct background (e.g., gravel yard) to differentiate it from Panels 1 and 2.",
+      "panel_scores": [
+        72
+      ],
+      "set_attempt": 3
     }
   ]
 }
