@@ -1,0 +1,40 @@
+{
+  "source_id": "10800022002429-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 26,
+      "product_height_percent": 34,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Excessive human presence: A tractor with a clearly visible driver (human body part/silhouette) is present in the background, which is a hard reject.",
+        "Watermark violation: The required bottom-right watermark is 'AFP | 09134922013', but the image displays 'AFP | 09134922013' (missing the required '4' after 09134922).",
+        "machine-enforced bounding-box check failed: Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the tractor and driver; replace the distant tractor with a distant unattended field or simple farm building to maintain a clean background. Add the missing '4' to the bottom-right watermark to read 'AFP | 09134922013'. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 27,
+      "product_height_percent": 31,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip tape carton roll visible.",
+        "No visible people, human body parts, or silhouettes.",
+        "Background features an ordinary field edge and distant farm building, which are permitted and contextually relevant.",
+        "The required watermark 'AFP | 09134922013' is present and clearly visible in the bottom-right corner.",
+        "No hard reject elements present (no bottles, second rolls, layflat hoses, gibberish writing, or impossible geometry).",
+        "Product width and height proportions are within the acceptable estimation noise range."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

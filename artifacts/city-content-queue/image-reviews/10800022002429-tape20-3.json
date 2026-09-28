@@ -1,0 +1,57 @@
+{
+  "source_id": "10800022002429-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 34,
+      "product_height_percent": 32,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Presence of a human body parts (worker kneeling in foreground)",
+        "Roll is wider than 27% of frame (approx 34%)",
+        "Gibberish text on roll label ('DRIIP IRRYAAIT TAPe')",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the worker from the scene. Reduce the roll width to less than 27% of the frame. Correct the label text to standard English spelling without gibberish. Ensure a zero-human count. Reduce the product group from 34% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 23,
+      "product_height_percent": 18,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Person visible in the frame (farmer operating equipment)",
+        "Carton package visible in the background behind the roll",
+        "Gibberish and distorted text on the drip-tape roll (e.g., 'ORIP mowonin')",
+        "Carton text appears misspelled or distorted ('DRIP ARTUH')",
+        "Product roll is positioned centrally rather than adhering to a lower-third/off-center editorial preference"
+      ],
+      "correction_prompt": "Remove the person and the cardboard package from the scene. Regenerate the drip-tape roll with clear, legible, and accurate text. Move the roll to a lower-third position.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Zero people or body parts detected, hard reject criteria met",
+        "Exactly one approved AFP drip-tape roll is present and clearly identifiable",
+        "Product dimensions (24% width / 30% height) are within physical plausibility limits",
+        "Watermark 'AFP | 09134922013' is correctly present in bottom-right",
+        "Distant unattended tractor and fixed irrigation infrastructure are contextually relevant and allowed",
+        "Product is appropriately secondary to the fixed irrigation hardware setup"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

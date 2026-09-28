@@ -1,0 +1,53 @@
+{
+  "source_id": "10800013002240-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Second commercial package or roll is present (a separate grey hose/drip line is coiled on the ground next to the main product carton).",
+        "Hard reject: The primary product carton roll width exceeds the 27% limit of the frame width.",
+        "Hard reject: The primary product carton roll height exceeds the 32% limit of the frame height.",
+        "Product text displays gibberish/incorrect wording instead of the required clear AFP branding.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with only one approved AFP white-and-blue wide low cylindrical drip-tape carton roll. Remove the secondary coiled hose on the ground. Ensure the carton is smaller (width < 25%, height < 30%) and positioned in the lower-third. Keep the farm field background with a distant tractor and building. Ensure the 'AFP | 09134922013' watermark is visible in the bottom-right corner. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "The packaging displays illegible/gibberish writing instead of legible, correct product labeling.",
+        "The required 'SELECTION EVIDENCE' role is not met; the image lacks visible emitter-spacing or field-selection markers (e.g., ruler with measurements, technical field data, labeled markers), showing only a generic field view."
+      ],
+      "correction_prompt": "Regenerate with legible product labeling, add visible emitter-spacing and field-selection evidence (ruler, marker pegs, or labeled technical data) to fulfill the SELECTION EVIDENCE role.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Exactly one commercial drip-tape carton roll present; no bottles, jars, cans, or second commercial packages.",
+        "No humans, body parts, or human silhouettes visible; tractors and red barn in the background are unattended/allowed infrastructure.",
+        "Watermark 'AFP | 09134922013' is present in the required bottom-right position.",
+        "Product bounding box estimates: width ≈ 24% of frame (within 13–27%), height ≈ 30% of frame (within ≤32%), center x ≈ 32%."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "source_id": "10800019002317-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 32,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The image contains two separate drip-tape rolls (a large commercial carton on the left and a second coiled roll on the right), which violates the hard reject rule for a second roll or package.",
+        "The product bounding box extends across the second roll, resulting in a combined width of approximately 30% of the frame, which exceeds the 27% hard reject limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to include only one AFP white-and-blue wide low cylindrical drip-tape carton roll. Remove the second coiled roll on the right to ensure the image width of the sole product is between 20-23% of the frame. Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 29,
+      "product_height_percent": 38,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Zero people and no human body parts present.",
+        "Single AFP white-and-blue wide low cylindrical drip-tape carton roll is clearly visible.",
+        "Background context (field, distant tractor, and farm building) matches the editorial brief and is acceptable.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Product dimensions are slightly outside the preferred 20-23% width and 32% height limits, but the object remains physically plausible and well-composed, so it does not trigger a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 29% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 27,
+      "product_height_percent": 32,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product is a single AFP white-and-blue drip-tape roll with correct color scheme and branding.",
+        "Visible drip-tape line in the foreground provides the mandatory selection evidence (emitter spacing) and demonstrates application context.",
+        "Zero people or human body parts are visible in the image.",
+        "No hard rejects present (no bottles, jars, buckets, or second commercial packages).",
+        "Background context (distant unattended tractors, farm building, soil texture) is allowed per editorial guidelines.",
+        "Product width and height are at the upper limit of the permissible range (27% and 32%) but remain physically plausible and within the noise margin.",
+        "Required watermark 'AFP | 09134922013' is present and correct.",
+        "Placement is off-center to the left, which is acceptable and not a standalone hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

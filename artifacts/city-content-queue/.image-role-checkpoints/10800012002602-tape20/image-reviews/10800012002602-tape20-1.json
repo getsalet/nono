@@ -1,0 +1,51 @@
+{
+  "source_id": "10800012002602-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 17,
+      "product_height_percent": 16,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Visible human (farmer/worker) present in the frame, which strictly violates the 'zero people and zero human body parts' rule."
+      ],
+      "correction_prompt": "Regenerate the image strictly excluding all humans and human body parts. Ensure the frame contains only the drip-tape roll and the farm environment (crops, equipment, sky).",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 18.5,
+      "product_height_percent": 23.5,
+      "product_x_center_percent": 49.5,
+      "reasons": [
+        "Visible person/farmer is standing next to the yellow irrigation machinery in the middle-left background (hard reject).",
+        "The primary product roll is centered on the main irrigation line, failing the 'off-center' requirement for an editorial hero shot."
+      ],
+      "correction_prompt": "Regenerate to remove the person standing near the yellow tank; the tractor and machinery must be unattended. Move the irrigation context or product roll to the left or right to ensure it is off-center, maintaining a low, wide aspect ratio for the roll in the lower third.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Contains exactly one wide low cylindrical AFP drip-tape carton roll",
+        "Product dimensions are within the 20-23% preferred width range",
+        "Off-center lower third placement is consistent with the editorial hero role",
+        "Zero people or human body parts visible",
+        "Watermark is present and correctly formatted",
+        "Contextual farm background (tractor, crop rows, irrigation lines) matches the article brief"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
