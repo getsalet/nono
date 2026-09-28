@@ -1,0 +1,40 @@
+{
+  "source_id": "1240002002209-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 34,
+      "product_height_percent": 43,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: The main product carton exceeds the maximum allowable height of 35 percent.",
+        "Hard reject: The main product carton exceeds the maximum allowable width of 30 percent.",
+        "Hard reject: A second commercial package (the unrolled drip tape with visible emitters) is present, violating the 'exactly one approved carton' requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width.; Reduce product height from 43% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a single carton-only composition. The carton must be scaled to a maximum width of 25% and height of 30% of the frame. Remove all unrolled tape and ensure no secondary packaging or product forms are visible. Keep the background a clean soil edge or distant farm building with a simple horizon. Maintain the required bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 34% to 12-30% of frame width. Reduce product height from 43% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 27,
+      "product_height_percent": 23,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Exact presence of the single approved AFP drip-tape carton roll.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Zero human subjects or body parts detected.",
+        "Product dimensions and placement fall within reviewer-estimation noise and plausibility limits.",
+        "Background aligns with an agricultural context (field, distant building) without conflicting products."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

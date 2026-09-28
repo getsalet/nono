@@ -1,0 +1,65 @@
+{
+  "source_id": "1240003002164-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 38,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Product width (30%) and height (38%) exceed the physical plausibility limits specified in the brief (max 30% width, 35% height).",
+        "Contains a second commercial package/roll (the coiled drip tape on the right), which is a hard reject under 'zero people and zero human body parts... second commercial package, second roll' rules.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to remove the coiled drip tape on the right. Reduce the physical size of the AFP carton roll so it occupies at most 25% of the image width and 30% of the image height, making it appear smaller and further away. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: visible person (farmer) standing on the right side of the image."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the person, ensuring zero people or body parts are visible in the field.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Second roll of drip tape is visible to the right of the carton",
+        "Missing required SELECTION EVIDENCE: No visible emitter-spacing or field-selection markers/notes on the carton"
+      ],
+      "correction_prompt": "Regenerate image showing exactly one white-and-blue AFP drip tape carton roll. Remove the coiled black drip tape entirely. Add visible field-selection or emitter-spacing technical evidence on the carton label or beside it. Keep the farm background and bottom-right watermark 'AFP | 09134922013'. Ensure zero people or containers.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Image displays exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Product dimensions (width ~28%, height ~35%) fall within the preferred 20-30% width and up-to-35% height range.",
+        "Mandatory SELECTION EVIDENCE role is met: the roll is placed on the field with visible loose drip tape coil next to it.",
+        "Background features a distant unattended tractor and farm building, which are explicitly allowed as contextually relevant infrastructure.",
+        "Zero people or human body parts are visible.",
+        "The required watermark 'AFP | 09134922013' is clearly present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

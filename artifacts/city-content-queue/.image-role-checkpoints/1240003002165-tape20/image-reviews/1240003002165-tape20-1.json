@@ -1,0 +1,52 @@
+{
+  "source_id": "1240003002165-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The image contains a human silhouette (person sitting in the middle distance on the left). The brief strictly requires zero people, even if distant.",
+        "Hard reject: The text on the carton ('Drip irrigation tube' instead of 'Drip Tape') and some illegible gibberish on the side labels do not perfectly match the required white-and-blue AFP drip-tape carton brief.",
+        "The watermark 'AFP | 09134922013' is correctly present as required, but the human presence is a disqualifying factor."
+      ],
+      "correction_prompt": "Regenerate the image strictly excluding any human figures, silhouettes, or body parts. Ensure the carton text clearly displays 'Drip Tape' in correct English or Persian (نوار تیپ) and is free of gibberish, maintaining the farm context and required watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 19.8,
+      "product_height_percent": 21.5,
+      "product_x_center_percent": 45.2,
+      "reasons": [
+        "Hard reject due to a visible person (farmer/man) standing in the background on the left side of the image."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove all human figures, farmers, and workers. Keep only the AFP drip-tape roll, the irrigation lines, and the distant unattended tractor/farm landscape.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 22,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present.",
+        "Product is fully visible, off-center on the lower third, with plausible dimensions within the 12-30% width and ≤35% height tolerance.",
+        "Zero people or human body parts visible.",
+        "Distant unattended tractors and ordinary farm context are allowed and contextually relevant.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right.",
+        "No hard-reject objects (no bottles, second packages, layflat hose, fake headlines, or impossible geometry)."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

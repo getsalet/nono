@@ -1,0 +1,123 @@
+{
+  "source_id": "1240003002165-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 27,
+      "product_height_percent": 35,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Presence of multiple people/farmers in the background (standing and kneeling).",
+        "Distant farm equipment (tractors/vehicles) visible in the background."
+      ],
+      "correction_prompt": "Remove all people and farm vehicles from the background. Keep only the empty concrete pad, the irrigation filter/gauge manifold, and the single small AFP drip-tape carton. Ensure no human silhouettes are visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image is missing the required 'HEADWORKS DETAIL' elements (fixed filter, gauge, regulator, and manifold) on the concrete pad.",
+        "The mandatory bottom-right watermark is 'AFP | 09134922013', but the image displays 'AFP | 0913422013' (missing a '2').",
+        "The primary focus of the image is the carton, rather than the required 'equipment-only' record photograph of the infrastructure."
+      ],
+      "correction_prompt": "Regenerate to include a headworks assembly (filter, gauge, regulator, manifold) as the primary subject on the concrete pad; reduce the carton to a small secondary object in the background; fix the bottom-right watermark to exactly 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: A second commercial package (cardboard box) is visible in the image, violating the 'exactly one' constraint.",
+        "Hard reject: People (human silhouettes) are visible in the background near the tractor, violating the 'zero people' constraint.",
+        "Mandatory role mismatch: The brief requires an elevated detail shot of fixed filters, gauges, and manifolds on a concrete pad with the carton as secondary, but the image shows the roll in the foreground.",
+        "Product width exceeds the 20-23% preferred range (estimated ~30%)",
+        "Product bounding box is on the lower half rather than the upper/centered position required for an 'elevated record photograph'."
+      ],
+      "correction_prompt": "Regenerate the image to focus on close-up equipment (filter, gauge, manifold) on a concrete pad. Remove all people and the cardboard box. The drip tape roll must be small and secondary in the background. Ensure the image depicts no human silhouettes.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Two drip-tape rolls are visible; the brief mandates exactly one primary roll with the second acting only as a small, secondary approved carton.",
+        "Roll height of 40% exceeds the 35% plausibility maximum.",
+        "Headworks mandatory equipment (filter, gauge, regulator, manifold) are completely absent.",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate showing only one small drip-tape roll (width 15-20%) as a secondary element next to a fixed irrigation filter and manifold on an empty concrete pad. Ensure roll height is under 35% and remove the second large roll. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Missing required fixed filter and manifold hardware; the image shows only gauges and regulators on a generic box, which does not satisfy the mandatory HEADWORKS DETAIL role of an elevated record photograph of one fixed filter, gauge, regulator, and manifold.",
+        "Image role mismatch: the prompt required a specific configuration of equipment (filter, gauge, regulator, and manifold) on an empty concrete pad, but the depicted setup is generic and lacks the necessary infrastructure elements."
+      ],
+      "correction_prompt": "Regenerate the image to strictly match the HEADWORKS DETAIL role: include one fixed filter, gauge, regulator, and manifold on an elevated empty concrete pad, with the approved carton remaining small and secondary.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: multiple people visible in the background (seated and standing).",
+        "Hard reject: presence of human body parts (arms, legs, heads) in the background scene.",
+        "Role violation: The image shows a farm activity scene rather than the required 'HEADWORKS DETAIL' of a fixed filter, gauge, regulator, and manifold on a concrete pad.",
+        "The background context (tractor, workers, hay) does not match the mandatory 'no farm activity' and 'equipment-only' brief."
+      ],
+      "correction_prompt": "Regenerate as a high-angle detailed close-up of a fixed irrigation manifold with filters, gauges, and regulators on an empty concrete pad. Place a single small AFP drip-tape roll (white and blue) in the immediate foreground. Strictly remove all people, farmers, standing figures, hay, and large tractors from the scene. Maintain the watermark 'AFP | 09134922013' in the bottom right.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Second roll of drip tape is present in the foreground (bottom left), which violates the hard reject requirement for a 'second roll'.",
+        "The image contains two separate commercial rolls/packages, whereas the brief explicitly specifies 'exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll'.",
+        "The visual brief requires the approved carton to remain 'small and secondary' to the filter/gauge infrastructure, but here the tape roll is the dominant object and the infrastructure is mounted on top of it rather than being the primary focus with the carton secondary."
+      ],
+      "correction_prompt": "Regenerate the image to show exactly one small AFP drip tape roll placed in the background or corner as a secondary element, with the fixed filter, gauge, regulator, and manifold on an empty concrete pad as the primary subject. Remove the second roll in the foreground entirely.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 27,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Second commercial package (drip tape roll) is visible in the background, which violates the 'exactly one carton roll' and 'no second roll' hard reject criteria.",
+        "The mandatory role 'HEADWORKS DETAIL' specifically requires 'exactly one fixed filter, gauge, regulator and manifold' as the primary focus, but the image is a low-angle product shot featuring two rolls.",
+        "Required watermark text '09134922013' is incorrect; the image displays '09134922019'."
+      ],
+      "correction_prompt": "Regenerate the image to show a close-up macro shot of a metal filter, pressure gauge, and manifold assembly. Include only ONE white-and-blue carton roll in the distant background, strictly remove the second roll, and update the bottom-right watermark text to exactly 'AFP | 09134922013'.",
+      "attempt": 8
+    }
+  ]
+}
