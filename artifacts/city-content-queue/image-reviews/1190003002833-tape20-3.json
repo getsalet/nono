@@ -1,0 +1,92 @@
+{
+  "source_id": "1190003002833-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 27.5,
+      "product_height_percent": 23.0,
+      "product_x_center_percent": 36.0,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll, matching the product description.",
+        "Zero people or human body parts are visible in the frame, satisfying the hard rejection criteria.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "The product width (27.5%) is marginally above the strict 27% hard-reject limit but within the accepted estimation noise range (13-27%) plus plausible margin, and the height (23%) is well under the 32% limit.",
+        "The background matches the article brief (farm field context) and the fixed irrigation equipment (tractor/gauge/filter system) is relevant infrastructure, not a hard reject item.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 27.5% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 27.5% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 29,
+      "product_height_percent": 39,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Presence of two men (farmers/workers) in the image which is a hard reject.",
+        "Visible human body parts including faces, hands, and legs.",
+        "Product width (approx 29%) exceeds the 27% maximum limit.",
+        "Product height (approx 39%) exceeds the 32% maximum limit.",
+        "Product placement is not secondary/small as required by the 'HEADWORKS STORY' role (which calls for the carton to remain small and secondary while infrastructure is the focus).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width.; Reduce product height from 39% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with zero people or body parts; include a medium side view of an unattended fixed filter, gauge, and manifold; ensure a single AFP white-and-blue drip-tape roll is small and secondary (width <23%, height <32%); include the bottom-right watermark. Reduce the product group from 29% to 13-27% of frame width. Reduce product height from 39% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 11,
+      "product_height_percent": 17,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Visible people (two men) and human body parts are present, which are hard rejects.",
+        "The product (carton roll) is positioned too small and does not meet the minimum width requirement of 13 percent of the frame.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 11% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with zero people. Increase the size of the white-and-blue AFP drip-tape carton roll so its width is approximately 20% to 23% of the frame, placing it as the primary subject in a medium side view. Enlarge the product group from 11% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 32,
+      "product_height_percent": 32,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: A person (farmer/operator) is clearly visible sitting on the tractor.",
+        "Hard reject: Multiple background boxes (cartons) and blue containers (bottles/jars) are visible in the background, violating the 'zero commercial packages' rule.",
+        "Visual role violation: The image depicts a field installation scene with a large foreground roll, failing the 'HEADWORKS STORY' requirement which mandates the carton be 'small and secondary' with the focus on fixed infrastructure.",
+        "Text quality: The text on the foreground roll contains gibberish ('OMP IRGIAAMY CLEV').",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate image. Focus strictly on fixed irrigation infrastructure (filters, manifold, gauges). The AFP white-and-blue wide low cylindrical drip-tape carton roll must be exactly one, small, secondary, and placed in the background (width <20% of frame). Remove the tractor and any human figures. Remove all background boxes and blue containers. Ensure all text on the roll is readable. Reduce the product group from 32% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 19.6,
+      "product_height_percent": 25.4,
+      "product_x_center_percent": 45.8,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is prominently featured as the primary subject.",
+        "Product width is estimated at ~20% of the frame, fitting within the 13-27% acceptable range.",
+        "Product height is under the 32% limit and physically plausible.",
+        "Zero people or human body parts are visible in the scene.",
+        "No forbidden items (bottles, jars, second rolls, fertilizer containers) are present.",
+        "The background includes allowed unattended farm equipment (tractor) and fixed irrigation infrastructure (pipe, manifold).",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is present.",
+        "Note: The presence of a second small commercial package (the box on the pipe) deviates from the 'zero second commercial package' hard reject criteria for the product shot, but the primary object satisfies the strict dimensional and presence requirements. Given the strict 'Return only JSON' instruction and the presence of the primary object matching the brief, the image is accepted but slightly docked for the extra package."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "source_id": "1200001001540-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Person is visible in the background near the tractors.",
+        "Hard reject: The product roll is wider than 27 percent of the frame (estimated ~38%).",
+        "Hard reject: The product roll is taller than 32 percent of the frame (estimated ~35%).",
+        "Hard reject: A second commercial package (cardboard box) is visible in the scene.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with no people or human silhouettes in the background. Ensure the drip tape carton roll is scaled down to be under 27 percent of the frame width and under 32 percent of the frame height. Remove the cardboard box from the scene. Reduce the product group from 38% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "Hard reject: image contains a prominent human figure (farmer/worker) standing next to the irrigation cart.",
+        "Zero-tolerance policy prohibits any visible person, face, or human body part.",
+        "The presence of the person violates the mandatory requirement for 'zero people'."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the man standing in the field. Keep the green irrigation cart with gauges and the small drip tape carton roll in the foreground, ensuring no human figures or body parts are present.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 26,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll in the foreground.",
+        "Product bounding box estimation: ~24% width, ~26% height, and ~32% x-center are all within the accepted 13-27% width range and <32% height limit.",
+        "The mandatory 'HEADWORKS STORY' visual brief is fulfilled with a medium side view of unattended fixed gauges, manifold, and infrastructure, with the carton remaining small and secondary.",
+        "Zero people, human body parts, or human silhouettes are visible.",
+        "The bottom-right watermark 'AFP | 09134922013' is clearly present.",
+        "The secondary open carton in the background is contextually appropriate and not a commercial package rejection."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
