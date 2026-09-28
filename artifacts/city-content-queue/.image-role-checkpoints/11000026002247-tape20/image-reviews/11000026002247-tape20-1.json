@@ -1,0 +1,53 @@
+{
+  "source_id": "11000026002247-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 14,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "A human figure is clearly visible standing in the field, which is a hard reject",
+        "Multiple human body parts are visible including face, torso, arms, and legs"
+      ],
+      "correction_prompt": "Remove the human figure from the image entirely, keeping only the farm landscape and the drip-tape carton roll on the ground",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product bounding box is centered in the frame (product_x_center_percent ~48), violating the 'EDITORIAL HERO' brief which requires the roll to be off-center on the lower third.",
+        "The drip tape roll's height (approx. 30%) relative to its width (approx. 22%) makes it look like a wide canister or drum rather than a 'drip-tape carton roll' or 'wide low cylindrical' tape reel; the aspect ratio is physically implausible for a thin tape roll."
+      ],
+      "correction_prompt": "Regenerate the image with the white and blue drip tape roll positioned clearly in the lower-right corner (off-center), ensuring the roll is flatter and wider (low aspect ratio) to look like a thin tape reel, and include the required 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The single white and blue wide cylindrical drip-tape carton roll is visible and physically plausible.",
+        "Object size (approx. 20% width) falls within the preferred 20-23% range and the 13-27% acceptance noise.",
+        "Placement is correctly off-center on the lower third as per the editorial brief.",
+        "The required 'AFP | 09134922013' watermark is correctly present in the bottom-right corner.",
+        "Zero people or human body parts are visible.",
+        "Background context (irrigated rows, distant tractors) matches the agricultural brief without prohibited commercial containers.",
+        "No hard reject elements (pipes through roll, second roll, bottles, or gibberish) are present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

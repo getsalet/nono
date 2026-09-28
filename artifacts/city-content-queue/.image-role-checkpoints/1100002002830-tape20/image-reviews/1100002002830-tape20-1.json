@@ -1,0 +1,52 @@
+{
+  "source_id": "1100002002830-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 22,
+      "product_height_percent": 31,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Roll is placed exactly at the center of the image (50%), violating the 'off-center' placement requirement.",
+        "Lower-third placement is compromised; the top edge of the roll extends significantly above the horizontal one-third line, dominating the composition rather than remaining small and subordinate as required for the EDITORIAL HERO role."
+      ],
+      "correction_prompt": "Move the AFP drip-tape roll significantly to the right (off-center) and lower in the frame (lower third), reducing its size by roughly 20% so it does not dominate the foreground.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 17.1,
+      "product_height_percent": 18.0,
+      "product_x_center_percent": 56.0,
+      "reasons": [
+        "Hard reject: visible human body parts (worker and machinery operator present in the field)",
+        "Product packaging is a cylindrical roll, which does not match the required 'wide low cylindrical carton' specification"
+      ],
+      "correction_prompt": "Regenerate the image with zero people or human silhouettes (distant field workers and tractor operators must be absent). Replace the cylindrical roll with a wide, low, rectangular drip-tape carton. The background must remain an empty farm field with high-oblique irrigation context, featuring the bottom-right watermark exactly.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 26,
+      "product_height_percent": 31,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The image contains exactly one 'AFP' carton roll that fits the 13-27% width acceptance range.",
+        "The roll is positioned in the lower-left third of the frame, consistent with the editorial role.",
+        "Zero visible people or human body parts are present.",
+        "No hard-reject items such as bottles, other rolls, or gibberish text are visible.",
+        "The bottom-right watermark 'AFP | 09134922013' is present as required.",
+        "The background context matches the farm/irrigation theme of the article brief."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
