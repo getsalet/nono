@@ -4,7 +4,7 @@ import base64,json,os,re,urllib.error,urllib.request,shutil,time
 from concurrent.futures import as_completed
 from pathlib import Path
 import image_prompt_policy
-REVIEW_POLICY='article-parity-v16-layflat-throughput-safe-metrics'
+REVIEW_POLICY='article-parity-v17-role3-throughput-safe-metrics'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
@@ -34,13 +34,14 @@ def _metric_check(family,verdict,kind=None):
   return False,['Return numeric product_width_percent, product_height_percent and product_x_center_percent.']
  # Keep impossible/giant products out, but do not starve the queue because a
  # noisy vision estimate misses an editorial target by a few points.
- min_width,max_width=(8,42) if family=='layflat' else (12,30)
+ min_width=8 if family=='layflat' else 12
+ max_width=(65 if int(kind or 0)==3 else 42) if family=='layflat' else 30
  issues=[]
  if width<min_width:
   issues.append(f'Enlarge the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
  elif width>max_width:
   issues.append(f'Reduce the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
- max_height=40 if family=='layflat' else 35
+ max_height=(45 if int(kind or 0)==3 else 40) if family=='layflat' else 35
  if height>max_height:
   issues.append(f'Reduce product height from {height:g}% to at most {max_height}% of frame height.')
  return not issues,issues
@@ -50,12 +51,13 @@ def _vision_review(base,path,item,kind):
  if quick:return quick
  family=__import__('image_prompt_policy').product_family(item)
  brief=image_prompt_policy.visual_brief(item)
+ layflat_width_limit=65 if int(kind)==3 else 42
  if FAST_MODE and kind not in REVIEW_KINDS:
   return {'pass':True,'score':90,'reasons':['fast mode: trusted prompt for non-key image'],'correction_prompt':''}
  encoded=base64.b64encode(path.read_bytes()).decode('ascii')
  if family=='layflat':
-  criteria='The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. The preferred combined width is 12 to 15 percent; accept reviewer-estimation noise from 8 to 42 percent and height up to 40 percent when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than 42 percent of the frame, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
+  criteria=f'The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. The preferred combined width is 12 to 20 percent; accept noisy reviewer estimates from 8 to {layflat_width_limit} percent for this role when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
+  reject=f'Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than {layflat_width_limit} percent of the frame, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
  else:
   criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. The preferred width is 20 to 23 percent; accept reviewer-estimation noise from 12 to 30 percent and height up to 35 percent when the object remains physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts. The background should match the article brief and selected image role.'
   reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 30 percent of the frame, taller than 35 percent, bottle, jar, canister, bucket, fertilizer or pesticide container, second commercial package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry or severely distorted dimensions. A distant unattended tractor, ordinary farm building and fixed irrigation hardware are allowed when contextually relevant.'
@@ -165,7 +167,7 @@ def _review_image_panel(base,paths,item,role_numbers):
  roles='; '.join(f'{kind}: {image_prompt_policy.role_directive(family,kind)}' for kind in role_numbers)
  prompt=f'''Review this panel from a {len(paths)}-image city-article editorial set.
 Panel role numbers: {role_numbers}. Article visual brief: {brief}. Required roles: {roles}.
-The same AFP product is expected in every image, so product identity itself is not duplication. Pass only when the shown roles are visibly distinct in camera height/angle, environment structure and technical narrative, and every background is relevant to the article brief. Reject repeated layouts, generic farms, role-3/role-5 hardware duplication, any person, any bottle/container, oversized product, or images that only move the product. The exact bottom-right watermark "AFP | 09134922013" is required and must never be treated as duplication, obstruction, added caption or a rejection reason. Return duplicate_roles using the original role numbers from {role_numbers}. Return only JSON: {{"pass":true|false,"score":0-100,"duplicate_roles":{role_numbers},"reasons":["..."],"correction_prompt":"one concise replacement instruction"}}.'''
+The same AFP product is expected in every image, so product identity itself is not duplication. Pass only when the shown roles are visibly distinct in camera height/angle, environment structure and technical narrative, and every background is relevant to the article brief. Reject repeated layouts, generic farms, role-3/role-5 hardware duplication, any person, any bottle/container, oversized product, or images that only move the product. A distant unattended tractor or farm building is allowed context and is not farm activity; never reject it by itself. The exact bottom-right watermark "AFP | 09134922013" is required and must never be treated as duplication, obstruction, added caption or a rejection reason. Return duplicate_roles using the original role numbers from {role_numbers}. Return only JSON: {{"pass":true|false,"score":0-100,"duplicate_roles":{role_numbers},"reasons":["..."],"correction_prompt":"one concise replacement instruction"}}.'''
  content=[{'type':'text','text':prompt}]
  content.extend({'type':'image_url','image_url':{'url':'data:image/webp;base64,'+blob}} for blob in encoded)
  payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':content}],'temperature':0,'response_format':{'type':'json_object'}}

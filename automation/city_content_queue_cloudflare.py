@@ -121,7 +121,12 @@ def process(queue):
  tape=[x for x in pending if image_prompt_policy.product_family(x)=='tape20']
  layflat=[x for x in pending if image_prompt_policy.product_family(x)=='layflat']
  if q.BATCH>=3 and tape and layflat:
-  batch=(tape[:q.BATCH-1]+layflat[:1])[:q.BATCH]
+  # Reserve one slot for layflat, then fill every unused tape slot with
+  # additional layflat work. The old expression capped a 24-item batch at
+  # only three items once tape backlog was nearly exhausted.
+  tape_take=min(len(tape),q.BATCH-1)
+  selected=tape[:tape_take]
+  batch=(selected+layflat[:q.BATCH-len(selected)])[:q.BATCH]
  else:
   batch=pending[:q.BATCH]
  if not batch:

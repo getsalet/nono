@@ -5,7 +5,7 @@ from pathlib import Path
 import city_content_queue as base
 HERE=Path(__file__).resolve().parent
 base.MAX_ATTEMPTS=max(1,int(os.getenv('MAX_ATTEMPTS','4')))
-IMAGE_RETRY_POLICY='retry-after-v16-layflat-throughput-safe-metrics'
+IMAGE_RETRY_POLICY='retry-after-v17-role3-throughput-safe-metrics'
 
 # Same-group workflow concurrency means any committed processing item belongs to
 # an interrupted earlier run. Return it to pending without consuming an attempt.

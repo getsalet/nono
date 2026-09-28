@@ -64,7 +64,7 @@ jobs:
       IMAGE_QA_ATTEMPTS: "5"
       IMAGE_QA_MIN_SCORE: "70"
       IMAGE_QA_REVIEW_ATTEMPTS: "3"
-      IMAGE_SET_QA_ATTEMPTS: "2"
+      IMAGE_SET_QA_ATTEMPTS: "3"
       IMAGE_QA_FAST_MODE: "1"
       # Role 2 still participates in the set-diversity review; skip only its
       # redundant per-image vision call to avoid repeated oversized-product loops.
@@ -74,7 +74,7 @@ jobs:
       # handled separately after fresh throughput is healthy.
       REPAIR_FAILED_LIMIT: "4"
       WORDPRESS_DB_NAME: navaraby_wp569
-      CURRENT_IMAGE_POLICY: retry-after-v16-layflat-throughput-safe-metrics
+      CURRENT_IMAGE_POLICY: retry-after-v17-role3-throughput-safe-metrics
 
     steps:
       - name: Checkout repository
