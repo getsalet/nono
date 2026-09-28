@@ -1,0 +1,58 @@
+{
+  "source_id": "10800023002315-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails the EDITORIAL HERO requirement: The shot is ground-level and the two coils dominate the foreground (approx. 50% of the frame), violating the 'small, separate, and off-center' constraint.",
+        "Role 2 fails the SELECTION EVIDENCE requirement: It lacks an 'elevated technical comparison' perspective. The two coils are nearly identical in size, orientation, and foreground placement, making it impossible to show a diameter or construction difference as requested.",
+        "Role 2 and Role 1 are near-duplicates: Both use the same product configuration (packaged coil + bare coil) and the same low ground-level angle against a dirt field, with only a distant tractor/background change.",
+        "Role 3 has UI artifacts: There are small thumbnail/inset boxes visible in the bottom-left corner which should not be present in a clean editorial image."
+      ],
+      "correction_prompt": "Role 1: Recreate as a high-oblique wide-angle shot where the field context is prominent and the two coils are small, off-center props. Role 2: Recreate from a top-down or high-elevated angle clearly showing a size difference (e.g., a 1-inch vs 1/2-inch coil). Role 3: Remove the thumbnail inset boxes in the bottom-left corner, ensuring the focus remains solely on the pump, gauge, and manifold on the concrete pad.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Roles 1 and 2 are nearly identical in layout, camera angle, and subject placement; both show a ground-level crop field with the two coils side-by-side, indicating the product was merely moved rather than changed in narrative context.",
+        "Role 2 fails the 'Selection Evidence' brief, which requires an elevated technical comparison showing a construction or diameter difference; instead, it shows a standard horizontal product shot.",
+        "Role 3 omits the required fixed pump and manifold, showing only a pressure gauge, and the coils are placed centrally rather than as small, secondary elements in an equipment-only environment."
+      ],
+      "correction_prompt": "Replace Role 2 with an elevated close-up technical comparison of the two coils showing construction differences; update Role 3 to include a fixed pump and manifold on a concrete pad with the coils positioned small and secondary.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        3
+      ],
+      "reasons": [
+        "Role 1 fails the 'EDITORIAL HERO' requirement by including a large green pump unit; the brief explicitly states only the coils should be present, and they must remain small, separate, and off-center.",
+        "Role 3 includes a gauge, which causes a rejection due to 'role-3/role-5 hardware duplication' (gauges and manifolds are reserved for the Headworks Detail role in the editorial set).",
+        "Role 1 also lacks the required 'wide high-oblique water-transfer context' (no pipeline or water path is visible), and the product is oversized rather than small and secondary."
+      ],
+      "correction_prompt": "Remove all pumps and gauges from Roles 1 and 3; regenerate Role 1 as a wide high-oblique editorial shot showing water-transfer context with coils small and off-center, and Role 3 as a ground-level shot with coils only.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 3
+    }
+  ]
+}
