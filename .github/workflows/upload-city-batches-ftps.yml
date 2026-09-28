@@ -18,9 +18,9 @@ env:
   FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
 
 concurrency:
-  # Serialize uploads with city generation and image rebuilds so a ZIP cannot
-  # change while it is being hashed or transferred.
-  group: navar-city-content-queue
+  # A committed 50-post ZIP is immutable. Keep upload in its own lane so the
+  # generator's next self-dispatch cannot cancel a pending FTPS upload.
+  group: navar-city-ftps-upload
   cancel-in-progress: false
 
 jobs:

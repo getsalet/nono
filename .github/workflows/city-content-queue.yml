@@ -12,15 +12,12 @@ on:
       - 'automation/run_agnes_city_queue_fast.py'
       - 'automation/run_agnes_city_queue_resilient.py'
       - 'automation/run_agnes_city_queue_seo.py'
-      - 'automation/image_prompt_policy.py'
-      - 'automation/image_quality_gate.py'
       - 'automation/text_cleanup_policy.py'
       - 'automation/repair_completed_city_sql.py'
-      - 'automation/assets/**'
 
   schedule:
-    # Run after the hourly reference rebuild; avoid replacing another pending
-    # workflow in the shared navar-city-content-queue concurrency group.
+    # Hourly watchdog. Normal production self-chains after each persisted batch;
+    # this entry point only recovers the queue if a chain was interrupted.
     - cron: "25 * * * *"
 
 permissions:
