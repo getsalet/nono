@@ -112,9 +112,8 @@ jobs:
           PY
           )"
           if [ "$remaining" -gt 0 ]; then
-            echo "Image rebuild has $remaining remaining posts; dispatching the next isolated batch."
-            sleep 30
-            gh workflow run rebuild-reference-images.yml --ref main
+            echo "Image rebuild has $remaining remaining posts; yielding to one fresh city-production batch before the next repair slice."
+            gh workflow run city-content-queue.yml --ref main
           else
             echo "Image rebuild is complete; resuming the city production queue."
             gh workflow run city-content-queue.yml --ref main
