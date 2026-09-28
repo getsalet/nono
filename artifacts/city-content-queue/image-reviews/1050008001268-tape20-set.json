@@ -1,20 +1,36 @@
 {
   "source_id": "1050008001268-tape20",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 45,
       "duplicate_roles": [],
       "reasons": [
-        "Count mismatch: The review requires five images, but only four are provided.",
-        "Role 1 (Editorial Hero) failure: The brief specifies a 'wide high-oblique view' where the farm context dominates and the carton is 'small'. The provided image is a close, ground-level hero shot with a large product.",
-        "Role 3 (Headworks) vs Role 4 (Installation Proof) duplication: Both provided images use a nearly identical visual formula: the large roll in the foreground, a cardboard box on the right, and multiple tractors lined up in the background.",
-        "Role 5 (Maintenance Detail) missing: There is no close-up technical detail image of an emitter or connector.",
-        "Brief violation (Role 2): The 'elevated technical arrangement' is actually a ground-level shot, and it prominently features a second roll of tape in the foreground, which is prohibited in detail roles."
+        "Panel 1 layout violation: The product is positioned centrally in the immediate foreground rather than 'off-center on the lower third' as required. The roll dominates the bottom frame and obstructs the view of the irrigation line it is placed upon.",
+        "Panel 2 missing requirement: The brief for 'SELECTION EVIDENCE' explicitly requires visible emitter-spacing. The current shot shows a tilled field with dirt clods, but no visual evidence of dripline spacing or selection criteria.",
+        "Panel 3 subject violation: The brief specifies 'equipment-only' on an 'empty concrete pad'. The image features multiple active farm machines (tractors and sprayers) directly behind the subject, failing to isolate the filtration hardware on the pad as required."
       ],
-      "correction_prompt": "Generate the missing 5th image as an extreme macro detail of a drip emitter on a tape line with the carton blurred in the background. Re-shoot Role 1 as a wide high-angle shot from a drone/oblique perspective to show the farm context, and differentiate Roles 3 and 4 by removing the tractors and box from Role 4 to focus on installed crop beds.",
+      "correction_prompt": "Re-shoot all three panels. For Panel 1, move the product to the left or right lower third on the furrow. For Panel 2, lay a sample tape on the ground to show specific emitter spacing. For Panel 3, remove the background tractors and show only a single filter, gauge, and manifold set up on a clean concrete slab.",
+      "panel_scores": [
+        45
+      ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 (Image 2) fails to show 'emitter-spacing or field-selection evidence', displaying only a loose loop of tape and a generic field background which overlaps with the layout of Role 1.",
+        "Role 3 (Image 3) violates the 'equipment-only' requirement by including the AFP tape roll as a primary subject in the foreground instead of keeping the hardware (filter/gauge) on the empty pad as the sole focus.",
+        "Role 3 (Image 3) contains a generic agricultural building and tractor in the background, conflicting with the 'no farm activity' and 'empty concrete pad' instruction."
+      ],
+      "correction_prompt": "Redo Role 2 to include visible field rows or a measurement tool for selection evidence; redo Role 3 to exclude the tape roll and show only the hardware on a clean concrete pad with a blank, non-active background.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 2
     }
   ]
 }

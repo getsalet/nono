@@ -2,17 +2,19 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-28T19:07:56+00:00`
+- آخرین بروزرسانی: `2026-09-28T19:13:03+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **543 از 1894 (28.67٪)**
 - تکمیل‌شده: **543**
 - در حال پردازش: **0**
 - در انتظار: **712**
+- آماده انتخاب در اجرای بعدی: **712**
+- در انتظار ولی قفل‌شده در سقف تلاش: **0**
 - ناموفق: **639**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
-- فاصله شروع پست بعدی: **۳۰ ثانیه**
+- فاصله شروع پست بعدی: **۱۰ ثانیه**
 
 ## بسته‌های آماده آپلود
 
@@ -53,16 +55,16 @@
 
 ## خطاهای اخیر
 
-- **نقده** — `layflat`: `image hard gate rejected role 3 after 8 attempt`
-- **پلدشت** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
-- **پلدشت** — `layflat`: `image hard gate rejected role 3 after 8 attempt`
-- **لاجان** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
-- **لاجان** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
-- **پیرانشهر** — `tape20`: `Editorial review failed: internal link count must equal minimum`
-- **پیرانشهر** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
-- **آواجیق** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **آواجیق** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
-- **حاجیلار** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
+- **گیلانغرب** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
+- **رباط** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **نودشه** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
+- **کوزران** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
+- **کرمانشاه** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
+- **باینگان** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
+- **هلشی** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
+- **بیستون** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
+- **قصرشیرین** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
+- **رباط** — `tape20`: `Agnes generated image is unexpectedly small`
 
 ## فایل‌های خروجی
 
