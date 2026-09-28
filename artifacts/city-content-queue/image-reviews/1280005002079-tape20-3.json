@@ -1,0 +1,54 @@
+{
+  "source_id": "1280005002079-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 21,
+      "product_height_percent": 27,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible human figure in the background (farmer) is a hard reject per constraints.",
+        "Mandatory 'HEADWORKS DETAIL' role is missing; the image shows a general farm pad scene instead of an elevated record of filter/gauge/manifold infrastructure.",
+        "A second piece of equipment/tractor in the background conflicts with the specific brief requirements."
+      ],
+      "correction_prompt": "Regenerate as a tight elevated detail shot of fixed irrigation infrastructure (filter, gauge, regulator, manifold) on a concrete pad; remove all human figures and distant tractors; place one small secondary AFP carton in the foreground.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "A second commercial package (second roll of tape) is present in the lower-left foreground, which is a hard reject.",
+        "A gauge and regulator unit is visible on the right side, violating the role's requirement for 'exactly one approved carton' to be the focus without other visible hardware conflicting with the primary object.",
+        "The primary product (the large carton roll) exceeds the hard-reject thresholds for width (over 30%) and height (over 35% of the frame).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the second roll of drip tape and the gauge/regulator from the scene. Reduce the size of the main AFP carton so its width is under 30% of the frame. Position the main carton on a concrete pad with a fixed filter and manifold visible in the background, maintaining a zero-human composition. Reduce the product group from 35% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "One clearly visible white-and-blue wide cylindrical drip-tape carton roll",
+        "Zero visible people, faces, or human body parts",
+        "Roll dimensions are physically plausible and within acceptable width/height limits",
+        "Watermark 'AFP | 09134922013' correctly present in bottom-right corner",
+        "Background (distant field, open tilled pad, irrigation machinery) aligns with editorial brief without violating hard rejects"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

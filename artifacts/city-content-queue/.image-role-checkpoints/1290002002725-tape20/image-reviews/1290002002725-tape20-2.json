@@ -1,0 +1,66 @@
+{
+  "source_id": "1290002002725-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "The image contains 'Drip Irrigation Tape' embossed on the roll's core, which creates a physical geometry inconsistency for a rolled carton.",
+        "Visible piping or layflat hose running through the field conflicts with the required 'elevated technical arrangement' role for SELECTION EVIDENCE.",
+        "Product height (42%) exceeds the 35% limit for physical plausibility.",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the visible pipe/hose from the field to maintain a clean elevated technical arrangement. Ensure the carton roll has a realistic solid core and reduce the roll's height to 32% of the frame. Add visible emitter-spacing markers or a selection evidence tag to satisfy the SELECTION EVIDENCE role. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "The small sign next to the drip tape contains gibberish and unreadable characters, which falls under the hard reject category for writing issues."
+      ],
+      "correction_prompt": "Remove the small illegible sign next to the drip tape. Regenerate with clear technical text or a plain background to eliminate the gibberish writing hard reject.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 24,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: The image contains visible human figures in the background (one on the left and one near the right), which violates the zero-people rule.",
+        "The product labeling contains gibberish text instead of the required 'AFP | 09134922013' or other legible text."
+      ],
+      "correction_prompt": "Remove all human figures from the background, completely. Replace the gibberish text on the roll with 'AFP' or '20mm Drip Tape'. Keep the white and blue roll in the foreground on the field soil.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 28,
+      "product_height_percent": 32,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present",
+        "Zero people or human body parts",
+        "Watermark 'AFP | 09134922013' correctly visible in bottom-right",
+        "Emitter-spacing or field-selection evidence present in image",
+        "Product dimensions fall within acceptable physical plausibility thresholds",
+        "Background matches article brief with distant farm building and tractor (allowed unattended equipment)"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

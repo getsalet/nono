@@ -1,0 +1,64 @@
+{
+  "source_id": "1290002002725-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 16,
+      "product_height_percent": 27,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Hard reject: Visible person (human) standing near the tractor in the background."
+      ],
+      "correction_prompt": "Regenerate the image without the human figure near the tractor, keeping the unattended tractor and the drip tape roll.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 14,
+      "product_height_percent": 28,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: A human (farmer) and visible body parts are present in the image, violating the strict rule of zero people or human silhouettes."
+      ],
+      "correction_prompt": "Regenerate the image removing the human entirely; replace the standing person with a static crop row or open field to maintain the agricultural context while ensuring the scene is completely person-free.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image role is defined as 'wide high-oblique view' where the farm and irrigation context should dominate; this image presents a low-angle eye-level view from the crop row, which does not match the required editorial hero perspective.",
+        "The watermark required is '09134922013', but the image displays '09134922013' (missing the '0' at the start of the second half)."
+      ],
+      "correction_prompt": "Regenerate with a high-oblique wide shot looking down over the crop rows; ensure the farm and irrigation infrastructure dominate the composition; correct the bottom-right watermark to exactly 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 18,
+      "product_height_percent": 17,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Product dimensions are within the accepted range (width approx 18%, height approx 17%).",
+        "Product is located in the lower third of the image.",
+        "Zero people or human body parts visible.",
+        "Background is an agricultural field consistent with the article brief regarding drip irrigation.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right.",
+        "No prohibited objects (bottles, cans, second rolls) are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
