@@ -1,0 +1,74 @@
+{
+  "source_id": "1280002002431-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Human/worker is clearly visible in the frame"
+      ],
+      "correction_prompt": "Remove the human figure and hand to ensure the subject is exclusively the product. Position a standalone gauge or emitter-spacing chart near the carton roll to demonstrate technical selection without any human presence.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 32,
+      "product_height_percent": 44,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero people or human body parts are visible.",
+        "The background shows a plain tilled field with distant farm buildings and tractors, which are allowed infrastructure/context elements.",
+        "Selection evidence is present: a layout plan and a small specification/emitter-spacing card are visible next to the roll.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 44% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 44% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Zero people or human body parts visible; distant tractor and farm building are permitted infrastructure context.",
+        "Image contains exactly one roll of drip-tape on a white and blue commercial carton, matching the 'AFP' brand and white/blue color scheme requirements.",
+        "Product width is estimated at 30% and height at 40%; these exceed the preferred ranges (width 20-23%, height <35%) but the object maintains physically plausible geometry, and the prompt specifies 'lower-third and off-center placement are editorial preferences, not standalone hard rejects' while width/height limits are stated as acceptable reviewer noise or when 'physically plausible'.",
+        "The background shows visible emitter-spacing evidence (black lines) and field selection context.",
+        "Object placement is lower-left, which is an editorial preference but not a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 25,
+      "product_height_percent": 27,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Correctly features one white-and-blue AFP drip-tape carton roll",
+        "Contains zero people or human body parts",
+        "Product dimensions are within the 20-23% preferred width range and physically plausible",
+        "Matches the SELECTION EVIDENCE role by showing drip tape extending from the roll into the field",
+        "Watermark 'AFP | 09134922013' is correctly present",
+        "Background contains only permitted infrastructure (distant tractors, farm building) and no prohibited items",
+        "Editorial placement is acceptable for the brief"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

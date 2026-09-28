@@ -1,0 +1,54 @@
+{
+  "source_id": "1280006002567-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 31,
+      "product_height_percent": 42,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product exceeds hard reject dimensions: height is approximately 42% (limit is 35%) and width is approximately 31% (limit is 30%).",
+        "Severe text distortion: The text on the packaging reads 'DRIP IRRIGIANS', which contains gibberish/typos, violating the requirement for readable/correct text.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with a smaller product roll so that its height is under 35% and width is under 30% of the frame. Ensure the text 'DRIP IRRIGATION' on the carton is spelled correctly and legible. Keep the 'AFP | 09134922013' watermark in the bottom-right corner. Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 26,
+      "product_x_center_percent": 26,
+      "reasons": [
+        "Hard reject: multiple people (human silhouettes and standing figures) are clearly visible in the background near the tractors.",
+        "Hard reject: multiple tractors are present in the mid-ground, violating the 'distant unattended tractor' allowance by being prominent and active.",
+        "Product bounding box estimated at approximately 22% width and 26% height, located in the bottom-left quadrant."
+      ],
+      "correction_prompt": "Regenerate the image with zero people or human silhouettes. Remove all mid-ground tractors; keep only distant unattended equipment if necessary, or just the field horizon. Maintain the single AFP drip-tape roll in the bottom-left foreground with a clean field background.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "The image displays exactly one white cylindrical drip-tape roll with the correct branding, matching the mandatory 'SELECTION EVIDENCE' role.",
+        "Zero people or human body parts are present in the frame, which is a hard requirement.",
+        "Product dimensions (width 25%) fall within the acceptable 20-23% preferred range.",
+        "The watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner as required.",
+        "Placement is off-center, which is an editorial preference rather than a hard reject.",
+        "Background contains a simple field edge and distant building, both allowed as contextual elements."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
