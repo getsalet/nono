@@ -53,6 +53,7 @@ jobs:
         with: {python-version: "3.12"}
       - run: python -m pip install --disable-pip-version-check pillow
       - name: Verify reference rebuild inputs
+        id: verify
         run: |
           test -n "$AGNES_API_KEY"
           python -m py_compile automation/rebuild_city_images_preserve_posts.py automation/image_prompt_policy.py automation/image_quality_gate.py automation/city_content_queue.py automation/city_content_queue_cloudflare.py
@@ -96,7 +97,9 @@ jobs:
         if: steps.rebuild.outputs.exit_code != '0'
         run: echo "::warning::One reference set was quarantined after diagnostics were preserved; the city generator remains available."
       - name: Continue image rebuild automatically
-        if: always() && !cancelled()
+        # Never self-dispatch after a syntax/test/input failure; otherwise a bad
+        # validation commit creates an endless chain of failed workflow runs.
+        if: always() && !cancelled() && steps.verify.outcome == 'success'
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
