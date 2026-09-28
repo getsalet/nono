@@ -13,6 +13,7 @@ on:
       - 'automation/assets/**'
 permissions:
   contents: write
+  actions: write
 concurrency:
   # Rebuilds have a separate lane so queue self-chaining cannot replace the pending rebuild.
   # Capacity stays within the shared 64-image benchmark: 24+24+12 = 60.
@@ -91,3 +92,23 @@ jobs:
       - name: Fail after preserving rebuild diagnostics
         if: steps.rebuild.outputs.exit_code != '0'
         run: echo "::warning::One reference set was quarantined after diagnostics were preserved; the city generator remains available."
+      - name: Continue image rebuild automatically
+        if: always() && !cancelled()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          remaining="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('artifacts/city-content-queue/image-rebuild-article-parity-v14-three-image.json')
+          print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 0)
+          PY
+          )"
+          if [ "$remaining" -gt 0 ]; then
+            echo "Image rebuild has $remaining remaining posts; dispatching the next isolated batch."
+            sleep 30
+            gh workflow run rebuild-reference-images.yml --ref main
+          else
+            echo "Image rebuild is complete."
+          fi
