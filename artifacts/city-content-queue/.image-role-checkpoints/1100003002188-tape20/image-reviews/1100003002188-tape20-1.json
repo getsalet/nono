@@ -6,64 +6,19 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": false,
-      "score": 20,
-      "product_width_percent": 18,
-      "product_height_percent": 14,
-      "product_x_center_percent": 44,
-      "reasons": [
-        "Hard reject: Visible human body parts (face, hands, arm, legs) present in the foreground.",
-        "Hard reject: Image contains a prominent person/farmer/worker.",
-        "Image violates the mandatory role requirement of 'zero people'."
-      ],
-      "correction_prompt": "Remove the crouching man completely. Ensure the frame contains no human body parts, faces, or silhouettes. Keep the carton and irrigation infrastructure in the same position.",
-      "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 30,
-      "product_width_percent": 28.5,
-      "product_height_percent": 33.2,
-      "product_x_center_percent": 46,
-      "reasons": [
-        "Product bounding box exceeds hard reject thresholds: estimated width is ~28.5% (> 27%) and estimated height is ~33.2% (> 32%).",
-        "Carton label text is partially gibberish/illegible (e.g. 'OHP REEENTFOTT 11cm'), violating the 'no gibberish writing' criterion.",
-        "Product placement is too large/central, failing the 'EDITORIAL HERO' requirement that the carton be small and off-center.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 28.5% to 13-27% of frame width.; Reduce product height from 33.2% to at most 32% of frame height."
-      ],
-      "correction_prompt": "Regenerate to shrink the drip-tape carton roll to a width of 20-23% of the frame and height < 30%; move the roll to the lower-right off-center third; ensure all carton text is legible and clean; retain the farm context and bottom-right watermark. Reduce the product group from 28.5% to 13-27% of frame width. Reduce product height from 33.2% to at most 32% of frame height.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 10,
-      "product_width_percent": 14,
-      "product_height_percent": 12,
-      "product_x_center_percent": 56,
-      "reasons": [
-        "Hard reject: Presence of a full human figure (farmer/worker) standing in the frame, which violates the strict 'zero people and zero human body parts' requirement.",
-        "Watermark number mismatch: The bottom-right watermark reads 'AFP | 09134922013', but the mandated number is '09134922013' (the provided prompt text contains a typo with 8 digits, but standard practice usually aligns with the intended ID; regardless, the human presence is the primary hard fail)."
-      ],
-      "correction_prompt": "Remove the human subject completely. Ensure the frame contains only the farm landscape and the single AFP drip tape roll on the ground, maintaining the wide high-oblique view without any people or workers.",
-      "attempt": 3
-    },
-    {
       "pass": true,
-      "score": 95,
-      "product_width_percent": 21,
-      "product_height_percent": 28,
-      "product_x_center_percent": 50,
+      "score": 85,
+      "product_width_percent": 19,
+      "product_height_percent": 26,
+      "product_x_center_percent": 47,
       "reasons": [
-        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is visible and fully in-frame.",
-        "Object dimensions (approx. 21% width / 28% height) align with preferred/accepted bounds for this brief.",
-        "Zero people, hands, or human silhouettes present.",
-        "Farm context (cultivated furrows, horizon, unattended distant tractor) matches the EDITORIAL HERO role.",
-        "Mandatory bottom-right watermark 'AFP | 09134922013' is clearly present and intact.",
-        "Product is placed on the lower third of the frame, off-center relative to the horizon line, acting as a secondary anchor to the landscape as requested.",
-        "No hard-reject triggers (extra products, gibberish text, impossible geometry, or containers) detected."
+        "Image contains exactly one approved AFP drip-tape roll that is white and blue.",
+        "Product dimensions are within the acceptable thresholds (width 19%, height 26%).",
+        "Watermark 'AFP | 09134922013' is present and correctly placed.",
+        "No prohibited elements found: no people, human body parts, bottles, jars, cans, or other commercial containers."
       ],
       "correction_prompt": "",
-      "attempt": 4
+      "attempt": 1
     }
   ]
 }

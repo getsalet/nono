@@ -6,21 +6,47 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 26,
-      "product_height_percent": 31,
-      "product_x_center_percent": 42,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 40,
       "reasons": [
-        "Correctly displays one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
-        "Watermark 'AFP | 09134922013' is present and correctly positioned in the bottom-right corner.",
-        "Contains zero people or human body parts.",
-        "Provides necessary selection evidence by clearly showing the field layout and visible drip lines in the soil.",
-        "Product width is slightly wide at an estimated 26% but remains within the acceptable reviewer-estimation noise of 13-27%.",
-        "Background contextually matches the agricultural brief with distant unattended tractors and a farm building."
+        "Contains a standing human figure in the background, which is a hard reject for any visible person or body part.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image without any human figures or people in the background. Keep the farm setting, tractor, and building. Ensure the drip tape roll is the sole subject in the foreground. Maintain the AFP watermark in the bottom right. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: visible humans (farmers) in the background",
+        "Missing the required bottom-right watermark 'AFP | 09134922013'",
+        "Contains non-English gibberish writing on the product label"
+      ],
+      "correction_prompt": "Remove all people and tractors from the background to show an empty field. Replace all text on the roll with clean English. Add the required 'AFP | 09134922013' watermark in the bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 27,
+      "product_height_percent": 27,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero people or human body parts are visible.",
+        "Watermark is present and correctly formatted at the bottom-right.",
+        "Background matches article brief with distant unattended farm equipment and a farm building.",
+        "Product width is at the upper limit of the accept band (27%)."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

@@ -5,17 +5,37 @@
     {
       "pass": false,
       "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 violation: The AFP product is excessively oversized, dominating the foreground and obstructing the view rather than appearing small in the lower third.",
-        "Role 2 violation: The environment is a bare field with a barn and tractor; it completely lacks the required technical evidence of emitter-spacing or drip irrigation lines visible on the soil.",
-        "Role 3 violation: The technical hardware (gauges, filters, manifold) is incorrectly depicted mounted on a large agricultural vehicle, whereas the brief requires unattended fixed ground-level units."
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Resize the product to be small and secondary in the foreground; add visible drip tape lines to the field for the selection panel; and replace the vehicle-mounted hardware with a stationary ground-level filtration unit for the headworks panel.",
+      "reasons": [
+        "Role 1 fails the 'off-center' layout requirement; the product is placed dead center in the foreground rather than on the lower third off-center.",
+        "Role 1 displays a generic city skyline which is irrelevant to the article brief located in Smirum/Isfahan (a rural farming context).",
+        "Role 1 is not a high-oblique view; it is a low eye-level shot, failing the camera height requirement for the HERO role."
+      ],
+      "correction_prompt": "Redo panel 1 with a wide high-oblique aerial view; remove the city skyline and replace with rural landscape, and shift the tape roll off-center to the lower third.",
       "panel_scores": [
         45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 satisfies the 'Editorial Hero' brief with a high-oblique view where the farm landscape dominates; the product carton is small and off-center.",
+        "Role 2 provides distinct 'Selection Evidence' through a low-angle shot of a tilled field, with the product and visible tire tracks distinguishing it from the lush crop rows in Role 1.",
+        "Role 3 correctly depicts the 'Headworks Story' by showing the irrigation hardware (filter, gauge, regulator) in a side view; the product remains secondary and small as required.",
+        "All three images feature different environments (lush crop vs. tilled earth vs. machinery context) and camera angles, avoiding duplication or generic repetition.",
+        "No prohibited elements (people, bottles, oversizing) are present."
+      ],
+      "correction_prompt": "No correction needed; the editorial set successfully distinguishes the required roles through varied angles and contexts.",
+      "panel_scores": [
+        95
+      ],
+      "set_attempt": 2
     }
   ]
 }

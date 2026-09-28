@@ -7,58 +7,33 @@
   "history": [
     {
       "pass": false,
-      "score": 30,
-      "product_width_percent": 14,
-      "product_height_percent": 11,
-      "product_x_center_percent": 38,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 47,
       "reasons": [
-        "Hard reject: The image contains a person standing next to the tractor on the right side (visible face, hands, and body silhouette).",
-        "The presence of the human figure is a standalone hard reject regardless of the product placement."
+        "Presence of multiple people (workers on tractor and inside the shed) violates the zero-people hard reject criteria.",
+        "Second commercial product/package (blue bucket) visible next to the workers, violating the 'zero second commercial package' rule.",
+        "Product is centered rather than placed in the lower-third off-center as preferred by the editorial role."
       ],
-      "correction_prompt": "Regenerate the image with zero people or human body parts. Remove the person standing next to the tractor entirely. Keep the farm context and the single drip tape roll on the lower third exactly as they are.",
+      "correction_prompt": "Remove all human figures and the blue bucket. Regenerate the image with exactly one white and blue AFP drip-tape carton roll placed in the lower-left or lower-right third of the frame, keeping the farm background and distant tractor/shed but with no people present.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 10,
-      "product_width_percent": 0,
-      "product_height_percent": 0,
-      "product_x_center_percent": 0,
-      "reasons": [
-        "Hard reject: The object in the foreground is a large toilet paper roll with a visible cardboard core, which does not match the 'wide low cylindrical drip-tape carton roll' description.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
-      ],
-      "correction_prompt": "Replace the toilet paper roll with a wide, low, cylindrical drip-tape carton roll (white and blue with AFP logo), keeping it small in the lower-third off-center position. Enlarge the product group from 0% to 13-27% of frame width.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 22,
-      "product_height_percent": 30,
-      "product_x_center_percent": 50,
-      "reasons": [
-        "Hard reject: Visible people in the image (two farmers standing in the background)."
-      ],
-      "correction_prompt": "Regenerate the image with exactly two people removed, leaving only the AFP drip-tape roll and the farm context.",
-      "attempt": 3
-    },
-    {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 22,
-      "product_height_percent": 16,
-      "product_x_center_percent": 43,
+      "score": 95,
+      "product_width_percent": 26,
+      "product_height_percent": 32,
+      "product_x_center_percent": 70,
       "reasons": [
-        "Product is correctly identified as a single AFP white-and-blue drip tape roll within the acceptable size and proportion limits (width 20-23%, height up to 32%).",
-        "Placement is properly in the lower third, slightly off-center, matching the 'EDITORIAL HERO' visual brief.",
-        "The wide high-oblique view of the farm field with crop rows and distant unattended tractor effectively creates the required context where the farm dominates and the product remains small and fully visible.",
-        "No people, human silhouettes, or body parts are present in the frame.",
-        "The required watermark 'AFP | 09134922013' is correctly displayed in the bottom right corner.",
-        "No hard-reject elements such as extra commercial packages, bottles, or containers are visible."
+        "Contains exactly one AFP white-and-blue drip-tape carton roll.",
+        "No people or human body parts are visible.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right.",
+        "The roll is positioned in the lower-right off-center area, consistent with the editorial hero role.",
+        "Background context (farm, irrigation, tractor, building) is appropriate and contextually relevant."
       ],
       "correction_prompt": "",
-      "attempt": 4
+      "attempt": 2
     }
   ]
 }

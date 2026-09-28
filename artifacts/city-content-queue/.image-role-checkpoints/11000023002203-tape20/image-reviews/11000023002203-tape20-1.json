@@ -7,34 +7,59 @@
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 20,
+      "product_width_percent": 11,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a human (farmer) in the image is a hard reject trigger.",
+        "Product width is approximately 11%, which falls below the accepted 13% threshold.",
+        "Product is centered in the bottom section rather than off-center on the lower third as requested.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 11% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with zero humans, place the single white-and-blue drip tape roll off-center on the lower third, and ensure the roll's width is between 13 and 27 percent of the frame. Enlarge the product group from 11% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 21,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Critical Hard Reject: The image contains a human figure (a man) standing directly in the background, violating the 'zero people' rule.",
+        "Critical Hard Reject: The human figure's body parts (face, hands, legs) are clearly visible and must not be present in the final asset."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the man. Keep the AFP carton roll, the red tractor, and the irrigation field context exactly as they are.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
       "product_width_percent": 21,
       "product_height_percent": 28,
       "product_x_center_percent": 48,
       "reasons": [
-        "The watermark text is displayed incorrectly as '09134922013' instead of the required '09134922013' (extra '2' included).",
-        "The roll's dimensions (28% height) are closer to the hard reject threshold (32%) and do not clearly fit the preference of 20-23% width.",
-        "The object is not centered in the lower third as per the editorial hero requirement."
+        "Hard reject: Human body part (driver) visible inside the tractor cabin in the background."
       ],
-      "correction_prompt": "Remove the extra '2' in the watermarked phone number to ensure '09134922013'. Reposition the roll to a clearly off-center location (lower-left or lower-right) and reduce its visual size so it occupies less than 25% of the frame height.",
-      "attempt": 1
+      "correction_prompt": "Regenerate the image to completely remove the human driver from the tractor cabin; ensure the background contains zero people or faces while maintaining the wide farm context.",
+      "attempt": 3
     },
     {
       "pass": true,
-      "score": 88,
-      "product_width_percent": 16,
-      "product_height_percent": 22,
-      "product_x_center_percent": 47,
+      "score": 85,
+      "product_width_percent": 18,
+      "product_height_percent": 14,
+      "product_x_center_percent": 48,
       "reasons": [
-        "The image contains exactly one wide low cylindrical carton roll.",
-        "Product dimensions are within the permitted tolerance (width ~16%, height ~22%).",
-        "Zero people, faces, or body parts are visible.",
-        "Background context (drip-irrigated field rows and distant buildings) is appropriate for the editorial brief.",
-        "Required watermark 'AFP | 09134922013' is present and legible.",
-        "No hard rejects such as bottles, containers, second rolls, or distorted geometry detected."
+        "The image features exactly one white and blue cylindrical drip-tape roll in the foreground, consistent with the specified product dimensions (width ~18%, height ~14%).",
+        "The image contains zero people or human body parts.",
+        "The bottom-right watermark 'AFP | 09134922013' is clearly visible and matches the mandatory requirement.",
+        "The background provides an appropriate editorial context for irrigation (crop rows), and the absence of a city skyline is acceptable as it avoids a 'fake headline' or impossible geometry for a farm setting.",
+        "The roll is positioned in the lower third of the frame as required for the editorial hero role."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 4
     }
   ]
 }

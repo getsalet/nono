@@ -7,38 +7,76 @@
   "history": [
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 33,
-      "product_height_percent": 38,
-      "product_x_center_percent": 40,
+      "score": 12,
+      "product_width_percent": 38,
+      "product_height_percent": 44,
+      "product_x_center_percent": 41,
       "reasons": [
-        "Hard reject: Human person (woman) is clearly visible in the frame.",
-        "Hard reject: A second commercial package (cardboard carton box) is present.",
-        "Hard reject: The primary product (drip tape roll) exceeds the maximum width limit of 27 percent.",
-        "Hard reject: The primary product exceeds the maximum height limit of 32 percent.",
-        "Role Mismatch: The image shows a person rather than a medium side view of unattended fixed filter, gauge, and manifold as requested in the headline role.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+        "Hard reject: A visible person (kneeling male) with full upper and lower body parts is present in the image.",
+        "Product dimensions are outside the acceptable range: the bounding box width (38%) exceeds the maximum limit of 27%, and the height (44%) exceeds the maximum limit of 32%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width.; Reduce product height from 44% to at most 32% of frame height."
       ],
-      "correction_prompt": "Remove all people and the cardboard box. Shrink the drip tape roll to 20-23% width. Change scene to a close-up of an unattended irrigation manifold with filters and gauges, ensuring the AFP tape roll appears small and secondary. Reduce the product group from 33% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "correction_prompt": "Remove all people. Regenerate the image to show the AFP drip tape roll strictly as a small, secondary object within a wide shot of an unattended fixed irrigation system (filters, gauges, manifold). Ensure the roll's bounding box does not exceed 27% frame width and 32% frame height. Reduce the product group from 38% to 13-27% of frame width. Reduce product height from 44% to at most 32% of frame height.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 72,
-      "product_width_percent": 20,
-      "product_height_percent": 15,
-      "product_x_center_percent": 40,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
       "reasons": [
-        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
-        "The roll's width is estimated at approximately 20% of the frame, which falls within the preferred 20-23% range.",
-        "The roll's height is physically plausible and well under the 32% hard limit.",
-        "The mandatory image role of a 'HEADWORKS STORY' is satisfied by the medium side view of the unattended fixed filter, gauge, regulator, and manifold, with the carton roll remaining small and secondary.",
-        "Zero people or human body parts are visible in the scene.",
-        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
-        "No hard rejects are present; the background features a farm field and distant unattended equipment, which are contextually relevant and allowed."
+        "Hard reject: Visible human farmer operating equipment (head, arms, and full body present).",
+        "Hard reject: Visible bottle/container (sprayer tank with blue cap) present on the machine.",
+        "Image role violation: The mandatory role required 'medium side view of unattended fixed filter, gauge...'; this image shows a person working on a machine."
+      ],
+      "correction_prompt": "Remove all people and the blue-capped spray tank from the image. Replace the manual equipment with a stationary, unattended fixed filter and manifold system. Keep the single AFP drip-tape carton roll as the primary static subject in the field.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 29,
+      "product_height_percent": 38,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Watermark text is inaccurate: '09134922013' is visible instead of the required '09134922013'.",
+        "Product width (~29%) and height (~38%) exceed the hard reject thresholds of 27% and 32%.",
+        "Gibberish/meaningless text visible on the side of the carton (e.g., 'MEERTING ZTUY').",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with the correct bottom-right watermark text 'AFP | 09134922013'. Scale down the drip-tape roll to 20% of the frame width and height. Remove gibberish text from the roll and ensure 'AFP' is clearly legible. Keep the filter/gauge infrastructure in the foreground. Reduce the product group from 29% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 12,
+      "product_height_percent": 15,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Hard reject: visible human present (kneeling man in center, additional person by tractor in background)",
+        "Hard reject: human body parts visible (hands, legs, face)",
+        "Product is placed in the foreground and is secondary, whereas the HEADWORKS STORY role required the infrastructure (filter/gauge) to be the main subject and the product to be small/distant",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 12% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate without any people. Place the fixed irrigation infrastructure (filter, gauge, regulator) as the main subject. Show the small white-and-blue AFP drip-tape carton roll in the background as a secondary element, not in the foreground. Keep the required watermark in the bottom-right. Enlarge the product group from 12% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product size and positioning are within acceptable editorial preferences.",
+        "Required infrastructure (filter, gauge, regulator, manifold) is visible.",
+        "Required watermark 'AFP | 09134922013' is present and correctly placed.",
+        "No people or human body parts visible."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 5
     }
   ]
 }

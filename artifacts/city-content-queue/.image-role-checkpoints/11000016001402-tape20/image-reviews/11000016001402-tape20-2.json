@@ -6,22 +6,119 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 82,
-      "product_width_percent": 23,
-      "product_height_percent": 28,
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 31,
+      "product_height_percent": 30,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Contains exactly one white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero people, human body parts, or silhouettes are visible.",
+        "Distant unattended tractor and ordinary farm building are acceptable infrastructure/context.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right.",
+        "Elevated technical arrangement with visible field-selection evidence (emitter tape coiled next to the roll) matches the SELECTION EVIDENCE role.",
+        "Placed in the lower-third, which is an editorial preference and not a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product size exceeds the 27% width limit, representing a minor aesthetic deviation from the preferred 20-23% range",
+        "Dense emitter-layout background may be stylistically cluttered but remains within acceptable contextual evidence for field selection",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 31,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "The product roll is too large relative to the frame width (25% vs preferred 20-23%) and nearly at the maximum height limit (31% vs 32%).",
+        "Layflat hoses are deployed on the ground in the foreground, which is explicitly defined as a hard reject in this strict QA context despite being a common application for drip tape.",
+        "The image lacks the required 'elevated technical arrangement' and specific 'emitter-spacing evidence' to satisfy the SELECTION EVIDENCE role for the article brief."
+      ],
+      "correction_prompt": "Regenerate the image with a significantly smaller drip tape roll (occupying ~20% width) positioned on an elevated display surface, featuring clear emitter spacing details and completely removing any deployed hoses from the foreground.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 72,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Missing required visible emitter-spacing or field-selection evidence",
+        "Background is a simple agricultural landscape, not the specific 'elevated technical arrangement' or layout requested for SELECTION EVIDENCE role"
+      ],
+      "correction_prompt": "Re-render the scene to show a close-up technical arrangement of the drip-tape roll on a technical table or soil profile slice with clear emitter spacing diagrams/labels visible in the frame. Maintain the rural farm context and watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
       "product_x_center_percent": 48,
       "reasons": [
-        "Exact required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Image displays exactly one wide low cylindrical drip-tape carton roll with white and blue color scheme.",
-        "Product dimensions are within acceptable bounds (width ~23%, height ~28%).",
-        "Background aligns with the article brief, showing an ordinary field edge and farm building.",
-        "Visible drip tape extending from the roll provides the required field-selection and emitter-spacing evidence.",
-        "No hard rejects detected (no people, no human body parts, no prohibited containers, no gibberish writing, or impossible geometry).",
-        "Editorial placement and lower-third positioning are compliant."
+        "Presence of a second commercial package (cardboard box) in the background",
+        "Gibberish and distorted writing visible on the product roll and background box (e.g., '120 ADEI' instead of correct text)"
       ],
-      "correction_prompt": "",
-      "attempt": 1
+      "correction_prompt": "Remove the second cardboard box and irrigation hardware to ensure a single product arrangement. Redraw the text on the white roll and background to be legible and accurate (specifically 'AFP').",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 34,
+      "product_height_percent": 33,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Product width (34%) exceeds hard reject threshold of 27% of frame width",
+        "Product height (33%) exceeds maximum allowable height of 32%",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 13-27% of frame width.; Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to reduce the physical size of the drip-tape carton roll so that it occupies between 20 and 23 percent of the frame width and less than 32 percent of the frame height. Ensure the water mark 'AFP | 09134922013' remains in the bottom-right corner. Keep the background, field, and building identical, but shrink the roll proportionally to meet the dimensional requirements. Reduce the product group from 34% to 13-27% of frame width. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 15,
+      "product_height_percent": 14,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Two human figures visible in the distant background to the right of the farm building.",
+        "Product bounding box width (approx 15%) is below the reviewer-accepted minimum threshold of 13% (likely 14-15%), falling short of the preferred 20-23% range and the required visual scale.",
+        "Required specific watermark text '09134922013' does not match the provided instruction string."
+      ],
+      "correction_prompt": "Regenerate to strictly remove any human figures or body parts in the background. Increase the scale of the drip-tape roll so it occupies 20-23% of the image width. Ensure the bottom-right watermark text reads 'AFP | 09134922013'.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 37.5,
+      "product_height_percent": 44.2,
+      "product_x_center_percent": 36.8,
+      "reasons": [
+        "The image contains a visible person (farmer) in the background, which is a hard reject for any human figure.",
+        "The product bounding box width exceeds the 27% maximum limit.",
+        "The product bounding box height exceeds the 32% maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 37.5% to 13-27% of frame width.; Reduce product height from 44.2% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with no people or human body parts. Ensure the single AFP drip-tape roll has a width of 20-23% of the frame width and a height of 24-32% of the frame height. Reduce the product group from 37.5% to 13-27% of frame width. Reduce product height from 44.2% to at most 32% of frame height.",
+      "attempt": 8
     }
   ]
 }
