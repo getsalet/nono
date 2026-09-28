@@ -1,0 +1,67 @@
+{
+  "source_id": "10700022002060-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23.4,
+      "product_height_percent": 24.2,
+      "product_x_center_percent": 47.2,
+      "reasons": [
+        "Product is placed in the foreground center, which is physically plausible but visually dominant, contrary to the requirement that it remain 'small at a field edge'.",
+        "The image uses a centered vanishing point perspective, which is explicitly prohibited by the 'no centered vanishing point' requirement for the INSTALLATION PROOF role."
+      ],
+      "correction_prompt": "Regenerate to remove the centered vanishing point. Reposition the single AFPP carton roll to the far background at a field edge to appear small. Keep the foreground crop beds and irrigation tape lines in an asymmetric layout to avoid central convergence.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 17,
+      "product_height_percent": 28,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Presence of a second commercial package/roll (white cylinder visible in the mid-ground)",
+        "Product bounding box height exceeds the 32% maximum physical plausibility limit",
+        "Product width is outside the preferred 20-23% range (estimated ~17%)"
+      ],
+      "correction_prompt": "Remove the distant white roll in the mid-ground. Shrink the foreground AFP roll to a height of 30% and width of 21% of the frame to comply with installation proof constraints.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 16,
+      "product_height_percent": 22,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject: presence of a second commercial package (the open carton in the center of the frame violates the 'exactly one approved carton' rule).",
+        "Hard reject: presence of a second roll; the drip tape is unrolled and visible extending from the main roll across the soil, which fails the 'no layflat hose/pipe through the roll' or 'exactly one roll' requirement.",
+        "The main roll is in the immediate foreground rather than being 'small at a field edge' as required by the installation proof role."
+      ],
+      "correction_prompt": "Regenerate the image showing only one unopened AFP drip-tape roll at the background edge. Remove the open carton and remove all unrolled tape from the foreground. Ensure the roll is small, distant, and no people or tractors are visible.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Product width is approximately 20% of the frame width, falling within the preferred 20-23% range.",
+        "No people or human body parts are visible in the image.",
+        "The bottom-right watermark 'AFP | 09134922013' is present as required.",
+        "Background context (tilled soil, crop rows, distant building) is consistent with the installation/field proof role without violating hard rejects.",
+        "The roll is physically plausible and not distorted."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

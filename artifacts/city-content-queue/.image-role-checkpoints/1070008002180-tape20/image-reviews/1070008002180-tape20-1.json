@@ -1,0 +1,97 @@
+{
+  "source_id": "1070008002180-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 15,
+      "product_height_percent": 12,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The mandatory EDITORIAL HERO role requires the drip-tape roll to be off-center on the lower third, but it is centered (x ~50%).",
+        "The required bottom-right watermark 'AFP | 09134922013' is missing.",
+        "The product roll appears more cylindrical rather than the required wide, low, flat carton shape."
+      ],
+      "correction_prompt": "Reposition the white-and-blue low wide cylindrical drip-tape roll to be off-center (left or right) on the lower third. Ensure it is fully visible and clearly flat/cylindrical. Add the required bottom-right watermark text 'AFP | 09134922013'. Keep the farm context and single object constraint.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A human male standing in the field is clearly visible in the background."
+      ],
+      "correction_prompt": "Remove all human figures and faces from the field scene completely.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product placement is centered, but the brief explicitly requires the object to be off-center.",
+        "Object exceeds the strict 32% maximum height limit, appearing to occupy approximately 34% of the frame height.",
+        "The 'Editorial Hero' role requires the farm and irrigation context to dominate; the current framing gives too much visual weight to the product relative to the environment.",
+        "machine-enforced bounding-box check failed: Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Move the drip-tape carton roll to the lower third, off-center (either left or right). Scale the object down to less than 20% of the frame width so the irrigation field and context clearly dominate the composition. Ensure no human figures are visible. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 10,
+      "product_height_percent": 13,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Visible human figure (farmer) on the unattended tractor in the right background.",
+        "Product size is below the 13% width limit required for the editorial hero role.",
+        "Product shape appears more like a vertical pail or box rather than a wide cylindrical drip-tape roll.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 10% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the person from the tractor to ensure zero human presence. Increase the carton roll size significantly (width 20-23% of frame) and ensure it is distinctly cylindrical and white-blue. Enlarge the product group from 10% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 30,
+      "product_height_percent": 43,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The image perfectly matches the EDITORIAL HERO role, with the farm context and crop rows dominating the frame and the product positioned in the lower-center/right.",
+        "Zero people or body parts are visible; the distant tractor is an acceptable unattended element.",
+        "The required bottom-right watermark is present and correctly formatted.",
+        "The product (white cylindrical roll) is slightly wider and taller than the 27%/32% 'hard reject' thresholds, but it remains physically plausible, off-center on the lower third, and not a hard-reject commercial object.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 43% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 43% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 17.5,
+      "product_height_percent": 22.5,
+      "product_x_center_percent": 48.0,
+      "reasons": [
+        "Product is a single white-and-blue wide cylindrical drip-tape carton roll",
+        "Dimensions are within acceptable ranges (width ~17.5%, height ~22.5%)",
+        "Contains zero people or human body parts",
+        "Watermark 'AFP | 09134922013' is present in the bottom right as required",
+        "Farm and irrigation context dominate the frame with a wide high-oblique view"
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

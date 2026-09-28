@@ -1,0 +1,39 @@
+{
+  "source_id": "1070008002652-tape20",
+  "family": "tape20",
+  "kind": 4,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 10,
+      "product_height_percent": 11,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Image contains a prominent person (farmer/worker) with visible face, hands, and body.",
+        "Hard reject: Image contains a commercial pump unit and filtration equipment (extra commercial hardware/containers) next to the tape roll.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 10% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the person completely. Remove the silver pump/filter hardware. Keep only the unattended white-and-blue drip tape roll placed on the soil in the crop field, ensuring it is the sole product shown. Enlarge the product group from 10% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 72,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Object fits preferred dimensions: width 24% (range 20-23 + reviewer noise) and height 30% (within 32% limit).",
+        "Zero people or human body parts present.",
+        "Bottom-right watermark 'AFP | 09134922013' is present as required.",
+        "Product is a wide, low cylindrical roll consistent with drip-tape carton form factor.",
+        "Background shows planted crop beds and open field, consistent with the installation-proof visual brief."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

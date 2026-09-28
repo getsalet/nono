@@ -2,13 +2,13 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-28T00:05:05+00:00`
+- آخرین بروزرسانی: `2026-09-28T00:07:37+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **425 از 1894 (22.44٪)**
 - تکمیل‌شده: **425**
 - در حال پردازش: **0**
-- در انتظار: **1333**
-- ناموفق: **136**
+- در انتظار: **1327**
+- ناموفق: **142**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -56,8 +56,8 @@
 - **پلدشت** — `layflat`: `image hard gate rejected role 2 after 6 attempt`
 - **لاجان** — `tape20`: `image hard gate rejected role 5 after 6 attempt`
 - **لاجان** — `layflat`: `image hard gate rejected role 3 after 6 attempt`
-- **پیرانشهر** — `tape20`: `image hard gate rejected role 5 after 6 attempt`
-- **پیرانشهر** — `layflat`: `image hard gate rejected role 3 after 6 attempt`
+- **پیرانشهر** — `tape20`: `Editorial review failed: internal link count must equal minimum`
+- **پیرانشهر** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
 - **آواجیق** — `tape20`: `image hard gate rejected role 5 after 6 attempt`
 - **آواجیق** — `layflat`: `image hard gate rejected role 2 after 6 attempt`
 - **حاجیلار** — `tape20`: `image hard gate rejected role 2 after 6 attempt`
