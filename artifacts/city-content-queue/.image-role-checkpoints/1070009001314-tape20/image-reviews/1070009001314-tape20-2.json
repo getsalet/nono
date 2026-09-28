@@ -8,36 +8,51 @@
     {
       "pass": false,
       "score": 10,
-      "product_width_percent": 28,
-      "product_height_percent": 30,
-      "product_x_center_percent": 33,
-      "reasons": [
-        "Hard reject: Image contains a crouching male farmer.",
-        "Hard reject: Human body parts (hands) are visible in the bottom-right overlay.",
-        "Hard reject: A second commercial package (small carton) is visible.",
-        "The product is wider than the 27% hard limit.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
-      ],
-      "correction_prompt": "Remove all people, farmers, and human body parts. Remove the small second carton box. Regenerate with a single wide low cylindrical drip-tape roll positioned on the left, occupying approximately 20% of the frame width, with no secondary packaging or overlays. Reduce the product group from 28% to 13-27% of frame width.",
-      "attempt": 1
-    },
-    {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 20,
+      "product_width_percent": 22,
       "product_height_percent": 30,
       "product_x_center_percent": 25,
       "reasons": [
-        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
-        "Product dimensions are within acceptable range: width is approximately 20% and height is approximately 30%.",
-        "Zero people or body parts present in the image.",
-        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Background includes distant unattended tractors and field context which is allowed and matches the brief.",
-        "Drip tape layout is visible on the ground, providing the required 'selection evidence'.",
-        "No forbidden objects such as bottles, jars, or containers are present."
+        "Hard reject: Presence of a person/farmer working on equipment in the top-right quadrant.",
+        "Hard reject: Presence of a second commercial product (loose tubing roll) in the bottom-right quadrant.",
+        "Hard reject: The image shows a 'layflat hose' or loose tape roll, which is not the specific 'carton roll' requested as the primary subject."
+      ],
+      "correction_prompt": "Regenerate as a single, focused image (do not use a grid). Show exactly one AFP white-and-blue carton roll of drip tape sitting on a field edge or soil. Do not include any people, farmers, or loose tubing rolls. Ensure the 'SELECTION EVIDENCE' context is present (e.g., a visible spec sheet or emitter spacing markers nearby) but keep the background clean and the carton roll as the primary focus.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 29,
+      "product_height_percent": 22,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Product is a wide low cylindrical drip-tape carton roll in the required white-and-blue AFP color scheme.",
+        "Contains exactly one approved carton roll.",
+        "Zero people or human body parts are visible.",
+        "Background matches the brief with an ordinary field edge and distant farm building.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and accurate.",
+        "Paper document is present providing field-selection evidence as required by the role.",
+        "Minor deduction: The product width (29%) is slightly outside the preferred 13-27% range, and the text on the blue band appears slightly stylized or 'gibberish' upon close inspection, though it does not break the main visual requirements.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 29% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Roll dimensions are within the acceptable width range of 13-27% and height range of up to 32%.",
+        "Zero visible people or human body parts in the frame.",
+        "Correct bottom-right watermark 'AFP | 09134922013' is present and legible.",
+        "Visual context aligns with the brief, featuring unattended distant farm equipment and ordinary farm buildings.",
+        "Only one visible commercial package (the product roll) without disallowed extra bottles or containers."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }

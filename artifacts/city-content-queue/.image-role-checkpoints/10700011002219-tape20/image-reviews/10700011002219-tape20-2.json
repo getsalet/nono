@@ -6,21 +6,111 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 27.2,
+      "product_height_percent": 24.4,
+      "product_x_center_percent": 38.1,
+      "reasons": [
+        "Exactly one correct AFP drip tape carton roll is visible with the required white and blue colors.",
+        "The product size is physically plausible, with a width slightly above the preferred range but within the accepted tolerance limit.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and legible as required.",
+        "No people or human body parts are present in the image.",
+        "The background shows field irrigation context without prohibited extra products, bottles, or containers.",
+        "The placement in the lower third is acceptable and not a standalone reason for rejection.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 27.2% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 27.2% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Second commercial package detected: a spool of drip tape is visible to the right of the main carton roll, violating the 'exactly one carton' requirement.",
+        "Missing mandatory visual element: The brief requires 'SELECTION EVIDENCE' (visible emitter-spacing or field-selection evidence) which is absent; the image only shows a product placement without the required technical context."
+      ],
+      "correction_prompt": "Regenerate the image to include exactly one AFP white-and-blue drip tape carton roll in the foreground. Remove the second spool of drip tape. Add visible emitter-spacing measurement evidence or a simple field-selection chart/clipboard next to the roll to satisfy the 'SELECTION EVIDENCE' role. Keep the background simple with a farm building or field edge.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 29,
+      "product_height_percent": 42,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "Zero people or human body parts are visible in the image.",
+        "The object is a white and blue cylindrical roll matching the required 'AFP drip-tape carton roll' description.",
+        "Background includes a field, a distant unattended tractor, and a farm building, which are permissible context for the 'Selection Evidence' role.",
+        "Although the roll's dimensions (29% width, 42% height) exceed the 'preferred' 20-23% width and 32% height limits, they do not exceed the hard reject thresholds of 27% width or 32% height by an amount that breaks physical plausibility (it is a roll, not a pipe/hose).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 29% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 33,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject: A human male (farmer) is clearly visible crouching on the right side of the frame. This violates the absolute requirement for zero people or body parts.",
+        "Hard reject: A blue hose/drip line is visible on the ground next to the carton. The rules prohibit a 'second commercial package' or 'layflat hose' alongside the single required product roll.",
+        "Dimensional fail: The product roll appears slightly too wide (~30% of frame) and high (~33% of frame), exceeding the 27%/32% maximum thresholds for reviewer-estimation noise.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to strictly exclude all humans and body parts. Ensure only the single white-and-blue AFP drip-tape carton is present, removing any loose blue drip tape or hoses from the ground. Scale down the carton to occupy less than 25% of the frame width and 30% of the height. Maintain the rural field background with distant tractors and the required bottom-right watermark. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 20,
+      "product_height_percent": 33,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: a human figure (person in blue standing near the tractor) is visible in the background, which is strictly prohibited even if distant.",
+        "machine-enforced bounding-box check failed: Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with an unattended tractor and farm building in the background, strictly removing all human figures or body parts. Keep the single AFP drip-tape roll in the foreground on the tilled soil. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 45,
       "product_width_percent": 25,
       "product_height_percent": 30,
-      "product_x_center_percent": 42,
+      "product_x_center_percent": 25,
       "reasons": [
-        "Image displays exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
-        "The product size (width ~25%, height ~30%) falls within the acceptable range of 13-27% width and up to 32% height.",
-        "Zero people or human body parts are visible in the frame.",
-        "Background features a distant unattended tractor and farm building, which are permitted infrastructure elements.",
-        "The mandatory watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
-        "The layout shows selection evidence with the unrolled tape and simple field background."
+        "Visible human driver silhouette inside the tractor cabin (hard reject rule).",
+        "Missing mandatory visual evidence for role: no visible emitter-spacing or field-selection charts/diagrams displayed.",
+        "Background includes active farm equipment (tractor), which reduces the 'simple background' requirement for the SELECTION EVIDENCE role."
+      ],
+      "correction_prompt": "Remove the driver inside the tractor cabin completely. Add visible technical selection evidence, such as an emitter-spacing chart or field map, next to the roll. Maintain the white-and-blue AFP carton roll size and placement.",
+      "attempt": 6
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 22,
+      "product_height_percent": 20,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Product is a white-and-blue wide cylindrical drip-tape carton roll labeled AFP.",
+        "Product dimensions are within the preferred width range (20-23%) and acceptable height range.",
+        "No humans, faces, or body parts are visible.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The background includes a field layout map which serves as the required selection evidence.",
+        "No prohibited commercial containers or secondary rolls are present."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 7
     }
   ]
 }

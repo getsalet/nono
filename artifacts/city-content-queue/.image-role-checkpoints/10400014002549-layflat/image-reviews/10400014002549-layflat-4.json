@@ -7,110 +7,109 @@
   "history": [
     {
       "pass": false,
-      "score": 85,
-      "product_width_percent": 22,
-      "product_height_percent": 14,
-      "product_x_center_percent": 28,
+      "score": 10,
+      "product_width_percent": 60,
+      "product_height_percent": 55,
+      "product_x_center_percent": 35,
       "reasons": [
-        "The visual clearly demonstrates the approved layout: one packaged coil and one bare woven coil are grouped together at the bottom-left, fitting the required 9-20% width bracket.",
-        "The installation proof is effective, showing the black hose extended into the field with clear, visible connections.",
-        "The exact watermark 'AFP | 09134922013' is present in the bottom-right corner and was preserved as requested.",
-        "There are zero visible people or human body parts in the frame, and no prohibited extra items like bottles, jars, or other commercial packages.",
-        "The scene is set in an unattended agricultural field with standard farm infrastructure visible in the distance, which aligns with the 'INSTALLATION PROOF' role.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 22% to 9-20% of frame width."
+        "Hard reject: The image contains a visible person (a crouching man), which violates the requirement for zero people or body parts.",
+        "The approved product pair occupies significantly more than the maximum allowed 20% of the frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 9-20% of frame width.; Reduce product height from 55% to at most 32% of frame height."
       ],
-      "correction_prompt": "Reduce the product group from 22% to 9-20% of frame width.",
+      "correction_prompt": "Remove all human figures and replace them with an unattended view of a field. Ensure the two coiled hoses (one packaged AFP coil and one bare black woven coil) are placed at the field edge, occupying less than 20% of the total frame width. Reduce the product group from 60% to 9-20% of frame width. Reduce product height from 55% to at most 32% of frame height.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 14,
-      "product_height_percent": 24,
-      "product_x_center_percent": 31,
+      "score": 95,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
       "reasons": [
-        "The image contains a visible person in the background on the right side, which constitutes a hard reject.",
-        "The approved layflat pair is missing; the scene displays only one coiled product with packaging.",
-        "Although the extended hose connection is present, the hard-rejection criteria for people and missing products cannot be bypassed."
+        "The approved layflat pair (one packaged AFP coil and one bare black woven coil) is present, fully visible, separate, and physically plausible at the field edge.",
+        "The extended layflat connection entering the field is clearly visible, fulfilling the 'INSTALLATION PROOF' role.",
+        "The image contains zero people, hands, or human body parts, satisfying the negative constraints.",
+        "The watermark 'AFP | 09134922013' is present in the bottom right and has not been flagged for rejection.",
+        "Distant unattended farm equipment (tractor) is visible but is correctly classified as infrastructure and does not interfere with the product pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 9-20% of frame width.; Reduce product height from 35% to at most 32% of frame height."
       ],
-      "correction_prompt": "Remove the person in the background entirely and include the full layflat product pair: one packaged AFP coil and one bare black woven coil.",
+      "correction_prompt": "Reduce the product group from 55% to 9-20% of frame width. Reduce product height from 35% to at most 32% of frame height.",
       "attempt": 2
     },
     {
       "pass": false,
-      "score": 30,
-      "product_width_percent": 48,
-      "product_height_percent": 40,
-      "product_x_center_percent": 40,
+      "score": 15,
+      "product_width_percent": 11,
+      "product_height_percent": 9,
+      "product_x_center_percent": 41,
       "reasons": [
-        "Product pair width significantly exceeds the 20% maximum hard reject threshold (approx 48%).",
-        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 9-20% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+        "Image contains a full human body (worker/farmer) which is a hard reject for Role 4",
+        "Zero people and zero body parts requirement violated"
       ],
-      "correction_prompt": "Regenerate with the two-coil pair significantly reduced in scale to occupy only 12-15% of the frame width while maintaining visibility of the extended hose. Reduce the product group from 48% to 9-20% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "correction_prompt": "Remove the worker entirely. Replace with an unattended, unstaffed scene showing the hose extended into the field with no hands, people, or silhouettes visible.",
       "attempt": 3
     },
     {
       "pass": false,
-      "score": 85,
-      "product_width_percent": 21,
-      "product_height_percent": 18,
-      "product_x_center_percent": 18,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 20,
       "reasons": [
-        "Zero humans or body parts detected in the image",
-        "Required bottom-right watermark 'AFP | 09134922013' is present and clearly visible",
-        "Required layflat pair (packaged AFP coil and black woven coil) is present and physically plausible",
-        "Product pair is estimated at ~21% width; reviewer-estimation noise (9–20% acceptable) is slightly exceeded by 1 point, but objects remain fully visible, separate, and recognizable—treated as minor estimation variance, not a hard reject",
-        "Lower-third off-center placement aligns with editorial preference and is not a standalone reject",
-        "Distant unattended tractor, farm building, and extended hose segment are allowed infrastructure/context, not extra commercial products",
-        "No bottle, jar, canister, bucket, fake label, floating/merged products, or impossible intersections detected",
-        "machine-enforced bounding-box check failed: Reduce the product group from 21% to 9-20% of frame width."
+        "Hard reject: A person (farmer/worker) is clearly visible handling the hose, violating the zero people/body parts rule.",
+        "Hard reject: Third commercial package identified; a white plastic bottle/container is visible next to the coils.",
+        "Pair size violation: The coils and the bottle occupy approximately 28-30% of the frame width, exceeding the 20% maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 9-20% of frame width.; Reduce product height from 35% to at most 32% of frame height."
       ],
-      "correction_prompt": "Reduce the product group from 21% to 9-20% of frame width.",
+      "correction_prompt": "Remove the human figure completely to show an unattended installation scene. Eliminate the white plastic bottle. Reduce the visual size of the layflat coil pair to under 15% of the frame width, placing them smaller in the lower-left foreground. Reduce the product group from 28% to 9-20% of frame width. Reduce product height from 35% to at most 32% of frame height.",
       "attempt": 4
     },
     {
       "pass": false,
-      "score": 25,
-      "product_width_percent": 35,
-      "product_height_percent": 20,
-      "product_x_center_percent": 32,
+      "score": 35,
+      "product_width_percent": 8,
+      "product_height_percent": 11,
+      "product_x_center_percent": 40,
       "reasons": [
-        "Hard reject: Person is visible in the background on the right (standing, full body/silhouette).",
-        "Hard reject: Second person is visible in the center background (crouching by the tractor).",
-        "The image contains human body parts, which is a strict disqualifier.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 9-20% of frame width."
+        "Missing mandatory packaged AFP coil; only one bare black woven coil is visible",
+        "Pair does not satisfy the required two-coil layout (one packaged AFP, one bare black)",
+        "Product width is below the 12-15% target and below the 9-20% acceptance band",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 8% to 9-20% of frame width."
       ],
-      "correction_prompt": "Remove all human figures and body parts from the image, including the standing figure in the distance and the crouching figure near the tractor. Reduce the product group from 35% to 9-20% of frame width.",
+      "correction_prompt": "Regenerate the image to include the required pair of one packaged AFP coil and one bare black woven coil side by side at the field edge, occupying 12 to 15% of the frame width, with the extended layflat hose entering the field. Ensure the bottom-right watermark 'AFP | 09134922013' remains. Enlarge the product group from 8% to 9-20% of frame width.",
       "attempt": 5
     },
     {
       "pass": false,
-      "score": 5,
-      "product_width_percent": 5,
-      "product_height_percent": 10,
-      "product_x_center_percent": 48,
+      "score": 92,
+      "product_width_percent": 41,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Hard reject: The image contains a visible human (a male farmer/worker). The requirements mandate zero people and zero human body parts.",
-        "The mandatory layout of the 'approved two-coil pair' (one packaged AFP coil and one bare black woven coil) is not visible; instead, the human is interacting with a single component.",
-        "Hard reject: The product bounding box is not clearly discernible as the required pair, and the presence of the human fundamentally invalidates the image against the 'zero people' constraint.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 5% to 9-20% of frame width."
+        "Strictly meets 'INSTALLATION PROOF' role: asymmetric unattended view with an extended hose entering the field.",
+        "Approved pair correctly identified: one packaged coil and one bare black woven coil.",
+        "Zero people and zero human body parts present.",
+        "Distant unattended tractor correctly treated as relevant farm equipment, not a third product.",
+        "Watermark 'AFP | 09134922013' present in the bottom-right corner as required.",
+        "Product placement is off-center/low, which is an acceptable editorial preference.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 41% to 9-20% of frame width."
       ],
-      "correction_prompt": "Remove the person completely. Regenerate the scene to show an extended layflat hose connection in an empty field. Include the approved pair (one packaged AFP coil and one bare black woven coil) small at the edge of the frame (12-15% width). Maintain the bottom-right watermark 'AFP | 09134922013'. Enlarge the product group from 5% to 9-20% of frame width.",
+      "correction_prompt": "Reduce the product group from 41% to 9-20% of frame width.",
       "attempt": 6
     },
     {
       "pass": true,
-      "score": 95,
-      "product_width_percent": 17,
-      "product_height_percent": 20,
-      "product_x_center_percent": 35,
+      "score": 92,
+      "product_width_percent": 14,
+      "product_height_percent": 18,
+      "product_x_center_percent": 22,
       "reasons": [
-        "Contains exactly two approved objects: a packaged AFP coil and a bare black woven coil.",
-        "No people, faces, hands, arms, legs, or silhouettes present.",
-        "The two coils together occupy approximately 17% of the frame width, which falls within the acceptable 9-20% recognition range.",
-        "An extended hose segment (installation proof) is visible entering the field, and its relationship to the product pair is physically plausible.",
-        "The required bottom-right watermark 'AFP | 09134922013' is present.",
-        "Environment features such as ordinary soil texture, horizon, and crop rows are not treated as defects."
+        "Correctly displays the mandatory 'INSTALLATION PROOF' role with an extended hose entering the field.",
+        "The approved layflat pair (packaged coil and bare black coil) is clearly visible, separate, and physically plausible.",
+        "Product size is approximately 14% of the frame width, well within the acceptable 12-15% target range.",
+        "The 'AFP | 09134922013' watermark is present and correctly positioned in the bottom-right corner.",
+        "Zero people, body parts, or extra commercial items (like bottles or jars) are visible.",
+        "Distant farm infrastructure and crop rows are acceptable context for this article's visual brief."
       ],
       "correction_prompt": "",
       "attempt": 7

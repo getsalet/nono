@@ -6,21 +6,86 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 94,
-      "product_width_percent": 27,
-      "product_height_percent": 28,
-      "product_x_center_percent": 36,
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "One AFP white-and-blue wide low cylindrical drip-tape carton roll visible",
-        "Zero people or human body parts present",
-        "Correct watermark 'AFP | 09134922013' included in bottom-right",
-        "Background matches field context with distant unattended tractor and farm building (allowed)",
-        "Product placement and scale are physically plausible",
-        "Visible drip lines in the background provide relevant 'field-selection' evidence"
+        "The image is a multi-panel collage; the requirement is for a single image containing exactly one roll. There are at least three distinct cartons visible in different panels.",
+        "Multiple people and human body parts are present, including two full-body figures in the top panels and a hand in the bottom-right and middle-right panels. This is a hard reject.",
+        "The middle-right panel shows a hand holding a container (fertilizer/pesticide), which is a hard reject for any container other than the specified roll.",
+        "The composition does not match the required 'elevated technical arrangement' for a single product shot.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Generate a single 16:9 image. Foreground: exactly one white and blue cylindrical drip-tape carton roll (AFP brand). Place it on a wooden surface or in a field context. Midground: visible irrigation manifold, gauge, or drip-tape line unspooling. Background: simple field rows or farm building. No people, no hands, no bottles, no other packages. The 'AFP | 09134922013' watermark must be in the bottom-right corner. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Image shows exactly one approved white-and-blue wide low cylindrical drip-tape carton roll labeled AFP.",
+        "Object geometry is physically plausible, wide, low, and cylindrical.",
+        "Zero people, human body parts, or silhouettes are present.",
+        "Background shows a farm building and field edge, which is allowed and contextually relevant.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Included irrigation infrastructure (gauge, filter, tape) matches the 'Selection Evidence' role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 21,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The product label text is gibberish or unreadable.",
+        "Missing visible emitter-spacing or field-selection technical evidence required for the SELECTION EVIDENCE role."
+      ],
+      "correction_prompt": "Regenerate the image with a clear, legible 'AFP 20' label on the drip-tape roll and add visible evidence of emitter spacing (such as marked tape or a technical diagram overlay) to meet the selection evidence requirement.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 86,
+      "product_width_percent": 29,
+      "product_height_percent": 27,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The image correctly features exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero people and zero human body parts are present in the frame.",
+        "Background context is accurate: unattended tractor, red farm building, and fixed irrigation hardware are visible and allowed.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "The 'SELECTION EVIDENCE' role is fulfilled with a visible field layout/selection diagram placed next to the roll.",
+        "Deduction of 14 points for the visual presence of a second commercial package (the white layout diagram), which the brief strictly defines as a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the white layout diagram on the right side of the image, keeping only the AFP drip-tape roll, the watermark, and the existing background farm context. Reduce the product group from 29% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present.",
+        "Product dimensions and placement are within the acceptable threshold ranges (width 25%, height 24%).",
+        "Zero people or human body parts are visible in the scene.",
+        "Bottom-right watermark 'AFP | 09134922013' is correctly present as required.",
+        "Background context with an unattended tractor and farm building is editorially appropriate and allowed.",
+        "Visible emitter-spacing on the field floor satisfies the 'selection evidence' brief."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 5
     }
   ]
 }

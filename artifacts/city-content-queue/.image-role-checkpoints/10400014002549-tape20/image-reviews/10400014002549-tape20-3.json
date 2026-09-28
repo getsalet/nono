@@ -6,21 +6,37 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 82,
-      "product_width_percent": 17,
-      "product_height_percent": 16,
-      "product_x_center_percent": 40,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 31,
+      "product_x_center_percent": 28,
       "reasons": [
-        "Exact bottom-right watermark 'AFP | 09134922013' is present and correct.",
-        "Zero people or human body parts are visible.",
-        "Rolled product bounding box is approximately 17% wide and 16% tall, comfortably within the 13-27% width and <32% height acceptance thresholds.",
-        "The carton roll is white with blue accents and features a small water-drop logo.",
-        "Headworks infrastructure (filter, gauge, regulator) is visible and contextually relevant to the drip-tape story.",
-        "Composition features the product slightly lower-left and the infrastructure on the right, adhering to preferred editorial placements."
+        "Hard reject: A full human figure (farmer) is visible in the image, violating the 'zero people and zero human body parts' requirement.",
+        "Hard reject: A coiled section of the drip tape is lying on the ground next to the roll, appearing as a second commercial package or layflat hose.",
+        "Hard reject: The product roll width exceeds the 27% maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the person and the coiled tape on the ground. Keep only the single drip tape roll on the left. Position the image as a medium side view of a medium shot of unattended fixed filter, gauge, regulator, and manifold with the roll as a secondary element in the foreground. Reduce the roll's width to under 27% of the frame width. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "The image displays exactly one white and blue AFP drip-tape carton roll in the bottom-left foreground.",
+        "The bounding box of the roll is estimated at approximately 20% width and 25% height, which aligns perfectly with the preferred 20-23% width range and the hard reject limits.",
+        "The image contains zero people, faces, or human body parts.",
+        "The image includes allowed infrastructure: an unattended tractor and a fixed irrigation assembly with a coiled hose, filter, gauge, and manifold.",
+        "The required watermark \"AFP | 09134922013\" is clearly visible in the bottom-right corner.",
+        "No prohibited containers (bottles, jars, cans) or second commercial rolls are present.",
+        "The composition and background match the article's brief regarding agricultural irrigation context."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

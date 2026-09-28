@@ -7,48 +7,34 @@
   "history": [
     {
       "pass": false,
-      "score": 42,
-      "product_width_percent": 33,
-      "product_height_percent": 34,
-      "product_x_center_percent": 44,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Visible blue container/bucket in the right-middle field constitutes a hard reject",
-        "Product roll is wider than the maximum 27% frame width limit",
-        "Product roll is taller than the maximum 32% frame height limit",
-        "Multiple commercial cardboard boxes are present in the background",
-        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width.; Reduce product height from 34% to at most 32% of frame height."
+        "The carton roll's height is estimated at 38% of the frame height, which exceeds the maximum allowed height of 32%. Even though the roll remains physically plausible, it violates the strict bounding box constraints specified for this role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 32% of frame height."
       ],
-      "correction_prompt": "Remove all visible blue containers, buckets, and secondary cardboard boxes from the field. Reduce the size of the main drip-tape carton roll so it is approximately 20% of the frame width. Maintain the 'INSTALLATION PROOF' layout with the roll off-center at the field edge. Reduce the product group from 33% to 13-27% of frame width. Reduce product height from 34% to at most 32% of frame height.",
+      "correction_prompt": "Regenerate with a much smaller scale for the white-and-blue AFP drip tape carton, keeping it as a small field-edge detail. Target a roll height of 20-25% of the frame height and a width of ~18% to clearly convey the 'installation proof' role without the carton dominating the foreground. Reduce product height from 38% to at most 32% of frame height.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 10,
-      "product_width_percent": 16,
-      "product_height_percent": 15,
-      "product_x_center_percent": 35,
-      "reasons": [
-        "Hard reject: presence of a human person (worker/farmer) standing next to the tractor in the background."
-      ],
-      "correction_prompt": "Regenerate the image to remove the human person standing next to the tractor; replace with an unattended farm scene while keeping the exact bottom-right watermark 'AFP | 09134922013' and the AFP drip tape roll at the same size and position.",
-      "attempt": 2
-    },
-    {
       "pass": true,
-      "score": 92,
-      "product_width_percent": 18,
-      "product_height_percent": 26,
-      "product_x_center_percent": 40,
+      "score": 95,
+      "product_width_percent": 16,
+      "product_height_percent": 24,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Exact match for the required AFP white-and-blue drip tape roll.",
-        "Product dimensions are well within the preferred 20-23% width range and acceptable height limit.",
-        "Placement is in the lower third, acting as an editorial anchor without being a hard reject.",
-        "Zero human silhouettes or body parts detected.",
-        "Required watermark is present.",
-        "Background shows asymmetric view of installed drip tape and crop beds, fulfilling the role brief."
+        "Product matches specification: one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Dimensions are within the preferred 20-23% width (estimated 16% is well within the 13-27% acceptance range) and acceptable height.",
+        "Placement is asymmetric and in the foreground, fitting the 'INSTALLATION PROOF' role without a centered vanishing point.",
+        "Zero people or human body parts present.",
+        "Background includes crop beds, installed drip tape, and an unattended distant tractor, which are contextually relevant.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right.",
+        "No hard rejects found (no bottles, no second packages, no gibberish, no impossible geometry)."
       ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 2
     }
   ]
 }

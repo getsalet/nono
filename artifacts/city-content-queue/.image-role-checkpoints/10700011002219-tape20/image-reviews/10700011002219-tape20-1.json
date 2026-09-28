@@ -6,22 +6,64 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 21,
-      "product_height_percent": 22,
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 9,
+      "product_height_percent": 14,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains zero people and zero human body parts.",
+        "Exactly one AFP white-and-blue drip-tape carton roll is visible and fully in frame.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Background matches the editorial hero brief with a dominant farm and irrigation context.",
+        "The roll is placed in the lower third and off-center as an editorial preference.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 9% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 9% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 25,
       "product_x_center_percent": 48,
       "reasons": [
-        "Exactly one AFP drip-tape carton roll is visible.",
-        "Product dimensions are within preferred and accepted thresholds (width ~21%, height ~22%).",
-        "Zero people or human body parts visible.",
-        "Background contextually matches the agricultural and irrigation article brief.",
-        "Required bottom-right watermark 'AFP | 09134922013' is present.",
-        "Distant tractors are unattended and contextually relevant, not commercial product rejects.",
-        "No bottles, jars, cans, buckets, fertilizers, second rolls, or text gibberish."
+        "Presence of a human figure (farmer/walker) in the distant background violates the zero-people hard reject rule.",
+        "The exact required bottom-right watermark 'AFP | 09134922013' is missing."
+      ],
+      "correction_prompt": "Remove all human figures and add the exact watermark 'AFP | 09134922013' to the bottom-right corner. Maintain the farm context and single drip-tape roll composition.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 19,
+      "product_height_percent": 24,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Multiple human figures (farmers/workers) are visible in the field, including one in the foreground left and others near the tractor.",
+        "Fail: The image contains people, which is a mandatory hard reject."
+      ],
+      "correction_prompt": "Remove all human figures (farmers, workers) from the field. Keep the AFP drip-tape roll small in the lower third, the farm context, and the required watermark 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Exact match of single white-and-blue AFP wide low cylindrical drip-tape carton roll",
+        "Product width and height within accepted tolerance range (18% width, 22% height)",
+        "No people, faces, hands, or body parts present",
+        "Required bottom-right watermark 'AFP | 09134922013' correctly displayed",
+        "Farm and irrigation context dominates with a wide high-oblique view",
+        "Only one commercial package present; background is contextually relevant with crop rows and distant unattended equipment"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 4
     }
   ]
 }
