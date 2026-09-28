@@ -220,16 +220,16 @@ class CityImagePolicyTests(unittest.TestCase):
         item = {"source_id": "city-layflat", "topic": "layflat", "city": "پلدشت"}
         prompt = image_prompt_policy.image_prompt(item, 2)
         self.assertIn("elevated technical view", prompt)
-        self.assertIn("no person, bottle or third commercial package", prompt)
+        self.assertIn("no horizon, building, crop rows, person", prompt)
         self.assertIn("occupying approximately 12 to 15 percent of frame width", prompt)
 
     def test_tape_maintenance_role_is_isolated_from_people_and_vehicles(self):
         item = {"source_id": "city-tape20", "topic": "tape20", "city": "لاجان"}
         prompt = image_prompt_policy.image_prompt(item, 5)
         self.assertIn("elevated close documentary view", prompt)
-        self.assertIn("Keep all people, human body parts, bottles, jars and extra commercial packages out of frame", prompt)
+        self.assertIn("Crop all horizon, sky, buildings, people, animals", prompt)
         self.assertIn("exactly one carton visible at roughly 20 to 23 percent of frame width", prompt)
-        self.assertIn("connector, emitter, flush-point", prompt)
+        self.assertIn("connector/emitter/flush-point", prompt)
 
 
 if __name__ == "__main__":
