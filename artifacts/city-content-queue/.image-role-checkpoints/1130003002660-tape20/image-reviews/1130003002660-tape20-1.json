@@ -1,0 +1,50 @@
+{
+  "source_id": "1130003002660-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 23,
+      "product_height_percent": 25,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: A human person (farmer) is clearly visible standing in the field, violating the rule of zero people.",
+        "Hard reject: The drip tape roll appears to be a loose roll of tape (black/grey core with white tape) rather than the specified white-and-blue cylindrical carton packaging."
+      ],
+      "correction_prompt": "Regenerate the image with no people in the scene. The irrigation tape roll must be a white and blue cylindrical carton box placed in the bottom left foreground. Keep the wide farm landscape background and the watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "Product is a rigid cylindrical roll with vertical sides; brief mandates a wide, low cylindrical drip-tape carton roll."
+      ],
+      "correction_prompt": "Regenerate image replacing the upright cylindrical roll with a wide, low cylindrical drip-tape carton roll; maintain AFP white-and-blue branding and keep product width at 20-23% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image correctly features exactly one AFP wide cylindrical drip-tape roll.",
+        "The roll size falls within the acceptable noise range (13-27% width, <32% height).",
+        "The farm and irrigation context dominates the wide high-oblique view as required for an EDITORIAL HERO role.",
+        "The bottom-right watermark 'AFP | 09134922013' is present exactly as required.",
+        "No people or human body parts are visible; the distant unattended tractor is permissible context."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

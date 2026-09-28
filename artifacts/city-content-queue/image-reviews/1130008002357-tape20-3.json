@@ -1,0 +1,50 @@
+{
+  "source_id": "1130008002357-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 38,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Hard reject: Contains two visible human subjects (one crouching, one kneeling) which violates the zero-person constraint.",
+        "Hard reject: The drip-tape carton roll is excessively wide (30%) and tall (38%), falling outside the maximum 27% width and 32% height limits.",
+        "Hard reject: Contains a second commercial package (cardboard box) which violates the 'exactly one roll' instruction and the 'second commercial package' reject rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image to remove all humans and the cardboard box. Shrink the white AFP drip-tape roll to occupy less than 27% of the width and 32% of the height. Place the shrunken roll in a lower-third position. Ensure the background features an unattended fixed filter, gauge, and manifold without any people or extra packaging. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 12,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: A visible human (farmer/worker) is present in the image, which is explicitly forbidden (zero people, zero body parts, no human silhouettes).",
+        "Hard reject: Contains a second commercial package (an open cardboard box next to the product).",
+        "Hard reject: Contains a blue canister/container (the pump unit on wheels) which is prohibited.",
+        "Placement: The AFP roll is located in the bottom-center/foreground and is cut off at the bottom edge of the frame, failing the 13-27% width constraint and the requirement for a clearly defined bounding box within the frame.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 12% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to remove the human, the open cardboard box, and the blue pump unit entirely. The image must feature exactly one AFP drip-tape roll in the lower third (off-center) against a background of irrigation infrastructure (filter, manifold) with a distant tractor or crop rows. The roll must be fully visible, not cut off, and approximately 20% of the frame width. Keep the watermark 'AFP | 09134922013' in the bottom right. Enlarge the product group from 12% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 24,
+      "product_height_percent": 16,
+      "product_x_center_percent": 45,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

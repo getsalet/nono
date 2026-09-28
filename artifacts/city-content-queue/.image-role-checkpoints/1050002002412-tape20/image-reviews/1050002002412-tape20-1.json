@@ -2,37 +2,56 @@
   "source_id": "1050002002412-tape20",
   "family": "tape20",
   "kind": 1,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 25,
-      "product_width_percent": 17.5,
-      "product_height_percent": 38.0,
-      "product_x_center_percent": 50.0,
+      "score": 68,
+      "product_width_percent": 26,
+      "product_height_percent": 27,
+      "product_x_center_percent": 50,
       "reasons": [
-        "Hard reject: The image contains a human (a farmer/worker) standing in the middle of the field, which violates the 'zero people and zero human body parts' rule."
+        "The image displays a bulk roll of drip tape with a hollow cardboard core, which lacks the specific 'carton' packaging (boxed material) explicitly required by the visual brief. Furthermore, the placement of the object is central on the horizontal axis (50%) rather than the 'off-center' position preferred for the editorial hero shot.",
+        "The product is placed on the central axis rather than off-center."
       ],
-      "correction_prompt": "Regenerate the image completely removing the human figure and any worker. Keep the white-and-blue AFP drip-tape roll in the foreground, the green tractor in the background, and the farm field context. Ensure the roll is off-center on the lower third and fully visible.",
+      "correction_prompt": "Regenerate to replace the bulk roll with a white-and-blue box-wrapped drip-tape carton roll, and position it off-center on the lower third to match the editorial requirements.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 90,
-      "product_width_percent": 26,
-      "product_height_percent": 25,
-      "product_x_center_percent": 47,
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
       "reasons": [
-        "Product is the correct AFP white and blue wide cylindrical drip-tape carton roll.",
-        "Product width is estimated at 26% of the frame, falling within the preferred 20-28% range.",
-        "Product placement is in the bottom third as requested.",
-        "Image contains no visible humans, faces, or body parts.",
-        "Background includes a distant unattended tractor and crop rows which are contextually relevant and allowed.",
-        "Mandatory watermark is present and correct."
+        "Placement is centered rather than off-center as required by the EDITORIAL HERO role",
+        "Watermark 'AFP | 09134922013' is missing from the bottom-right corner"
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Reposition the white and blue cylindrical carton roll to the lower-left or lower-right third of the image (off-center). Add the specific text watermark 'AFP | 09134922013' in white bold font to the bottom-right corner.",
       "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 14,
+      "product_height_percent": 10,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of multiple people and human body parts in the background (farmers and workers operating machinery and standing in the field) is a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove all people, human silhouettes, and human body parts. Retain only the farm context, distant equipment, and the single small AFP drip-tape roll positioned in the lower third.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 100,
+      "product_width_percent": 20,
+      "product_height_percent": 24,
+      "product_x_center_percent": 47,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 4
     }
   ]
 }

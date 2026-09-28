@@ -1,0 +1,70 @@
+{
+  "source_id": "1130003002659-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 26,
+      "product_height_percent": 33,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Placement violation: The product is centered (approx. 50% x-coordinate) instead of the required off-center position on the lower third.",
+        "Size violation: The product height (33%) exceeds the strict 32% maximum limit and is larger than the 20-23% preferred target width.",
+        "Composition: The product is disproportionately large relative to the background, failing the 'small' requirement for the editorial hero role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Re-render with the roll placed off-center on the bottom-left or bottom-right third. Reduce the roll's dimensions significantly so its width is under 20% of the frame and height under 30%, ensuring the farm context dominates the wide shot. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 20,
+      "product_x_center_percent": 85,
+      "reasons": [
+        "The background features a city skyline, which contradicts the required rural farm/irrigation context for the article brief regarding Nahavand/Hamedan agriculture."
+      ],
+      "correction_prompt": "Regenerate the background to show a rural agricultural field with distant farm buildings and crop rows instead of a city skyline. Keep the white and blue AFP drip-tape carton roll in the lower-right foreground with the required watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 13,
+      "product_height_percent": 35,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Object size (width ~13%) is at the edge of the accepted lower-bound, but remains physically plausible and not excessively small.",
+        "Zero people or human body parts present.",
+        "No prohibited items like bottles, cans, or second rolls detected.",
+        "Required watermark present and correctly formatted.",
+        "Image follows the editorial role with the farm context dominating and the product in the lower-third off-center.",
+        "Writing on the package is somewhat unclear but not illegible gibberish, maintaining credibility.",
+        "machine-enforced bounding-box check failed: Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 31,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image features exactly one white-and-blue drip tape carton roll with 'AFP' branding and a water drop logo, matching the required visual identity.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly visible and present.",
+        "The product dimensions (22% width, 31% height) fall well within the preferred and acceptance ranges.",
+        "The background aligns perfectly with the editorial brief, showing a wide high-oblique view of a farm with irrigation context and distant tractors, which are allowed as unattended equipment.",
+        "The image is free of people, human body parts, and hard-reject items such as bottles, jars, or second commercial packages."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

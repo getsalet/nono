@@ -2,95 +2,38 @@
   "source_id": "1050002002896-layflat",
   "family": "layflat",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 0,
-      "product_width_percent": 55,
-      "product_height_percent": 35,
-      "product_x_center_percent": 28,
+      "score": 25,
+      "product_width_percent": 75,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
       "reasons": [
-        "Hard reject due to the presence of a person (worker) interacting with the products."
+        "Hard reject: Product bounding box is far too wide (estimated 75% of frame) and includes a third commercial product (grey manifold/filtration unit).",
+        "Hard reject: The third commercial package/object (grey infrastructure) is visible, violating the 'two-coil pair' constraint.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 9-20% of frame width.; Reduce product height from 40% to at most 32% of frame height."
       ],
-      "correction_prompt": "Remove the worker entirely. Ensure the image displays only the two specified products on the ground with no human figures present.",
+      "correction_prompt": "Remove the grey manifold and all other infrastructure. Retain only the two coils (one packaged AFP, one bare). Shrink the layout so the pair of coils occupies 12-15% of the image width. Reduce the product group from 75% to 9-20% of frame width. Reduce product height from 40% to at most 32% of frame height.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 50,
-      "product_width_percent": 70,
-      "product_height_percent": 40,
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 17,
+      "product_height_percent": 22,
       "product_x_center_percent": 50,
       "reasons": [
-        "The two required product coils (one bare, one wrapped) span approximately 70% of the frame width, which exceeds the hard limit of 60%.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-60% of frame width."
+        "Image shows the required two-coil pair: one packaged AFP coil on the left and one bare black coiled hose on the right.",
+        "The product pair is separated, fully visible, and physically plausible without merging or intersection.",
+        "The pair's width is estimated at approximately 17% of the frame width, which is within the 12-15% target and the 9-20% acceptable range.",
+        "No persons, human body parts, bottles, jars, canisters, or unapproved third commercial products are visible.",
+        "The mandatory watermark 'AFP | 09134922013' is correctly present in the bottom right corner."
       ],
-      "correction_prompt": "Zoom in on the two coils or crop the frame so the combined width of the product pair is less than 60% of the image. Ensure the coils remain the primary focus and the 20-35% preferred width range is approached if possible. Reduce the product group from 70% to 8-60% of frame width.",
+      "correction_prompt": "",
       "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 40,
-      "product_width_percent": 80,
-      "product_height_percent": 40,
-      "product_x_center_percent": 50,
-      "reasons": [
-        "Violation of approved layflat pair specification: The image shows three distinct coils/products (one large black coil on the left, one packaged AFP coil in the center, and a third bare black coil on the right). The strict requirement is for exactly one packaged AFP coil and one bare black woven coil; the presence of a third coil constitutes a hard reject.",
-        "Pair width exceeds tolerance: The total horizontal span of the product group is approximately 80% of the frame width, which significantly exceeds the maximum hard-reject limit of 60%.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 80% to 8-60% of frame width."
-      ],
-      "correction_prompt": "Remove the third bare coil on the far right. Regenerate the scene showing only the specific approved pair (one packaged AFP coil and one bare black woven coil) so that the total product width is less than 60% of the frame. Reduce the product group from 80% to 8-60% of frame width.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 92,
-      "product_width_percent": 62,
-      "product_height_percent": 28,
-      "product_x_center_percent": 45,
-      "reasons": [
-        "Visually confirms the required two-coil layflat pair.",
-        "Includes the necessary 'AFP | 09134922013' watermark.",
-        "Shows a technical comparison of the coiled hose constructions.",
-        "Zero people or human body parts visible.",
-        "No third commercial packages, bottles, or extra coils present.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-60% of frame width."
-      ],
-      "correction_prompt": "Reduce the product group from 62% to 8-60% of frame width.",
-      "attempt": 4
-    },
-    {
-      "pass": false,
-      "score": 0,
-      "product_width_percent": 60,
-      "product_height_percent": 30,
-      "product_x_center_percent": 50,
-      "reasons": [
-        "Presence of a person (worker) in the image, which is a hard reject.",
-        "Presence of a third commercial package (the white box-shaped object in the foreground)."
-      ],
-      "correction_prompt": "Remove the person and the third package/box. Keep only the two coiled hoses (one bare, one packaged) on the ground. Ensure the pair represents a width of roughly 20-35% of the frame and remains physically plausible.",
-      "attempt": 5
-    },
-    {
-      "pass": false,
-      "score": 92,
-      "product_width_percent": 71,
-      "product_height_percent": 38,
-      "product_x_center_percent": 50,
-      "reasons": [
-        "Contains approved layflat pair: bare black woven coil and packaged coil",
-        "Clear visual differentiation in construction between the two coils",
-        "No people or human body parts visible",
-        "Required watermark 'AFP | 09134922013' is present",
-        "Connector between coils is valid infrastructure, not a third commercial product",
-        "Physically plausible placement with visible comparison value",
-        "machine-enforced bounding-box check failed: Reduce the product group from 71% to 8-60% of frame width."
-      ],
-      "correction_prompt": "Reduce the product group from 71% to 8-60% of frame width.",
-      "attempt": 6
     }
   ]
 }
