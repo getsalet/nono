@@ -1,0 +1,90 @@
+{
+  "source_id": "10700022001311-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 52,
+      "product_height_percent": 24,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Image contains multiple human figures (persons/farmers/workers), which is a hard reject criterion.",
+        "The combined width of the two coils (52%) significantly exceeds the hard reject limit of 25% of the frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove all persons and human body parts from the scene. Scale down the two product coils to occupy less than 25% of the total frame width. Keep the 'AFP | 09134922013' watermark in the bottom right. Ensure the coils are small, separate, and off-center. Reduce the product group from 52% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 48,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains a person (farmer/worker) standing in the background.",
+        "Combined product width is too large (approx. 48% of frame, exceeds 25% hard reject limit).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate without any people, farmer, or worker. Reduce the relative size of the product pair to approximately 10-15 percent of the frame width, keeping them small and off-center. Reduce the product group from 48% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 42,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains zero people, zero human body parts, or human silhouettes.",
+        "The scene includes a distant unattended tractor and farm building, which are permitted as relevant infrastructure context and do not violate the commercial product restrictions.",
+        "Both the packaged coil and the bare black woven coil are clearly visible, separate, and physically plausible.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The combined bounding box width (42%) and height (30%) are consistent with the requested editorial hero role where the products should remain small and off-center relative to the wide high-oblique water-transfer context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 42% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 40,
+      "product_height_percent": 28,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Contains exactly two required objects: one packaged AFP coil and one bare black woven coil.",
+        "Zero people or human body parts visible.",
+        "No hard rejects detected (no bottles, third packages, impossible physics, or severe distortion).",
+        "Distant tractor is correctly treated as unattended farm equipment (infrastructure) rather than a product violation.",
+        "Product combined width is approximately 40% of the frame, which exceeds the preferred 12-15% and the 25% rejection threshold. They are recognizable but appear larger than the 'small' descriptor in the editorial hero brief, lowering the score.",
+        "Watermark is present and correct.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 40% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 21,
+      "product_height_percent": 12,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains exactly one packaged AFP coil and one bare black woven coil as required",
+        "Both objects are separate, physically plausible, and fully visible",
+        "Zero people or human body parts present",
+        "Watermark 'AFP | 09134922013' present in bottom-right",
+        "Placement is off-center and lower-third, consistent with editorial preferences",
+        "Product width ~21% is within the accepted reviewer-estimation noise range of 8–25%",
+        "Distant tractor and farm building are infrastructure, not extra commercial products"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

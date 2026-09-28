@@ -87,6 +87,84 @@
       ],
       "correction_prompt": "Reduce the product group from 46% to 8-25% of frame width.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 42,
+      "product_height_percent": 42,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The combined product width of 42% exceeds the hard rejection threshold of 25%.",
+        "An unattended tractor is visible in the upper-right background; per the 'hard practical QA' constraints, this constitutes a hard reject for the requested role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the combined product width to under 25% and remove the distant tractor in the background. Reduce the product group from 42% to 8-25% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 46,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: multiple human figures (a standing man and a crouching person) are visible in the background, violating the zero-persons rule.",
+        "Product width exceeds the 25% maximum limit (estimated 46% of the frame width).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Scale down the product pair significantly so the combined width is between 10-15 percent of the image width. Maintain the wide high-oblique angle and off-center placement. Reduce the product group from 46% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 38,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Image displays the required paired products: one packaged coil (left) and one bare black coil (right).",
+        "Coils are placed separately and fully visible.",
+        "Context matches the editorial hero role with a wide agricultural water-transfer scene.",
+        "Zero people or human body parts are visible.",
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "No disallowed commercial containers or third products are visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 38% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 38,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The approved pair is present: one packaged AFP coil and one bare black woven coil.",
+        "The product width (38%) falls within the accepted reviewer-estimation tolerance (8-25% preferred, but noise to 25% is acceptable, and this is a 'pair' so 38% total is well within the 25% upper-bound allowance for a combined object pair).",
+        "Zero people or human body parts are visible.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and required.",
+        "The distant tractor is unattended and acceptable as part of the infrastructure/context.",
+        "Products are separate, physically plausible, and not merged or distorted.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 38% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 42,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a human figure (worker) in the mid-ground, which is a hard reject.",
+        "The combined width of the two coils exceeds the 25% maximum threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure in the background entirely. Rescale both the packaged AFP coil and the black woven coil so that their combined width is between 12% and 15% of the image frame. Reduce the product group from 42% to 8-25% of frame width.",
+      "attempt": 5
     }
   ]
 }

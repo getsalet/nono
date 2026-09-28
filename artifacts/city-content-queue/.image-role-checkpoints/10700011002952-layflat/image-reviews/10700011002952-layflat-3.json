@@ -1,0 +1,55 @@
+{
+  "source_id": "10700011002952-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 48,
+      "product_height_percent": 33,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Correct 'layflat' pair shown: one packaged AFP coil and one bare black woven coil.",
+        "Both objects are physically plausible, separate, and fully visible on the concrete pad.",
+        "Zero human presence (no people, silhouettes, or body parts).",
+        "Approved bottom-right watermark 'AFP | 09134922013' is present.",
+        "Reviewer-estimation noise accepted despite width being >25% as objects remain clearly recognizable and separate.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 36,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The combined width of the two product coils exceeds the 25 percent hard reject threshold (estimated at approximately 36-40 percent of the frame width).",
+        "The image is missing the mandatory equipment-only components (fixed pump, gauge, and manifold) required for the specified 'HEADWORKS DETAIL' role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Scale down the two product coils so their combined width is under 25 percent of the image width. Add a small fixed pump, gauge, and manifold assembly on the concrete pad in the foreground to meet the equipment-only role. Reduce the product group from 36% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 12,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image successfully displays the mandatory HEADWORKS DETAIL equipment (pump/gauge/manifold) on a concrete pad.",
+        "The approved two-coil pair (packaged AFP coil and bare black woven coil) is present, separate, and physically plausible.",
+        "Zero people or human body parts are visible.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "source_id": "10700020001312-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 55,
+      "product_height_percent": 30,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The combined width of the two coil objects exceeds the hard reject threshold of 25% of the frame (estimated at ~55%).",
+        "The required role of 'HEADWORKS DETAIL: equipment-only elevated record photograph' is not met, as the focus is entirely on the coils rather than the pump, gauge, and manifold mentioned in the brief.",
+        "The coils are the dominant subject, whereas they are supposed to be 'small, separate and secondary' per the specific role description.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Shrink the two coils to a combined width of 12% of the frame, making them small and secondary. Reframe to an elevated, headworks detail shot focused on a fixed pump, gauge, and manifold on an empty concrete pad, with the small coils placed as background or peripheral elements. Maintain the bottom-right watermark 'AFP | 09134922013' and ensure no people or human body parts are visible. Reduce the product group from 55% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 50,
+      "product_height_percent": 35,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The combined width of the two coils is approximately 50% of the image frame, which violates the hard reject threshold for objects wider than 25% of the frame.",
+        "The approved pair is too large relative to the frame; preferred combined width is 12–15% (with tolerance up to 25%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the scale of both the packaged and bare coils so that their combined bounding-box width is between 12% and 15% of the frame. Ensure both coils remain small, secondary, separate, and physically plausible. Keep the required bottom-right watermark 'AFP | 09134922013' unchanged. Reduce the product group from 50% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 46,
+      "product_height_percent": 32,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The required headworks equipment (pump, gauge, manifold) is missing from the image.",
+        "The image shows a flat lay of coils on a concrete pad instead of the requested 'elevated record photograph' of infrastructure.",
+        "The product width exceeds the 25% threshold for hard reject (estimated at ~46%).",
+        "The role '3' requires a focus on equipment/headworks which is not present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a detail shot of agricultural irrigation infrastructure (fixed pump, gauge, manifold) on an empty concrete pad. Remove the large coils and ensure no people are visible. Reduce the product group from 46% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 57,
+      "product_height_percent": 22,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Product combined width (57%) significantly exceeds the 25% hard reject threshold.",
+        "Missing mandatory 'HEADWORKS DETAIL' equipment (fixed pump, gauge, manifold) visible in the foreground.",
+        "A third object (loose hose segment/lead) is visible near the coils, which is a hard reject under 'invented package' or 'third coil/product' strictness.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 57% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce coil size to under 15% width. Add large industrial pump, gauge, and manifold setup on the concrete pad in the background/foreground to satisfy 'HEADWORKS DETAIL'. Remove loose hose end. Reduce the product group from 57% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 48,
+      "product_height_percent": 35,
+      "product_x_center_percent": 18,
+      "reasons": [
+        "Required two-coil pair present (one packaged AFP, one bare black woven).",
+        "No people or human body parts visible.",
+        "Watermark present and correct.",
+        "Fixed pump/gauge/manifold matches mandatory HEADWORKS DETAIL role.",
+        "No prohibited third commercial products, bottles, or fake labels.",
+        "Coils are separate and physically plausible; some width exceeds preferred 12-15% but remains within the 8-25% acceptance noise band when both are visible and recognizable.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-25% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "source_id": "10700020001312-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 50,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: The combined width of the product pair (approx. 50%) exceeds the maximum allowed limit of 25%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the size of the two product coils significantly so their combined width is less than 20% of the frame width, keeping them in the foreground but smaller relative to the background context. Reduce the product group from 50% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 62,
+      "product_height_percent": 22,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "The image contains a human worker standing in the irrigation channel, which is a strict hard-reject condition regardless of their role or attire.",
+        "The product cluster (the two coils) spans roughly 62% of the image width, far exceeding the 25% maximum width constraint for the pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with zero people or human silhouettes. Scale the two product coils down significantly so their combined width is less than 15% of the frame. Keep the coils in the bottom-right or lower-third area while maintaining the water-transfer context. Reduce the product group from 62% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 19,
+      "product_height_percent": 15,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Image displays the correct approved product pair: one packaged white coil and one bare black woven coil.",
+        "The products are placed in the lower-right section (lower-third and off-center), which aligns with the editorial preferences.",
+        "The estimated combined width of the products is within the acceptable 8-25% range.",
+        "Zero people or human body parts are visible; distant unattended tractor and background infrastructure are permitted context elements.",
+        "The required watermark 'AFP | 09134922013' is correctly present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

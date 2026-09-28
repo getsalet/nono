@@ -1,0 +1,41 @@
+{
+  "source_id": "10700011002553-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 28,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: visible human silhouette/worker in the background near the tractor.",
+        "Product pair combined width exceeds the 25% hard reject limit.",
+        "Placement is lower-center rather than the preferred off-center position.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove the human silhouette/worker near the tractor in the background. Shrink the coil pair by 30% to ensure combined width is under 25% of the frame, and shift them further to the bottom-left to maintain off-center placement. Keep the bottom-right watermark exact. Reduce the product group from 32% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 24,
+      "product_height_percent": 24,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Image correctly displays the required pair: one packaged AFP coil and one bare black woven coil.",
+        "No people, human body parts, faces, hands, or silhouettes are visible.",
+        "No extra commercial packages, bottles, jars, or containers are present.",
+        "The distant unattended tractor is allowed as farm infrastructure context and is not treated as a product reject.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Product dimensions and off-center placement are within acceptable editorial and tolerance parameters."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
