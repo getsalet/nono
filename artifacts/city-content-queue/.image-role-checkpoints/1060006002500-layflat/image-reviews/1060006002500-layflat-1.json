@@ -1,0 +1,40 @@
+{
+  "source_id": "1060006002500-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 42,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is completely missing from the image, which is a hard fail.",
+        "Both the packaged coil and the bare black woven coil are heavily distorted, appearing as blocky, low-resolution cubes rather than realistic 3D objects.",
+        "The product bounding box width (~42%) significantly exceeds the maximum limit of 25% and the preferred 12-15% combined width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate to include the mandatory bottom-right watermark 'AFP | 09134922013'. Reduce the width of the two coils to between 12 and 15 percent of the frame, separate them spatially more clearly, and improve the 3D geometry so the coils look like realistic spools of agricultural hose rather than flat cubes. Reduce the product group from 42% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 23,
+      "product_height_percent": 24,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Approved layflat pair (packaged AFP coil and bare black coil) is fully visible, separate, and physically plausible.",
+        "No visible humans, body parts, or third commercial containers.",
+        "Distant unattended tractor is allowed as farm equipment.",
+        "Product placement is off-center in the lower half, consistent with editorial preference."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

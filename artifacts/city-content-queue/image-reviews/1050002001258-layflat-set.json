@@ -1,20 +1,43 @@
 {
   "source_id": "1050002001258-layflat",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "The provided set contains only four distinct images, but the editorial brief requires five clearly distinct roles (Hero, Selection, Headworks, Installation, Maintenance).",
-        "Image 1 (with the tractor) explicitly violates the instruction to reject 'repeated furrow-field plus tractor compositions' and generic farm backgrounds; it serves as a poor editorial hero with a distracting background element.",
-        "Image 3 fails the 'Installation Proof' role by featuring only a single coiled layflat hose, whereas the brief requires the 'approved two-coil pair' (packaged and bare) to remain visible at the field edge.",
-        "The 'Maintenance Detail' role (Role 5) is completely missing from the set, and there is no image focusing on a close-up of a connector or fold detail.",
-        "The technical narrative lacks variety; the backgrounds are repetitive agricultural plots that do not provide the 'wide high-oblique water-transfer context' required for the Hero role."
+      "score": 10,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "Generate a fifth image focusing on a tight, unattended close-up of a hose connector or fold detail for the 'Maintenance' role, and replace the tractor background in the hero shot with a wide, high-oblique view of a water-transfer site (e.g., irrigation canal or river view) to eliminate the rejected agricultural cliché.",
+      "reasons": [
+        "Roles 1 and 2 are duplicates: both show the same product pair (packaged and bare coils) placed on the ground in a farm field with a blurred tractor in the background; the layouts and technical narratives are nearly identical, failing to provide distinct camera heights or environments.",
+        "Role 3 completely misses the brief: it depicts the coils on a generic sandy beach, which is an irrelevant background for an agricultural water-transfer article, and it fails to show the required 'one fixed pump, gauge and manifold on an empty concrete pad'.",
+        "The set does not meet the requirement for distinct camera angles (high-oblique vs. elevated technical) and environments (specific context vs. empty pad)."
+      ],
+      "correction_prompt": "Regenerate Role 2 as an elevated technical comparison shot on a neutral background; Regenerate Role 3 to strictly feature one fixed pump, gauge, and manifold on an empty concrete pad with the coils appearing small and secondary, removing the beach background.",
+      "panel_scores": [
+        10
+      ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 fails the 'SELECTION EVIDENCE' brief by including a pump, manifold, and gauge, which are explicitly reserved for Role 3; this causes a functional duplicate of hardware between roles 2 and 3.",
+        "Role 2 also violates its negative constraint of 'no third commercial package' by showing additional hardware components alongside the two coils.",
+        "Role 3 contains a red car in the background, which counts as a 'person or extra' element and violates the 'equipment-only' requirement for the headworks detail."
+      ],
+      "correction_prompt": "Remove the pump and manifold from role 2 to focus solely on the two-coil diameter comparison; in role 3, eliminate the red car from the background to ensure a strictly equipment-only headworks record on the concrete pad.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
     }
   ]
 }

@@ -1,0 +1,74 @@
+{
+  "source_id": "10600024002310-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 60,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Person visible in the background (standing farmer).",
+        "Product combined width exceeds the 25% hard limit (approx 60%).",
+        "Watermark text is incorrect; required is '09134922013' but shows '09134922013' with '2013' appended.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure in the background. Reduce the product pair width to approx 12%. Change bottom-right watermark to 'AFP | 09134922013'. Reduce the product group from 60% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 45,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains the two approved products: a packaged AFP coil and a bare black woven coil.",
+        "The products are separate, fully visible, and physically plausible.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "Zero people, human body parts, faces, or silhouettes are visible.",
+        "Background elements (farm building, crop rows, horizon) are environmental and do not violate the hard reject criteria.",
+        "No third commercial package, bottle, canister, or impossible intersections are present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Presence of two visible human figures in the background (hard reject: zero people required)",
+        "Product bounding box width (approx 32%) exceeds the maximum threshold of 25%",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the image completely. Shrink the product pair significantly so the combined width is under 20% of the frame width. Reduce the product group from 32% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 21,
+      "product_height_percent": 33,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Image contains exactly one packaged AFP coil and one bare black woven coil as required.",
+        "Zero people or human body parts are visible in the frame.",
+        "Product pair width is approximately 21%, which falls within the accepted estimation noise range of 8 to 25 percent.",
+        "Product pair height is approximately 33%, which is within the maximum 35 percent limit.",
+        "Products are off-center and placed in the lower third, which is compliant with editorial preferences.",
+        "Visible infrastructure (distant tractor, field water channel, farm buildings) is allowed and does not constitute extra commercial products.",
+        "Required watermark 'AFP | 09134922013' is clearly visible in the bottom right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

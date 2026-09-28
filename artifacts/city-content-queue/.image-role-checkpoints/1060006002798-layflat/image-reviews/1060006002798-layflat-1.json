@@ -1,0 +1,81 @@
+{
+  "source_id": "1060006002798-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 40,
+      "product_height_percent": 32,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "All hard reject conditions are avoided (no humans, third commercial packages, or merged objects).",
+        "The mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The packaged AFP coil and bare black woven coil are clearly recognizable, separate, and physically plausible within an agricultural water-transfer context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 40% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Visible human figure present in the mid-ground (farmer)",
+        "Product pair combined width significantly exceeds the 25% hard reject threshold",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image completely removing all human figures. Compress the layout so the packaged coil and bare black coil occupy no more than 25% of the total frame width. Reduce the product group from 45% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 58,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains a visible person standing in the field, which is a hard reject.",
+        "The approved layflat pair takes up more than 25% of the frame width, violating the width constraint.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image without any people or human silhouettes. Shrink the two coils significantly so their total width is less than 25% of the frame, keeping them separate and off-center in the foreground. Reduce the product group from 58% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 45,
+      "product_height_percent": 15,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: visible human (worker) crouching in the field",
+        "Product width significantly exceeds 25% limit (estimated 45%)",
+        "Approved pair (packaged AFP coil + bare black woven coil) is not clearly distinguishable as the primary subject, instead a long hose/pipe is visible",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with a wide high-oblique shot of an agricultural field. Place exactly two small, separate objects in the foreground: one packaged AFP coil and one bare black woven coil. Ensure the product pair occupies 12-15% of the frame width. Absolutely NO people or human body parts. Include the required watermark 'AFP | 09134922013' in the bottom-right corner. Distant unattended tractor and farm infrastructure are acceptable. Reduce the product group from 45% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 50,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product width exceeds the maximum acceptable 25 percent limit, the pair occupies half the frame width",
+        "The bare black coil includes a loose hose loop extending significantly to the right, distorting the natural dimension of the approved pair",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate with the two coils much smaller, closer together, and fully contained without any loose hose loops extending outwards Reduce the product group from 50% to 8-25% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

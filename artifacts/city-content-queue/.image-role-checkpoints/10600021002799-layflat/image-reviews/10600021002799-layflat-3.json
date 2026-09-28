@@ -1,0 +1,80 @@
+{
+  "source_id": "10600021002799-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 78,
+      "product_width_percent": 30,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains the approved two-coil pair (one packaged AFP coil and one bare black woven coil) with a visible, plausible connector joining them.",
+        "Zero people or human body parts are visible.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 55,
+      "product_height_percent": 42,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Human figures are visible in the background",
+        "Two people standing near the farm equipment in the upper portion of the frame",
+        "Contains human body parts which are a hard reject",
+        "The two coils are excessively wide relative to the 12-15% preferred target",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the two people standing in the background. Re-position the two product coils (the packaged coil and the bare black woven coil) to be significantly smaller and closer to each other, occupying a total width of approximately 12-15 percent of the frame. Reduce the product group from 55% to 8-25% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 40,
+      "product_height_percent": 25,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject due to the presence of a visible person (human figure) sitting on a tractor in the background, which strictly violates the 'zero people and zero human body parts' rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove all humans or figures driving the tractors in the background, ensuring no part of a human body (arms, faces, silhouettes) is visible anywhere in the frame. Reduce the product group from 40% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 55,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Pair width of 55% exceeds the hard reject threshold of 25%",
+        "Preferred width of 12-15% not met and reviewer-estimation noise of 8-25% exceeded",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate with the packaged coil and bare coil significantly smaller, combined width between 12 and 15% of the frame, fully separate, on the concrete pad with pump/gauge/manifold; keep zero humans and the bottom-right AFP watermark. Reduce the product group from 55% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The combined width of the two coil objects (approx. 40% of the frame width) exceeds the hard reject limit of 25%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate with significantly smaller scale. The two coils (one packaged AFP, one bare black woven) must together occupy no more than 15% of the frame width (max 25% with noise). Ensure they remain small, separate, and secondary to the main subject. Reduce the product group from 30% to 8-25% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

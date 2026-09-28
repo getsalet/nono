@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-28T19:13:03+00:00`
+- آخرین بروزرسانی: `2026-09-28T19:23:32+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **543 از 1894 (28.67٪)**
 - تکمیل‌شده: **543**
 - در حال پردازش: **0**
-- در انتظار: **712**
-- آماده انتخاب در اجرای بعدی: **712**
+- در انتظار: **690**
+- آماده انتخاب در اجرای بعدی: **690**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **639**
+- ناموفق: **661**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -55,16 +55,16 @@
 
 ## خطاهای اخیر
 
-- **گیلانغرب** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
-- **رباط** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **نودشه** — `layflat`: `image hard gate rejected role 1 after 8 attempt`
-- **کوزران** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
-- **کرمانشاه** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
-- **باینگان** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
-- **هلشی** — `tape20`: `image hard gate rejected role 3 after 8 attempt`
-- **بیستون** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
-- **قصرشیرین** — `layflat`: `image hard gate rejected role 2 after 8 attempt`
-- **رباط** — `tape20`: `Agnes generated image is unexpectedly small`
+- **قلعه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
+- **تشان** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **چمران** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **بندرماهشهر** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **کوزران** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **سردشت** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **حمیدیه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 2 rounds`
+- **آبادان** — `layflat`: `Editorial review failed: internal link count must equal minimum`
+- **منصوریه** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **حسینیه** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 
