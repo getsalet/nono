@@ -1,0 +1,123 @@
+{
+  "source_id": "1250002001062-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 18,
+      "product_height_percent": 27,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Multiple people (farmer, workers, men) are visible in the background and foreground, violating the strict 'zero people' rule.",
+        "Distant agricultural machinery (tractors, red equipment) and people standing near farm infrastructure are present, conflicting with the 'no farm activity' brief and the 'human silhouette' rejection criteria."
+      ],
+      "correction_prompt": "Regenerate the image with a completely empty background on the concrete pad. Remove all tractors, red machinery, farm buildings, and all human figures from the scene. Ensure the AFP drip-tape roll is the sole subject.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 28,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Violation of mandatory image role (HEADWORKS DETAIL): The image shows an isolated drip tape roll instead of the required 'equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold'.",
+        "Missing required infrastructure: The article brief demands a fixed filter, gauge, regulator, and manifold on a concrete pad, none of which are present in this image."
+      ],
+      "correction_prompt": "Regenerate image to show a fixed filter, gauge, regulator, and manifold system on a concrete pad; include one small AFP drip tape roll as a secondary element; remove the large foreground roll.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: visible person (farmer/worker) kneeling in the frame",
+        "Hard reject: visible human body parts (face, hands, arms, legs)",
+        "Hard reject: second commercial package (open cardboard box) and second drip tape roll visible"
+      ],
+      "correction_prompt": "Regenerate an elevated record photograph of a fixed irrigation filter, gauge, regulator, and manifold on a concrete pad. Include only one small secondary AFP white-and-blue drip-tape carton roll in the background. Ensure zero people or human body parts are visible. Remove any secondary cardboard boxes or tape rolls.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 34,
+      "product_height_percent": 26,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: Visible people (human silhouettes) are present in the background, which is a standalone hard reject criterion.",
+        "Hard reject: The image contains two commercial carton rolls, but the brief mandates exactly one.",
+        "The foreground roll is wider than the maximum allowed threshold of 30 percent.",
+        "The mandatory role 'HEADWORKS DETAIL' (equipment-only elevated record of a fixed filter/manifold) is completely missing; instead, the image shows product-only rolls on the ground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all visible people from the background. Remove the second carton roll in the distance. Regenerate as a high-detail photo of a fixed drip-tape filtration manifold and gauge on a concrete pad, with only one small, secondary AFP drip-tape carton (width 20-23%) placed nearby on the ground. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a second commercial package (smaller drip-tape roll) on the left, which is a hard reject",
+        "Destructuring of background vehicles: the red trucks/tractors are too large and prominent, failing the 'distant' requirement",
+        "Ambiguity regarding fixed infrastructure: the gauges appear to be resting on a loose hose rather than mounted to fixed irrigation hardware on a concrete pad"
+      ],
+      "correction_prompt": "Remove the small secondary drip-tape roll on the left. Reduce the scale and distance of the background red trucks to make them distant infrastructure. Ensure the filter assembly is clearly mounted on a concrete pad rather than resting on a loose hose. Retain the bottom-right watermark.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product width is estimated at 32%, which exceeds the hard reject limit of 30% of the frame.",
+        "Product height is estimated at 45%, which exceeds the hard reject limit of 35% of the frame.",
+        "Required image role (HEADWORKS DETAIL) not met: The image shows a drip tape roll as the primary subject, whereas the brief mandates a detail shot of a fixed filter, gauge, regulator, and manifold on a concrete pad with the carton remaining small and secondary.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Generate a high-angle close-up of a fixed irrigation system (filter, gauge, regulator, manifold) on an empty concrete pad. Include a small AFP white-and-blue drip-tape carton roll in the background or as a secondary element. No people. Ensure the carton is less than 20% of the frame width. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 34,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains a distant human figure (hard reject)",
+        "Contains a second commercial roll/package (hard reject)",
+        "Product dimensions exceed limits: width > 30%, height > 35%",
+        "Does not match mandatory role: missing equipment (filter, gauge, regulator, manifold) on a pad",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the human figure and the second roll. Replace the scene with a fixed filter, gauge, and manifold on a concrete pad. Keep a single small AFP drip-tape roll as a secondary element. Ensure the main infrastructure is the focus. Reduce the product group from 34% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing mandatory bottom-right watermark 'AFP | 09134922013'.",
+        "Image does not match the mandatory visual role 'HEADWORKS DETAIL' which requires an elevated record of a filter, gauge, regulator, and manifold; instead, it shows a wide empty concrete pad with the roll as the primary subject."
+      ],
+      "correction_prompt": "Regenerate the image to strictly match the 'HEADWORKS DETAIL' brief: show an elevated, close-up record of a fixed filter, gauge, regulator, and manifold on an empty concrete pad. The approved drip-tape carton roll must be small and secondary to the infrastructure. Include the mandatory 'AFP | 09134922013' watermark in the bottom-right corner. Do not show any people.",
+      "attempt": 8
+    }
+  ]
+}

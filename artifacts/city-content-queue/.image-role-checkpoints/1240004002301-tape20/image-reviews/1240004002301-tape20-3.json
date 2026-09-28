@@ -1,0 +1,125 @@
+{
+  "source_id": "1240004002301-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 31,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Multiple people (farmers/workers) are visible in the background, which is a hard reject.",
+        "The product roll exceeds the maximum allowed dimensions (width > 30%, height > 35%).",
+        "The image contains a coiled hose (layflat pipe) on the ground, which is a hard reject.",
+        "Fail to match the specific article brief of 'equipment-only elevated record photograph'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Generate an elevated, eye-level photograph of an empty concrete pad containing a fixed drip irrigation manifold, a pressure gauge, and a small secondary carton of AFP tape. Remove all humans, remove all coiled hoses, and ensure the carton is small and secondary. Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 33,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Multiple commercial packages detected: The required role calls for 'exactly one approved carton remains small and secondary', but the image contains a large roll plus a separate box containing a gauge/regulator, violating the product count constraint.",
+        "Missing mandatory infrastructure: The brief explicitly requires a 'fixed filter' and 'manifold', which are absent from the scene.",
+        "Unnecessary farm clutter: The inclusion of a horse and tractors contradicts the 'equipment-only' and 'no farm activity' instructions.",
+        "Text rendering error: The roll label contains gibberish/sub-text that falls under hard reject criteria for fake or unreadable writing."
+      ],
+      "correction_prompt": "Remove the horse and background tractors. Replace the box/gauge with a fixed inline filter, manifold, and gauge assembly on the concrete pad. Ensure the main roll is the only large cartoned product and contains only clean 'AFP' branding without subtext.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 38,
+      "product_height_percent": 38,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Product width is approximately 38% of the image, significantly exceeding the hard reject threshold of 30%.",
+        "Product height is approximately 38% of the image, exceeding the hard reject threshold of 35%.",
+        "The approved carton roll is the dominant object and is not 'small and secondary' as required by the article visual brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the AFP white-and-blue wide low cylindrical drip-tape carton roll significantly smaller (width approx 20-23%). Ensure the roll is positioned as a secondary detail next to the fixed filter, gauge, regulator, and manifold on the concrete pad. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL role: image lacks a record photograph of a fixed filter, gauge, regulator, and manifold on a concrete pad.",
+        "The required secondary AFP carton is missing; the image instead features a wheeled portable pump unit which is not 'fixed infrastructure' and contradicts the 'no farm activity' requirement.",
+        "Roll geometry is not perfectly cylindrical wide-low as preferred, though dimensions are within acceptable width/height noise limits.",
+        "Watermark 'AFP | 09134922013' is present as required."
+      ],
+      "correction_prompt": "Regenerate as a HEADWORKS DETAIL shot of fixed filter, gauge, and manifold on a concrete pad. Remove the wheeled pump. Include a small secondary AFP carton in the background. Ensure zero people.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 31,
+      "product_height_percent": 31,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Visible people in the background (left and right)",
+        "Hard reject: Product width exceeds the 30% maximum limit",
+        "Mandatory role mismatch: Scene lacks required filter, gauge, regulator, and manifold equipment",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the background. Reduce the carton roll's bounding box to 23% width. Add fixed filter, gauge, regulator, and manifold on the concrete pad. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Hard reject: A visible human figure (standing person) is present in the distant background on the left side of the frame.",
+        "The presence of a human silhouette is a standalone hard reject regardless of distance or focus."
+      ],
+      "correction_prompt": "Remove the person standing in the distant background on the left. Retain the AFP roll, the infrastructure (filter, gauge, manifold), the concrete pad, and the required bottom-right watermark. Ensure zero human figures or body parts are visible in the scene.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Human silhouette visible inside the cabin of the unattended red tractor in the background.",
+        "Missing mandatory roles: The brief required 'equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold on an empty concrete pad', but the image shows only the roll on the ground without the required hydraulic infrastructure."
+      ],
+      "correction_prompt": "Remove all human figures from the background tractors. Add the mandatory hydraulic infrastructure (filter, gauge, regulator, and manifold) on the concrete pad. Keep the white and blue AFP roll as a small, secondary object.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image prominently features a large piece of heavy machinery (a filtration system on a cart) in the mid-ground, which acts as a distracting commercial product and violates the 'secondary carton' requirement.",
+        "The visual brief strictly requires a specific equipment-only setup (filter, gauge, regulator, and manifold) on a concrete pad; the current image shows a rolling cart system instead of fixed hardware on a pad.",
+        "The product is not 'small and secondary' as requested; it is a primary focal point of the composition."
+      ],
+      "correction_prompt": "Regenerate with a static, fixed manifold setup (filter, gauge, regulator) on a concrete pad; remove the rolling cart machinery; ensure the AFP drip tape carton remains small and secondary in the frame.",
+      "attempt": 8
+    }
+  ]
+}
