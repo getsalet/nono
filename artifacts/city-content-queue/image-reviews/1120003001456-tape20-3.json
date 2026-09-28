@@ -1,0 +1,85 @@
+{
+  "source_id": "1120003001456-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 23,
+      "product_height_percent": 36,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: Two visible people (one kneeling and one standing) are present in the frame",
+        "Hard reject: Human body parts (arms, hands, legs, faces) are visible",
+        "machine-enforced bounding-box check failed: Reduce product height from 36% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with zero people or human body parts. Maintain the single AFP drip-tape roll in the foreground and the specified farm infrastructure background. Reduce product height from 36% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: Visible humans in the image (a male worker and a female worker).",
+        "Hard reject: Roll dimensions exceed acceptable thresholds (estimated width ~30% and height ~35%, exceeding the 27% and 32% maximums).",
+        "Hard reject: The image contains two tractors instead of a fixed filtration setup, and the product is the primary focus rather than small and secondary.",
+        "The required role 'HEADWORKS STORY' is not met.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all people. Shrink the drip-tape roll so it is less than 27% of the frame width. Set the scene on fixed irrigation infrastructure (filter, gauge, manifold). Keep the carton roll small and secondary to the system. Retain the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Critical violation: Pipe running through the roll of tape.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image showing the AFP drip tape roll standing upright on the soil or ground surface, completely separated from the black mainline irrigation pipe. Do not have the pipe passing through the center hole of the roll. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains multiple human figures (two standing in the background, one next to the tractor)",
+        "Contains a human body part (hand/arm near the tractor)",
+        "Violation of hard reject rule: zero people allowed",
+        "Contains a coiled black hose which is a second commercial/irrigation package",
+        "Contains a second open carton in the background",
+        "Contains an unattended tractor with operator, violating 'zero people' rule"
+      ],
+      "correction_prompt": "Regenerate a side-view image of a single, small, unattended drip-tape carton roll on the soil, with a fixed filter and gauge in the background. Ensure the scene contains zero human figures, zero human body parts, and zero other commercial packaging or hoses. Include the 'AFP | 09134922013' watermark in the bottom-right corner.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 25,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "The product is correctly identified as a white-and-blue AFP drip-tape roll, adhering to the 'wide low cylindrical' description.",
+        "Zero people or human body parts are visible, satisfying the safety constraints.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "The background includes relevant unattended fixed infrastructure (gauge and manifold) matching the 'HEADWORKS STORY' visual brief.",
+        "Product bounding box width and height are within the acceptable estimation range (13-27% width, up to 32% height)."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

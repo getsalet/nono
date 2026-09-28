@@ -1,0 +1,53 @@
+{
+  "source_id": "1120004002462-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image contains two separate rolls of drip tape (the main carton and a coiled white roll to the right), violating the hard reject for a 'second roll'.",
+        "The role required 'emitter-spacing' evidence, which is not visibly discernible on the tape in the image."
+      ],
+      "correction_prompt": "Remove the white coiled tape roll on the right side of the frame to ensure only one product object is visible. Adjust the texture of the main tape roll to clearly show the emitters/spacers along the length.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Visible human body parts: Three people (farmers/technicians) are clearly present in the background, one of whom is crouching directly behind the product roll.",
+        "Visible containers: There is a red bottle (likely fertilizer or pesticide) standing on the ground in the middle ground behind the product.",
+        "Role mismatch: The image shows a 'working field' scene with active personnel rather than the required 'SELECTION EVIDENCE' (an elevated technical arrangement with visible emitter-spacing or field-selection evidence)."
+      ],
+      "correction_prompt": "Remove all people and the red container bottle. Show the AFP drip tape roll in isolation or with a technical close-up of the tape's emitters/spacing on a clean background or table.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 21,
+      "product_height_percent": 29,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Image shows exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll as required.",
+        "Product bounding box dimensions fall within the preferred width range (20-23%) and acceptable height limit.",
+        "Contains zero people or human body parts.",
+        "Mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Background features an ordinary farm field edge with a building, which is allowed and contextually relevant.",
+        "Visible spill of tape serves as visual evidence for the selection/technical arrangement role."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

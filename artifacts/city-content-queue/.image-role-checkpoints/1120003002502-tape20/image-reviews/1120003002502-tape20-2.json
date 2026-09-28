@@ -1,0 +1,81 @@
+{
+  "source_id": "1120003002502-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Excess product package: The image contains two coiled objects (the carton roll and a second roll of coiled tube/tape to the right), which violates the 'exactly one' hard reject rule.",
+        "Product dimension out of tolerance: The bounding box of the main carton roll (approx 38% width) exceeds the maximum acceptable threshold of 27% of frame width.",
+        "Vertical dimension out of tolerance: The carton roll height (approx 35% of frame height) exceeds the maximum threshold of 32%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate to remove the loose coiled tubing on the right to ensure exactly one object is visible. Scale down the carton roll so its width is between 20-23% of the image and height under 32%. Maintain the background and the bottom-right 'AFP | 09134922013' watermark. Reduce the product group from 38% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 20,
+      "product_height_percent": 24,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Visible human: A man is clearly present in the image, kneeling next to the product.",
+        "Multiple people: The hard reject criterion of 'zero people' is violated."
+      ],
+      "correction_prompt": "Regenerate the image strictly without any humans, farmers, or body parts. Keep only the AFP drip tape roll in the foreground on the field, with simple background (soil, horizon, distant field edge or farm building).",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 31,
+      "product_height_percent": 41,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product dimensions exceed hard limits: estimated width is 31% and height is 41%, which are strictly rejected under the 27% width and 32% height maximums.",
+        "The required 'selection evidence' such as visible emitter-spacing or field-selection data sheets is not clearly visible; only generic gibberish label text is present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width.; Reduce product height from 41% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image ensuring the drip-tape carton roll is scaled down to occupy only 20-23% of the frame width and less than 32% of the height. Clearly show visible emitter-spacing diagrams or a field-selection chart on the carton to satisfy the 'selection evidence' role. Maintain the AFP watermark in the bottom-right corner. Reduce the product group from 31% to 13-27% of frame width. Reduce product height from 41% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 17,
+      "product_height_percent": 22,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: A person (farmer/worker) is visible walking in the background, which is strictly prohibited.",
+        "Hard reject: The object is a rectangular box, not the required 'wide low cylindrical' drip-tape roll."
+      ],
+      "correction_prompt": "Regenerate the image to remove the person in the background entirely. Replace the rectangular box with a wide, low cylindrical roll of white-and-blue drip tape. Ensure the background contains zero people or human silhouettes.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 20,
+      "product_height_percent": 32,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The roll dimensions fall within the preferred width (20%) and maximum height (32%) acceptance criteria.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Zero people and zero human body parts are visible in the frame.",
+        "Placement is slightly left of center, which is an editorial preference and not a hard reject.",
+        "The background matches the article brief (farm context), and distant tractors are acceptable infrastructure."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

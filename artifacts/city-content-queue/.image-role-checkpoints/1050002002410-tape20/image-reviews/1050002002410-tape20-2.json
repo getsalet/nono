@@ -2,54 +2,39 @@
   "source_id": "1050002002410-tape20",
   "family": "tape20",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 36,
-      "product_height_percent": 38,
-      "product_x_center_percent": 35,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 29,
+      "product_x_center_percent": 46,
       "reasons": [
-        "Product size is within the acceptable bounds (36% width and 38% height).",
-        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "No people or human body parts are visible.",
-        "Background context is appropriate (field with irrigation lines and unattended farm equipment).",
-        "FAILED: The article brief requires 'emitter-spacing or field-selection evidence'. The visible white tubing lines in the foreground appear to be laid flat lay-flat hoses without any visible emitters or spacing indicators, which is a hard reject condition."
+        "Missing mandatory 'SELECTION EVIDENCE' (no visible emitter-spacing or field-selection evidence present).",
+        "Product width is estimated at 28 percent, which exceeds the hard reject limit of 27 percent.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
       ],
-      "correction_prompt": "Regenerate the image to include visible emitters on the drip lines or a clear field-selection diagram to satisfy the 'emitter-spacing or field-selection evidence' requirement, while maintaining the single AFP roll and the existing background context.",
+      "correction_prompt": "Regenerate with visible emitter spacing or field selection evidence to satisfy the selection role. Shrink the carton roll to be under 27 percent of the frame width and ensure it remains physically plausible. Reduce the product group from 28% to 13-27% of frame width.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 35,
-      "product_width_percent": 28,
-      "product_height_percent": 40,
-      "product_x_center_percent": 30,
-      "reasons": [
-        "Hard reject: A full human figure (farmer/worker) is visible standing in the right background.",
-        "Hard reject: The image contains a coiled layflat hose on the ground, which is prohibited (only one carton roll is allowed)."
-      ],
-      "correction_prompt": "Remove the human figure from the background. Remove the coiled hose on the ground, leaving only the single drip-tape carton roll on the soil. Maintain the red barn and distant tractor in the background.",
-      "attempt": 2
-    },
-    {
       "pass": true,
-      "score": 95,
-      "product_width_percent": 28,
-      "product_height_percent": 35,
-      "product_x_center_percent": 45,
+      "score": 85,
+      "product_width_percent": 19,
+      "product_height_percent": 18,
+      "product_x_center_percent": 27,
       "reasons": [
-        "Product is a white-and-blue wide low cylindrical drip-tape carton roll matching the specified item.",
-        "Roll dimensions are within acceptable physical plausibility limits (28% width, 35% height).",
-        "Zero people or human body parts visible.",
-        "No prohibited items (bottles, jars, cans, etc.) present.",
-        "Required bottom-right watermark 'AFP | 09134922013' is present.",
-        "Background features a red barn and distant tractor which are allowed contextual elements for the farm brief."
+        "Contains exactly one white-and-blue wide low cylindrical drip-tape carton roll in the foreground.",
+        "Product dimensions are well within the acceptable range (width 13-27%, height <32%).",
+        "Zero people, body parts, or silhouettes are present; the distant tractor is unattended and allowed.",
+        "The mandatory 'SELECTION EVIDENCE' role is satisfied by the visible irrigation line extending from the roll.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "Background consists of an open field and farm building, which is consistent with the article brief and does not violate hard rejects."
       ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 2
     }
   ]
 }

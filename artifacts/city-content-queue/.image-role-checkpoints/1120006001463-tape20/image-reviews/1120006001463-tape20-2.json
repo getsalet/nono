@@ -1,0 +1,55 @@
+{
+  "source_id": "1120006001463-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 36,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Hard reject: Visible human (male crouching next to the product).",
+        "Hard reject: Product dimensions (approx 28% width, 36% height) exceed the 27% width and 32% height limits.",
+        "Hard reject: Contains a second commercial package/roll (dark coil on the right irrigation system) which is not permitted.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 36% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the person and the right-side irrigation manifold/valve. Regenerate a wide low cylindrical drip-tape carton roll (white and blue, AFP label) positioned in the lower-left quadrant, scaled to a maximum width of 23% and height of 30% of the frame, showing emitter spacing detail, with a blurred farm field background. Keep the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 36% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 44,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Product width estimated at 32% exceeds the hard reject limit of 27%.",
+        "Product height estimated at 44% exceeds the hard reject limit of 32%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 44% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the drip-tape carton roll significantly smaller; target approximately 20-22% width and under 30% height to maintain physical plausibility while adhering to strict size limits. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 44% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 84,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Single approved AFP white-and-blue wide cylindrical drip-tape carton roll is present",
+        "Exactly one commercial package with zero people or body parts visible",
+        "Required 'AFP | 09134922013' watermark present in bottom-right",
+        "Field edges and distant unattended tractor provide suitable contextual background",
+        "Product dimensions (20% width) fit within the 13-27% acceptance range",
+        "Layout is editorial and physically plausible"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

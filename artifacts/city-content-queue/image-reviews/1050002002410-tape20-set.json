@@ -1,39 +1,25 @@
 {
   "source_id": "1050002002410-tape20",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 42,
       "duplicate_roles": [
         1,
         3
       ],
       "reasons": [
-        "All images feature a roll of drip tape ('Drip Irrigation 100m') instead of the required '20 cm Type Nuri' carton, failing the specific 'approved carton' product identity constraint.",
-        "The 'repeated furrow-field plus tractor compositions' are used in all four images, violating the requirement for distinct environmental structures and camera angles.",
-        "Image 1 shows a generic tractor/barn scene that does not meet the 'elevated technical arrangement' requirement for Role 2 (missing field-selection evidence), and the product placement is not an 'approved carton'.",
-        "Image 3 shows a generic field with drip lines, which does not fulfill the specific 'unattended fixed filter, gauge, regulator, and manifold' requirement for Role 3 (Headworks Story).",
-        "Image 4 focuses on a close-up of a fitting/connector, which, while relevant to maintenance, fails to show the 'exactly one approved carton' in a visible secondary position as required for Role 5."
+        "Role 1 is a low-level straight shot where the carton dominates the central foreground (oversized product), violating the requirement for a wide high-oblique view where the farm context must dominate and the carton must be small/off-center.",
+        "Role 3 is a low-level side view with a cluttered background of tractors and machinery, failing to keep the carton 'secondary' or provide a clean 'unattended fixed filter' setup; the carton is also disproportionately large.",
+        "Panel 2 is the only role that is partially compliant, showing the required field context and product size.",
+        "Layouts 1 and 3 are too similar in camera height and product prominence."
       ],
-      "correction_prompt": "Replace the drip tape rolls with 20cm Type Nuri cartons; create four distinct compositions: 1) Wide high-oblique farm view with carton small in lower third, 2) Technical arrangement with carton + filter/selector evidence, 3) Unattended headworks (filter/gauge/manifold) with secondary carton, 4) Asymmetric crop-bed view with carton at field edge; remove tractors from background.",
+      "correction_prompt": "Role 1: Recreate as a wide high-oblique shot looking down at the farm rows, shrinking the carton to the lower third (off-center). Role 3: Recreate as a medium side view of unattended fixed filtration equipment with a simple field background, ensuring the carton is small and secondary.",
+      "panel_scores": [
+        42
+      ],
       "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 12,
-      "duplicate_roles": [
-        3,
-        5
-      ],
-      "reasons": [
-        "Role 1 (Image 1) shows a large central carton that fails the 'small, fully visible, and off-center' requirement.",
-        "Role 2 (Image 2) centers the technical narrative on a tractor rather than the required visible emitter-spacing or field-selection evidence.",
-        "Role 3 (Image 3) is a wide crop-field shot, completely missing the required medium side view of a filter, gauge, and manifold system.",
-        "Role 4 (Image 4) includes an unrelated tool/object next to the carton, and the crop field composition is too similar to Image 3."
-      ],
-      "correction_prompt": "Replace all images with distinct setups: 1) Wide oblique aerial of a farm with the carton small in the lower third; 2) An elevated view of a tape roll with visible planting lines to show spacing; 3) A side profile of a fixed filter and gauge station with the carton in the background; 4) An asymmetrical crop-bed shot with the carton at the edge; 5) A close-up of an installed emitter with the carton small in the background.",
-      "set_attempt": 2
     }
   ]
 }

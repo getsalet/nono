@@ -2,38 +2,110 @@
   "source_id": "1050002002410-tape20",
   "family": "tape20",
   "kind": 1,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 20,
-      "product_width_percent": 0,
-      "product_height_percent": 0,
-      "product_x_center_percent": 0,
+      "score": 40,
+      "product_width_percent": 11,
+      "product_height_percent": 14,
+      "product_x_center_percent": 47,
       "reasons": [
-        "Hard reject: The image contains two commercial rolls instead of exactly one. The brief explicitly mandates 'exactly one approved carton' and 'a second roll' is listed as a hard reject condition.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 10-48% of frame width."
+        "Hard reject: A standalone commercial pressure sprayer (bottle and canister) is present on the right side, which is prohibited under the rules for 'second commercial package' or 'bottle, jar, canister... container'.",
+        "Product width is estimated at 11% of the frame, which is below the 13% minimum threshold for acceptance noise.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 11% to 13-27% of frame width."
       ],
-      "correction_prompt": "Regenerate the image to show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. Remove the second roll on the left. The remaining roll must be positioned off-center in the lower third, fully visible, and small relative to the wide farm background. Enlarge the product group from 0% to 10-48% of frame width.",
+      "correction_prompt": "Remove the stand-alone commercial pressure sprayer on the right side of the image. Increase the size of the white-and-blue 'AFP' drip-tape carton roll so its width is approximately 20 percent of the image width, placing it clearly in the lower-third area. Enlarge the product group from 11% to 13-27% of frame width.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 20,
-      "product_height_percent": 30,
-      "product_x_center_percent": 45,
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 33,
+      "product_x_center_percent": 49,
       "reasons": [
-        "Zero people or human body parts visible.",
-        "Exactly one AFP white-and-blue wide cylindrical drip-tape carton roll is present.",
-        "Product size (20% width, 30% height) is well within the 10-48% and up to 58% practical limits.",
-        "The bottom-right watermark \"AFP | 09134922013\" is present as required.",
-        "The background consists of a wide farm field with crop rows and distant farm buildings, matching the irrigation context without extraneous commercial products.",
-        "The object is placed in the lower half of the frame."
+        "Hard reject: Presence of a visible person (a worker/figure standing near the tractor in the mid-ground) and other human silhouettes.",
+        "Hard reject: The product bounding box height (33%) exceeds the maximum plausibility threshold of 32%.",
+        "Visual brief violation: The 'EDITORIAL HERO' role requires the carton to remain small and off-center in the lower third; here the roll is positioned centered and too large.",
+        "Visual brief violation: The high-oblique view requirement is not met; the camera angle appears close to the horizon/ground level relative to the crop rows rather than a high angle view.",
+        "machine-enforced bounding-box check failed: Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all humans from the scene. Regenerate using a high-oblique aerial perspective. Position the AFP drip-tape roll small (15% width) and strictly off-center in the lower third. Maintain the wide field context with unattended irrigation infrastructure. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 0,
+      "product_height_percent": 16,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product in the foreground appears to be an upright cylindrical bucket or canister container rather than a wide, low cylindrical drip-tape carton roll.",
+        "The image shows a centered placement on the bottom axis rather than the required off-center lower-third placement.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Replace the upright canister bucket with a wide, flat, cylindrical drip-tape roll positioned off-center on the lower third (left or right side). Maintain the wide high-oblique farm background and the AFP watermark. Enlarge the product group from 0% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 33,
+      "product_height_percent": 30,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Visible people: two farmers are clearly present in the field (one seated on a cart, one standing in the distance).",
+        "Forbidden object: a blue plastic fertilizer/pesticide container is visible on the cart, violating the zero-container rule.",
+        "Product geometry: the carton roll width (~33% of frame) exceeds the hard reject threshold of 27%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people and the blue plastic container from the field. Shrink the white and blue AFP drip-tape carton roll so its width is approximately 20% of the image width. Keep the roll centered on the lower third of the frame in a wide high-oblique view with the farm landscape dominating the background. Reduce the product group from 33% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 12,
+      "product_height_percent": 16,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Visible human (farmer/worker) standing in the crop rows on the left side of the image.",
+        "Product width (approx 12%) is below the minimum reviewer-estimation noise floor of 13%.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 12% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the image. Increase the scale of the 'AFP' white drip-tape carton roll to occupy at least 15% of the frame width. Move the roll off-center to the lower-left or lower-right third. Enlarge the product group from 12% to 13-27% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 21,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "A visible person (standing in the crop rows) is present in the image, which is a hard reject based on the zero human rule."
+      ],
+      "correction_prompt": "Regenerate the image strictly with zero people or human silhouettes; the field should be unattended, and the AFP drip-tape carton roll must remain small and fully visible on the lower-third.",
+      "attempt": 6
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 19.5,
+      "product_height_percent": 19.2,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Product is a single wide cylindrical drip-tape roll matching the 'AFP white-and-blue' description.",
+        "Dimensions (19.5% width, 19.2% height) fall well within the acceptable 13-27% width and 32% height limits.",
+        "The image contains the required bottom-right watermark 'AFP | 09134922013'.",
+        "Zero people or human body parts are visible in the scene.",
+        "Context includes farm irrigation (drip lines) and unattended equipment (tractor) which are permissible; no hard reject items like bottles or jars are present.",
+        "Slight deviation: The product is centered horizontally (50%) rather than strictly 'off-center', but the criteria state that centered placement is not a standalone hard reject."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 7
     }
   ]
 }
