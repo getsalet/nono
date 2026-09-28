@@ -2,38 +2,84 @@
   "source_id": "10500010002414-layflat",
   "family": "layflat",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 10,
-      "product_width_percent": 32,
-      "product_height_percent": 22,
-      "product_x_center_percent": 38,
+      "score": 100,
+      "product_width_percent": 78,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Contains two full people, including faces, hands and legs, which is a hard reject",
-        "Coils are not presented as a packaged AFP coil plus a bare black woven coil pair for clear diameter comparison",
-        "Blue drum-like container is present and is treated as an extra commercial product, which is a hard reject"
+        "The image contains the required watermarks and no visible people or body parts.",
+        "The scene perfectly matches the agricultural context with a distant unattended farm building and crop rows.",
+        "The required pair of products (one packaged AFP coil and one bare black woven coil) are clearly visible.",
+        "The diameter and construction differences between the two coils are visually distinct, fulfilling the SELECTION EVIDENCE role.",
+        "Only the two approved commercial products are present; no extra bottles, jars, or invented packages are visible.",
+        "The objects are separate, physically plausible, and not distorted or floating.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 9-20% of frame width."
       ],
-      "correction_prompt": "Regenerate without any people or body parts. Show only the approved pair: one packaged AFP coil and one bare black woven coil, with the coil pair occupying 20 to 35 percent of frame width, fully visible and physically plausible. Remove the blue container and any third commercial package. Keep only the required bottom-right watermark 'AFP | 09134922013'.",
+      "correction_prompt": "Reduce the product group from 78% to 9-20% of frame width.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: Visible human body (man crouching on the right side of the frame).",
+        "Hard reject: The prompt mandates zero people and zero human body parts; the presence of a prominent worker violates this constraint.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Remove the man crouching on the right. Keep only the two black coils and the center package on the dirt ground with the distant tractor and farm building. Ensure no other human body parts or full figures are visible in the frame. Enlarge the product group from 0% to 9-20% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 65,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product pair occupies approx 65% of frame width, significantly exceeding the 20% hard reject threshold.",
+        "The packaged coil appears to be a flat reel rather than a tall 'AFP' coil, deviating slightly from the approved visual brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 9-20% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the two-coil pair (packaged AFP coil and bare black woven coil) much smaller, occupying roughly 12-15% of the frame width. Reduce the product group from 65% to 9-20% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 58,
+      "product_height_percent": 32,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Pair width is approximately 58% of the frame, far exceeding the 20% hard-reject limit.",
+        "Contains three distinct product items (bare coil, packaged coil, bare woven hose coil), violating the 'zero third commercial package or third coil' rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Regenerate with only a single packaged AFP coil and a single bare black woven hose coil, scaled to occupy ~14% of the frame width, with no additional hose coils, bottles, or containers. Reduce the product group from 58% to 9-20% of frame width.",
+      "attempt": 4
     },
     {
       "pass": true,
       "score": 95,
-      "product_width_percent": 55,
-      "product_height_percent": 45,
-      "product_x_center_percent": 48,
+      "product_width_percent": 15,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
       "reasons": [
-        "Both the packaged AFP coil and the bare black woven coil are fully visible, separate, and physically plausible.",
-        "No persons, human body parts, or silhouettes are present.",
-        "Product pair occupies approximately 55% of the frame width, which is within the accepted practical range.",
-        "The exact required watermark 'AFP | 09134922013' is visible in the bottom right corner.",
-        "Background farm buildings and equipment are contextually appropriate and not considered extra commercial products."
+        "The image correctly displays the approved pair of one bare black coiled hose and one coiled hose with packaging on top.",
+        "The total width of the product pair occupies approximately 15% of the frame, which is within the accepted 12-15% target range.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "No people, human body parts, or unauthorized third commercial packages are present.",
+        "The scene is a relevant farm environment with visible infrastructure (soil, crops) that aligns with the article brief."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 5
     }
   ]
 }

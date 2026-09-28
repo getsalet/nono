@@ -1,0 +1,52 @@
+{
+  "source_id": "11000016001597-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: Multiple people (farmer/workers) are clearly visible in the background, which is strictly forbidden in this brief."
+      ],
+      "correction_prompt": "Completely remove all human figures and people from the background, keeping only the field edge and the distant farm building as context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Product height is estimated at approximately 38% of frame height, exceeding the 32% hard-reject limit.",
+        "Visible text on the carton (specifically 'RRRAAII') is gibberish and illegible, matching the hard-reject condition for gibberish writing.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with a lower profile product roll to keep vertical height below 32% of the frame. Ensure all text on the packaging, including 'DRIP TAPE 20', is legible and correctly spelled. Maintain the field background and the specific bottom-right watermark. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present.",
+        "Product dimensions (width ~22%, height ~30%) fall within the 13-27% and <32% acceptance ranges.",
+        "Zero people or human body parts are visible.",
+        "Background contains a distant unattended tractor and farm building, which are allowed infrastructure.",
+        "Visible emitter-spacing or field-selection evidence (metal spools and stakes) is present, matching the mandatory SELECTION EVIDENCE role.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and undistorted."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

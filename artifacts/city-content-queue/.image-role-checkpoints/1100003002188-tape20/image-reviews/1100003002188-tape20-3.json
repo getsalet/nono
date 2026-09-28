@@ -1,0 +1,57 @@
+{
+  "source_id": "1100003002188-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 21,
+      "product_height_percent": 34,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains 4 visible human figures (hard reject)",
+        "Exceeds maximum allowed height of 32 percent",
+        "Contains second roll of drip tape (hard reject)",
+        "machine-enforced bounding-box check failed: Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with zero human figures; maintain exactly one AFP roll; ensure product height is under 32% of frame width; ensure product width is between 13-27%. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 40,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Image contains two visible people (one standing in background, one crouching in foreground), violating the zero-person constraint.",
+        "Hard reject: Product dimensions exceed limits (estimated width 32% > 27% cap, height 40% > 32% cap), making it physically implausible for the requested 20cm width relative to the frame.",
+        "Image role mismatch: The brief requires a 'HEADWORKS STORY' (medium side view of infrastructure), but this is a portrait/lifestyle shot featuring the people and the roll as the primary subject.",
+        "Presence of a second commercial product/roll in the background (large beige spool).",
+        "Watermark 'AFP | 09134922013' is correctly present but does not offset the hard rejects.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove all people and the large beige spool from the background. Reframe to a medium side view of a fixed irrigation manifold and filter (headworks) with the AFP drip tape roll positioned as a small secondary element (width <20%). No humans or body parts. Keep the 'AFP | 09134922013' watermark in the bottom-right corner. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The image accurately displays exactly one AFP drip-tape carton roll (the 'tape20' family match) in a white and blue color scheme.",
+        "The 'HEADWORKS STORY' role is successfully met, with the drip tape positioned as a small secondary element while the unattended fixed filter and gauge assembly (infrastructure) take prominence.",
+        "No people or human body parts are visible, and no prohibited items (bottles, containers, second rolls) are present.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly visible and correctly formatted.",
+        "Product dimensions and position fall within the specified acceptable ranges for a physically plausible object."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

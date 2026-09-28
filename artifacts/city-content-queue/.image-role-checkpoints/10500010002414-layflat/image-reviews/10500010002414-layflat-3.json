@@ -2,39 +2,46 @@
   "source_id": "10500010002414-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 10,
-      "product_width_percent": 0,
-      "product_height_percent": 0,
-      "product_x_center_percent": 0,
+      "score": 20,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
       "reasons": [
-        "Hard reject: Visible human body part (hand) and human leg (blue jeans) on the far right edge of the frame.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-60% of frame width."
+        "Product pair width (55%) significantly exceeds the hard reject threshold of 20%.",
+        "Product placement is centered/foregrounded rather than secondary.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 9-20% of frame width.; Reduce product height from 35% to at most 32% of frame height."
       ],
-      "correction_prompt": "Remove all visible human body parts, specifically the hand on the right and the blue jeans, while keeping the pump, gauge, and coils in the same positions. Enlarge the product group from 0% to 8-60% of frame width.",
+      "correction_prompt": "Shrink the two hoses to occupy a small 15% width segment in the lower right background, place a fixed pump and gauge infrastructure in the foreground, and keep the farm scene static without any people. Reduce the product group from 55% to 9-20% of frame width. Reduce product height from 35% to at most 32% of frame height.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 88,
-      "product_width_percent": 25,
-      "product_height_percent": 28,
-      "product_x_center_percent": 32,
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 55,
       "reasons": [
-        "Presence of mandatory bottom-right watermark 'AFP | 09134922013'",
-        "Approved layflat pair is visible: one packaged coil and one bare black woven coil",
-        "Zero people, body parts, or human silhouettes detected",
-        "Product scale is within the preferred 20-35% range and well within the 8-60% acceptance range",
-        "Mandatory 'HEADWORKS STORY' role satisfied: medium side view of fixed unattended pump, gauge, and manifold visible with product pair remaining secondary",
-        "Distant farm building and unattended infrastructure are acceptable and not treated as prohibited commercial products",
-        "Both coils are separate, physically plausible, and clearly recognizable without merging or distortion"
+        "Presence of a human figure standing near the tractor in the background is a hard reject.",
+        "The product pair is too large, occupying significantly more than 20% of the frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 9-20% of frame width.; Reduce product height from 40% to at most 32% of frame height."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Remove the human figure in the background. Scale the two coils down so they occupy 12-15% of the frame width and move them to a secondary position relative to the pump infrastructure. Reduce the product group from 55% to 9-20% of frame width. Reduce product height from 40% to at most 32% of frame height.",
       "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 14,
+      "product_height_percent": 18,
+      "product_x_center_percent": 52,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 3
     }
   ]
 }
