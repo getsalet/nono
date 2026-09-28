@@ -1,0 +1,39 @@
+{
+  "source_id": "10000013002773-tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 8,
+      "product_height_percent": 12,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Two people (man and woman) are clearly visible in the image. The brief requires zero people and zero human body parts.",
+        "The article role EDITORIAL HERO requires farm/irrigation context dominating with the product small and off-center; however, people presence makes this invalid regardless of composition.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 8% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove both people from the image. Keep only the AFP drip tape carton roll on the lower third, off-center, with farm rows and irrigation context in the background. No humans or body parts should be visible anywhere in the frame. Enlarge the product group from 8% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 14,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Exactly one AFP white-and-blue low cylindrical drip-tape carton roll is present, fully visible, placed off-center in the lower third as the editorial hero role requires.",
+        "Product bounding box is within accepted limits: width ~14% (within 12-30%), height ~22% (under 35% cap), geometrically plausible.",
+        "Zero people, faces, hands, limbs or human silhouettes visible; only distant farm buildings and unattended irrigation hardware (pipes, crop rows) which are allowed context.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner and was not rejected.",
+        "Background matches the article brief: wide high-oblique farm and drip-irrigation context for 20 cm drip-tape in Khonjin.",
+        "No forbidden items: no bottle, jar, canister, bucket, fertilizer/pesticide container, second roll, layflat hose, or fake headline/gibberish text."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
