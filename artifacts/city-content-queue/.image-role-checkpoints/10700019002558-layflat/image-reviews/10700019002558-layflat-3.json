@@ -1,0 +1,84 @@
+{
+  "source_id": "10700019002558-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 32,
+      "product_height_percent": 33,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Product pair width exceeds the 25% hard reject limit",
+        "Required fixed pump, gauge, and manifold are missing from the image",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reshoot the image focusing on a fixed pump, gauge, and manifold. Shrink the two-coil pair (packaged and bare) to less than 25% of the frame width and place them as secondary items on the edge of the concrete pad. Reduce the product group from 32% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 72,
+      "product_height_percent": 45,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The image contains three distinct coils of hose/tubing instead of the required two-coil pair, which is a hard reject.",
+        "The product bounding box is approximately 72% of the frame width, which significantly exceeds the hard reject limit of 25%.",
+        "The image is missing the mandatory 'equipment-only elevated record' of a fixed pump, gauge, and manifold on a concrete pad.",
+        "The approved pair composition is incorrect; it includes a brown coiled hose which was not requested in the layflat description (packaged AFP + bare black woven).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-25% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate to show exactly two coils: one packaged black layflat coil and one bare black woven coil, arranged as a secondary element (under 20% width). Include the primary subject: a fixed irrigation pump, gauge, and manifold on a clean concrete pad in the foreground. Ensure zero people and remove any third hose or coil. Reduce the product group from 72% to 8-25% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 68,
+      "product_height_percent": 20,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The image shows the required fixed pump, gauge, and manifold setup on an empty concrete pad as the primary detail role.",
+        "The approved layflat pair (packaged coil and bare black coil) are both visible, separate, and recognizable.",
+        "Product width and height fall within the accepted estimation range (12-25% width, up to 35% height), even if estimated toward the higher end.",
+        "Zero people, human body parts, or commercial bottles/canisters are present.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 68% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 60,
+      "product_height_percent": 45,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The combined width of the product pair (the packaged coil and the bare black woven coil) occupies approximately 60% of the image width. This significantly exceeds the hard rejection threshold of 25% combined width and falls outside the acceptable range for 'reviewer-estimation noise' (8-25%); the products are clearly the primary subject, whereas the brief requires the pair to be small, separate, and secondary to the infrastructure equipment.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-25% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image so the two coils (packaged and bare) are much smaller, occupying no more than 15% of the total frame width combined. The coils should appear secondary in the composition, positioned in the background or far foreground to prioritize the fixed pump, gauge, and manifold on the concrete pad as the main focus of the detail shot. Reduce the product group from 60% to 8-25% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 58,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The presence of two people in the background (upper left) is a hard reject.",
+        "The product pair (the two coils) is wider than the accepted 25% threshold (estimated at 58%), which violates the size constraint.",
+        "The role requires 'no farm activity', but the visible people and nearby machinery imply an active farm environment.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-25% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people and farm activity from the background. Shrink the pair of coils significantly so they occupy less than 25% of the frame width. Ensure the foreground focus remains on the pump and manifold while keeping the coils small and distinct. Reduce the product group from 58% to 8-25% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

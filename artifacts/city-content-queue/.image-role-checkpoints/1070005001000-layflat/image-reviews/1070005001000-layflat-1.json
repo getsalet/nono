@@ -1,0 +1,40 @@
+{
+  "source_id": "1070005001000-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Presence of a person (hard reject): A man is clearly visible standing in the field in the background.",
+        "Product width exceeds limit: The combined width of the two coils is approximately 45% of the frame width, exceeding the strict 25% hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Remove the man from the background completely. Reduce the scale of the coils so their combined width is under 25% of the frame, keeping them small, separate, and off-center while maintaining the wide high-oblique water-transfer context. Reduce the product group from 45% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Exact approved pair present: packaged AFP coil and bare black woven coil.",
+        "Watermark 'AFP | 09134922013' clearly visible in bottom-right.",
+        "Both coils are separate, physically plausible, and fully visible.",
+        "Combined product width (~24%) falls within the allowed estimation noise range (8-25%).",
+        "Zero people, faces, or body parts visible; distant tractor and building are acceptable context.",
+        "Image aligns with the EDITORIAL HERO brief for a water-transfer context."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

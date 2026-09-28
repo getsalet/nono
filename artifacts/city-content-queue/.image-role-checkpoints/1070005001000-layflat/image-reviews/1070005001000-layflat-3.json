@@ -1,0 +1,88 @@
+{
+  "source_id": "1070005001000-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 55,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The required role (fixed pump, gauge, and manifold) is missing from the image.",
+        "The two-coil pair is excessively wide, taking up more than 50% of the frame, violating the 8-25% width constraint.",
+        "The approved two-coil pair appears dominant and central rather than small, secondary, and off-center as specified for the headworks detail shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate to feature an elevated close-up of a fixed pump, gauge, and manifold on an empty concrete pad. Include the packaged AFP coil and bare black woven coil in the background, ensuring they are small, separate, and secondary (combined width < 25%). Reduce the product group from 55% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 55,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Correctly displays the approved pair of one packaged and one bare black coil without third-party commercial products.",
+        "Mandatory watermark 'AFP | 09134922013' is present and correct.",
+        "No visible people or body parts.",
+        "The distant unattended tractor and farm building are treated as permitted infrastructure/background elements, not hard rejects.",
+        "The product pair is physically plausible, separate, and fully visible on the concrete pad.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 50,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains exactly two coils: one packaged white/blue and one bare black, which matches the required pair",
+        "Zero people, body parts, or human silhouettes are visible",
+        "The bottom-right watermark 'AFP | 09134922013' is present and correct",
+        "No third commercial products, bottles, or containers are visible",
+        "Coils are separate, physically plausible, and fully visible",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 50% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 60,
+      "product_height_percent": 45,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The product pair width is significantly larger than the maximum allowed threshold (60% vs 25% cap)",
+        "Mandatory role requirement for 'HEADWORKS DETAIL' (fixed pump, gauge, and manifold) is completely missing",
+        "Watermark text contains a numeric typo ('09134922013' instead of the required '09134922013' - wait, the prompt says 09134922013, but the image has an extra '2' or different digits. Let me re-read prompt: 'AFP | 09134922013' vs image 'AFP | 09134922013'. Actually, the prompt asks for '09134922013', the image has '09134922013' which is a 10 digit number ending in 3. The prompt asks for 09134922013 (also 10 digits ending in 3). They match. Let's look closer. Prompt: 09134922013. Image: 09134922013. Okay, watermark is fine.",
+        "Missing required infrastructure elements (pump/gauge) causes a hard reject under the specific role constraints",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-25% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the coils. Show a small, distant fixed pump and manifold on an empty concrete pad as the main subject. Add two very small, separate coils (one packaged, one bare) in the background. Ensure the text watermark is bottom-right. Reduce the product group from 60% to 8-25% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 20,
+      "product_height_percent": 15,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Mandatory role HEADWORKS DETAIL requires an elevated record photograph of a fixed pump, gauge, and manifold on a concrete pad, which is completely missing.",
+        "Scene depicts general farm equipment (tractor) in the background, violating the 'no farm activity' and 'empty pad' constraints.",
+        "Missing required infrastructure elements (pump, gauge, manifold) listed in the role description."
+      ],
+      "correction_prompt": "Regenerate as an elevated record photograph on an empty concrete pad. Foreground must feature a fixed pump, gauge, and manifold. The two-coil pair (packaged and bare) must remain small and secondary in the frame. Remove all farm vehicles and activity.",
+      "attempt": 5
+    }
+  ]
+}

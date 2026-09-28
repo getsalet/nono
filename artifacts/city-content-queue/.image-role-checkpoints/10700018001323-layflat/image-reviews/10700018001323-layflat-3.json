@@ -1,0 +1,71 @@
+{
+  "source_id": "10700018001323-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 55,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The mandatory role 'HEADWORKS DETAIL: equipment-only elevated record photograph of one fixed pump, gauge and manifold on an empty concrete pad' is not met.",
+        "The approved two-coil pair is primary and excessively wide (>25% of frame) rather than small and secondary.",
+        "Farm buildings and a tractor are visible in the background, violating the 'no farm activity' requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a tight, elevated close-up of a fixed pump, gauge, and manifold on an empty concrete pad with no farm buildings or tractors visible. Include two small, separate coils (one packaged, one bare) secondary to the pump and positioned far in the background. Reduce the product group from 55% to 8-25% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 59.8,
+      "product_height_percent": 27.6,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Product pair width (59.8%) exceeds the hard limit of 25% of the frame width.",
+        "Image depicts three distinct coils, whereas the approved pair must contain exactly two (one bare coil and one packaged AFP coil).",
+        "The primary role is a 'HEADWORKS DETAIL' of a fixed pump, gauge, and manifold on an empty concrete pad; the provided image lacks the required pump and manifold infrastructure.",
+        "Tractors in the background are active or moving equipment, conflicting with the 'no farm activity' instruction for this specific role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 59.8% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Generate an elevated detail photograph on an empty concrete pad featuring a fixed pump and manifold. Include exactly two small coils (approx 12-15% width): one packaged AFP coil and one bare black woven coil, placed separately. Zero people. Remove tractors and farm activity. Reduce the product group from 59.8% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 62,
+      "product_height_percent": 55,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: The image contains three coiled objects (two in blue/white packaging and one bare black coil). The strict requirement is for exactly two coils: one packaged AFP coil and one bare black woven coil. The presence of a third commercial package violates the 'zero third commercial package' rule.",
+        "The combined width of the products significantly exceeds the 25% hard limit, occupying roughly 62% of the frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-25% of frame width.; Reduce product height from 55% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image showing exactly one packaged AFP coil and one bare black woven coil, totaling two objects. Remove the third coiled package. Scale the objects down so their combined width is between 12% and 15% of the frame. Include a fixed pump, gauge, and manifold on a concrete pad as the primary subject, keeping the coils small and secondary. Reduce the product group from 62% to 8-25% of frame width. Reduce product height from 55% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Zero people, human body parts, or silhouettes present.",
+        "Image contains exactly one packaged coil and one bare black woven coil as required.",
+        "Fixed pump, gauge, and manifold are present on an empty concrete pad, matching the required role.",
+        "Distant tractors are unattended and treated as background infrastructure, not commercial products.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Product pair width is within the 8 to 25 percent acceptance range (est. 24%)."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
