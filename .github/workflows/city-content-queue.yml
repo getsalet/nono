@@ -6,7 +6,6 @@ on:
   push:
     branches: [main]
     paths:
-      - '.github/workflows/city-content-queue.yml'
       - 'automation/city_content_queue_cloudflare.py'
       - 'automation/reviewed_publish_city_queue.py'
       - 'automation/run_agnes_city_queue.py'
@@ -172,7 +171,17 @@ jobs:
           python automation/package_city_content_batches.py || AUX_CODE=$?
           python automation/render_city_queue_status.py || AUX_CODE=$?
           if [ "$AUX_CODE" -eq 0 ]; then
+            signal_path="artifacts/city-content-queue/.new-batch-signal"
+            before_signal="$(sha256sum "$signal_path" 2>/dev/null | cut -d' ' -f1 || true)"
             python automation/write_new_batch_signal.py || AUX_CODE=$?
+            after_signal="$(sha256sum "$signal_path" 2>/dev/null | cut -d' ' -f1 || true)"
+            if [ -n "$after_signal" ] && [ "$after_signal" != "$before_signal" ]; then
+              echo "NEW_BATCH_READY=1" >> "$GITHUB_ENV"
+              echo "new_batch_signal_changed=true" | tee -a artifacts/city-content-queue/run.log
+            else
+              echo "NEW_BATCH_READY=0" >> "$GITHUB_ENV"
+              echo "new_batch_signal_changed=false" | tee -a artifacts/city-content-queue/run.log
+            fi
           fi
           echo "auxiliary_exit_code=$AUX_CODE" | tee -a artifacts/city-content-queue/run.log
 
@@ -219,6 +228,13 @@ jobs:
             echo "Packaging/status generation failed with exit code $AUX_CODE" >&2
             exit "$AUX_CODE"
           fi
+
+      - name: Dispatch FTPS only for a newly created 50-post package
+        if: always() && !cancelled() && env.NEW_BATCH_READY == '1'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run upload-city-batches-ftps.yml --ref main
 
       # A batch can preserve valid partial progress while returning non-zero for
       # one quarantined article. Keep the queue moving in that case; hard bans

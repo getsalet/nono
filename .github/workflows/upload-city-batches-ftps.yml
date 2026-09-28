@@ -1,21 +1,10 @@
-# Restarted after migration to smxsmx20/nono.
+# Dispatch-only FTPS upload: runs only for a newly created 50-post package.
 name: Upload new city batches via FTPS
 
 on:
+  # This workflow is dispatched by the generator only when a new 50-post ZIP
+  # changes .new-batch-signal. No schedule means no empty hourly runner.
   workflow_dispatch:
-  # Commits created by another GitHub Actions workflow do not reliably trigger
-  # a second push workflow. Poll in a dedicated hourly window; the local signal
-  # gate exits before opening FTPS unless a genuinely new ZIP is pending.
-  schedule:
-    - cron: "50 * * * *"
-  # Fire only when the generate workflow commits a NEW 50-post batch (it writes
-  # .new-batch-signal). This replaces the old workflow_run trigger that fired on
-  # every single-post commit — the cause of 500+ no-op FTPS runs.
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/upload-city-batches-ftps.yml"
-      - "artifacts/city-content-queue/.new-batch-signal"
 
 permissions:
   contents: write
