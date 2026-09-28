@@ -1,27 +1,50 @@
 {
   "source_id": "1050003001261-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
+      "score": 25,
+      "duplicate_roles": [],
       "reasons": [
-        "Product oversizing in all three panels: the AFP roll/carton dominates the foreground rather than staying small on the lower third (role 1) or remaining secondary (roles 2 and 3).",
-        "Role 1 (EDITORIAL HERO) fails to present a wide high-oblique view with the farm context dominating; instead, the oversized product is central and foregrounded.",
-        "Role 2 (SELECTION EVIDENCE) shows drip lines, but the carton is too large and centered; the elevated technical arrangement is not achieved.",
-        "Role 3 (HEADWORKS STORY) presents the hardware correctly but violates the 'exactly one small and secondary carton' requirement due to the large foreground product.",
-        "The product placement is visually identical in terms of scale and positioning across all three roles, creating a repeated layout."
+        "Role 1 fails the 'exactly one small approved carton' constraint; the product is oversized, placed centrally at the bottom, and disrupts the wide high-oblique farm view.",
+        "Role 3 is rejected due to farm activity in the background (visible tractors and equipment), which strictly violates the 'no farm activity' requirement for the headworks detail."
       ],
-      "correction_prompt": "Significantly reduce the scale of the AFP carton in all panels, position it off-center on the lower third for role 1, and keep it secondary to the hardware in role 3; adjust role 1 to a wider high-oblique view dominated by the field landscape.",
+      "correction_prompt": "Reshoot Role 1 with the carton small and off-center on the lower third, and reshoot Role 3 on an isolated concrete pad with a clear, empty background free of farm activity.",
       "panel_scores": [
-        35
+        25
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails the 'exact lower-third off-center' placement requirement; the product is centered on the field furrow, violating the specific layout constraints for the Editorial Hero.",
+        "Role 3 contains a farm tractor in the background, violating the 'no farm activity' and 'empty concrete pad' isolation requirements for the Headworks Detail shot.",
+        "Role 3 product placement is overly large (foreground center), failing the 'small and secondary' size requirement relative to the hardware."
+      ],
+      "correction_prompt": "In Role 1, move the carton to the lower-right off-center position. In Role 3, remove the tractor background to leave a clean concrete pad and shrink the carton to make the hardware the primary focus.",
+      "panel_scores": [
+        50
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 violation: The farm context is not dominant; the product is oversized and centered, violating the requirement for it to stay small and off-center.",
+        "Role 1 violation: The farm building (barn) in the background is not relevant to the specific 'Paveh/Kermanshah' regional brief.",
+        "Role 3 violation: The required headworks equipment (filter, gauge, regulator, and manifold) is completely missing from the scene."
+      ],
+      "correction_prompt": "Regenerate the set: 1) Shrink the product to 15% width in Role 1 and move it off-center to the left, emphasizing the vast crop field. 2) For Role 3, strictly add the required fixed filter, gauge, and manifold components next to the carton on the concrete pad.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
     }
   ]
 }

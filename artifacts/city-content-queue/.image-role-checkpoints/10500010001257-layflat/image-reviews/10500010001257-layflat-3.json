@@ -2,25 +2,137 @@
   "source_id": "10500010001257-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 14,
-      "product_height_percent": 32,
-      "product_x_center_percent": 32,
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 41,
+      "product_height_percent": 58,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Correct inclusion of the mandatory HEADWORKS STORY role (fixed pump, gauge, and manifold).",
-        "Accurate depiction of the required two-coil pair (one packaged, one bare black) with both objects fully visible and physically plausible.",
-        "Product width is estimated at approximately 14% of frame width, falling well within the 9-20% acceptable range.",
-        "Zero people or human body parts detected in the frame.",
-        "Required 'AFP | 09134922013' watermark is correctly present in the bottom-right position.",
-        "Background farm environment (barn, fields, tractor) is relevant to the layflat role and does not constitute a hard reject."
+        "The image shows the approved layflat pair: one black woven coil and one packaged coil (AFP brand visible), fulfilling the core visual requirement.",
+        "The scene correctly features a fixed pump, gauges, and manifold on a concrete/ground pad, matching the HEADWORKS DETAIL role with infrastructure as primary and coils secondary.",
+        "Zero people or human body parts are visible.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "No forbidden objects (bottles, third commercial packages) are present.",
+        "The product bounding box width (~41%) exceeds the 25% hard rejection threshold for 'pair width', likely causing a technical mismatch, but the visual composition matches the specific mandatory scene description (HEADWORKS DETAIL) where the pair is small and secondary relative to the equipment installation. Under a strict interpretation of the text rule ('Hard reject a pair wider than 25 percent'), this would be a fail, but given the specific scene description overrides general size in 'editorial' contexts or implies the 25% rule applies to close-ups, I will pass it as the scene matches the mandatory role perfectly. However, sticking to the strict 'Hard reject' instruction in the text, I must fail it if I strictly count pixel width. The text says 'Hard reject a pair wider than 25 percent'. The coils + gap are ~41%. I must reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 41% to 8-25% of frame width.; Reduce product height from 58% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the scale of the two coiled hoses (one black, one packaged) to be small and secondary in the frame, ensuring the combined width is under 25% of the image, while maintaining the foreground focus on the fixed pump and gauge manifold. Reduce the product group from 41% to 8-25% of frame width. Reduce product height from 58% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 55,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The required 'AFP | 09134922013' watermark is present in the bottom-right corner.",
+        "The image features exactly one packaged coil and one bare black coil as specified.",
+        "A fixed pump and manifold are present on the concrete pad, fitting the infrastructure requirement for role 3.",
+        "No people or body parts are visible, and there are no prohibited third commercial products or bottles.",
+        "The scene is clean, physically plausible, and meets the 'HEADWORKS DETAIL' equipment-only criteria.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-25% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 58,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The combined width of the two coils is too large, measuring approximately 58% of the frame, which exceeds the maximum hard-reject limit of 25%.",
+        "The visual brief mandates an elevated detail shot of a fixed pump, gauge, and manifold on an empty concrete pad as the primary subject, which is completely missing from this low-angle foreground image.",
+        "The required pair of products (one packaged coil, one bare black coil) is present and recognizable, but the massive scale change makes them the primary focus instead of secondary elements.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate with a high-angle perspective showing the two specified coils (one packaged, one bare) as very small, secondary objects on a large, empty concrete pad, with the primary focus on a fixed pump, gauge, and manifold assembly in the mid-ground, maintaining the distant farm background. Reduce the product group from 58% to 8-25% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The foreground contains two identical bare black coils, missing the required packaged coil",
+        "Hard reject triggered for 'third commercial package' (third coil)",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Change one of the two foreground black coils into a packaged white/silver AFP coil to ensure one packaged and one bare coil are present. Remove any third coil. Enlarge the product group from 0% to 8-25% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 40,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Product pair width exceeds the 25% hard reject limit (estimated ~40% of frame width).",
+        "The packaged coil appears to have an invalid or non-existent label; the 'AFP' text on the packaging is obscured and the packaging style does not clearly represent a standard approved commercial packaging.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Shrink the two coils to 12-15% combined width and ensure they are small and secondary. Place them to the right of the pump. Clarify the packaging on the wrapped coil. Reduce the product group from 40% to 8-25% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 55,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Approved pair present: One packaged AFP coil and one bare black woven coil.",
+        "No humans, body parts, or human silhouettes detected.",
+        "No third commercial products (bottles, cans, buckets) present.",
+        "Required watermark 'AFP | 09134922013' is visible in the bottom-right corner.",
+        "Image depicts a clean, empty concrete pad with a distant field horizon, consistent with the 'equipment-only' aesthetic preference (absence of farm activity).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-25% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The image completely misses the mandatory 'HEADWORKS DETAIL' role which requires an equipment-only photograph of a fixed pump, gauge, and manifold on an empty concrete pad.",
+        "The two coils are excessively large and dominant (approx 55% width), failing the requirement that they remain 'small, separate and secondary' (preferred 12-15%, max 25%).",
+        "The concrete pad is not associated with any pump or headworks infrastructure, rendering the context irrelevant to the article's specific visual brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a detailed headworks photograph: a large concrete pad containing a red diesel engine, fixed pump, pressure gauge, and manifold. In the extreme lower foreground, show two very small irrigation coils (one in packaging, one black) occupying <15% of the frame. No people. Reduce the product group from 55% to 8-25% of frame width.",
+      "attempt": 7
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Approved pair present: one packaged AFP coil and one bare black woven coil.",
+        "Mandatory role satisfied: equipment-only elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad.",
+        "Zero people or human body parts visible.",
+        "No third commercial packages, bottles, jars, cans, or invented labels detected.",
+        "Bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "Placed tractors and farm building in the background are permitted unattended infrastructure/context and do not violate the 'no third product' rule.",
+        "Product pair width (25%) sits at the absolute maximum threshold for acceptance; preferred width range is 12-15% but the hard reject limit is 25%.",
+        "Coils are clearly separate, recognizable, and physically plausible on the concrete pad."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 8
     }
   ]
 }
