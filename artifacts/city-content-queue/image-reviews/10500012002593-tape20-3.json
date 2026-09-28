@@ -1,0 +1,70 @@
+{
+  "source_id": "10500012002593-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 5,
+      "product_width_percent": 33,
+      "product_height_percent": 38,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Hard reject: The image contains visible people (a crouching worker in the foreground and a standing worker in the background) and human body parts, which is explicitly prohibited.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image removing all humans. Keep exactly one white-and-blue AFP drip-tape carton roll in a medium side view, positioned to be secondary to the fixed filter, gauge, and manifold infrastructure as described in the HEADWORKS STORY role. Ensure the roll width is estimated at 20-23% of the frame. Maintain the bottom-right watermark. Reduce the product group from 33% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Two visible people (farmers/workers) are present in the image.",
+        "Hard reject: The object roll width is approximately 38% of the frame, exceeding the 27% maximum limit.",
+        "Hard reject: The object roll height is approximately 45% of the frame, exceeding the 32% maximum limit.",
+        "Hard reject: A second commercial package (cardboard box) is visible directly underneath the roll.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width.; Reduce product height from 45% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 38% to 13-27% of frame width. Reduce product height from 45% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 29,
+      "product_height_percent": 38,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Presence of a human figure standing in the background, which is a hard reject.",
+        "The product bounding box height (~38%) exceeds the maximum 32% limit, and width (~29%) exceeds the 27% hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the man standing in the field. Resize the drip-tape carton roll to be significantly smaller, reducing its width to ~20% of the frame and height to under 32%, keeping it in the foreground. Reduce the product group from 29% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 14,
+      "product_height_percent": 24,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Zero people, farmers, or human body parts are visible in the frame.",
+        "The primary product (the carton roll) is present in the foreground with the correct 'AFP' white-and-blue branding.",
+        "Placement is off-center (lower-left), which aligns with editorial preferences for a 'secondary' product in a HEADWORKS STORY role.",
+        "Width estimation is approximately 14%, falling within the acceptable 13-27% noise band.",
+        "Height estimation is approximately 24%, falling within the maximum 32% limit.",
+        "The image features the required background infrastructure (irrigation manifold, gauge) and the distant unattended tractor, which are allowed by the brief.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
