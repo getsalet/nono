@@ -1,0 +1,58 @@
+{
+  "source_id": "1080006002320-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Image contains exactly one AFP white-and-blue wide cylindrical drip-tape roll.",
+        "Watermark 'AFP | 09134922013' is present and correctly positioned in bottom-right.",
+        "Background shows farm building, distant unattended tractor, and drip lines, which are contextually relevant for the 'SELECTION EVIDENCE' role (field selection).",
+        "No visible human face, hand, or body parts are present; distant silhouettes are too indistinct to reject.",
+        "Roll dimensions (width 28%, height 38%) are within the acceptable bounds (<40% width, <50% height).",
+        "The text on the label is clear, and the geometry of the object is physically plausible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 34,
+      "product_height_percent": 40,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Hard reject: visible human (person) standing in the background near the tractor and building.",
+        "Product width (34%) and height (40%) exceed the hard reject thresholds (27% and 32%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the human figure from the background. Shrink the AFP drip tape roll so its width is under 27% and height is under 32% of the frame width. Reduce the product group from 34% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 22,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Object is exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll",
+        "Product dimensions are within the preferred and acceptable ranges (width ~21%, height ~22%)",
+        "Required bottom-right watermark 'AFP | 09134922013' is present",
+        "No people or human body parts are visible",
+        "Background context (field, soil, pipe) matches the agricultural selection evidence role",
+        "Distant unattended tractor is allowed as infrastructure"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

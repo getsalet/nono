@@ -2,25 +2,56 @@
   "source_id": "1050009001260-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Image contains a person (worker/farmer) crouching and handling the equipment.",
+        "Hard reject: The presence of a human and body parts is an absolute violation regardless of other elements.",
+        "Hard reject: The product pair (coils) occupies approximately 45% of the frame width, which far exceeds the 20% maximum limit (target 12-15%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 9-20% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the person entirely. Reduce the scale of the two coils (one packaged, one bare) significantly so the combined pair occupies only 12-15% of the frame width. Keep the pair separate and fully visible on the left. Maintain the unattended pump and gauge setup in the center and the 'AFP | 09134922013' watermark in the bottom right corner. Reduce the product group from 45% to 9-20% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The required two-coil pair is missing (only one visible coil in the bottom-left corner)",
+        "The image width of the product area exceeds the 20% hard limit",
+        "A third commercial product (a coiled black wire attached to the pump) is visible",
+        "The product placement is not centered as required",
+        "machine-enforced bounding-box check failed: Reduce the product group from 25% to 9-20% of frame width."
+      ],
+      "correction_prompt": "Regenerate image to show two distinct layflat coils (one wrapped in packaging, one bare black) in the bottom-left. The pair should be small, occupying only 12-15% of the frame width. Remove the coiled wire from the pump to avoid a 'third product' rejection. Keep the pump, gauge, and distant tractor/barn in the background. Ensure the product is centered and the image is free of people. Reduce the product group from 25% to 9-20% of frame width.",
+      "attempt": 2
+    },
+    {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 44,
-      "product_height_percent": 40,
+      "score": 88,
+      "product_width_percent": 14,
+      "product_height_percent": 12,
       "product_x_center_percent": 42,
       "reasons": [
-        "Image contains zero visible persons, faces, or human body parts.",
-        "The two approved coils (one bare, one packaged) are present, separate, and physically plausible.",
-        "Product pair width is estimated at 44%, which falls within the preferred 20-35% range, but is well within the acceptable 8-60% range and remains recognizable.",
-        "The mandatory infrastructure elements (gauge and manifold) required for the 'HEADWORKS STORY' role are visible.",
-        "The required watermark 'AFP | 09134922013' is correctly placed in the bottom-right corner.",
-        "No third commercial products, bottles, or impossible intersections are observed."
+        "The image displays the required pair of one packaged AFP coil and one bare black woven coil.",
+        "The fixed pump, gauge, and manifold are present in the mid-ground, fulfilling the 'HEADWORKS STORY' infrastructure role without obstructing the product pair.",
+        "The product pair is estimated to occupy 14% of the frame width, which falls within the accepted 12-15% target range.",
+        "The approved bottom-right watermark 'AFP | 09134922013' is correctly present and legible.",
+        "The scene contains zero people or human body parts; the distant red tractor is unattended and treated as permitted farm infrastructure.",
+        "The physical placement of the coils on the ground is plausible and they remain separate from the infrastructure."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

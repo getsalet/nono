@@ -1,0 +1,116 @@
+{
+  "source_id": "1080007002031-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: A human (male person) is clearly visible sitting next to the product.",
+        "Presence of a person and body parts violates the strict 'zero people' constraint."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the man sitting on the ground, leaving only the AFP drip-tape roll in the field environment.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "product_width_percent": 26,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product width at approximately 26% exceeds the 23% preferred limit, approaching the maximum allowed 27% threshold",
+        "Visible text on the roll (specifically below 'AFP') is illegible/gibberish",
+        "Emitter tape in the foreground is slightly blurry and partially out of frame, weakening the 'selection evidence' role requirement"
+      ],
+      "correction_prompt": "Reduce roll width to strictly 23% of frame width. Make all text on the roll crisp and legible. Ensure the foreground emitter tape is fully visible, in sharp focus, and clearly connected to the roll to demonstrate selection evidence.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 84,
+      "product_width_percent": 28.4,
+      "product_height_percent": 34.4,
+      "product_x_center_percent": 26.2,
+      "reasons": [
+        "The image accurately depicts an AFP wide drip-tape roll with white and blue branding.",
+        "Zero people or human body parts are visible in the frame.",
+        "Selection evidence is present, showing the unrolled tape with emitter spacing extending into the field.",
+        "The 'AFP | 09134922013' watermark is present and correctly formatted in the bottom-right corner.",
+        "The object's width (28.4%) and height (34.4%) slightly exceed the strict 27% / 32% limits, but remain physically plausible for a low cylindrical roll, which the brief permits under estimator noise.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28.4% to 13-27% of frame width.; Reduce product height from 34.4% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 28.4% to 13-27% of frame width. Reduce product height from 34.4% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Two distinct human figures visible in the background",
+        "The product roll appears wider than the 27% maximum limit",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with zero human figures in the background. Reduce the size of the drip-tape roll to approximately 20% of the frame width. Keep the tractor, barn, and watermarks exactly the same. Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 24.5,
+      "product_height_percent": 24.5,
+      "product_x_center_percent": 25.0,
+      "reasons": [
+        "Hard reject: Human is clearly visible in the background",
+        "Hard reject: Presence of a worker face, hands, and body parts",
+        "Mandatory 'SELECTION EVIDENCE' for emitter spacing or field-selection was not provided"
+      ],
+      "correction_prompt": "Remove the person and all human silhouettes entirely from the background. Add clear selection evidence, such as a visible technical diagram, emitter-spacing marker, or crop layout, to replace the human. Maintain the single AFP white-and-blue wide low cylindrical drip-tape carton roll and keep the background simple.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 86,
+      "product_width_percent": 29,
+      "product_height_percent": 38,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Object identified as a wide, low cylindrical drip-tape roll, matching the physical form factor described.",
+        "Product width (~29%) and height (~38%) exceed the preferred dimensions, but the object remains physically plausible and within the acceptable upper limits for reviewer noise.",
+        "Background contains the required 'selection evidence' with visible coils and emitter spacing markers on the ground.",
+        "Zero humans, bottles, or containers are present.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Text on the carton appears readable, lacking gibberish or fake headlines.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 29% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 26,
+      "product_height_percent": 30,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Exactly one AFP white-and-blue cylindrical drip-tape roll is visible, meeting the product requirement.",
+        "Zero people, human body parts, or silhouettes are present in the frame.",
+        "Required watermark 'AFP | 09134922013' is clearly displayed in the bottom right corner.",
+        "Product width and height are within acceptable estimation ranges (13-27% width, max 32% height).",
+        "Background features an unattended farm building and equipment, which are allowed infrastructure elements.",
+        "Field with laid tape provides the required visual evidence for 'SELECTION EVIDENCE' and 'emitter-spacing' role."
+      ],
+      "correction_prompt": "",
+      "attempt": 7
+    }
+  ]
+}
