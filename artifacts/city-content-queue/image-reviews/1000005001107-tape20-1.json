@@ -1,0 +1,52 @@
+{
+  "source_id": "1000005001107-tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 18,
+      "product_height_percent": 8,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Contains two visible men squatting in the foreground - hard reject",
+        "Human faces, hands, arms and legs clearly visible - hard reject",
+        "Article brief requires zero people - reject",
+        "AFP branded roll present but context compromised by people"
+      ],
+      "correction_prompt": "Regenerate without any people visible; show only the wide agricultural tape roll in an irrigation context with farm infrastructure",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 18,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: a person (man/farmer) is clearly visible on the right side of the frame, walking through the crop rows and holding a tool. This violates the strict no-person rule regardless of the product roll placement or watermark presence."
+      ],
+      "correction_prompt": "Regenerate image with exactly one AFP white-and-blue drip-tape carton roll in an editorial hero farm/irrigation scene; remove all people, workers, farmers, and any human body parts entirely. Keep the AFP watermark 'AFP | 09134922013' in the bottom-right corner. Distant unattended farm equipment is acceptable but no humans should appear anywhere in the frame.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 15,
+      "product_height_percent": 11,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll present, placed on the lower third, slightly off-center.",
+        "Roll width approximately 15% of frame (within 12–30% acceptable range); height approximately 11% (well within 35% limit).",
+        "No people, human body parts, or silhouettes present.",
+        "Editorial hero context: wide high-oblique farm view dominates; distant unattended tractor and ordinary farm infrastructure present and appropriate.",
+        "Mandatory watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "No extra commercial packages, layflat hose through roll, fake headlines, or impossible geometry detected."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

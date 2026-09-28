@@ -1,0 +1,41 @@
+{
+  "source_id": "1000005001107-tape20",
+  "kind": 2,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 9,
+      "product_height_percent": 17,
+      "product_x_center_percent": 56,
+      "reasons": [
+        "Hard reject: two full people (faces, hands, arms, legs) are present in frame, violating zero-people/zero-body-part rule.",
+        "Product roll is a small upright white cylinder, not the required wide low cylindrical drip-tape carton roll; width ~9% far below the 12–30% acceptable band.",
+        "Foreground object proportions do not match the 'wide low' carton-roll shape specified.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 9% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with no people or body parts; show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll occupying ~20–23% of frame width on a simple field edge with optional distant farm building, keep bottom-right watermark 'AFP | 09134922013'. Enlarge the product group from 9% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 25,
+      "product_height_percent": 33,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Exactly one AFP white-and-blue low cylindrical drip-tape carton roll present; no second roll, bottle, canister, bucket or commercial package.",
+        "Zero people and zero human body parts; no human silhouette anywhere.",
+        "Product bounding box width ~25% and height ~33%, within accepted ranges (width 12-30%, height up to 35%); physically plausible dimensions.",
+        "Required bottom-right watermark 'AFP | 09134922013' present and intact.",
+        "Coiled blue tape line on the ground provides field-selection/evidence context without violating pipe-through-roll rule.",
+        "Background (open soil field, distant farm building) matches article brief and is an allowed contextual element.",
+        "Lower-left off-center placement is an editorial preference, not a hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
