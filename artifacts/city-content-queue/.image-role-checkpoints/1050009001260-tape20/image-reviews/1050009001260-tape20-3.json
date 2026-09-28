@@ -2,24 +2,55 @@
   "source_id": "1050009001260-tape20",
   "family": "tape20",
   "kind": 3,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 28,
-      "product_height_percent": 42,
-      "product_x_center_percent": 34,
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 16,
+      "product_height_percent": 34,
+      "product_x_center_percent": 33,
       "reasons": [
-        "Image contains exactly one AFP white-and-blue cylindrical drip-tape carton roll",
-        "Zero people or human body parts visible",
-        "Required watermark 'AFP | 09134922013' is present in the bottom-right",
-        "Background includes unattended tractor and irrigation infrastructure (filter/gauge manifold) matching the 'HEADWORKS STORY' brief",
-        "Product size (width ~28%, height ~42%) falls within practical and preferred vision estimate ranges"
+        "Hard reject: Image contains a man (farmer/worker) interacting with the equipment, violating the 'zero people' and 'zero human body parts' constraint.",
+        "Hard reject: The presence of a human figure forces this to fail regardless of the correct product shape or the presence of the mandatory watermark.",
+        "Minor: A layflat hose is visible emerging from the machinery near the roll, which is flagged as a hard reject condition.",
+        "machine-enforced bounding-box check failed: Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Remove the man entirely. Keep only the unattended green filtration machine, the distant tractor, and the single white-and-blue AFP carton roll on the left. Ensure zero humans and no hoses emerging from the machine. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Product width is 35%, significantly exceeding the 27% hard reject threshold.",
+        "Product height is 40%, significantly exceeding the 32% hard reject threshold.",
+        "Visual brief requires a medium side view of unattended fixed filter, gauge, regulator, and manifold, none of which are visible in this image.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the AFP drip-tape roll significantly smaller (width 20-23%, height <32%). Replace the tractor with a close-up medium side view of fixed irrigation infrastructure (filter, gauge, regulator, manifold) to match the brief, while keeping the roll small and secondary. Reduce the product group from 35% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 98,
+      "product_width_percent": 18,
+      "product_height_percent": 19,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The image contains zero people or human body parts, strictly meeting the hard reject criteria.",
+        "The product is a single white and blue cylindrical drip-tape carton roll from the AFP brand, which fits the 'secondary' requirement of the HEADWORKS STORY role.",
+        "Background context with a tractor and fixed filter infrastructure is explicitly allowed for this image role.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is present and correctly positioned.",
+        "Product dimensions (width and height percentages) fall within the accepted estimation noise range and physically plausible limits.",
+        "No forbidden items like bottles, fertilizer containers, or second commercial packages are visible."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

@@ -1,0 +1,52 @@
+{
+  "source_id": "10500012002977-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Contains a visible person (farmer/worker) crouching in the foreground",
+        "Shows multiple commercial containers (carton on cart, carton on floor, tank on cart)",
+        "Contains a layflat hose being handled by the person"
+      ],
+      "correction_prompt": "Regenerate the image to show only the selected drip-tape carton roll on the ground in a field. Remove the person, the cart, the tank, and the second carton. Ensure the scene contains zero people and no hoses.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 28.5,
+      "product_height_percent": 26,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The unrolled tape extending from the roll and lying on the ground constitutes a 'pipe through the roll' or extraneous layflat hose, triggering a hard reject.",
+        "The product bounding box (including the unrolled tape) spans approximately 28.5% of the image width, which exceeds the 27% hard reject limit.",
+        "The unrolled tape creates 'impossible geometry' relative to the specific instruction of a 'cylindrical drip-tape carton roll' in an elevated technical arrangement without loose extraneous piping.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28.5% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate to show ONLY the cylindrical carton roll without any unrolled tape extending onto the ground. Keep the roll width below 27% of the frame width. Remove the loose tape loops to the right of the roll. Reduce the product group from 28.5% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product is a wide low cylindrical drip-tape carton matching brief.",
+        "Watermark present exactly as required.",
+        "No people, hands, or forbidden containers visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
