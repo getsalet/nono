@@ -84,7 +84,14 @@ def healthy_existing_zip(
             if "manifest.json" not in names:
                 return None
             embedded = json.loads(archive.read("manifest.json").decode("utf-8"))
-            create_sql = archive.read("sql/create-batch.sql").decode("utf-8")
+            create_name = f"sql/create-{batch_name}.sql"
+            rollback_name = f"sql/rollback-{batch_name}.sql"
+            # Accept legacy package names so already uploaded ZIPs stay immutable.
+            if create_name not in names:
+                create_name = "sql/create-batch.sql"
+            if rollback_name not in names:
+                rollback_name = "sql/rollback-batch.sql"
+            create_sql = archive.read(create_name).decode("utf-8")
             actual_ids = {str(post.get("source_id")) for post in embedded.get("posts", [])}
             expected_post_types = {
                 source_id(item): str(item.get("post_type", "")) for item in expected
@@ -97,8 +104,8 @@ def healthy_existing_zip(
                 embedded.get("batch") != batch_name
                 or int(embedded.get("post_count", 0)) != len(expected)
                 or actual_ids != expected_ids
-                or "sql/create-batch.sql" not in names
-                or "sql/rollback-batch.sql" not in names
+                or create_name not in names
+                or rollback_name not in names
                 or len([name for name in names if name.startswith("items/") and name.endswith(".json")]) < len(expected)
                 or not any(name.startswith("images/") for name in names)
                 or (
@@ -127,7 +134,11 @@ def build_package(batch: list[dict], batch_name: str) -> dict:
     (work / "images").mkdir(parents=True)
     (work / "items").mkdir(parents=True)
 
-    preamble = ["SET NAMES utf8mb4;", f"USE `{DB_NAME}`;"]
+    preamble = [
+        "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_520_ci;",
+        "SET collation_connection = 'utf8mb4_unicode_520_ci';",
+        f"USE `{DB_NAME}`;",
+    ]
     create_parts = [
         f"-- Upload-ready SQL for {BATCH_SIZE} completed generated posts",
         *preamble,
@@ -182,9 +193,11 @@ def build_package(batch: list[dict], batch_name: str) -> dict:
     if missing:
         raise RuntimeError("Cannot create healthy package; missing artifacts: " + ", ".join(sorted(set(missing))[:20]))
 
-    (work / "sql" / "create-batch.sql").write_text("\n".join(create_parts) + "\n", encoding="utf-8")
-    (work / "sql" / "rollback-batch.sql").write_text("\n".join(rollback_parts) + "\n", encoding="utf-8")
-    files += ["sql/create-batch.sql", "sql/rollback-batch.sql"]
+    create_name = f"create-{batch_name}.sql"
+    rollback_name = f"rollback-{batch_name}.sql"
+    (work / "sql" / create_name).write_text("\n".join(create_parts) + "\n", encoding="utf-8")
+    (work / "sql" / rollback_name).write_text("\n".join(rollback_parts) + "\n", encoding="utf-8")
+    files += [f"sql/{create_name}", f"sql/{rollback_name}"]
     manifest = {
         "batch": batch_name,
         "post_count": len(batch),
