@@ -2,73 +2,42 @@
   "source_id": "10500012002593-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 0,
-      "product_width_percent": 22,
-      "product_height_percent": 22,
-      "product_x_center_percent": 34,
+      "score": 15,
+      "product_width_percent": 42,
+      "product_height_percent": 45,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Image contains a person (hard reject): A man is crouching in the foreground right, interacting with the coils.",
-        "Human body parts visible: Hands, arms, and legs are visible.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 22% to 9-20% of frame width."
+        "Required HEADWORKS DETAIL (pump on empty concrete pad) is missing; image is a crop field.",
+        "Severely distorted/impossible objects: the AFP package on the right has intersecting wire and impossible label text.",
+        "Pair width significantly exceeds the 25% hard reject limit.",
+        "The AFP package appears to be merging with the pump base rather than sitting separately.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width.; Reduce product height from 45% to at most 35% of frame height."
       ],
-      "correction_prompt": "Regenerate the image removing the crouching man entirely. Ensure the scene contains only the unattended pump infrastructure, the specific coil pair (one packaged AFP, one bare black woven), and the background fields with zero people or body parts. Reduce the product group from 22% to 9-20% of frame width.",
+      "correction_prompt": "Regenerate as an elevated record photograph on an empty concrete pad. Show one grey fixed pump, gauge, and manifold. Place the two coils separately in the foreground: a clean white AFP package on the left and a bare black flat spiral coil on the right. Ensure labels are legible and objects are physically plausible. Reduce the product group from 42% to 8-25% of frame width. Reduce product height from 45% to at most 35% of frame height.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 92,
-      "product_width_percent": 38,
-      "product_height_percent": 55,
-      "product_x_center_percent": 60,
-      "reasons": [
-        "The image correctly shows the mandatory HEADWORKS STORY elements: a fixed, unattended pump, gauge, and manifold.",
-        "The approved layflat pair is present and consists of exactly two coils: one packaged AFP coil and one bare black woven coil.",
-        "The coils are separate, physically plausible, and fully visible.",
-        "The complete pair occupies approximately 38% of the frame width, which comfortably fits within the 9-20% tolerance range when reviewer-estimation noise is considered for wide-format frames.",
-        "Zero people or human body parts are visible.",
-        "The required bottom-right watermark \"AFP | 09134922013\" is present and has not been flagged for rejection.",
-        "Infrastructure elements (pump, gauge, manifold, farm building, crop rows) are properly handled as allowed contextual elements, not hard rejects.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 9-20% of frame width.; Reduce product height from 55% to at most 32% of frame height."
-      ],
-      "correction_prompt": "Reduce the product group from 38% to 9-20% of frame width. Reduce product height from 55% to at most 32% of frame height.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 15,
-      "product_width_percent": 38,
-      "product_height_percent": 28,
-      "product_x_center_percent": 30,
-      "reasons": [
-        "Severe scaling violation: The two coils in the bottom-left foreground are large and occupy approximately 38% of the frame width. The mandatory target is 12-15%, and the hard reject threshold of 20% has been exceeded by a significant margin.",
-        "Coil overlap: The packaged white coil and the black bare coil are touching and overlapping, which violates the requirement for them to be a 'separate' and physically plausible pair.",
-        "Visual Hierarchy: The coils are the dominant subject of the image due to their large size and bottom-left placement. The brief explicitly requires the pair to be 'secondary' to the fixed pump/machinery, but here they compete with the pump for the primary role.",
-        "Composition: The image places the product in a standard product-shot position (bottom-left) rather than integrating them as secondary elements within the infrastructure-focused HEADWORKS story.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 9-20% of frame width."
-      ],
-      "correction_prompt": "Redraw the image with a strong focus on the pump, gauge, and manifold on the right. Shrink the two coils (one white packaged, one black bare) significantly so their combined width is approximately 15% of the frame. Position them small and separate on the ground near the pump, ensuring they do not overlap and are clearly secondary to the machinery. Keep the 'AFP | 09134922013' watermark in the bottom right corner. Do not include any people. Reduce the product group from 38% to 9-20% of frame width.",
-      "attempt": 3
-    },
-    {
       "pass": true,
-      "score": 80,
-      "product_width_percent": 15,
-      "product_height_percent": 11,
-      "product_x_center_percent": 52,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 38,
       "reasons": [
-        "The layout successfully includes a fixed pump, gauge, and manifold, which serves as the correct infrastructure for the image role.",
-        "The required two-coil pair (one packaged white coil and one bare black coil) is present, separate, and fully visible.",
-        "The product pair occupies approximately 15% of the frame width, meeting the 12-15% target.",
-        "There are no human figures, face parts, or extraneous commercial products in the frame.",
-        "The mandatory bottom-right watermark is correctly applied and visible."
+        "Image contains zero people or body parts",
+        "Shows the approved two-coil pair: one packaged AFP coil and one bare black woven coil",
+        "The fixed pump, gauge, and manifold are correctly presented as infrastructure per the 'HEADWORKS DETAIL' brief",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner",
+        "Placement is off-center/lower-third which is accepted as an editorial preference",
+        "Product bounding box width is at the absolute upper limit of 25%, but no hard rejects are triggered",
+        "Objects are separate, physically plausible, and clearly recognizable"
       ],
       "correction_prompt": "",
-      "attempt": 4
+      "attempt": 2
     }
   ]
 }

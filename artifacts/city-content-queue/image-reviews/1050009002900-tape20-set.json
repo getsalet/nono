@@ -1,27 +1,52 @@
 {
   "source_id": "1050009002900-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
   "history": [
     {
       "pass": false,
-      "score": 25,
+      "score": 65,
       "duplicate_roles": [
-        1,
-        2,
         3
       ],
       "reasons": [
-        "Role 1 Violation: The product carton is placed in the lower-center of the frame rather than being off-center on the lower third as required.",
-        "Role 2 Violation: The requirement is for 'exactly one approved carton'. Image 2 clearly shows two distinct product rolls/containers, which triggers the rejection criterion for any repeated product or container.",
-        "Role 3 Violation: The role demands a medium side view of unattended fixed headworks (filter, gauge, regulator, manifold). Image 3 displays a mobile, wheeled filtration unit, which is structurally different from 'fixed' headworks.",
-        "Layout Duplication: All three roles utilize the exact same camera composition (low angle, product in the foreground center-left, subject on the right). There is no distinct variation in camera height/angle or layout structure between the roles, making the set feel repetitive.",
-        "Generic Farming: Image 2 features a generic red barn and tractor background that is likely inconsistent with the specific regional context (Kermanshah/Iran) implied by the article text, appearing as a stock 'generic farm' placeholder."
+        "Role 3 fails the 'equipment-only' and 'no farm activity' criteria, showing a prominent red tractor and farm building in the background instead of an isolated concrete pad setting."
       ],
-      "correction_prompt": "Regenerate all three images to ensure distinct camera angles (high-oblique, elevated, side). For Role 1, place the single carton off-center (left or right). For Role 2, strictly include only one carton with a visible irrigation line. For Role 3, replace the mobile unit with a fixed ground-based filter/gauge assembly. Ensure backgrounds reflect the specific agricultural region instead of generic stock imagery.",
+      "correction_prompt": "Regenerate role 3 as a strict equipment-only photograph on an empty concrete pad, completely removing the background tractors and farm buildings to focus solely on the fixed filter, gauge, and regulator assembly.",
       "panel_scores": [
-        25
+        65
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 contains an unapproved object (a surveillance-style camera device) which violates the technical narrative of 'selection evidence' requiring visible emitter spacing or field selection only.",
+        "Role 3 fails the 'exactly one approved carton remains small and secondary' constraint; the carton is the primary focus and is oversized.",
+        "Role 3 lacks the required 'fixed filter, gauge, regulator and manifold' equipment setup."
+      ],
+      "correction_prompt": "Redesign Role 2 by removing the camera and focusing on the tape with visible in-field emitters or crop rows for technical context; redesign Role 3 to feature a close-up of the irrigation manifold and filter on a concrete pad with the product carton minimized in the background.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 2 is a camera-height 'hero' shot placed directly on the ground, failing the required 'elevated technical arrangement' and 'selection evidence' criteria for its role.",
+        "Panel 3 fails the strict 'no farm activity' requirement for role 3 by showing active tractors and hay bales in the background, which conflicts with the 'empty concrete pad' instruction.",
+        "Panel 3 lacks the required 'elevated' angle and does not feature a fixed filter, gauge, regulator, and manifold setup; it is a generic low-angle shot of the product on a pad.",
+        "The three panels show a clear progression from hero to equipment, but roles 2 and 3 are swapped or poorly executed, with role 3 specifically contaminated by the active farm machinery."
+      ],
+      "correction_prompt": "Redo Panel 2 as an elevated technical setup showing the carton with emitter spacing or gauge next to a small farm building (no tractors). Redo Panel 3 as a high-elevation shot of a single fixed filtration system on an empty concrete pad with no background farm activity.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 3
     }
   ]
 }
