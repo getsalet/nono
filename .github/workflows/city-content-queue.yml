@@ -260,9 +260,19 @@ jobs:
           print(int(json.loads(path.read_text(encoding='utf-8')).get('pending',0)) if path.exists() else 0)
           PY
           )"
+          rebuild_remaining="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('artifacts/city-content-queue/image-rebuild-article-parity-v14-three-image.json')
+          print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 0)
+          PY
+          )"
           rebuild_active="$(gh run list --workflow rebuild-reference-images.yml --limit 20 --json status --jq '[.[] | select(.status == "queued" or .status == "in_progress" or .status == "waiting" or .status == "pending" or .status == "requested")] | length')"
           if [ "$rebuild_active" -gt 0 ]; then
             echo "City image rebuild is active or queued; it owns the next handoff."
+          elif [ "$pending" -gt 0 ] && [ "$rebuild_remaining" -gt 0 ]; then
+            echo "Fresh city production advanced; dispatching one bounded image-repair slice before the next content batch."
+            gh workflow run rebuild-reference-images.yml --ref main
           elif [ "$pending" -gt 0 ]; then
             cooldown=10
             if [ "${{ steps.queue.outputs.exit_code }}" != "0" ]; then cooldown=60; fi
