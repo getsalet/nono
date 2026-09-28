@@ -1,0 +1,64 @@
+{
+  "source_id": "1180003002817-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "The image contains a visible person (a farmer) crouching in the crop rows, which is a hard reject criterion."
+      ],
+      "correction_prompt": "Remove the person completely; keep the white-and-blue drip-tape roll in the lower right and the farm irrigation context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 18.0,
+      "product_height_percent": 24.0,
+      "product_x_center_percent": 65.0,
+      "reasons": [
+        "Hard reject: A person (farmer/worker) is clearly visible in the center of the image.",
+        "Hard reject: There is a person inside the tractor."
+      ],
+      "correction_prompt": "Regenerate the image with absolutely no people, faces, or body parts visible. Remove the man standing in the field and anyone inside the tractor. Ensure only the unattended tractor and the drip-tape roll are present in the field.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 17,
+      "product_height_percent": 23,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Visible human driver/figure inside the tractor cabin",
+        "Human silhouette present in the background tractor"
+      ],
+      "correction_prompt": "Regenerate the image to strictly exclude all human figures, drivers, and silhouettes. Use an empty, unattended tractor or remove it entirely to comply with the zero-person hard reject rule. Maintain the farm background and the single 'AFP' drip tape carton roll in the lower third as the hero object.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero people or human body parts visible.",
+        "Product width (~22%) and height (~28%) are within acceptable bounds.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right.",
+        "Background matches the article brief with wide farm/irrigation context.",
+        "Minor deduction: The roll is centered, whereas the editorial role prefers an off-center placement on the lower third; also, the crop field appears slightly too green/vibrant for the specified regions, but these are not hard rejects."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "source_id": "1180009002933-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 29,
+      "product_height_percent": 28,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Product width exceeds the maximum threshold of 27% (estimated at ~29% of frame width).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the apparent size of the white-and-blue AFP drip-tape roll to be 20-22% of the image width. The roll should be positioned in the lower-third while maintaining the field and farm building context, ensuring it does not dominate the frame. Reduce the product group from 29% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 20,
+      "product_x_center_percent": 26,
+      "reasons": [
+        "Hard reject: Image contains a person (farmer/worker) which is strictly prohibited.",
+        "Hard reject: Visible human body parts (arms, legs, face) are present."
+      ],
+      "correction_prompt": "Regenerate image with zero people or human silhouettes. Show only the single AFP drip-tape roll on the field soil with a simple background (distant farm building or field edge) to serve as selection evidence. Keep the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 23,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "One valid white-and-blue cylindrical drip tape carton roll visible, consistent with the AFP branding and wide low geometry.",
+        "Product size falls within acceptable estimation noise (width 23%, height 22%).",
+        "Zero people or human body parts present.",
+        "Watermark 'AFP | 09134922013' is present and correctly placed.",
+        "Background includes a farm building and field, which are allowed editorial context and do not trigger hard rejection."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
