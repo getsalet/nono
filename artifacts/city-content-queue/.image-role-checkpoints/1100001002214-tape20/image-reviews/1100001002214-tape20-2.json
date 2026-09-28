@@ -1,0 +1,107 @@
+{
+  "source_id": "1100001002214-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Excessive secondary loose coiled drip tape (layflat) next to the main product carton violates the 'exactly one commercial package' requirement.",
+        "Watermark 'AFP | 09134922013' at the bottom right is missing.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate: Remove all loose coiled tape from the ground to ensure exactly one product is visible. Crop the image so the main cylindrical roll is 20-23% of the frame width. Ensure the watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner. Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 34,
+      "product_height_percent": 31,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The roll exceeds the preferred width of 23 percent and the reviewer-estimation noise limit of 27 percent, making the object visually prominent rather than subordinate to the field context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 34% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 35,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The product bounding box width is estimated at approximately 35% of the frame width, which exceeds the hard reject threshold of 27%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Shrink the width of the drip tape carton roll to approximately 20% of the image frame width to satisfy the size constraints while maintaining its cylindrical shape. Reduce the product group from 35% to 13-27% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The object is a bare roll of drip tape, not an approved carton, violating the mandatory SELECTION EVIDENCE role requirement.",
+        "No visible emitter-spacing or field-selection evidence is present in the image."
+      ],
+      "correction_prompt": "Replace the bare drip tape roll with a white-and-blue wide low cylindrical carton. Add clear printed labels indicating emitter spacing to satisfy the selection evidence requirement. Keep the background simple with the field edge and unattended equipment.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 32,
+      "product_height_percent": 41,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Zero people or human body parts visible, compliant with negative constraints.",
+        "Correct AFP branding and white-and-blue cylindrical drip-tape carton roll design.",
+        "Background features an unattended tractor and farm building, which are explicitly permitted contextually.",
+        "Mandatory bottom-right watermark 'AFP | 09134922013' is present.",
+        "Product is positioned low in the frame, consistent with editorial preference, and geometry is physically plausible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 41% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 41% to at most 32% of frame height.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 38,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Hard reject: Visible human figures (three distant people) present in the background field.",
+        "Hard reject: The roll's bounding box exceeds the maximum allowable dimensions (estimated ~30% width and ~38% height, both exceeding the 27% and 32% limits).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with exactly one AFP drip-tape roll in the foreground. The roll must be smaller (approx 20-23% of frame width). Completely remove all human figures from the background field. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 6
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Pass: The image features a white and blue AFP drip-tape carton positioned in the foreground. It is accompanied by a roll of drip tape on the left and a coil of wire on the right, fulfilling the 'elevated technical arrangement' requirement with visible selection evidence.",
+        "Pass: The background includes a distant unattended tractor and a farm building, which are permissible according to the 'fixed infrastructure' rule. There are no visible people or human body parts.",
+        "Pass: The product width and height fall within the acceptable estimation range. The watermark 'AFP | 09134922013' is present in the bottom-right corner as required."
+      ],
+      "correction_prompt": "",
+      "attempt": 7
+    }
+  ]
+}

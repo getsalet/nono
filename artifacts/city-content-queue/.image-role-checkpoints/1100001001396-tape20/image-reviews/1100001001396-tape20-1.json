@@ -1,0 +1,67 @@
+{
+  "source_id": "1100001001396-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 44,
+      "product_height_percent": 44,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product width is 44% of the frame width, which exceeds the hard reject threshold of 27%.",
+        "Product height is estimated at 44%, exceeding the hard reject threshold of 32%.",
+        "The roll is centered in the frame (50% x-center), whereas the editorial brief strictly requires an off-center placement on the lower third.",
+        "The object dominates the foreground too heavily to satisfy the 'small' and 'high-oblique view' requirements of the hero role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 13-27% of frame width.; Reduce product height from 44% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a wide high-oblique angle. Ensure the farm landscape dominates the scene. Scale the AFP drip-tape roll to be much smaller (approx 20% width) and shift it to the lower-left or lower-right off-center. Keep the bottom-right watermark. Reduce the product group from 44% to 13-27% of frame width. Reduce product height from 44% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 15,
+      "product_height_percent": 14,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Hard reject: image contains a human figure (person standing in the field)."
+      ],
+      "correction_prompt": "Regenerate the image with no human figures or body parts visible. Ensure the AFP drip-tape carton is the only product in the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Presence of a standing human in the center of the image",
+        "Hard reject: Human silhouette clearly visible in the field"
+      ],
+      "correction_prompt": "Remove the standing human completely; ensure the frame contains zero people or body parts while maintaining the exact AFP watermark",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero people, faces, or human body parts are visible in the scene.",
+        "The roll is fully visible and placed on the lower third of the image.",
+        "Product dimensions are estimated at 20% width and 25% height, which falls within the preferred 20-23% width range and the 32% height maximum.",
+        "The background context of crop rows and a distant horizon is editorially appropriate for a drip tape article."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

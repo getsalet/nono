@@ -1,0 +1,39 @@
+{
+  "source_id": "10900015001383-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 17,
+      "product_height_percent": 20,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Image contains a person (farmer/man standing in the field), which is a hard reject.",
+        "The drip tape extends past the roll in a loop on the ground, which appears as a 'second roll' or 'layflat hose' violating the 'exactly one carton roll' constraint.",
+        "A distant tank/tractor combination is visible which acts as a 'second commercial package' or 'container' risk, but the person is the primary failure."
+      ],
+      "correction_prompt": "Remove the person. Remove the extended drip tape and extra loops, showing only the single carton roll. Keep the farm background but ensure no additional equipment or containers are visible.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 31,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Product is a wide low cylindrical drip-tape carton with white and blue coloring, matching the role",
+        "Product dimensions (width ~22%, height ~31%) are within the preferred physical plausibility limits",
+        "Zero people or human body parts visible in the frame",
+        "Bottom-right watermark 'AFP | 09134922013' is correctly present and not rejected",
+        "Farm context and irrigation background are editorially relevant without disallowed elements (bottles, extra rolls, fake captions, etc.)"
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

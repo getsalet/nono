@@ -1,0 +1,52 @@
+{
+  "source_id": "10900015001384-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 86,
+      "product_width_percent": 29,
+      "product_height_percent": 31,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Visible hard reject: The product roll's bounding box width (~29%) exceeds the maximum 27% width threshold, violating the 'hard reject a roll wider than 27 percent' rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 29% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Please regenerate the image keeping all other elements identical, but reduce the visual width of the drip tape roll so it occupies no more than 25% of the frame width to meet the physical dimension constraint. Reduce the product group from 29% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The image contains a second commercial package (the box next to the roll), which is a hard reject criterion. The brief strictly requires 'exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll' and 'zero... second commercial package'.",
+        "The 'SELECTION EVIDENCE' role requires a specific arrangement that is not present in this standard product shot.",
+        "The watermark text 'AFP | 09134922013' is incorrectly formatted with a space before and after the pipe, not matching the exact string 'AFP | 09134922013' as required."
+      ],
+      "correction_prompt": "Regenerate the image containing ONLY the AFP drip tape roll (20cm) without the box, positioned lower-left, with visible emitter spacing details to demonstrate selection evidence. Ensure the watermark 'AFP | 09134922013' is positioned exactly in the bottom right corner with correct spacing.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 23,
+      "product_height_percent": 30,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "The image shows exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Product dimensions are within the accepted 13-27% width range and below the 32% height limit.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The role of SELECTION EVIDENCE is satisfied by the presence of the drip tape extending from the roll and the emitter spacing visible on the ground.",
+        "No people, human body parts, or forbidden containers are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
