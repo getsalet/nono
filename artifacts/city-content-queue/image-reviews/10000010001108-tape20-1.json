@@ -1,0 +1,94 @@
+{
+  "source_id": "10000010001108-tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 8,
+      "product_height_percent": 12,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Image contains a person (farmer) standing in the field holding a farming tool, which is a hard reject per criteria.",
+        "The EDITORIAL HERO role requires zero people and the farm/irrigation context must dominate; the person occupies significant frame space.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 8% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people and human figures from the image. Generate a wide high-oblique editorial hero shot of farm/irrigation context with exactly one small AFP white-and-blue drip-tape carton roll placed off-center on the lower third. Enlarge the product group from 8% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 16,
+      "product_height_percent": 11,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: one person (man) standing in the field is visible on the right side of the image. Zero people rule is violated.",
+        "AFP watermark 'AFP | 09134922013' is present and correctly placed in bottom-right corner."
+      ],
+      "correction_prompt": "Remove all people from the image. Keep the farm/irrigation context with the white-and-blue AFP drip-tape carton roll on the lower third, off-center. No human or body parts anywhere in the frame.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 14,
+      "product_height_percent": 8,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: visible person seated on farm equipment in the mid-right background. The article brief requires zero people and zero human body parts. A human operator is clearly visible on the yellow tractor/machinery."
+      ],
+      "correction_prompt": "Remove all people and human body parts from the image. Ensure zero humans are visible anywhere in the frame, including distant operators. Regenerate with only infrastructure (tractor without driver, farm buildings) in the background.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "product_width_percent": 17,
+      "product_height_percent": 11,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: person visible operating the tractor in the mid-ground. A human silhouette/driver is clearly present inside the tractor cab, violating the zero-people rule.",
+        "Product (AFP white-and-blue drip-tape carton roll) is correctly placed on lower-left third, width ~17%, height ~11%, off-center — all within acceptable ranges.",
+        "Mandatory watermark 'AFP | 09134922013' is present in bottom-right corner.",
+        "Farm context with tractor, barn, crop rows, and irrigation tape laid in rows is appropriate for the editorial brief.",
+        "Distant unattended tractor is allowed; however, this tractor is attended (driver visible), which triggers a hard reject."
+      ],
+      "correction_prompt": "Remove the person driving the tractor; regenerate with an empty/unattended tractor or omit the tractor entirely while keeping the farm irrigation context, barn, and crop rows.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Image contains two people (farmer and worker) which violates the requirement for zero people and zero human body parts",
+        "Hard reject: Image shows human silhouettes and body parts which are explicitly prohibited"
+      ],
+      "correction_prompt": "Regenerate image with exactly one AFP drip-tape carton roll in farm setting, completely removing all people from the scene while maintaining the editorial hero composition",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 20,
+      "product_height_percent": 16,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Single AFP white-and-blue cylindrical drip-tape carton roll present at lower-third, slightly off-center",
+        "Product width ~20% of frame (within 13-27% acceptable range)",
+        "Product height ~16% of frame (below 32% maximum)",
+        "Zero people or body parts in image",
+        "Background shows agricultural field with irrigation context matching article brief",
+        "Required AFP watermark present in bottom-right corner",
+        "No extra commercial packages, bottles, or prohibited objects detected"
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}
