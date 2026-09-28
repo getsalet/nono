@@ -1,0 +1,55 @@
+{
+  "source_id": "10000010002228-tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 52,
+      "product_width_percent": 11,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product width (11%) is below the minimum acceptable threshold of 13%.",
+        "Product height (34%) exceeds the maximum allowable limit of 32%.",
+        "Product is horizontally centered; placement must be off-center on the lower third.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 11% to 13-27% of frame width.; Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reposition the roll to the lower-right or lower-left area so it is clearly off-center. Reduce the roll's height proportionally so it occupies no more than 32% of the frame height, and ensure its width is between 13% and 27% of the frame width. Keep the roll small and fully visible within the farm context. Enlarge the product group from 11% to 13-27% of frame width. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 8,
+      "product_height_percent": 6,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "HARD REJECT: Two people visible in frame - woman kneeling and man standing with bucket. Policy requires zero people and zero human body parts.",
+        "HARD REJECT: Additional commercial container present - metal bucket held by person.",
+        "Multiple human figures and commercial containers present, violating core requirements.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 8% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove all people from scene. Show only empty farm field with exactly one AFP white-and-blue drip-tape carton roll placed small on lower third, off-center. Enlarge the product group from 8% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 18,
+      "product_height_percent": 11,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Single AFP white-and-blue wide low cylindrical drip-tape carton roll present, centered in lower third and slightly off-center horizontally",
+        "Roll width approximately 18% of frame (within 13-27% acceptable range), height ~11% (well under 32% limit)",
+        "Zero people, zero human body parts anywhere in frame",
+        "Distant unattended tractor and farm building allowed as contextual infrastructure",
+        "Required bottom-right watermark 'AFP | 09134922013' present and visible",
+        "Editorial hero composition: farm and irrigation context dominates with exactly one carton small and fully visible"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
