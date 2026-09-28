@@ -1,0 +1,82 @@
+{
+  "source_id": "1150004001494-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 24,
+      "product_height_percent": 15,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Presence of a human subject (farmer) in the foreground, which is a hard reject.",
+        "The product roll is cropped at the bottom of the frame, preventing a full geometric evaluation of height."
+      ],
+      "correction_prompt": "Remove the person from the image. Reframe to show the entire drip tape roll completely within the frame, including the bottom edge, without cutting off the product. Maintain the simple field background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 31,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Exactly one white-and-blue AFP wide low cylindrical drip-tape carton roll is present",
+        "Zero people, human silhouettes, or body parts are visible in the frame",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner",
+        "Background includes a distant unattended tractor and farm building, which are permitted contextual elements",
+        "Product dimensions are within the physically plausible range (width under 27% of frame, height under 32%), though slightly larger than the preferred 20-23% width",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The product bounding box is estimated at 28% width and 38% height, which exceeds the hard reject thresholds of 27% width and 32% height.",
+        "The text 'DRIP IRRIGATION LINE' on the carton front is slightly distorted/gibberish, failing the legibility requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Resize the drip-tape carton roll to approximately 20-22% of the frame width and under 30% of the frame height. Ensure the text on the carton is sharp and legible. Maintain the field background and distant tractor. Reduce the product group from 28% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 34,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Product bounding box exceeds strict limit (30% width vs 27% max)",
+        "Product bounding box exceeds strict limit (34% height vs 32% max)",
+        "Lacks mandatory SELECTION EVIDENCE of visible emitter-spacing",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 34% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the AFP drip-tape roll occupying a smaller area (under 27% width). Include clear visible emitters or spacing markers on the tape extending from the roll to satisfy the selection evidence role. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 34% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 19,
+      "product_height_percent": 22,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Object is a white-and-blue cylindrical drip-tape carton roll with extended tape showing visible emitter spacing.",
+        "No people or body parts visible; a distant unattended tractor and farm building are present but contextually permitted as infrastructure/background.",
+        "Required bottom-right watermark is present."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

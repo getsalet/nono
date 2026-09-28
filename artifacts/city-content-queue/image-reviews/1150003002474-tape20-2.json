@@ -1,0 +1,53 @@
+{
+  "source_id": "1150003002474-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 16,
+      "product_height_percent": 15,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "Multiple visible bottles and containers in the filter setup violate the hard reject rule against bottles, jars, or containers.",
+        "Visible human silhouette/pilot inside the distant tractor violates the hard reject rule against people or silhouettes.",
+        "Missing mandatory 'SELECTION EVIDENCE' such as emitter-spacing or field-selection evidence required by the role."
+      ],
+      "correction_prompt": "Remove the visible person inside the distant tractor and remove all liquid bottles and containers from the filtration hardware. Add a detailed schematic or visible guide strip showing the drip tape emitter spacing and spacing intervals to satisfy the SELECTION EVIDENCE role.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 43,
+      "product_height_percent": 30,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "A figure resembling a person standing near the tractor in the background violates the zero-people hard reject rule.",
+        "Product width is approximately 43 percent of the frame width, significantly exceeding the maximum allowable threshold of 27 percent.",
+        "The image contains gibberish or illegible text on the front of the carton (e.g., 'ORIP') that violates the 'no gibberish writing' rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 43% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to remove the person near the tractor. Reduce the width of the AFP carton roll to less than 27 percent of the image frame. Fix the text on the carton to be legible and remove gibberish. Reduce the product group from 43% to 13-27% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image features a single wide, low cylindrical white-and-blue drip-tape roll matching the specified dimensions and branding.",
+        "The bottom-right watermark 'AFP | 09134922013' is present as required.",
+        "The visible drip tape in the foreground provides necessary selection evidence.",
+        "The background context (tractor, farm building, field) is appropriate and contains no visible human body parts or prohibited containers."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

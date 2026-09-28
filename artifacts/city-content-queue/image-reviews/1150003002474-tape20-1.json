@@ -1,0 +1,53 @@
+{
+  "source_id": "1150003002474-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: Human (male farmer) is present in the foreground, touching the product.",
+        "Hard reject: Second commercial product (metal cylindrical tank/carrier) is visible to the right of the approved item."
+      ],
+      "correction_prompt": "Regenerate the image removing all people, farmers, and hands from the frame. Also remove the metal cylindrical tank/carrier, leaving only a single standalone white-and-blue drip-tape carton roll in the lower third of a farm field with a distant tractor.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 23,
+      "product_height_percent": 16,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product is placed dead-center in the frame, whereas the editorial hero role strictly requires it to be off-center on the lower third.",
+        "Placement at the center makes the image look like a generic composite/stock photo rather than an editorial crop featuring the farm context."
+      ],
+      "correction_prompt": "Regenerate the image by moving the drip-tape roll to the lower-right or lower-left third of the frame to satisfy the off-center editorial requirement while keeping the farm context dominant and the roll small.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 17,
+      "product_height_percent": 19,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present, matching the product description.",
+        "The roll is positioned in the lower-center, aligning with the editorial preference for lower-third placement.",
+        "Product dimensions are well within the acceptable range (13-27% width, up to 32% height) and appear physically plausible.",
+        "Zero people or human body parts are visible in the frame.",
+        "The background matches the brief, featuring a wide view of a farm with crop rows and irrigation context.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "No hard reject items such as bottles, second rolls, pipes, or gibberish text are found."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

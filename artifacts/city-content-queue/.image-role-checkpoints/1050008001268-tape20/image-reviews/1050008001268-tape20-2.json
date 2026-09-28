@@ -2,65 +2,59 @@
   "source_id": "1050008001268-tape20",
   "family": "tape20",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
   "fast_mode": false,
   "history": [
     {
       "pass": false,
-      "score": 55,
-      "product_width_percent": 22,
-      "product_height_percent": 35,
-      "product_x_center_percent": 28,
+      "score": 82,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 51,
       "reasons": [
-        "Second commercial package (loose coiled tape roll) visible in foreground, violating 'exactly one approved carton' and 'zero second commercial package' rules.",
-        "Hard reject: bottle/container/second roll present (the loose coil of tape)."
+        "No human presence detected",
+        "Watermark correctly present and unmodified",
+        "Product type is correct (single drip tape roll)",
+        "Technical arrangement with measurement tool visible aligns with 'selection evidence' role",
+        "Product dimensions exceed the strict 27% width limit, but are physically plausible for this 'hero' product shot and not absurdly distorted",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
       ],
-      "correction_prompt": "Regenerate image showing ONLY the single white-and-blue AFP carton roll on the soil. Remove the loose coiled tape ring lying next to it. Keep the single drip line extending into the field, the background farm building, and the distant unattended tractor. Preserve the 'AFP | 09134922013' watermark. Ensure zero people and zero other containers.",
+      "correction_prompt": "Reduce the product group from 38% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 30,
-      "product_width_percent": 30,
-      "product_height_percent": 35,
-      "product_x_center_percent": 35,
+      "score": 10,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 31,
       "reasons": [
-        "The white hose line is explicitly identified as an 'impossible geometry' hard reject condition in the prompt ('pipe through the roll'), and it is prominently draped through the foreground, breaking the clean presentation required for SELECTION EVIDENCE.",
-        "The text on the product carton appears as 'gibberish' or distorted writing rather than clear technical specifications or 'visible emitter-spacing' evidence, failing the 'SELECTION EVIDENCE' role requirement.",
-        "The product carton is positioned too low (bottom-left) and overlaps with the reject hose, violating the layout requirements for a clean technical arrangement."
+        "Presence of a person (crouching man with hand on the roll) which is a hard reject for this brief",
+        "Roll height is estimated at ~38% of frame height, exceeding the 32% maximum",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 32% of frame height."
       ],
-      "correction_prompt": "Regenerate the image with the hose completely removed and no pipe running through the product. Reposition the carton to be clearly visible with legible text (no gibberish) to demonstrate product details. Ensure the background remains a simple field edge or farm building with a distant tractor, but focus the foreground on the clean, isolated product carton.",
+      "correction_prompt": "Regenerate the image strictly from a low angle or straight-on perspective to make the roll appear shorter (less than 32% of frame height) and remove the crouching man completely to ensure zero human presence. Reduce product height from 38% to at most 32% of frame height.",
       "attempt": 2
     },
     {
-      "pass": false,
-      "score": 22,
-      "product_width_percent": 38,
-      "product_height_percent": 42,
-      "product_x_center_percent": 41,
-      "reasons": [
-        "Severe mismatch with mandatory visual role: The image is a standard landscape product shot, completely missing the required 'elevated technical arrangement' and 'visible emitter-spacing or field-selection evidence' specified for the SELECTION EVIDENCE role.",
-        "Missing required text elements: The required 'visible emitter-spacing or field-selection evidence' is not present in the scene."
-      ],
-      "correction_prompt": "Regenerate image with close-up technical arrangement of the single AFP roll on a white studio or workbench surface, clearly visible spacing chart or labeled sample tape in foreground showing 20cm emitter spacing, completely removing the field landscape and tractor.",
-      "attempt": 3
-    },
-    {
       "pass": true,
-      "score": 88,
-      "product_width_percent": 34,
-      "product_height_percent": 38,
-      "product_x_center_percent": 52,
+      "score": 95,
+      "product_width_percent": 21.5,
+      "product_height_percent": 16.0,
+      "product_x_center_percent": 46.5,
       "reasons": [
-        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present.",
-        "Roll dimensions are physically plausible and within accepted frame percentages (10-48% width, up to 58% height).",
-        "Zero people or human body parts are visible in the image.",
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero visible people, faces, hands, or body parts.",
+        "No forbidden commercial containers (bottles, jars, buckets, fertilizer cans) present.",
+        "Width (21.5%) is within the preferred 20-23% range.",
+        "Height is physically plausible and well within limits.",
+        "Background shows an ordinary field edge and farm building which is contextually allowed.",
         "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Elevated technical arrangement is visible on the surface below the roll, providing visible evidence for the SELECTION EVIDENCE role.",
-        "Background is simple and appropriate for an elevated technical product shot."
+        "Placement is lower-third/off-center which is an editorial preference, not a hard reject.",
+        "Visible black drip tape line provides field-selection evidence."
       ],
       "correction_prompt": "",
-      "attempt": 4
+      "attempt": 3
     }
   ]
 }

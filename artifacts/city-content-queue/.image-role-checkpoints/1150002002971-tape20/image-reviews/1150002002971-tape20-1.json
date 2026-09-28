@@ -1,0 +1,89 @@
+{
+  "source_id": "1150002002971-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 10,
+      "product_height_percent": 24,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Visible person (farmer) interacting with the product and context.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 10% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure completely. The image must depict only the irrigation field with the drip-tape carton; no people or body parts are permitted. Enlarge the product group from 10% to 13-27% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 17,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject due to a visible human (worker) standing near the distant tractor.",
+        "Product placement in the lower center is inconsistent with the 'EDITORIAL HERO' role which requires the carton to be small and off-center."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove all people and human silhouettes. Reposition the drip-tape roll to the lower-left or lower-right off-center area to match the editorial hero context.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 19,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A man (farmer/worker) is visible in the image holding a farm implement, which violates the 'zero people' and 'zero human body parts' requirement."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the person; keep the wide high-oblique farm view with the single AFP white-and-blue carton roll (width ~19% of frame) on the lower third of the soil, include the required 'AFP | 09134922013' watermark in the bottom-right corner, no humans, no bottles, no second rolls, no pipes.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 14,
+      "product_height_percent": 15,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Object placement is in the bottom-center rather than the off-center position on the lower third required by the editorial hero role",
+        "No visible high-oblique perspective; the image appears to be taken at a low horizon-level angle",
+        "Carton roll is positioned on the soil rather than in the context where the farm and irrigation context strictly dominate the visual field"
+      ],
+      "correction_prompt": "Regenerate a high-oblique perspective photo showing the farm and irrigation infrastructure in the background. Place the single white-and-blue drip-tape carton roll on the lower third, but off-center (left or right) to match the editorial hero brief.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A person is visible in the center of the image.",
+        "Hard reject: The required watermark text 'AFP | 09134922013' is missing; the current watermark does not match the required string."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the person from the field and change the bottom-right watermark text to 'AFP | 09134922013'.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 19,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Single approved roll of AFP drip tape clearly visible and off-center in the lower third",
+        "No people or human body parts present",
+        "Background context (farm field with crop rows and distant unattended tractor) is appropriate for the editorial hero role",
+        "Required bottom-right watermark is present"
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

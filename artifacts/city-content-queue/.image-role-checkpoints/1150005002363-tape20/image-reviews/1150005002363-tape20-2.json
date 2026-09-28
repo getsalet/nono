@@ -1,0 +1,100 @@
+{
+  "source_id": "1150005002363-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 15,
+      "product_height_percent": 19,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: Presence of a human figure (a man crouching next to the product)."
+      ],
+      "correction_prompt": "Remove the man entirely. The scene must show only the white and blue AFP carton roll on the soil, with no people or body parts visible. Keep the background field and distant tractor context but ensure the focus is solely on the product.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 30,
+      "product_height_percent": 42,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The product is too large, taking up 30% of the width and 42% of the height, exceeding the 27% width and 32% height limits.",
+        "Visible text on the side of the roll is gibberish/illegible.",
+        "Missing required selection evidence (no visible emitter-spacing or field-selection evidence).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a much smaller, distant roll (approx 20% width) placed in the lower third; remove gibberish text and ensure clear technical markings or visible emitter spacing are present. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 15,
+      "product_height_percent": 20,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Hard reject: A person (farmer/worker) is visible in the foreground, interacting with the irrigation reel.",
+        "Hard reject: Human body parts (arms, hands, legs, face) are present, violating the zero-person constraint."
+      ],
+      "correction_prompt": "Remove the person and the irrigation reel entirely. Retain only the white AFP drip-tape carton, the background tractor, and the field.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 32.5,
+      "product_height_percent": 35.0,
+      "product_x_center_percent": 40.0,
+      "reasons": [
+        "Product roll width (approx 32.5%) exceeds the strict 27% maximum limit, resulting in a hard reject.",
+        "Product roll height (approx 35%) exceeds the 32% limit, rendering the object physically implausible given the specified constraints.",
+        "Missing required 'SELECTION EVIDENCE' (emitter-spacing or field-selection tools) as per the visual brief.",
+        "Carton label text contains gibberish/distracted dimensions, failing the clear-label requirement.",
+        "Background equipment (tractor) appears too large and prominent rather than being 'distant/unattended' relative to the close-up product.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32.5% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Resize the drip-tape roll so its width is between 20-23% of the frame width and height under 32%. Ensure clear, legible product branding on the carton. Add visible 'emitter-spacing' tools or measuring tape next to the roll to fulfill the selection evidence role. Add the required watermark 'AFP | 09134922013' in the bottom right. Reduce the product group from 32.5% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The primary product (carton roll) exceeds the preferred width (30% vs 23%), but remains within the 27% tolerance limit if accounting for visual estimation noise.",
+        "Visible tape measure and ruler satisfy the 'field-selection evidence' requirement for image role 2.",
+        "Distant tractor and farm building are contextual and permitted.",
+        "The required watermark is present and intact.",
+        "No people or prohibited containers are visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 30% to 13-27% of frame width.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 27,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Single AFP white-and-blue drip-tape carton roll is visible and matches the brand requirement.",
+        "The roll is physically plausible and not severely distorted.",
+        "Zero people or human body parts are visible in the frame.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and clearly readable.",
+        "Emitter-spacing evidence is shown via the extended drip-tape loop on the soil, satisfying the selection-evidence role.",
+        "Background includes an ordinary farm building and distant unattended tractors, which are contextually allowed infrastructure."
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

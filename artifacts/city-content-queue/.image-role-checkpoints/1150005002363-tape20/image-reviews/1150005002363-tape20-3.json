@@ -1,0 +1,110 @@
+{
+  "source_id": "1150005002363-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 16,
+      "product_height_percent": 20,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The image contains two prominent people (a man on the left and a man on the right), violating the 'zero people' and 'zero human body parts' rule.",
+        "Hard reject: The mandatory image role 'HEADWORKS STORY' requires the approved carton to be 'small and secondary' to infrastructure, whereas here the carton is the primary subject of the action.",
+        "The image depicts an installation scene with people rather than the specified unattended infrastructure view."
+      ],
+      "correction_prompt": "Regenerate image showing the AFP drip-tape carton on the ground next to unattended fixed irrigation infrastructure (filters, gauges, manifold) with no people present. Keep the carton small and secondary in the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 26,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Presence of a human (person crouching with hands and face visible) violates the zero-person rule.",
+        "The article visual brief mandates 'unattended' fixed infrastructure, but the visible pump/filter setup is being actively held by a person."
+      ],
+      "correction_prompt": "Remove the crouching man entirely. Leave the cartons, pipes, and pump/filter assembly unattended on the ground. Retain the orange tractor and farm buildings in the background.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 20,
+      "product_height_percent": 31,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Visible text on the product label is gibberish (e.g., 'Drip Revatory Parn'), which is a hard reject condition.",
+        "Image contains two tractors in the background (an orange one and a green one). While distant equipment is allowed, the combination of gibberish text triggers a failure."
+      ],
+      "correction_prompt": "Regenerate the image ensuring the text on the 'AFP' carton is legible and non-gibberish. Remove the second green tractor from the background. Keep the required watermark 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 33,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Visible human person (farmer sitting) in the middle distance.",
+        "Product width is roughly 30% of the frame, exceeding the 27% hard reject threshold.",
+        "Product height is roughly 33% of the frame, exceeding the 32% hard reject threshold.",
+        "The primary role is a product shot, not a side view of a filter/gauge as specified in the 'Headworks Story' brief, and the visible container in the background is an unapproved commercial product.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 33% to at most 32% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image removing all human figures and the orange container in the background. Reduce the size of the drip tape carton roll so its width is under 25% of the frame and height under 30%. Keep the AFP white and blue wide low cylindrical roll as the central focus on the soil. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 33% to at most 32% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 17,
+      "product_height_percent": 20,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: visible human silhouettes (farmers/worker) near the tractor in the background."
+      ],
+      "correction_prompt": "Regenerate the image with no people, workers, or human silhouettes visible in the background; maintain the single AFP white-and-blue carton roll as secondary and the irrigation infrastructure in the foreground.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 25,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: visible human (farmer/worker) in the background",
+        "Product width exceeds the 27% limit",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove any humans, faces, or body parts. Ensure the drip-tape carton roll is scaled down to be approximately 20-23% of the image width. Reduce the product group from 28% to 13-27% of frame width.",
+      "attempt": 6
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 22,
+      "product_height_percent": 16,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Product (carton roll) is a single wide cylindrical object with white and blue coloring (matches 'white-and-blue')",
+        "Product width is estimated at 22% of frame width, which falls within the preferred range of 20-23%",
+        "Product height is approximately 16%, well within the 32% limit",
+        "Image role (Headworks story) is respected as the filter/gauge/manifold apparatus is prominent",
+        "Background is contextually relevant (farmland with drip irrigation lines and distant tractor)",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right",
+        "No hard reject triggers (no people, no bottles, no gibberish text)",
+        "Second roll of hose/tape on the ground is present but small and secondary"
+      ],
+      "correction_prompt": "",
+      "attempt": 7
+    }
+  ]
+}
