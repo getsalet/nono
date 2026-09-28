@@ -35,6 +35,16 @@ class CityImagePolicyTests(unittest.TestCase):
         self.assertIn("IMAGE_RETRY_POLICY", retry_source)
         self.assertIn("item.get('retry_policy')!=IMAGE_RETRY_POLICY", retry_source)
 
+    def test_city_pipeline_matches_three_image_article_contract(self):
+        backend = (ROOT / "automation" / "city_content_queue_cloudflare.py").read_text(encoding="utf-8")
+        launcher = (ROOT / "automation" / "run_agnes_city_queue_seo.py").read_text(encoding="utf-8")
+        rebuild = (ROOT / "automation" / "rebuild_city_images_preserve_posts.py").read_text(encoding="utf-8")
+        self.assertIn("IMAGE_COUNT=3", backend)
+        self.assertIn("range(1,4)", backend)
+        self.assertIn("install_set_manager(base,backend,3)", launcher)
+        self.assertIn("range(1, 4)", rebuild)
+        self.assertNotIn("range(1, 6)", rebuild)
+
     def test_layflat_references_are_scale_conditioned(self):
         refs = image_prompt_policy.reference_images(
             1, {"source_id": "city-layflat", "title": "لوله نخی"}

@@ -185,7 +185,7 @@ The same AFP product is expected in every image, so product identity itself is n
 def review_image_set(base,paths,item):
  # Agnes vision is reliable with up to four attachments. Review two overlapping
  # panels instead of sending all five and then accepting an unverified fallback.
- panels=[(paths[:4],[1,2,3,4]),(paths[1:],[2,3,4,5])]
+ panels=([(paths,[1,2,3])] if len(paths)==3 else [(paths[:4],[1,2,3,4]),(paths[1:],[2,3,4,5])])
  verdicts=[_review_image_panel(base,panel,item,roles) for panel,roles in panels]
  duplicate_roles=[];reasons=[];corrections=[]
  for verdict in verdicts:

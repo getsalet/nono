@@ -66,8 +66,8 @@ run_source=replace_once(
     run_source,
     'backend.generate_image=image_quality_gate.install(base,backend,agnes_generate_image)\n',
     'backend.generate_image=image_quality_gate.install(base,backend,agnes_generate_image)\n'
-    'backend.generate_images_parallel=image_quality_gate.install_set_manager(base,backend,5)\n',
-    'atomic five-image set QA',
+    'backend.generate_images_parallel=image_quality_gate.install_set_manager(base,backend,3)\n',
+    'atomic three-image article-parity set QA',
 )
 original=review_path.read_text(encoding='utf-8')
 review=replace_once(original,'import hashlib,json,os,re,time\n','import hashlib,json,os,re,time,urllib.parse\nimport image_prompt_policy\nimport research_grounding_review\nimport faq_policy\nimport text_cleanup_policy\n','review imports')

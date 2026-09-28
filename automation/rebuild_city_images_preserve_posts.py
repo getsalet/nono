@@ -8,6 +8,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import shutil
 import tempfile
 import time
@@ -23,10 +24,10 @@ import city_content_queue_cloudflare as backend
 import image_prompt_policy
 import image_quality_gate
 
-POLICY = "article-parity-v13-no-human-no-container-scale-topic-role-reviewed"
-MODE = "article-parity-reference-conditioned-3d-rerender-topic-first"
+POLICY = "article-parity-v14-three-image-no-human-no-container-reviewed"
+MODE = "article-parity-three-image-reference-conditioned-rerender"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
-MARKER = OUT / "image-rebuild-article-parity-v13.json"
+MARKER = OUT / "image-rebuild-article-parity-v14-three-image.json"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")
 API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
     "AGNES_API_BASE", "https://apihub.agnes-ai.com/v1"
@@ -207,7 +208,7 @@ def generate_set(item: dict) -> dict[int, dict]:
     staging_reviews.mkdir(parents=True)
     set_review_path = OUT / "image-reviews" / f"{source_id}-set.json"
     results, feedback, history = {}, {}, []
-    pending = set(range(1, 6))
+    pending = set(range(1, 4))
     try:
         with ThreadPoolExecutor(max_workers=WORKERS, thread_name_prefix="city-rebuild-image") as pool:
             for set_attempt in range(1, SET_ATTEMPTS + 1):
@@ -222,7 +223,7 @@ def generate_set(item: dict) -> dict[int, dict]:
                 for future in as_completed(futures):
                     kind = futures[future]
                     results[kind] = future.result()
-                paths = [staging_images / results[kind]["name"] for kind in range(1, 6)]
+                paths = [staging_images / results[kind]["name"] for kind in range(1, 4)]
                 verdict = image_quality_gate.review_image_set(base, paths, item)
                 verdict["set_attempt"] = set_attempt
                 history.append(verdict)
@@ -241,7 +242,7 @@ def generate_set(item: dict) -> dict[int, dict]:
                     base.IMAGES.mkdir(parents=True, exist_ok=True)
                     final_reviews = OUT / "image-reviews"
                     final_reviews.mkdir(parents=True, exist_ok=True)
-                    for kind in range(1, 6):
+                    for kind in range(1, 4):
                         staged = staging_images / results[kind]["name"]
                         if not staged.exists():
                             raise RuntimeError(f"Approved staged image is missing for role {kind}")
@@ -250,7 +251,7 @@ def generate_set(item: dict) -> dict[int, dict]:
                         if role_review.exists():
                             os.replace(role_review, final_reviews / role_review.name)
                     return results
-                pending = set(verdict.get("duplicate_roles") or range(1, 6))
+                pending = set(verdict.get("duplicate_roles") or range(1, 4))
                 correction = str(verdict.get("correction_prompt") or "; ".join(verdict.get("reasons", [])))
                 for kind in pending:
                     feedback[kind] = correction + f" Create a new role-{kind} scene clearly unlike the other four."
@@ -270,6 +271,17 @@ def replace_names(path: Path, mapping: dict[str, str]) -> None:
     updated = text
     for old, new in mapping.items():
         updated = updated.replace(old, new)
+    if updated != text:
+        path.write_text(updated, encoding="utf-8")
+
+
+def remove_named_figures(path: Path, names: list[str]) -> None:
+    if not path.exists() or not names:
+        return
+    text = path.read_text(encoding="utf-8")
+    updated = text
+    for name in names:
+        updated = re.sub(r'<figure\b[^>]*>.*?' + re.escape(name) + r'.*?</figure>', '', updated, flags=re.S)
     if updated != text:
         path.write_text(updated, encoding="utf-8")
 
@@ -375,16 +387,19 @@ def main() -> int:
     rebuilt, stamp = [], now()
     aggregate_mapping = {}
     for source_id, (item, path, data) in records.items():
-        if source_id in failed_ids or len(results[source_id]) != 5:
+        if source_id in failed_ids or len(results[source_id]) != 3:
             continue
-        generated = [results[source_id][kind] for kind in range(1, 6)]
+        generated = [results[source_id][kind] for kind in range(1, 4)]
         old_images = data.get("images") or item.get("images") or []
         old_names = [
             Path(x.get("name") if isinstance(x, dict) else str(x)).name for x in old_images
         ]
         new_names = [x["name"] for x in generated]
-        mapping = dict(zip(old_names, new_names))
+        mapping = dict(zip(old_names[:3], new_names))
+        extra_names = old_names[3:]
         aggregate_mapping.update(mapping)
+        remove_named_figures(path, extra_names)
+        remove_named_figures(OUT / "sql" / f"{source_id}.sql", extra_names)
         replace_names(path, mapping)
         data = json.loads(path.read_text(encoding="utf-8"))
         data.update(
@@ -406,6 +421,8 @@ def main() -> int:
         for old_name, new_name in mapping.items():
             if old_name and old_name != new_name:
                 (base.IMAGES / old_name).unlink(missing_ok=True)
+        for old_name in extra_names:
+            (base.IMAGES / old_name).unlink(missing_ok=True)
         replace_names(OUT / "sql" / f"{source_id}.sql", mapping)
         replace_names(OUT / "rollback" / f"{source_id}.sql", mapping)
         rebuilt.append(source_id)

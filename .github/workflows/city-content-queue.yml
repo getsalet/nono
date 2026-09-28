@@ -62,9 +62,9 @@ jobs:
       # half of the tested combined budget while both queues are active.
       # Adaptive stable share after live telemetry: five strict images per city create
       # more API calls than the three-image article pipeline.
-      BATCH_SIZE: "8"
-      ARTICLE_WORKERS: "8"
-      IMAGE_WORKERS: "12"
+      BATCH_SIZE: "12"
+      ARTICLE_WORKERS: "12"
+      IMAGE_WORKERS: "20"
       IMAGE_QA_ATTEMPTS: "8"
       IMAGE_QA_MIN_SCORE: "70"
       IMAGE_QA_REVIEW_ATTEMPTS: "4"
@@ -75,7 +75,7 @@ jobs:
       # handled separately after fresh throughput is healthy.
       REPAIR_FAILED_LIMIT: "2"
       WORDPRESS_DB_NAME: navaraby_wp569
-      CURRENT_IMAGE_POLICY: article-parity-v13-no-human-no-container-scale-topic-role-reviewed
+      CURRENT_IMAGE_POLICY: article-parity-v14-three-image-no-human-no-container-reviewed
 
     steps:
       - name: Checkout repository

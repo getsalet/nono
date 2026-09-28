@@ -10,7 +10,7 @@ import image_prompt_policy
 
 MODEL=os.getenv('CLOUDFLARE_IMAGE_MODEL','@cf/leonardo/lucid-origin')
 TOKEN=os.getenv('CLOUDFLARE_API_TOKEN','').strip(); ACCOUNT=os.getenv('CLOUDFLARE_ACCOUNT_ID','').strip()
-IMAGE_COUNT=5
+IMAGE_COUNT=3
 ARTICLE_WORKERS=max(1,int(os.getenv('ARTICLE_WORKERS','4')))
 IMAGE_WORKERS=max(1,int(os.getenv('IMAGE_WORKERS','8')))
 WATERMARK='AFP | 09134922013'
@@ -64,17 +64,17 @@ def generate_image(item,kind):
 
 def make_content(item,links):
  approved=links[:12]; link_lines='\n'.join(f"- {x['title']} | {x['url']}" for x in approved)
- prompt=f'''برای شهر {item['city']} در شهرستان {item['county']}، استان {item['province']} یک مقاله کاملاً جدید، فارسی، کاربردی و سئوشده درباره انتخاب و خرید نوار آبیاری بنویس. متن باید دست‌کم {q.MIN_WORDS} کلمه باشد و از ادعای ساختگی درباره اقلیم، قیمت، نمایندگی، موجودی یا ارسال محلی خودداری کند. ساختار HTML فقط با h2/h3/p/ul/ol/table/strong/a باشد و H1 نداشته باشد. موضوعات لازم: نیازسنجی مزرعه، انتخاب ضخامت و فاصله قطره‌چکان، فشار و فیلتراسیون، طراحی، نصب، نگهداری، خطاهای رایج، FAQ و جمع‌بندی. حداقل {q.MIN_LINKS} و حداکثر ۷ لینک داخلی فقط از فهرست زیر استفاده کن. برای چهار تصویر داخل متن، نشانگرهای دقیق [[[IMAGE_2]]], [[[IMAGE_3]]], [[[IMAGE_4]]], [[[IMAGE_5]]] را هرکدام دقیقاً یک بار و بلافاصله پس از بخشی مرتبط با موضوع همان تصویر قرار بده. تصویر شماره ۱ شاخص است و نشانگر داخل متن ندارد. JSON معتبر با کلیدهای title, meta_title, meta_description, focus_keyword, excerpt, html برگردان.\nلینک‌های مجاز:\n{link_lines}'''
+ prompt=f'''برای شهر {item['city']} در شهرستان {item['county']}، استان {item['province']} یک مقاله کاملاً جدید، فارسی، کاربردی و سئوشده درباره انتخاب و خرید نوار آبیاری بنویس. متن باید دست‌کم {q.MIN_WORDS} کلمه باشد و از ادعای ساختگی درباره اقلیم، قیمت، نمایندگی، موجودی یا ارسال محلی خودداری کند. ساختار HTML فقط با h2/h3/p/ul/ol/table/strong/a باشد و H1 نداشته باشد. موضوعات لازم: نیازسنجی مزرعه، انتخاب ضخامت و فاصله قطره‌چکان، فشار و فیلتراسیون، طراحی، نصب، نگهداری، خطاهای رایج، FAQ و جمع‌بندی. حداقل {q.MIN_LINKS} و حداکثر ۷ لینک داخلی فقط از فهرست زیر استفاده کن. برای دو تصویر داخل متن، نشانگرهای دقیق [[[IMAGE_2]]] و [[[IMAGE_3]]] را هرکدام دقیقاً یک بار و بلافاصله پس از بخشی مرتبط با موضوع همان تصویر قرار بده. تصویر شماره ۱ شاخص است و نشانگر داخل متن ندارد. JSON معتبر با کلیدهای title, meta_title, meta_description, focus_keyword, excerpt, html برگردان.\nلینک‌های مجاز:\n{link_lines}'''
  for _ in range(4):
   obj=q.agnes(prompt); body=obj.get('html',''); used=q.internal_links(body); allowed={x['url'] for x in approved}
-  if q.words(body)>=q.MIN_WORDS and q.MIN_LINKS<=len(used)<=7 and not(used-allowed) and all(body.count(f'[[[IMAGE_{i}]]]')==1 for i in range(2,6)):return obj
-  prompt+='\nنسخه قبلی کنترل کیفیت را رد کرد؛ طول متن، لینک‌های مجاز و چهار نشانگر تصویر را دقیق اصلاح کن.'
+  if q.words(body)>=q.MIN_WORDS and q.MIN_LINKS<=len(used)<=7 and not(used-allowed) and all(body.count(f'[[[IMAGE_{i}]]]')==1 for i in range(2,4)):return obj
+  prompt+='\nنسخه قبلی کنترل کیفیت را رد کرد؛ طول متن، لینک‌های مجاز و دو نشانگر تصویر را دقیق اصلاح کن.'
  raise RuntimeError('Text QA failed after 4 attempts')
 
 def sql_for(item,obj,image_names):
  title=obj['title'];body=obj['html'];urls=[]
  for name in image_names:urls.append(f'{q.SITE}/wp-content/uploads/2026/09/navar-city-generated/{name}')
- for i in range(2,6):
+ for i in range(2,4):
   alt=ALT_TEMPLATES[i].format(city=item['city']);body=body.replace(f'[[[IMAGE_{i}]]]',f'<figure class="wp-block-image size-large"><img src="{urls[i-1]}" alt="{alt}"/><figcaption>{alt}</figcaption></figure>')
  pt=item['post_type'];slug=item['slug'];excerpt=obj.get('excerpt','');marker=str(item.get('source_id',''))
  commands=[q.sql_preamble(),'START TRANSACTION;',f"SET @existing_post=(SELECT ID FROM `{q.TABLE}` WHERE `post_name`='{q.esc(slug)}' AND `post_type`='{q.esc(pt)}' LIMIT 1);",'SET @created_post=IF(@existing_post IS NULL,1,0);',f"INSERT INTO `{q.TABLE}` (`post_author`,`post_date`,`post_date_gmt`,`post_content`,`post_title`,`post_excerpt`,`post_status`,`comment_status`,`ping_status`,`post_name`,`post_modified`,`post_modified_gmt`,`post_parent`,`guid`,`menu_order`,`post_type`,`post_mime_type`,`comment_count`) SELECT 1,NOW(),UTC_TIMESTAMP(),'{q.esc(body)}','{q.esc(title)}','{q.esc(excerpt)}','draft','closed','closed','{q.esc(slug)}',NOW(),UTC_TIMESTAMP(),0,'',0,'{q.esc(pt)}','',0 WHERE @created_post=1;",'SET @post_id=COALESCE(@existing_post,LAST_INSERT_ID());']
@@ -88,8 +88,8 @@ def sql_for(item,obj,image_names):
  return '\n'.join(commands)+'\n',rollback,body
 
 def migrate(queue):
- queue['version']=2; queue['text_model']=q.AGNES_MODEL; queue['image_model']=MODEL; queue['images_per_post']=5
- queue.setdefault('rules',{}).update({'draft_only':True,'minimum_words':q.MIN_WORDS,'minimum_internal_links':q.MIN_LINKS,'featured_images':1,'inline_images':4,'watermark':WATERMARK,'article_workers':ARTICLE_WORKERS,'image_workers':IMAGE_WORKERS})
+ queue['version']=2; queue['text_model']=q.AGNES_MODEL; queue['image_model']=MODEL; queue['images_per_post']=3
+ queue.setdefault('rules',{}).update({'draft_only':True,'minimum_words':q.MIN_WORDS,'minimum_internal_links':q.MIN_LINKS,'featured_images':1,'inline_images':2,'watermark':WATERMARK,'article_workers':ARTICLE_WORKERS,'image_workers':IMAGE_WORKERS})
  for item in queue['items']:
   if item.get('status')=='blocked_image_model':
    item['status']='pending';item['attempts']=0
@@ -100,10 +100,10 @@ class StageFailure(RuntimeError):
  def __init__(self,stage,error):self.stage=stage;self.original=error;super().__init__(str(error))
 
 def generate_images_parallel(item,pool):
- futures={pool.submit(generate_image,item,kind):kind for kind in range(1,6)};results={}
+ futures={pool.submit(generate_image,item,kind):kind for kind in range(1,4)};results={}
  for future in as_completed(futures):
   kind=futures[future];results[kind]=future.result()
- return [results[kind] for kind in range(1,6)]
+ return [results[kind] for kind in range(1,4)]
 
 def _produce_item(item,links,image_pool):
  try:obj=make_content(item,links)
@@ -139,7 +139,7 @@ def process(queue):
      obj,names,hashes=future.result();stage='sql'
      insert,rollback,body=sql_for(item,obj,names)
      (q.SQL/f"{item['source_id']}.sql").write_text(insert,encoding='utf-8');(q.ROLLBACK/f"{item['source_id']}.sql").write_text(rollback,encoding='utf-8')
-     (q.ITEMS/f"{item['source_id']}.json").write_text(json.dumps({**item,**obj,'html':body,'images':names,'image_sha256':hashes,'image_roles':['featured','inline','inline','inline','inline'],'watermark':WATERMARK},ensure_ascii=False,indent=2),encoding='utf-8')
+     (q.ITEMS/f"{item['source_id']}.json").write_text(json.dumps({**item,**obj,'html':body,'images':names,'image_sha256':hashes,'image_roles':['featured','inline','inline'],'watermark':WATERMARK},ensure_ascii=False,indent=2),encoding='utf-8')
      item.update(status='completed',completed_at=q.now(),word_count=q.words(body),images=names,last_error='');item.pop('started_at',None);item.pop('failed_at',None)
      successes+=1
     except Exception as exc:
