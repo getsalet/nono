@@ -1,0 +1,50 @@
+{
+  "source_id": "1000001002074-tape20",
+  "kind": 2,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 26,
+      "product_height_percent": 38,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Gibberish small text on the carton label violates the no-gibberish-writing hard reject",
+        "Roll height approximately 38% exceeds the 35% plausibility ceiling",
+        "Coiled unrolled tape extends the product footprint toward the right edge",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate a single clean AFP white-and-blue wide low cylindrical drip-tape carton roll with fully readable label text (no gibberish characters), roll height under 35% of frame and width 20-23%, with a short small coiled tape spiral as emitter-spacing evidence, simple field edge and distant red barn background, zero people, keep the exact bottom-right watermark AFP | 09134922013 Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Product (main carton) is too wide at approximately 38% of frame width, exceeding the 30% hard-reject threshold.",
+        "A second roll/sample of drip tape is visible beside the main carton on the right, violating the 'no second roll / no second commercial package' hard reject.",
+        "Illegible/gibberish writing on the carton label that cannot be confidently identified as real product text.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the secondary roll/sample piece beside the main carton so only one AFP drip-tape carton remains. Reduce the carton width to under 30% of frame. Ensure all printed text on the label is legible and clearly readable (not gibberish). Keep the AFP white-and-blue branding and the required bottom-right watermark. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 98,
+      "product_width_percent": 21,
+      "product_height_percent": 18,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. The product width is approximately 21% of the frame and height is approximately 18%, falling within the preferred 20-23% width and acceptance ranges. There are zero people or human body parts. Distant unattended tractor and farm building are present and allowed. The mandatory bottom-right watermark 'AFP | 09134922013' is clearly visible. The image fits the SELECTION EVIDENCE role with a simple field background."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

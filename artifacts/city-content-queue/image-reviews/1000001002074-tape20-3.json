@@ -1,0 +1,40 @@
+{
+  "source_id": "1000001002074-tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 35,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Image contains a person (worker) crouching next to the carton roll, which violates the hard rejection rule for any human presence. The mandatory role requires an equipment-only photograph with no farm activity.",
+        "The AFP carton roll is positioned as the primary subject rather than being small and secondary as required by the HEADWORKS DETAIL role specification.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the worker/person from the image. Show only the AFP drip-tape carton roll as a small secondary element alongside fixed irrigation equipment (filter, gauge, regulator, manifold) on an empty concrete pad with no human activity. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 20,
+      "product_height_percent": 29,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll present",
+        "No people, faces, hands, limbs, or human silhouettes",
+        "Roll width ~20% (preferred range) and height ~29% (under 35% cap), physically plausible",
+        "Background is an empty concrete pad with allowed distant unattended tractors and farm building; no farm activity",
+        "Gauge and metal regulator/filter housing are permitted irrigation infrastructure, not extra commercial products",
+        "Required bottom-right watermark 'AFP | 09134922013' present",
+        "No second roll, layflat hose, bottle, jar, canister, bucket, fertilizer/pesticide container, pipe through roll, fake headline, caption, or gibberish overlay"
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
