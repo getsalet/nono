@@ -1,60 +1,51 @@
 {
   "source_id": "1140006002841-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 38,
-      "product_height_percent": 38,
-      "product_x_center_percent": 45,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "The image contains a visible person (farmer/worker) next to the tractor, which triggers the strict hard reject for any visible human or face."
+        "HARD REJECT: Two people visible — one crouching in foreground handling coil, one standing behind. Violates zero-person requirement.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
       ],
-      "correction_prompt": "Regenerate image with no visible humans or body parts. Maintain the two coiled products in the foreground and the distant tractor and water transfer context.",
+      "correction_prompt": "Regenerate image with exactly zero people. Show only the packaged AFP coil and bare black woven coil in a water-transfer context, off-center placement. Include mandatory bottom-right watermark 'AFP | 09134922013'. Enlarge the product group from 0% to 8-42% of frame width.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 92,
-      "product_width_percent": 45,
-      "product_height_percent": 30,
-      "product_x_center_percent": 40,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Image correctly displays the required layout: packaged coil on the left, bare black coil on the right.",
-        "Watermark 'AFP | 09134922013' is present and correctly placed in the bottom-right.",
-        "Wide high-oblique water-transfer context and background equipment meet the editorial role.",
-        "No people, human body parts, or disallowed objects (bottles, cans) are visible.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+        "Image contains a person (farmer/worker crouching in the mid-left background near the field), which is a hard reject. The required exact bottom-right watermark \"AFP | 09134922013\" is present. The approved layflat pair (one packaged AFP coil and one bare black woven coil) is visible in the lower portion of the frame.",
+        "Remove the person from the background. Replace with empty farmland or field context while keeping the packaged AFP coil and bare black woven coil in the foreground."
       ],
-      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "correction_prompt": "Remove the person crouching in the mid-left field area. Keep the packaged AFP coil and bare black woven coil in the foreground on soil beside the irrigation channel. Add an empty agricultural field background instead of a human figure. Preserve the exact bottom-right watermark \"AFP | 09134922013\".",
       "attempt": 2
     },
     {
-      "pass": false,
-      "score": 90,
-      "product_width_percent": 50,
-      "product_height_percent": 22,
-      "product_x_center_percent": 47,
-      "reasons": [
-        "Visual brief and editorial requirements are met.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width."
-      ],
-      "correction_prompt": "Reduce the product group from 50% to 8-42% of frame width.",
-      "attempt": 3
-    },
-    {
       "pass": true,
-      "score": 90,
-      "product_width_percent": 40,
-      "product_height_percent": 35,
-      "product_x_center_percent": 40,
-      "reasons": [],
+      "score": 92,
+      "product_width_percent": 13,
+      "product_height_percent": 4,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Passes all hard reject criteria: zero people, zero human body parts, zero third commercial packages or containers.",
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil, both clearly recognizable, separate, and physically plausible.",
+        "Combined product width approximately 13% of frame, within the preferred 12-20% range and well under the 42% hard reject limit.",
+        "Lower-third and off-center placement conforms to editorial preferences; no rejection for centered placement or ordinary soil texture.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and intact.",
+        "Distant farm buildings and infrastructure are allowed per guidelines and are not treated as third commercial products."
+      ],
       "correction_prompt": "",
-      "attempt": 4
+      "attempt": 3
     }
   ]
 }

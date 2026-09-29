@@ -1,18 +1,38 @@
 {
   "source_id": "1220001001563-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 14,
+      "product_height_percent": 8,
+      "product_x_center_percent": 52,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: image contains two people (an adult man and a young boy) crouching next to the coil. The mandate requires zero people and zero human body parts. Additionally, only a single coil is shown rather than the required approved layflat pair of one packaged AFP coil and one bare black woven coil."
+      ],
+      "correction_prompt": "Generate an image with zero people showing exactly two coil products (one packaged AFP coil and one bare black woven coil) as a side-by-side layflat pair in a technical comparison setup, with the watermark AFP | 09134922013 in the bottom-right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 76,
+      "product_width_percent": 36,
+      "product_height_percent": 28,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Approved layflat pair present: one wrapped/packaged AFP coil (left, metallic sheath) and one bare black woven/coiled hose (right), clearly showing diameter and construction difference.",
+        "Combined product width ~36% of frame — within acceptable 8–42% range.",
+        "Zero people or human body parts visible.",
+        "Distant farm buildings and horizon are allowed background elements; not hard rejects.",
+        "Small connector/fitting visible near the black coil — relevant infrastructure, not a third commercial package.",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Role satisfied: SELECTION EVIDENCE — the pair visually communicates packaged vs bare construction difference for technical comparison."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
