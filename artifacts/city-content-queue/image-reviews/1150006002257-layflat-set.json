@@ -1,39 +1,57 @@
 {
   "source_id": "1150006002257-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "score": 42,
+      "duplicate_roles": [],
       "reasons": [
-        "Roles 1 and 2 are visually indistinguishable in environment structure; both utilize the same low-angle shot of the product pair sitting on dirt soil with a blurred tractor in the background, failing to create distinct camera angles.",
-        "Role 1 (Editorial Hero) does not show a 'wide high-oblique water-transfer context' as required; the composition is a standard product-on-ground shot rather than an elevated scene.",
-        "Role 2 (Selection Evidence) is not an 'elevated technical comparison' but repeats the low horizontal angle of Role 1, and it incorrectly includes an unapproved foreign object (a wooden spigot) in the center of the product coil.",
-        "Role 3 (Headworks Detail) fails to include the required equipment (fixed pump, gauge, and manifold), showing only the product pair on a generic concrete surface instead of the necessary technical headworks setup."
+        "Watermark is incorrect in all panels: shown as 'AFP | 09134922013' but required exact bottom-right watermark is 'AFP | 0913492201'. This is a systemic error across the set.",
+        "Panel 3 (HEADWORKS DETAIL) fails role requirements: image shows only the two-coil pair on concrete pad but is missing required equipment—a fixed pump, gauge, and manifold. Brief explicitly requires 'one fixed pump, gauge and manifold on an empty concrete pad'.",
+        "Panel 3 background includes a green truck that appears too prominent for 'distant unattended' context; truck is near center-frame rather than properly distant."
       ],
-      "correction_prompt": "Re-render Role 1 as a high-oblique wide shot of an agricultural water-transfer landscape; replace Role 2 with a strictly elevated shot of the two approved coils without foreign objects; and replace Role 3 with a detailed shot of a pump, gauge, and manifold on a concrete pad, keeping the product pair small and secondary.",
+      "correction_prompt": "Panel 1-2: Recapture with exact watermark 'AFP | 0913492201' in bottom-right corner only. Panel 3: Full redesign—add a fixed pump, pressure gauge, and metal manifold assembly as primary subject on empty concrete pad; reduce two-coil pair to small secondary placement in frame edge; ensure background has only distant unattended tractor or farm building, never a prominent truck or any person.",
       "panel_scores": [
-        45
+        42
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 85,
-      "duplicate_roles": [],
-      "reasons": [
-        "All three roles are visibly distinct in composition and technical narrative. Role 1 acts as a wide editorial hero establishing the water-transfer context with a high oblique view. Role 2 shifts to a low angle to provide selection evidence, clearly showing the diameter and construction difference between the two coiled products. Role 3 functions as an equipment-only headworks detail on a concrete pad, with the products correctly serving as secondary evidence.",
-        "No prohibited elements are present. The images strictly avoid people, bottles, and extra commercial packaging. The backgrounds remain relevant to the agricultural context without engaging in distracting farm activity. The watermark 'AFP | 09134922013' is present and handled correctly."
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        2
       ],
-      "correction_prompt": "The sequence is effective. To enhance the 'wide high-oblique' requirement of Role 1, a slightly more elevated camera angle in a refinement pass would further distinguish it from the lower perspective of Role 2.",
+      "reasons": [
+        "Panel 2 (SELECTION EVIDENCE) fails its role: it shows only one coil next to a pump assembly instead of the approved two-coil pair for technical diameter/construction comparison.",
+        "Panel 2 has shifted into EQUIPMENT DETAIL territory, duplicating the concept of Panel 3 (HEADWORKS DETAIL with pump/gauge/manifold on concrete pad).",
+        "Panel 2 also introduces a bottle/container element on the platform surface, violating the no-bottle rule.",
+        "Panel 3 correctly executes HEADWORKS DETAIL with the approved two-coil pair, fixed pump, gauge, and manifold on empty concrete—no person or farm activity.",
+        "Panel 1 correctly executes EDITORIAL HERO with wide high-oblique irrigation context; coils small and off-center."
+      ],
+      "correction_prompt": "Redo Panel 2 as elevated technical close-up showing ONLY the approved two-coil pair side-by-side to reveal diameter or woven-construction difference through the coils themselves—no pump, no gauge, no bottle, no third package; neutral or field-edge backdrop relevant to selection context; keep AFP watermark bottom-right.",
       "panel_scores": [
-        85
+        42
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Panel 2 fails SELECTION EVIDENCE role: both coils shown are identical plain black woven coils with no visible diameter or construction difference between them, defeating the purpose of a technical comparison shot. The two approved products (packaged/coated vs. bare woven) are visually indistinguishable here.",
+        "Panel 2 lacks the required product contrast — the approved packaged coil and the bare woven coil should be visibly different from each other in the frame to communicate specification comparison. Both appear as uniform black coils of similar size.",
+        "Panel 1 and Panel 3 satisfy their respective roles adequately with appropriate camera angles, environment structure, and technical narrative distinct from each other."
+      ],
+      "correction_prompt": "Redo Panel 2 as an elevated close-up technical comparison where the two coils are clearly distinguishable — one appearing as the packaged/coated variant with visible wrapping or finish, and the other as the bare black woven textile variant, placed side by side on the same ground surface to highlight diameter and construction differences. No person, bottle, or extra coils. Keep the same AFP watermark.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 3
     }
   ]
 }

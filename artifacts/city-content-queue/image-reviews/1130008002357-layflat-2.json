@@ -1,18 +1,38 @@
 {
   "source_id": "1130008002357-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: visible person (arm, hand, torso) on right side of frame. The objects shown are rigid corrugated pipes, not AFP packaged coil plus bare woven layflat coil pair. No evidence of layflat construction orAFP packaging. Hay bale present as unrelated third object. Missing required watermark AFP | 09134922013."
+      ],
+      "correction_prompt": "Regenerate image with exactly two coiled layflat hose products on ground only: one packaged AFP coil and one bare black woven layflat coil, side by side, no person, no hay bale, no rigid pipes, in agricultural field setting near Damq, with bottom-right watermark AFP | 09134922013",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil, both fully visible and separate.",
+        "No people, body parts, or human silhouettes detected.",
+        "Combined product width approximately 38%, within the 8-42% acceptable range.",
+        "Mandatory watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Diameter and construction difference clearly shown between the two coils for selection evidence role.",
+        "Distant farm building in background is acceptable infrastructure, not a third commercial product.",
+        "No impossible intersections, floating objects, or merged products."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
