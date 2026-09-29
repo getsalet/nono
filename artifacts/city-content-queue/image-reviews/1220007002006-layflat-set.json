@@ -1,0 +1,54 @@
+{
+  "source_id": "1220007002006-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1: The image features a city skyline in the background, which is irrelevant to the article brief regarding agriculture, Bika, Roudan, or Hormozgan (these are agricultural/rural locations, not urban centers).",
+        "Role 2: The image shows the product coils in close proximity, failing to keep them 'separate' as required for the technical comparison; the narrative focuses on the objects rather than an elevated technical analysis of their structural differences.",
+        "Role 3: The requirement for 'one fixed pump, gauge, and manifold' is completely missing from the image. The composition is effectively a duplicate of Role 2's layout (two coils on concrete) without the required specific headworks equipment.",
+        "Duplicate Layouts: Roles 2 and 3 share nearly identical environmental structures (flat concrete pads) and object placement, lacking the distinct camera angle changes required for an editorial sequence."
+      ],
+      "correction_prompt": "1. Replace the city skyline with a rural Hormozgan landscape; 2. Separate the coils to visually highlight their construction differences; 3. Add a fixed pump and gauge manifold to the concrete pad for the headworks shot.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 fails the 'EDITORS HERO' brief: it shows an eye-level equipment setup on a concrete pad with a narrow water strip, rather than a wide high-oblique water-transfer context, and the two coils are oversized and centered.",
+        "Role 2 fails the 'SELECTION EVIDENCE' brief: the setup is identical to Role 1 (same pad, field, and composition) with no elevated technical comparison or visible construction difference between the coils.",
+        "Roles 1 and 2 are nearly duplicates in layout and narrative, violating the requirement for distinct camera angles and environments."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide, high-oblique shot of a field with a water channel and small, off-center coils; regenerate Role 2 as an elevated, close-up technical comparison of the two coils showing construction differences without the pump or pad.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 (Image 2) fails the 'no third commercial package' constraint by displaying three distinct coil configurations: a wrapped coil, a bare coil, and a large open coil.",
+        "Role 1 (Image 1) places the coils centrally in the foreground; the brief requires them to remain 'off-center' in the EDITORIAL HERO shot."
+      ],
+      "correction_prompt": "Remove the third large open coil from Role 2 to satisfy the two-coil constraint, and reposition the product pair to be clearly off-center in Role 1.",
+      "panel_scores": [
+        62
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

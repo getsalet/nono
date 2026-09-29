@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-29T08:17:04+00:00`
+- آخرین بروزرسانی: `2026-09-29T08:34:20+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **603 از 1894 (31.84٪)**
-- تکمیل‌شده: **603**
+- پیشرفت: **608 از 1894 (32.10٪)**
+- تکمیل‌شده: **608**
 - در حال پردازش: **0**
-- در انتظار: **176**
-- آماده انتخاب در اجرای بعدی: **176**
+- در انتظار: **156**
+- آماده انتخاب در اجرای بعدی: **156**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1115**
+- ناموفق: **1130**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,11 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **باوج** — خوزستان — `layflat` — 1109 کلمه — `2026-09-29T08:29:35+00:00`
+- **زیارتعلی** — هرمزگان — `layflat` — 1171 کلمه — `2026-09-29T08:29:10+00:00`
+- **رویدر** — هرمزگان — `layflat` — 1291 کلمه — `2026-09-29T08:28:20+00:00`
+- **کوهستک** — هرمزگان — `layflat` — 1095 کلمه — `2026-09-29T08:28:02+00:00`
+- **کنگ** — هرمزگان — `layflat` — 1189 کلمه — `2026-09-29T08:24:22+00:00`
 - **لمزان** — هرمزگان — `layflat` — 1191 کلمه — `2026-09-29T07:53:57+00:00`
 - **خضرآباد** — یزد — `layflat` — 1196 کلمه — `2026-09-29T07:53:48+00:00`
 - **بفروییه** — یزد — `layflat` — 1932 کلمه — `2026-09-29T07:53:43+00:00`
@@ -47,24 +52,19 @@
 - **سرابله** — ایلام — `layflat` — 1368 کلمه — `2026-09-29T06:34:23+00:00`
 - **شباب** — ایلام — `layflat` — 1581 کلمه — `2026-09-29T06:25:23+00:00`
 - **زرنه** — ایلام — `layflat` — 1361 کلمه — `2026-09-29T06:19:50+00:00`
-- **موسیان** — ایلام — `layflat` — 1491 کلمه — `2026-09-29T06:18:56+00:00`
-- **پلدختر** — لرستان — `layflat` — 1356 کلمه — `2026-09-29T06:04:10+00:00`
-- **گراب** — لرستان — `layflat` — 1189 کلمه — `2026-09-29T06:03:14+00:00`
-- **سردشت** — خوزستان — `tape20` — 1312 کلمه — `2026-09-29T06:03:11+00:00`
-- **بندرماهشهر** — خوزستان — `layflat` — 1385 کلمه — `2026-09-29T05:50:45+00:00`
 
 ## خطاهای اخیر
 
-- **مجومرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **حمیدیا** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **هرات** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **زارچ** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **بستک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **تخت** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **چارک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **سردشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کوهیچ** — `layflat`: `Editorial review failed: internal link count must equal minimum`
-- **جناح** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **سیریک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **تیرور** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **درگهان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **دارخوین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **خمیر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **کیش** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **لافت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **لیردف** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **رمکان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **گروک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

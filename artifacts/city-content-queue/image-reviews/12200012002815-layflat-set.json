@@ -1,0 +1,59 @@
+{
+  "source_id": "12200012002815-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 failure: The 'EDITORIAL HERO' contains a person standing in the mid-ground next to the green tractor, which is an explicit rejection criterion.",
+        "Role 2 failure: The 'SELECTION EVIDENCE' image is a close-up product shot on dirt, not an 'elevated technical comparison' showing diameter or construction differences. It lacks the required high-oblique angle and is visually indistinguishable in narrative from the Role 1 foreground, creating a layout duplication.",
+        "Role 3 failure: The 'HEADWORKS DETAIL' image shows the product pair on a concrete slab without the required 'fixed pump, gauge and manifold' equipment. The technical headworks narrative is completely missing."
+      ],
+      "correction_prompt": "Regenerate the set: In Role 1, strictly remove all people from the high-oblique shot; in Role 2, elevate the camera angle to a technical high-angle showing the two coils distinctively for comparison; in Role 3, overlay or composite the two coils onto a concrete pad explicitly containing a pump, pressure gauge, and manifold.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        3
+      ],
+      "reasons": [
+        "Role 1 (Image 1) fails the EDITORIAL HERO requirement: it is not a wide, high-oblique water-transfer context shot, but rather an eye-level equipment scene on a concrete pad that duplicates the narrative and physical setting of Role 3 (Headworks).",
+        "The 3 images are not visually distinct in camera height/angle or environment structure; Images 1 and 3 share nearly identical framing, lighting, and the same close-up concrete pad with the two-coil pair and pump hardware.",
+        "Role 1 (Image 1) does not feature the coils as 'small, separate and off-center' against a wide background as required; instead, it uses a mid-ground framing similar to the other two panels.",
+        "All images contain the required 'AFP | 09134922013' watermark in the bottom-right corner, which is accepted as part of the visual brief."
+      ],
+      "correction_prompt": "Replace Image 1 with a wide high-oblique shot of the water-transfer field that positions the packaged and bare coils small and off-center in the frame; ensure the environment is distinct from the close-up concrete pad shots in Images 2 and 3.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 successfully frames a wide high-oblique water-transfer context with the products kept small and off-center.",
+        "Role 2 displays an elevated technical comparison using a concrete pad and fixed headworks equipment to show the coil pair difference.",
+        "Role 3 provides an equipment-only record shot on an empty concrete surface with the product pair as secondary evidence.",
+        "All three roles are visually distinct in camera angle and environment structure, avoiding repeated layouts."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        85
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

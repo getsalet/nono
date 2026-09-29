@@ -1,0 +1,53 @@
+{
+  "source_id": "10600010001004-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Failed mandatory role: The image depicts a general farm scene with equipment in a field, not the required 'elevated record photograph... on an empty concrete pad'.",
+        "Coil placement/visibility: The required 'approved layflat pair' (packaged coil and bare coil) is not arranged as the preferred secondary elements; the packaged coil (left) is large and prominent, and there is an additional loose hose coil (bottom right) that acts as a third object/visual clutter.",
+        "Text quality: The label on the packaged coil contains gibberish text ('CIER AI WEOLY'), indicating an 'invented/fake label' quality issue."
+      ],
+      "correction_prompt": "Re-render as a high-angle detail shot of a concrete water pad. In the foreground, place a compact, clearly visible set of fixed pumps, gauges, and manifolds. Keep the two specific coils (one in a box, one bare) small, distinct, and placed in the background to the side. Remove all loose hoses and extraneous farm equipment. Ensure the packaging label text is sharp and legible. Keep the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 52,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing mandatory infrastructure: The brief requires a 'HEADWORKS DETAIL' showing a fixed pump, gauge, and manifold. These are completely absent.",
+        "Context mismatch: The products are placed on generic pavement instead of an 'empty concrete pad' associated with pump infrastructure.",
+        "Product packaging anomaly: The left coil is wrapped in an odd, metallic-looking synthetic material rather than the standard expected packaging for agricultural layflat hose, creating a visually plausible but incorrect impression."
+      ],
+      "correction_prompt": "Regenerate on an empty concrete pad. Include a prominent fixed pump, pressure gauge, and manifold (HEADWORKS DETAIL) as the main equipment. The two layflat hose coils (one packaged, one black bare) should be placed small and secondary near the base of the pump setup.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains the mandatory fixed pump, gauge, and manifold on a concrete pad, which fits the HEADWORKS DETAIL role requirement.",
+        "The approved two-coil pair (one packaged, one bare) is present, fully visible, separate, and physically plausible.",
+        "The combined bounding box of the products (pump + coils) spans approximately 55% of the image width, which is well within the 65% hard reject limit.",
+        "No people, human body parts, or unapproved commercial products (like extra bottles or containers) are visible.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

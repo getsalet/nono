@@ -1,0 +1,83 @@
+{
+  "source_id": "1220008002092-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 50,
+      "product_height_percent": 33,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Zero people or body parts detected.",
+        "Approved pair present: one packaged coil (left) and one bare black woven coil (right).",
+        "Objects are separate, fully visible, and physically plausible on the soil.",
+        "Background contains relevant farm context (tractor, crop rows, soil) without prohibited commercial containers.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 50% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 75,
+      "product_height_percent": 28,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: A third distinct object (a third black coil) is visible to the right of the approved pair, violating the requirement for exactly two coils.",
+        "Hard reject: A coiled hose segment is visible to the right of the third coil, creating an 'impossible intersection' and an extra commercial product.",
+        "The total bounding box for the product group is approximately 75% wide, which exceeds the 42% maximum threshold for the combined product pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the third coil and the coiled hose on the right. Retain only the single packaged coil and one bare black woven coil. Ensure the pair is small (approx 20% width) and off-center. Reduce the product group from 75% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 23,
+      "product_height_percent": 14,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The packaged coil on the left shows a severely distorted and geometrically impossible structure with sharp, angular cuts that resemble a synthetic artifact or melted product, violating the requirement for physically plausible product dimensions.",
+        "The image placement is heavily centered in the lower third, whereas the editorial brief specifically mandates off-center placement for the hero product pair."
+      ],
+      "correction_prompt": "Regenerate the image with the two coils positioned off-center to the left or right. Ensure the packaged coil is a flat, cylindrical roll of hose with smooth, realistic wrapping geometry, removing any angular or melting artifacts.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 58,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Exact required watermark 'AFP | 09134922013' is visible in the bottom-right corner.",
+        "Zero people, human silhouettes, or body parts are visible in the frame.",
+        "The image shows the correct editorial high-oblique context with crop rows and an unattended distant tractor, which is permitted.",
+        "The two required objects (packaged coil and bare woven coil) are recognizable, separate, and physically plausible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 44,
+      "product_height_percent": 33,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Shows the approved AFP packaged coil and the bare black woven coil.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 44% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}
