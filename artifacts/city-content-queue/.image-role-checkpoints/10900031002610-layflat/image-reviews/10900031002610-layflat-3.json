@@ -1,0 +1,83 @@
+{
+  "source_id": "10900031002610-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 50,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing the fixed pump and manifold required for the HEADWORKS DETAIL role",
+        "No commercial gauge or infrastructure elements visible on the concrete pad",
+        "Two coils present, but the scene lacks the mandatory equipment setup"
+      ],
+      "correction_prompt": "Add a fixed pump, pressure gauge, and manifold manifold system on the concrete pad to satisfy the HEADWORKS DETAIL role.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 18,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: a third commercial package (the brown cardboard box) is present, violating the 'zero third commercial package' rule.",
+        "The product configuration is physically impossible and distorted, depicting a coil wrapped in a cloth/cover and sitting on a strange black spherical base instead of a standard packaged AFP coil.",
+        "The image includes multiple standalone gauges (one on the pump, one on the ground), which are not requested in the layflat coil role and complicate the infrastructure setup.",
+        "The visual setup does not align with the 'HEADWORKS DETAIL' role, which requires a small, secondary two-coil pair in the background."
+      ],
+      "correction_prompt": "Generate a clean photograph on a concrete pad featuring one packaged AFP coil and one bare black woven hose coil placed side-by-side. They must be the main focus. In the background, place one simple fixed pump, a gauge, and a manifold. Do not include any cardboard boxes, extra bottles, or human figures. Include the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 40,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains an invented and physically impossible commercial object: the object on the left is a metallic, futuristic-looking casing rather than a standard packaged AFP coil.",
+        "The left object fails the recognizability requirement for the requested product (one packaged AFP coil).",
+        "The black hose extends out of the frame and disappears, which conflicts with the requirement that the coil remain fully visible and separate.",
+        "The combination of a high-tech metallic casing and a pump setup on an empty concrete pad feels like a rendering rather than an elevated record photograph of farm equipment."
+      ],
+      "correction_prompt": "Regenerate showing one standard white or grey plastic wrapped AFP hose reel next to one bare black woven hose coil. Remove the metallic casing object. Ensure the coils are completely visible within the frame and do not overlap. Keep the pump in the background on a concrete pad.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image displays a large, complex piece of industrial machinery (the pump/manifold) located in the center of the frame, which contradicts the brief's instruction to keep the equipment 'small, separate and secondary' and the pair the focus.",
+        "The white coil on the left appears to be coiled around an inner cardboard core, which does not match the approved 'packaged AFP coil' description (typically a flat wrapped bundle).",
+        "The black coil on the right is coiled on a flat spool rather than being 'layflat' (ribbed profile)."
+      ],
+      "correction_prompt": "Elevated detail photo of a fixed pump, gauge, and manifold on a concrete pad. The pump unit should be small and positioned in the upper right background. In the foreground, include a small white AFP coiled hose (flat bundle) and a small black layflat hose. No people.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 63,
+      "product_height_percent": 60,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains three distinct product types (a black coil on a wooden stand, a black coil, and a white coil), whereas the requirement strictly specifies an approved pair of one packaged AFP coil and one bare black woven coil.",
+        "Visible bottle or white container hard reject triggered.",
+        "Headworks detail role failed because multiple product coils are dominant rather than just small/secondary; the pump is visible but the surrounding products are not 'secondary' to the equipment-only focus required by the mandatory brief.",
+        "The product pair is too wide relative to the frame.",
+        "machine-enforced bounding-box check failed: Reduce product height from 60% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate to display exactly two products: one packaged AFP coil and one bare black woven coil, alongside a fixed pump, gauge, and manifold on a concrete pad. Remove the white coil entirely. Shrink the two approved coils to 15 percent of frame width to satisfy the 'secondary' layout role. Reduce product height from 60% to at most 45% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

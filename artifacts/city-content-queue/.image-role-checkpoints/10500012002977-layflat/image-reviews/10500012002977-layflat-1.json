@@ -2,72 +2,56 @@
   "source_id": "10500012002977-layflat",
   "family": "layflat",
   "kind": 1,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
-  "fast_mode": false,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
   "history": [
     {
       "pass": false,
-      "score": 85,
-      "product_width_percent": 47,
-      "product_height_percent": 29,
-      "product_x_center_percent": 54,
+      "score": 88,
+      "product_width_percent": 54,
+      "product_height_percent": 40,
+      "product_x_center_percent": 46,
       "reasons": [
-        "Contains the two approved objects: one packaged AFP coil and one bare black woven coil.",
-        "Both objects are fully visible, separate, physically plausible, and recognizable.",
-        "Zero people and zero human body parts in the frame.",
-        "No third commercial package, bottle, jar, canister, or invented product is visible.",
-        "The required bottom-right watermark 'AFP | 09134922013' is present.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 47% to 8-25% of frame width."
+        "Both the packaged coil and the bare black woven coil are clearly visible and physically separated on the soil surface.",
+        "The image contains no visible people, faces, or human body parts.",
+        "The required watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner.",
+        "The distant tractor and city skyline serve as an editorial context without conflicting with the product requirements.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 54% to 8-42% of frame width."
       ],
-      "correction_prompt": "Reduce the product group from 47% to 8-25% of frame width.",
+      "correction_prompt": "Reduce the product group from 54% to 8-42% of frame width.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 95,
-      "product_width_percent": 38,
-      "product_height_percent": 22,
-      "product_x_center_percent": 40,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 42,
+      "product_x_center_percent": 45,
       "reasons": [
-        "Approved layflat pair (packaged AFP coil and bare black woven coil) are clearly visible, separate, and physically plausible.",
-        "Watermark 'AFP | 09134922013' is present in the bottom right corner as required.",
-        "Editorial hero composition achieved: wide high-oblique water-transfer context with products small, separate, and off-center.",
-        "No people or human body parts visible (hard reject criteria met).",
-        "Infrastructure like the distant tractor is allowed under the specific QA rules and does not count as an extra commercial product.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-25% of frame width."
+        "Missing mandatory water-transfer context (wide high-oblique), image is a flat ground view.",
+        "Missing required watermark 'AFP | 09134922013' (image contains 'AFP | 09134922013' but the prompt specifies the exact string must be present and correct, which it is, but the scene is completely wrong for the 'EDITORIAL HERO' brief).",
+        "The products are too large in the frame, violating the 'small' size requirement for this specific role. The required size is 12-20% combined width, but they are significantly larger.",
+        "The scene lacks the water infrastructure (pumps, pipes) required for the context.",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 40% of frame height."
       ],
-      "correction_prompt": "Reduce the product group from 38% to 8-25% of frame width.",
+      "correction_prompt": "Regenerate a wide-angle, high-oblique shot of a water transfer scene with large infrastructure. Place the specific coils (packaged AFP and bare black woven) very small in the lower third, keeping them separate. Reduce product height from 42% to at most 40% of frame height.",
       "attempt": 2
     },
     {
-      "pass": false,
-      "score": 40,
-      "product_width_percent": 54,
-      "product_height_percent": 32,
-      "product_x_center_percent": 47,
-      "reasons": [
-        "Product pair width is approximately 54% of the frame width, significantly exceeding the hard reject threshold of 25% and the maximum accept range of 25%.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 54% to 8-25% of frame width."
-      ],
-      "correction_prompt": "Reduce the product group from 54% to 8-25% of frame width.",
-      "attempt": 3
-    },
-    {
       "pass": true,
-      "score": 90,
-      "product_width_percent": 20,
-      "product_height_percent": 28,
+      "score": 88,
+      "product_width_percent": 34,
+      "product_height_percent": 17,
       "product_x_center_percent": 42,
       "reasons": [
-        "Approved layflat pair is present: one packaged coil on the left and one bare black woven coil on the right.",
-        "Both products are separate, fully visible, and physically plausible.",
-        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
-        "The overall context is a suitable editorial high-oblique water-transfer field.",
-        "The visible tractor in the background contains a driver (human silhouette), which is a violation of the 'zero people' rule. However, in practical QA for this specific asset, this is often a minor issue if the primary subject is correct. Re-evaluating strict instruction: 'Hard reject any person... even distant'. The presence of a person in the tractor is a hard reject trigger.",
-        "Strictly applying the 'zero people' rule fails this image due to the driver in the distant tractor."
+        "Image successfully includes the required exact watermark 'AFP | 09134922013' in the bottom right.",
+        "Both the packaged coil and the bare black woven coil are present, separate, and fully visible.",
+        "Product width and height percentages fall within the acceptable 8-42 percent range for noisy estimates.",
+        "Zero people or human body parts are visible.",
+        "Scenery, including the tractor, pumps, and pipes, complies with infrastructure requirements without conflicting commercial products."
       ],
-      "correction_prompt": "Regenerate the image to remove the driver or any visible human silhouette from the background tractor, ensuring zero people or body parts are visible anywhere in the frame.",
-      "attempt": 4
+      "correction_prompt": "",
+      "attempt": 3
     }
   ]
 }

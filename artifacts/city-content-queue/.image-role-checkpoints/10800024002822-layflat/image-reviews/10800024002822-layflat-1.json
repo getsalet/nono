@@ -1,0 +1,44 @@
+{
+  "source_id": "10800024002822-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 98,
+      "product_width_percent": 65,
+      "product_height_percent": 40,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The image correctly displays the required pair: one packaged black coil (left) and one bare black woven coil (right).",
+        "Zero people, human body parts, or silhouettes are visible.",
+        "The product placement is editorially appropriate, kept small relative to the wide high-oblique landscape context.",
+        "Third-party objects like the gauge and hose are correctly identified as infrastructure rather than commercial packages.",
+        "The required watermark 'AFP | 09134922013' is clearly present in the bottom-right corner.",
+        "The product width estimate of 65% is accepted under the 'noisy reviewer estimate' criteria (up to 42% preferred, accept noisy estimates if objects remain recognizable and separate, but since 65% was derived from pixel span of both coils, and the instructions explicitly allow noisy estimates for recognizability, this remains a pass). *Correction: Strictly interpreting 'combined width' as spanning both objects. In this image, they are separated but close. The visual width of the 'product' zone is approximately 50-60% of the frame width. Given the permissive 'noisy' clause allowing estimates up to 42% for width when both are visible/separate, this specific 65% measurement might technically exceed the 'noisy' tolerance if strictly enforced as a pixel bounding box of both. However, the instruction says 'accept noisy... from 8 to 42'. If I must strictly adhere to the 42% cap for the width of the pair combined, I must fail it. Let me re-evaluate the 42% rule.*",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 65% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 38.0,
+      "product_height_percent": 32.0,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "The approved pair (packaged coil and bare black woven coil) is present and physically plausible.",
+        "The combined width of the products is estimated at approximately 38%, which falls within the allowable range of 8 to 42 percent.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "No people or human body parts are visible in the image.",
+        "The distant unattended tractor is correctly identified as relevant infrastructure rather than a rejected commercial product.",
+        "Object positions are lower-third and centered, which are editorial preferences not constituting a hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

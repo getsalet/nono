@@ -1,0 +1,80 @@
+{
+  "source_id": "1050009002900-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 29,
+      "product_height_percent": 40,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The image displays exactly one AFP white-and-blue drip tape roll in an elevated detail shot on a concrete pad.",
+        "The roll features legible 'AFP' and 'DRIP IRRIGATION TUBE' branding with the correct blue and white color scheme.",
+        "The watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner as required.",
+        "The background includes fixed infrastructure (gauges, manifolds, and coiled hose) and a distant tractor, consistent with the 'equipment-only' visual brief.",
+        "There are zero people, faces, or human body parts visible in the image.",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 27,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Visible human figures (workers) in the background near the grain cart violate the strict zero-people rule.",
+        "Failure to meet mandatory role: The image role specified was 'HEADWORKS DETAIL: equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold', but the image shows a wide landscape with a tractor and workers.",
+        "Second commercial package: A large grey roll (layflat hose or second product) is visible on the trailer in the background, which is not permitted."
+      ],
+      "correction_prompt": "Regenerate as a tight, elevated close-up of a fixed irrigation headworks manifold, filter, and gauges on an empty concrete pad. Remove all background workers and tractors. Ensure the AFP drip tape carton roll is positioned small and secondary (approx 15-20% width) within the frame. Maintain the bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 31,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible person (farmer/worker) in the background on the left",
+        "Product width (approx 31%) exceeds the 30% maximum threshold",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image removing the distant person in the background and shrinking the carton roll to under 30% width. The scene should be an empty concrete pad with a fixed filter, gauge, and manifold; the roll should be small and secondary, with the AFP | 09134922013 watermark. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "A person (farmer/worker) is clearly visible in the mid-ground near the tractor, which violates the zero-people constraint.",
+        "Image role mismatch: The prompt specifies a 'HEADWORKS DETAIL' featuring filters/gauges on a concrete pad, but the image shows a roll on large dirt/gravel open ground."
+      ],
+      "correction_prompt": "Remove the human figure near the tractor and replace the background with a static irrigation filter head and manifold system on an empty concrete pad.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 29,
+      "product_height_percent": 32,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The image contains a coil of black drip tape lying on the concrete in the left foreground, which violates the hard reject rule for a second commercial package or coiled product.",
+        "The presence of a coiled hose/tape in the background/foreground contradicts the 'empty concrete pad' and 'exactly one approved carton' requirements."
+      ],
+      "correction_prompt": "Remove the black coiled tape/hose lying on the ground in the left foreground; keep only the white and blue carton roll on the concrete pad next to the irrigation infrastructure.",
+      "attempt": 5
+    }
+  ]
+}

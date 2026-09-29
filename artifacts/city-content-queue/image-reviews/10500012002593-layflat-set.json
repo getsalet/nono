@@ -1,0 +1,56 @@
+{
+  "source_id": "10500012002593-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1
+      ],
+      "reasons": [
+        "Role 1 (Panel 1) fails the specific layout requirement: the product coils are centered in the foreground rather than 'small, separate and off-center', and the packaging/coil are not distinctively scaled small.",
+        "Role 3 (Panel 3) violates the negative constraint: a white product box/container is present in the foreground, which is explicitly forbidden ('no... any bottle/container').",
+        "Role 2 (Panel 2) is weak on 'elevated technical comparison': the shot is a low-angle close-up on the ground that does not clearly show diameter or construction differences as required by the technical narrative."
+      ],
+      "correction_prompt": "Reposition the coils in Role 1 to be small, separate, and off-center; remove the white box in Role 3 and ensure the coils remain secondary; adjust the angle in Role 2 to clearly visualize the difference between the two coils.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "The composition of Role 1 and Role 2 is nearly identical, showing the same two-coil layout at a similar low camera angle on a farm field with distant tractors, failing to provide distinct visual separation.",
+        "The products in Role 1 and Role 2 are oversized and centered, contradicting the requirement for them to be 'small, separate and off-center' in the editorial hero shot.",
+        "Role 3 includes a white cardboard product packaging box, which is not permitted (no extra commercial packages/boxes).",
+        "Role 3 contains a visible 'AFP' brand label on the pump, conflicting with the requirement that the watermark should be the only brand identifier."
+      ],
+      "correction_prompt": "Redesign Role 1 as a high-oblique wide shot where the coils are secondary/off-center; differentiate Role 2 by using a macro close-up to clearly contrast the coil diameters without duplicating the ground-level layout; and in Role 3, remove the white box and generic label to maintain the required equipment-only focus.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 fails due to the presence of an extra cylindrical object (likely a connector or bottle) next to the coils, which violates the 'no extra container/bottle' constraint.",
+        "Role 3 fails due to the presence of a white commercial box, which acts as an extra commercial package or container, violating the 'equipment-only' constraint for this role."
+      ],
+      "correction_prompt": "Regenerate panel 2 removing the cylindrical object; Regenerate panel 3 removing the white box to isolate the pump equipment.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

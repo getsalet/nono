@@ -1,0 +1,61 @@
+{
+  "source_id": "1080008002603-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "All three provided images feature the exact same camera angle, framing, and layout of the two coils placed in the foreground, failing to show the required variation in camera height/angle.",
+        "Role 2 (Selection Evidence) requires an elevated technical comparison view, but the image shows a low-angle field shot with active tractors in the background, which is not an elevated viewpoint.",
+        "Role 3 (Headworks Detail) specifically requires equipment-only record photography of a pump, gauge, and manifold on an empty concrete pad. The provided image is missing this hardware entirely and instead shows coils on a slab.",
+        "The provided images are effectively duplicates of a single concept (low-angle soil shot) rather than a sequence of three distinct roles (high-oblique hero, elevated comparison, and equipment-only detail).",
+        "The background in the second image includes active, attended tractors, which can be interpreted as distracting farm activity rather than the neutral or empty context often required for editorial focus."
+      ],
+      "correction_prompt": "Generate three strictly distinct panels: 1. A high-oblique aerial view of the field where the two coils are a small, off-center detail; 2. A close-up, top-down technical shot showing the construction/diameter difference of the two coils; 3. An eye-level shot of a pump, pressure gauge, and manifold on a concrete pad, with the coils placed small and secondary in the background.",
+      "panel_scores": [
+        20
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 fails the 'SELECTION EVIDENCE' requirement because it contains forbidden extra items: a cardboard box and a third small coil alongside the approved two-coil pair.",
+        "Role 3 fails the 'HEADWORKS DETAIL' requirement because it shows only the two-coil product on a concrete pad, completely omitting the required equipment (pump, gauge, manifold)."
+      ],
+      "correction_prompt": "Remove the cardboard box and extra small coil from Role 2 to leave only the approved two-coil pair; regenerate Role 3 to feature a prominent fixed pump, pressure gauge, and manifold on the concrete pad, making the coil pair appear small and secondary in the background.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 depicts the 'pump' as a green wheel-based farm machine (resembling a sprayer/mower), which violates the strict 'equipment-only... fixed pump' technical specification required for the SELECTION EVIDENCE comparison.",
+        "Role 3 shows hardware duplication with Role 2, as both use nearly identical compositions featuring a central pump machine and a concrete pad, rather than providing the distinct 'elevated' or 'high-oblique' narrative progression required for the editorial sequence."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a strict top-down or high-angle technical still of the two coils on a neutral background, clearly showing their diameter/construction difference without any machinery. Regenerate Role 3 as a distinct low-angle headworks record shot of a fixed pump on a concrete pad, with the two coils placed as small secondary items in the immediate background or foreground.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 3
+    }
+  ]
+}
