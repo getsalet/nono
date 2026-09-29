@@ -1,0 +1,82 @@
+{
+  "source_id": "1170006001513-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Missing the required equipment-only headworks detail (one fixed pump, gauge, and manifold) on the concrete pad as specified in the mandatory role.",
+        "The scene shows an empty concrete pad, which contradicts the role requirement of elevated active infrastructure."
+      ],
+      "correction_prompt": "Include a single fixed pump unit equipped with a gauge and manifold on the concrete pad to fulfill the equipment-only headworks role; keep the two coils small and secondary.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 70,
+      "product_height_percent": 50,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The combined width of the two coils (the product pair) significantly exceeds the 65% hard-reject limit, spanning most of the frame horizontally.",
+        "The bare coil is not black woven material but appears to be solid plastic with an orange core, which conflicts with the specific material requested in the prompt.",
+        "The packaging is an open carton rather than a standard packaged AFP coil as specified in the role requirements.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-65% of frame width.; Reduce product height from 50% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Shrink the two coils to occupy a combined width of 15% of the frame, ensuring the bare coil is black woven fabric. Position the coils as small, separate objects in the background behind the main pump and gauge infrastructure. Reduce the product group from 70% to 8-65% of frame width. Reduce product height from 50% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The mandatory 'HEADWORKS DETAIL' role (fixed pump on an empty concrete pad) is not shown; the image contains an active pump/tractor rig, not just a pump/gauge/manifold assembly on an empty pad.",
+        "The approved two-coil pair is larger than the preferred combined width (estimated at ~55% of the frame), falling within the hard reject threshold range for a pair.",
+        "A third commercial product/packaging unit is visible in the background (the black round spool), which is a hard reject per the rules against third packages or third coils.",
+        "The overall scene includes machinery (tractor rig) that is not simply 'relevant fixed infrastructure' in the context of the empty pad requirement."
+      ],
+      "correction_prompt": "Regenerate image showing an elevated record photograph of a single fixed pump, gauge, and manifold assembly sitting on an empty concrete pad with no machinery or tractor. Include the approved two-coil pair (one packaged AFP and one bare black) as small, separate secondary elements. Do not include the background black spool or any farm equipment in motion.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 75,
+      "product_height_percent": 55,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product pair spans approximately 75% of the frame width, which exceeds the hard reject threshold of 65%.",
+        "The image fails to meet the mandatory role requirements for 'HEADWORKS DETAIL', which specifies the presence of a fixed pump, gauge, and manifold on an empty concrete pad; none of this infrastructure is visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-65% of frame width.; Reduce product height from 55% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a strict crop focusing on the equipment: include a fixed pump, gauge, and manifold on an empty concrete pad. The two coils must be significantly smaller and placed as secondary background elements, ensuring the total product width is under 65% of the frame. Reduce the product group from 75% to 8-65% of frame width. Reduce product height from 55% to at most 45% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 72,
+      "product_width_percent": 42,
+      "product_height_percent": 28,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Correct layflat pair composition (packaged coil and bare black coil)",
+        "Products are separate, recognizable, and physically plausible",
+        "No humans, body parts, or prohibited commercial items detected",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner",
+        "Product placement is slightly large relative to the preferred 12-20% width, but within the 8-65% acceptance threshold"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

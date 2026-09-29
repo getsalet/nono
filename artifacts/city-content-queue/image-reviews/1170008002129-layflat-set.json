@@ -1,0 +1,58 @@
+{
+  "source_id": "1170008002129-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 fails the 'EDITORIAL HERO' criteria: the product coils are oversized and centered in the foreground, violating the 'small, separate and off-center' constraint.",
+        "Role 2 contains a rejection violation: a brown plastic connector/bottle is visible on the front of the left coil, which matches the 'bottle/container' rejection criteria.",
+        "Role 3 fails the 'HEADWORKS DETAIL' specification: the required pump, gauge, and manifold on a concrete pad are completely missing, showing only coils on a generic slab."
+      ],
+      "correction_prompt": "Regenerate the three panels to ensure: Panel 1 places small product coils off-center with a high-oblique view; Panel 2 removes all plastic connectors/bottles; and Panel 3 adds a fixed pump and gauge manifold on a concrete pad with the coils secondary in the background.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 violates the 'no third commercial package' constraint by including a cardboard box (marked 'PIPE') alongside the required two-coil pair, failing the headworks detail criteria.",
+        "Role 3 and Role 2 are visually duplicated in layout composition: both use a low-angle 'surface record' perspective where the coils and pump sit on a shared planar surface, and the technical narrative in both focuses on the equipment array rather than the specified 'elevated' or 'high-oblique' perspectives.",
+        "Role 1 fails to satisfy the 'wide high-oblique water-transfer context' requirement; the shot is a close-up perspective of the field surface with no visible infrastructure, transfer context, or high camera angle.",
+        "Role 2 violates the 'no third commercial package' constraint by including a wooden spool or box-like element next to the coils, and the 'elevated technical comparison' narrative is weak due to the low, static angle."
+      ],
+      "correction_prompt": "Remove the cardboard box from Role 3 and the wooden spool from Role 2. Restage Role 1 as a wide, high-oblique aerial view showing water-transfer context. Adjust Role 2 to an elevated viewpoint focusing strictly on the diameter difference of the two-coil pair. Restage Role 3 with the pump, gauge, and manifold on an empty concrete pad, keeping the two-coil pair small and secondary, with a high-angle record perspective.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Panel 1) includes an unapproved extra coil on the ground, violating the 'exactly two-coil' constraint",
+        "Role 2 (Panel 2) includes multiple unapproved coils and a commercial machine on the pad, violating 'no third commercial package' and 'equipment-only' rules",
+        "Role 3 (Panel 3) is missing the required fixed pump, gauge, and manifold for the 'HEADWORKS DETAIL' role"
+      ],
+      "correction_prompt": "Redo Panel 1 to remove the extra loose coil and show only two; redo Panel 2 to remove the blue machine and extra coils showing only the pump/gauge/manifold; redo Panel 3 to include the fixed pump, gauge, and manifold alongside the two small coils.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

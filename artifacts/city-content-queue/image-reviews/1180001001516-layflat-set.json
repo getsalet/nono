@@ -1,0 +1,56 @@
+{
+  "source_id": "1180001001516-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 fails the 'high-oblique' requirement; the camera angle is low and close to the ground, failing to provide the required wide water-transfer context.",
+        "Roles 1 and 2 use nearly identical layout and camera angle (low angle, side-on close-up), making them not visibly distinct in camera height or technical narrative.",
+        "Role 3 fails completely as it only shows the product on a concrete pad, missing the required fixed pump, gauge, and manifold equipment setup."
+      ],
+      "correction_prompt": "Role 1: Recreate as a wide high-oblique aerial shot of a farm water-transfer system with the coils small in the foreground. Role 2: Change to a high-angle top-down shot to show diameter difference between the two coils. Role 3: Add a fixed pump, pressure gauge, and manifold on the concrete pad.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Role 3 violates the 'no farm activity' constraint: the image contains a visible tractor in the top right, which contradicts the requirement for an empty concrete pad with no activity.",
+        "Role 3 layout duplication: The headworks equipment (pump, manifold, gauge) and the arrangement of the two coils are nearly identical to the layout in Role 2, making the 'elevated record photograph' lack the distinct technical narrative requested.",
+        "Role 1 fails the 'off-center' requirement: The two coils are positioned centrally in the foreground, directly under the horizon line, rather than being off-center as specified for the hero shot."
+      ],
+      "correction_prompt": "Role 1: Shift the two coils to the far-left or far-right edge of the frame to satisfy the off-center requirement. Role 3: Remove the tractor entirely and crop or regenerate the image to focus solely on the fixed pump and manifold on the concrete pad, with the two coils positioned small and secondary, strictly excluding any vehicle or farm activity.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 (Image 2) violates the negative constraint 'no third commercial package, bottle, person or extra coil' by displaying three distinct coil/package objects instead of the required pair.",
+        "Role 1 (Image 1) fails the layout constraint for the 'EDITORIAL HERO' role, which requires the products to be 'small, separate and off-center'; in this shot, the two coils are large and central.",
+        "Role 3 (Image 3) is largely compliant, featuring the required fixed headworks equipment and the secondary approved product evidence."
+      ],
+      "correction_prompt": "For Role 1, reduce the product scale and shift them off-center on the high-oblique background. For Role 2, remove the third coil to ensure only the two-coil pair is shown as evidence of construction comparison.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

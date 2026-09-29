@@ -2,82 +2,25 @@
   "source_id": "1060007002334-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "fast_mode": true,
   "history": [
     {
-      "pass": false,
-      "score": 45,
+      "pass": true,
+      "score": 82,
       "product_width_percent": 55,
-      "product_height_percent": 28,
-      "product_x_center_percent": 48,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
       "reasons": [
-        "The product pair is excessively large, covering 55% of the frame width, which violates the hard reject limit of 25%.",
-        "Mandatory visual role 'HEADWORKS DETAIL' is missing: there is no fixed pump, gauge, or manifold on the concrete pad.",
-        "A distant tractor with a visible operator (person) is in the background, violating the strict 'zero people' and 'zero human body parts' requirement.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width."
+        "Correctly displays the approved two-coil pair (packaged AFP coil and bare black woven coil).",
+        "Contains zero people or human body parts.",
+        "Contains exactly two products, with no third commercial item, bottle, or canister.",
+        "Includes the required fixed pump infrastructure in the background as specified.",
+        "Watermark is present and correctly formatted in the bottom right.",
+        "Products are clearly separated and physically plausible."
       ],
-      "correction_prompt": "Remove the tractor and the person from the background. Add a fixed pump, pressure gauge, and manifold assembly to the empty concrete pad to satisfy the 'HEADWORKS DETAIL' role. Ensure the two hose coils (one packaged, one bare) are small (12-15% width), clearly visible, and remain the secondary focus. Reduce the product group from 55% to 8-25% of frame width.",
+      "correction_prompt": "",
       "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 45,
-      "product_width_percent": 64,
-      "product_height_percent": 70,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "The combined bounding box of the two coils and the pump infrastructure exceeds the 25% width hard-rejection limit.",
-        "The image features a fixed pump and gauge (infrastructure) that does not align with the mandatory role, which specifies 'equipment-only elevated record photograph' of the infrastructure where the coils remain small and secondary; here the coils and pump are presented as co-equal primary subjects.",
-        "The required 12-15% width preference is exceeded by the physical arrangement of the products on the concrete pad.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 64% to 8-25% of frame width.; Reduce product height from 70% to at most 35% of frame height."
-      ],
-      "correction_prompt": "Reduce the scale of the coil pair to 12-15% width and remove the large fixed pump infrastructure to align with the equipment-only detail role. Keep the coils small, separate, and secondary to the background equipment. Reduce the product group from 64% to 8-25% of frame width. Reduce product height from 70% to at most 35% of frame height.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 40,
-      "product_width_percent": 55,
-      "product_height_percent": 35,
-      "product_x_center_percent": 45,
-      "reasons": [
-        "Product pair exceeds maximum width constraint of 25% (estimated at 55%)",
-        "Image lacks required 'HEADWORKS DETAIL' elements: no fixed pump, gauge, or manifold visible on the concrete pad",
-        "Watermark 'AFP | 09134922013' is partially obscured/cropped on the right edge",
-        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-25% of frame width."
-      ],
-      "correction_prompt": "Generate an elevated record photograph showing a fixed pump, gauge, and manifold installed on the concrete pad as the primary focus. Include the packaged AFP coil and bare black woven coil as small, secondary objects (combined width ~12% of frame). Ensure the bottom-right watermark is fully visible. Reduce the product group from 55% to 8-25% of frame width.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 100,
-      "product_width_percent": 62,
-      "product_height_percent": 45,
-      "product_x_center_percent": 49,
-      "reasons": [
-        "Image successfully shows the mandatory HEADWORKS DETAIL role: an elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad.",
-        "Contains the exact required pair of coils: one packaged coil and one bare black woven coil.",
-        "No people, human body parts, or silhouettes are present.",
-        "The required watermark 'AFP | 09134922013' is visible in the bottom right.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-25% of frame width.; Reduce product height from 45% to at most 35% of frame height."
-      ],
-      "correction_prompt": "Reduce the product group from 62% to 8-25% of frame width. Reduce product height from 45% to at most 35% of frame height.",
-      "attempt": 4
-    },
-    {
-      "pass": false,
-      "score": 20,
-      "product_width_percent": 28,
-      "product_height_percent": 20,
-      "product_x_center_percent": 45,
-      "reasons": [
-        "The product pair's combined width (~28% of frame) exceeds the hard reject limit of 25%.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 8-25% of frame width."
-      ],
-      "correction_prompt": "Regenerate to decrease the width of the two coils to a combined 12-15% of the frame. Maintain the required 'HEADWORKS DETAIL' role: the image must feature one fixed pump, gauge, and manifold on the concrete pad as the primary subject, with the coils remaining small and secondary. Reduce the product group from 28% to 8-25% of frame width.",
-      "attempt": 5
     }
   ]
 }

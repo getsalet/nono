@@ -1,0 +1,55 @@
+{
+  "source_id": "1170001001512-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 18,
+      "duplicate_roles": [],
+      "reasons": [
+        "Image 1: Contains a visible person standing by the tractor in the background, which is explicitly forbidden.",
+        "Image 2: Features an extra commercial object (a beige connector fitting) on the ground and an awkward, redundant composition (the coil is wrapped twice), violating the 'no extra commercial objects' rule.",
+        "Image 3: Displays four distinct coil objects instead of the required 'approved two-coil pair', resulting in hardware duplication and a generic farm equipment layout rather than a specific fixed headworks record."
+      ],
+      "correction_prompt": "Regenerate Image 1 strictly without any human figures; regenerate Image 2 with a single, clean coil and no loose accessories; regenerate Image 3 to show exactly two coils (one packaged, one bare) as a small secondary detail next to a pump/gauge setup.",
+      "panel_scores": [
+        18
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Panel 2 violates Role 2 constraints by showing three coils (a packaged unit plus two bare coils) instead of the required 'approved two-coil pair', and includes an unapproved commercial object (tire) in the foreground.",
+        "Panel 1 violates Role 1 constraints by displaying the products prominently and oversized in the immediate foreground; the brief required them to remain small, separate, and off-center within a wide high-oblique context.",
+        "Panel 3 contains an unapproved cardboard box packaging the coil, which conflicts with the 'equipment-only' and 'no extra commercial objects' directives."
+      ],
+      "correction_prompt": "Regenerate: Panel 1 must feature a wide high-oblique landscape where the coils are small, separate and off-center; Panel 2 must show exactly two coils (packaged and bare) on a plain surface with no tires, boxes, or extra coils; Panel 3 must show the two coils small and secondary to a fixed pump on a concrete pad without any cardboard packaging.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 and Role 3 are nearly identical in composition: the same side-by-side arrangement of the packaged coil and bare black coil, with a nearly identical camera angle and framing (distant horizontal shot), making them duplicate layouts.",
+        "Role 3 fails the 'HEADWORKS DETAIL' requirement: it lacks the specific requested 'fixed pump, gauge and manifold' setup, instead showing the product pair and a hose on a concrete pad. It looks like a duplicate of Role 2 rather than a distinct equipment-focused shot."
+      ],
+      "correction_prompt": "Regenerate Role 3 to be visually distinct from Role 2 by including a fixed headworks setup (pump, pressure gauge, and manifold) as the primary focus, with the two-coil product pair appearing small and secondary in the background.",
+      "panel_scores": [
+        50
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "source_id": "1170002002480-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 25,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: The image contains a visible person (farmer) on the left side, which violates the requirement for zero people or body parts."
+      ],
+      "correction_prompt": "Regenerate the image strictly without any people. Keep the packaged AFP coil and the bare black woven coil in the foreground on the soil, ensuring the water channel, blue pump, and bucket remain visible, but completely remove the man from the scene.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 50,
+      "product_height_percent": 30,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: A large white bucket is clearly visible on the right side of the frame. Buckets are explicitly listed in the prohibited items (third commercial package or invented package).",
+        "Hard reject: Product width is approximately 50% of the image width, which is significantly wider than the maximum allowed threshold of 42%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the white bucket on the right completely. Reduce the size of the two coils to occupy less than 42% of the image width, ensuring they remain distinct and off-center. Reduce the product group from 50% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 48,
+      "product_height_percent": 35,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The combined width of the two coils (~48%) exceeds the 42% hard reject threshold.",
+        "The approved pair dominates the frame rather than being 'small, separate and off-center' as requested for an EDITORIAL HERO role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image so the two coils are significantly smaller in the foreground (total width ~25% of frame), placed closer to the bottom-right corner to maintain an editorial off-center composition. Keep the background field context and the exact bottom-right watermark intact. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product pair is placed centrally in the lower section, violating the mandatory 'off-center' editorial hero requirement.",
+        "The objects appear relatively large and prominent in the frame, failing to meet the 'remain small' preference for the water-transfer context."
+      ],
+      "correction_prompt": "Shift the layflat hose pair significantly to the left or right to be off-center and reduce their relative size in the frame to emphasize the wide agricultural landscape context.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 25,
+      "product_height_percent": 18,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The approved pair (packaged AFP coil and bare black woven coil) is present and fully visible in the bottom-left.",
+        "Both products are separate and physically plausible without distortion.",
+        "No people or human body parts are visible in the frame.",
+        "The distant unattended tractor is treated as infrastructure/context and does not violate the hard reject rules.",
+        "The mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The combined width of the products is approximately 25%, which falls within the preferred 12-20% range and well within the 8-42% acceptance criteria."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
