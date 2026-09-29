@@ -1,0 +1,41 @@
+{
+  "source_id": "1140009002732-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 85,
+      "product_height_percent": 80,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Visible people in the background (farmer driving tractor and two standing figures)",
+        "Three commercial coils visible (packaged coil, middle coil, right coil) instead of the approved pair",
+        "The approved layflat pair (packaged + bare black) is not represented in the standard way",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 8-42% of frame width.; Reduce product height from 80% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures and the tractor. Display only one packaged AFP coil and one bare black woven coil in the foreground, with clear separation. Reduce the product group from 85% to 8-42% of frame width. Reduce product height from 80% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 39,
+      "product_height_percent": 27,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Image correctly features the approved pair: one packaged AFP coil and one bare black woven coil.",
+        "Exact bottom-right watermark 'AFP | 09134922013' is present and preserved.",
+        "No humans, faces, hands, or body parts are visible in the frame.",
+        "Distant tractor is correctly identified as unattended equipment and not a rejectable product.",
+        "Combined product width (~39%) is within the accepted range of 8-42% for this editorial role.",
+        "Objects are fully visible, separate, and physically plausible on the ground."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

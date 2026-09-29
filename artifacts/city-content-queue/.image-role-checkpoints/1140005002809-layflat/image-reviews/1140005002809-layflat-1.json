@@ -1,0 +1,57 @@
+{
+  "source_id": "1140005002809-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 47,
+      "product_height_percent": 24,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Visible person (farmer/worker) standing in the background near the tractor in the upper-right quadrant.",
+        "Presence of human silhouette violates the hard reject rule for zero people or body parts.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 47% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the person standing near the tractor in the background. Ensure the scene contains no humans or human body parts while maintaining the wide high-oblique farm context. Reduce the product group from 47% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 58,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains exactly the approved layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "Both objects are separate, fully visible, and physically plausible.",
+        "Zero people or human body parts visible; distant tractor is allowed unattended farm equipment.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Editorial high-oblique context of water-transfer field met.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 58% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 34,
+      "product_height_percent": 28,
+      "product_x_center_percent": 54,
+      "reasons": [
+        "Contains exactly the two approved objects: one packaged coil and one bare black woven coil",
+        "Both objects are separate, physically plausible, and fully visible",
+        "Contains zero people and zero human body parts",
+        "Required bottom-right watermark 'AFP | 09134922013' is present",
+        "Background contains only permitted infrastructure/ordinary farm elements",
+        "Product width is within the acceptable 8-42% range for this role"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

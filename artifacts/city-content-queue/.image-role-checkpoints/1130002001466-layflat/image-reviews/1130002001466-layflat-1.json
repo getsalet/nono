@@ -1,0 +1,79 @@
+{
+  "source_id": "1130002001466-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 42,
+      "product_height_percent": 15,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Third commercial product detected: An extra bare black coil is visible to the right, violating the requirement for exactly one packaged and one bare coil.",
+        "Distracting infrastructure: A large farm vehicle is prominently featured in the background, which conflicts with the specific 'distant unattended tractor' allowance and detracts from the editorial focus on the products.",
+        "Product framing: The three-product cluster creates a wide bounding box that occupies nearly half the frame width, reducing the required negative space for the wide high-oblique context."
+      ],
+      "correction_prompt": "Remove the third coil on the right to leave only one packaged and one bare coil. Push the background vehicle to the horizon line or remove it. Shrink the foreground product cluster to 15% width and place it in the bottom-left corner to emphasize the wide field and water channel context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 15,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Missing required packaged AFP coil, only one bare black coil is visible."
+      ],
+      "correction_prompt": "Generate a second product: a packaged AFP irrigation tape coil in white/blue wrapping placed next to the bare black woven coil. Keep both coils small, off-center, and physically plausible. Ensure the bottom-right watermark remains exactly as 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Visible approved pair: one packaged AFP coil and one bare black woven coil are clearly present.",
+        "Zero people, body parts, or human silhouettes detected in the frame.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Editorial high-oblique water-transfer/farm context is maintained with no hard rejects such as third commercial packages, bottles, or impossible intersections.",
+        "Objects are separate, physically plausible, and fully visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 15,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: human driver visible in the unattended tractor in the background.",
+        "Hard reject: person/worker visible in the tractor cab."
+      ],
+      "correction_prompt": "Regenerate the image ensuring the background tractor is completely unattended and driverless, with no human figures or silhouettes visible anywhere in the scene.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 54,
+      "product_height_percent": 36,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "The bounding box enclosing both the packaged coil and the bare black coil represents approximately 54% of the image width, which exceeds the 42% hard rejection limit for noisy reviewer estimates.",
+        "A driver/occupant is visible inside the cabin of the tractor in the background, violating the absolute rule against visible people or human silhouettes, even if distant.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 54% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to remove the human driver from the tractor cabin (ensure the seat is empty) and shift the two coils significantly closer together and further to the side to reduce their combined frame width to under 42%. Reduce the product group from 54% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

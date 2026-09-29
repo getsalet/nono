@@ -1,0 +1,58 @@
+{
+  "source_id": "1140002002614-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "An unapproved third commercial product (an upright black backpack) is present in the scene.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate to remove the backpack and extra gauge hardware, showing only the laid flat packed coil and the bare black coil. Ensure the pair is small, off-center, and physically plausible. Retain the AFP watermark. Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 55,
+      "product_height_percent": 25,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Contains the approved pair: one packaged AFP coil (wrapped) and one bare black woven coil.",
+        "Zero people or human body parts visible in the frame.",
+        "Distant tractor and farm buildings are correctly identified as allowed context infrastructure, not rejected as extra commercial products.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The scene depicts a wide high-oblique water-transfer context suitable for the editorial hero role.",
+        "Product bounding box is estimated at approximately 55% width and 25% height, which falls within the 8-42% 'noisy reviewer' acceptance range for combined width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 26,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Strict adherence to mandatory visual role: 'Editorial Hero' with wide high-oblique water-transfer context and product elements kept small, separate, and off-center.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "Approved layflat pair is clearly identifiable: one packaged AFP coil and one bare black woven coil.",
+        "Hard reject criteria verified: Zero people or human body parts detected in the foreground or the distant agricultural machinery.",
+        "No extraneous commercial products (bottles, third coils, etc.) are present.",
+        "Bounding box estimation is within the accepted tolerance range (8 to 42 percent) for this role, maintaining full recognizability and physical plausibility.",
+        "Infrastructure elements (distant tractor, soil, crop rows) are appropriately treated as background context."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

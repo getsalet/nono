@@ -1,0 +1,83 @@
+{
+  "source_id": "1130003002660-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: image contains a prominent person (farmer/worker)"
+      ],
+      "correction_prompt": "Remove the person entirely; ensure the image contains zero humans. Keep the packaged coil and the bare black woven coil small, separate, and off-center.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Presence of human silhouette in the distant background (center-left of the crop rows)",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is missing from the image",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove all human silhouettes or people from the image. Add the text watermark 'AFP | 09134922013' to the bottom-right corner. Enlarge the product group from 0% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 52,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains the approved packaged coil and bare black woven coil",
+        "Includes the required watermark 'AFP | 09134922013'",
+        "No people or human body parts are visible",
+        "Farmer/worker/face/hand/arm/leg absent",
+        "Only a distant unattended tractor and farm equipment are present, which are allowed",
+        "No forbidden third commercial packages, bottles, jars, or invented containers",
+        "The pair is off-center and physically plausible; however, the combined bounding box width is wider than the 8–42% acceptable range for noisy estimates, leading to a reduced score",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Tractor in the background contains a visible human driver (hard reject for any person or body part)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to ensure the background tractor is clearly unattended and has no visible person, maintaining the off-center hero shot of the coil pair in the foreground. Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 45,
+      "product_height_percent": 20,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Approved pair present: packaged coil and bare black coil are separate and physically plausible.",
+        "Exact required watermark 'AFP | 09134922013' present in bottom-right.",
+        "No visible humans, faces, or body parts.",
+        "Distant unattended tractor is farm equipment and does not violate rules.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}
