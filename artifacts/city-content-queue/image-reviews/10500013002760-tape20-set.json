@@ -1,22 +1,57 @@
 {
   "source_id": "10500013002760-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Hero): The product roll is located in the immediate foreground (bottom-left/bottom-center) rather than the required 'lower third' off-center position. It is visually dominant and significantly larger than the 'small' specification, failing the 'exactly one approved carton stays small' constraint.",
-        "Role 2 (Selection Evidence): The product roll is significantly oversized (dominating the left foreground) and fails the 'elevated technical arrangement' requirement. It is placed at ground level, making it the primary visual focus instead of the evidence.",
-        "Role 3 (Headworks): The hardware shown is a mobile irrigation cart with wheels and a hose reel, not the required 'unattended fixed' infrastructure (fixed filter, gauge, manifold). Additionally, the product roll is oversized in the foreground.",
-        "Role 3 (Headworks): An open cardboard box is present, which violates the 'no bottle/container' rule and detracts from the professional technical narrative."
+      "score": 45,
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "Crop or reframe to place the product small in the lower-third off-center (Hero); replace the oversized roll with a small prop while showcasing technical evidence (Selection); and swap the mobile cart for fixed field infrastructure (manifold/gauges) without any cardboard boxes (Headworks).",
+      "reasons": [
+        "Panel 1 (Role 1) fails: The AFP carton is centered in the frame rather than 'off-center on the lower third' as required for the EDITORIAL HERO.",
+        "Panel 2 (Role 2) fails: The requirement calls for 'visible emitter-spacing or field-selection evidence'. The tools shown (pressure gauge/adjuster) are installation tools, not layout tapes, rulers, or measurement devices that demonstrate spacing/selection evidence.",
+        "Panel 3 (Role 3) fails: The prompt requires 'one fixed filter, gauge, regulator and manifold' (4 distinct units). The image only shows one main assembly (filter/regulator) and a single gauge, missing the manifold component. Additionally, the carton is used as a stand, violating the instruction that it should remain 'secondary' or separate contextually; the equipment is on an 'empty concrete pad' but is physically resting on the product."
+      ],
+      "correction_prompt": "Re-shoot Panel 1 with the carton positioned off-center in the lower third; re-shoot Panel 2 with a measurement tool (like a tape measure or marker) visible on the soil next to the carton; re-shoot Panel 3 on a clean concrete pad displaying four distinct components (filter, regulator, gauge, manifold) without resting equipment on the carton.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Role 3 (Image 3) fails the brief because it includes farm vehicles (tractors and trailers) in the background, violating the 'no farm activity' rule.",
+        "Role 3 (Image 3) places the product (black tape) on top of a coil of beige tubing/hose, which acts as a stand-in container/prop not allowed in the equipment-only record shot.",
+        "Role 3 (Image 3) fails to show the required set of 'fixed filter, gauge, regulator and manifold' clearly; it only shows a manifold block and a gauge-like dial, missing the filter and regulator elements."
+      ],
+      "correction_prompt": "Replace the third panel with an elevated, equipment-only shot of a filter, gauge, regulator, and manifold on a plain concrete pad; strictly remove all tractors, farm buildings, and tubing coils from the background.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1
+      ],
+      "reasons": [
+        "Role 2: The image depicts a technical kit rather than the required 'visible emitter-spacing or field-selection evidence' such as a tape roll with printed markings.",
+        "Role 3: Missing mandatory 'equipment-only' hardware. The prompt requires a fixed filter, gauge, regulator, and manifold. Instead, the image shows the product (carton) on a concrete pad with farm machinery in the background, violating the 'no farm activity' constraint by including large tractors.",
+        "Role 1: The product carton is oversized relative to the requirements. It is the dominant focal point and not 'small and secondary'."
+      ],
+      "correction_prompt": "Regenerate Role 2 to include an unrolled section of tape showing printed emitter spacing markers; Regenerate Role 3 to feature a headworks assembly (filter, gauge, manifold) on a clean concrete pad with no visible tractors or farm activity; Rescale Role 1 to ensure the carton is small and the irrigation field context dominates the wide high-oblique view.",
       "panel_scores": [
         35
       ],
-      "set_attempt": 1
+      "set_attempt": 3
     }
   ]
 }
