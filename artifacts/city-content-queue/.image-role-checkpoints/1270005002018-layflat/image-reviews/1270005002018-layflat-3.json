@@ -1,0 +1,56 @@
+{
+  "source_id": "1270005002018-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 40,
+      "product_height_percent": 35,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Missing mandatory role: Headworks Detail (pump, gauge, manifold).",
+        "Wrong packaging shape: Image shows a box rather than a packaged AFP coil.",
+        "Watermark content mismatch: Image displays 'AAP' instead of the required 'AFP | 09134922013'."
+      ],
+      "correction_prompt": "Regenerate image to include a fixed pump, gauge, and manifold on a concrete pad. The hose products must be two small coils (one packaged AFP, one bare black) placed secondarily. Remove the box and use correct coil packaging. Ensure watermark is exactly 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 68,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing mandatory role object: no fixed pump, gauge, or manifold on a concrete pad",
+        "Product pair exceeds the 65 percent width hard limit",
+        "Scene is a flat lay product photo instead of the requested elevated equipment detail",
+        "Contains an unapproved hose segment not tied to relevant infrastructure",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate an elevated, equipment-only record photo of one fixed pump with a gauge and manifold on an empty concrete pad. Keep the AFP coil and bare black woven coil small, separate, and secondary. No farm activity. Include only the bottom-right watermark 'AFP | 09134922013'. No people, faces, hands, or body parts. Reduce the product group from 68% to 8-65% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 58,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains the required two-coil pair: one packaged AFP coil and one bare black woven coil.",
+        "The mandatory equipment (pump, gauge, manifold) is present as part of the layout.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "There are zero people or human body parts.",
+        "The objects are separate, physically plausible, and not distorted.",
+        "The product width is within the acceptable 8-65% range (approx 58%)."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

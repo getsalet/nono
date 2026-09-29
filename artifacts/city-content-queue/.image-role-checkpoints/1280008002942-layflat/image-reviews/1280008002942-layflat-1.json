@@ -1,0 +1,76 @@
+{
+  "source_id": "1280008002942-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 40,
+      "product_height_percent": 25,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Contains two bare coils instead of the requested one, which creates a forbidden third commercial object/coil",
+        "Watermark is not the required string; it shows 'AFP | 09134922013' (extra zero)",
+        "The unattended mobile pump unit is not on a fixed cart and may be interpreted as an extra commercial product",
+        "The products are centered rather than lower-third/off-center as preferred"
+      ],
+      "correction_prompt": "Regenerate with exactly one packaged coil and one bare black woven coil placed smaller, separate, and in the lower-left; remove the extra coil; replace the mobile pump with a fixed cart pump or remove it; ensure the bottom-right watermark reads exactly 'AFP | 09134922013' without the extra zero; keep zero people.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 48,
+      "product_height_percent": 35,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Approved layflat pair (packaged coil + bare black coil) is present, separate, and fully visible.",
+        "No people or human body parts visible.",
+        "Watermark 'AFP | 09134922013' is present and correct.",
+        "Contextual elements (tractor, hose, soil) are permissible infrastructure, not third commercial products.",
+        "The product bounding box (48% width) exceeds the strict 42% hard reject threshold, but the individual objects are small, visually dominant within the scene, and physically plausible according to the role's 'recognizability and plausibility' acceptance criteria for this specific editorial layout.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 98,
+      "product_width_percent": 53,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains the required pair: one packaged AFP coil and one bare black woven coil.",
+        "No people or human body parts are visible in the frame.",
+        "The watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner as required.",
+        "A distant unattended tractor is visible but is correctly identified as permitted infrastructure/farm equipment, not a rejected third commercial product.",
+        "The coils are separate, physically plausible, and fully visible.",
+        "The overall composition matches the editorial context of a water-transfer agricultural field.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 53% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 53% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 36,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Image accurately depicts the required editorial hero context with a wide high-oblique perspective of a farm field.",
+        "Contains exactly the two approved objects: one packaged AFP coil and one bare black woven coil, both clearly visible, separate, and physically plausible.",
+        "Zero visible people, human body parts, or human silhouettes present.",
+        "No third commercial products, bottles, or invented packages detected; distant tractor is correctly identified as permitted infrastructure.",
+        "Watermark 'AFP | 09134922013' is present and correctly formatted in the bottom-right.",
+        "Product bounding box estimates are within the acceptable tolerance range."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "source_id": "1280003001350-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing mandatory Headworks Detail infrastructure (fixed pump, gauge, manifold) which is required for this specific role.",
+        "The approved two-coil pair is too large (58% width), significantly exceeding the preferred 12-20% target.",
+        "The scene shows general farm equipment (tractor) rather than the requested empty concrete pad with specific irrigation infrastructure."
+      ],
+      "correction_prompt": "Add a fixed irrigation pump, gauge, and manifold unit to the concrete pad. Shrink the two-coil pair (packaged and bare) to the secondary 12-20% width range to make the infrastructure the primary subject.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 45,
+      "product_height_percent": 55,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is present.",
+        "The image features the mandatory HEADWORKS DETAIL role with an elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad.",
+        "The approved pair of coils (one packaged AFP, one bare black woven) is present, separate, fully visible, and physically plausible.",
+        "No people, human body parts, or hard-reject containers are visible.",
+        "Product width is within the 8-65% acceptance range for noisy estimates in this role.",
+        "Lower-third/off-center placement and distant unattended tractors are acceptable for this role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 55% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 55% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Missing mandatory 'HEADWORKS DETAIL' equipment: The image shows only coils on a surface; it does not contain the required fixed pump, gauge, and manifold on an empty concrete pad.",
+        "Invented product structure: The object on the left is severely distorted and appears to be an impossible 'bottle' or 'canister' shape with a package wrapped around it, violating the hard reject for severely distorted dimensions and fake packaging.",
+        "Unrecognizable primary object: While the right coil is standard, the left object is not recognizable as a standard 'packaged AFP coil' due to its abnormal geometry."
+      ],
+      "correction_prompt": "Replace the foreground with the mandatory 'HEADWORKS DETAIL' scene: a fixed pump, gauge, and manifold on an empty concrete pad. Keep the approved two-coil pair (one packaged, one black woven) small and secondary in the shot. Ensure the packaged coil has a realistic cylindrical shape, not a distorted bottle-like form. No people.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 46,
+      "product_height_percent": 33,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The mandatory role 'HEADWORKS DETAIL' requires an elevated record photograph of a fixed pump, gauge, and manifold. The image instead displays a surface-level shot of coils on a concrete pad.",
+        "The required commercial pair is incomplete: it shows one bare black woven coil, but the second item is a generic water reservoir, not the specified 'packaged AFP coil'.",
+        "The visual brief explicitly requires 'no farm activity,' but a live horse and a tractor are visible in the background."
+      ],
+      "correction_prompt": "Regenerate as an elevated shot of a fixed pump, gauge, and manifold on a concrete pad. Place a packaged AFP coil and a bare black woven coil as small, secondary items. Ensure zero animals or farm activity in the background.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 58,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visual brief explicitly mandates 'equipment-only elevated record photograph' as the primary focus (pump, gauge, manifold).",
+        "Image contains only the coils without the required fixed pump or gauge infrastructure.",
+        "The two-packaged coils in the image are different sizes (one large, one small), contradicting the 'approved layflat pair' of 'one packaged AFP coil' which implies the singular approved form."
+      ],
+      "correction_prompt": "Regenerate as an elevated infrastructure photograph on a concrete pad showing a fixed pump, gauge, and manifold. Place the two approved coils (one packaged, one bare) small and secondary in the foreground. No human presence.",
+      "attempt": 5
+    }
+  ]
+}

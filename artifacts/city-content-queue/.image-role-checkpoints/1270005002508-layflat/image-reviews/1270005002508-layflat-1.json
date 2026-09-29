@@ -1,0 +1,39 @@
+{
+  "source_id": "1270005002508-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 100,
+      "product_height_percent": 75,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The two coils are not 'small, separate and off-center' as required for the editorial hero role; they dominate the foreground, making the 'wide' frame context the main visual weight rather than a small inserted product pair.",
+        "Product bounding box spans nearly the entire image, failing the requirement that the product pair remain small relative to the wide water-transfer context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 100% to 8-42% of frame width.; Reduce product height from 75% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Generate an editorial hero image of a wide, high-oblique agricultural landscape with a prominent horizon and crop rows. Include the packaged AFP coil and the bare black woven coil as small, clearly separate objects placed off-center (preferably lower-third). Maintain the 'AFP | 09134922013' watermark in the bottom-right. Reduce the product group from 100% to 8-42% of frame width. Reduce product height from 75% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 98,
+      "product_width_percent": 27,
+      "product_height_percent": 15,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "The image clearly displays the required pair of products: one packaged white coil and one bare black woven coil, which are separate, fully visible, and physically plausible.",
+        "The products are positioned in the lower-left section of the frame, keeping them small relative to the wide editorial landscape (width < 42%) and off-center as requested.",
+        "The context is a high-oblique wide shot of agricultural field rows, providing an appropriate water-transfer/irrigation setting.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "No human figures, body parts, or third commercial products (like bottles or unrelated machinery) are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

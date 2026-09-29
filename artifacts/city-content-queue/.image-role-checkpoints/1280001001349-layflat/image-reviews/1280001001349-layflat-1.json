@@ -1,0 +1,55 @@
+{
+  "source_id": "1280001001349-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: A prominent person (man) is visible in the center of the image.",
+        "Visible human body parts including face, arms, torso, and legs violate the zero-person constraint.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image strictly with zero people. Remove the man entirely. Keep the packaged AFP coil and bare black woven coil small, separate, and off-center within the wide high-oblique agricultural field context. Ensure the 'AFP | 09134922013' watermark remains in the bottom right corner. Enlarge the product group from 0% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 47,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Correct objects present: one packaged coil and one bare black coil.",
+        "Required AFP watermark is visible.",
+        "No people or human body parts visible.",
+        "Wide, high-oblique crop context suitable for editorial hero role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 47% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 47% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 41,
+      "product_height_percent": 38,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Approved pair of packaged coil and bare black woven coil are visible and separate.",
+        "Zero people or human body parts present.",
+        "Editorial high-oblique water-transfer context is met.",
+        "Required watermark 'AFP | 09134922013' is present and unobstructed.",
+        "Product pair is wide but within the 8-42% acceptance tolerance range for this role, and objects are fully recognizable."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
