@@ -1,0 +1,57 @@
+{
+  "source_id": "1250001002516-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 98,
+      "product_width_percent": 52,
+      "product_height_percent": 31,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Perfectly displays the required pair of products: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Both objects are clearly visible, separate, and positioned off-center in the lower portion of the frame.",
+        "No human silhouettes, faces, or body parts are visible.",
+        "The required 'AFP | 09134922013' watermark is present and legible in the bottom right corner.",
+        "The background contains only acceptable infrastructure: distant buildings, a horizon, and an unattended farm setting without additional prohibited commercial products (bottles/canisters).",
+        "The physical intersection of the hose from the right coil into the center is plausible and consistent with the product role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 42,
+      "product_height_percent": 38,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Visible human figure (man) standing in the background on the left side.",
+        "Hard reject: Visible human figure (person) seated in the tractor in the background.",
+        "Hard reject: Visible human figure (person) crouching in the background on the right side."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove all humans and any human body parts, faces, or silhouettes from the background. Keep the water channel, the packaged coil, the bare black woven coil, and the unattended farm equipment visible, but ensure the scene is completely devoid of people.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 14,
+      "product_height_percent": 26,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Exact watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Both mandatory objects are visible and separate: the wrapped black coil (packaged) and the bare black woven coil.",
+        "No people, human body parts, or forbidden commercial containers (bottles, buckets, jars) are visible in the frame.",
+        "Distant unattended tractor and water cart are correctly identified as farm equipment and not rejected as third-party products.",
+        "Object placement is off-center in the foreground, which satisfies the editorial visual brief without triggering a hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

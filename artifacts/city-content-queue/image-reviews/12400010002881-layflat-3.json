@@ -1,0 +1,54 @@
+{
+  "source_id": "12400010002881-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 68,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Total product bounding box is approximately 68 percent wide, which exceeds the 65 percent hard reject threshold for a 'wide pair'",
+        "Missing mandatory 'HEADWORKS DETAIL' equipment (fixed pump, gauge, and manifold) required on the empty concrete pad",
+        "Required watermark string is incorrect: shows '09134922013' instead of the mandatory '09134922013'",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Scale down the coil pair so total width is under 60 percent of the frame. Add a fixed pump, pressure gauge, and manifold to the concrete pad to complete the equipment-only role. Replace the incorrect watermark with 'AFP | 09134922013'. Reduce the product group from 68% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 45,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: A third small black coil is visible on the ground between the main layflat package and the large bare black coil, which is not part of the approved pair.",
+        "The required role is a 'HEADWORKS DETAIL' of a fixed pump, gauge, and manifold. The image shows a generic portable motor pump and includes a third coil, failing the role description.",
+        "The large black coil is a solid, flat-wound coil rather than the specified 'bare black woven' (flexible) coil."
+      ],
+      "correction_prompt": "Remove the small third coil from the foreground. Replace the flat-wound coil with a flexible woven layflat hose coil. Reframe as a close-up detail of a fixed industrial pump, gauge, and manifold on a concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image successfully displays the required layout: one packaged AFP coil (layflat) and one bare black woven coil, plus the mandated pump, gauge, and manifold setup.",
+        "The pair of coils remains separate, physically plausible, and fully visible.",
+        "The combined width of the products is estimated at 30% of the frame, which falls within the 8-65% acceptable range for a noisy reviewer estimate and the 12-20% preferred band (or slightly above, but well within the hard limit).",
+        "There are zero people, body parts, or human silhouettes in the image.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

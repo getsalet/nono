@@ -6,21 +6,83 @@
   "fast_mode": true,
   "history": [
     {
-      "pass": true,
-      "score": 92,
-      "product_width_percent": 40,
-      "product_height_percent": 30,
-      "product_x_center_percent": 30,
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 58,
+      "product_height_percent": 45,
+      "product_x_center_percent": 55,
       "reasons": [
-        "Contains both required products: packaged AFP coil (left) and bare black woven coil (right).",
-        "No people, face, or body parts visible.",
-        "Watermark 'AFP | 09134922013' is clearly present in the bottom-right.",
-        "Scene depicts a high-oblique water-transfer context in a field, fitting the editorial hero role.",
-        "The small machine on the right is infrastructure, not a disqualifying commercial product.",
-        "The combined width of the two coils is within the 8-42% acceptable range."
+        "A person (farmer/worker) is clearly visible in the top-left background of the image, which is a hard reject trigger.",
+        "The combined width of the product pair (packaged coil and black coil) is significantly wider than the allowed maximum of 42 percent, appearing to take up nearly 60 percent of the frame's width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Remove the person on the left side of the image completely. Reposition the two coils much closer together and scale them down so their combined width is under 40% of the frame. Keep the exact bottom-right watermark visible. Reduce the product group from 58% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 48,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image accurately depicts the required pair of products: a packaged coil on the left and a bare black woven coil on the right.",
+        "The 'AFP | 09134922013' watermark is correctly visible in the bottom-right corner as required.",
+        "The background provides a perfect editorial context (wide high-oblique water-transfer/agricultural context in a field).",
+        "Zero people or human body parts are visible.",
+        "There are no extraneous commercial products, bottles, or containers.",
+        "Both objects are fully visible, separate, and physically plausible on the soil.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 53,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Successfully shows exactly the approved layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "The two objects are separate, fully visible, and physically plausible without merging.",
+        "The exact bottom-right watermark 'AFP | 09134922013' is present and correctly preserved.",
+        "Zero people, farmers, workers, or human body parts are visible in the frame.",
+        "Distant farm infrastructure (tractor, roll, fields) is treated correctly as environmental context rather than commercial products.",
+        "No hard reject criteria such as third commercial packages, bottles, or floating elements are present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 53% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 53% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 44,
+      "product_height_percent": 48,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human workers are visible in the background (standing near the farm equipment).",
+        "Hard reject: Third commercial product present in the image (a large white cylindrical filter or tank sitting on the ground next to the farm trailer).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 8-42% of frame width.; Reduce product height from 48% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Regenerate image removing all human figures from the background and removing the large cylindrical filter/tank. Keep only the green tractor (unattended) and the farm building as background context. Ensure the two coals remain the primary focus and are smaller relative to the frame width. Reduce the product group from 44% to 8-42% of frame width. Reduce product height from 48% to at most 40% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 45,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Combined product width (~58%) significantly exceeds the hard reject limit of 42% and the preferred 12-20% range.",
+        "The packaged coil appears to be a standard round tire/wheel wrapped in fabric rather than a flat layflat hose, which conflicts with the 'layflat' family description.",
+        "Editorial Hero role requires products to remain small and separate; here they are large, merging into a single visual block.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Reduce combined width of the two products to 15-20% of the frame width. Place them distinctly separate in the lower third (e.g., bottom left). Ensure the packaged coil clearly looks like a flat layflat hose, not a round tire. Keep the distant tractor and farm context but ensure products are small relative to the wide landscape shot. Reduce the product group from 58% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 5
     }
   ]
 }
