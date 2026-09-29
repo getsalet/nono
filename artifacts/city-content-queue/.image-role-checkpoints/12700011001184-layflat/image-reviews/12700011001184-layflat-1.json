@@ -1,0 +1,56 @@
+{
+  "source_id": "12700011001184-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 42,
+      "product_height_percent": 40,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Humans (farmers/operators) are visible inside the distant tractors, violating the mandatory requirement for zero people and zero body parts.",
+        "The product pair (packaged coil + bare coil) is off-center but heavily biased toward the left, failing to align with the 'right-side' placement preferred for this role in the article brief."
+      ],
+      "correction_prompt": "Remove all human figures, specifically the operators inside the background tractors. Reposition the product pair (packaged coil and bare coil) to be clearly on the right side of the frame, separated by a wide stretch of irrigation hose.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 67,
+      "product_height_percent": 28,
+      "product_x_center_percent": 54,
+      "reasons": [
+        "Zero visible people or human body parts.",
+        "Correct presence of the mandatory bottom-right watermark 'AFP | 09134922013'.",
+        "Correct inclusion of the approved pair: one packaged coil and one bare black woven coil.",
+        "Tractor is correctly identified as distant unattended equipment (allowed infrastructure), not a hard reject.",
+        "Product pair width estimated at 67%, which exceeds the 42% upper limit for noisy estimates.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 67% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Rescale the composition to make the pair of coils significantly smaller (width < 42% of the frame) while maintaining the approved packaged and bare coil layout. Reduce the product group from 67% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 34,
+      "product_height_percent": 20,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains exactly one packaged coil and one bare black woven coil, which are separate, fully visible, and physically plausible on the ground.",
+        "The combined width of the products is estimated at 34%, which falls within the acceptable range of 8 to 42 percent.",
+        "The placement is off-center (lower-left), which aligns with the editorial preference to keep the hero context (water channel) dominant.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The image contains zero people and zero human body parts; the tractor in the background is unattended equipment and allowed.",
+        "No third commercial products, bottles, or impossible intersections are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-29T10:01:37+00:00`
+- آخرین بروزرسانی: `2026-09-29T10:16:25+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **625 از 1894 (33.00٪)**
-- تکمیل‌شده: **625**
+- پیشرفت: **628 از 1894 (33.16٪)**
+- تکمیل‌شده: **628**
 - در حال پردازش: **0**
-- در انتظار: **84**
-- آماده انتخاب در اجرای بعدی: **84**
+- در انتظار: **64**
+- آماده انتخاب در اجرای بعدی: **64**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1185**
+- ناموفق: **1202**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,9 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **نوکنده** — گلستان — `layflat` — 1825 کلمه — `2026-09-29T10:16:23+00:00`
+- **فراغی** — گلستان — `layflat` — 1492 کلمه — `2026-09-29T10:15:29+00:00`
+- **مینودشت** — گلستان — `layflat` — 1367 کلمه — `2026-09-29T10:09:27+00:00`
 - **رفیع** — خوزستان — `layflat` — 1417 کلمه — `2026-09-29T10:00:36+00:00`
 - **شال** — قزوین — `layflat` — 1749 کلمه — `2026-09-29T09:58:04+00:00`
 - **رفیع** — خوزستان — `tape20` — 1231 کلمه — `2026-09-29T09:58:02+00:00`
@@ -49,22 +52,19 @@
 - **نصیرشهر** — تهران — `layflat` — 1508 کلمه — `2026-09-29T08:47:26+00:00`
 - **میناب** — هرمزگان — `layflat` — 1271 کلمه — `2026-09-29T08:45:42+00:00`
 - **شرافت** — خوزستان — `tape20` — 1301 کلمه — `2026-09-29T08:42:14+00:00`
-- **باوج** — خوزستان — `layflat` — 1109 کلمه — `2026-09-29T08:29:35+00:00`
-- **زیارتعلی** — هرمزگان — `layflat` — 1171 کلمه — `2026-09-29T08:29:10+00:00`
-- **رویدر** — هرمزگان — `layflat` — 1291 کلمه — `2026-09-29T08:28:20+00:00`
 
 ## خطاهای اخیر
 
-- **دستجرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **سرعین** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **جعفریه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **مرادلو** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **قاهان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **عنبران** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **آراللو** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **زهره** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کوراییم** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **قشلاق** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **گالیکش** — `layflat`: `Agnes Image HTTP 503: {"error":{"message":"image queue is full, please retry later (request id: 2026092910161990604383aZTKjPh6)","type":"","param":"","code":null}}`
+- **بندرگز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **دوزین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **ترکالکی** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **دلند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **گلیداغ** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **القجر** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **مراوه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **سماله** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **ضیاآباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

@@ -1,43 +1,63 @@
 {
   "source_id": "10600020002715-layflat",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 42,
+      "score": 25,
       "duplicate_roles": [
         1,
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Roles 1 and 2 are nearly indistinguishable: both use low field-level camera angles with active farm equipment (tractors) in the background, violating the requirement for visibly distinct camera heights and environments.",
-        "Role 1 violates the editorial hero brief by showing active farm machinery (tractor), which the instructions explicitly prohibit.",
-        "Role 2 (selection evidence) is not 'elevated' or a 'technical comparison' as requested; instead, it is a low-angle shot with a generic farm field background and active machinery (tractor), rather than a controlled or neutral technical context.",
-        "Role 3 correctly adheres to the 'concrete pad' and 'no farm activity' constraints, but the duplication between the first two roles causes the set to fail."
+        "Role 1 (Hero): While it has a tractor, the camera angle is a low ground shot rather than the required 'wide high-oblique' view. The product is centered and too large, failing to be 'off-center' and 'small'.",
+        "Role 2 (Selection Evidence): The brief explicitly forbids a 'third commercial package' or 'extra coil', but this image shows three coiled products, directly violating the negative constraint. It also lacks the elevated technical comparison perspective.",
+        "Role 3 (Headworks Detail): This is the most severe failure. The brief requires 'equipment-only' including a pump, gauge, and manifold on a concrete pad. This image only shows the product coils on the concrete with zero headworks equipment present.",
+        "The set fails to create distinct camera heights and environments; roles 1 and 2 share similar low-angle field environments, and role 3 lacks the necessary technical infrastructure narrative."
       ],
-      "correction_prompt": "Replace roles 1 and 2 with high-oblique wide shots and elevated technical comparisons set against static, non-mechanical agricultural backgrounds (no tractors or active farm machinery) to ensure distinct camera angles and environments.",
+      "correction_prompt": "Regenerate Role 1 as a high-oblique shot with small, off-center product; Restrict Role 2 to exactly two coils in an elevated comparison view; and for Role 3, strictly add the required fixed pump, gauge, and manifold equipment on the concrete pad alongside the small product coils.",
       "panel_scores": [
-        42
+        25
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 30,
+      "score": 55,
       "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Roles 1 and 2 are visually near-identical (same layout, camera angle, and equipment arrangement), failing the distinct role requirement.",
+        "Role 1 does not fulfill the 'high-oblique' wide context requirement, instead using the same eye-level perspective as Role 2.",
+        "Role 2 fails to show the required 'approved two-coil pair' as the selection evidence, instead displaying two single coils and multiple extra hoses/pumps."
+      ],
+      "correction_prompt": "Reconstruct the image set: create a high-oblique wide-angle hero shot for Role 1 showing the coils as small off-center details; separate Role 2 into a distinct low-level technical comparison of two specific coils; and ensure Role 3 remains unique as an equipment-only headworks detail without duplicating the layouts of the previous two.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
         2
       ],
       "reasons": [
-        "Role 1 contains a person (tractor driver), which is an explicit rejection trigger, and also includes farm activity that should be absent.",
-        "Role 3 completely omits the required equipment (pump, gauge, manifold), failing to meet the 'HEADWORKS DETAIL' requirements.",
-        "Roles 2 and 3 are duplicates as they use the same camera angle (eye-level), identical layout, and show only the coil pair without distinguishing environment or technical narrative.",
-        "Role 2 does not demonstrate diameter or construction differences through the pair itself, lacking the required selection evidence."
+        "Role 1 fails the 'EDITORIAL HERO' requirement as the coils are shown as oversized, central foreground objects rather than small, off-center items in a wide high-oblique context.",
+        "Role 2 and Role 1 are nearly identical in camera height and composition (low-angle field close-up), resulting in layout duplication.",
+        "Role 3 fails the 'HEADWORKS DETAIL' requirement by completely omitting the required pump, gauge, and manifold; it instead shows a duplicate of the field/close-up layout."
       ],
-      "correction_prompt": "Regenerate Role 1 without any person or driver; replace Role 3 to feature an elevated record photograph of a fixed pump, gauge, and manifold on a concrete pad with the coils appearing small and secondary, ensuring distinct camera angles across all panels.",
+      "correction_prompt": "For Role 1, create a wide high-oblique editorial hero shot where the coils are small and off-center. For Role 3, insert a fixed pump, gauge, and manifold on an empty concrete pad as the primary subject, leaving the coils small and secondary.",
       "panel_scores": [
-        30
+        45
       ],
-      "set_attempt": 2
+      "set_attempt": 3
     }
   ]
 }

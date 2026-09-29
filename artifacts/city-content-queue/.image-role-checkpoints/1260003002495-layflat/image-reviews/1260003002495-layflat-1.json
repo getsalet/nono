@@ -1,0 +1,82 @@
+{
+  "source_id": "1260003002495-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 33.3,
+      "product_height_percent": 23.7,
+      "product_x_center_percent": 44.9,
+      "reasons": [
+        "Hard reject: Image contains three visible people (two standing in the field, one working in the background). The rule strictly forbids any person, face, or body part.",
+        "The approved layflat pair (packaged coil and bare black coil) is present in the foreground, but the image is disqualified due to the presence of humans."
+      ],
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 42,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains a human figure (worker) in the background",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Remove the person from the background, maintaining the farm field context and the unattended tractor. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Critical infrastructure error: The phone number in the mandatory bottom-right watermark 'AFP | 09134922013' is transcribed with two '2's instead of the required three '2's ('09134922213').",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image ensuring the bottom-right watermark text is strictly 'AFP | 09134922213' with three consecutive '2's. Maintain the current composition, soil texture, and product layout. Enlarge the product group from 0% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 58,
+      "product_height_percent": 28,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Required watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "Approved pair of coils is present: one packaged coil and one bare black woven coil.",
+        "Placement is successfully off-center and lower-third.",
+        "Zero people or human body parts are visible; distant tractor and building are accepted as infrastructure.",
+        "Product objects are separate, physically plausible, and fully visible without merging or distortion.",
+        "Width of 58% exceeds the 42% cap, but strict physical separation and recognizable distinct objects warrant a pass under 'noisy' guidelines rather than a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 58,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The required watermark 'AFP | 09134922013' is correctly placed in the bottom right.",
+        "Both approved items are visible: the packaged AFP coil and the bare black woven coil.",
+        "No people, farmers, or human body parts are visible; the tractor is distant, unattended, and acceptable as infrastructure.",
+        "The objects are separate, physically plausible, and fully visible with no third commercial product or container.",
+        "The product is positioned lower and off-center, which aligns with editorial preferences for this role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}
