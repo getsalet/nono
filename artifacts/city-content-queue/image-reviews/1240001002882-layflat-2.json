@@ -1,18 +1,47 @@
 {
   "source_id": "1240001002882-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: image contains a person (farmer) kneeling and handling the coils. Required role specifies zero people and must show an approved layflat pair with one packaged AFP coil and one bare black woven coil. Image only shows bare black coils, no packaged AFP coil visible."
+      ],
+      "correction_prompt": "Remove all human figures. Generate an image showing exactly two coil products side by side: one packaged AFP coil (wrapped in packaging/material) and one bare black woven agricultural hose coil. Place on elevated surface for technical comparison. Keep product width between 12-20% of frame, lower-third placement preferred. Include mandatory bottom-right watermark: AFP | 09134922013",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 68,
+      "product_width_percent": 54,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Combined product width of ~54% exceeds the 42% hard-reject threshold for this role; both coils are recognizable and separately placed, but the pair is too wide for the frame.",
+        "No people or extra commercial products present; watermark is correctly positioned; infrastructure elements in background are acceptable.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 54% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Recompose the two-coil pair so their combined bounding box occupies no more than 42% of the frame width while keeping both coils fully visible, separate, and clearly showing the packaged vs. bare construction difference. Reduce the product group from 54% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image correctly features the approved pair: one packaged AFP coil and one bare black woven coil, placed on soil with a distant unattended tractor in the background which is permitted. The mandatory 'AFP | 09134922013' watermark is present and exact in the bottom right. No people or forbidden objects are visible. The coils are fully visible, separate, and show construction differences as required for the selection evidence role.",
+        "The product pair is well-composed in the foreground, distinct from the distant agricultural setting. The packaged coil on the left and the bare black coil on the right clearly demonstrate the selection evidence needed for the article's visual brief. The distant tractor is unattended and falls under permitted infrastructure. The watermark is correctly placed and readable."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

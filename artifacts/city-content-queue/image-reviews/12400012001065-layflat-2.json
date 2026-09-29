@@ -1,18 +1,38 @@
 {
   "source_id": "12400012001065-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 25,
+      "product_x_center_percent": 30,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "HARD REJECT: Main subject is a person crouching in the foreground holding a coil, with face, arms, legs, and full body visible",
+        "HARD REJECT: Additional person sitting on tractor in background, plus other small figures near farm building",
+        "Violation of zero-people requirement throughout the entire frame"
+      ],
+      "correction_prompt": "Regenerate with zero people anywhere in frame. Remove all human figures, faces, hands, arms, legs. Show only two hose coils (one packaged AFP coil and one bare black woven coil) on bare soil with distant unattended farm infrastructure (tractor, building, hose segment) allowed when relevant. Fixed watermark AFP | 09134922013 required.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Two coils clearly visible and separate — one packaged silver/blue, one bare black woven",
+        "Watermark 'AFP | 09134922013' present in bottom right",
+        "No people, no human body parts",
+        "Tractor, barn, and farm infrastructure in background are acceptable",
+        "Objects are physically plausible, fully visible, and distinct"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

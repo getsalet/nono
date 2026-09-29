@@ -1,18 +1,42 @@
 {
   "source_id": "1270009002835-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 52,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "HARD REJECT: Person visible in background — individual standing near tractor, wearing light pants and grey shirt",
+        "Third commercial package present — multiple open cardboard boxes beyond the approved two-coil pair",
+        "Additional objects include crumpled silver packaging material and an extra coiled product in a box",
+        "Combined product width exceeds 42% threshold at approximately 52% of frame",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the image, including the person near the tractor in the background. Show only the approved two-coil layflat pair: one packaged AFP coil and one bare black woven coil. Eliminate extra cardboard boxes and silver crumpled packaging. Keep watermark AFP | 09134922013 in bottom-right corner. Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 16.4,
+      "product_height_percent": 7.8,
+      "product_x_center_percent": 42.3,
+      "reasons": [
+        "Approved layflat pair present: one packaged silver AFP coil and one bare black woven coil, both clearly visible and physically plausible.",
+        "Combined product width approximately 16.4% of frame — within acceptable range (8–42%).",
+        "Zero people or human body parts in the image.",
+        "Distant unattended red tractor in background is permissible infrastructure per rules.",
+        "Required watermark 'AFP | 09134922013' is present in bottom-right corner.",
+        "Black circular object on the right edge is consistent with a gauge/connector fixture rather than a third commercial package, given its appearance and context.",
+        "SELECTION EVIDENCE role fulfilled: the two coils are displayed side-by-side at elevation showing construction difference (wrapped vs bare weave)."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

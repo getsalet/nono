@@ -1,61 +1,94 @@
 {
   "source_id": "1270009002835-layflat",
-  "family": "layflat",
   "kind": 3,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "product_width_percent": 62,
-      "product_height_percent": 38,
-      "product_x_center_percent": 46,
+      "score": 48,
+      "product_width_percent": 28,
+      "product_height_percent": 10,
+      "product_x_center_percent": 38,
       "reasons": [
-        "The image does not include the mandatory 'HEADWORKS DETAIL' infrastructure (fixed pump, gauge, and manifold) on the concrete pad, focusing instead solely on the coils.",
-        "The required bottom-right watermark 'AFP | 09134922013' is missing."
+        "Missing mandatory HEADWORKS DETAIL: no fixed pump, gauge, or manifold present on the concrete pad.",
+        "Large concrete wall structure is not part of the required equipment detail and dominates the frame improperly.",
+        "Distant barn and wheat field create a generic farm scene rather than the required equipment-only elevated record shot.",
+        "No visible pump, gauge, manifold, or relevant connectors are present.",
+        "The approved two-coil pair is present and correct, but the overall role/brief is not met."
       ],
-      "correction_prompt": "Regenerate with a fixed pump, gauge, and manifold mounted on a concrete pad in the background or upper section. Add the text 'AFP | 09134922013' as a watermark in the bottom-right corner. Keep the two coils small and secondary.",
+      "correction_prompt": "Regenerate with one fixed pump, one gauge, and one manifold as the primary elevated-record subject on an empty concrete pad; place the two-coil pair (one packaged AFP coil, one bare black woven coil) small, separate, and secondary in the foreground. Remove the large concrete wall structure. Keep the AFP | 09134922013 watermark in the bottom-right corner. No people or farm activity.",
       "attempt": 1
     },
     {
       "pass": false,
       "score": 35,
-      "product_width_percent": 74,
-      "product_height_percent": 60,
-      "product_x_center_percent": 48,
+      "product_width_percent": 48,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
       "reasons": [
-        "The combined product width is approximately 74%, which exceeds the hard reject threshold of 65%.",
-        "The image clearly shows three distinct commercial products (a packaged coil, a bare black coil, and a large silver coil/wheel), whereas the brief strictly requires only two (one packaged AFP coil and one bare black woven coil). The third coil is a hard reject.",
-        "The image depicts all three objects (including the extra silver coil) equally as primary products, but the brief mandates that the two-coil pair remain 'small, separate and secondary' to the pump infrastructure.",
-        "A wooden mallet/hammer is visible on the ground, which acts as an unexpected tool and contradicts the 'no farm activity' and 'equipment-only' intent of the brief.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 74% to 8-65% of frame width.; Reduce product height from 60% to at most 45% of frame height."
+        "Missing mandatory HEADWORKS DETAIL elements: no fixed pump, gauge, or manifold visible on the concrete pad. The two-coil pair dominates the foreground rather than being small and secondary. The image shows a field/tractor scene instead of the required equipment-only elevated record photograph. Distant tractor with visible activity (kicking up dust) conflicts with 'no farm activity' requirement.",
+        "correction_prompt: "
       ],
-      "correction_prompt": "Reduce the two approved coils (one packaged AFP, one bare black) to 15-20% of the total image width. Completely remove the large silver coil/wheel and the wooden mallet. Elevate the fixed pump, gauge, and manifold on a concrete pad so the infrastructure is the clear primary focus, with the two coils resting small and secondary on the ground. Reduce the product group from 74% to 8-65% of frame width. Reduce product height from 60% to at most 45% of frame height.",
       "attempt": 2
     },
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 37,
-      "product_height_percent": 34,
-      "product_x_center_percent": 49,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 18,
+      "product_x_center_percent": 52,
       "reasons": [
-        "Image does not contain the required infrastructure elements for the 'HEADWORKS DETAIL' role (fixed pump, gauge, and manifold on an empty concrete pad are missing).",
-        "The scene shows the products on a plain grey concrete surface but lacks the specific elevated pump setup requested in the article visual brief."
+        "Active green tractor visible in background performing farm work (kicking up dust) - violates 'no farm activity' requirement",
+        "Tractor appears to be in operation with driver inside cab - constitutes farm activity, not 'distant unattended equipment'",
+        "Equipment (pump/gauge and coils) correctly placed on concrete pad in foreground",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner"
       ],
-      "correction_prompt": "Add a fixed pump with a gauge and manifold mounted on an elevated stand in the background; keep the two coils as small secondary objects in the foreground; remove all people.",
+      "correction_prompt": "Remove the active green tractor from the background. The scene should show only equipment (fixed pump, gauge, manifold, and irrigation coils) on an empty concrete pad with no farm activity. Distant unattended equipment is acceptable but active tractors performing work must be removed.",
       "attempt": 3
     },
     {
-      "pass": true,
-      "score": 100,
-      "product_width_percent": 46,
-      "product_height_percent": 25,
-      "product_x_center_percent": 32,
-      "reasons": [],
-      "correction_prompt": "",
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 42,
+      "product_height_percent": 38,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Third commercial object present: a coiled black hose with a connector is visible to the right, violating the two-coil-only requirement.",
+        "Objects are centrally placed rather than lower-third.",
+        "The image is more of a general product shot than a specific equipment detail per the brief."
+      ],
+      "correction_prompt": "Remove the coiled hose with connector from the right side; keep only the packaged AFP coil and the single bare black woven coil in a lower-third composition on the concrete pad.",
       "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Mandatory HEADWORKS DETAIL role not fulfilled: image shows only two hose coils on an empty concrete surface with no fixed pump, gauge, or manifold present. The small copper connector piece on the bare coil does not constitute the required infrastructure. Coils are the primary subject rather than small and secondary as specified. No elevated record photograph of headworks equipment is depicted."
+      ],
+      "correction_prompt": "Regenerate image as HEADWORKS DETAIL: fixed pump, gauge, and manifold installed on an empty concrete pad with the two-coil pair (one packaged AFP coil, one bare black woven coil) placed small, separate, and secondary in the foreground or periphery. Preserve AFP | 09134922013 watermark.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 18,
+      "product_height_percent": 24,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil, both fully visible and separate",
+        "Fixed pump with gauge and manifold correctly positioned as background infrastructure on concrete pad",
+        "Zero people or human body parts detected",
+        "Required bottom-right watermark 'AFP | 09134922013' is present",
+        "Product occupies appropriate 18% width (within acceptable range)",
+        "Lower-third placement suitable for editorial role"
+      ],
+      "correction_prompt": "",
+      "attempt": 6
     }
   ]
 }
