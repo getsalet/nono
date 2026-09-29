@@ -167,7 +167,7 @@ def _review_image_panel(base,paths,item,role_numbers):
  roles='; '.join(f'{kind}: {image_prompt_policy.role_directive(family,kind)}' for kind in role_numbers)
  prompt=f'''Review this panel from a {len(paths)}-image city-article editorial set.
 Panel role numbers: {role_numbers}. Article visual brief: {brief}. Required roles: {roles}.
-The same AFP product is expected in every image, so product identity itself is not duplication. Pass only when the shown roles are visibly distinct in camera height/angle, environment structure and technical narrative, and every background is relevant to the article brief. Reject repeated layouts, generic farms, role-3/role-5 hardware duplication, any person, any bottle/container, oversized product, or images that only move the product. A distant unattended tractor or farm building is allowed context and is not farm activity; never reject it by itself. The exact bottom-right watermark "AFP | 09134922013" is required and must never be treated as duplication, obstruction, added caption or a rejection reason. Return duplicate_roles using the original role numbers from {role_numbers}. Return only JSON: {{"pass":true|false,"score":0-100,"duplicate_roles":{role_numbers},"reasons":["..."],"correction_prompt":"one concise replacement instruction"}}.'''
+The same AFP product is expected in every image, so product identity itself is not duplication. Pass only when the shown roles are visibly distinct in camera height/angle, environment structure and technical narrative, and every background is relevant to the article brief. Reject repeated layouts, generic farms, role-3/role-5 hardware duplication, any person, any bottle/container, oversized product, or images that only move the product. For role 3, the approved product evidence is required and may remain small and secondary beside the fixed headworks; never reject it merely for being present. "Equipment-only" means no people, activity or extra commercial objects, not absence of the approved product evidence. A distant unattended tractor or farm building is allowed context and is not farm activity; never reject it by itself. The exact bottom-right watermark "AFP | 09134922013" is required and must never be treated as duplication, obstruction, added caption or a rejection reason. Return duplicate_roles using the original role numbers from {role_numbers}. Return only JSON: {{"pass":true|false,"score":0-100,"duplicate_roles":{role_numbers},"reasons":["..."],"correction_prompt":"one concise replacement instruction"}}.'''
  content=[{'type':'text','text':prompt}]
  content.extend({'type':'image_url','image_url':{'url':'data:image/webp;base64,'+blob}} for blob in encoded)
  payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':content}],'temperature':0,'response_format':{'type':'json_object'}}
@@ -209,6 +209,33 @@ def review_image_set(base,paths,item):
  }
 
 
+
+def _target_set_roles(verdict,image_count):
+ """Regenerate only roles identified by set QA; default to role 3, not the whole set."""
+ roles=[]
+ for value in verdict.get('duplicate_roles') or []:
+  try:value=int(value)
+  except (TypeError,ValueError):continue
+  if 1<=value<=image_count and value not in roles:roles.append(value)
+ evidence=' '.join([*(str(x) for x in verdict.get('reasons') or []),str(verdict.get('correction_prompt') or '')])
+ for match in re.finditer(r'(?i)\b(?:role|image|panel)\s*[-:#]?\s*([1-5])\b',evidence):
+  value=int(match.group(1))
+  if 1<=value<=image_count and value not in roles:roles.append(value)
+ return set(roles or [3 if image_count>=3 else image_count])
+
+
+def _soft_set_accept(verdict,set_attempt,rounds):
+ """After bounded retries, accept individually-approved sets with only diversity defects."""
+ if set_attempt!=rounds or int(verdict.get('score',0))<55:return False
+ evidence=' '.join(str(x).lower() for x in verdict.get('reasons') or [])
+ hard_terms=(
+  'person','people','human','body part','face','hand',' arm',' leg','silhouette',
+  'bottle','jar','canister','bucket','third commercial','extra commercial','extra coil',
+  'gibberish','fake label','impossible','intersect','floating','severely distorted',
+  'mandatory role missing','missing mandatory','fails the role assignment',
+ )
+ return not any(term in evidence for term in hard_terms)
+
 def install_set_manager(base,backend,image_count=5):
  def manager(item,pool):
   review_id=str(item.get('source_id') or 'unknown')
@@ -236,6 +263,10 @@ def install_set_manager(base,backend,image_count=5):
     set_review.parent.mkdir(parents=True,exist_ok=True)
     set_review.write_text(json.dumps({'source_id':review_id,'policy':REVIEW_POLICY,'history':history[-20:]},ensure_ascii=False,indent=2),encoding='utf-8')
     print(f"city_image_set_qa source_id={review_id} attempt={set_attempt} pass={verdict.get('pass')} score={verdict.get('score')} duplicate_roles={verdict.get('duplicate_roles',[])} reasons={verdict.get('reasons',[])}",flush=True)
+    soft_accept=_soft_set_accept(verdict,set_attempt,rounds)
+    if soft_accept:
+     verdict['pass']=True;verdict['soft_accepted']=True
+     print(f"city_image_set_qa_soft_accept source_id={review_id} attempt={set_attempt} score={verdict.get('score')} reasons={verdict.get('reasons',[])}",flush=True)
     if verdict.get('pass'):
      base.IMAGES.mkdir(parents=True,exist_ok=True);final_reviews=base.OUT/'image-reviews';final_reviews.mkdir(parents=True,exist_ok=True)
      for kind in range(1,image_count+1):
@@ -246,7 +277,7 @@ def install_set_manager(base,backend,image_count=5):
       if role_review.exists():os.replace(role_review,final_reviews/role_review.name)
      completed=True
      return [results[kind] for kind in range(1,image_count+1)]
-    pending=set(verdict.get('duplicate_roles') or range(1,image_count+1))
+    pending=_target_set_roles(verdict,image_count)
     correction=str(verdict.get('correction_prompt') or '; '.join(verdict.get('reasons',[])))
     for kind in pending:
      feedback[kind]=correction+f' Create a new role-{kind} scene clearly unlike the other roles.'
