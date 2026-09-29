@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Queue restart trigger after repository transfer to getsalet/nono.
 """Rebuild completed city images using exact, non-generated AFP product assets."""
 from __future__ import annotations
 
