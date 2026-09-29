@@ -24,7 +24,7 @@ import city_content_queue_cloudflare as backend
 import image_prompt_policy
 import image_quality_gate
 
-POLICY = "article-parity-v14-three-image-no-human-no-container-reviewed"
+POLICY = "strict-restoration-posts-567-632-20260929"
 MODE = "article-parity-three-image-reference-conditioned-rerender"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
 MARKER = OUT / "image-rebuild-article-parity-v14-three-image.json"
@@ -39,6 +39,8 @@ QA_ATTEMPTS = max(1, int(os.getenv("IMAGE_QA_ATTEMPTS", "10")))
 SET_ATTEMPTS = max(1, int(os.getenv("IMAGE_SET_QA_ATTEMPTS", "3")))
 FROM_POST = max(1, int(os.getenv("REBUILD_FROM_POST", "1")))
 POST_LIMIT = max(1, int(os.getenv("REBUILD_POST_LIMIT", "1")))
+POST_WORKERS = max(1, int(os.getenv("REBUILD_POST_WORKERS", "1")))
+COMPLETED_SINCE = os.getenv("REBUILD_COMPLETED_SINCE", "").strip()
 image_prompt_policy.install(backend)
 
 
@@ -329,6 +331,11 @@ def main() -> int:
         raise RuntimeError("Queue file is missing")
     state = json.loads(base.QUEUE.read_text(encoding="utf-8"))
     completed_all = [x for x in state.get("items", []) if x.get("status") == "completed"]
+    if COMPLETED_SINCE:
+        completed_all = [
+            x for x in completed_all
+            if str(x.get("completed_at") or "") >= COMPLETED_SINCE
+        ]
     completed = completed_all[FROM_POST - 1:]
     records, skipped = {}, []
     for item in completed:
@@ -375,13 +382,19 @@ def main() -> int:
     records = {source_id: records[source_id] for source_id in selected_ids}
     results = {source_id: {} for source_id in records}
     failures = []
-    for source_id, (item, _, data) in records.items():
-        try:
-            results[source_id] = generate_set({**item, **data})
-        except Exception as exc:
-            failures.append(
-                {"source_id": source_id, "kind": "set", "error": str(exc)[:1200]}
-            )
+    with ThreadPoolExecutor(max_workers=POST_WORKERS, thread_name_prefix="city-rebuild-post") as post_pool:
+        futures = {
+            post_pool.submit(generate_set, {**item, **data}): source_id
+            for source_id, (item, _, data) in records.items()
+        }
+        for future in as_completed(futures):
+            source_id = futures[future]
+            try:
+                results[source_id] = future.result()
+            except Exception as exc:
+                failures.append(
+                    {"source_id": source_id, "kind": "set", "error": str(exc)[:1200]}
+                )
 
     failed_ids = {x["source_id"] for x in failures}
     rebuilt, stamp = [], now()
@@ -435,7 +448,7 @@ def main() -> int:
     save_marker(current, skipped, failures, len(completed), remaining, final=True)
     print(
         f"exact_product_rebuild rebuilt={len(rebuilt)} failures={len(failures)} "
-        f"workers={WORKERS} post_limit={POST_LIMIT} remaining={remaining} policy={POLICY}",
+        f"workers={WORKERS} post_workers={POST_WORKERS} post_limit={POST_LIMIT} remaining={remaining} policy={POLICY}",
         flush=True,
     )
     return 1 if failures else 0
