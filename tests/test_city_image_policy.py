@@ -270,6 +270,33 @@ class CityImagePolicyTests(unittest.TestCase):
         self.assertIn("exactly one carton visible at roughly 20 to 23 percent of frame width", prompt)
         self.assertIn("connector/emitter/flush-point", prompt)
 
+    def test_set_qa_targets_only_named_roles_and_defaults_to_role_three(self):
+        verdict = {
+            "duplicate_roles": [],
+            "reasons": ["Image 1 and Role 2 repeat the same layout"],
+            "correction_prompt": "replace panel 2",
+        }
+        self.assertEqual(image_quality_gate._target_set_roles(verdict, 3), {1, 2})
+        self.assertEqual(
+            image_quality_gate._target_set_roles(
+                {"duplicate_roles": [], "reasons": ["generic composition"]}, 3
+            ),
+            {3},
+        )
+
+    def test_final_diversity_only_failure_can_soft_pass_but_safety_cannot(self):
+        diversity = {
+            "score": 55,
+            "reasons": ["Images 1 and 2 use similar camera angles"],
+        }
+        unsafe = {
+            "score": 80,
+            "reasons": ["A person is visible in panel 2"],
+        }
+        self.assertTrue(image_quality_gate._soft_set_accept(diversity, 3, 3))
+        self.assertFalse(image_quality_gate._soft_set_accept(unsafe, 3, 3))
+        self.assertFalse(image_quality_gate._soft_set_accept(diversity, 2, 3))
+
 
 if __name__ == "__main__":
     unittest.main()
