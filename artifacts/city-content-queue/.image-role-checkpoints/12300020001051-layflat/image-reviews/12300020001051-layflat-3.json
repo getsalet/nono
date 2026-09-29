@@ -1,0 +1,82 @@
+{
+  "source_id": "12300020001051-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The mandatory role is 'equipment-only' on an empty concrete pad, but the image contains visible people (a worker kneeling, a distant figure, and someone inside the vehicle).",
+        "The presence of a worker and farm activity directly contradicts the specific 'no farm activity' requirement of the role.",
+        "Visible people or human body parts trigger a hard reject regardless of the product presentation."
+      ],
+      "correction_prompt": "Remove all human figures, workers, and visible farm activity. Regenerate an equipment-only scene on an empty concrete pad featuring a fixed pump, gauge, and manifold with the two approved coils (packaged and bare) as small, secondary elements. Keep the required watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 58,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing required mandatory role: HEADWORKS DETAIL (no visible fixed pump, gauge, or manifold).",
+        "Approved two-coil pair is primary and large in the composition instead of being small and secondary."
+      ],
+      "correction_prompt": "Regenerate image to prominently feature a fixed pump, gauge, and manifold on a concrete pad. Keep the two coils small, in the background, and secondary. Maintain the required watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The required 'one packaged AFP coil' is missing from the image, containing only a single black woven coil.",
+        "A visible blue tag/label is attached to the pump, which is not part of the approved product coil.",
+        "The required bottom-right watermark 'AFP | 09134922013' is missing.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to include two separate coils on the right: one black woven hose coil and one packaged AFP white hose coil. Add the required watermark 'AFP | 09134922013' in the bottom-right corner. Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 62,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Missing required infrastructure: the brief mandates 'HEADWORKS DETAIL' showing a fixed pump, gauge, and manifold, but only coiled hoses are visible.",
+        "The left-hand object is a packaged item (labeled as AFP coil), not a third commercial package, but the composition fails to include the required elevated infrastructure.",
+        "The required objects are not present in the frame to fulfill the specific 'equipment-only' role."
+      ],
+      "correction_prompt": "Regenerate an elevated, equipment-only photograph of a fixed pump, gauge, and manifold on a concrete pad. Include a small, secondary pair of coiled hoses (one packaged AFP, one bare black) in the background or foreground. No people, bottles, or other commercial packages.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 68,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains the mandatory two-coil pair: one packaged AFP coil and one bare black woven coil.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Zero human figures or body parts visible.",
+        "Coils are separate, physically plausible, and fully visible.",
+        "Environment (concrete pad and distant tractor) is appropriate infrastructure.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 68% to 8-65% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

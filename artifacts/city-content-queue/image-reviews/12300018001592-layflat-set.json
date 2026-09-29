@@ -1,0 +1,60 @@
+{
+  "source_id": "12300018001592-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "All three panels share the same low-angle camera height and similar subject placement (two coils side-by-side), failing to provide distinct visual roles.",
+        "Panel 1 contains farm machinery (tractor) in the background, which violates the 'equipment-only' requirement for a Headworks panel.",
+        "Panel 3 lacks the required fixed pump and manifold on the concrete pad, depicting only two coils instead of the specified infrastructure.",
+        "The products appear oversized in all frames, dominating the scene and contradicting the 'small' product requirement for roles 1 and 3."
+      ],
+      "correction_prompt": "Regenerate the set with distinct angles: a high-oblique wide shot for role 1, an elevated technical comparison for role 2, and a headworks detail shot on a concrete pad with a pump and manifold for role 3; scale products down to secondary status.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 failed to provide the required 'wide high-oblique water-transfer context' and instead shows a generic in-field farm scene with a tractor and in-ground pipes.",
+        "Role 3 completely failed to show the required 'equipment-only elevated record photograph' (pump, gauge, manifold); instead, it displays only the product coils on a concrete pad.",
+        "Roles 2 and 3 feature the exact same product composition (packaged coil and bare coil side-by-side with a tape measure/fitting), resulting in duplicated layouts and a lack of distinct technical narrative."
+      ],
+      "correction_prompt": "Role 1: Generate a wide high-oblique shot of water transfer infrastructure; Role 3: Add a fixed pump, gauge, and manifold to the empty concrete pad and arrange the two coils to be small, separate, and secondary.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 is a severe violation: The brief requires an 'equipment-only elevated record photograph of one fixed pump, gauge and manifold on an empty concrete pad'. Instead, the image displays only the two coils on a concrete surface, completely lacking the required headworks equipment (pump, gauge, manifold).",
+        "Roles 2 and 3 display an 'oversized product' layout, contradicting the specific instruction for the Hero (Role 1) to keep the coils 'small' and 'off-center'; the coils here dominate the frame.",
+        "Role 3 contains an unexplained UI artifact (two small square thumbnails) in the bottom-left corner, which violates the requirement for a clean 'equipment-only' record photograph.",
+        "Roles 1 and 2 are visually similar (soil field backgrounds with distant tractors), but Role 1 technically fits the 'Hero' width, whereas Role 2 attempts a 'selection' angle without a distinct construction difference shown."
+      ],
+      "correction_prompt": "Redo Role 3 to show a fixed pump unit, pressure gauge, and manifold installed on a concrete pad, with the two coils placed small and secondary in the background; remove the bottom-left thumbnail artifact from Role 3; and increase the visual separation between Roles 1 and 2 by lowering the camera angle in Role 2 to focus on the coil connection point.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

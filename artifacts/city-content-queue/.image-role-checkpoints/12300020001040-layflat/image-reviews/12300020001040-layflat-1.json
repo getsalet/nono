@@ -1,0 +1,87 @@
+{
+  "source_id": "12300020001040-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product bounding box width (55%) significantly exceeds the 42% maximum threshold.",
+        "The packaged coil features a large, fabricated white/blue label with legible text (resembling 'GROUPE...') which triggers the hard reject for 'fake label' or 'invented package'.",
+        "The combination of the two coils is centered in the lower half of the frame, violating the 'off-center' preference and creating a dominant composition that is too large for the 'EDITORIAL HERO' role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Resize the combined product bounding box to under 40% of the frame width. Shift the composition to the lower-left quadrant to satisfy off-center placement. Remove the white paper wrapping and large printed label from the left coil, replacing it with a subtle, texture-based packaging that avoids legible branding or fake labels. Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 52,
+      "product_height_percent": 34,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Both approved objects (packaged AFP coil and bare black woven coil) are present, separate, fully visible, and physically plausible.",
+        "Zero people or human body parts detected.",
+        "Watermark 'AFP | 09134922013' is present and correctly formatted in the bottom-right.",
+        "Context matches the editorial brief: wide high-oblique view of a field with distant farm equipment and crop rows.",
+        "Product width slightly exceeds the preferred 12-20% range, but remains within the acceptable noisy reviewer estimate threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 54,
+      "product_height_percent": 32,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The approved products (packaged AFP coil and bare black woven coil) are excessively large relative to the frame, spanning approximately 54% width, which is hard-rejected as 'a pair wider than 42 percent of the frame'.",
+        "The products are placed centrally in the lower foreground, rather than being small, off-center, and editorial as required for the 'EDITORIAL HERO' role.",
+        "The black woven coil features an impossible, physically implausible wooden handle/dropper protruding vertically from the center of the roll, which falls under hard reject criteria for 'impossible intersection' or 'object passing through a coil'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 54% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the visual scale of the packaged AFP coil and bare black woven coil so they occupy approximately 15% of the total frame width. Reposition the pair off-center into the bottom-right or bottom-left corner. Remove the vertical wooden handle/dropper from the black coil, showing only the natural spiral weave of the hose. Maintain the wide high-oblique agricultural background and ensure the 'AFP | 09134922013' watermark remains visible in the bottom right. Reduce the product group from 54% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 48,
+      "product_height_percent": 32,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Visible people (farmers/workers) in the background of the field",
+        "Product pair is too wide (estimated 48% of frame width)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the people/farmers from the background and make the two coils smaller and closer together so the combined width is less than 40% of the frame. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 33,
+      "product_height_percent": 20,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Both required products are clearly visible and properly represented: one packaged AFP coil and one bare black woven coil.",
+        "Products are separate, physically plausible, and appropriately sized (approx. 33% width / 20% height).",
+        "The scene features a suitable wide high-oblique water-transfer context.",
+        "Zero people or human body parts are present.",
+        "The mandatory 'AFP | 09134922013' watermark is correctly placed in the bottom-right corner.",
+        "Unattended farm equipment and infrastructure are appropriately treated as acceptable background elements."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

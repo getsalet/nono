@@ -1,0 +1,54 @@
+{
+  "source_id": "1240004002301-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Roles 1 and 2 are duplicated: both feature the same low-angle foreground shot of the product pair against a generic farm background with distant machinery, failing to create distinct visual narratives or camera angles.",
+        "Role 3 fails the specific content requirement: while the empty concrete pad is present, the required equipment (fixed pump, gauge, and manifold) is missing, resulting in a duplicate layout with roles 1 and 2 instead of a distinct 'Headworks Detail' shot.",
+        "Roles 1 and 2 show oversized product elements in the foreground, conflicting with the 'small, separate' requirements for the hero shot."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a high-oblique wide shot with the product small and off-center; Regenerate Role 2 as a distinct technical close-up comparison; Regenerate Role 3 to include the fixed pump, gauge, and manifold on the concrete pad.",
+      "panel_scores": [
+        20
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 1 fails the EDITORIAL HERO role: it is a ground-level shot (not wide high-oblique) and features a pump/gauge manifold on a concrete pad. This equipment-only setup is the specific requirement for Panel 3, causing a role 1/3 duplication error in the setup and camera angle.",
+        "Panel 1 includes a visible farm background with crop rows, which conflicts with the 'empty concrete pad' and 'no farm activity' constraint for the headworks detail role it is mistakenly fulfilling.",
+        "Panel 3 fails the HEADWORKS DETAIL role: it is missing the required fixed pump, gauge, and manifold. It is a generic close-up of coils on a flat surface, completely lacking the 'elevated record photograph of equipment' narrative."
+      ],
+      "correction_prompt": "Reshoot Panel 1 as a wide, high-oblique shot of water-transfer context with the coils placed small and off-center in a field; reshoot Panel 3 to focus on a single fixed pump, gauge, and manifold on an empty concrete pad with the two coils secondary in the frame.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Role 2 contains a visible person (figure standing on the right side) and an extra commercial object (the pressure gauge/manifold assembly), both of which are explicitly forbidden for the SELECTION EVIDENCE role (no person or extra commercial objects)."
+      ],
+      "correction_prompt": "Regenerate Role 2 by removing the standing person and the pressure gauge assembly to show only the two coils in an elevated, empty field context.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
+    }
+  ]
+}
