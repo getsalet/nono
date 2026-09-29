@@ -1,18 +1,39 @@
 {
   "source_id": "1110005002891-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 58,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "HARD REJECT: Two people (men) are prominently featured in the foreground examining the coil",
+        "HARD REJECT: Visible faces, arms, hands, and full bodies of workers present",
+        "Missing required paired coil configuration: image shows only one coil instead of approved two-coil pair (packaged AFP coil + bare black woven coil)",
+        "Violates zero-people requirement which is a standalone hard reject condition"
+      ],
+      "correction_prompt": "Remove all people from the image. Show only the approved layflat pair: one packaged AFP coil and one bare black woven coil, side by side, with zero humans or body parts visible anywhere in the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 87,
+      "product_width_percent": 14,
+      "product_height_percent": 11,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Two products clearly visible on soil: one silver/blue/white packaged nozzle and one bare black coiled hose. Both identifiable, separate, physically plausible in agricultural field setting. Watermark AFP | 09134922013 required and present in bottom-right. Zero people, zero human body parts. No distortion, no merging. Products recognizable, fully visible, separate and physically plausible.",
+        "Agricultural field with tilled soil, green crop rows, farm building, trees - appropriate context for irrigation products. Watermark present, no third commercial package or person. Products are separate and clearly identifiable on the ground.",
+        "AFP | 09134922013 watermark present and positioned in bottom-right corner. No other commercial element or person present.",
+        "Zero person, farmer, worker, face, hand, arm, leg, body part or silhouette. Zero object wider than 42 percent of frame. Zero object passing through another. Zero distorted dimensions. Two products separate and fully visible.",
+        "No person, farmer, worker, face, hand, arm, leg, body part or silhouette. No object wider than 42 percent of frame. No object passing through another. No severely distorted dimensions. Two products separate and fully visible."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

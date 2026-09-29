@@ -1,26 +1,53 @@
 {
   "source_id": "1110005002891-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
-      "product_width_percent": 36,
-      "product_height_percent": 28,
-      "product_x_center_percent": 48,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 16,
+      "product_height_percent": 11,
+      "product_x_center_percent": 32,
       "reasons": [
-        "Correct pair identified: One packaged AFP coil (left) and one bare black woven coil (right).",
-        "Zero people or human body parts visible.",
-        "Combined width estimate is ~36%, well within the 8-42% acceptable range.",
-        "Watermark 'AFP | 09134922013' is present and correct.",
-        "Distant unattended tractor and farm buildings are correctly identified as infrastructure/context, not commercial products.",
-        "Editorial high-oblique perspective is maintained with off-center product placement."
+        "Image contains a visible person (man squatting near the canal), which is a hard reject per the strict no-human rule. Additionally, the two product coils (packaged AFP and bare black woven) are present and correctly placed in the foreground with the required watermark intact, but the presence of a human disqualifies the image.",
+        "correction_prompt:"
+      ],
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 18,
+      "product_height_percent": 5,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Image contains a person (man crouching) - violates the mandatory zero-person rule",
+        "Presence of human body: full torso, arms, legs visible",
+        "Facial features, beard clearly shown"
+      ],
+      "correction_prompt": "Regenerate image with zero people - only show the two irrigation coils (one packaged silver, one bare black woven) on agricultural soil near water channel. Remove all humans, body parts, and silhouettes entirely.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 16,
+      "product_height_percent": 9,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Approved pair present: packaged AFP coil (silver wrapping) and bare black woven coil, both fully visible and separate",
+        "Zero people or human body parts detected",
+        "Water channel in field provides correct water-transfer editorial context",
+        "Combined product width 16% falls within preferred 12-20% range",
+        "Lower-third placement with slight off-center positioning aligns with editorial preference",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Distant farm buildings and field infrastructure acceptable per guidelines",
+        "No third commercial products, impossible geometry, or visual artifacts detected"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

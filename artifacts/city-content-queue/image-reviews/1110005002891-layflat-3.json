@@ -1,40 +1,82 @@
 {
   "source_id": "1110005002891-layflat",
-  "family": "layflat",
   "kind": 3,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "product_width_percent": 85,
-      "product_height_percent": 38,
-      "product_x_center_percent": 50,
+      "score": 38,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Exceeds hard reject threshold: The combined bounding box of the two coils spans approximately 85% of the frame width, significantly exceeding the 65% maximum limit for a hard reject.",
-        "Missing mandatory equipment: The specific role requirements for 'HEADWORKS DETAIL' (an elevated record photo of a fixed pump, gauge, and manifold) are not met; only the layflat hoses are present on the ground.",
-        "Product-to-frame ratio: The required role preference for a 'small, separate and secondary' combined width (12-20%) is not met by the massive foreground scale of the coils.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 8-65% of frame width."
+        "Mandatory HEADWORKS DETAIL role not fulfilled: image must be an equipment-only elevated record photograph of one fixed pump, gauge and manifold on an empty concrete pad with the two-coil pair remaining small, separate and secondary. The image shows only the two hose coils with no pump, gauge, or manifold present.",
+        "Two-coil pair at approximately 24% width slightly exceeds preferred 12–20% combined range.",
+        "Distant tractor and farm building are allowed infrastructure per rules; however the core role requirement — fixed pump/gauge/manifold as the primary subject — is entirely missing."
       ],
-      "correction_prompt": "Regenerate the image featuring the two coils (one AFP packaged, one bare black woven) significantly smaller (12-20% frame width) and positioned lower in the composition. In the background, prominently display a fixed pump, gauge, and manifold on a concrete pad. Remove the farm buildings and ensure the pair remains separate and recognizable. Reduce the product group from 85% to 8-65% of frame width.",
+      "correction_prompt": "Regenerate as an elevated record photograph showing one fixed pump, one pressure gauge, and a manifold assembly installed on an empty concrete pad as the primary subject. Place the two-coil pair (one packaged AFP coil and one bare black woven coil) small, separate and clearly secondary in the frame, targeting 12–20% combined width. No people. Include the bottom-right watermark AFP | 09134922013.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 60,
-      "product_height_percent": 40,
-      "product_x_center_percent": 42,
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 42,
+      "product_height_percent": 38,
+      "product_x_center_percent": 52,
       "reasons": [
-        "Complies with all hard reject criteria: zero people, zero human body parts, zero bottles or third commercial packages.",
-        "Perfect inclusion of the required bottom-right watermark 'AFP | 09134922013'.",
-        "Correctly displays the requested equipment-only fixed pump with gauge.",
-        "Contains both recognized layflat coils (one bare black, one wrapped in packaging).",
-        "The combined bounding box of the layflat pair spans approximately 60% of the frame width, which safely falls within the extended 8-65% acceptance range for noisy reviewer estimates on this specific role."
+        "Third commercial package present: the cardboard box labeled 'ARPP' alongside the bare woven coil and pump assembly constitutes a third commercial product, violating the hard-reject rule for a third commercial package or invented package.",
+        "Label on box reads 'ARPP' rather than 'AFP', raising concern about invented/fake label.",
+        "The pump, gauge, and manifold are acceptable as fixed infrastructure per the rules.",
+        "Watermark 'AFP | 09134922013' is present and correctly placed in bottom-right corner."
+      ],
+      "correction_prompt": "Remove the cardboard box labeled ARPP. The image must contain only the approved two-coil pair: one packaged AFP coil and one bare black woven coil, along with the fixed pump, gauge, and manifold. Replace the box with the correct packaged AFP coil or remove it entirely so only two products remain visible.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 40,
+      "product_height_percent": 11,
+      "product_x_center_percent": 57,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL elements: no fixed pump, gauge, or manifold visible. The image only shows two coils on concrete without any elevated equipment or infrastructure. The two-coil pair is acceptable, but the primary required subject matter is absent.",
+        "correction_prompt\":\"Recompose with one fixed pump, pressure gauge, and manifold assembly on an empty concrete pad as the primary elevated-record subject; place the approved packaged AFP coil and bare black woven coil pair small, separate, and secondary in the foreground; retain bottom-right AFP watermark; no people.\"}",
+        "correction_prompt�}]}]}}&quot;:&quot;Recompose with one fixed pump, pressure gauge, and manifold assembly on an empty concrete pad as the primary elevated-record subject; place the approved packaged AFP coil and bare black woven coil pair small, separate, and secondary in the foreground; retain bottom-right AFP watermark; no people.&quot;}]}```</invoke></think>{",
+        "product_width_percent",
+        "product_height_percent",
+        "product_x_center_percent"
+      ],
+      "missing_elements": [
+        "fixed pump",
+        "pressure gauge",
+        "manifold assembly"
+      ],
+      "image_contains": [
+        "packaged coil (left)",
+        "bare black woven coil (right)",
+        "concrete surface",
+        "AFP watermark"
+      ],
+      "overall_assessment": "The image fails the HEADWORKS DETAIL role requirement due to missing primary infrastructure elements. While the two-coil pair is correctly rendered and the watermark is present, the composition lacks the required pump, gauge, and manifold subject matter.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 78,
+      "product_width_percent": 22,
+      "product_height_percent": 15,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Both coils (one packaged AFP coil and one bare black woven coil) are clearly visible, separate, and fully rendered.",
+        "The fixed pump, gauge, and manifold are present as elevated infrastructure on a concrete pad — consistent with HEADWORKS DETAIL role.",
+        "No people, body parts, or human silhouettes present.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Combined product width is approximately 22% of frame — within acceptable range (8–65%); visually plausible and secondary to the pump setup.",
+        "Distant farm buildings, fields, and horizon are present but do not introduce third commercial products or violate any hard-reject criteria."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 4
     }
   ]
 }
