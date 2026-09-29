@@ -40,6 +40,7 @@ SET_ATTEMPTS = max(1, int(os.getenv("IMAGE_SET_QA_ATTEMPTS", "3")))
 FROM_POST = max(1, int(os.getenv("REBUILD_FROM_POST", "1")))
 POST_LIMIT = max(1, int(os.getenv("REBUILD_POST_LIMIT", "1")))
 POST_WORKERS = max(1, int(os.getenv("REBUILD_POST_WORKERS", "1")))
+POST_STAGGER_SECONDS = max(0.0, float(os.getenv("REBUILD_POST_STAGGER_SECONDS", "0")))
 COMPLETED_SINCE = os.getenv("REBUILD_COMPLETED_SINCE", "").strip()
 image_prompt_policy.install(backend)
 
@@ -383,10 +384,13 @@ def main() -> int:
     results = {source_id: {} for source_id in records}
     failures = []
     with ThreadPoolExecutor(max_workers=POST_WORKERS, thread_name_prefix="city-rebuild-post") as post_pool:
-        futures = {
-            post_pool.submit(generate_set, {**item, **data}): source_id
-            for source_id, (item, _, data) in records.items()
-        }
+        futures = {}
+        record_rows = list(records.items())
+        for index, (source_id, (item, _, data)) in enumerate(record_rows):
+            futures[post_pool.submit(generate_set, {**item, **data})] = source_id
+            if POST_STAGGER_SECONDS and index + 1 < len(record_rows):
+                print(f"rebuild_post_stagger_seconds={POST_STAGGER_SECONDS:g}", flush=True)
+                time.sleep(POST_STAGGER_SECONDS)
         for future in as_completed(futures):
             source_id = futures[future]
             try:
