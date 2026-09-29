@@ -1,18 +1,39 @@
 {
   "source_id": "10600023002313-tape20",
-  "family": "tape20",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: Human present.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person and regenerate the image showing only the product in the specified setting. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 19,
+      "product_height_percent": 18,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Exactly one AFP white-and-blue cylindrical drip-tape carton roll present, within acceptable width/height proportions",
+        "Zero people, body parts, or human silhouettes in frame",
+        "Required bottom-right watermark 'AFP | 09134922013' present and intact",
+        "Coiled blue drip tape beside carton provides visible emitter-spacing evidence supporting SELECTION EVIDENCE role",
+        "Distant unattended tractor and farm building are permitted contextual infrastructure",
+        "Background matches article brief (agricultural field, Khuzestan setting context)",
+        "No hard-reject items: no second roll, bottle, jar, canister, bucket, fertilizer/pesticide container, layflat hose, pipe through roll, fake headline, caption, gibberish, or impossible geometry"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
