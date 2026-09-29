@@ -1,18 +1,32 @@
 {
   "source_id": "11100020002049-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 28.5,
+      "product_height_percent": 15.2,
+      "product_x_center_percent": 50.0,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: Two people (faces, hands, arms, legs) are present and central to the image. The QA brief explicitly requires zero people and zero human body parts."
+      ],
+      "correction_prompt": "Regenerate with no people visible. Show only the approved layflat coil pair (one packaged AFP coil + one bare black woven coil) on neutral ground. Place both coils fully visible, separate, with zero human presence. Include required 'AFP | 09134922013' watermark in bottom-right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 38,
+      "product_height_percent": 20,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil, clearly showing construction/diameter difference. Zero people or body parts. Width ~38% within acceptable 8–42% range. Required watermark 'AFP | 09134922013' present in bottom-right. Distant farm building is infrastructure, not a third commercial product. No extra commercial packages, bottles, or impossible intersections."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

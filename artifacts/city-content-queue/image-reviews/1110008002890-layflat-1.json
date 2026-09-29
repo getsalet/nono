@@ -1,38 +1,52 @@
 {
   "source_id": "1110008002890-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 25,
-      "product_width_percent": 40,
-      "product_height_percent": 30,
-      "product_x_center_percent": 40,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 8,
+      "product_x_center_percent": 22,
       "reasons": [
-        "A human figure (walker) is clearly visible in the middle distance along the field path, which is a hard reject.",
-        "The image depicts a modern urban skyline (Tehran) rather than the requested rural Sistan and Baluchestan (Parud) context."
+        "Hard reject: image contains two people (woman standing, man crouching) - violates zero-people mandatory rule",
+        "Hard reject: visible human faces, arms, hands, legs all present",
+        "Product (black coil) is recognizable and placed correctly at bottom-left",
+        "Watermark 'AFP | 09134922013' is present and correct"
       ],
-      "correction_prompt": "Remove the human figure walking in the distance. Remove the modern city skyline in the background and replace it with a rural horizon typical of Sistan and Baluchestan. Keep the foreground hose coils and water channel.",
+      "correction_prompt": "Regenerate image with ZERO people. Remove both the woman and man from the frame. Keep the black coil product visible at bottom-left corner. Maintain the farm/water-channel background context. The editorial hero should be a wide high-oblique view of the water-transfer setting with only the product visible - no humans, no farmers, no workers, no body parts anywhere in the image.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 92,
-      "product_width_percent": 27,
-      "product_height_percent": 18,
-      "product_x_center_percent": 30,
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 11.72,
+      "product_height_percent": 9.38,
+      "product_x_center_percent": 50.0,
       "reasons": [
-        "Both approved products (packaged coil and bare black woven coil) are clearly visible, separate, and physically plausible.",
-        "Combined product width is approximately 27%, within the preferred 12-20% range (accepting noisy estimates 8-42%).",
-        "Zero people or human body parts are visible.",
-        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Context includes water-transfer infrastructure (channel, crops) matching the editorial brief, with no hard-reject elements (third commercial product, impossible geometry, etc.)."
+        "Mandatory role requires a layflat pair (one packaged AFP coil and one bare black woven coil). The image shows only a single bare black coil; the packaged coil is absent."
+      ],
+      "correction_prompt": "Regenerate to show a pair: one packaged AFP coil and one bare black woven coil.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 14.5,
+      "product_height_percent": 6.2,
+      "product_x_center_percent": 38.4,
+      "reasons": [
+        "The image correctly displays the approved layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "The products are off-center and located in the lower portion of the frame, consistent with editorial hero styling.",
+        "The combined product width is approximately 14.5%, which falls well within the acceptable 8-42% range.",
+        "There are no people or human body parts visible; the distant tractor is allowed unattended infrastructure.",
+        "The required watermark 'AFP | 09134922013' is present and correctly placed in the bottom-right corner.",
+        "The scene provides a suitable water-transfer context with a canal and agricultural fields."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }
