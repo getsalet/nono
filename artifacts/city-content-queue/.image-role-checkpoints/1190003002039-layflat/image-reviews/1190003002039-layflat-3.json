@@ -1,0 +1,81 @@
+{
+  "source_id": "1190003002039-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image fails to meet the mandatory 'HEADWORKS DETAIL' role, which requires an elevated record photograph of one fixed pump, gauge, and manifold on an empty concrete pad.",
+        "The scene depicts the coils on the ground without the required specialized infrastructure (pump, gauges, manifold).",
+        "Although the image contains zero people and recognizable coils, it does not match the specific visual brief for role 3.",
+        "The 'AFP | 09134922013' watermark is present, but the content context is incorrect."
+      ],
+      "correction_prompt": "Regenerate as an elevated equipment-only record photograph showing a fixed pump, gauge, and manifold on an empty concrete pad. Ensure the two-coil pair (one packaged AFP and one bare black) is included but remains small, separate, and secondary in the frame. No human presence or farm activity.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 62,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The mandatory 'HEADWORKS DETAIL' role (elevated equipment-only record photograph of a fixed pump, gauge, and manifold) is missing from the image. Instead, the image is a ground-level shot of two hose coils.",
+        "The required background elements—pump, gauge, and manifold on a concrete pad—are not visible.",
+        "The product pair is too large relative to the frame (approx. 62% width), exceeding the preferred range and approaching the hard reject limit."
+      ],
+      "correction_prompt": "Regenerate as a high-angle, equipment-only record photo. Primary focus: a fixed water pump, gauge, and manifold on an empty concrete pad. Secondary focus: small (10% of frame) packaged and bare black hose coils placed unobtrusively in the foreground. No human presence. Retain bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 58,
+      "product_height_percent": 40,
+      "product_x_center_percent": 53,
+      "reasons": [
+        "The layout fails to meet the required 'HEADWORKS DETAIL' role: the pump and manifold are not the elevated primary subject, and the two-coil pair is not kept small/secondary.",
+        "The two-coil pair is approximately 58% of the frame width, which far exceeds the preferred 12–20% and breaches the 65% noisy-reviewer threshold."
+      ],
+      "correction_prompt": "Re-frame so the elevated pump/gauge/manifold on the concrete pad is the primary subject; scale the approved two-coil pair to ≤20% of frame width and keep it small and secondary.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 56,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Missing required 'HEADWORKS DETAIL' role elements: the brief mandates a fixed pump, gauge, and manifold on an empty concrete pad, none of which are present in the image.",
+        "The image focuses on standard product display rather than the 'equipment-only elevated record' perspective specified for role 3.",
+        "Product pair width (approx 56%) significantly exceeds the preferred range (12-20%) and enters the 'noisy reviewer' zone (8-65%), making the composition too crowded for the intended secondary role of the coils.",
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom-right."
+      ],
+      "correction_prompt": "Regenerate with an elevated 'HEADWORKS' perspective focusing on a fixed pump, gauge, and manifold assembly on a concrete pad. Keep the AFP coil and black woven coil visible but small and secondary (approx 15% of frame width), separated from the infrastructure.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 60,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Dropped/wooden support post visible inside the bare black coil.",
+        "Hard reject: Third object present inside the coil (post and block structure), which is not allowed.",
+        "Hard reject: Product width estimated at 60%, approaching/within the 65% rejection threshold, but the structural flaw in the coil is the primary cause for rejection.",
+        "Watermark present and correct."
+      ],
+      "correction_prompt": "Remove the vertical post and block structure from inside the black coil. Ensure the bare black coil is empty and physically plausible. Keep the packaged coil on the left and the pump/gauge behind them. Maintain the AFP watermark.",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "source_id": "1190004002038-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 50,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Mandatory 'HEADWORKS DETAIL' role is ignored: required equipment-only fixed pump, gauge, and manifold on an empty concrete pad are missing.",
+        "The left object is an unidentified geometric block that does not resemble a standard packaged AFP coil; its 'packaging' is severely distorted and implausible."
+      ],
+      "correction_prompt": "Regenerate the image to strictly match the 'HEADWORKS DETAIL' role: an elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad. The two AFP coils must be secondary (approx. 15% of frame width), separate, and physically plausible. Do not include the distorted geometric block.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 60,
+      "product_height_percent": 40,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Image contains three distinct product objects (one packaged coil, two bare coils) rather than the approved two-coil pair.",
+        "The total width of the product cluster spans approximately 60% of the frame, exceeding the 12-20% preferred width for the specific layout role."
+      ],
+      "correction_prompt": "Regenerate the image to show only one packaged AFP coil and one bare black woven coil. Remove the third coil to ensure only two products are visible. Shrink the scale of the two coils so their combined bounding box is between 12% and 20% of the image width, ensuring they are small and secondary.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 58,
+      "product_height_percent": 25,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Both required coil types are present, recognizable, fully visible, separate, and physically plausible.",
+        "No people, body parts, or human silhouettes are visible.",
+        "The required bottom-right watermark is present and correctly formatted.",
+        "Product width estimate (~58%) falls within the accepted noisy range of 8% to 65%.",
+        "Lower-third placement is an editorial preference and not a standalone hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
