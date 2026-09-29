@@ -1,0 +1,41 @@
+{
+  "source_id": "11100022001444-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 42,
+      "product_height_percent": 45,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Combined product pair width is approximately 42% of the frame, exceeding the 20% preferred target and approaching the hard reject threshold.",
+        "The packaged coil resembles a geometric tent or fabric bundle rather than a flat, recognizable industrial layflat hose coil.",
+        "The black hose coil is very wide and flat, with dimensions that look slightly distorted compared to standard packaging.",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Reduce the scale of the two hose coils significantly so the pair occupies only 15% of the frame width. Redesign the packaged coil to look like a flat, compressed, wrapped industrial hose roll. Maintain the same perspective, background, and watermark. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image contains exactly two approved products: a packaged AFP coil on the left and a bare black woven coil on the right.",
+        "The combined bounding box of the products is approximately 28% of the image width, which falls within the acceptable 8-42% range for this role.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "There are zero visible people or body parts; the distant tractor contains no visible operator and is acceptable as farm equipment.",
+        "The products are physically plausible, separate, and fully visible on the soil surface.",
+        "Placement is lower-center, which is not a hard reject, but the image fits the water-transfer context well."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

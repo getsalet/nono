@@ -1,0 +1,40 @@
+{
+  "source_id": "1110005002891-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 85,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Exceeds hard reject threshold: The combined bounding box of the two coils spans approximately 85% of the frame width, significantly exceeding the 65% maximum limit for a hard reject.",
+        "Missing mandatory equipment: The specific role requirements for 'HEADWORKS DETAIL' (an elevated record photo of a fixed pump, gauge, and manifold) are not met; only the layflat hoses are present on the ground.",
+        "Product-to-frame ratio: The required role preference for a 'small, separate and secondary' combined width (12-20%) is not met by the massive foreground scale of the coils.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image featuring the two coils (one AFP packaged, one bare black woven) significantly smaller (12-20% frame width) and positioned lower in the composition. In the background, prominently display a fixed pump, gauge, and manifold on a concrete pad. Remove the farm buildings and ensure the pair remains separate and recognizable. Reduce the product group from 85% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 60,
+      "product_height_percent": 40,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Complies with all hard reject criteria: zero people, zero human body parts, zero bottles or third commercial packages.",
+        "Perfect inclusion of the required bottom-right watermark 'AFP | 09134922013'.",
+        "Correctly displays the requested equipment-only fixed pump with gauge.",
+        "Contains both recognized layflat coils (one bare black, one wrapped in packaging).",
+        "The combined bounding box of the layflat pair spans approximately 60% of the frame width, which safely falls within the extended 8-65% acceptance range for noisy reviewer estimates on this specific role."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "source_id": "1110008002501-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1: The camera angle is too low (ground-level) for an 'EDITORIAL HERO' shot which requires a 'high-oblique' perspective to establish context. The product coils are also oversized and center-bottom, violating the 'small and off-center' instruction.",
+        "Role 3: The instruction explicitly requires a 'pump' and 'manifold' in addition to the gauge. The image shows a gauge and coils on concrete, but lacks the fixed pump and manifold hardware, failing the equipment-specific requirement."
+      ],
+      "correction_prompt": "Regenerate Role 1 with a high-oblique aerial angle to show the water channel context with small, off-center coils; Regenerate Role 3 to include a visible fixed pump and manifold assembly on the concrete pad alongside the gauge and coils.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1
+      ],
+      "reasons": [
+        "Role 1 (Image 1) violates the EDITORIAL HERO brief by including the fixed pump, gauge, and manifold installation, which is the specific requirement for Role 3; this results in role 3/role-5 hardware duplication and layout repetition.",
+        "Role 1 fails to maintain the approved two-coil pair as small, separate, and off-center; instead, the coils are large, foreground, and centered.",
+        "Role 3 (Image 3) is correct, successfully isolating the equipment-only record on the concrete pad.",
+        "Role 2 (Image 2) is correct, providing the necessary elevated technical comparison of the two coil types."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide high-oblique shot of the water-transfer channel (without the pump installation), ensuring the two coils are small, off-center elements in the background to avoid duplication with Role 3.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Role 2 does not fulfill the 'SELECTION EVIDENCE' brief as it lacks the required elevated camera angle and technical framing to show diameter or construction differences; instead, it presents a horizontal layout nearly identical to the Role 1 hero shot.",
+        "Role 3 fails to meet the 'HEADWORKS DETAIL' requirement because it completely lacks the mandatory equipment (fixed pump, gauge, and manifold)."
+      ],
+      "correction_prompt": "Update image 2 to a vertical, top-down close-up comparison of the two coils showing their diameter difference, and update image 3 to include a fixed pump, gauge, and manifold on an empty concrete pad.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

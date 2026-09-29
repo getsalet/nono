@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-29T03:59:06+00:00`
+- آخرین بروزرسانی: `2026-09-29T04:14:12+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **566 از 1894 (29.88٪)**
-- تکمیل‌شده: **566**
+- پیشرفت: **573 از 1894 (30.25٪)**
+- تکمیل‌شده: **573**
 - در حال پردازش: **0**
-- در انتظار: **406**
-- آماده انتخاب در اجرای بعدی: **406**
+- در انتظار: **386**
+- آماده انتخاب در اجرای بعدی: **386**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **922**
+- ناموفق: **935**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,13 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **پارود** — سیستان و بلوچستان — `layflat` — 1500 کلمه — `2026-09-29T04:10:59+00:00`
+- **گتیج** — سیستان و بلوچستان — `layflat` — 1165 کلمه — `2026-09-29T04:10:52+00:00`
+- **سوران** — سیستان و بلوچستان — `layflat` — 1319 کلمه — `2026-09-29T04:07:20+00:00`
+- **محمدان** — سیستان و بلوچستان — `layflat` — 1383 کلمه — `2026-09-29T04:05:45+00:00`
+- **کوزران** — کرمانشاه — `tape20` — 1379 کلمه — `2026-09-29T04:05:41+00:00`
+- **اسفندک** — سیستان و بلوچستان — `layflat` — 1149 کلمه — `2026-09-29T04:04:27+00:00`
+- **سرجنگل** — سیستان و بلوچستان — `layflat` — 1226 کلمه — `2026-09-29T04:03:59+00:00`
 - **رزوه** — اصفهان — `layflat` — 1397 کلمه — `2026-09-29T03:43:50+00:00`
 - **تودشک** — اصفهان — `layflat` — 1426 کلمه — `2026-09-29T03:32:54+00:00`
 - **گلشن** — اصفهان — `layflat` — 1808 کلمه — `2026-09-29T02:31:27+00:00`
@@ -45,26 +52,19 @@
 - **روانسر** — کرمانشاه — `layflat` — 1096 کلمه — `2026-09-29T01:28:42+00:00`
 - **باجگیران** — خراسان رضوی — `layflat` — 1240 کلمه — `2026-09-29T01:28:25+00:00`
 - **شهداد** — کرمان — `layflat` — 1138 کلمه — `2026-09-29T00:35:29+00:00`
-- **باخرز** — خراسان رضوی — `layflat` — 1457 کلمه — `2026-09-29T00:35:26+00:00`
-- **کیانشهر** — کرمان — `layflat` — 1215 کلمه — `2026-09-29T00:28:30+00:00`
-- **بلورد** — کرمان — `layflat` — 1395 کلمه — `2026-09-29T00:05:44+00:00`
-- **خانوک** — کرمان — `layflat` — 1273 کلمه — `2026-09-29T00:02:58+00:00`
-- **پیرانشهر** — آذربایجان غربی — `layflat` — 1240 کلمه — `2026-09-28T23:42:31+00:00`
-- **فاروق** — فارس — `layflat` — 1394 کلمه — `2026-09-28T23:25:17+00:00`
-- **اکبرآباد** — فارس — `layflat` — 1707 کلمه — `2026-09-28T23:24:53+00:00`
 
 ## خطاهای اخیر
 
-- **هلشی** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **نطنز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **گلدشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **هرند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **نیاسر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **برزک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **قلعه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **قمصر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کرمانشاه** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **جوزدان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **هیدوچ** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **گلمورتی** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **گشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **چگرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **گیلانغرب** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **سیرکان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بریس** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **بزمان** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **بنجار** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **گلشهر** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 
