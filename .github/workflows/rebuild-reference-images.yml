@@ -40,12 +40,14 @@ jobs:
       IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY14 }}
       IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
       AGNES_IMAGE_MODEL: agnes-image-2.5-flash
-      IMAGE_WORKERS: "8"
+      IMAGE_WORKERS: "3"
+      REBUILD_POST_WORKERS: "3"
       IMAGE_RETRIES: "6"
       IMAGE_QA_ATTEMPTS: "10"
       IMAGE_SET_QA_ATTEMPTS: "3"
       REBUILD_FROM_POST: "1"
-      REBUILD_POST_LIMIT: "2"
+      REBUILD_POST_LIMIT: "6"
+      REBUILD_COMPLETED_SINCE: "2026-09-29T03:43:51+00:00"
     steps:
       - uses: actions/checkout@v7
         with: {fetch-depth: 0}
@@ -112,8 +114,9 @@ jobs:
           PY
           )"
           if [ "$remaining" -gt 0 ]; then
-            echo "Image rebuild has $remaining remaining posts; yielding to one fresh city-production batch before the next repair slice."
-            gh workflow run city-content-queue.yml --ref main
+            echo "Strict restoration has $remaining remaining posts; dispatching the next parallel repair batch."
+            sleep 15
+            gh workflow run rebuild-reference-images.yml --ref main
           else
             echo "Image rebuild is complete; resuming the city production queue."
             gh workflow run city-content-queue.yml --ref main
