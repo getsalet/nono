@@ -1,0 +1,82 @@
+{
+  "source_id": "10600016002420-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 31,
+      "product_height_percent": 42,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The product bounding box slightly exceeds the 30% width and 35% height thresholds, but the object remains physically plausible and consistent with a large-scale drip-tape roll.",
+        "Watermark 'AFP | 09134922013' is present and correctly positioned.",
+        "No human figures, body parts, or silhouettes are visible.",
+        "The background features unattended equipment (tractor and harvesters) which is allowed in the context of infrastructure and farm settings.",
+        "The carton features the required AFP branding (white and blue).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 26,
+      "product_height_percent": 34,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: presence of three people (human figures) in the background",
+        "Hard reject: human body parts and silhouettes are visible",
+        "Presence of unattended tractor and farm equipment violates the 'equipment-only elevated record photograph' and 'no farm activity' constraints for the mandatory HEADWORKS DETAIL role",
+        "Image fails the strict 'zero people' requirement which is a primary hard reject condition"
+      ],
+      "correction_prompt": "Remove all people, tractors, and farm equipment from the background to create a clean, empty concrete pad scene. Ensure the scene contains only the required infrastructure (filter, gauge, manifold) and the single drip-tape roll with no human presence or active farm machinery.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 28,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Image contains a human figure (person standing in the background left) and a driver inside the tractor on the right, violating the zero-people rule.",
+        "Hard reject: The background includes a tractor and a large agricultural spreader, which are large pieces of equipment not consistent with the 'empty concrete pad' and 'no farm activity' requirements, creating a visual conflict with the brief."
+      ],
+      "correction_prompt": "Regenerate image featuring only the single AFP drip tape carton on an empty concrete pad. Completely remove all human figures, the tractor, and the large agricultural spreader from the background. Ensure the background is a plain empty concrete surface with no farm activity. Maintain the watermark 'AFP | 09134922013' in the bottom right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 29,
+      "product_height_percent": 25,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL equipment (filter, gauge, regulator, manifold)",
+        "Product roll is too wide (29% is close to the 30% reject threshold)",
+        "Object is placed as the primary focus instead of being small and secondary",
+        "No concrete pad infrastructure context as required by the brief"
+      ],
+      "correction_prompt": "Regenerate as an elevated detailed record photograph of fixed irrigation infrastructure (filter, gauge, regulator, manifold) on an empty concrete pad. Reduce the AFf drip-tape carton roll to a small secondary element in the background. Ensure the roll width is under 15 percent of the frame width and maintain the required 'AFP | 09134922013' watermark in the bottom-right.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible person (farmer/worker) in the background",
+        "Second commercial package (drip tape ring) present on the ground to the right of the main roll"
+      ],
+      "correction_prompt": "Remove the person in the background and the second small drip tape ring on the right, keeping only the main AFP white-and-blue roll.",
+      "attempt": 5
+    }
+  ]
+}

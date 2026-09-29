@@ -1,0 +1,57 @@
+{
+  "source_id": "11100015002353-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 fails: The prompt requires a 'equipment-only elevated record photograph' of a fixed pump, gauge, and manifold on a concrete pad. The provided image only shows the two coils on concrete, lacking the essential pump equipment (hardware) described in the brief.",
+        "Role 2 and Role 3 fail: Both images feature the exact same composition of the 'packaged coil' (left) and 'bare black woven coil' (right) on a flat surface. The only difference is the ground texture (dirt in image 2, concrete in image 3). This violates the requirement for visible distinctness in camera height/angle and composition between the roles; they are nearly identical layouts."
+      ],
+      "correction_prompt": "Regenerate Role 3 to strictly follow the 'Equipment-only' brief: display a fixed pump, gauge, and manifold on an empty concrete pad, with the two-coil pair appearing small and secondary in the background. Differentiate Role 2 by using a low-angle shot to emphasize the diameter difference between the two coils.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 2 (Role 2) contains a pump/green machine unit in the background, which violates the strict 'no third commercial object' constraint for the Selection Evidence role, where only the pair of coils should be visible.",
+        "Panels 2 and 3 (Roles 2 and 3) feature the exact same subject composition: the two coils placed on a concrete pad with the packaged coil on the left and the woven coil on the right.",
+        "The visual layout of Roles 2 and 3 is too similar, with only the background (pump vs. plain concrete) changing while the product presentation remains the same, violating the requirement for distinct environments and technical narratives."
+      ],
+      "correction_prompt": "Re-shoot Role 2 from a technical top-down or macro angle focusing entirely on the two coils to show diameter/construction differences without the pump in the background, and re-shoot Role 3 to clearly frame the fixed headworks as the primary subject with the coils positioned peripherally.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 18,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1: Camera is too low; the brief specifies a wide high-oblique water-transfer context, which is missing.",
+        "Role 1: The product coils are prominently placed in the foreground rather than remaining small, separate, and off-center.",
+        "Role 2: A visible drip/emitter nozzle is present on the tube end, which counts as an extra commercial object or container not allowed in this role.",
+        "Role 3: The headworks lacks the required elevated record of a fixed pump, gauge, and manifold; the tank-like object is generic and fails the technical equipment-only requirement."
+      ],
+      "correction_prompt": "Shooting Role 1 from a high oblique viewpoint with products small and off-center; removing the nozzle in Role 2 to show only the two coils; replacing Role 3 with a clearly identifiable pump, gauge, and manifold setup on the concrete pad.",
+      "panel_scores": [
+        18
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

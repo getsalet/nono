@@ -1,0 +1,55 @@
+{
+  "source_id": "1120002001455-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails: The editorial hero is not wide/high-oblique and the product is prominently placed in the center/foreground rather than being small and off-center.",
+        "Role 2 fails: There are three commercial package/coil objects (a wrapped coil, a wooden core coil, and a bare coil), violating the 'exactly two-coil pair' and 'no third commercial package' rules.",
+        "Role 3 fails: The headworks equipment is not a fixed assembly on a concrete pad as specified; it is a loose, floating arrangement on a hard surface that lacks the requested technical detail of a pump/gauge/manifold system."
+      ],
+      "correction_prompt": "Image 1: Create a wide-angle high-oblique shot of a water-transfer context with the coils kept small and positioned off-center in the background. Image 2: Show only a two-coil pair (one packaged, one bare) on a clean surface to compare construction, removing all extra commercial items. Image 3: Render a fixed headworks system consisting of a pump, pressure gauge, and manifold bolted to an empty concrete pad, with the two coils positioned as small secondary evidence on the side.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        3
+      ],
+      "reasons": [
+        "The images do not fulfill the specific visual brief for the 3-panel editorial structure.",
+        "Image 1 and Image 3 both depict a similar high-angle view of the product pair and a small gauge/pump unit on a concrete pad with a tilled field background. The camera height and angle in Image 3 are nearly identical to Image 1, failing to provide a distinct visual narrative (Role 1 should be a wide high-oblique hero shot, Role 3 an equipment-only record shot).",
+        "Image 2 does not fit Role 2 (Selection Evidence with a technical comparison emphasizing diameter/construction difference); instead, it shows the product pair at a low angle next to a large hose ring, which does not strictly isolate the two-coil pair for comparison as required.",
+        "The prompt requires exactly the approved packaged coil and bare black woven coil to remain small and separate; in Image 2, the presence of the large hose ring and low camera angle distracts from the specific comparison requested."
+      ],
+      "correction_prompt": "Create three distinct images: 1) A wide high-oblique hero shot of a large agricultural landscape with the two coils small and off-center; 2) A close-up, eye-level technical shot focusing strictly on the two coils side-by-side to contrast their construction; 3) A record shot of a concrete pad with a fixed pump, gauge, and manifold (no people), with the two coils small and secondary.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 48,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Image 1) fails the EDITORIAL HERO brief: the required wide, high-oblique water-transfer context is missing, and the co-located headworks/pump equipment belongs to Role 3, causing technical narrative conflation.",
+        "Role 2 (Image 2) fails the SELECTION EVIDENCE brief: it shows a generic wide field with headworks and a tractor rather than an elevated, technical product-comparison shot, and it does not focus on the required two-coil pair to illustrate diameter/construction differences.",
+        "Role 3 (Image 3) fails the HEADWORKS DETAIL brief: it is a static product-only shot on a concrete pad that completely omits the required fixed pump, gauge, and manifold infrastructure."
+      ],
+      "correction_prompt": "Regenerate the 3-image sequence to strictly isolate roles: Role 1 is a wide high-oblique water-transfer context where only the small, separate coils appear off-center; Role 2 is an elevated technical macro-comparison focusing exclusively on the two-coil pair's differences; Role 3 is a ground-level equipment record photo of the fixed pump, gauge, and manifold, with the two coils strictly secondary.",
+      "panel_scores": [
+        48
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

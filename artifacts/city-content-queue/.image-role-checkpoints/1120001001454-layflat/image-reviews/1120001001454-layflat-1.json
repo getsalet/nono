@@ -1,0 +1,79 @@
+{
+  "source_id": "1120001001454-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 58,
+      "product_height_percent": 35,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Product pair bounding box is approximately 58% wide, exceeding the 42% maximum threshold.",
+        "The image fails to clearly showcase the 'packaged AFP coil' and 'bare black woven coil' as the main hero elements; instead, large agricultural pumps dominate the right side of the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the size of the agricultural pumps and reframe to make the packaged coil and bare woven hose the primary focus, ensuring the combined product width is under 40% of the frame. Move the product pair slightly to the left to better fit the off-center editorial role. Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 32,
+      "product_height_percent": 25,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image contains multiple visible people (one standing in the foreground and others in the background), which is a hard reject condition.",
+        "The required bottom-right watermark \"AFP | 09134922013\" is missing from the image."
+      ],
+      "correction_prompt": "Regenerate the image without any people or human body parts. Ensure the products are visible and off-center. Add the specific text watermark \"AFP | 09134922013\" clearly in the bottom right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 55,
+      "product_height_percent": 25,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Approved products present: One packaged AFP coil and one bare black woven coil are visible.",
+        "Zero people: No human body parts or silhouettes are present.",
+        "Watermark compliance: The exact watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Context: The image provides a high-oblique wide shot of a water-transfer context (crop field with farm infrastructure in the background) as required by the editorial brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 40,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Two people are clearly visible walking in the distant background, which is a hard reject. There is also a possibility of a third smaller human figure in the distance. According to the brief, zero people and zero human body parts are required, and any visible human triggers a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image ensuring there are absolutely no people, human silhouettes, or body parts visible anywhere in the scene, including the distant background. Keep the two product coils in the foreground and the water-filled ditch, removing all human figures.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 22,
+      "product_height_percent": 19,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Approved layflat pair present and recognizable",
+        "Combined width within accepted 8-42% window",
+        "Exact required watermark present",
+        "No people, body parts, or prohibited extra commercial containers detected"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "source_id": "1120007001459-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 54,
+      "product_height_percent": 35,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: visible person (farmer) holding a pipe",
+        "Hard reject: human body parts (face, arms, legs) clearly visible in the upper center of the frame",
+        "Product width exceeds maximum acceptable limit of 42%",
+        "Human presence violates the strict requirement of zero people and zero human body parts",
+        "machine-enforced bounding-box check failed: Reduce the product group from 54% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the farmer and all human elements entirely. Reduce the total width of the coil pair to less than 30% of the frame width. Ensure the image contains no people, faces, or body parts. Reduce the product group from 54% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 42,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains the required paired products: one packaged AFP coil and one bare black woven coil.",
+        "Zero people or body parts are visible.",
+        "The exact required watermark 'AFP | 09134922013' is present in the bottom-right.",
+        "Placement is off-center in the lower section, satisfying the role preference.",
+        "Third products or hard rejects (like bottles or containers) are not present."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
