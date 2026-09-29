@@ -1,0 +1,48 @@
+{
+  "source_id": "1120008001457-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 64,
+      "product_width_percent": 52,
+      "product_height_percent": 38,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The combined product pair spans roughly 52% of the frame, exceeding the accepted noisy upper bound of 42% for image role 1.",
+        "Although both required coils are present (one white-packaged AFP, one black woven), their wide lateral spread makes the pair too dominant for the role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate with the two coils grouped more tightly and smaller within the frame so the combined product pair fits under 30% width; keep both coils separate, off-center, and retain the bottom-right 'AFP | 09134922013' watermark and the field-with-equipment context. No people. Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 35,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: A human figure (farmer/worker) is clearly visible in the background on the right side of the frame.",
+        "The presence of a person strictly violates the 'zero people' requirement."
+      ],
+      "correction_prompt": "Remove all human figures from the image entirely, including background elements.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 30,
+      "product_height_percent": 16,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Correctly displays both required products: one packaged AFP coil and one bare black woven coil, remaining fully visible, separate, and physically plausible. The distant unattended tractor is correctly treated as ordinary farm infrastructure rather than an extra commercial product. The image contains zero humans and no prohibited containers. The exact required bottom-right watermark 'AFP | 09134922013' is present, though the product pair's placement in the bottom-left is slightly off-center relative to the optimal combined-width target range. Overall, the visual fully meets the mandatory editorial hero context and hard constraints, earning a solid pass."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

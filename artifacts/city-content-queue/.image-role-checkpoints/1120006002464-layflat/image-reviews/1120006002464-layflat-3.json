@@ -1,0 +1,70 @@
+{
+  "source_id": "1120006002464-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 80,
+      "product_height_percent": 55,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Image contains the required layflat pair: one packaged AFP coil and one bare black woven coil",
+        "Watermark 'AFP | 09134922013' is present and correctly formatted",
+        "No people or human body parts visible",
+        "Product dimensions are acceptable for the specified role",
+        "machine-enforced bounding-box check failed: Reduce the product group from 80% to 8-65% of frame width.; Reduce product height from 55% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 80% to 8-65% of frame width. Reduce product height from 55% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 48,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Mandatory role (HEADWORKS DETAIL) fails: image contains zero fixed pumps, gauges, or manifolds, which are the primary required elements of the role.",
+        "The two-coil pair is not 'small, separate, and secondary' as required; it is the dominant subject occupying nearly half the frame.",
+        "The packaged coil on the left is severely distorted, appearing as an unrecognizable blob with merged textures, violating the hard reject criteria for 'severely distorted dimensions'.",
+        "Missing required watermark (the image contains a different phone number)."
+      ],
+      "correction_prompt": "Regenerate to show a high-angle record photo of one fixed pump, gauge, and manifold on a concrete pad. The two coils (one packaged AFP, one black woven) must be small in the background. Ensure coils are recognizable and properly shaped. Add the specific watermark 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 58,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The mandatory headline visual brief calls for an equipment-only photograph of a fixed pump, gauge, and manifold on an empty concrete pad, but this image only shows two coils of hose.",
+        "The required product width (12-20%) is exceeded at ~58%, making the pair the dominant subject rather than the secondary element requested."
+      ],
+      "correction_prompt": "Regenerate the image to feature a fixed pump with a gauge and manifold on an empty concrete pad as the primary subject. Place the two coils (one packaged AFP and one bare black) in the background as small, secondary objects.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 58,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains the required pair of one packaged AFP coil and one bare black woven coil.",
+        "Includes mandatory elevated infrastructure (pump, gauge, manifold) on an empty concrete pad.",
+        "No people, body parts, or human silhouettes are visible.",
+        "Required watermark 'AFP | 09134922013' is present and correctly placed in the bottom-right corner.",
+        "Coils are separate, fully visible, and physically plausible.",
+        "No hard-reject elements such as third packages, bottles, or distorted dimensions."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

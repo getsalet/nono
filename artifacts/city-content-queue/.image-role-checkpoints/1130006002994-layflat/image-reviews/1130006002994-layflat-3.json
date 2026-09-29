@@ -1,0 +1,82 @@
+{
+  "source_id": "1130006002994-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 72,
+      "product_height_percent": 48,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The combined bounding box of the two coiled products and the central stand is excessively wide, exceeding the 65% hard reject threshold.",
+        "The image fails to meet the mandatory HEADWORKS DETAIL role. It displays a general product pair on a flat surface instead of the required elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad.",
+        "A stand is visible beneath the packaged coil, which acts as an unintended third object.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width.; Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 72% to 8-65% of frame width. Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 55,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Missing mandatory equipment: The visual brief explicitly requires 'one fixed pump, gauge and manifold', which are absent from this image.",
+        "Context mismatch: The scene shows a flat yard rather than the specified 'empty concrete pad' with pump infrastructure.",
+        "Prohibited object: The loose hose segment lying in the foreground acts as an 'impossible intersection' or extraneous object not part of the two-coil pair."
+      ],
+      "correction_prompt": "Regenerate the image to include a fixed pump, gauge, and manifold on an empty concrete pad. Keep the two-coil pair small and secondary in the frame. Remove the loose hose segment on the ground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL: The image shows a close-up of two coils on a concrete pad, but completely lacks the required 'fixed pump, gauge and manifold' infrastructure in the frame.",
+        "Product pair is secondary: While the coils are the main subjects, the brief specifies they should be small and secondary to the equipment (which is missing)."
+      ],
+      "correction_prompt": "Regenerate image showing a fixed pump, gauge, and manifold on a concrete pad as the primary subject; include the packaged and bare coils in the foreground as small, secondary elements; ensure 'AFP | 09134922013' watermark is visible in the bottom-right corner.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 65,
+      "product_height_percent": 60,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: Image displays three distinct product units (one packaged, two bare coils) whereas the brief requires a specific two-coil pair.",
+        "Hard reject: The image lacks the mandatory 'HEADWORKS DETAIL' required for the role, which specified a photograph of a fixed pump, gauge, and manifold on a concrete pad.",
+        "Hard reject: Product pair width is estimated at 65%, exceeding the 12-20% combined width preference and violating the 'small and secondary' requirement for this editorial role.",
+        "Hard reject: The image does not align with the 'layflat' image role context; instead, it shows a generic product shot of hoses/tubing on a concrete surface without the required infrastructure context.",
+        "machine-enforced bounding-box check failed: Reduce product height from 60% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Re-generate image: Headworks detail (role 3) of one fixed pump, gauge, and manifold on an empty concrete pad. In the foreground, include a small, secondary (15-20% width) pair consisting of exactly one packaged AFP coil and one bare black woven coil. No people, no third commercial package, and no farm activity. Reduce product height from 60% to at most 45% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 48,
+      "product_height_percent": 72,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The product pair significantly exceeds the preferred width limit of 12-20 percent (approx. 48% actual).",
+        "The visual composition completely omits the 'HEADWORKS DETAIL' infrastructure elements (fixed pump, gauge, manifold) explicitly mandated by the brief.",
+        "The image displays a generic flat-lay of coils which conflicts with the 'elevated record' perspective of the mandatory role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 72% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate to include the mandatory HEADWORKS DETAIL infrastructure (pump, manifold, gauges) on a concrete pad as the primary subject, reducing the two-coil pair to a small, secondary 12-20% element. Remove the flat-lay perspective. Reduce product height from 72% to at most 45% of frame height.",
+      "attempt": 5
+    }
+  ]
+}
