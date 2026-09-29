@@ -1,0 +1,60 @@
+{
+  "source_id": "1170003001515-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 (Image 1): Camera angle is too low. The brief requires a 'wide high-oblique' perspective to show the water-transfer context, but the image is at a low ground-level perspective, making the landscape look flat and failing to provide the required spatial hierarchy.",
+        "Role 2 (Image 2): Contains a rejected element. The brief strictly prohibits 'any person', but a figure (farmer) is clearly visible standing in the background near the barn, which is an automatic disqualifier.",
+        "Role 3 (Image 3): Missing required equipment. The brief specifies 'equipment-only... of one fixed pump, gauge and manifold'. The image shows only the coils on a concrete pad but lacks the pump and gauge set entirely, failing the specific role description."
+      ],
+      "correction_prompt": "Regenerate Role 1 with a wide high-oblique perspective; remove the human figure from Role 2's background; and add a fixed pump unit, gauge, and manifold to the concrete pad in Role 3.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 violates the 'empty concrete pad' and 'secondary' constraints by displaying two large, dominant coils that compete visually with the pump equipment.",
+        "Roles 2 and 3 feature nearly identical pump hardware configurations (mobile pump chassis with wheels) resulting in a duplicated technical narrative despite different camera angles.",
+        "Role 2 fails the 'exactly two-coil' constraint by displaying three coil objects (packaged + 2 bare), which prevents the required diameter comparison between just two units."
+      ],
+      "correction_prompt": "For Role 3, reduce the two coils to small, background elements on an empty concrete pad, and change the equipment to a stationary, fixed pump unit without wheels to differentiate from Role 2.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Role 1 (Image 1) fails the EDITORIAL HERO brief: The prompt explicitly requires the products to be 'small, separate, and off-center' within a 'wide high-oblique water-transfer context.' In the image, the packaged coil and bare coil are large, foregrounded, and centered, making them the primary focus rather than contextual elements. The background shows a generic farm landscape, not a water-transfer context.",
+        "Role 2 (Image 2) contains a rejected element: The prompt strictly forbids a 'third commercial package, bottle, person or extra coil.' This image displays three distinct coils on the ground (the packaged coil, two bare coils), which violates the 'approved two-coil pair' constraint and adds an extra coil.",
+        "Role 3 (Image 3) displays a 'role-3/role-5 hardware duplication': The equipment shown is a small, portable meter or pump, which duplicates the hardware type found in Role 5 (portable equipment). The brief specifically requires an 'elevated record photograph' of a 'fixed pump... on an empty concrete pad,' implying a stationary headworks unit, not a handheld device."
+      ],
+      "correction_prompt": "Regenerate all images: For Role 1, place the coils small and off-center in a high-oblique water-transfer setting; For Role 2, strictly limit the display to exactly two coils (one packaged, one bare) and remove the third; For Role 3, replace the handheld device with a stationary fixed pump and manifold on a concrete pad.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

@@ -7,27 +7,31 @@
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 30,
-      "product_height_percent": 45,
-      "product_x_center_percent": 40,
+      "score": 0,
+      "product_width_percent": 38.0,
+      "product_height_percent": 28.0,
+      "product_x_center_percent": 35.0,
       "reasons": [
-        "Person present in foreground",
-        "Missing required bare black woven coil pair",
-        "Watermark text is incorrect or missing 'AFP | 09134922013'",
-        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 40% of frame height."
+        "The image contains a visible person (farmer) in the background holding a tool, which is a hard reject.",
+        "The image includes a large mobile pump unit with a tire, which is treated as a third commercial/transportable object, violating the 'zero extra commercial products' rule."
       ],
-      "correction_prompt": "Remove the person entirely and add a second bare black woven coil next to the AFP packaged coil. Ensure both coils are small, separate, and off-center. Correct the bottom-right watermark to exactly display 'AFP | 09134922013'. Reduce product height from 45% to at most 40% of frame height.",
+      "correction_prompt": "Remove the human figure on the left and the mobile pump unit on the right. Ensure only the two coil products (packaged AFP and bare black) remain visible on the foreground surface, keeping them separate and fully visible.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 0,
-      "review_unavailable": true,
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 42,
+      "product_height_percent": 35,
+      "product_x_center_percent": 40,
       "reasons": [
-        "visual reviewer unavailable after 3 retries: TimeoutError"
+        "Approved layflat pair present: one packaged coil and one bare black woven coil",
+        "Zero people or human body parts",
+        "Distant unattended tractor and building are acceptable infrastructure context",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correct",
+        "Combined width 42% is at the upper limit of acceptable noisy range (8-42%)"
       ],
-      "correction_prompt": "Retry visual review of the preserved candidate without regenerating it.",
+      "correction_prompt": "",
       "attempt": 2
     }
   ]

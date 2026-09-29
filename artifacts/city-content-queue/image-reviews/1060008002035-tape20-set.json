@@ -1,43 +1,22 @@
 {
   "source_id": "1060008002035-tape20",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 25,
-      "duplicate_roles": [
-        1,
-        2,
-        3,
-        4
-      ],
+      "score": 40,
+      "duplicate_roles": [],
       "reasons": [
-        "Missing Role 5: The set only contains four images, but five distinct roles are required.",
-        "Role Mismatch (Image 1): The image provided does not match the 'EDITORIAL HERO' brief. It features a coiled, pre-cut strip of tape alongside the carton, which conflicts with the requirement that the carton be the only visible product (fully visible, off-center).",
-        "Role Mismatch (Image 2): The 'SELECTION EVIDENCE' brief requires a simple background and visible emitter spacing. The image shows a complex filtration head and tractor, violating the 'simple background' instruction.",
-        "Role Mismatch (Image 3): The 'HEADWORKS STORY' brief requires the carton to be small and secondary. In this image, the carton is large, centered in the foreground, and dominates the frame, failing to show the 'unattended fixed filter' as the primary subject.",
-        "Role Mismatch (Image 4): The 'INSTALLATION PROOF' brief specifies an asymmetric unattended view. This image is a centered, symmetrical composition with a strong vanishing point and a large centered carton, which is explicitly forbidden by the brief.",
-        "Zero People Violation: A driver is clearly visible inside the tractor in Image 3, violating the mandatory 'Zero people' rule."
+        "Role 1: The AFP product roll is oversized, dominating the foreground instead of remaining a small, secondary element as required.",
+        "Role 2: The AFP product roll is excessively large compared to the emitter tape and background context, failing the 'small' size requirement.",
+        "Role 3: The AFP product roll is central and oversized, competing for attention with the headworks equipment, which violates the requirement that it remains small and secondary.",
+        "No visible camera height/angle distinctions between roles 2 and 3 beyond background changes; both use a similar low-angle close-up of the product."
       ],
-      "correction_prompt": "Regenerate the complete set of five images: (1) A wide high-oblique hero shot with a small off-center carton; (2) An elevated view with a carton and simple field edge; (3) A medium side view of a filtration head where the carton is small; (4) An asymmetric view of an installed field (no centering, no people in tractors); (5) A close-up of an installed tape emitter/connector where the carton is visible but no other containers are present.",
+      "correction_prompt": "Scale down the AFP product roll to be clearly small and secondary in all three images, strictly subordinate to the environmental context (wide farm view, technical evidence, and headworks equipment respectively), ensuring distinct camera angles for each role.",
+      "panel_scores": [
+        40
+      ],
       "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 22,
-      "duplicate_roles": [
-        3,
-        4
-      ],
-      "reasons": [
-        "Missing Role 3: No medium side view of unattended fixed filter, gauge, regulator, or manifold; all background settings are generic fields, not technical headworks.",
-        "Missing Role 5: No unattended close-up macro details of installed emitters, connectors, or flush-points; focus remains on wide field landscapes.",
-        "Repeated Composition: Images 3 and 4 are nearly identical, both featuring a centered drip-tape roll and a blurred tractor in the furrow-field background.",
-        "Generic Context: The visuals lack specific 'Dzfoul, Khuzestan' regional or agricultural identity, defaulting to generic North American-style barns and open farmland.",
-        "Weak Narrative: Images 1 and 2 show the product in an abstract studio-like layout rather than a high-oblique editorial hero shot or a real installation proof."
-      ],
-      "correction_prompt": "Replace the entire set with: 1) High-oblique wide hero shot of a Dzfoul farm with the AFP roll small in the lower third; 2) Technical arrangement on a workbench with visible emitter-spacing charts; 3) Side view of an unattended irrigation headworks manifold and gauge; 4) Asymmetric wide shot of a drip-irrigated flower crop in Khuzestan; 5) Macro shot of an installed AFP drip-tape emitter with a flush connector in the soil.",
-      "set_attempt": 2
     }
   ]
 }

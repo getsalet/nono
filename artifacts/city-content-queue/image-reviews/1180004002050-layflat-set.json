@@ -1,0 +1,57 @@
+{
+  "source_id": "1180004002050-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Panel 1) fails the 'EDITOIAL HERO' specification; the approved coiled products are positioned large and centered in the foreground rather than remaining small, separate, and off-center.",
+        "Role 2 (Panel 2) lacks the 'elevated' camera angle specified for technical comparison, instead presenting the coils at a low, ground-level perspective similar to Role 1.",
+        "Role 3 (Panel 3) fails the 'HEADWORKS DETAIL' requirement; the image is missing the essential fixed pump, gauge, and manifold equipment, showing only product packaging on a bare concrete pad.",
+        "The visual environments for Roles 2 and 3 are indistinguishable in their relationship to the product, with both showing the coiled items as the primary subject on a surface rather than as secondary evidence."
+      ],
+      "correction_prompt": "1) Move the small product coils to a distant off-center position in a wide, high-oblique view of the water transfer. 2) Raise the camera height for the comparison shot to show diameter difference. 3) Introduce fixed pump, gauge, and manifold equipment to accompany the secondary coils on the concrete pad.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 contains a person, which is a hard reject criterion.",
+        "Role 3 contains neither the required 'fixed pump' nor 'gauge and manifold'; it is a product-only shot on a concrete surface, not an equipment record.",
+        "Roles 2 and 3 share the same static 'product-only on concrete' layout, failing to provide distinct visual narratives or camera angles.",
+        "Role 1 fails the 'small, separate, off-center' requirement; the packaged and bare coils are placed centrally and are excessively large within the frame.",
+        "No image depicts the specific 'water-transfer context' or 'technical comparison' (e.g., diameter difference) requested in the brief; instead, the product is simply placed in a generic farm environment."
+      ],
+      "correction_prompt": "Role 2 must remove the person and use a camera angle that makes the diameter difference between the two coils explicit (e.g., side-by-side with a scale). Role 3 must be an elevated shot featuring a fixed pump, pressure gauge, and manifold on a concrete pad with the coils secondary and small. Role 1 must reframe to make the coils off-center and significantly smaller relative to the high-oblique water-transfer context.",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 fails the negative constraint by depicting a third extra commercial coil (three coils total) instead of just the approved two-coil pair.",
+        "Role 3 fails the 'equipment-only' constraint by displaying extra commercial non-product text 'AFP' branded directly onto the pump housing.",
+        "Role 1 features a wide high-oblique crop that does not properly isolate the water-transfer context required for the Editorial Hero role."
+      ],
+      "correction_prompt": "Regenerate Role 2 containing exactly two coils (no third), remove the text branding from the Role 3 pump, and widen the Role 1 frame to capture the surrounding water-transfer infrastructure.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

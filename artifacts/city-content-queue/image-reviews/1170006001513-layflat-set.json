@@ -4,22 +4,53 @@
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "score": 45,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Hero) fails the 'wide high-oblique' requirement; it is a low, flat-angle shot on the dirt.",
-        "Role 2 (Selection Evidence) is nearly identical to Role 1 in layout and composition, showing the coils on the dirt with a tractor in the background rather than an elevated technical comparison.",
-        "Role 1 and 2 are duplicates in environment structure and camera angle.",
-        "Role 3 (Headworks Detail) fails completely; it is a flat-angle product shot on a concrete slab with no pump, gauge, or manifold equipment present."
+        "Role 1 shows the product centrally in a farm field with a large tractor, not the required wide high-oblique water-transfer context.",
+        "Role 2 includes multiple coils and a valve, deviating from the required elevated comparison of the two-coil pair showing construction difference.",
+        "Role 3 shows only coils on concrete, missing the required fixed pump, gauge, and manifold equipment detail."
       ],
-      "correction_prompt": "Regenerate Role 1 as a high-oblique aerial view of the field with the coils off-center; regenerate Role 2 as a close-up technical comparison of the coils; replace Role 3 with an elevated shot of a pump/gauge manifold on a concrete pad with the coils as secondary evidence.",
+      "correction_prompt": "Create three distinct images: Role 1 as a wide high-oblique water-transfer context with the two coils small and off-center; Role 2 as an elevated close-up comparing only the two coils to show diameter/construction difference; Role 3 as a detailed shot of a fixed pump, gauge, and manifold on an empty concrete pad with the two coils small and secondary.",
       "panel_scores": [
-        35
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 violates the 'equipment-only' and 'no farm activity' constraints by showing a distant tractor in the background.",
+        "Roles 2 and 3 are functionally duplicates: both show a low-angle close-up of the coiled pipes with no fixed headworks equipment (pump/gauge) as required by the specific role briefs.",
+        "The layout of the pipe coils is nearly identical between roles 2 and 3, failing to create a distinct technical narrative as requested."
+      ],
+      "correction_prompt": "Regenerate Role 3 to focus exclusively on the fixed headworks equipment (pump, gauge, manifold) on an empty concrete pad with a blurred rural background (no tractors). Regenerate Role 2 to provide a high-elevation 'comparison' shot of the two coils showing construction/diameter differences, removing the headworks equipment.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 (Headworks Detail) is missing the required fixed pump, gauge, and manifold equipment on an empty concrete pad; it fails to display the specific 'record photograph' of the headworks infrastructure and instead just shows the coils on a generic pad.",
+        "Roles 2 and 3 are effectively duplicates of the product close-up layout (flat, table-like surface with the two-coil pair), failing to establish the distinct technical comparison narrative for Role 2 or the equipment narrative for Role 3."
+      ],
+      "correction_prompt": "Generate Role 3 as an elevated record photograph of a fixed pump, pressure gauge, and manifold sitting on a concrete pad, with the two-coil pair placed small and secondary in the background. Ensure Role 2 remains a clear close-up technical comparison of the coils themselves, distinct from the Role 3 headworks infrastructure shot.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 3
     }
   ]
 }
