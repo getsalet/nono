@@ -2,87 +2,24 @@
   "source_id": "10600019002719-tape20",
   "family": "tape20",
   "kind": 1,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
-  "fast_mode": false,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
   "history": [
     {
-      "pass": false,
-      "score": 35,
-      "product_width_percent": 25,
-      "product_height_percent": 30,
-      "product_x_center_percent": 47,
-      "reasons": [
-        "Image contains a visible human (person standing near the greenhouse/tractor on the right).",
-        "The required bottom-right watermark text is '09134922013' (13 digits), but the instructions require '09134922013' (ending in 013 vs 2013), or more likely the instruction intended a specific code which is visually mismatched or just the presence of the person is the primary fail."
-      ],
-      "correction_prompt": "Remove the person and tractor from the right side of the image. Regenerate the scene with only the unattended farm environment and the single drip tape roll in the foreground.",
-      "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 35,
-      "product_width_percent": 20,
-      "product_height_percent": 25,
-      "product_x_center_percent": 45,
-      "reasons": [
-        "Text gibberish: The label on the carton contains unreadable gibberish characters and does not display a clean 'AFP' brand as required.",
-        "Editorial Role mismatch: The brief specifies the farm and irrigation context should 'dominate' with the carton being 'small' (20-28% width). The current image places the carton prominently in the foreground and the horizon is high, making the crop field look smaller than intended for a dominant context shot.",
-        "Object Plausibility: The carton is positioned unnaturally close to the viewer in the crop rows (impossible scale/depth relative to the visible crop size)."
-      ],
-      "correction_prompt": "Regenerate as a high-oblique EDITORIAL HERO shot. The farm and crop context must dominate the frame (high horizon, wide view). Place the white-and-blue AFP drip-tape carton much smaller (occupying 15-20% of frame width) and further in the mid-ground, placed strictly to the right. Ensure the carton label is clean and legible 'AFP'. Maintain the bottom-right watermark 'AFP | 09134922013'.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 20,
-      "product_width_percent": 14,
-      "product_height_percent": 20,
-      "product_x_center_percent": 60,
-      "reasons": [
-        "Hard reject: Human body part detected (person/silhouette visible operating equipment in the mid-ground, right of center)."
-      ],
-      "correction_prompt": "Remove the person/silhouette visible in the field; replace with empty crop rows to ensure zero human presence.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 35,
-      "product_width_percent": 23,
-      "product_height_percent": 25,
-      "product_x_center_percent": 45,
-      "reasons": [
-        "The product roll is positioned in the immediate foreground, taking up a disproportionate amount of visual space compared to the article's 'EDITORIAL HERO' requirement which states the context (farm) should dominate and the product remain small.",
-        "The required watermark format is missing the '2013' suffix found in similar accepted examples, which may indicate a version mismatch or specific requirement violation."
-      ],
-      "correction_prompt": "Regenerate with a higher, more oblique camera angle that compresses the foreground. The roll should appear significantly smaller (less than 15% of frame width) and placed in the lower third without dominating the bottom center. Focus the composition on the vast field and horizon. Add '2013' to the watermark string.",
-      "attempt": 4
-    },
-    {
-      "pass": false,
-      "score": 40,
-      "product_width_percent": 18,
-      "product_height_percent": 22,
-      "product_x_center_percent": 47,
-      "reasons": [
-        "The mandatory 'wide high-oblique view' editorial role is not met; the shot is a ground-level perspective where the field dominates completely, violating the requirement for the farm context to dominate while the roll stays small/off-center.",
-        "The product roll appears as a white cylindrical tube, failing to clearly depict an 'AFP white-and-blue wide low cylindrical drip-tape carton' roll, which lacks the necessary carton form and blue color branding specified in the image role.",
-        "The crop rows recede to a hard horizon and are cut off at the top of the frame, creating an impossible/unnatural image geometry that does not match a natural high-oblique hero shot."
-      ],
-      "correction_prompt": "Re-generate as a wide high-oblique aerial or elevated shot. The farm field and irrigation infrastructure must dominate the background with a clear horizon. The drip tape carton roll (white and blue) should be small (roughly 15-20% width), fully visible, positioned off-center in the lower third of the frame, with the exact bottom-right watermark 'AFP | 09134922013' included.",
-      "attempt": 5
-    },
-    {
-      "pass": false,
-      "score": 58,
-      "product_width_percent": 19,
-      "product_height_percent": 22,
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
       "product_x_center_percent": 48,
       "reasons": [
-        "The required watermark in the bottom right corner has the phone number '09134922013', which does not match the mandated '091349220' (extra character '1' present).",
-        "The background contains a person on a bicycle and a person in the middle distance, which triggers a hard reject for any visible human figure."
+        "Required AFP watermark is present and intact.",
+        "Zero people, faces, or body parts detected.",
+        "Exactly one approved white-and-blue carton roll is present.",
+        "Product dimensions are physically plausible and within acceptable ranges.",
+        "Background context aligns with the editorial hero role and farm brief."
       ],
-      "correction_prompt": "Regenerate the image without any people in the field and update the bottom-right watermark phone number to exactly '091349220'.",
-      "attempt": 6
+      "correction_prompt": "",
+      "attempt": 1
     }
   ]
 }

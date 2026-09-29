@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-29T07:44:46+00:00`
+- آخرین بروزرسانی: `2026-09-29T07:58:11+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **599 از 1894 (31.63٪)**
-- تکمیل‌شده: **599**
+- پیشرفت: **603 از 1894 (31.84٪)**
+- تکمیل‌شده: **603**
 - در حال پردازش: **0**
-- در انتظار: **196**
-- آماده انتخاب در اجرای بعدی: **196**
+- در انتظار: **176**
+- آماده انتخاب در اجرای بعدی: **176**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1099**
+- ناموفق: **1115**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -18,8 +18,7 @@
 
 ## بسته‌های آماده آپلود
 
-- بسته‌های 50تایی آماده: **11**
-- [batch-002-posts-0051-0100.zip](./packages/batch-002-posts-0051-0100.zip) — 50 پست — 19910534 بایت
+- بسته‌های 50تایی آماده: **12**
 - [batch-003-posts-0101-0150.zip](./packages/batch-003-posts-0101-0150.zip) — 50 پست — 18707430 بایت
 - [batch-004-posts-0151-0200.zip](./packages/batch-004-posts-0151-0200.zip) — 50 پست — 18632681 بایت
 - [batch-005-posts-0201-0250.zip](./packages/batch-005-posts-0201-0250.zip) — 50 پست — 18787501 بایت
@@ -29,9 +28,14 @@
 - [batch-009-posts-0401-0450.zip](./packages/batch-009-posts-0401-0450.zip) — 50 پست — 17601600 بایت
 - [batch-010-posts-0451-0500.zip](./packages/batch-010-posts-0451-0500.zip) — 50 پست — 13986604 بایت
 - [batch-011-posts-0501-0550.zip](./packages/batch-011-posts-0501-0550.zip) — 50 پست — 12330394 بایت
+- [batch-012-posts-0551-0600.zip](./packages/batch-012-posts-0551-0600.zip) — 50 پست — 10846317 بایت
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **لمزان** — هرمزگان — `layflat` — 1191 کلمه — `2026-09-29T07:53:57+00:00`
+- **خضرآباد** — یزد — `layflat` — 1196 کلمه — `2026-09-29T07:53:48+00:00`
+- **بفروییه** — یزد — `layflat` — 1932 کلمه — `2026-09-29T07:53:43+00:00`
+- **ابوموسی** — هرمزگان — `layflat` — 1506 کلمه — `2026-09-29T07:51:20+00:00`
 - **میامی** — سمنان — `layflat` — 1338 کلمه — `2026-09-29T07:42:09+00:00`
 - **رودیان** — سمنان — `layflat` — 1469 کلمه — `2026-09-29T07:41:56+00:00`
 - **مجن** — سمنان — `layflat` — 1339 کلمه — `2026-09-29T07:40:51+00:00`
@@ -48,23 +52,19 @@
 - **گراب** — لرستان — `layflat` — 1189 کلمه — `2026-09-29T06:03:14+00:00`
 - **سردشت** — خوزستان — `tape20` — 1312 کلمه — `2026-09-29T06:03:11+00:00`
 - **بندرماهشهر** — خوزستان — `layflat` — 1385 کلمه — `2026-09-29T05:50:45+00:00`
-- **سردشت** — چهارمحال و بختیاری — `layflat` — 1302 کلمه — `2026-09-29T05:50:15+00:00`
-- **بازفت** — چهارمحال و بختیاری — `layflat` — 1560 کلمه — `2026-09-29T05:49:50+00:00`
-- **سودجان** — چهارمحال و بختیاری — `layflat` — 1749 کلمه — `2026-09-29T05:13:11+00:00`
-- **آبژدان** — خوزستان — `layflat` — 1435 کلمه — `2026-09-29T05:07:57+00:00`
 
 ## خطاهای اخیر
 
-- **بیارجمند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **خرانق** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **ابوحمیظه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **سمنان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **دیباج** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **ابوحمیظه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **بسطام** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **درجزین** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **مهردشت** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **رضوان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **مجومرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **حمیدیا** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **هرات** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **زارچ** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **بستک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **تخت** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **چارک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **سردشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **کوهیچ** — `layflat`: `Editorial review failed: internal link count must equal minimum`
+- **جناح** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

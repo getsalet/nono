@@ -1,0 +1,53 @@
+{
+  "source_id": "1220009002959-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image is missing the mandatory infrastructure elements: fixed pump, gauge, and manifold.",
+        "The 'packaged AFP coil' is incorrectly depicted as a black jar/bottle wrapped in a cloth, which triggers a hard reject for bottles or containers.",
+        "The product pair is wider than the accepted 65 percent threshold, violating the layout requirements for this role."
+      ],
+      "correction_prompt": "Regenerate an elevated record shot on a concrete pad including a fixed pump, gauge, and manifold. Correct the first object from a wrapped jar to a properly packaged AFP coil. Ensure the pair is smaller, separate, and secondary to the infrastructure.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Visible human figures (worker) present in the background next to the equipment",
+        "Mandatory role violation: Presence of people violates the 'no farm activity' and 'zero people' constraint",
+        "Visual brief mismatch: The image contains human elements which are explicitly prohibited for this role"
+      ],
+      "correction_prompt": "Regenerate the image without any human figures or workers; keep only the fixed pump, gauge, and manifold infrastructure on the concrete pad with the two product coils in the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 58,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains the required approved layflat pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "A fixed pump, gauge, and manifold are visible on the concrete pad, consistent with the 'HEADWORKS DETAIL' equipment-only role; these are treated as infrastructure, not extra commercial products.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "There are zero people or human body parts visible.",
+        "No hard reject triggers are present (no bottles, no third commercial package, no floating/merged objects, and dimensions are plausible)."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
