@@ -1,22 +1,59 @@
 {
   "source_id": "1110006001047-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
     {
-      "pass": true,
-      "score": 92,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Image 1): Effectively executes the 'Editorial Hero' role. It provides a wide high-oblique context of the agricultural landscape, clearly establishing the water-transfer narrative. The product pair is present, off-center, and relatively small in the frame, meeting the compositional requirements for the opening shot.",
-        "Role 2 (Image 2): Successfully fulfills the 'Selection Evidence' role. The camera is low and intimate, framing the two coils to emphasize their visual differences in texture and structure (a key part of the selection process). There are no disallowed third-party objects, people, or bottles.",
-        "Role 3 (Image 3): Correctly executes the 'Headworks Detail' role. The background has shifted to a flat concrete pad, providing the distinct structural change required. While the coil pair is slightly larger here than in the hero shot, the prompt explicitly allows for this to remain as 'secondary' evidence, and the distinct background successfully prevents it from being considered a duplicate of Role 2.",
-        "All three panels feature the exact required watermark and maintain product identity consistency. The 'distinction' between the panels is strong because they represent three separate narrative beats: Context -> Comparison -> Application/Infrastructure."
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "",
+      "reasons": [
+        "Panel 3 (HEADWORKS DETAIL) required: equipment-only elevated record of one fixed pump, gauge and manifold on empty concrete pad with approved two-coil pair small and secondary. Actual image shows three coils on concrete with no pump/gauge/manifold. Violates 'no third commercial package' rule by including three coils instead of the required two-coil pair plus pump equipment.",
+        "Role-3 shows close-up of three product coils rather than equipment-focused view. Missing the required technical instrumentation (pump, pressure gauge, manifold) central to the HEADWORKS DETAIL narrative."
+      ],
+      "correction_prompt": "Regenerate Panel 3 as elevated record photograph of one fixed agricultural pump, pressure gauge and manifold assembly on empty concrete pad. Place the approved two-coil pair (packaged and bare black woven) small, separate and secondary in frame. Remove third coil. Show equipment-focused technical composition without any farm activity.",
       "panel_scores": [
-        92
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 28,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panel 1 fails EDITORIAL HERO: camera is low ground-level, not high-oblique; product coils are oversized and dominate the foreground instead of being small/separate/off-center; background is generic North American row-crop farmland, not consistent with Sistan and Baluchestan irrigation context.",
+        "Panel 2 fails SELECTION EVIDENCE: same low ground-level framing as Panel 1; no technical diameter/construction difference is communicated; background is a barn-and-field generic farm that overlaps conceptually with Panel 1's setting — roles 1 and 2 share nearly identical layout, camera height, and environmental structure.",
+        "Panel 3 has some structural distinction (concrete surface) but still features oversized product in foreground, includes a brass fitting/stub that is not part of the approved two-coil pair description, and the background is generic field rather than the required fixed pump + gauge + manifold equipment-only record photograph on an empty concrete pad."
+      ],
+      "correction_prompt": "Redesign Panel 1 as a true high-oblique wide shot showing water flowing through laid-out hoses across a dry agricultural field in Sistan context, with both coils small and off-center in the distance. Redesign Panel 2 as an elevated side-by-side technical comparison shot on a simple neutral surface emphasizing visible diameter and weave-construction difference between the two coils, with no background farm activity or third objects. Redesign Panel 3 as an equipment-only elevated photograph of a fixed pump, pressure gauge, and manifold assembly on an empty concrete pad with no product dominant in frame.",
+      "panel_scores": [
+        28
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panel 3 (HEADWORKS DETAIL) fails its role: no fixed pump, gauge, or manifold is visible — only the two coils on a concrete pad. The required equipment-only elevated record photograph is absent.",
+        "Panels 1 and 2 are compositionally redundant: both place the same two-coil pair at ground-level on bare/tilled earth with a nearly identical distant barn, same camera height, and same narrative function (product display in field). They do not deliver visually distinct roles.",
+        "The approved packaged-coil design is inconsistent across panels (dome-wrap in 1 and 3, cube-box in 2), breaking product identity continuity expected for an editorial set.",
+        "Backgrounds across all three panels are generic open farmland with similar barn silhouettes — not sufficiently varied to support three distinct editorial narratives for an article set."
+      ],
+      "correction_prompt": "Redo Panel 3 as an equipment-only elevated close-up on an empty concrete pad showing one fixed submersible/diesel pump, a pressure gauge, and a PVC manifold with valves — keep the two-coil pair small and off to one side as secondary evidence. Redo Panel 1 as a wide high-oblique establishing shot of active water transfer through laid hose across the field (hero context). Redo Panel 2 as a clean elevated side-by-side diameter/construction comparison of the two coils on a neutral surface with no field background, showing the packed coil and bare black woven coil only.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 3
     }
   ]
 }

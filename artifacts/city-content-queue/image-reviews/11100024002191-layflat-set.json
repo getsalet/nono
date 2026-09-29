@@ -1,23 +1,60 @@
 {
   "source_id": "11100024002191-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
     {
-      "pass": true,
-      "score": 95,
+      "pass": false,
+      "score": 42,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Image 1) serves as the EDITORIAL HERO: It presents a wide, high-oblique view of a water-transfer context (crop field). The two coiled products are small, separate, and off-center, satisfying the composition requirements.",
-        "Role 2 (Image 2) serves as SELECTION EVIDENCE: The low-angle 'elevated technical' framing places the two coils in the foreground, allowing a clear comparison of the packaged product versus the bare coil, with the difference in construction/diameter clearly visible.",
-        "Role 3 (Image 3) serves as the HEADWORKS DETAIL: The scene is set on a concrete pad. Although the specific pump/gauge hardware is not prominently shown, the presence of the two coils on the concrete pad is explicitly permitted ('approved product evidence is required and may remain small and secondary'). The background context (tractor/building) is allowed, and the equipment-only rule (no people/activity) is satisfied.",
-        "All images feature distinct environments (crop field, bare soil, concrete pad) and camera angles, avoiding layout duplication.",
-        "The specific 'AFP | 09134922013' watermark is present in the bottom-right corner of all panels."
+        "Panel 3 critically fails its HEADWORKS DETAIL role: it shows the two product coils prominently on the concrete pad instead of an equipment-only record of one fixed pump, gauge, and manifold. No pump, pressure gauge, or manifold is present anywhere in the image.",
+        "Panel 1 is shot at near-ground level looking down crop rows, not the required wide high-oblique water-transfer perspective; the camera height must be significantly elevated to convey the broader water-transfer context.",
+        "Product coils dominate the foreground of all three panels rather than remaining small and secondary, contradicting the brief.",
+        "Panel 2 background shows active baling/harvesting tractors with visible dust and round hay bales, which reads as farm activity rather than the neutral comparative setting needed for SELECTION EVIDENCE."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Regenerate all three panels: Panel 1 from a high oblique/elevated drone-like angle showing a wide water-transfer scene with the two coils small and off-center in the foreground; Panel 2 as an elevated product-focused comparison shot of the two coils side-by-side on a neutral surface with no background activity, emphasizing their construction/diameter difference; Panel 3 as a clean elevated record photo of one fixed pump, pressure gauge, and manifold on an empty concrete pad with no product coils in frame, distant tractor permitted as inert context.",
       "panel_scores": [
-        95
+        42
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 22,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 and Role 2 are visually redundant: both show the same product pair on bare soil with blurred barns in background, same camera height, same composition structure. No meaningful distinction in angle, environment, or narrative.",
+        "No panel matches the article brief: none depict Iran/Sistan & Baluchestan/Jallaq agricultural context. All backgrounds are generic North-American/Western farm fields with red barns, corn rows, and green tractors.",
+        "Role 3 contains an active green tractor with operator in background — violates 'no farm activity' and turns the shot into equipment-operation documentation rather than an elevated technical record.",
+        "Watermark number '09134922013' does not match the required AFP product identifier.",
+        "Product coils are oversized and foreground-dominant in all three panels, not 'small, separate and secondary' as required."
+      ],
+      "correction_prompt": "Reshoot all three panels in Iran's Sistan and Baluchestan province (Jallaq/Golshan area) with arid landscape, desert-adapted agriculture context, and no Western barns or tractors. Panel 1: wide high-oblique hero shot of water transfer in field with coils small/off-center. Panel 2: elevated side-by-side diameter comparison only. Panel 3: fixed pump + gauge + manifold on concrete pad with coils small in background, no tractor, no person.",
+      "panel_scores": [
+        22
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panel 1 is a low-angle field-row composition, not a 'wide high-oblique water-transfer context' — no canal, aqueduct, ditch, or water-infrastructure framing; product too large and centered for an editorial hero.",
+        "Panel 2 is another generic-field product shot (tilled soil, distant tractors) — no technical comparison narrative (no diameter/thickness distinction shown, no scale reference), violating the SELECTION EVIDENCE role.",
+        "Panel 1 and Panel 2 share near-identical layout logic: ground-level foreground product pair on bare earth with distant farm equipment; environment structure and camera height are not visibly distinct."
+      ],
+      "correction_prompt": "Panel 1: recompose as a wide high-oblique establishing shot of an active water-transfer corridor (irrigation canal, mainline, or pipeline route) with both coils tiny and off-center. Panel 2: switch to an elevated technical close-up framing the two coils side-by-side where diameter/construction difference is legible, on a neutral studio or workbench surface, no person, no bottle, no extra coils.",
+      "panel_scores": [
+        38
+      ],
+      "set_attempt": 3
     }
   ]
 }
