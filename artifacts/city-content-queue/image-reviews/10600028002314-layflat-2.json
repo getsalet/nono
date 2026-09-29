@@ -1,18 +1,35 @@
 {
   "source_id": "10600028002314-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 48,
+      "product_height_percent": 38,
+      "product_x_center_percent": 38,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Image does not match the required SELECTION EVIDENCE role. The brief mandates an approved layflat pair consisting of one packaged AFP coil and one bare black woven coil, with the pair demonstrating diameter or construction difference. Instead, the image shows a single black coiled hose alongside a green pump/gauge assembly, not a two-coil comparison pair.",
+        "The two foreground objects are a coil and a mechanical pump device, not two coils representing packaged vs bare construction.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Replace the green pump/gauge assembly with a second coil (one packaged AFP coil and one bare black woven coil) placed side by side to enable a technical diameter/construction comparison. Keep the black coil, add the second contrasting coil. Remove the pump. Retain watermark. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 26,
+      "product_height_percent": 14,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Two distinct layflat coils shown: left packaged AFP coil with visible metal center ring, right bare black woven coil — satisfies SELECTION EVIDENCE role by displaying diameter and construction differences. Zero people, zero body parts. Distant barn and unattended farm infrastructure present but not commercial products. No third coil, bottle, jar, or invented packaging. Watermark 'AFP | 09134922013' present in bottom-right. Combined width approximately 26% of frame, within acceptable 8-42% range. Objects are separate, recognizable, physically plausible, grounded on soil surface.",
+        ""
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
