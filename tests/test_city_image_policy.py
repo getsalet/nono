@@ -255,6 +255,22 @@ class CityImagePolicyTests(unittest.TestCase):
                 guarded(item, 2)
             self.assertEqual(seen, ["move camera farther away"])
 
+    def test_strict_rebuild_preserves_role_checkpoints_without_policy_changes(self):
+        rebuild = (
+            ROOT / "automation" / "rebuild_city_images_preserve_posts.py"
+        ).read_text(encoding="utf-8")
+        workflow = (
+            ROOT / ".github" / "workflows" / "rebuild-reference-images.yml"
+        ).read_text(encoding="utf-8")
+        self.assertIn('OUT / ".image-role-checkpoints" / source_id', rebuild)
+        self.assertIn("city_rebuild_checkpoint_reused", rebuild)
+        self.assertIn("if completed:", rebuild)
+        self.assertNotIn("tempfile.mkdtemp", rebuild)
+        self.assertIn('REBUILD_POST_LIMIT: "12"', workflow)
+        self.assertIn("deferring expensive ZIP repackaging until completion", workflow)
+        self.assertIn("IMAGE_QA_ATTEMPTS: \"10\"", workflow)
+        self.assertIn("IMAGE_SET_QA_ATTEMPTS: \"3\"", workflow)
+
     def test_layflat_selection_role_has_no_conflicting_scene_objects(self):
         item = {"source_id": "city-layflat", "topic": "layflat", "city": "پلدشت"}
         prompt = image_prompt_policy.image_prompt(item, 2)

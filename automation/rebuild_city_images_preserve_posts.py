@@ -11,7 +11,6 @@ import json
 import os
 import re
 import shutil
-import tempfile
 import time
 import urllib.error
 import urllib.request
@@ -205,14 +204,59 @@ def generate(item: dict, kind: int) -> dict:
 def generate_set(item: dict) -> dict[int, dict]:
     source_id = str(item["source_id"])
     OUT.mkdir(parents=True, exist_ok=True)
-    staging_root = Path(tempfile.mkdtemp(prefix=f".image-staging-{source_id}-", dir=OUT))
+    # Persist individually approved roles between scheduled runs. Publication
+    # remains atomic: checkpointed files replace live images only after the
+    # complete three-image set passes the unchanged diversity gate.
+    staging_root = OUT / ".image-role-checkpoints" / source_id
     staging_images = staging_root / "images"
     staging_reviews = staging_root / "image-reviews"
-    staging_images.mkdir(parents=True)
-    staging_reviews.mkdir(parents=True)
+    staging_images.mkdir(parents=True, exist_ok=True)
+    staging_reviews.mkdir(parents=True, exist_ok=True)
     set_review_path = OUT / "image-reviews" / f"{source_id}-set.json"
     results, feedback, history = {}, {}, []
-    pending = set(range(1, 4))
+    if set_review_path.exists():
+        try:
+            history = list(
+                json.loads(set_review_path.read_text(encoding="utf-8")).get("history")
+                or []
+            )[-20:]
+        except (OSError, json.JSONDecodeError):
+            history = []
+    for kind in range(1, 4):
+        name = image_prompt_policy.seo_image_name(item, kind, "webp")
+        image_path = staging_images / name
+        review_path = staging_reviews / f"{source_id}-{kind}.json"
+        try:
+            review = json.loads(review_path.read_text(encoding="utf-8"))
+            review_history = review.get("history") or []
+        except (OSError, json.JSONDecodeError):
+            review_history = []
+        if (
+            image_path.exists()
+            and image_path.stat().st_size > 10000
+            and review_history
+            and review_history[-1].get("pass")
+        ):
+            blob = image_path.read_bytes()
+            results[kind] = {
+                "name": name,
+                "sha256": hashlib.sha256(blob).hexdigest(),
+                "mime": "image/webp",
+                "width": 1200,
+                "height": 675,
+            }
+            print(
+                f"city_rebuild_checkpoint_reused source_id={source_id} kind={kind}",
+                flush=True,
+            )
+        elif review_history:
+            last = review_history[-1]
+            feedback[kind] = str(
+                last.get("correction_prompt")
+                or "; ".join(last.get("reasons") or [])
+            ).strip()
+    pending = set(range(1, 4)) - set(results)
+    completed = False
     try:
         with ThreadPoolExecutor(max_workers=WORKERS, thread_name_prefix="city-rebuild-image") as pool:
             for set_attempt in range(1, SET_ATTEMPTS + 1):
@@ -254,18 +298,28 @@ def generate_set(item: dict) -> dict[int, dict]:
                         role_review = staging_reviews / f"{source_id}-{kind}.json"
                         if role_review.exists():
                             os.replace(role_review, final_reviews / role_review.name)
+                    completed = True
                     return results
                 pending = set(verdict.get("duplicate_roles") or range(1, 4))
                 correction = str(verdict.get("correction_prompt") or "; ".join(verdict.get("reasons", [])))
                 for kind in pending:
-                    feedback[kind] = correction + f" Create a new role-{kind} scene clearly unlike the other four."
+                    feedback[kind] = correction + f" Create a new role-{kind} scene clearly unlike the other roles."
                     if kind in results:
                         (staging_images / results[kind]["name"]).unlink(missing_ok=True)
                         results.pop(kind, None)
                     (staging_reviews / f"{source_id}-{kind}.json").unlink(missing_ok=True)
-        raise RuntimeError(f"Image-set diversity gate rejected the five-image editorial set after {SET_ATTEMPTS} rounds")
+        raise RuntimeError(f"Image-set diversity gate rejected the three-image editorial set after {SET_ATTEMPTS} rounds")
     finally:
-        shutil.rmtree(staging_root, ignore_errors=True)
+        if completed:
+            shutil.rmtree(staging_root, ignore_errors=True)
+        else:
+            # Keep useful role images and reviews for the next scheduled run.
+            # Remove only a truly empty checkpoint directory.
+            try:
+                if not any(staging_images.iterdir()) and not any(staging_reviews.iterdir()):
+                    shutil.rmtree(staging_root, ignore_errors=True)
+            except OSError:
+                pass
 
 
 def replace_names(path: Path, mapping: dict[str, str]) -> None:
@@ -291,6 +345,25 @@ def remove_named_figures(path: Path, names: list[str]) -> None:
 
 
 def save_marker(rebuilt, skipped, failures, total, remaining, final=False):
+    previous = {}
+    if MARKER.exists():
+        try:
+            previous = json.loads(MARKER.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            previous = {}
+    previous_remaining = int(previous.get("remaining_candidates", total))
+    progressed = remaining < previous_remaining
+    stalled_runs = (
+        0
+        if progressed
+        else int(previous.get("consecutive_no_progress_runs", 0)) + 1
+    )
+    checkpoint_root = OUT / ".image-role-checkpoints"
+    checkpoint_posts = (
+        sum(1 for path in checkpoint_root.iterdir() if path.is_dir())
+        if checkpoint_root.exists()
+        else 0
+    )
     MARKER.write_text(
         json.dumps(
             {
@@ -304,8 +377,16 @@ def save_marker(rebuilt, skipped, failures, total, remaining, final=False):
                 "skipped": skipped,
                 "failures": failures,
                 "workers": WORKERS,
+                "post_workers": POST_WORKERS,
+                "post_limit": POST_LIMIT,
+                "checkpoint_posts": checkpoint_posts,
+                "consecutive_no_progress_runs": stalled_runs,
                 "from_completed_post": FROM_POST,
-                "last_progress_at": now(),
+                "last_progress_at": (
+                    now()
+                    if progressed or not previous
+                    else previous.get("last_progress_at") or now()
+                ),
             },
             ensure_ascii=False,
             indent=2,
