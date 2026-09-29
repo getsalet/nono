@@ -1,36 +1,39 @@
 {
   "source_id": "1180003002369-layflat",
-  "family": "layflat",
   "kind": 3,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 65,
-      "product_height_percent": 40,
-      "product_x_center_percent": 48,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
       "reasons": [
-        "Presence of a third commercial package (the dark tank/barrel object in the background) which is not an allowed fixed pump or gauge.",
-        "The product group is too large/wide relative to the frame (estimated 65%), failing the preferred 12-20% width constraint and hitting the hard reject limit for 'pair wider than 65 percent'."
+        "Does not match HEADWORKS DETAIL role: missing fixed pump, gauge, and manifold on empty concrete pad; coils are dominant instead of small/secondary",
+        "Shows active farm tractors in background, violating 'no farm activity' requirement",
+        "Two coils occupy 58% width - exceeds preferred 12-20% combined range",
+        "No equipment infrastructure visible; scene is product-focused agricultural setting"
       ],
-      "correction_prompt": "Regenerate with strictly two items (one packaged coil, one bare coil) and a small fixed pump. Remove the dark barrel/tank. Ensure the combined product width is 12-20% of the image width. Keep the watermark 'AFP | 09134922013' in the bottom right.",
+      "correction_prompt": "Regenerate as equipment-only elevated photograph on empty concrete pad showing one fixed pump, gauge, and manifold as primary subject; place small separate packaged AFP coil and bare black woven coil in foreground as secondary elements; remove all tractors and farm activity from background; maintain AFP watermark",
       "attempt": 1
     },
     {
       "pass": true,
       "score": 88,
-      "product_width_percent": 54,
-      "product_height_percent": 32,
-      "product_x_center_percent": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 58,
       "reasons": [
-        "The image displays exactly the two required objects: a packaged coil on the left and a bare black woven coil on the right.",
-        "The product pair is clearly recognizable, separate, and physically plausible with no overlapping or merged products.",
-        "The image contains zero people, human body parts, or silhouettes.",
-        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
-        "Estimated combined product width is approximately 54%, which is within the 8-65% noise estimate window for this role, although on the wider side of the preferred 12-20% range.",
-        "Visual details such as the coil packaging and woven texture are sharp and professional."
+        "Image shows approved layflat pair: one packaged AFP coil and one bare black woven coil on concrete pad",
+        "Combined width approximately 18%, within acceptable 12-20% range",
+        "Fixed pump, gauge, and manifold present as required headworks detail",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner",
+        "No people, body parts, or third commercial products visible",
+        "Equipment-only elevated record photograph with empty concrete pad background",
+        "Coils are separate, recognizable, and physically plausible",
+        "Lower-third placement appropriate for editorial role"
       ],
       "correction_prompt": "",
       "attempt": 2
