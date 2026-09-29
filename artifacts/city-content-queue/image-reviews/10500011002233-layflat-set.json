@@ -1,25 +1,39 @@
 {
   "source_id": "10500011002233-layflat",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 25,
       "duplicate_roles": [
         1,
-        2,
-        3
+        2
       ],
       "reasons": [
-        "Panel 1 violates the 'off-center' rule by placing the coils prominently in the foreground left/center and fails to provide a wide 'high-oblique' context. ",
-        "Panel 2 fails to meet the 'SELECTION EVIDENCE' requirement; it includes a metallic filter/coupling which violates the 'no extra hardware' constraint and lacks the required technical comparison of the coils. ",
-        "Panel 3 fails to meet the 'HEADWORKS STORY' requirement; instead of a medium side view of a fixed unattended pump, it displays a low-angle 'table top' layout with a pressure gauge and manifold on the ground, making the coils oversized and central rather than secondary. "
+        "Role 1 (Hero): The image uses a low-angle perspective from ground level looking up at the field, which fails the requirement for a 'wide high-oblique' view.",
+        "Role 2 (Selection Evidence): The image uses a similar low-angle perspective and similar ground-level environment (field/dirt) to Role 1, resulting in a lack of visible distinct camera height/angle and environment structure between the first two panels.",
+        "Role 3 (Headworks Detail): The equipment includes a 'manifold' or valve with a handle that resembles a container/bottle shape, and the coils appear too large relative to the equipment, violating the 'secondary' and 'small' constraints."
       ],
-      "correction_prompt": "Regenerate the panels: 1) Reframe Panel 1 to a wide high-oblique shot with the two coils placed small and off-center in the background. 2) Reframe Panel 2 as an elevated technical comparison showing only the two coils to highlight diameter/construction differences without any extra metal hardware. 3) Reframe Panel 3 as a medium side-view of a fixed pump and gauge with the two coils placed small and secondary in the background.",
+      "correction_prompt": "1) Recreate the hero shot from a high-oblique, drone-like perspective. 2) Change the selection shot to an elevated 'high-key' studio environment with white background and hard lighting, showing the two coils side-by-side to contrast diameter without a farm setting. 3) Shrink the coils in the detail shot to make them clearly secondary to the pump and manifold.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Panel 1) fails the EDITORIAL HERO requirement: it is not a wide high-oblique water-transfer context but a close-up field shot where the products are prominently centered; the camera angle and framing are inconsistent with a hero editorial shot.",
+        "Role 2 (Panel 2) is a generic white-background studio shot rather than an 'elevated technical comparison' with the specific two-coil pair; it does not show a diameter or construction difference through the pair itself as required.",
+        "Role 3 (Panel 3) violates the 'equipment-only' instruction by including three coiled packages (the approved two-coil pair plus an extra third coil); it is not a record photograph of a single fixed pump and manifold."
+      ],
+      "correction_prompt": "Replace with a set featuring: 1) a high-oblique wide-angle shot of a farm water transfer landscape with two small off-center coils; 2) a top-down comparison of two distinct coils showing size/construction difference; and 3) a clean equipment shot of a pump and gauges on an empty pad without extra coils.",
       "panel_scores": [
         35
       ],
-      "set_attempt": 1
+      "set_attempt": 2
     }
   ]
 }

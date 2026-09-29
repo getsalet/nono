@@ -1,0 +1,85 @@
+{
+  "source_id": "11000022001399-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 60,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The role is 'HEADWORKS DETAIL', which requires an equipment-only photo focused on a fixed pump/gauge/manifold. The pump and manifold are not visible in the image; instead, it features a pair of coils which is the 'layflat' role, making this image incorrect for the requested role.",
+        "The product width (~60%) is near the upper limit of the accepted range for noisy estimates, and the coils dominate the frame rather than being 'small and secondary' as required for this role."
+      ],
+      "correction_prompt": "Regenerate as 'HEADWORKS DETAIL': show a fixed pump, gauge, and manifold on a concrete pad as the main subject, with the two coils small and secondary in the background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 34,
+      "product_height_percent": 42,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL: no fixed pump, gauge, or manifold on a concrete pad. The image shows a layflat pair on a paved surface instead of the specified infrastructure setup.",
+        "Watermark 'AFP | 09134922013' is present and correctly positioned in the bottom right corner, but the core image content violates the specific role requirement for infrastructure photography.",
+        "Scene context (open pavement/road) does not align with the 'empty concrete pad' or 'agricultural infrastructure' environment described in the brief."
+      ],
+      "correction_prompt": "Regenerate the image to show one fixed pump, a pressure gauge, and a manifold installed on an empty concrete pad. Include a small, secondary pair of coils (one packaged AFP and one black woven) in the background or foreground, ensuring no farm activity is visible. Keep the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 68,
+      "product_height_percent": 45,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Image successfully features the mandatory fixed pump, gauge, and manifold infrastructure on an empty concrete pad.",
+        "Contains exactly one packaged AFP coil (wrapped) and one bare black coil, clearly separate and physically plausible.",
+        "Zero people or human body parts are visible, complying with strict safety requirements.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The infrastructure elements act as context rather than prohibited third commercial products.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 68% to 8-65% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 66,
+      "product_height_percent": 40,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The image correctly displays the approved pair: a packaged AFP coil on the left and a bare black woven coil on the right.",
+        "Zero people or human body parts are visible in the frame.",
+        "The water mark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "The background contains a distant unattended tractor and farm building, which are allowed as infrastructure and do not represent a third commercial product.",
+        "The product width estimate of 66% is within the acceptable range for noisy reviewer estimates (8-65%+), and both objects remain recognizable and physically plausible.",
+        "Lower-third placement is consistent with the editorial role, and centered placement is not a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 66% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 66% to 8-65% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 48,
+      "product_height_percent": 32,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Missing required infrastructure: The image lacks the mandatory 'fixed pump, gauge and manifold on an empty concrete pad' specified in the HEADWORKS DETAIL role.",
+        "Unapproved object in coil: There is a brown cylindrical plug/connector visible in the center of the bare black coil. This appears to be a separate item or 'fake label' that disrupts the 'bare' nature of the product and constitutes an extra commercial object.",
+        "Context mismatch: The image shows a farm scene with a tractor in the background, which violates the 'equipment-only... no farm activity' constraint."
+      ],
+      "correction_prompt": "Regenerate the image as an equipment-only elevated record photograph on an empty concrete pad. Include a fixed pump, gauge, and manifold. Place the one packaged AFP coil and one bare black woven coil in the background, small and separate. Remove the brown plug from the coil. Remove all farm activity, tractors, and soil; only the concrete pad and infrastructure should be visible.",
+      "attempt": 5
+    }
+  ]
+}

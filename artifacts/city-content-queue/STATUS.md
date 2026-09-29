@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-29T01:52:02+00:00`
+- آخرین بروزرسانی: `2026-09-29T02:07:16+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **557 از 1894 (29.41٪)**
-- تکمیل‌شده: **557**
+- پیشرفت: **562 از 1894 (29.67٪)**
+- تکمیل‌شده: **562**
 - در حال پردازش: **0**
-- در انتظار: **486**
-- آماده انتخاب در اجرای بعدی: **486**
+- در انتظار: **466**
+- آماده انتخاب در اجرای بعدی: **466**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **851**
+- ناموفق: **866**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,11 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **بیدخت** — خراسان رضوی — `layflat` — 1742 کلمه — `2026-09-29T02:02:25+00:00`
+- **سیدآباد** — خراسان رضوی — `layflat` — 1387 کلمه — `2026-09-29T02:00:05+00:00`
+- **ابوزیدآباد** — اصفهان — `layflat` — 1804 کلمه — `2026-09-29T01:59:05+00:00`
+- **سومار** — کرمانشاه — `tape20` — 2000 کلمه — `2026-09-29T01:58:02+00:00`
+- **سین** — اصفهان — `layflat` — 1402 کلمه — `2026-09-29T01:56:55+00:00`
 - **شاهو** — کرمانشاه — `layflat` — 1101 کلمه — `2026-09-29T01:30:53+00:00`
 - **روانسر** — کرمانشاه — `layflat` — 1096 کلمه — `2026-09-29T01:28:42+00:00`
 - **باجگیران** — خراسان رضوی — `layflat` — 1240 کلمه — `2026-09-29T01:28:25+00:00`
@@ -47,24 +52,19 @@
 - **خوزی** — فارس — `layflat` — 1256 کلمه — `2026-09-28T23:24:18+00:00`
 - **زاووت** — خوزستان — `tape20` — 1672 کلمه — `2026-09-28T20:07:14+00:00`
 - **دینور** — کرمانشاه — `layflat` — 1570 کلمه — `2026-09-28T18:12:55+00:00`
-- **سنقر** — کرمانشاه — `tape20` — 1833 کلمه — `2026-09-28T17:13:56+00:00`
-- **باغستان** — خراسان جنوبی — `tape20` — 1323 کلمه — `2026-09-28T17:01:18+00:00`
-- **بیرجند** — خراسان جنوبی — `tape20` — 1146 کلمه — `2026-09-28T16:48:08+00:00`
-- **تیتکانلو** — خراسان شمالی — `tape20` — 1445 کلمه — `2026-09-28T16:39:27+00:00`
-- **خانلق** — خراسان شمالی — `tape20` — 1855 کلمه — `2026-09-28T16:22:12+00:00`
 
 ## خطاهای اخیر
 
-- **شاندیز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **شادمهر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **سطر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **جنگل** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **سرخس** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **طرقبه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **مزرج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **رشتخوار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **فرهادگرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **شامکان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **شاپورآباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **زیار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **گلبهار** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **خورزوق** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بیستون** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **قصرشیرین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بهارستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **کاخک** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **دستگرد** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **گلمکان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

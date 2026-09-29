@@ -2,24 +2,74 @@
   "source_id": "10500011002233-layflat",
   "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
-  "fast_mode": false,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
   "history": [
     {
-      "pass": true,
-      "score": 88,
-      "product_width_percent": 15,
-      "product_height_percent": 30,
-      "product_x_center_percent": 30,
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 58,
+      "product_height_percent": 40,
+      "product_x_center_percent": 55,
       "reasons": [
-        "Image features exactly one packaged AFP coil and one bare black woven coil, both visible and physically plausible.",
-        "Contains a fixed pump, gauge, and manifold as part of a static equipment setup on an empty pad, which meets the 'HEADWORKS DETAIL' role without active farm activity.",
-        "Zero people, body parts, or human silhouettes are present.",
-        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
-        "The combined width and height of the products are within the acceptable estimation noise range."
+        "The image fails the mandatory HEADWORKS DETAIL role: it shows a farm field with a red barn instead of an empty concrete pad with a fixed pump, gauge, and manifold.",
+        "A third commercial product (a large brown jug) is visible behind the packaged coil, which is a hard reject.",
+        "The product pair takes up approximately 58 percent of the frame width, deviating significantly from the preferred 12 to 20 percent for this role."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Generate an elevated detail shot of a concrete pad with a fixed pump, gauge, and manifold. Place a small packaged white coil and a small black woven coil in the foreground. Include the 'AFP | 09134922013' watermark in the bottom right. Remove the jug and farm building.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 65,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing exact required watermark 'AFP | 09134922013' in the bottom-right corner.",
+        "Third commercial product present (a white roll of tubing/tape) in the foreground.",
+        "Third object present (a wrapped blue and black tank/bag) which acts as an extra product."
+      ],
+      "correction_prompt": "Regenerate the image with the exact text watermark 'AFP | 09134922013' placed in the bottom-right corner. Remove the small white roll in the foreground and the blue/black wrapped tank, leaving only the black coiled hose and its cardboard package.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The presence of the large cardboard box placed on top of the left coiled hose violates the 'zero invented package' and 'strict layflat pair' constraints. The image must show exactly one packaged AFP coil (or similar allowed packaging) and one bare coil without additional clutter like cardboard boxes."
+      ],
+      "correction_prompt": "Remove the large cardboard box from the left coiled hose; keep only the essential two-coil pair and fixed pump infrastructure.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 33,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The mandatory HEADWORKS DETAIL (elevated equipment-only record of pump, gauge, and manifold) is completely missing from the image.",
+        "The visual fails to include the required fixed pump, gauge, or manifold infrastructure on the concrete pad."
+      ],
+      "correction_prompt": "Generate an elevated close-up of a fixed pump, gauge, and manifold mounted on an empty concrete pad. Include the required two-coil product pair (one packaged AFP coil and one bare black woven coil) in the background, small and secondary. Ensure no people are visible and keep the AFP | 09134922013 watermark in the bottom right.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 50,
+      "product_height_percent": 32,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL role: the required record of a fixed pump, gauge, and manifold on an empty concrete pad is completely absent.",
+        "No visible farm infrastructure (pumps, gauges, or manifolds) is present as required for the mandatory equipment-only role."
+      ],
+      "correction_prompt": "Regenerate an elevated record photograph of a fixed pump, pressure gauge, and manifold on an empty concrete pad; add the small secondary two-coil pair (one AFP packaged coil, one bare black woven coil) to the scene while maintaining strict separation and zero people.",
+      "attempt": 5
     }
   ]
 }

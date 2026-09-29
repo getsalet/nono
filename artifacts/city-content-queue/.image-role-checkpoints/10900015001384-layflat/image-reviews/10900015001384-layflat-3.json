@@ -1,0 +1,78 @@
+{
+  "source_id": "10900015001384-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 52,
+      "product_height_percent": 42,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Critical failure: A third commercial package/object (a blue and silver wrapped coil) is present in the image alongside the required brown package and two bare black coils. The role requires exactly one packaged AFP coil and one bare black woven coil.",
+        "The presence of the third object violates the 'zero people, zero extra commercial products' hard reject criteria, specifically the ban on a 'third commercial package or third coil'."
+      ],
+      "correction_prompt": "Remove the blue and silver wrapped coil object entirely. Keep only the single brown cardboard package and the two bare black coils to strictly match the approved layflat pair specification.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Missing the required 'HEADWORKS DETAIL' primary subject: a fixed pump, gauge, and manifold on an empty concrete pad are absent.",
+        "Only one black woven coil is visible; the required 'packaged AFP coil' is missing (the open box appears empty or contains only cardboard packaging elements, not a clear second coil).",
+        "The scene lacks the context of agricultural irrigation infrastructure described in the mandatory visual brief."
+      ],
+      "correction_prompt": "Regenerate the image to feature a fixed irrigation pump, pressure gauge, and manifold mounted on a concrete pad as the main subject. Include a small, coiled black hose next to the pump. Ensure the composition is an elevated 'record photograph' style, including the text 'AFP | 09134922013' in the bottom right corner, with no people present.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 55.0,
+      "product_height_percent": 28.0,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Missing required HEADWORKS (fixed pump, manifold) - image shows only coils and a standalone gauge",
+        "Includes a third commercial product (packaged black coil under fabric)",
+        "Watermark contains incorrect tracking ID (09134922013 instead of 09134922013)"
+      ],
+      "correction_prompt": "Regenerate as an elevated headworks-only record: remove the three coils and standalone gauge; show one fixed pump with integrated gauge and manifold on an empty concrete pad; keep the approved two-coil pair very small and secondary; add the exact bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 34,
+      "product_height_percent": 48,
+      "product_x_center_percent": 54,
+      "reasons": [
+        "The mandatory role 'HEADWORKS DETAIL' is not met: the image fails to show a fixed pump, gauge, and manifold on an empty concrete pad.",
+        "Objects are physically implausible: the equipment (pump/gauge/manifold) is embedded directly inside the upper black woven coil instead of sitting on the concrete pad.",
+        "The equipment is not positioned in an elevated or detailed viewpoint suitable for a record photograph.",
+        "Composition is not centered or arranged properly for the requested layout where the equipment should be secondary to the coil pair.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Generate an image showing a fixed pump, gauge, and manifold installed on a concrete pad. Place one packaged AFP coil and one bare black woven coil on the same concrete pad, clearly separate from the infrastructure. Keep the coil pair small, secondary, and recognizable. Exclude any human presence. Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 27,
+      "product_height_percent": 18,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Mandatory role conflict: Image displays coils on a concrete pad but completely omits the required 'fixed pump, gauge, and manifold' necessary for the HEADWORKS DETAIL role."
+      ],
+      "correction_prompt": "Add a fixed pump, pressure gauge, and manifold on the concrete pad behind or beside the two coils, maintaining them as secondary elements.",
+      "attempt": 5
+    }
+  ]
+}

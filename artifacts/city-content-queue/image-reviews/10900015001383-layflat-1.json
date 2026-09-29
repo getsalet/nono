@@ -1,0 +1,53 @@
+{
+  "source_id": "10900015001383-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 83,
+      "product_height_percent": 54,
+      "product_x_center_percent": 75,
+      "reasons": [
+        "Contains a third commercial product (the packaged coil on the left); the role requires only one packaged and one bare black woven coil",
+        "The pair exceeds the 42 percent width hard reject limit at approximately 83 percent of the frame",
+        "machine-enforced bounding-box check failed: Reduce the product group from 83% to 8-42% of frame width.; Reduce product height from 54% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Regenerate to show only the approved two-coil pair (one packaged and one bare black woven coil), remove the third coil, keep the combined width between 12 and 20 percent, and ensure off-center placement Reduce the product group from 83% to 8-42% of frame width. Reduce product height from 54% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 48,
+      "product_height_percent": 26,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Multiple people (workers) are visible sitting in the center of the field, which is a hard reject.",
+        "The product pair is centered in the frame rather than off-center as per the editorial hero brief.",
+        "The product bounding box width is estimated at 48% of the frame width, which exceeds the 42% hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the field. Reposition the two coils (packaged and bare) to the lower-left or lower-right to be off-center. Scale down the coils to occupy less than 40% of the frame width while maintaining sharpness. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 34,
+      "product_height_percent": 26,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Correctly displays the approved layflat pair: one packaged white coil and one bare black woven coil.",
+        "Coils are separate, fully visible, and physically placed on the ground with correct proportions.",
+        "Required watermark 'AFP | 09134922013' is clearly visible in the bottom right corner.",
+        "Background features an appropriate agricultural setting with distant farm infrastructure (building) and no visible people."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

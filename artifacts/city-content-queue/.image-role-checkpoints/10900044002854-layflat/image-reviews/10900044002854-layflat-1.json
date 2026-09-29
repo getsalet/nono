@@ -1,0 +1,89 @@
+{
+  "source_id": "10900044002854-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 55,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image displays the required pair of products: a packaged coil on the left and a bare black woven coil on the right.",
+        "The products are physically separate, recognizable, and plausible.",
+        "No people, body parts, or faces are present.",
+        "The watermarked 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "The products are placed in the foreground (lower-third), consistent with the editorial hero requirement.",
+        "While the pair's width is larger than the 'preferred' 12-20% band, the objects remain fully visible and distinct, which is acceptable in the absence of 'noisy estimates' explicitly validating larger widths for a hero shot, though I will score it slightly lower to reflect the deviation from the tight preferred band without failing it, as 'lower-third and off-center placement' are preferred but the scale is a visual estimate. *Correction*: The prompt accepts 8-42% for noisy estimates. This pair is roughly 55%. However, typically 'width' in these constraints refers to the object size, and if it's a hero, it's expected to be larger. I will interpret the 42% limit strictly: if the combined width is >42%, it is a hard reject. Let's look closer. The objects span from x=200 to x=1000 in a 1280 image. 800/1280 = 62%. This is likely a hard reject for a 12-20% target even with a 42% tolerance.",
+        "Re-evaluating based on the 'Hard reject a pair wider than 42 percent' instruction. The objects span nearly 60% of the frame width. This is a hard reject based on the specific width constraint provided.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the size of the two hose coils so that their combined width is less than 42 percent of the image frame; ensure they appear smaller and further back or physically smaller in the scene while maintaining the low-angle water transfer context. Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 62,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains a third commercial coil (an additional loose black coil on the right), which is a hard reject.",
+        "A visible human figure is present in the distance along the crop row, which is a hard reject.",
+        "The total width of the product pair is estimated at 62% of the frame, exceeding the hard reject limit of 42%.",
+        "The product trio is placed in the lower-center rather than being off-center as an editorial preference.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate image to show exactly one packaged AFP coil and one bare black woven coil. Remove the third coil and the distant human figure. Scale down the products to be between 12% and 20% of the image width, placing them off-center in the bottom-right to maintain the wide high-oblique editorial perspective. Ensure the bottom-right watermark 'AFP | 09134922013' remains visible. Reduce the product group from 62% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 48,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Zero visible humans or body parts.",
+        "Image contains exactly the approved layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "Watermark 'AFP | 09134922013' is present and intact.",
+        "Objects are fully visible, separate, and physically plausible.",
+        "Editorial high-oblique context with crop rows is appropriate.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 46,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Combined product bounding box exceeds the hard reject threshold of 42% width (estimated ~46%).",
+        "The packaged coil on the left appears severely distorted and warped, violating the dimension stability requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Scale down both coils to fit within 35% combined frame width. Ensure the packaged coil retains a clean, unwrapped geometric form without warping. Keep the two items separate and clearly visible. Reduce the product group from 46% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 24,
+      "product_height_percent": 33,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible human (standing in background center) in a commercial product hero shot",
+        "Visible human body parts (arms, legs, head) clearly present",
+        "Hard reject triggered by the presence of a person and human silhouette"
+      ],
+      "correction_prompt": "Regenerate the image to remove the man standing in the field, keeping the agricultural setting, tractors, and the specific coil products as described.",
+      "attempt": 5
+    }
+  ]
+}
