@@ -1,40 +1,67 @@
 {
   "source_id": "1160004002850-layflat",
-  "family": "layflat",
   "kind": 3,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "product_width_percent": 58,
-      "product_height_percent": 45,
-      "product_x_center_percent": 52,
+      "score": 48,
+      "product_width_percent": 42,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
       "reasons": [
-        "The image contains a packaged blue and white coil in the background, which is not part of the approved pair (one packaged AFP and one bare black woven coil).",
-        "A third commercial object, a cylindrical filter head, is present between the coils, which is not explicitly requested and disrupts the composition.",
-        "Neither of the black coils appears to be the specific 'packaged AFP coil' referenced in the mandatory instructions.",
-        "The presence of multiple extra objects violates the 'equipment-only elevated record' aesthetic required for this specific role."
+        "Mandatory HEADWORKS DETAIL role requires one fixed pump, gauge, and manifold on an empty concrete pad with the two-coil pair remaining small, separate, and secondary. Image shows only the two coils on a concrete pad; no fixed pump, gauge, or manifold is visible.",
+        "Product pair occupies approximately 42% of frame width, exceeding the preferred 12-20% range and making them the dominant subject rather than secondary elements.",
+        "Composition reads as a product placement shot rather than an equipment-focused elevated record photograph."
       ],
-      "correction_prompt": "Remove the blue packaged coil and the central cylindrical filter head. Keep only one black bare woven coil and one packaged AFP coil. Place them small, separate, and secondary to the fixed pump, gauge, and manifold on the concrete pad. Ensure no other products are visible.",
+      "correction_prompt": "Regenerate as a HEADWORKS DETAIL shot: show a fixed pump, gauge, and manifold as the primary subject on an empty concrete pad, with one packaged AFP coil and one bare black woven coil placed small, separate, and secondary in the scene. Keep combined product width to 12-20% of frame. Include watermark AFP | 09134922013 in bottom-right. No people.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 88,
-      "product_width_percent": 45,
-      "product_height_percent": 40,
-      "product_x_center_percent": 30,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 60,
+      "product_height_percent": 42,
+      "product_x_center_percent": 52,
       "reasons": [
-        "The image successfully displays the mandatory equipment-only pump and gauge on a concrete pad.",
-        "The layout correctly features a secondary, small coil pair that is physically plausible and fully visible.",
-        "The bottom-right watermark 'AFP | 09134922013' is present as required.",
-        "No people, body parts, or forbidden third commercial products are present in the scene.",
-        "The visual composition aligns with the HEADWORKS DETAIL role for an elevated record photograph."
+        "Missing mandatory fixed pump, gauge, and manifold described in the HEADWORKS DETAIL role.",
+        "The two-coil pair is the primary subject, large and central, rather than being small and secondary as requested.",
+        "Scene is a generic product placement on concrete, lacking the required headworks equipment infrastructure."
+      ],
+      "correction_prompt": "Regenerate image with a fixed pump, gauge, and manifold as the main subject on the concrete pad. Place the two-coil pair (one packaged AFP, one bare black woven) small and secondary in the composition.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Third commercial coil present: image shows three coils (two packaged plus one bare) instead of the required approved two-coil pair.",
+        "Missing mandatory role elements: no fixed pump, gauge, or manifold visible on the concrete pad.",
+        "The two-coil pair requirement specifies one packaged AFP coil and one bare black woven coil; this image has an additional packaged coil violating the hard reject for a third commercial package/coil."
+      ],
+      "correction_prompt": "Remove the extra packaged coil, keeping only one packaged AFP coil and one bare black woven coil as a small secondary pair. Add a fixed pump, gauge, and manifold on the concrete pad as the primary elevated subject. Maintain the 'AFP | 09134922013' watermark in the bottom-right corner.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 78,
+      "product_width_percent": 38,
+      "product_height_percent": 19,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Approved two-coil pair present: one packaged AFP coil (left) and one bare black woven coil (right), both fully visible and separate.",
+        "Fixed pump, gauge, and manifold correctly shown as primary equipment on empty concrete pad; coils remain secondary.",
+        "Zero people or human body parts visible.",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Combined coil width approximately 38% of frame — above preferred 12-20% but within acceptable 8-65% noisy estimate range.",
+        "Lower-third placement of coils is consistent with editorial preference."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 4
     }
   ]
 }
