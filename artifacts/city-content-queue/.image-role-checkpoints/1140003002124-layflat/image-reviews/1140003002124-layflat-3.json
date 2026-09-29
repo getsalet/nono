@@ -1,0 +1,88 @@
+{
+  "source_id": "1140003002124-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 75,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The pair includes three distinct commercial objects: the packaged AFP coil, a small black roll, and a large black woven coil. The role explicitly requires a pair (2 objects).",
+        "The estimated combined width of the three items exceeds 65% of the frame, violating the hard reject limit.",
+        "The mandatory visual role 'HEADWORKS DETAIL' (elevated record photograph of fixed pump/gauge/manifold on an empty pad) is not fulfilled; the image shows a standard low-angle product shot instead.",
+        "A visible copper pipe connector/fitting protrudes from the large coil, which may be interpreted as an impossible intersection or extra object element.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Remove the middle small black coil so only two products remain: one packaged AFP coil and one large black woven coil. Shrink the product width to under 20% of the frame. Reframe the shot as an elevated 'record photograph' showing a fixed pump, gauge, and manifold on a concrete pad, with the two coils placed secondary in the background. Reduce the product group from 75% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image contains a third black coil of hose in the background (mid-left), which violates the strict limit of showing only the approved two-coil pair and is considered a hard reject.",
+        "The mandatory HEADWORKS DETAIL role (an elevated record shot where the equipment is the primary focus and the coil pair is secondary/small) is not met, as the coils are prominent and co-equal to the pump rather than secondary.",
+        "There are visible connectors and hoses extending from the main coil, which can be interpreted as additional manufactured items, blurring the 'only two coils' requirement."
+      ],
+      "correction_prompt": "Regenerate an elevated detail shot where the fixed pump and manifold are the central focus. Reduce the coil pair to be secondary and smaller in the frame (approx 12% width). Strictly remove the third black coil in the background and ensure no extraneous connectors or floating segments are visible. Keep the AFP | 09134922013 watermark intact.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Mandatory HEADWORKS DETAIL role not met: Image lacks the required 'one fixed pump, gauge and manifold' infrastructure. Only a small connector is visible.",
+        "Product dimensions are invalid: The two-coil pair (AFP packaged coil and bare black woven coil) exhibits 'severely distorted dimensions' and 'impossible intersection'. The left object (packaged coil) has incorrect topology and material representation (geometric faceting and impossible hollow shapes), failing the 'physically plausible' hard reject criteria.",
+        "Severe deviation from preferred width: The combined product occupies approximately 55-65% of the image width, near the hard reject threshold of 65%.",
+        "Editorial preference violation: The image is centered with too much empty space, failing the 'lower-third and off-center' preference.",
+        "Invented/Impossible objects: The left object is not a recognizable 'packaged AFP coil' due to severe distortion.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with 'lower-third' placement and reduced object size (combined width < 30%). Must include 'one fixed pump, gauge and manifold' on a concrete pad (HEADWORKS DETAIL). Ensure both coils are 'physically plausible' with correct materials and no geometric distortion. 'AFP | 09134922013' watermark remains in bottom right. Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 64,
+      "product_height_percent": 46,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image displays a third, unrecognized commercial object (a coiled product wrapped in blue/white packaging) in the foreground, which violates the requirement for strictly 'one packaged AFP coil and one bare black woven coil'.",
+        "The 'equipment-only elevated record photograph' mandated by the visual brief (fixed pump, gauge, manifold) is completely absent; the image instead shows a low-angle product shot on a concrete floor.",
+        "machine-enforced bounding-box check failed: Reduce product height from 46% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate as an elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad. Include a small, secondary pair of one packaged AFP coil and one bare black woven coil on the side. Remove the third blue-wrapped object entirely. No people. Reduce product height from 46% to at most 45% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 35,
+      "product_height_percent": 50,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image accurately depicts the required equipment: a fixed pump, gauge, and manifold on an empty concrete pad.",
+        "The approved layflat pair (one packaged AFP coil and one bare black woven coil) are present, separate, fully visible, and physically plausible.",
+        "The width of the product group (35%) falls within the acceptable 'noisy' range for this role.",
+        "Zero people or body parts are visible.",
+        "The exact watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "No third commercial products, bottles, or jars are visible.",
+        "machine-enforced bounding-box check failed: Reduce product height from 50% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 50% to at most 45% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

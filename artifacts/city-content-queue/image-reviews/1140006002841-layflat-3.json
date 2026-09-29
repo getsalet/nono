@@ -1,0 +1,52 @@
+{
+  "source_id": "1140006002841-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 58,
+      "product_height_percent": 34,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: A human silhouette/farmer is visible operating the distant tractor, violating the 'zero people' rule.",
+        "Placement error: The products are placed in the center/lower-third of the frame, whereas the mandatory role requires an 'elevated record photograph' where the products remain secondary to the equipment."
+      ],
+      "correction_prompt": "Remove all visible people and ensure the distant tractor is completely unattended. Reposition the AFP coil and black woven coil to be significantly smaller and secondary in the lower part of the frame, emphasizing the infrastructure (pump/gauge) and high-elevation perspective.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 54,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: visible human figures/legs in the distant background (approx. 45-60% horizontal position).",
+        "Mandatory role 'HEADWORKS DETAIL' missing: the image does not show a fixed pump, gauge, and manifold on a concrete pad; instead, it shows a construction site with soil lanes.",
+        "Product object 1 (left) appears to be an 'invented package' with an artificial crystalline/geometric pattern rather than a standard AFP coil, which is a hard reject."
+      ],
+      "correction_prompt": "Remove all visible humans from the background. Generate the scene on a clean, empty concrete pad to match the HEADWORKS role, adding a fixed pump, pressure gauge, and manifold on the left. Replace the left product with a standard packaged flat hose coil and ensure the right product is a bare black woven coil. The pair should be centered, separate, and occupy 15% width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 42,
+      "product_height_percent": 14,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "The mandatory approved pair of coils (one packaged, one bare) is present, fully visible, and separate.",
+        "The layout correctly follows the role requirement with the equipment (pump, gauge, manifold) as the elevated headworks detail and the coils as small, secondary products.",
+        "Zero people or human body parts are visible.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Width is within the noisy reviewer accept range of 8-65 percent."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

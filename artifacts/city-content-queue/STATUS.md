@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-29T05:40:34+00:00`
+- آخرین بروزرسانی: `2026-09-29T05:56:10+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **581 از 1894 (30.68٪)**
-- تکمیل‌شده: **581**
+- پیشرفت: **584 از 1894 (30.83٪)**
+- تکمیل‌شده: **584**
 - در حال پردازش: **0**
-- در انتظار: **326**
-- آماده انتخاب در اجرای بعدی: **326**
+- در انتظار: **306**
+- آماده انتخاب در اجرای بعدی: **306**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **987**
+- ناموفق: **1004**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,9 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **بندرماهشهر** — خوزستان — `layflat` — 1385 کلمه — `2026-09-29T05:50:45+00:00`
+- **سردشت** — چهارمحال و بختیاری — `layflat` — 1302 کلمه — `2026-09-29T05:50:15+00:00`
+- **بازفت** — چهارمحال و بختیاری — `layflat` — 1560 کلمه — `2026-09-29T05:49:50+00:00`
 - **سودجان** — چهارمحال و بختیاری — `layflat` — 1749 کلمه — `2026-09-29T05:13:11+00:00`
 - **آبژدان** — خوزستان — `layflat` — 1435 کلمه — `2026-09-29T05:07:57+00:00`
 - **سروآباد** — کردستان — `layflat` — 1303 کلمه — `2026-09-29T04:55:54+00:00`
@@ -49,22 +52,19 @@
 - **سرجنگل** — سیستان و بلوچستان — `layflat` — 1226 کلمه — `2026-09-29T04:03:59+00:00`
 - **رزوه** — اصفهان — `layflat` — 1397 کلمه — `2026-09-29T03:43:50+00:00`
 - **تودشک** — اصفهان — `layflat` — 1426 کلمه — `2026-09-29T03:32:54+00:00`
-- **گلشن** — اصفهان — `layflat` — 1808 کلمه — `2026-09-29T02:31:27+00:00`
-- **اصغرآباد** — اصفهان — `layflat` — 1303 کلمه — `2026-09-29T02:29:57+00:00`
-- **بیدخت** — خراسان رضوی — `layflat` — 1742 کلمه — `2026-09-29T02:02:25+00:00`
 
 ## خطاهای اخیر
 
-- **سامن** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **سفیددشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **برزول** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **نافچ** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **گندمان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کاج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **دشتک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **میداود** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **میداود** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **فیروزان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **دستنا** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **شاهپوراباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **اشترینان** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **هارونی** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بآباحیدر** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **ازنا** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **کیان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **چلیچه** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **شیبان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **گوجان** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 

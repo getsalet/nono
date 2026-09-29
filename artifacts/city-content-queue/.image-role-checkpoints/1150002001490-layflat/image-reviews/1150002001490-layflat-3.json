@@ -1,0 +1,51 @@
+{
+  "source_id": "1150002001490-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 65,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Presence of multiple human figures and faces in the background."
+      ],
+      "correction_prompt": "Remove all human figures, workers, and spectators from the background while maintaining the equipment-only context on the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 55,
+      "product_height_percent": 48,
+      "product_x_center_percent": 54,
+      "reasons": [
+        "The image contains two distinct bare black woven coils instead of one packaged AFP coil and one bare coil.",
+        "The left coil features a wooden spool, which does not match the required 'packaged AFP' presentation specified in the brief.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Replace the left wooden spool coil with a packaged AFP coil (in industrial packaging) and keep one bare black woven coil. Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Image matches the mandatory HEADWORKS DETAIL role with a fixed pump, gauge, and manifold on an empty concrete pad.",
+        "The required two-coil pair (one packaged AFP coil and one bare black woven coil) is present, separate, fully visible, and physically plausible.",
+        "No people or human body parts are visible.",
+        "The exact required watermark is present in the bottom-right corner.",
+        "Distant tractor and farm building are correctly treated as background infrastructure, not commercial products."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
