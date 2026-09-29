@@ -1,18 +1,41 @@
 {
   "source_id": "1200003002775-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 48,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: two people (farmers/workers) kneeling in the field with faces, arms, and legs clearly visible.",
+        "Hard reject: presence of a white bottle/container placed on the coil.",
+        "Hard reject: three commercial coils/packages present instead of the approved pair (one packaged AFP coil and one bare black woven coil).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove both people entirely. Show only two coils in an open field: one packaged AFP coil and one bare black woven coil, side by side, no bottle, no third product, watermark AFP | 09134922013 bottom right. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 22,
+      "product_height_percent": 11,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Two-coil pair present: one packaged AFP coil (silver/blue) and one bare black woven coil, both fully visible and physically distinct.",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "No people, body parts, or silhouettes visible.",
+        "Diameter/construction difference between the two coils is clearly shown.",
+        "Background hay bales are ordinary farm elements, not third commercial packages.",
+        "Combined product width (~22%) is within the 8-42% acceptable range for noisy reviewer estimates.",
+        "Lower-third placement is appropriate for editorial presentation."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
