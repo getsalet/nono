@@ -28,6 +28,7 @@ POLICY = "strict-restoration-posts-567-632-20260929"
 MODE = "article-parity-three-image-reference-conditioned-rerender"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
 MARKER = OUT / "image-rebuild-article-parity-v14-three-image.json"
+CHECKPOINT_ROOT = OUT / ".image-role-checkpoints"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")
 API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
     "AGNES_API_BASE", "https://apihub.agnes-ai.com/v1"
@@ -207,7 +208,7 @@ def generate_set(item: dict) -> dict[int, dict]:
     # Persist individually approved roles between scheduled runs. Publication
     # remains atomic: checkpointed files replace live images only after the
     # complete three-image set passes the unchanged diversity gate.
-    staging_root = OUT / ".image-role-checkpoints" / source_id
+    staging_root = CHECKPOINT_ROOT / source_id
     staging_images = staging_root / "images"
     staging_reviews = staging_root / "image-reviews"
     staging_images.mkdir(parents=True, exist_ok=True)
@@ -344,6 +345,22 @@ def remove_named_figures(path: Path, names: list[str]) -> None:
         path.write_text(updated, encoding="utf-8")
 
 
+def prune_checkpoint_cache(active_source_ids: set[str]) -> int:
+    """Keep checkpoints only for unfinished posts in this strict restoration."""
+    if not CHECKPOINT_ROOT.exists():
+        return 0
+    removed = 0
+    for path in CHECKPOINT_ROOT.iterdir():
+        if path.is_dir() and path.name not in active_source_ids:
+            shutil.rmtree(path, ignore_errors=True)
+            removed += 1
+    print(
+        f"city_rebuild_checkpoint_prune removed={removed} active={len(active_source_ids)}",
+        flush=True,
+    )
+    return removed
+
+
 def save_marker(rebuilt, skipped, failures, total, remaining, final=False):
     previous = {}
     if MARKER.exists():
@@ -358,10 +375,9 @@ def save_marker(rebuilt, skipped, failures, total, remaining, final=False):
         if progressed
         else int(previous.get("consecutive_no_progress_runs", 0)) + 1
     )
-    checkpoint_root = OUT / ".image-role-checkpoints"
     checkpoint_posts = (
-        sum(1 for path in checkpoint_root.iterdir() if path.is_dir())
-        if checkpoint_root.exists()
+        sum(1 for path in CHECKPOINT_ROOT.iterdir() if path.is_dir())
+        if CHECKPOINT_ROOT.exists()
         else 0
     )
     MARKER.write_text(
@@ -431,6 +447,10 @@ def main() -> int:
         if data.get("image_rebuild_policy") == POLICY:
             continue
         records[source_id] = (item, path, data)
+
+    # Old cache entries are not inputs to this restoration. Keep only the
+    # unfinished strict candidates so future runs remain small and auditable.
+    prune_checkpoint_cache(set(records))
 
     def current_ids():
         result=[]
