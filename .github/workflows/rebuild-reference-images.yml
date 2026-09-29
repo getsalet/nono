@@ -17,7 +17,10 @@ concurrency:
   # Rebuilds have a separate lane so queue self-chaining cannot replace the pending rebuild.
   # Rebuild stays isolated; production queues receive priority within the shared 14-key pool.
   group: navar-city-content-pipeline
-  cancel-in-progress: false
+  # A push means an operational upgrade was merged: cancel the old run so no
+  # remaining post is rebuilt with pre-upgrade code. Normal self-dispatched
+  # workflow runs stay serialized and never cancel each other.
+  cancel-in-progress: ${{ github.event_name == 'push' }}
 jobs:
   rebuild:
     runs-on: ubuntu-latest
@@ -47,7 +50,9 @@ jobs:
       IMAGE_QA_ATTEMPTS: "10"
       IMAGE_SET_QA_ATTEMPTS: "3"
       REBUILD_FROM_POST: "1"
-      REBUILD_POST_LIMIT: "6"
+      # Amortize checkout, packaging and commit overhead without increasing the
+      # two-post / six-image concurrency cap.
+      REBUILD_POST_LIMIT: "12"
       REBUILD_COMPLETED_SINCE: "2026-09-29T03:43:51+00:00"
     steps:
       - uses: actions/checkout@v7
@@ -72,7 +77,19 @@ jobs:
           exit 0
       - name: Refresh packages and status
         run: |
-          python automation/package_city_content_batches.py
+          remaining="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('artifacts/city-content-queue/image-rebuild-article-parity-v14-three-image.json')
+          print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 0)
+          PY
+          )"
+          if [ "$remaining" -eq 0 ]; then
+            echo "Strict restoration is complete; rebuilding final delivery packages."
+            python automation/package_city_content_batches.py
+          else
+            echo "Strict restoration has $remaining posts remaining; deferring expensive ZIP repackaging until completion."
+          fi
           python automation/render_city_queue_status.py
       - name: Commit rebuilt images and metadata
         shell: bash
@@ -107,16 +124,19 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          remaining="$(python - <<'PY'
+          read -r remaining stalled <<<"$(python - <<'PY'
           import json
           from pathlib import Path
           path=Path('artifacts/city-content-queue/image-rebuild-article-parity-v14-three-image.json')
-          print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 0)
+          data=json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
+          print(int(data.get('remaining_candidates',0)), int(data.get('consecutive_no_progress_runs',0)))
           PY
           )"
           if [ "$remaining" -gt 0 ]; then
-            echo "Strict restoration has $remaining remaining posts; dispatching the next parallel repair batch."
-            sleep 15
+            cooldown=15
+            if [ "$stalled" -ge 2 ]; then cooldown=120; fi
+            echo "Strict restoration has $remaining remaining posts; stalled_runs=$stalled cooldown=${cooldown}s before the next checkpoint-aware batch."
+            sleep "$cooldown"
             gh workflow run rebuild-reference-images.yml --ref main
           else
             echo "Image rebuild is complete; resuming the city production queue."
