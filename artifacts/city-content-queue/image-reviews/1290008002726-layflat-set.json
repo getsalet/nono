@@ -1,0 +1,61 @@
+{
+  "source_id": "1290008002726-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 violation: The image displays an open concrete pad with the two coil products but completely lacks the required equipment (fixed pump, gauge, and manifold).",
+        "Role 1 violation: The products are placed in the foreground and are too prominent; the brief requires them to be small, separate, and off-center within a wide water-transfer context, which is missing here.",
+        "Role 2 violation: The pair of coils does not clearly demonstrate a diameter or construction difference; both appear to be the same product type without clear technical distinction."
+      ],
+      "correction_prompt": "Replace Role 3 with a photograph of a fixed pump, gauge, and manifold on a concrete pad with the two coils placed small in the background; adjust Role 1 to a wide landscape view with smaller products; adjust Role 2 to show two distinct coils with visibly different diameters.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 violates the 'off-center' constraint by placing the two coils centered in the foreground and dominating the composition as the primary subject.",
+        "Role 2 is rejected because the approved product pair is not used to 'show diameter or construction difference'; the coils are visually similar and identical, failing the technical comparison requirement.",
+        "Role 2 violates the 'no third commercial package' rule by including a green tractor and red farm equipment in the background, which are extra commercial objects and 'farm activity'.",
+        "Role 3 is rejected for hardware duplication with Role 2; both images feature the exact same fixed pump and gauge manifold assembly on a concrete pad.",
+        "Role 3 uses a 'low' camera angle looking slightly up at the equipment, whereas the role specification requires an 'elevated' record photograph."
+      ],
+      "correction_prompt": "Role 1: Shift the product pair to the bottom-left corner and keep them small relative to the wide field context. Role 2: Display the two coils with visibly different diameters or thicknesses to demonstrate construction difference, and remove the tractor and farm equipment from the background. Role 3: Change the camera angle to high-ob/elevated, distinct from Role 2, while maintaining the product pair as a small secondary element beside the headworks.",
+      "panel_scores": [
+        65
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1: While it shows a field context, it lacks the 'elevated high-oblique' angle specified for the HERO role, instead using a standard ground-level shot.",
+        "Role 2: Violates the 'no person' constraint and fails the 'elevated technical comparison' requirement; the shot includes a walking figure and is not a focused technical record.",
+        "Role 3: Fails the 'equipment-only' requirement; it displays only coils on a concrete pad without the mandated fixed pump, gauge, or manifold headworks.",
+        "General: The visual narrative is weak, with Roles 1 and 2 featuring very similar compositions of the product placed in a dirt field."
+      ],
+      "correction_prompt": "Re-shoot Role 1 from a high-oblique angle; remove the person from Role 2 to focus purely on the technical pair; and add the fixed pump, gauge, and manifold headworks to Role 3.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

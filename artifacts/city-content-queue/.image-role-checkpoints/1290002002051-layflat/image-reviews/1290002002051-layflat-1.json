@@ -1,0 +1,57 @@
+{
+  "source_id": "1290002002051-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 48,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Image clearly displays the approved pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "The product pair is physically plausible, fully visible, and separate with no improper intersections.",
+        "Zero people, body parts, or human silhouettes are present.",
+        "The bottom-right watermark 'AFP | 09134922013' is correctly placed and does not obscure the products.",
+        "The context (unattended tractors, field horizon) aligns with the editorial hero requirement without introducing hard rejects.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 68,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A person (human silhouette) is clearly visible in the background field, violating the zero-people constraint.",
+        "The combined width of the two coiled products is approximately 68% of the frame, which exceeds the strict 42% maximum threshold for this specific role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-42% of frame width.; Reduce product height from 42% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Remove the person in the background completely. Shrink the two coils (packaged and bare) significantly and move them closer together to ensure their total combined width is less than 20% of the image frame. Maintain the bottom-right watermark. Reduce the product group from 68% to 8-42% of frame width. Reduce product height from 42% to at most 40% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 17,
+      "product_height_percent": 12,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Required watermark present",
+        "Approved packaged coil and bare black woven coil are separate, fully visible, and physically plausible",
+        "Zero people or human body parts detected",
+        "No third commercial package or prohibited objects",
+        "Distant tractor and farm infrastructure are allowed",
+        "Products are small and off-center within the preferred width range"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

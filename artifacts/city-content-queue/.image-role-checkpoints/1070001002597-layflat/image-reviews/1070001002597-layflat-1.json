@@ -2,43 +2,84 @@
   "source_id": "1070001002597-layflat",
   "family": "layflat",
   "kind": 1,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "fast_mode": true,
   "history": [
     {
       "pass": false,
-      "score": 92,
-      "product_width_percent": 53,
-      "product_height_percent": 32,
-      "product_x_center_percent": 33,
+      "score": 85,
+      "product_width_percent": 50,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
       "reasons": [
-        "The image contains exactly the two approved products: the left-hand packaged AFP coil and the right-hand bare black woven coil.",
-        "The combined width of the products is roughly 53%, which violates the 12-15% preferred width and the 25% hard reject limit, but the user prompt states 'accept reviewer-estimation noise' and 'hard reject a pair wider than 25 percent'. In this context, the product bounding box is a hard visual constraint, so the image technically fails the 25% width limit.",
-        "However, looking at the hard reject instructions again: 'Hard reject a pair wider than 25 percent of the frame'. My estimated 53% is a hard fail based on the prompt's specific width constraints.",
-        "Wait, I must strictly follow the JSON schema requirements. If I must return valid JSON and the image violates the 25% width rule, I must mark it as false.",
-        "Actually, let me re-evaluate the bounding box. The width of the combined product area is from x=183 to x=673 (490 pixels out of 1000 width). 490/1000 = 49%. This is wider than 25%.",
-        "Therefore, the image is a hard fail due to the width constraint, even though it successfully has zero humans and correct products.",
-        "If I must output strictly valid JSON, I will report a hard fail on the width.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 53% to 8-25% of frame width."
+        "Contains the required exact bottom-right watermark 'AFP | 09134922013'.",
+        "Zero people or human body parts are visible in the scene.",
+        "Both the approved packaged AFP coil and the bare black woven coil are fully visible, separate, and physically plausible.",
+        "The bare black woven coil and the blue manifold/filter are separated, with no impossible intersections or merging.",
+        "Context features like the distant tractor, farm building, and crop rows are correctly treated as unattended infrastructure/environment rather than commercial products.",
+        "Product bounding box is estimated across the central product cluster (package, coil, and manifold) resulting in a width of 50% and height of 45%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
       ],
-      "correction_prompt": "Shrink the bounding box of the two coils significantly. They should occupy only 12-15% of the frame width (or at most 25%) rather than taking up over half the width. Keep them small, separate, and off-center in the lower third. Reduce the product group from 53% to 8-25% of frame width.",
+      "correction_prompt": "Reduce the product group from 50% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 22,
-      "product_height_percent": 33,
-      "product_x_center_percent": 39,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 52,
       "reasons": [
-        "Approved pair present: one packaged AFP coil and one bare black woven coil",
-        "Both objects are separate, physically plausible, and fully visible",
-        "Zero people or human body parts detected",
-        "Watermark 'AFP | 09134922013' is present in the bottom-right as required",
-        "Contextual water-transfer field setting aligns with the editorial hero role"
+        "Hard reject: The packaged coil clearly contains a seated driver/operator (human figure/face visible inside the cab), which violates the requirement for zero people or human silhouettes.",
+        "Hard reject: The bare black coil contains an invented third commercial object (an orange pipe/cylinder) inside it, violating the 'third commercial package or invented package' rule."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Completely remove the human driver from the tractor cabin, ensuring it is unattended. Remove the orange pipe cylinder from the center of the bare black coil so it is empty.",
       "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 48,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Both required objects (packaged coil and bare black coil) are visible and separate",
+        "No people or human body parts are present",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner",
+        "Context (crop rows, farm building) matches the editorial hero brief",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Correctly displays the required layout with one packaged AFP coil and one bare black woven coil.",
+        "Image contains zero people and zero human body parts.",
+        "Required watermark 'AFP | 09134922013' is visible in the bottom right.",
+        "Placement is low and off-center as preferred for editorial hero.",
+        "No prohibited third commercial items, bottles, or impossible intersections are present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 42,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains a visible person (worker standing next to the tractor in the background), which is a hard reject."
+      ],
+      "correction_prompt": "Remove the human figure standing next to the red tractor in the background to ensure zero people are visible.",
+      "attempt": 5
     }
   ]
 }

@@ -1,0 +1,55 @@
+{
+  "source_id": "1070002002177-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 36,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product placement is centered and in the bottom-center rather than off-center/lower-third as required for the EDITORIAL HERO role.",
+        "Product height is approximately 36% of the frame, exceeding the hard reject limit of 35%.",
+        "The product is too large and central; it does not appear 'small and fully visible' relative to the background as intended by the brief.",
+        "machine-enforced bounding-box check failed: Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reposition the AFP drip-tape roll off-center (left or right) in the lower third. Reduce the scale of the roll to make it appear smaller relative to the field. Widen the camera angle slightly to include more of the irrigation farm context and ensure the roll's height is under 30% of the frame. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 17,
+      "product_height_percent": 16,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: Visible person (farmer) standing in the field.",
+        "Hard reject: Human face and body parts are present in the image.",
+        "Required watermark 'AFP | 09134922013' is missing (image shows 'AFP | 09134922013' - wait, actually looking at the image, it DOES have the watermark. Let me re-evaluate the watermark rejection. Ah, the rule says 'The exact bottom-right watermark... is REQUIRED and must never be rejected'. I will not reject for lack of watermark. The rejection is purely for the person.)"
+      ],
+      "correction_prompt": "Regenerate the image without the farmer or any people. Keep the exact same setting, lighting, and the identical white-and-blue AFP drip-tape carton roll in the same position on the soil. Ensure the bottom-right watermark 'AFP | 09134922013' remains present.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Product is a single white-and-blue cylindrical roll matching the required role.",
+        "Object size is within the acceptable width (20-23%) and height (<35%) tolerance range.",
+        "Composition correctly places the product off-center on the lower third.",
+        "Mandatory watermark 'AFP | 09134922013' is present in the bottom right.",
+        "Zero visible people or body parts detected.",
+        "Background provides appropriate farm and irrigation context with no prohibited items."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
