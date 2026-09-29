@@ -1,0 +1,55 @@
+{
+  "source_id": "11000013002078-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 55,
+      "product_height_percent": 33,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The image correctly displays the approved pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Zero people or human body parts are visible.",
+        "The distant green mobile pump/filtration unit is recognized as allowable infrastructure and not a prohibited third commercial product.",
+        "Products are physically plausible, separate, and clearly recognizable despite being larger than the preferred 12-20% width range.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 38,
+      "product_height_percent": 25,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "A person is clearly visible standing in the background (left-of-center), which is a hard reject violation",
+        "Hard reject criteria for 'any person, face, or body part' strictly forbids this"
+      ],
+      "correction_prompt": "Regenerate the image ensuring the background field and distant cityscape are completely free of any human figures, farmers, or workers. Remove the standing person.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 41,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image successfully displays the approved pair of one packaged AFP coil and one bare black woven coil on the ground.",
+        "The wide high-oblique context with the city background (Bafqran/Nayin) is maintained.",
+        "The mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Zero people, human body parts, or forbidden containers (bottles/cans) are visible.",
+        "Estimated product width is 41% of the frame, which falls within the accepted upper limit of 42%."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

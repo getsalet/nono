@@ -1,0 +1,54 @@
+{
+  "source_id": "11000014001438-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: A person (standing farmer) is visible in the scene, which is strictly prohibited for this role."
+      ],
+      "correction_prompt": "Remove the person/farmer completely. Keep the water pump, field, and the two hoses. Regenerate with a wide high-oblique angle where the hoses are smaller and off-center.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 55,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains both the packaged AFP coil and the bare black woven coil as required",
+        "Zero people or human body parts visible",
+        "Watermark 'AFP | 09134922013' is present in the bottom right",
+        "Wide high-oblique editorial context with the city and tractor visible in the background",
+        "Product dimensions are physically plausible and separate",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 32,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "All mandatory visual elements are present: the packaged AFP coil and the bare black woven coil are separate, fully visible, and physically plausible.",
+        "Zero people or human body parts are visible in the frame.",
+        "The combined product width is estimated at 32%, which falls within the 8-42% accepted range for noisy estimates.",
+        "The bottom-right watermark 'AFP | 09134922013' is present exactly as required.",
+        "The scene matches the wide high-oblique water-transfer editorial brief with the products appropriately off-center."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

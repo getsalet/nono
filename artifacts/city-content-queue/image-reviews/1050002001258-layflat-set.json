@@ -1,26 +1,7 @@
 {
   "source_id": "1050002001258-layflat",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
-    {
-      "pass": false,
-      "score": 10,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
-      "reasons": [
-        "Roles 1 and 2 are duplicates: both show the same product pair (packaged and bare coils) placed on the ground in a farm field with a blurred tractor in the background; the layouts and technical narratives are nearly identical, failing to provide distinct camera heights or environments.",
-        "Role 3 completely misses the brief: it depicts the coils on a generic sandy beach, which is an irrelevant background for an agricultural water-transfer article, and it fails to show the required 'one fixed pump, gauge and manifold on an empty concrete pad'.",
-        "The set does not meet the requirement for distinct camera angles (high-oblique vs. elevated technical) and environments (specific context vs. empty pad)."
-      ],
-      "correction_prompt": "Regenerate Role 2 as an elevated technical comparison shot on a neutral background; Regenerate Role 3 to strictly feature one fixed pump, gauge, and manifold on an empty concrete pad with the coils appearing small and secondary, removing the beach background.",
-      "panel_scores": [
-        10
-      ],
-      "set_attempt": 1
-    },
     {
       "pass": false,
       "score": 35,
@@ -29,15 +10,49 @@
         3
       ],
       "reasons": [
-        "Role 2 fails the 'SELECTION EVIDENCE' brief by including a pump, manifold, and gauge, which are explicitly reserved for Role 3; this causes a functional duplicate of hardware between roles 2 and 3.",
-        "Role 2 also violates its negative constraint of 'no third commercial package' by showing additional hardware components alongside the two coils.",
-        "Role 3 contains a red car in the background, which counts as a 'person or extra' element and violates the 'equipment-only' requirement for the headworks detail."
+        "Role 1 fails: The 'EDITORIAL HERO' image contains people in the mid-ground (walking near the canal), which explicitly violates the 'no person' rejection rule. Additionally, the products are positioned in the bottom-center rather than being 'off-center' as specified.",
+        "Role 2 fails: The 'SELECTION EVIDENCE' image features a moving tractor in the background, which constitutes 'farm activity' and violates the rule against generic farm scenes for this specific technical role.",
+        "Role 3 fails: The 'HEADWORKS DETAIL' image is completely missing the required 'fixed pump, gauge and manifold' equipment. It only shows the coils on a concrete pad, failing to provide the required technical narrative for this role."
       ],
-      "correction_prompt": "Remove the pump and manifold from role 2 to focus solely on the two-coil diameter comparison; in role 3, eliminate the red car from the background to ensure a strictly equipment-only headworks record on the concrete pad.",
+      "correction_prompt": "Re-shoot all three roles: remove all people from Role 1 and shift products off-center; remove the tractor/farm activity from Role 2 background to focus on the comparison; and add a fixed pump, gauge, and manifold setup to Role 3.",
       "panel_scores": [
         35
       ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 includes a cardboard box that violates the constraint against commercial packages and third-party items.",
+        "Role 2 contains a green field sprayer and a tractor, which constitute active farm machinery and activity, disqualifying it as a static technical comparison.",
+        "Role 1 features small human figures (farmers) in the background, violating the 'no person' rejection rule.",
+        "Role 3 includes an orange cylindrical object within the bare coil and the pump assembly lacks the required 'manifold' description."
+      ],
+      "correction_prompt": "Remove all people, cardboard boxes, and active farm machinery (tractors/sprayers) from the frame; isolate the two-coil pair on a static concrete pad or technical setup for a pure equipment-only record photograph.",
+      "panel_scores": [
+        45
+      ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 2 (Selection Evidence) and Role 3 (Headworks Detail) are duplicates of the 'Oversized Product' rejection reason: both images feature the two product coils as large, dominant foreground subjects, violating the 'secondary' or 'background' requirements for Role 3 and failing the 'technical narrative' context of Role 2.",
+        "Role 3 is completely missing required elements: it depicts a generic product display on concrete but lacks the mandatory pump, gauge, and manifold equipment.",
+        "The camera angles and environment structure are not distinct enough between Roles 2 and 3; both are high-angle product record shots with no narrative variation."
+      ],
+      "correction_prompt": "Regenerate Role 2 to show the two coils small in the background next to a technical comparison chart or diagram; regenerate Role 3 to feature a fixed pump and gauge on a concrete pad with the coils placed in the distance as secondary context.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
     }
   ]
 }

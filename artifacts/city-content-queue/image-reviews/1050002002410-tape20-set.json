@@ -1,21 +1,53 @@
 {
   "source_id": "1050002002410-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
       "score": 78,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Image 1) shows a high-rise city skyline in the background, which is inconsistent with the farm/irrigation context and location brief (Kermanshah).",
-        "Role 2 (Image 2) features a standard American red barn that does not fit the geographical or stylistic context of the Iran-based article brief.",
-        "Role 3 (Image 3) includes a green tractor in the background, violating the strict 'no farm activity' requirement for the hardware detail shot."
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "Regenerate all three images with consistent local farm backgrounds (no city skylines or out-of-place red barns) and remove the tractor from the background of Role 3 to ensure a strictly equipment-only setting.",
+      "reasons": [
+        "Panel 3 contains multiple distinct product rolls (the main white roll plus a secondary blue roll), violating the requirement to show 'exactly one approved carton' in roles 2 and 3.",
+        "Panel 1 fails the 'EDITORIAL HERO' requirement for the product placement; it is centered in the foreground rather than being 'off-center on the lower third' as specified, and is relatively dominant rather than 'staying small'.",
+        "Panel 3, while showing the required headworks detail, lacks the 'elevated' technical camera angle mentioned in the brief for role 3, presenting more of a horizontal eye-level view."
+      ],
+      "correction_prompt": "Regenerate Panel 1 to place the product in the lower-right or lower-left corner; for Panel 3, remove the secondary blue roll to ensure only one product is visible.",
       "panel_scores": [
         78
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 fails the 'equipment-only' requirement: it displays a large single product on a pad with a prominent tractor in the background, missing the required fixed filter, gauge, regulator, and manifold assembly.",
+        "Role 1 layout violation: The product is placed centrally in the foreground rather than being small, fully visible, and off-center on the lower third as specified.",
+        "Role 2 fails technical narrative: The layout is a generic studio-style product display with a cut loop of tubing, missing the 'elevated technical arrangement' and 'emitter-spacing or field-selection evidence' required by the brief."
+      ],
+      "correction_prompt": "Regenerate all three panels to match their specific narratives: Panel 1 must feature a wide high-oblique view of the farm with a small, off-center product on the lower third; Panel 2 must be an elevated shot showing technical emitter spacing; and Panel 3 must be an equipment-only shot of a filter manifold on a concrete pad with no prominent tractors or large product focus.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 (Image 2) fails because it includes visible persons, which is explicitly prohibited, and the layout is a non-standard multi-panel collage rather than a single 'elevated technical arrangement.'",
+        "Role 3 (Image 3) fails because it violates the 'no farm activity' constraint; the presence of a cardboard box with the AFP logo indicates a packing/unpacking activity, and a second 'approved carton' is visible (exceeding the 'exactly one' limit).",
+        "Role 1 (Image 1) correctly identifies the 'Editorial Hero' visual but places the product on the left rather than the requested 'off-center on the lower third' (implying the right), and is a low-angle shot rather than the requested 'high-oblique' view."
+      ],
+      "correction_prompt": "Regenerate all panels: For Role 1, use a high-oblique crop with the product placed in the lower-right. For Role 2, remove all people and use a clean, single elevated shot with a simple field background. For Role 3, remove the cardboard box and any signs of activity, showing only the filtration system and the roll on the concrete pad.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 3
     }
   ]
 }

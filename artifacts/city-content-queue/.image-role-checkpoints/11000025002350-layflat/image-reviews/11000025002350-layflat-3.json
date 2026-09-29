@@ -1,0 +1,82 @@
+{
+  "source_id": "11000025002350-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 48,
+      "product_height_percent": 42,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Mandatory role mismatch: Image shows the coils as the primary subject; the brief requested an 'equipment-only elevated record photograph of one fixed pump, gauge and manifold' as the main focus with the coils as a secondary element.",
+        "Missing mandatory equipment: No fixed pump, gauge, or manifold is visible on the concrete pad."
+      ],
+      "correction_prompt": "Elevate the viewpoint and reframe the shot to focus on the fixed pump, gauge, and manifold on the concrete pad; keep the two coils small and secondary in the background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 52,
+      "product_height_percent": 48,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: A third object, specifically a pump/manifold unit labeled 'AFP', is visible in the foreground on the left, which violates the instruction to only show a packaged AFP coil and one bare coil.",
+        "Hard reject: The combined width of the objects (coils and pump) exceeds the 20% preferred limit and reaches the 52% level, approaching the hard reject threshold (65%) for multiple objects.",
+        "The presence of the pump/manifold as a primary subject conflicts with the brief's focus on the two-coil pair and introduces a third commercial/industrial element not allowed in this specific QA check.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Remove the AFP pump/manifold unit from the left side completely. Frame only the two coiled hoses (the wrapped one and the bare woven one) on the concrete pad to ensure no third object is present and the pair remains the sole focus. Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 20,
+      "product_height_percent": 15,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains a human person standing in the background, which is a hard reject condition.",
+        "The mandatory 'HEADWORKS DETAIL' showing a fixed pump, gauge, and manifold is completely missing from the scene."
+      ],
+      "correction_prompt": "Regenerate image as an equipment-only elevated record photograph on an empty concrete pad showing a fixed pump, gauge, and manifold. Include the two coils (one packaged, one bare) as small, secondary elements in the foreground. Remove the human figure and all farm activity. Ensure the bottom-right watermark 'AFP | 09134922013' is present.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 50,
+      "product_height_percent": 65,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Zero visible people or body parts",
+        "Contains the required 'AFP | 09134922013' watermark",
+        "Products are within the acceptable width range",
+        "Three main objects present instead of the required two",
+        "Missing required equipment-only headworks detail (pump/gauge/manifold)",
+        "machine-enforced bounding-box check failed: Reduce product height from 65% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 65% to at most 45% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 70,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Human silhouette/person visible in the background center, which is a hard reject for image role 3.",
+        "Missing the mandatory 'HEADWORKS DETAIL' requirement: the image lacks the equipment-only elevated record photograph of one fixed pump, gauge, and manifold on an empty concrete pad.",
+        "Product pair width estimated at ~70%, exceeding the 65% hard limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Remove the distant person. Add a fixed pump, gauge, and manifold on a concrete pad in the foreground to satisfy the HEADWORKS DETAIL role. Ensure the two coils are clearly visible and smaller in scale, with no humans present. Reduce the product group from 70% to 8-65% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

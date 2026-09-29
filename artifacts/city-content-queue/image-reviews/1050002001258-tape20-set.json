@@ -1,23 +1,59 @@
 {
   "source_id": "1050002001258-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 25,
+      "score": 35,
       "duplicate_roles": [
+        2,
         3
       ],
       "reasons": [
-        "Role 3 (Panel 3) violates the 'HEADWORKS DETAIL' brief by failing to show the required technical components (filter, gauge, regulator, and manifold). The image displays only the product on a pad, missing the specific 'equipment-only' narrative required for this role.",
-        "Role 3's background (tractors and farm building) contradicts the 'no farm activity' constraint for an equipment-only record photograph.",
-        "The carton in Panel 3 is centered and dominant, violating the requirement that it remain 'small and secondary' relative to the hardware installation."
+        "Role 1 fails the brief: The product (reel/canister) is oversized, dominating the foreground rather than staying small and off-center.",
+        "Role 2 fails the technical brief: The 'elevated' selection evidence (emitter spacing chart) looks like a flat piece of generic paper/plastic on the ground rather than an elevated technical arrangement.",
+        "Role 3 fails completely: The required headworks hardware (filter, gauge, regulator, manifold) is entirely missing. Instead, the carton is presented as a dominant hero object on the pad, violating the 'secondary product' requirement.",
+        "Layout Duplication: Roles 2 and 3 are structurally nearly identical (a single product centered in the foreground with a blurred farm vehicle in the background), violating the requirement for distinct environments and camera narratives."
       ],
-      "correction_prompt": "Regenerate Panel 3 to feature a technical close-up of a filter, gauge, regulator, and manifold on a concrete pad; the carton must be small and secondary, and all active farm machinery (tractors) must be removed from the background.",
+      "correction_prompt": "Regenerate all three panels ensuring distinct environments: 1. High-oblique wide shot of a green farm with the carton tiny in the lower third; 2. High-angle technical shot with the carton and a clearly elevated emitter spacing chart; 3. Equipment-only close-up of a filter/gauge assembly on a concrete pad with the carton small and in the background.",
       "panel_scores": [
-        25
+        35
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 2 contains multiple people (standing man, crouching figure, and arm), which violates the 'no person' rejection rule.",
+        "Panel 3 displays a large skid-mounted equipment rack containing pumps, piping, and filtration systems; this constitutes 'oversized product' or a second piece of hardware, conflicting with the requirement that the irrigation tape carton remains 'small and secondary' and is the primary visual focus.",
+        "Panel 2 includes multiple cartons (large box in center, partial box on right, small roll on ground), violating the 'exactly one' requirement for the visual hierarchy."
+      ],
+      "correction_prompt": "Remove all people from Panel 2 to show only the technical field arrangement; in Panel 3, remove the large equipment rack to frame only the small AFP tape roll on a concrete pad with no background hardware, keeping the carton as the dominant subject.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 fails the 'SELECTION EVIDENCE' requirement: it is a generic product-in-field shot lacking visible emitter-spacing or field-selection evidence, and the camera angle is similar to Role 3 (low-angle on the product).",
+        "Role 3 contains a 'bottle/container' (the large grey tank and brown canister), which is an explicit rejection reason.",
+        "Role 3 fails to show 'one fixed filter, gauge, regulator and manifold' as a cohesive, equipment-only arrangement; it shows scattered tools and a cluttered background.",
+        "Roles 2 and 3 are visually indistinct in their technical narrative and framing, with both featuring the product as the foreground subject on a flat surface or soil."
+      ],
+      "correction_prompt": "Regenerate Role 2 to show visible drip line spacing on soil; regenerate Role 3 to display a clean assembly of filter, gauge, regulator, and manifold on a concrete pad with no tanks or loose containers.",
+      "panel_scores": [
+        10
+      ],
+      "set_attempt": 3
     }
   ]
 }

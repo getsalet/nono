@@ -1,0 +1,57 @@
+{
+  "source_id": "11000014002045-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 2 (Selection Evidence) displays a third commercial package (a coil of tube wound on a reel) inside the packaging, which directly violates the 'no third commercial package' restriction.",
+        "Panel 3 (Headworks Detail) fails to show the required equipment: one fixed pump, gauge, and manifold are entirely absent from the scene.",
+        "The environment in Panel 3 is an empty concrete slab without any visible infrastructure, contradicting the 'HEADWORKS DETAIL' role. This also violates the rule that all backgrounds must be relevant to the article brief."
+      ],
+      "correction_prompt": "Regenerate all panels. For Panel 2, ensure only the two required coils are present without any underlying commercial reel or extra tube. For Panel 3, reposition the camera to prominently feature a fixed pump, pressure gauge, and manifold on the pad, with the two coils in the background.",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 (HEADWORKS) is missing required elements: no fixed pump, gauge, or manifold, which are mandatory for this specific panel.",
+        "Role 3 fails the 'equipment-only' requirement and uses a generic concrete pad instead of the specific headworks context.",
+        "Role 2 (SELECTION EVIDENCE) includes extraneous hardware (sprayer) and does not visually show the diameter or construction difference through the coil pair itself, failing the 'technical comparison' requirement."
+      ],
+      "correction_prompt": "Regenerate Panel 3 to show a fixed pump, gauge, and manifold on an empty concrete pad with the two coils small in the background; Regenerate Panel 2 to remove the sprayer and focus the comparison on the physical difference between the packaged and bare coils.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 fails the 'SELECTION EVIDENCE' brief by including a third, unapproved commercial package (kraft box) and omitting the required headworks equipment (pump/gauge), which belongs in Role 3.",
+        "Role 3 fails the 'HEADWORKS DETAIL' brief by showing a static product display on a concrete pad without the required equipment (pump, gauge, and manifold).",
+        "There is a mismatch where the equipment required for Role 3 is erroneously present in the Role 2 image."
+      ],
+      "correction_prompt": "Remove the third kraft-box package from the Role 2 image and move the pump, gauge, and manifold from the Role 2 image into the Role 3 image to ensure each panel matches its specific technical and equipment brief.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 3
+    }
+  ]
+}
