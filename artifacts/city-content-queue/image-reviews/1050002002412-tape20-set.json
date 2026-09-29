@@ -1,22 +1,56 @@
 {
   "source_id": "1050002002412-tape20",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 satisfies the EDITORIAL HERO role with a wide, high-oblique perspective where the agricultural context dominates and the product is positioned off-center on the lower third.",
-        "Panel 2 fulfills the SELECTION EVIDENCE role through an elevated technical shot featuring visible drip-tape installation evidence and a simple background with distant, unattended farm equipment.",
-        "Panel 3 correctly executes the HEADWORKS DETAIL role by displaying a filter, gauge, and regulator on an empty concrete pad, with the product evidence kept small and secondary.",
-        "The three images are visibly distinct in camera angle, environmental structure, and technical narrative, with no forbidden objects, people, or oversized product."
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        1,
+        3
       ],
-      "correction_prompt": "",
+      "reasons": [
+        "Panel 1 carton is oversized and dominates the lower frame rather than being small and secondary",
+        "Panel 3 shows an active red tractor with a visible driver (farm activity), violating the no-farm-activity rule for HEADWORKS DETAIL",
+        "Panel 3 equipment is a wheeled sprayer/boom rig on wheels rather than one fixed filter, gauge, regulator and manifold on an empty concrete pad as required",
+        "Panel 1 has an urban skyline backdrop (city skyscrapers) inconsistent with the Kuzaran rural/farm article brief set in Kermanshah countryside"
+      ],
+      "correction_prompt": "Panel 1: Use a small AFP carton placed off-center on lower third in a wide high-oblique Kuzaran farmland scene with crop rows receding to horizon; reduce carton size significantly. Panel 3: Replace with an equipment-only elevated shot of one fixed filtration + gauge + regulator assembly on an empty concrete pad with no tractor, no driver, no moving machinery—only static headworks hardware.",
       "panel_scores": [
-        95
+        52
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 3 is a complete role failure: it shows only the product carton on an empty concrete pad with distant tractors/buildings, but contains none of the required headworks equipment (fixed filter, pressure gauge, regulator, and manifold). It reads as another oversized-product placement, not an equipment record photograph.",
+        "The AFP carton is oversized and foreground-dominant in all three panels, violating the requirement that exactly one approved carton remain small and secondary (especially in Roles 1 and 3).",
+        "Panels 1 and 2 feature generic Western/North-American farm aesthetics (red barn, large silo-industrial complex, hay bales) inconsistent with the Kuzaran, Kermanshah Iranian agricultural setting called for in the brief.",
+        "Panel 2's coiled tape alongside the carton is acceptable as selection evidence, but the background does not support the localized Persian-kurdish farming context."
+      ],
+      "correction_prompt": "Redo Panel 1 as a wide high-oblique Iranian farmland shot near Kuzaran with crops in row, the AFP carton small and off-center on the lower third only. Redo Panel 2 keeping the elevated product-plus-coiled-tape arrangement but swap the red-barn background for a modest local Kermanshah farm edge; keep carton secondary. Redo Panel 3 as an equipment-only elevated view of one fixed filter, pressure gauge, regulator and manifold plumbed together on an empty concrete pad, with the AFP carton small and secondary; remove tractors/farm activity from the frame.",
+      "panel_scores": [
+        38
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 1 (EDITORIAL HERO): No approved carton present — only an oversized AFP roll placed prominently in the foreground, violating the 'exactly one approved carton small and off-center on lower third' rule.",
+        "Panel 2 (SELECTION EVIDENCE): Acceptable — shows one carton plus coiled tape/emitter evidence with a farm building background.",
+        "Panel 3 (HEADWORKS DETAIL): Completely fails — no filter, gauge, regulator, or manifold is shown. Instead it displays only the AFP roll on a concrete pad with a tractor and shed in the background, missing the required headworks equipment narrative entirely."
+      ],
+      "correction_prompt": "Panel 1: replace oversized AFP roll with a small, fully visible approved carton on the lower third; keep the wide farm/irrigation hero context. Panel 3: replace the AFP roll with an elevated equipment-only shot of a fixed filter, pressure gauge, regulator, and manifold on an empty concrete pad, keeping one small approved carton secondary and ensuring no person or farm activity is present.",
+      "panel_scores": [
+        38
+      ],
+      "set_attempt": 3
     }
   ]
 }
