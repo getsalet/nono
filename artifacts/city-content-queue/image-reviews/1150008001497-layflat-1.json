@@ -1,26 +1,50 @@
 {
   "source_id": "1150008001497-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 25,
-      "product_height_percent": 20,
-      "product_x_center_percent": 45,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 14.2,
+      "product_height_percent": 7.8,
+      "product_x_center_percent": 32.5,
       "reasons": [
-        "The image displays the required approved pair: one packaged AFP coil (left) and one bare black woven coil (right).",
-        "No people or body parts are visible.",
-        "The distant tractor is treated as allowed infrastructure/equipment, not a rejectable item.",
-        "The product placement is off-center and physically plausible.",
-        "The estimated combined width of 25% falls within the accepted range for this role.",
-        "The required bottom-right watermark 'AFP | 09134922013' is present and clearly visible."
+        "Hard reject: Image contains a prominent adult male standing near the ditch and a second distant figure, violating the zero-people requirement."
+      ],
+      "correction_prompt": "Regenerate image with zero people; keep packaged AFP coil and bare black woven coil in foreground with AFP watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 8,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Two people (men/farmers) visible in mid-ground field standing near irrigation ditch",
+        "Violation of zero-people requirement",
+        "Human silhouettes clearly present despite agricultural context"
+      ],
+      "correction_prompt": "Regenerate with same wide high-oblique water-transfer context but remove both human figures from the field area. Keep packaged AFP coil and bare black woven coil in foreground with watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 14,
+      "product_height_percent": 4,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Image shows one packaged AFP coil and one bare black woven coil, both clearly visible, separate, and physically plausible.",
+        "No people, humans, or human body parts present; distant tractor is permitted infrastructure.",
+        "Approved layflat pair size is within acceptable range (14% combined width).",
+        "Watermark 'AFP | 09134922013' is present and correctly placed.",
+        "Editorial hero composition with wide high-oblique water-transfer context in agricultural setting."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }
