@@ -1,25 +1,71 @@
 {
   "source_id": "1060006002500-tape20",
-  "family": "tape20",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 13,
-      "product_height_percent": 17,
-      "product_x_center_percent": 63,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Product size and shape are acceptable",
-        "Image contains the required bottom-right watermark",
-        "Product position is within the preferred lower-third/height range",
-        "No people, containers, or disallowed objects are present",
-        "Background fits the irrigation/farm context"
+        "Hard reject: A person is clearly visible crouching in the field, violating the zero-people rule.",
+        "Placement error: The product is too large and centrally located in the foreground, failing the 'small, fully visible and off-center on the lower third' requirement for an EDITORIAL HERO role.",
+        "Brand visibility: The AFP logo appears on the product packaging itself, in addition to the required watermark."
+      ],
+      "correction_prompt": "Remove the person completely. Position a single AFP white-and-blue drip-tape carton roll small, fully visible, and off-center on the lower third. Ensure the farm and irrigation context dominate the frame. Keep only the mandatory bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 9,
+      "product_height_percent": 11,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip-tape carton roll visible, placed in lower-third and slightly off-center. Width ~9% and height ~11% — well within acceptable ranges. Zero people, body parts, or forbidden objects. Background matches article brief: wide high-oblique farm view with crop rows and distant infrastructure. Required watermark present in bottom-right. No gibberish text, fake headlines, or impossible geometry detected.",
+        "correction_prompt:",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 9% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 9% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 8,
+      "product_height_percent": 6,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "HARD REJECT: A person (man kneeling, wearing blue shirt and jeans, with face, hands, arms, legs visible) is prominently present in the foreground touching the white carton.",
+        "Rule violation: The brief explicitly states 'The image must contain zero people and zero human body parts' and 'Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant.'",
+        "The farm/irrigation context and distant crops are acceptable, but the human presence overrides all other elements.",
+        "AFP watermark is present in bottom-right corner.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 8% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with exactly one white-and-blue drip-tape carton roll, no people whatsoever — remove all human figures including the kneeling man, his face, hands, arms, legs, and any human silhouette. Keep the farm/irrigation context, crop rows, and soil texture. Place the single carton off-center on the lower third. Maintain the required AFP | 09134922013 watermark. Enlarge the product group from 8% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 15,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Exactly one AFP white-and-blue cylindrical drip-tape carton roll present, centered horizontally on lower third",
+        "Roll dimensions (15% W x 20% H) within acceptable range; width below 30% threshold, height below 35% threshold",
+        "Zero people, zero body parts, zero human silhouettes in frame",
+        "Background matches article brief: farm field with row crops, irrigation context, distant farm buildings, no unauthorized commercial packages",
+        "Mandatory watermark 'AFP | 09134922013' present in bottom right corner",
+        "No bottles, jars, canisters, buckets, fertilizer/pesticide containers, layflat hose, or pipe through roll",
+        "No second roll or second commercial package",
+        "Natural lighting, plausible geometry, realistic farm setting"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 4
     }
   ]
 }
