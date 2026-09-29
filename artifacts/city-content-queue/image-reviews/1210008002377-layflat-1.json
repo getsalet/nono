@@ -1,43 +1,52 @@
 {
   "source_id": "1210008002377-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 95,
-      "product_width_percent": 34,
-      "product_height_percent": 42,
+      "score": 10,
+      "product_width_percent": 24,
+      "product_height_percent": 7,
       "product_x_center_percent": 38,
       "reasons": [
-        "Contains the approved layflat pair: one packaged AFP coil (left) and one bare black woven coil (right), placed separately.",
-        "No people or human body parts visible.",
-        "Watermark 'AFP | 09134922013' is present in the bottom-right as required.",
-        "Scene features wide high-oblique water-transfer context appropriate for editorial hero.",
-        "Width of combined products (34%) is within the 8-42% noisy review acceptance range for this role.",
-        "Fixed pump and cart are treated as infrastructure, not a hard reject third product.",
-        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 40% of frame height."
+        "Hard reject: a person (farmer/worker silhouette with face, arms, legs fully visible) is present in the mid-background near the field. This violates the zero-people rule regardless of other image qualities."
       ],
-      "correction_prompt": "Reduce product height from 42% to at most 40% of frame height.",
+      "correction_prompt": "Regenerate the image removing the person from the background. Keep the packaged AFP coil and bare black woven coil in the foreground, the irrigation context, and the bottom-right watermark. Ensure zero humans or human body parts anywhere in the frame.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 78,
-      "product_width_percent": 31.7,
-      "product_height_percent": 32.0,
-      "product_x_center_percent": 50.0,
+      "pass": false,
+      "score": 32,
+      "product_width_percent": 18,
+      "product_height_percent": 8,
+      "product_x_center_percent": 31,
       "reasons": [
-        "The image shows the approved layflat pair: one packaged coil and one bare black woven coil.",
-        "The combined width of the pair is approximately 31.7%, which is outside the preferred 12-20% range but well within the accepted noisy range of 8-42%. Both objects are fully visible, separate, and physically plausible.",
-        "There are zero people or human body parts in the image.",
-        "The required watermark \"AFP | 09134922013\" is correctly present in the bottom-right corner.",
-        "The scene provides a wide, high-oblique water-transfer context with a vast field and distant farm buildings, which aligns with the editorial hero mandate."
+        "Hard reject: a person is clearly visible standing in the water channel (wearing a white t-shirt and blue jeans). Policy explicitly requires zero people and zero human body parts, even distant.",
+        "Hard reject: hands and arms are visible on the person.",
+        "Products are correctly placed and recognizable, but the presence of a person invalidates the image."
+      ],
+      "correction_prompt": "Remove all people and human body parts from the image. Retain only the packaged AFP coil and bare black woven coil in the foreground, with the water-transfer farm context in the background. Keep the bottom-right watermark AFP | 09134922013.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 18,
+      "product_height_percent": 6,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is present in bottom-right corner as required",
+        "Two products visible: one packaged AFP coil (silver/blue wrapper) and one bare black woven coil, both recognizable and physically plausible",
+        "Products are small, separate, and off-center in the frame (left-of-center placement)",
+        "Editorial hero shot with wide high-oblique water-transfer context showing irrigation channel and agricultural field",
+        "No people, human body parts, or forbidden objects detected",
+        "Distant unattended tractor and farm buildings are infrastructure, not third commercial products",
+        "Combined product width estimated at ~18% of frame, within acceptable range"
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }
