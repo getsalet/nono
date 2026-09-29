@@ -270,8 +270,8 @@ jobs:
           rebuild_active="$(gh run list --workflow rebuild-reference-images.yml --limit 20 --json status --jq '[.[] | select(.status == "queued" or .status == "in_progress" or .status == "waiting" or .status == "pending" or .status == "requested")] | length')"
           if [ "$rebuild_active" -gt 0 ]; then
             echo "City image rebuild is active or queued; it owns the next handoff."
-          elif [ "$pending" -gt 0 ] && [ "$rebuild_remaining" -gt 0 ] && [ "$(( ${{ github.run_number }} % 4 ))" -eq 0 ]; then
-            echo "Four production slices advanced; dispatching one bounded image-repair slice before more fresh content."
+          elif [ "$pending" -gt 0 ] && [ "$rebuild_remaining" -gt 0 ]; then
+            echo "Fresh city production advanced; dispatching one bounded image-repair slice before the next content batch."
             gh workflow run rebuild-reference-images.yml --ref main
           elif [ "$pending" -gt 0 ]; then
             cooldown=10
