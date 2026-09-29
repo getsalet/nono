@@ -1,40 +1,51 @@
 {
   "source_id": "1220003002813-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 52,
       "duplicate_roles": [
+        1,
+        2,
         3
       ],
       "reasons": [
-        "Role 1 (Editorial Hero) fails the spatial requirement; the approved packaged coil and bare black woven coil are placed centrally and occupy a significant portion of the foreground rather than being 'small, separate and off-center'.",
-        "Role 2 (Selection Evidence) includes a third commercial object (a cardboard box) in the frame; the brief explicitly mandates 'no third commercial package, bottle, person or extra coil', rendering this a disqualifying violation.",
-        "Role 3 (Headworks Detail) is a complete narrative failure; it displays only the product coils on a concrete pad and entirely omits the required 'fixed pump, gauge and manifold' headworks equipment."
+        "Panel 2 contains a cardboard box (third commercial package) directly violating SELECTION EVIDENCE rule; Panel 3 lacks required equipment (pump, gauge, manifold) — it shows only the product pair on an open concrete pad with no headworks hardware visible, failing HEADWORKS DETAIL brief; environment in Panel 3 resembles airfield/runway rather than agricultural water-headworks site relevant to the article brief."
       ],
-      "correction_prompt": "Regenerate Role 1 to place the two coils small and off-center within a wide high-oblique water-transfer context; remove the third box from Role 2 to feature only the two-coil pair for technical comparison; and reconstruct Role 3 to feature a fixed headworks unit (pump, gauge, manifold) on a concrete pad with the two coils appearing small and secondary.",
+      "correction_prompt": "Panel 2: remove the cardboard box entirely, keep only the two-coil product pair and the measurement device on tilled soil. Panel 3: replace the empty concrete pad with an elevated close-up of one fixed pump with pressure gauge and manifold assembly on a clean concrete base, keeping the two-coil pair small and secondary in frame; add relevant water-pumping infrastructure context matching the article brief.",
       "panel_scores": [
-        35
+        52
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 95,
+      "pass": false,
+      "score": 42,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Panel 1) correctly executes the EDITORIAL HERO role using a wide high-oblique shot of a water channel through crops, with the approved coil pair placed small and off-center.",
-        "Role 3 (Panel 2) correctly executes the HEADWORKS DETAIL role by showing fixed pump hardware and gauges on a concrete pad with the coil pair present as secondary evidence.",
-        "Panel 3 successfully fulfills the Role 2 requirement for SELECTION EVIDENCE, providing an elevated technical comparison of the two coils (one wrapped/packaged, one bare) in a neutral environment.",
-        "All images successfully display the required 'AFP | 09134922013' watermark.",
-        "Roles 1 and 3 are clearly distinct in both environment (active field vs. concrete headworks) and equipment layout."
+        "All three panels are set in the same generic temperate/cornfield landscape with near-identical red tractors and farm buildings, creating visually indistinguishable environments across the set. The brief specifies Hormozgan/Bandar Lengeh context (arid, palm-style agriculture, water transfer in a desert/semi-arid setting), but every image uses the same lush green-row-crop setting. Panel 1 lacks water-transfer infrastructure (only an open irrigation canal, not a water-pumping/moving system); Panel 2 is acceptable as a selection comparison; Panel 3 fails the HEADWORKS DETAIL role — it shows two coils prominently on a concrete pad with no fixed pump, gauge, or manifold visible, and a small black object sitting on one coil does not constitute recorded headworks equipment. The environment relevance requirement is not met across any panel."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Redesign all three panels: set Panels 1 and 3 in an arid Hormozgan water-transfer environment with pumping infrastructure, orchards or date palms, and heat-hazed terrain. Panel 1 must show wide high-oblique water-pumping/moving context (well, pump house, or irrigation mains) with the two coils small and off-center. Panel 2 may remain in-field for the diameter comparison. Panel 3 must be an elevated record shot of one fixed pump, pressure gauge, and manifold on an empty concrete pad with the two coils small and secondary; remove the red tractors or replace with neutral arid-context equipment.",
       "panel_scores": [
-        95
+        42
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 2 (role 2) shows the product pair at ground-level close-up rather than elevated technical comparison, and the coils dominate the frame as oversized subjects rather than illustrating diameter/construction difference.",
+        "Panels 1, 2, and 3 all depict generic European-style farmland with red-roofed buildings, wide row crops, and distant tractors, inconsistent with the Hormozgan/Melzestan/Khamir article brief set in Bandar Lengeh, Hormozgan province, Iran.",
+        "Panel 2 lacks the required elevated camera angle and technical comparison narrative; it reads as a generic product flat-lay instead of a selection-evidence shot."
+      ],
+      "correction_prompt": "Redo all three panels set in a Hormozgan arid agricultural environment (sandy soil, date palm groves, or Persian Gulf coastal farmland). Panel 1: keep wide high-oblique water-transfer context with coils small and off-center. Panel 2: elevated camera view showing the two coils side-by-side emphasizing diameter or weave-construction difference, coils secondary in frame. Panel 3: keep pump/gauge/manifold on concrete pad with coils small and secondary in corner.",
+      "panel_scores": [
+        58
+      ],
+      "set_attempt": 3
     }
   ]
 }
