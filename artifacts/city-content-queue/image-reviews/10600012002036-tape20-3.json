@@ -1,0 +1,55 @@
+{
+  "source_id": "10600012002036-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Visible human figure (worker) in the background, which is a hard reject",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the worker from the background; show an empty concrete pad with only the drip-tape roll, filter, gauge, regulator, and manifold, with no people or extra products. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product bounding box width is estimated at approximately 32% of the frame, which exceeds the strict hard-reject threshold of 30%.",
+        "The image fails the mandatory role requirement 'HEADWORKS DETAIL: equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold on an empty concrete pad'; the scene depicts a wide-field context with distant agricultural equipment rather than a close-up infrastructure setup.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an elevated, tight close-up of a fixed irrigation filter, gauge, regulator, and manifold on an empty concrete pad. Ensure the white-and-blue AFP drip-tape roll is visible but small (occupying less than 30% of the frame width) and secondary to the infrastructure. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 24,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image shows exactly one wide, low cylindrical drip-tape carton roll.",
+        "The product is white and blue, with the 'AFP' logo and label clearly visible.",
+        "The product's bounding box dimensions (width 24%, height 20%) fall within the acceptable range.",
+        "No people or human body parts are visible.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right.",
+        "The background features fixed infrastructure (filter, gauges, manifold) on a concrete pad, consistent with the 'HEADWORKS DETAIL' role.",
+        "A distant unattended tractor and farm building are present, which are allowed as contextually relevant infrastructure.",
+        "The product is a small, secondary element as specified, with the infrastructure in the background."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "source_id": "12300012002826-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A person (tractor operator) is visible in the background driving the green tractor. The brief strictly forbids any visible human.",
+        "Hard reject: The background contains heavy farm equipment (tractor) and active farm activity, which contradicts the 'no farm activity' constraint for the HEADWORKS role."
+      ],
+      "correction_prompt": "Remove the person/tractor operator from the background tractor; replace with an empty, unattended tractor or remove the tractor entirely. The two coils in the foreground are correct and should remain.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 30,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Correct layflat pairing: one packaged coil and one bare black woven coil are present and clearly distinguishable.",
+        "The coils are fully visible, separate, and physically plausible.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Zero visible people or body parts; the background infrastructure (farm building, soil) is permissible under role rules."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

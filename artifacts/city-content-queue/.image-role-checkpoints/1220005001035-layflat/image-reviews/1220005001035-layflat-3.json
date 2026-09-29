@@ -1,0 +1,63 @@
+{
+  "source_id": "1220005001035-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 45,
+      "product_height_percent": 38,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The packaged coil on the left appears distorted and 'melty' rather than showing a realistic packaged AFP product.",
+        "The image does not contain the mandatory headworks equipment (fixed pump, gauge, and manifold) required for this specific role.",
+        "The coils are placed on open ground/pad, but the lack of the required primary equipment infrastructure makes this a hard reject for the 'HEADWORKS DETAIL' role."
+      ],
+      "correction_prompt": "Add a fixed pump, gauge, and manifold on a concrete pad as the main subject. Render the packaged coil on the left with sharp, realistic commercial packaging instead of the current distorted look.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible human figure (driver) inside the tractor in the background",
+        "The two coils are not distinct (one is heavily obscured by the cardboard package)",
+        "Watermark contains extra characters ('2013') compared to the required 'AFP | 09134922013'"
+      ],
+      "correction_prompt": "Regenerate the image removing the human driver inside the distant tractor. Ensure both coils are clearly distinct and visible: one black woven coil and one packaged coil, without excessive occlusion. Correct the watermark to exactly 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 35,
+      "product_height_percent": 15,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is missing; it is mandatory and cannot be omitted."
+      ],
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 65,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Image contains the required pair: one packaged AFP coil and one bare black woven coil.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "No people, body parts, or forbidden objects (bottles, buckets, extra coils) are visible.",
+        "Objects are separate, recognizable, and physically plausible on the concrete surface."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "source_id": "12300012002666-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains exactly two product coils (one wrapped, one bare black) with no third commercial product",
+        "Watermark 'AFP | 09134922013' is present in the bottom right",
+        "Zero people or body parts visible",
+        "Fixed pump and gauge are treated as infrastructure, not extra products",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 58,
+      "product_height_percent": 32,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Contains exactly one packaged AFP coil and one bare black woven coil",
+        "Both objects are separate, fully visible, and physically plausible",
+        "No people or human body parts present",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right",
+        "High-oblique water-transfer context with crop rows and distant farm equipment is appropriate",
+        "No third commercial package, bottle, or impossible intersection",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 52.0,
+      "product_height_percent": 35.0,
+      "product_x_center_percent": 46.0,
+      "reasons": [
+        "The combined bounding box of the product pair is approximately 52% of the frame width, which exceeds the hard reject threshold of 42%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Keep the wide field background and off-center composition but significantly reduce the physical scale of the two coils so their combined width is less than 40% of the frame. Do not include any people. Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 28,
+      "product_height_percent": 32,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Both required objects are present: one packaged AFP coil and one bare black woven coil.",
+        "Zero visible people, human body parts, or silhouettes.",
+        "Watermark 'AFP | 09134922013' is present exactly in the bottom-right corner.",
+        "Coils are physically separate, recognizable, and not merged.",
+        "Product width is 28%, within the acceptable 8-42% range for this role.",
+        "Off-center lower-left placement aligns with editorial hero preferences.",
+        "Distant farm infrastructure is allowed and treated as background, not extra commercial products."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
