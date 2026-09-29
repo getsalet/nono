@@ -1,26 +1,82 @@
 {
   "source_id": "10600021002799-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: Two visible men are crouching in the field, violating the zero-people requirement.",
+        "Hard reject: The image focuses on a field installation scene with people rather than the required editorial hero shot of the approved packaged AFP coil and bare black woven coil pair.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Generate an image with zero people, featuring exactly one packaged AFP coil and one bare black woven coil placed separately off-center in a water-transfer context, with the AFP watermark in the bottom-right corner. Enlarge the product group from 0% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 8,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: visible person (man crouching by the water channel) present in the image. Zero people rule is violated.",
+        "The foreground shows three coil-like objects (one packaged, two bare black coils) rather than exactly two as required for a layflat pair.",
+        "Distant urban skyline in background is inconsistent with the agricultural rural setting of آبژدان, خوزستان."
+      ],
+      "correction_prompt": "Regenerate image with zero people/human figures. Show exactly two coils: one packaged AFP coil and one bare black woven coil, placed off-center in a low-oblique agricultural irrigation context in آبژدان, خوزستان. Maintain the AFP | 09134922013 watermark in the bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 12,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Visible person standing in the field (torso, legs, head).",
+        "Hard reject: Person visible inside the tractor cab (driver)."
+      ],
+      "correction_prompt": "Remove all people from the image, including the standing figure in the field and the tractor driver.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard rejection: Distant human figure visible near tractor in background (operator/person on machinery)",
+        "Person present violates zero-human requirement",
+        "Product placement otherwise acceptable (packaged coil + bare black coil, combined width ~18%, off-center lower positioning)"
+      ],
+      "correction_prompt": "Remove all human figures including distant operator near tractor; ensure zero people anywhere in frame",
+      "attempt": 4
+    },
     {
       "pass": true,
       "score": 88,
-      "product_width_percent": 26,
-      "product_height_percent": 30,
-      "product_x_center_percent": 48,
+      "product_width_percent": 22,
+      "product_height_percent": 10,
+      "product_x_center_percent": 28,
       "reasons": [
-        "Approved pair present: packaged AFP coil and bare black woven coil.",
-        "Zero people or human body parts.",
-        "Watermark 'AFP | 09134922013' present and correct.",
-        "Off-center placement is editorially acceptable.",
-        "No third commercial product, bottle, or impossible geometry detected.",
-        "Distant unattended tractor is permitted as infrastructure."
+        "Exactly one packaged coil (silver/blue wrapper) and one bare black woven layflat coil, both small, separate and off-center bottom-left",
+        "AFP watermark 'AFP | 09134922013' present and correct in bottom-right",
+        "Zero people, zero human body parts",
+        "Irrigation ditch with flowing water, agricultural field with crop rows, distant unattended tractor and farm buildings — all consistent with editoriial hero context",
+        "Products are physically plausible, not merged or floating",
+        "Combined product width ~22% of frame, within 12-20% preference range",
+        "Lower-third, off-center placement is editorial preference — not a hard reject",
+        "No third commercial package, no fake labels, no impossible intersections"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 5
     }
   ]
 }
