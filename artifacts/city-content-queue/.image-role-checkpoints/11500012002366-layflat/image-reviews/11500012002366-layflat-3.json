@@ -1,0 +1,82 @@
+{
+  "source_id": "11500012002366-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible people in the distant background",
+        "Third commercial package present (wooden core coil in mid-ground)"
+      ],
+      "correction_prompt": "Remove all distant human figures and the extra wooden-core coil; keep only the two specified coils and fixed pump equipment on the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 58,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Mandatory 'HEADWORKS DETAIL' role requires the equipment (pump, gauge, manifold) to be the primary visual focus with the coils remaining small and secondary.",
+        "The image shows the coils as the dominant subject, occupying a wide area of the frame, with no visible fixed pump, gauge, or manifold setup on the concrete pad.",
+        "Product pair width is too large (58%) for the specified role of having the two-coil pair remain small and secondary.",
+        "Visual brief requires an 'elevated record photograph' of the equipment; the current framing is a ground-level close-up of the coils."
+      ],
+      "correction_prompt": "Refocus on the fixed pump, gauge, and manifold on the concrete pad as the main subject; keep the two-coil pair (one AFP packaged, one bare) visible but small in the background to satisfy the 'secondary' and 'small' requirements.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 75,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image depicts a 'layflat' family but is missing the core infrastructure required for the 'HEADWORKS DETAIL' role (no fixed pump, gauge, or manifold is visible).",
+        "The presence of three distinct commercial objects (one packaged coil and two bare coils) violates the 'approved pair' requirement (strictly one packaged, one bare) and acts as a hard reject for a 'third commercial product/coil'.",
+        "Product width span is approximately 75%, which exceeds the 65% maximum allowed for this role.",
+        "A wooden handle/tool is inserted into the center coil, which is not part of the standard product pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 75% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate with exactly one packaged AFP coil and one bare black woven coil only, placed next to a fixed pump, gauge, and manifold on a concrete pad. Remove the third coil and wooden tool. Ensure the pair is small and secondary to the infrastructure. Reduce the product group from 75% to 8-65% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 52,
+      "product_height_percent": 48,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Coil label reads 'APP' instead of 'AFP' (fake label/invented package rule)",
+        "The 'packaged' coil appears as a heavily distorted, abstract, impossible metallic shell intersecting with the cartons, violating the 'severely distorted dimensions' and 'impossible intersection' rules.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate the left-side packaged coil as a realistic standard agricultural pipe spool with a correct 'AFP' label. Eliminate the abstract metallic distortion and ensure both coils sit separately and physically plausibly on the concrete pad. Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 72,
+      "product_height_percent": 42,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory infrastructure: The role requires a fixed pump, gauge, and manifold on an empty concrete pad, which are not present in the image.",
+        "Pair width violation: The combined width of the two coils exceeds the maximum 65 percent threshold.",
+        "Missing required watermark: The specific string 'AFP | 09134922013' is not present; it is instead replaced by a standard agency code.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Re-generate to include a fixed pump, gauge, and manifold on an empty concrete pad. Reduce the size of the two coiled hoses so their combined width is under 40 percent of the frame. Ensure the watermark 'AFP | 09134922013' is clearly visible. Reduce the product group from 72% to 8-65% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

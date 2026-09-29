@@ -1,0 +1,68 @@
+{
+  "source_id": "1150008001497-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 54,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL: No fixed pump, gauge, or manifold is visible on the concrete pad.",
+        "The image fails the primary role requirement of showing equipment on an empty pad; instead, it focuses solely on the coils in a field context.",
+        "The coils are positioned at the center of the frame, which contradicts the mandatory editorial preference for off-center or lower-third placement."
+      ],
+      "correction_prompt": "Regenerate an elevated record photograph of an empty concrete pad with a fixed pump, gauge, and manifold. Place a small, secondary layflat and woven coil pair at the edge of the frame, keeping the equipment as the main focus and removing any human presence.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 85,
+      "product_height_percent": 60,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains a third commercial object (cardboard box) which is a hard reject.",
+        "The image is missing the required infrastructure elements: fixed pump, gauge, and manifold.",
+        "The product width estimate of 85% exceeds the 65% maximum hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 8-65% of frame width.; Reduce product height from 60% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image as an elevated record shot of a fixed pump, gauge, and manifold on a concrete pad. The two coils must be small and secondary, totaling less than 20% width. Remove the cardboard box and any other non-required commercial items. Ensure the 'AFP | 09134922013' watermark is visible in the bottom-right. Reduce the product group from 85% to 8-65% of frame width. Reduce product height from 60% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 62,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The visual brief for the mandatory HEADWORKS DETAIL role specifically requires an 'equipment-only elevated record photograph of one fixed pump, gauge and manifold' as the primary focus. This image fails that requirement by showing a flat-lay product shot on a concrete pad.",
+        "The approved pair is too large (estimated at 62% width) to be considered 'small and secondary' as required by the HEADWORKS role; the brief prioritizes the infrastructure over the product size.",
+        "Product objects are laid flat on the ground rather than showing the equipment-only infrastructure requested for this specific article section."
+      ],
+      "correction_prompt": "Regenerate as an elevated shot of a fixed pump, gauge, and manifold on an empty concrete pad; include one small packaged AFP coil and one small bare black woven coil lying on the ground as secondary elements, ensuring the equipment is the primary focus.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 62,
+      "product_height_percent": 45,
+      "product_x_center_percent": 54,
+      "reasons": [
+        "All core requirements for role 3 are met: the two approved coil types are present, separate, recognizable, and physically plausible.",
+        "Zero people or human body parts are visible.",
+        "The fixed pump and gauge infrastructure is correctly treated as equipment, not as an extra commercial product.",
+        "The product width falls within the allowed noisy reviewer window and the pair remains secondary to the equipment focus.",
+        "The required watermark is correctly present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

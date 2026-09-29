@@ -1,0 +1,57 @@
+{
+  "source_id": "1160006002616-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 78,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visually contains the two required products: a packaged AFP coil and a bare black woven coil",
+        "Zero human figures or body parts visible",
+        "Watermark 'AFP | 09134922013' is correctly positioned in the bottom-right",
+        "Infrastructure (gauges/manifolds) is correctly identified as part of the scene, not a hard-reject third commercial product",
+        "Crop and open soil context matches the 'editorial hero' visual brief",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 78% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 48,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A person (farmer) is clearly visible in the middle ground of the image.",
+        "Product pair width is approximately 48% of the frame, exceeding the 42% maximum hard limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the person standing in the middle distance. Scale down the two coiled products so they occupy less than 40% of the frame width. Keep the packaged coil and black woven coil separate and off-center. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Both required objects (packaged AFP coil and bare black woven coil) are present, clearly recognizable, and separate.",
+        "The pair width is approximately 28%, which falls within the acceptable range of 8 to 42 percent.",
+        "The placement is off-center and lower-third, aligning with the editorial hero brief.",
+        "The distant tractor is an unattended farm equipment element and not a prohibited third commercial product.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is present.",
+        "Zero people or human body parts are visible in the frame."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
