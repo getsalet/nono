@@ -1,0 +1,84 @@
+{
+  "source_id": "11000021001421-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The mandatory visual brief 'HEADWORKS DETAIL' (showing a fixed pump, gauge, and manifold on a pad) is not present in the image.",
+        "Product combined width of 55% significantly exceeds the 20% preferred maximum for this role.",
+        "Image features the coil pair as the primary subject rather than keeping it small, separate, and secondary as requested."
+      ],
+      "correction_prompt": "Regenerate to display a small, secondary two-coil pair on an empty concrete pad featuring a prominent fixed pump, gauge, and manifold setup (headworks detail). No farm activity.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 62,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The left object is severely distorted and geometrically impossible, appearing as a shattered or exploded metallic structure rather than a packaged AFP coil.",
+        "The combination of the distorted object and the bare coil in the foreground results in a pair width of ~62%, which exceeds the preferred 20% and is at the extreme limit of the 65% noise allowance, making the 'secondary' requirement effectively unmet.",
+        "The mandatory 'equipment-only' focus on the fixed pump, gauge, and manifold is violated by the inclusion of the unapproved and corrupted coil pair."
+      ],
+      "correction_prompt": "Regenerate the image to show a fixed pump, gauge, and manifold on a concrete pad. Add one packaged silver AFP coil and one bare black woven hose coil in the foreground. Ensure both coils are clearly recognizable, fully intact, physically plausible, and together occupy less than 20% of the frame width. Remove the distorted metallic object. Ensure zero human presence.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 78,
+      "product_width_percent": 25,
+      "product_height_percent": 62,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The approved layflat pair (packaged and bare coils) is present and recognizable.",
+        "Zero people or human body parts visible.",
+        "The required watermark is present and correctly formatted.",
+        "Deduction: The bare coil is partially cropped at the bottom, and a vertical stake/connector passes through the center of the packaged coil, appearing slightly unnatural.",
+        "machine-enforced bounding-box check failed: Reduce product height from 62% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 62% to at most 45% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 65,
+      "product_height_percent": 48,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Approved two-coil pair present and separate",
+        "Packaged AFP coil and bare black woven coil are visible",
+        "No people or body parts present",
+        "Fixed gauges and connector infrastructure are allowed",
+        "Required AFP watermark is present",
+        "No extra commercial bottles or containers",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 65,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The mandatory role required an 'equipment-only elevated record photograph of one fixed pump, gauge and manifold' which is completely missing.",
+        "The image instead depicts a standard layflat coil pair on a concrete pad, failing to satisfy the specific 'HEADWORKS DETAIL' visual brief requirements."
+      ],
+      "correction_prompt": "Generate an elevated headworks detail showing a fixed pump, gauge, and manifold on a concrete pad. Include a very small (5-10% width), secondary layflat coil pair in the background. No people.",
+      "attempt": 5
+    }
+  ]
+}

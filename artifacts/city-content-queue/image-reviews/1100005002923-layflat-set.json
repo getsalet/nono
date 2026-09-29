@@ -1,0 +1,61 @@
+{
+  "source_id": "1100005002923-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Role 2 contains a person, which is explicitly prohibited in the visual brief.",
+        "Role 2 lacks the required elevated technical comparison; it shows a ground-level scene with a farmer rather than a close-up construction/diameter detail.",
+        "Role 3 is a ground-level product shot on a concrete pad, whereas the role 3 brief specifies an 'elevated record photograph' of equipment (pump, gauge, manifold).",
+        "Role 3 fails to include the required 'fixed pump, gauge and manifold' equipment, showing only the coils instead."
+      ],
+      "correction_prompt": "Regenerate role 2 as a clean, elevated technical macro-shot comparing the diameter/construction of the two coils without a person; regenerate role 3 as an elevated record shot of a fixed pump, gauge, and manifold on an empty concrete pad with the two coils small and secondary in the frame.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 3 (Role 3) fails to depict the required 'HEADWORKS DETAIL' equipment; it shows the product pair on a concrete pad with a distant tractor instead of the required fixed pump and manifold. This is a layout/subject duplication of Panel 1.",
+        "Panel 2 (Role 2) violates the negative constraints by including 'extra' unapproved commercial items (red fittings/connectors) on the concrete pad alongside the required two coils.",
+        "The visual narratives are not sufficiently distinct between Panels 1 and 3, both showing the product pair on ground with background farm context."
+      ],
+      "correction_prompt": "For Panel 3, remove the distant tractor and replace the product pair with a close-up of the required equipment: one fixed pump, gauge, and manifold on a bare concrete pad, keeping only a tiny secondary coil in the background. For Panel 2, remove the red fittings and extra objects from the concrete pad, leaving only the two-coil pair to show diameter/construction difference.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "The required 'AFP | 09134922013' watermark is missing in the first image.",
+        "Role 1 (Editorial Hero) uses a low foreground shot instead of the required wide high-oblique view.",
+        "Role 2 (Selection Evidence) uses the same low foreground camera angle as Role 1, failing to provide the required distinct technical narrative and 'elevated' perspective.",
+        "The layout in Role 1 and Role 2 is nearly identical, violating the instruction to reject repeated layouts."
+      ],
+      "correction_prompt": "Re-shoot images 1 and 2 from a high oblique aerial angle to establish distinct viewpoints; add the missing bottom-right watermark to image 1; ensure image 2 clearly emphasizes the comparison between the two coil types rather than repeating the layout of image 1.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

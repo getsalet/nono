@@ -1,54 +1,57 @@
 {
   "source_id": "1050003002103-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 65,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 requires the product carton to be 'small' and 'off-center', but it is prominently large and centered in the foreground.",
-        "Role 2 requires 'elevated technical arrangement', but the image shows a low-angle ground-level perspective.",
-        "Role 3 requires a 'medium side view' with the product as 'secondary' (small), but the product is large and prominent in the foreground."
+        "Panel 3 contains a violation of the 'no container' rule: a cardboard box with 'AFP' branding is placed on top of the irrigation manifold assembly.",
+        "Panel 2 layout fails the spatial hierarchy test: the product carton is large, centered, and prominent in the foreground, acting as the primary subject rather than a secondary element.",
+        "Panel 3 composition conflicts with the 'product secondary' requirement for the technical detail role; the product takes up equal visual weight to the headworks assembly."
       ],
-      "correction_prompt": "Adjust the layout to make the product small/secondary in all three panels and change Role 2 to a high-angle technical shot.",
+      "correction_prompt": "Regenerate images by removing the cardboard box in Panel 3 and reducing the product's visual weight in Panels 2 and 3 to make them background/secondary elements.",
       "panel_scores": [
-        45
+        65
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 20,
+      "score": 45,
       "duplicate_roles": [
         1,
         2,
         3
       ],
       "reasons": [
-        "Role 1: The AFP carton is the dominant subject and placed dead-center, violating the 'small' and 'off-center' requirement for the Editorial Hero.",
-        "Role 2: The role requires an elevated/technical angle showing emitter-spacing, but the image is a low-angle close-up that duplicates the hero shot composition.",
-        "Role 3: The 'Headworks Story' must focus on the unattended hardware (filter/gauge/manifold) with the carton as secondary, but the carton remains the equal primary subject and foreground focal point."
+        "Panel 1 fails the 'exactly one approved carton' constraint: it depicts the irrigation strip itself (the product) running across the entire field. While the physical carton is small and off-center, the ubiquitous black tubing constitutes a second, dominant product presence that violates the single-item layout requirement.",
+        "Panel 2 fails the 'small carton' constraint: the product packaging is scaled significantly larger than Panel 1, serving as a foreground focal point rather than a secondary element. It also lacks visible technical evidence (no clear emitter spacing or field-selection indicators) required for a SELECTION EVIDENCE role.",
+        "Panel 3 fails the 'empty concrete pad' constraint: the headworks are positioned on a busy paved surface containing two large tractors in the background, which constitutes 'farm activity' explicitly forbidden in the brief."
       ],
-      "correction_prompt": "Adjust Role 1 to place the carton small and off-center on the lower third; shift Role 2 to an elevated perspective showing drip lines and emitters clearly in the background; move the carton to the background or edge in Role 3 so the manifold and gauge hardware are the primary technical focus.",
+      "correction_prompt": "Generate a strict sequence of three images: (1) A high-oblique view of a vast field with a single drip line where only one small packaging carton is visible; (2) A ground-level technical shot of a single small packaging carton next to a detailed close-up of an emitter spacing grid, with a simple background; (3) A sharp, isolated product shot of a filter, gauge, regulator, and manifold on an empty concrete pad, with no tractors or people, ensuring the single packaging carton remains small and secondary.",
       "panel_scores": [
-        20
+        45
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 15,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1: The AFP carton is significantly oversized and dominates the foreground rather than staying 'small' on the lower third as required.",
-        "Role 2: The AFP carton is again oversized and centered, lacking the required 'elevated technical arrangement' or visible emitter-spacing evidence.",
-        "Role 3: Contains an extra cardboard box, violating the 'exactly one approved carton' rule and the 'any container' restriction.",
-        "Roles 1 and 2: Highly duplicated visual layout (carton centered on a straight row in a tilled field), lacking the required camera height/angle distinction."
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "Regenerate to make the AFP carton small in Role 1; add a farm building or visible emitters in Role 2; remove the cardboard box in Role 3; and differentiate the camera angles across the set.",
+      "reasons": [
+        "Role 2 (Panel 2) contains a human subject, which violates the strict 'no person' constraint.",
+        "Role 3 (Panel 3) shows multiple product instances (a large cart and a small one) rather than the required 'exactly one approved carton' which must be small and secondary; the large product placement makes it a hero object, failing the specific role requirement.",
+        "Role 1 (Panel 1) places the product roughly in the center rather than 'off-center on the lower third' as specified in the editorial brief."
+      ],
+      "correction_prompt": "Regenerate panel 2 to remove the person; regenerate panel 3 to feature only one small carton secondary to the headworks; adjust panel 1 to place the single carton off-center in the lower third.",
       "panel_scores": [
-        15
+        55
       ],
       "set_attempt": 3
     }
