@@ -1,25 +1,38 @@
 {
   "source_id": "1180004002818-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 18,
-      "product_height_percent": 22,
-      "product_x_center_percent": 33,
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 14,
+      "product_height_percent": 8,
+      "product_x_center_percent": 62,
       "reasons": [
-        "The image features exactly two approved products: a packaged AFP-style coil (left) and a bare black woven coil (right).",
-        "No people, human faces, or body parts are visible in the frame.",
-        "The required bottom-right watermark 'AFP | 09134922013' is present and correct.",
-        "Fixed pumps and infrastructure are included but are not treated as extra commercial products.",
-        "Product placement is small, off-center, and physically plausible in the editorial hero context."
+        "Multiple people visible in the mid-ground field area, including standing figures and a group sitting together. Hard reject criterion requires zero people anywhere in the image.",
+        "Tractor with an operator in the cab violates the zero human body parts rule."
+      ],
+      "correction_prompt": "Remove all people and humans from the field area. Ensure no workers, farmers, or any human figures are visible anywhere in the scene.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 33,
+      "product_height_percent": 18,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil (inset with white background) and one bare black woven coil, both fully visible, separate, and physically plausible.",
+        "Required watermark 'AFP | 09134922013' is present in bottom-right corner.",
+        "Zero people or human body parts in the image.",
+        "Editorial hero context: wide high-oblique view of agricultural field rows with distant city skyline consistent with the article brief.",
+        "Combined product width approximately 33% — above preferred 12-20% range but well within the 42% acceptance threshold for this role.",
+        "Distant farm buildings and crop rows are infrastructure, not commercial products."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

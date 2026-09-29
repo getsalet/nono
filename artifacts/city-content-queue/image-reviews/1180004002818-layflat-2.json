@@ -1,18 +1,37 @@
 {
   "source_id": "1180004002818-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Image contains a person (man kneeling in field) - hard reject per instructions: 'Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette'",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the image. The scene should show only the two hose coils (one packaged AFP coil and one bare black woven coil) on the soil, with no humans present. Enlarge the product group from 0% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 33,
+      "product_height_percent": 17,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Image shows the approved layflat pair: one packaged AFP coil (left) and one bare black woven coil (right), both fully visible, separate, and physically plausible on soil.",
+        "The pair demonstrates diameter/construction difference suitable for selection evidence role.",
+        "Combined product width approximately 33% of frame, within the 8-42% acceptable range.",
+        "Distant tractors and farm building present in background are permitted as unattended infrastructure, not third commercial products.",
+        "Zero people or human body parts detected. Required watermark 'AFP | 09134922013' is present in bottom-right corner."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
