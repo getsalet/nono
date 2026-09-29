@@ -1,0 +1,47 @@
+{
+  "source_id": "1230006002168-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 52,
+      "product_height_percent": 35,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: Visible human legs in the upper right background (legs are explicit body parts and a person is clearly present).",
+        "Role mismatch: The image lacks the required 'HEADWORKS DETAIL' infrastructure (pump, gauge, manifold) specified in the brief."
+      ],
+      "correction_prompt": "Regenerate an equipment-only headworks detail photograph of a fixed pump, gauge, and manifold on a concrete pad. Include a small packaged AFP coil and a bare black woven coil in the foreground. No people, no legs, and no human body parts visible. Ensure the bottom-right watermark 'AFP | 09134922013' is clearly present.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 78,
+      "product_height_percent": 65,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Visible third coil",
+        "Product pair wider than 65 percent limit",
+        "Missing required pump, gauge, and manifold infrastructure",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-65% of frame width.; Reduce product height from 65% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to remove the third small coil at the bottom. Significantly reduce the scale of the two main coils to fit within 12-20 percent of the frame width. Add a fixed pump, gauge, and manifold on the concrete pad to satisfy the mandatory equipment-only detail requirement. Reduce the product group from 78% to 8-65% of frame width. Reduce product height from 65% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 40,
+      "product_height_percent": 20,
+      "product_x_center_percent": 45,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

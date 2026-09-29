@@ -1,0 +1,38 @@
+{
+  "source_id": "12300014002634-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 48,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of people: There are multiple workers visible in the field (one standing, one walking, one kneeling, and one in the tractor). This violates the hard reject rule for 'zero people' and 'human silhouettes'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width.; Reduce product height from 42% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Remove all humans and the driver from the scene; leave only the unattended green tractor. The two products (packaged coil and bare coil) should remain in the foreground but should be slightly smaller (approx. 35% width) to meet the 20% width constraint. Reduce the product group from 48% to 8-42% of frame width. Reduce product height from 42% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24.5,
+      "product_height_percent": 28.0,
+      "product_x_center_percent": 33.5,
+      "reasons": [
+        "Contains the required approved pair: one packaged coil and one bare black woven coil.",
+        "Zero people or human body parts visible in the scene.",
+        "Product width is approximately 24.5%, which is within the accepted 8-42% range for noisy estimates.",
+        "Watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "Distant unattended tractors are treated as infrastructure/context rather than hard rejects."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

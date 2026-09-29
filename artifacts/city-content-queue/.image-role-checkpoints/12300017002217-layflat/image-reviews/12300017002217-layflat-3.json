@@ -1,0 +1,80 @@
+{
+  "source_id": "12300017002217-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 60,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The required bottom-right watermark text is incorrect (displays '09134922013' instead of '09134922013'); this is a hard reject as the string must be exact.",
+        "The image contains more than two relevant objects: two coiled hoses and a separate large pump/gauge assembly, which constitutes a third commercial or infrastructure item beyond the approved pair.",
+        "The pump assembly is located on the far right and dominates the scene, failing the HEADWORKS DETAIL requirement of a 'fixed pump, gauge and manifold on an empty concrete pad' as the primary focus; instead, it is clustered with the hoses.",
+        "The combined width of the objects is at the upper limit of acceptable range but visually crowded by the additional pump assembly."
+      ],
+      "correction_prompt": "Regenerate the image with the following constraints: 1. Ensure the bottom-right watermark text reads exactly 'AFP | 09134922013' (fixing the 14-digit number to match the 11-digit string specified in the prompt, or correcting the prompt to 09134922013 if that is the target). 2. Show a dedicated equipment-only area (empty concrete pad) with one fixed pump, one gauge, and one manifold. 3. Include the two coiled hoses (one packaged, one bare black) as small, secondary, separate objects. 4. Ensure zero people are present.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 45,
+      "product_height_percent": 50,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "No people or human body parts are present",
+        "Contains the required fixed pump, gauge, and manifold on a concrete pad",
+        "Contains exactly two coils: one bare black and one packaged in a white bag",
+        "The approximate combined width of the product group is 45%, which falls within the 8-65% acceptable range for this role",
+        "The objects are fully visible, separate, and physically plausible",
+        "machine-enforced bounding-box check failed: Reduce product height from 50% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 50% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 40,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Presence of a human figure (person in blue) in the distant background is a hard reject.",
+        "Mandatory 'HEADWORKS DETAIL' visual requirement (elevation record of a fixed pump, gauge, and manifold) is missing; only the pair of coils is visible.",
+        "The packaged coil appears structurally distorted/melted at the top center rather than a standard AFP packaging format."
+      ],
+      "correction_prompt": "Regenerate: Remove all human figures and workers from the frame entirely. Include a fixed pump, gauge, and manifold set on a concrete pad in an elevated detail shot to match the HEADWORKS brief. Ensure the two coils (packaged and bare) are physically accurate, distinct, and properly formed. Keep the bottom-right watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 52,
+      "product_height_percent": 48,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image lacks the mandatory 'HEADWORKS DETAIL' equipment, which requires a fixed pump, gauge, and manifold to be the primary focus of the photograph.",
+        "The two product coils are the primary subjects and appear excessively large (estimated at ~55% width), failing the role's requirement that the product pair remains 'small, separate, and secondary'."
+      ],
+      "correction_prompt": "Rewrite the image to focus on an elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad. Shrink the two-coil pair (one packaged, one black woven) to be very small, separate, and secondary in the background. Ensure the equipment dominates the frame.",
+      "attempt": 5
+    }
+  ]
+}

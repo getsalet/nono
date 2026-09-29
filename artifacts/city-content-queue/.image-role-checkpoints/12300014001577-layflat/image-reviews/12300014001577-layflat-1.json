@@ -1,0 +1,53 @@
+{
+  "source_id": "12300014001577-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 48,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains a human figure (worker) in the background operating equipment, which is a hard reject.",
+        "The combined width of the two coils is approximately 48% of the frame width, exceeding the maximum limit of 42%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Remove the human figure and the tractor from the background. Reduce the size of the coils so their combined width is approximately 15% of the frame width while keeping them separate and off-center. Reduce the product group from 48% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 38,
+      "product_height_percent": 30,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The packaged product is not a correctly rendered AFP coil; it appears as a distorted, folded, umbrella-like or tent-shaped object with an invented package structure and impossible intersection.",
+        "The required exact bottom-right watermark text is missing; the image instead displays 'AFP | 09134922013' which does not match the mandated string 'AFP | 09134922013' formatting/visual requirement for a clean watermark lockup.",
+        "The visual role 'EDITORIAL HERO: wide high-oblique water-transfer context' is not met; there is no high-oblique water transfer context and no water/irrigation flow visible, just a field with a distant tractor."
+      ],
+      "correction_prompt": "Regenerate with a standard white/silver packaged AFP hose coil and a bare black woven hose coil placed small and off-center on the ground. Ensure no people. Add a high-oblique water irrigation context. Display the exact text watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 27,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image successfully displays the required pair: one packaged AFP coil and one bare black woven coil.",
+        "Placement is off-center in the bottom-left, aligning with editorial preferences.",
+        "Zero people or body parts are present.",
+        "The mandatory watermark 'AFP | 09134922013' is clearly visible and intact in the bottom-right corner.",
+        "The distant tractor and farm building are treated as infrastructure and do not trigger a hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
