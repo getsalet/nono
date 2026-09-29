@@ -262,8 +262,11 @@ class CityImagePolicyTests(unittest.TestCase):
         workflow = (
             ROOT / ".github" / "workflows" / "rebuild-reference-images.yml"
         ).read_text(encoding="utf-8")
-        self.assertIn('OUT / ".image-role-checkpoints" / source_id', rebuild)
+        self.assertIn('CHECKPOINT_ROOT = OUT / ".image-role-checkpoints"', rebuild)
+        self.assertIn("CHECKPOINT_ROOT / source_id", rebuild)
         self.assertIn("city_rebuild_checkpoint_reused", rebuild)
+        self.assertIn("def prune_checkpoint_cache(active_source_ids: set[str])", rebuild)
+        self.assertIn("prune_checkpoint_cache(set(records))", rebuild)
         self.assertIn("if completed:", rebuild)
         self.assertNotIn("tempfile.mkdtemp", rebuild)
         self.assertIn('REBUILD_POST_LIMIT: "12"', workflow)
