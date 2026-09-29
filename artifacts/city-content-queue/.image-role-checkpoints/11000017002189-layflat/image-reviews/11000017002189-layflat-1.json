@@ -1,0 +1,53 @@
+{
+  "source_id": "11000017002189-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 46,
+      "product_height_percent": 32,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil.",
+        "Zero people and zero human body parts detected.",
+        "Product placement is off-center and in the lower-third as preferred for the editorial hero role.",
+        "Background infrastructure (distant tractor, crop rows, water channel) is consistent with the water-transfer context.",
+        "Required watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "Width exceeds preferred 12-20% but remains within the acceptable noisy range (up to 42%) when factoring in the bounding box of the pair.",
+        "Physical plausibility maintained: objects are separate, not merged, and the cardboard spool is a standard packaging feature for bare woven hose.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 46% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 33,
+      "product_height_percent": 26,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Visible human body parts (legs) in the background",
+        "Visible worker silhouette"
+      ],
+      "correction_prompt": "Remove all visible people and human silhouettes from the background",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 34,
+      "product_height_percent": 22,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Meets all hard reject criteria. No visible people or body parts. Pair width is within the 42% tolerance. Approved layout with 12-20% preferred pair width. Exact required bottom-right watermark 'AFP | 09134922013' present. Water-transfer context accurately represents the article's water distribution use case. Packaging and bare black coil are properly recognizable and separate."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

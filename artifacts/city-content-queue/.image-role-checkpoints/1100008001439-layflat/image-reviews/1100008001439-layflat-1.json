@@ -1,0 +1,75 @@
+{
+  "source_id": "1100008001439-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 48,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains exactly one packaged coil and one bare black woven coil.",
+        "The watermark 'AFP | 09134922013' is present and correct in the bottom-right corner.",
+        "No people or human body parts are visible in the scene.",
+        "The background includes a farm building, unattended tractor, and pipes, which are permitted as infrastructure and equipment.",
+        "Products are fully visible, separate, and physically plausible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 52,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: person visible in the background on the left side.",
+        "Product pair width exceeds the 42% hard limit for this role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the person from the background completely. Shrink the two coil products to occupy a combined width of 12 to 20 percent of the frame. Keep them separate, recognizable, and physically plausible. Keep the tractor, water channel, and farm buildings in the background. Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 45,
+      "product_height_percent": 28,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "All mandatory objects are present: one packaged coil (left) and one bare black woven coil (right), separate and fully visible.",
+        "Zero people or human body parts detected in the image.",
+        "No extra commercial packages, bottles, jars, canisters, or impossible intersections.",
+        "Watermark is correctly present in the bottom-right corner.",
+        "Context is appropriate: wide high-oblique water-transfer channel with distant tractor and farm buildings, which are treated as infrastructure/background rather than extra products.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 40,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Image features exactly the approved pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Both objects are fully visible, separate, and physically plausible without intersections or distortions.",
+        "Estimated combined width of the product pair is ~40%, which falls within the accepted 8-42% range for this role.",
+        "Zero people, human body parts, or silhouettes are present.",
+        "Distant unattended tractors and farm infrastructure are acceptable as background elements.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "The scene provides the requested wide high-oblique water-transfer context (irrigated field/crop rows)."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

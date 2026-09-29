@@ -1,0 +1,55 @@
+{
+  "source_id": "11000016001402-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 58,
+      "product_height_percent": 38,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Missing mandatory 'HEADWORKS DETAIL' role: image does not show an elevated record of a fixed pump, gauge, and manifold on a concrete pad.",
+        "The image is a low-angle product shot that fails to meet the specific 'equipment-only' layout required by the brief.",
+        "Product width (~58%) exceeds the preferred 12-20% range, though it is within the noisy accept range."
+      ],
+      "correction_prompt": "Reframe to show a high-angle detail shot of a fixed pump, gauge, and manifold on an empty concrete pad with the two coils (one packaged AFP, one black woven) appearing small in the foreground or background as secondary elements.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 58,
+      "product_height_percent": 48,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Presence of a third commercial package (the blue/black hexagonal wrapped object) violates the 'approved layflat pair' rule.",
+        "The product bounding box for the three items combined is 58% width, exceeding the preferred 12-20% target and approaching the 65% hard reject threshold.",
+        "The image shows three distinct objects on a generic concrete pad rather than the specific 'HEADWORKS DETAIL' equipment scene requested.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate to show strictly two products: one black coiled hose and one smaller black hose in a '/AFP' cardboard box. Remove the blue hexagonal object. Place the pair on a concrete pad as a small secondary detail next to a fixed pump and gauge manifold. Ensure the pair takes up roughly 15% of the frame width. Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The image contains the required layflat pair: one packaged coil (inside the box) and one bare black woven coil on the ground.",
+        "The combined width is approximately 32% (estimated box width 25% + adjacent bare coil width), which falls within the acceptable 8-65% range.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "No human body parts, faces, or other prohibited items are visible.",
+        "Note: The large gray object next to the coil is identified as infrastructure/pump equipment based on role context and is not counted as a prohibited third commercial package.",
+        "The image is editorially centered rather than in the lower-third, but this is explicitly allowed."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

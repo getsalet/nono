@@ -1,0 +1,79 @@
+{
+  "source_id": "1050003001261-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A person (worker/farmer) is clearly visible standing in the background on the right side, violating the 'zero people' rule.",
+        "Hard reject: The product roll appears wider (approx 35%) and taller (approx 45%) than the 30%/35% limits, though the primary failure is the human presence.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image strictly without any humans, workers, or body parts. Remove the person standing in the background. Ensure the AFP roll remains the primary subject with clear blue/white branding, keeping its height under 35% of the frame. Reduce the product group from 35% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Height of the product roll is 38%, exceeding the hard limit of 35%.",
+        "Missing required watermarks 'AFP | 09134922013' is present, but the image fails other checks.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Scale down the product roll to ensure its height is below 35% of the image frame. Regenerate to strictly follow all dimensions. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 19,
+      "product_height_percent": 17,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Contains a visible person (standing worker) in the distant left background, which triggers a hard reject.",
+        "Role conflict: The selected image role is 3 (lower-third placement), but the article brief explicitly mandates role 1 (Headworks Detail), where the carton must be secondary and small.",
+        "Carton size is too dominant: At ~19-20% width and height, it functions as the primary subject rather than a 'small and secondary' element as required by the Headworks Detail brief."
+      ],
+      "correction_prompt": "Remove the person from the background. Reduce the size of the drip-tape carton to make it clearly secondary and small. Ensure the fixed filter, gauges, and manifold remain the prominent visual focus of the Headworks Detail role.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Hard reject: visible human body parts (two distinct human silhouettes/figures in the background).",
+        "Background contains active farm equipment (tractor and figures) rather than the specified 'empty concrete pad' and 'no farm activity'."
+      ],
+      "correction_prompt": "Remove all human figures and distant active tractor from the background. Replace the background with a plain, unattended farm scene or empty concrete pad without people to strictly meet the 'zero people' and 'no farm activity' constraints.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 32,
+      "product_height_percent": 36,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product bounding box width and height exceed the maximum physical plausibility limits of 30% and 35% respectively",
+        "Visible human silhouette standing next to the distant tractor violates the zero-person constraint",
+        "Failure to include the mandatory infrastructure (filter, gauge, regulator, manifold) as requested by the 'HEADWORKS DETAIL' image role",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate: Place a white and blue AFP drip-tape roll (width 20%, height 25%) on an empty concrete pad next to a small fixed filter, gauge, and manifold. The background must show a distant unattended red tractor and a farm building with absolutely no people or silhouettes. Ensure the required watermark is visible in the bottom right. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

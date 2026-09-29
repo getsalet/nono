@@ -1,0 +1,65 @@
+{
+  "source_id": "11000016001402-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Image 1 fails the 'EDITORIAL HERO' role by being a low-angle ground shot; the required wide high-oblique context is missing, and the coils are oversized in the foreground rather than small, separate, and off-center.",
+        "Image 2 is rejected for the 'SELECTION EVIDENCE' role because it includes a human figure in the background, which is explicitly forbidden.",
+        "Image 3 is rejected for the 'HEADWORKS DETAIL' role because it lacks the required equipment (pump, gauge, manifold) and instead duplicates the static layout of the previous two images.",
+        "The images share a duplicated layout, failing to demonstrate the required visible distinction in camera height/angle and technical narrative."
+      ],
+      "correction_prompt": "Generate a wide high-oblique crop with the coils as small off-center elements; create a strictly equipment-free elevated comparison shot; and produce a focused shot of a pump, gauge, and manifold on a concrete pad with the coils in the secondary background.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 (Hero) shows a close-up detail with the product as the main subject, whereas the brief requires a wide high-oblique shot where the product remains small and off-center against a large environmental context.",
+        "Role 2 (Selection Evidence) is described as an 'elevated technical comparison,' but the image is shot at a low angle from eye level, failing the camera height requirement.",
+        "The 'Selection Evidence' panel displays 3 items (packaged, 1 coil with handle, 1 large coil) instead of the required 'approved two-coil pair.'",
+        "The 'Selection Evidence' panel includes a green farm vehicle, which violates the constraint against including extra equipment or persons (farm activity) that are not specified.",
+        "The 'Hero' panel lacks the required high-oblique wide-angle perspective and includes a pump that distracts from the 'water-transfer context' of the coil."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide high-oblique aerial shot where the packaged and bare coils are small, separate off-center elements against a vast irrigation field; Regenerate Role 2 as a high-angle close-up of exactly two coils (packaged and bare) lying on a surface to show construction differences, with no background vehicles.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panel 1 (Editorial Hero): The camera angle is too low; the brief requires a 'high-oblique' wide shot, but the view is nearly eye-level. The product is also too prominent/centered rather than small and off-center.",
+        "Panel 2 (Selection Evidence): The framing and perspective are nearly identical to Panel 1 (low angle, product side-by-side in the field), failing to provide a visibly distinct 'elevated technical comparison' or showing construction differences.",
+        "Panel 3 (Headworks Detail): The 'fixed pump' is represented by a generic box and sci-fi-style robotic unit, which does not meet the technical narrative for equipment. It also features a cardboard box, which may be interpreted as 'extra packaging' conflicting with the 'equipment-only' constraint.",
+        "Visual Consistency: The product packaging in Panel 3 is significantly larger and different from the coils in Panels 1 and 2, creating a continuity error."
+      ],
+      "correction_prompt": "Reframe Panel 1 and 2 with distinct high-oblique and elevated angles respectively; reduce product size to keep it secondary in the background; and replace the robotic unit in Panel 3 with a standard industrial water pump on a concrete pad.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

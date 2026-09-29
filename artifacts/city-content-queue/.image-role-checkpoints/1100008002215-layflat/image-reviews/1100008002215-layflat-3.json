@@ -1,0 +1,79 @@
+{
+  "source_id": "1100008002215-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 52,
+      "product_height_percent": 48,
+      "product_x_center_percent": 53,
+      "reasons": [
+        "The image contains a third commercial package (the blue and black spherical wrapped tank) which is explicitly forbidden.",
+        "Hard reject triggered for a third commercial package or invented product; only the two-coil pair is allowed.",
+        "Label on the flat black coil is partially obscured and appears corrupted compared to the strict product brief.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image showing only two coils of hose (one bare black woven and one wrapped black) on the concrete pad with the fixed pump and gauge. Completely remove the blue spherical wrapped tank and any other extra products. Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 48,
+      "product_height_percent": 35,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The left product is severely distorted, appearing as a wrapped spherical mass with an impossible geometry rather than a packaged AFP coil.",
+        "The required 'HEADWORKS DETAIL' infrastructure (fixed pump, gauge, and manifold) is completely missing from the concrete pad, which contradicts the mandatory role for the image."
+      ],
+      "correction_prompt": "Regenerate the image featuring a fixed irrigation pump, gauge, and manifold on an empty concrete pad. Include a correctly shaped packaged AFP coil and a bare black woven layflat coil as small, secondary objects. Ensure no human figures are present and the 'AFP | 09134922013' watermark remains in the bottom-right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 58,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The mandatory role was specified as 'HEADWORKS DETAIL: equipment-only elevated record photograph of one fixed pump, gauge and manifold'; the image lacks this specific infrastructure and instead shows a simple layflat pair on a pad without the required pump/gauge/manifold trio.",
+        "Both objects remain recognizable, separate, and physically plausible; no hard rejects for humans or overlapping/merged products were triggered."
+      ],
+      "correction_prompt": "Regenerate as an elevated close-up of a fixed pump unit with a pressure gauge and manifold on a concrete pad. The two hoses (packaged AFP coil and bare black coil) must be placed small and secondary in the frame; do not show farmers or people.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 65,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains more than two coils (three total are visible).",
+        "The visual brief specifies a HEADWORKS DETAIL showing a fixed pump, gauge, and manifold, which are not present in this image.",
+        "The product width significantly exceeds the preferred 12-20% range and hits the hard rejection threshold for being too wide relative to the frame."
+      ],
+      "correction_prompt": "Regenerate the image showing a HEADWORKS DETAIL of a fixed pump, gauge, and manifold on an empty concrete pad. The two-coil pair (one packaged, one bare) must be small, separate, and secondary in the background. Ensure the total product width does not exceed 20% of the frame.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 45,
+      "product_height_percent": 48,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: Mandatory HEADWORKS DETAIL requirements (fixed pump, gauge, manifold) are missing.",
+        "Hard reject: Product pair is too wide (~45%), exceeding the preferred 12-20% and violating the 'small, separate, secondary' brief.",
+        "The packaged coil appears to be a different style than the approved 'AFP coil' packaging.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a single fixed pump, gauge, and manifold setup on a concrete pad as the hero. Include two small layflat hose coils (one packaged AFP, one bare black) in the background; reduce combined width of coils to 15% of frame width. Maintain watermark. Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

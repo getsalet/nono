@@ -1,0 +1,68 @@
+{
+  "source_id": "11000017001599-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The left-hand coiled product is severely distorted; its shape is irregular and does not resemble a standard layflat hose or AFP coil.",
+        "The watermark 'AFP | 09134922013' is rendered incorrectly as 'AFP | 09134922013', failing the exact text requirement specified in the brief.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate image featuring a standard packaged layflat hose on the left and a bare black woven coil on the right. Ensure the left product has a standard cylindrical coil shape. Fix the bottom-right watermark text to read exactly 'AFP | 09134922013'. Keep the headworks in the background. Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 60,
+      "product_height_percent": 55,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The prompt mandates a 'HEADWORKS DETAIL' role requiring an elevated record photograph of a fixed pump, gauge, and manifold.",
+        "The image shows only the two coiled products on a flat concrete surface; the mandatory pump, gauge, and manifold infrastructure are completely missing.",
+        "The visual brief is not satisfied because the equipment-only detail is not present.",
+        "machine-enforced bounding-box check failed: Reduce product height from 55% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate an elevated detail shot of a fixed pump, gauge, and manifold on a concrete pad. Place the two small hose coils (one packaged, one black woven) separately in the background or peripheral area. Reduce product height from 55% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 60,
+      "product_height_percent": 35,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: A third commercial product (a coiled hose with connectors) is visible in the upper right, violating the requirement for only one packaged AFP coil and one bare black woven coil.",
+        "Product pair width is approximately 60-65% of the frame, exceeding the preferred 12-20% range for the specified 'family layflat' role."
+      ],
+      "correction_prompt": "Regenerate the image to show only the packaged AFP coil and one bare black woven coil on the concrete pad. Remove the third coiled hose in the background. Make the two products smaller relative to the frame to achieve a width of approximately 15-20% while maintaining the prominent 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Zero people or body parts detected.",
+        "Exactly two coils present: one packaged (AFP) and one bare black coil.",
+        "Coils are physically separate and resting plausibly on the concrete surface.",
+        "Combined product width (~45%) is within the 8-65% acceptance range for this role.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Background is a clean concrete pad, consistent with the equipment-only role context, with no disqualifying third commercial products."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

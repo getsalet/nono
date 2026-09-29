@@ -1,0 +1,54 @@
+{
+  "source_id": "11000013001433-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Missing required bottom-right watermark 'AFP | 09134922013'",
+        "The pair of coils (packaged and bare) does not meet the preferred width constraint of 12-20% (estimated at ~55% of the frame width)",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Add the exact watermark 'AFP | 09134922013' in the bottom-right corner. Regenerate the image so the pair of coils occupies a smaller width (12-20% of the frame) while maintaining the 'HEADWORKS DETAIL' layout with the pump and manifold on the concrete pad. Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 65,
+      "product_height_percent": 55,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains a third commercial package (the cardboard box) which is a hard reject.",
+        "The central object is a spherical package wrapped in fabric, which is not the specified 'one packaged AFP coil'.",
+        "The required 'HEADWORKS DETAIL' (fixed pump, gauge, manifold on a concrete pad) is completely missing.",
+        "machine-enforced bounding-box check failed: Reduce product height from 55% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate to show one small AFP coil and one bare black woven coil as a pair. Remove the cardboard box and the spherical package. Include a fixed pump, gauge, and manifold on a concrete pad as the primary detail. Reduce product height from 55% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 48,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Required layflat pair present: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Zero people or body parts visible.",
+        "Combined width is within the 8-65% acceptable range for noisy estimates.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right.",
+        "Coils are separate and physically plausible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

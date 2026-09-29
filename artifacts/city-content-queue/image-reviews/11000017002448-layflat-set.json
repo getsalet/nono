@@ -1,0 +1,55 @@
+{
+  "source_id": "11000017002448-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Roles 1 and 2 use the same camera angle (ground-level eye view), identical field environment, and nearly identical product layout, with only a slight shift in position and addition of background tractors. They do not provide the required distinct visual roles.",
+        "Role 1 (EDITORIAL HERO) is required to be a wide high-oblique shot where the product pair is small, separate, and off-center; the provided image is a large foreground eye-level shot, failing the hero perspective.",
+        "Role 2 (SELECTION EVIDENCE) is required to be an elevated technical comparison; the provided image remains a low ground-level shot, failing the camera height/angle requirement.",
+        "Role 3 successfully provides the required equipment-only elevated record shot on an empty concrete pad with the product pair small and secondary."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a high wide-angle oblique shot with the two coils small and off-center in a water-transfer context, and Role 2 as a high-down elevated technical comparison of the two coils, ensuring no person or extra containers are present.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 layout is not editorial hero: product pair is centered and oversized, failing the 'small and off-center' requirement.",
+        "Role 2 shows a wooden fitting attached to the coil, which introduces extra hardware outside the approved two-coil pair.",
+        "Role 3 shows only a pump and gauge but completely omits the required 'approved two-coil pair' element.",
+        "Role 3 composition fails the layout instruction where the coils must remain 'secondary' elements within the frame."
+      ],
+      "correction_prompt": "Re-shoot Role 1 with a high-oblique wide angle moving the coils to the edge; trim Role 2 to show only the two coils without fittings; and composite or reshoot Role 3 to include the two coils as secondary elements next to the headworks on an empty concrete pad.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails the EDITORIAL HERO requirement: the two coils are placed oversized and centered in the immediate foreground rather than remaining small, separate, and off-center.",
+        "Role 2 violates the SELECTION EVIDENCE constraint: it displays three coils (left, back, and right), whereas the brief strictly prohibits showing a third commercial package, coil, or object in the comparison pair."
+      ],
+      "correction_prompt": "Crop Role 1 to push the coils to the off-center side and make them significantly smaller against the wide landscape. For Role 2, completely remove the third background coil to leave only the two-coil pair on the concrete pad.",
+      "panel_scores": [
+        60
+      ],
+      "set_attempt": 3
+    }
+  ]
+}
