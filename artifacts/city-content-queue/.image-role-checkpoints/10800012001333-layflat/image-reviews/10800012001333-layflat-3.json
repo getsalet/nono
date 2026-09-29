@@ -1,0 +1,76 @@
+{
+  "source_id": "10800012001333-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 42,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The article brief mandates an 'elevated record photograph' of infrastructure (fixed pump, gauge, and manifold) as the primary focus.",
+        "The image currently features the two coils as the primary subject in a low-angle, close-up shot, failing to meet the specific 'equipment-only' visual requirement.",
+        "Required infrastructure (pump, manifold, gauge) is missing, rendering the image irrelevant to the specific headworks role."
+      ],
+      "correction_prompt": "Regenerate as an elevated high-angle photo of a concrete pump pad featuring a fixed pump, gauge, and manifold. Include the AFP coil and bare black coil as small, secondary objects on the ground, on an empty concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 48,
+      "product_height_percent": 52,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "machine-enforced bounding-box check failed: Reduce product height from 52% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 52% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 35,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Mandatory role 'HEADWORKS DETAIL' not met: The image shows a flat concrete pad with two coils, but the required equipment (fixed pump, gauge, and manifold) is completely absent.",
+        "Distant tractors and buildings are present, which are allowed as infrastructure, but the primary required infrastructure for this role (pump/gauge/manifold) is missing."
+      ],
+      "correction_prompt": "Generate an elevated record photograph of a concrete pad featuring a fixed pump, pressure gauge, and manifold. Place the two approved coils (one packaged AFP coil, one black woven coil) small, separate, and secondary in the foreground or adjacent. Keep the coils under 40% of the frame width. Ensure no people or extra commercial products are visible. Maintain the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "product_width_percent": 68,
+      "product_height_percent": 55,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The approved two-coil pair is too wide relative to the frame (~68%), exceeding the 65% hard reject threshold and the 12–20% preferred range",
+        "The fixed pump assembly dominates the frame as the primary subject, violating the mandatory HEADWORKS DETAIL brief which requires the two-coil pair to remain small, separate and secondary",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width.; Reduce product height from 55% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the fixed pump, gauge, and manifold compositionally smaller and strictly secondary. Ensure the combined bounding box width of the packaged AFP coil and the bare black woven coil is between 12 and 20 percent of the frame width, maintaining the concrete pad infrastructure context. Reduce the product group from 68% to 8-65% of frame width. Reduce product height from 55% to at most 45% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image fails the mandatory 'HEADWORKS DETAIL' role. The brief explicitly requires a 'equipment-only elevated record photograph of one fixed pump, gauge and manifold'. The submitted image contains no pump, gauge, or manifold; it features only two coils on a flat pad.",
+        "The approved two-coil pair (packaged and bare) is positioned as the primary subject rather than being 'small, separate and secondary' to the required headworks infrastructure.",
+        "The visual composition does not match the requested 'elevated record photograph' of a fixed system setup."
+      ],
+      "correction_prompt": "Regenerate the image as a close-up, slightly elevated photograph of a fixed irrigation headworks unit (pump, pressure gauge, and manifold) installed on a concrete pad. The required two hose coils (one in blue packaging, one bare black) must be present but small and secondary in the frame, not the primary focus. Do not include any human body parts. Maintain the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 5
+    }
+  ]
+}

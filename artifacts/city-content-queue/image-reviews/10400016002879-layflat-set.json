@@ -1,43 +1,59 @@
 {
   "source_id": "10400016002879-layflat",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 30,
       "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Role 1 fails by placing the products too large and centered in the foreground, rather than small and off-center.",
-        "Role 3 fails because the 'pump' is actually a reel that duplicates the large coil of Role 2, and the product pair is oversized and central.",
-        "Role 3's background features a generic western-style red barn and hay, which is irrelevant to the specific Azerbaijan location (Chaypare, Hazylar) mentioned in the brief."
+        "Role 3 fails the mandatory equipment requirement: it must display a fixed pump, gauge, and manifold on an empty concrete pad, but only shows the two coiled hoses on concrete.",
+        "Role 2 fails the required 'elevated technical comparison': the image is a ground-level shot, not an elevated view showing a construction or diameter difference.",
+        "Roles 2 and 3 are structurally identical, displaying only the two coiled products without distinct camera angles or environments."
       ],
-      "correction_prompt": "For all three roles: Shrink and reposition the two-coil product pair to be smaller and strictly off-center. For Role 3, replace the central pump/reel hardware with a distinct, fixed unattended irrigation manifold and pressure gauge, and swap the barn for a realistic background featuring the Hazylar/Chaypare landscape (mountains/Aras river).",
+      "correction_prompt": "Regenerate Role 2 as an elevated shot of the two hoses showing their construction differences, and regenerate Role 3 to include a fixed pump, gauge, and manifold on the concrete pad with the two hoses placed as secondary details.",
       "panel_scores": [
-        35
+        30
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 60,
+      "score": 50,
       "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Role 1 background shows a dense city skyline which is completely irrelevant to the agricultural/water-transfer brief for West Azerbaijan province.",
-        "Role 2 is set in a post-harvest wheat field, which is a generic farm environment not specified in the article brief; the technical comparison is not visually distinct from the hardware context in Role 3.",
-        "Role 3 uses a similar hardware setup (pump and coil) on dry soil, which duplicates the visual layout and environment structure of Role 2, failing the requirement for distinct camera angles and technical narratives.",
-        "The brief required an 'elevated' angle for Role 2, but the image is a low-angle shot."
+        "Role 2 (Panel 2) contains people, which is explicitly prohibited by the brief.",
+        "Role 3 (Panel 3) lacks the required equipment (pump, gauge, manifold) and the approved two-coil pair with diameter/construction difference required for Role 2.",
+        "Panels 2 and 3 share a high-angle camera height and concrete pad environment structure, failing the requirement for visibly distinct camera angles and environments.",
+        "Role 2 does not correctly match the 'SELECTION EVIDENCE' role description, which requires the equipment to be prominent and the coils to be secondary, but instead shows a generic farm activity scene with people."
       ],
-      "correction_prompt": "Replace the city skyline in Role 1 with a rural West Azerbaijan landscape. Re-frame Role 2 to a high-oblique angle over irrigated crops with clear dimension callouts. Restructure Role 3 to a side-view close-up of the pump plumbing to distinguish it from Role 2's product pair.",
+      "correction_prompt": "Regenerate Role 2 with an elevated technical comparison of the two approved coils showing construction differences, removing all people. Regenerate Role 3 to strictly feature a pump, gauge, and manifold on a concrete pad with the coils remaining small and secondary, avoiding farm activity.",
       "panel_scores": [
-        60
+        50
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Role 3 fails to include the required 'one fixed pump, gauge and manifold' equipment as the main subject; it instead displays the coils as the primary focus, violating the 'equipment-only' mandate.",
+        "Role 2 contains an unwanted commercial cardboard box, which conflicts with the 'no third commercial package' constraint."
+      ],
+      "correction_prompt": "For Role 3, replace the foreground coils with a fixed pump, pressure gauge, and manifold assembly on the concrete pad; keep the two approved coils small and secondary in the background. For Role 2, remove the cardboard packaging box.",
+      "panel_scores": [
+        20
+      ],
+      "set_attempt": 3
     }
   ]
 }

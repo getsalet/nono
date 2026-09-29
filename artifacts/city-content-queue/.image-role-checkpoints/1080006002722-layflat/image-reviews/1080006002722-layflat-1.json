@@ -1,0 +1,77 @@
+{
+  "source_id": "1080006002722-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 63,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "machine-enforced bounding-box check failed: Reduce the product group from 63% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 63% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 52,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The combined product width (approx 52% of the frame) exceeds the strict 42% hard-reject threshold.",
+        "The products are centered/low-left rather than positioned off-center as preferred for the editorial hero role.",
+        "The tractor in the background is not a product/extra commercial item but contributes to the wide composition feel; primary failure is product scale.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the scale of both the packaged AFP coil and the bare black woven coil to fit within a 30-40% combined width. Reposition the pair off-center (right or left third) in a lower-third placement to better match the editorial hero description while maintaining the wide water-transfer context. Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Visible human silhouettes in the distant crop rows."
+      ],
+      "correction_prompt": "Remove all distant human figures from the background crop rows.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 46,
+      "product_height_percent": 35,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "A farmer is visible operating the tractor in the background, which triggers a hard reject for any human.",
+        "The combined width of the two product coils exceeds the 42% hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the farmer from the tractor in the background to ensure zero people in the frame. Shrink the two product coils and tighten their grouping so the total product width falls within 12-20 percent of the image frame. Reduce the product group from 46% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 31,
+      "product_height_percent": 24,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "The white packaged coil in the foreground is heavily distorted, exhibiting an impossible geometric structure (angular folding) that resembles a shattered object or abstract sculpture rather than a plausible wrapped product.",
+        "The packaging does not resemble a standard commercial coil wrap and appears to have 'impossible intersections' where the material folds over itself unnaturally.",
+        "The product is placed in the extreme bottom foreground, which obstructs the view of the field and conflicts with the requirement for the approved pair to be 'small' in the editorial context.",
+        "A distant tractor is visible in the field. While technically 'unattended' (no people), it introduces a vehicle into the hero shot that distracts from the water-transfer focus and may be interpreted as a third major object by strict standards, though the primary reject cause is the distorted product shape."
+      ],
+      "correction_prompt": "Regenerate the image. The product pair in the foreground must be physically realistic. The left item must be a standard cylindrical coil wrapped in white packaging (like a hose roll), not a distorted geometric shape. Keep the pair small, separate, and low in the frame to emphasize the wide agricultural context. Ensure the white package looks like a normal rolled product. Keep the watermark in the bottom right.",
+      "attempt": 5
+    }
+  ]
+}
