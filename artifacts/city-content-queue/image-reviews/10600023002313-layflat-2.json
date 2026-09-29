@@ -1,18 +1,54 @@
 {
   "source_id": "10600023002313-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 38,
+      "product_height_percent": 15,
+      "product_x_center_percent": 45,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Third item present: small silver roll/coil on right side violates two-coil pair requirement",
+        "Left item appears to be a separate folded/silver structure rather than a packaged version of the black coil - does not clearly represent 'nخی' (packaged) vs 'تاشو' (foldable) distinction",
+        "Required technical comparison between approved two-coil pair not clearly demonstrated through the pair itself"
+      ],
+      "correction_prompt": "Remove the small silver roll on right; show clear diameter/construction difference between exactly two coils - one packaged (نخی) and one foldable (تasho); position them as a pair in foreground",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 12,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Human figure visible between tractors in background — hard reject",
+        "White box with arrow present between coils — third commercial package — hard reject",
+        "Image shows extra commercial item not allowed in selection evidence role"
+      ],
+      "correction_prompt": "Remove all people including background figure; remove white box between coils; keep only one packaged AFP coil and one bare black woven coil on soil",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Two hose coils clearly displayed: one packaged AFP coil (left) and one bare black woven coil (right)",
+        "Construction/diameter difference visible through the pair itself - packaged vs unwoven",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner",
+        "No people or human body parts visible",
+        "Distant unattended tractor in background is acceptable farm infrastructure",
+        "Product width within acceptable range (under 42% hard limit)",
+        "Soil texture and field setting appropriate for agricultural context"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

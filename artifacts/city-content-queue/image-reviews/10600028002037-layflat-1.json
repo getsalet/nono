@@ -1,34 +1,36 @@
 {
   "source_id": "10600028002037-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "product_width_percent": 42,
-      "product_height_percent": 38,
-      "product_x_center_percent": 48,
+      "score": 15,
+      "product_width_percent": 12,
+      "product_height_percent": 8,
+      "product_x_center_percent": 38,
       "reasons": [
-        "The image contains a visible human standing in the water channel in the mid-ground, which is a hard reject element as the image must contain zero people or body parts.",
-        "The required bottom-right watermark displays the text 'AFP | 09134922013' but the prompt mandates the specific format 'AFP | 09134922013' which must be verified. Additionally, the prompt explicitly states the watermark 'AFP | 09134922013' is REQUIRED and must never be rejected for removal, but it is present here."
+        "HARD REJECT: Two people visible in the foreground — one kneeling and touching the coil, another standing with a shovel. The brief explicitly states: 'Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant.'",
+        "The bare black woven coil is partially visible but being handled by a person's hands, violating the zero-people rule.",
+        "The packaged coil is also being touched by a person's hand."
       ],
-      "correction_prompt": "Remove the human figure standing in the water channel. Retain the wide high-oblique view of the field and the two coils (packaged AFP coil and bare black coil) in the foreground. Ensure the bottom-right watermark 'AFP | 09134922013' remains clearly visible.",
+      "correction_prompt": "Regenerate image with exactly two coils (one packaged AFP coil, one bare black woven coil) placed small, off-center, and separate in a water-transfer editorial context. Remove ALL people, hands, arms, and any human body parts. Keep only the infrastructure elements (distant pump, hose, farm buildings). Include the mandatory bottom-right watermark 'AFP | 09134922013'.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 100,
-      "product_width_percent": 30,
-      "product_height_percent": 15,
-      "product_x_center_percent": 19,
+      "score": 88,
+      "product_width_percent": 14,
+      "product_height_percent": 8,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Contains exactly the two required approved coils (one packaged, one bare black) as separate physical objects.",
-        "No people, human body parts, or silhouettes are visible.",
-        "The bottom-right required watermark 'AFP | 09134922013' is present.",
-        "The combined product width of ~30% falls within the acceptable 8-42% estimation range."
+        "Both required objects present: packaged AFP coil (silver metallic box) and bare black woven coil (coiled hose) are small, separate, off-center, and physically plausible",
+        "Combined product bounding box ~14% width, within 12-20% preferred range and well below 42% hard reject",
+        "Zero people or human body parts visible",
+        "Correct watermark present: AFP | 09134922013",
+        "Background infrastructure (tractor, barn, irrigation channel) is legitimate agricultural setting, not third commercial products",
+        "Lower-third placement with editorial off-center composition"
       ],
       "correction_prompt": "",
       "attempt": 2

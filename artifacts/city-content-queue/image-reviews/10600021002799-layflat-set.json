@@ -1,24 +1,61 @@
 {
   "source_id": "10600021002799-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
     {
-      "pass": true,
-      "score": 98,
-      "duplicate_roles": [],
-      "reasons": [
-        "All three roles are visibly distinct in camera height, angle, and environment structure.",
-        "Role 1 correctly shows the 'Hero' shot with a high-oblique field context and the product pair small/off-center.",
-        "Role 2 correctly provides the 'Selection Evidence' on an elevated concrete pad, showing the technical comparison without people.",
-        "Role 3 correctly provides the 'Headworks Detail' of the specific pump equipment with the required product evidence as a secondary element.",
-        "No prohibited elements (bottles, people, or generic farm activity) are present in any frame.",
-        "Watermark is present and consistent in all panels."
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "",
+      "reasons": [
+        "Panel 3 fails its HEADWORKS DETAIL role entirely: no pump, gauge, or manifold is visible—only the two coil products on a bare concrete surface, with a small stray tube piece, violating the equipment-only record-photograph requirement.",
+        "Panel 1 oversized product: the two coils dominate the foreground rather than remaining small, separate, and off-center as required for EDITORIAL HERO.",
+        "Panel 1 contains multiple active tractors (three visible) in the midground, exceeding the allowed distant unattended context and approaching farm activity.",
+        "Panels 1 and 2 share near-identical composition logic (product pair on ground plane with blurred ag equipment in distance), reducing role distinction; Panel 3 uses a completely different plain-concrete setting but fails content requirements."
+      ],
+      "correction_prompt": "Panel 1: shrink coils to small off-center accents in a wide high-oblique water-furrow field; reduce background tractors to one distant unattended unit. Panel 2: keep as-is if clear, otherwise tighten the two-coil technical comparison without extra equipment. Panel 3: replace the product-only concrete shot with an elevated equipment photo of one fixed pump with pressure gauge and manifold on an empty concrete pad; place the approved two-coil pair small and secondary at the edge.",
       "panel_scores": [
-        98
+        42
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 1: Dominant oversized green pump/filter cylinder in the right foreground overshadows the product; tractor shows an active driver (counts as farm activity); coils present but environment framing is cluttered by equipment",
+        "Panel 2: Extra unapproved cardboard box (labeled 'AHOJ') introduced alongside the two-coil pair, violating the product-only comparison requirement; barn and tractor acceptable as distant context",
+        "Panel 3: Missing all required headworks equipment (pump, gauge, manifold); shows only two hose coils on concrete with no pressure-regulation hardware, failing the role-3 specification entirely"
+      ],
+      "correction_prompt": "Regenerate: Panel 1 — remove dominant green pump from foreground, keep only the two small off-center coils in a wide high-oblique irrigation-channel setting with distant unattended tractor; Panel 2 — remove cardboard box, show only the two-coil pair at elevation demonstrating diameter/construction difference on field soil; Panel 3 — include one fixed pump, pressure gauge, and manifold on an empty concrete pad with the two-coil pair small and secondary in frame.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panel 1 and Panel 2 share near-identical camera height, angle, and composition: both are low ground-level hero/product shots on tilled farmland with the two-coil pair as primary foreground subjects. The narrative does not shift from EDITORIAL HERO to SELECTION EVIDENCE — it simply moves the product to a slightly different field.",
+        "Panel 2 introduces an unapproved third object (a metallic connector/fitting attached to the bare coil) violating the 'no extra coil or container' rule.",
+        "Panel 3 fails the HEADWORKS DETAIL requirement entirely: it shows only two coils on plain concrete with no pump, gauge, manifold, or any equipment. The image is a sterile product close-up, not an elevated technical record of irrigation headworks hardware.",
+        "The geographic and contextual identity (Khuzestan/water-transfer infrastructure) is absent across all three panels; the fields and barns read as generic North American or European farmland rather than the specified Iranian agricultural setting.",
+        "Panel 2 background contains visibly active tractors, which edges toward farm activity rather than permissible distant unattended context."
+      ],
+      "correction_prompt": "Panel 1: keep wide high-oblique water-transfer context with two coils small/off-center. Panel 2: switch to elevated technical comparison angle where the two-coil pair visibly demonstrates diameter or wall-thickness difference; remove any connector or third object; background may include distant unattended farm structures. Panel 3: replace with equipment-only elevated record photograph of a fixed pump, pressure gauge, and manifold assembly on an empty concrete pad, with the two coils small and secondary in frame.",
+      "panel_scores": [
+        38
+      ],
+      "set_attempt": 3
     }
   ]
 }
