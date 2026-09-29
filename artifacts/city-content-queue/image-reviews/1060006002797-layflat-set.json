@@ -1,0 +1,55 @@
+{
+  "source_id": "1060006002797-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 1 fails the EDITORIAL HERO role: The shot is a low-level ground view, not a wide high-oblique perspective.",
+        "Panel 1 and Panel 2 both show the coils lying flat on tilled soil in the foreground with distant tractors, resulting in a repeated layout.",
+        "Panel 3 lacks the required equipment-only headworks context: It shows a single small, ambiguous handle next to the coils on a concrete slab instead of a fixed pump, gauge, and manifold."
+      ],
+      "correction_prompt": "Generate a Panel 1 with a wide high-oblique aerial view of the water field with the coils small and off-center; keep Panel 2 as an elevated close-up for construction comparison; generate a Panel 3 showing a fixed headworks assembly (pump, gauge, manifold) on a concrete pad with the coils placed small in the corner.",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 68,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 2 (Image 2) fails the SELECTION EVIDENCE brief by including a headworks assembly (gauges/manifold) in the foreground, which is reserved for Role 3; the role must focus solely on the technical comparison of the two coils without extra equipment.",
+        "Role 1 and Role 2 visually overlap because both present the coil pair on low agricultural terrain; they are not distinctly separate in environment structure or technical narrative as required for the trio.",
+        "Role 3 correctly isolates the equipment-only detail on the concrete pad with the product as secondary evidence."
+      ],
+      "correction_prompt": "Regenerate Panel 2 to remove the headworks assembly and focus entirely on the two-coil pair on an elevated surface to clearly separate it from the equipment detail in Panel 3 and the wide context in Panel 1.",
+      "panel_scores": [
+        68
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 violation: The approved two-coil pair is broken; one coil is covered by a cardboard box, violating the 'no third commercial package' rule.",
+        "Role 3 violation: The mandatory 'fixed pump, gauge and manifold' hardware is completely absent. The image depicts two coils on a concrete slab, failing the 'equipment-only' requirement.",
+        "Role 3 duplication: This image is essentially Role 2 shifted to a different surface (concrete instead of dirt), resulting in repeated visual layouts that lack the required technical narrative shift.",
+        "Role 3 violation: An extra cardboard box is visible on one of the coils, which is forbidden."
+      ],
+      "correction_prompt": "For Role 3, remove the cardboard box, add a fixed water pump head with a pressure gauge and manifold to the concrete pad, and include the approved two-coil pair in the background as small secondary elements; keep the box out of Role 2 to show the bare coils clearly.",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

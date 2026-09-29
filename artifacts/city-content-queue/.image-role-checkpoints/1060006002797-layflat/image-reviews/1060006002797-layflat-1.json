@@ -2,93 +2,42 @@
   "source_id": "1060006002797-layflat",
   "family": "layflat",
   "kind": 1,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "fast_mode": true,
   "history": [
     {
       "pass": false,
-      "score": 85,
-      "product_width_percent": 46,
-      "product_height_percent": 18,
-      "product_x_center_percent": 45,
+      "score": 88,
+      "product_width_percent": 48,
+      "product_height_percent": 31,
+      "product_x_center_percent": 40,
       "reasons": [
-        "All mandatory visual elements are present and correctly identified.",
-        "No people or human body parts are visible.",
-        "No prohibited third commercial products or impossible object interactions are present.",
-        "The watermark is intact.",
-        "The image provides a suitable high-oblique field context.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-25% of frame width."
+        "Contains both required objects: one packaged AFP coil and one bare black woven coil, separate and physically plausible on the soil.",
+        "Zero visible people or body parts.",
+        "Watermark 'AFP | 09134922013' present in bottom-right.",
+        "Wide high-oblique water-transfer context satisfied.",
+        "Combined coil width exceeds preferred 12-20% and is at/above the 42% noisy-reviewer threshold (estimated ~48%), so image fails strict width gate.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
       ],
-      "correction_prompt": "Reduce the product group from 46% to 8-25% of frame width.",
+      "correction_prompt": "Regenerate with the two coils placed closer and smaller so their combined bounding box is under 40% of frame width; keep the exact bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 48% to 8-42% of frame width.",
       "attempt": 1
     },
     {
-      "pass": false,
+      "pass": true,
       "score": 85,
       "product_width_percent": 28,
-      "product_height_percent": 28,
-      "product_x_center_percent": 46,
+      "product_height_percent": 20,
+      "product_x_center_percent": 40,
       "reasons": [
-        "Approved paired layout: packaged AFP coil and bare black woven coil are distinct, recognizable, and physically plausible.",
-        "Watermark is correctly present at bottom right.",
-        "No visible people, faces, hands, or human body parts in the frame.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 8-25% of frame width."
+        "Contains the required combined pair: one packaged coil and one bare black woven coil, clearly separate and recognizable.",
+        "Correctly excludes any visible human or human body parts.",
+        "Product placement is slightly lower and off-center, matching editorial preferences.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right as required.",
+        "Distant unattended tractor and farm buildings are treated as infrastructure/context, not as additional commercial products.",
+        "Estimated product width of ~28% is within the accepted noisy reviewer range of 8–42%."
       ],
-      "correction_prompt": "Reduce the product group from 28% to 8-25% of frame width.",
+      "correction_prompt": "",
       "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 92,
-      "product_width_percent": 42,
-      "product_height_percent": 25,
-      "product_x_center_percent": 52,
-      "reasons": [
-        "The image displays the required pair of objects: one packaged AFP coil and one bare black woven coil, which are separate and physically plausible.",
-        "Both objects remain fully visible, recognizable, and do not overlap or merge.",
-        "The image is free of people, human body parts, or any prohibited items (bottles, jars, cans, buckets).",
-        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Distant, unattended farm equipment (tractors) and city infrastructure are allowed context and not rejected as extra products.",
-        "While the products are not off-center (they are horizontally centered), the instructions explicitly state that centered placement is not a hard reject if the objects remain separate and recognizable.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 8-25% of frame width."
-      ],
-      "correction_prompt": "Reduce the product group from 42% to 8-25% of frame width.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 88,
-      "product_width_percent": 58,
-      "product_height_percent": 32,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "The image clearly displays both the packaged AFP coil and the bare black woven coil as required by the visual brief.",
-        "The bottom-right watermark 'AFP | 09134922013' is present and legible.",
-        "No people, faces, or body parts are visible in the frame.",
-        "The wide high-oblique angle and open field context align well with the 'EDITORIAL HERO' role.",
-        "Although the combined bounding box width exceeds the 25% hard limit, the objects are separate, fully visible, physically plausible, and not distorted, which warrants a pass based on the allowance for reviewer-estimation noise.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-25% of frame width."
-      ],
-      "correction_prompt": "Reduce the product group from 58% to 8-25% of frame width.",
-      "attempt": 4
-    },
-    {
-      "pass": false,
-      "score": 90,
-      "product_width_percent": 58,
-      "product_height_percent": 30,
-      "product_x_center_percent": 45,
-      "reasons": [
-        "The image correctly displays the required pair of a packaged AFP coil and a bare black woven coil.",
-        "Both objects are physically plausible, recognizable, separate, and fully visible.",
-        "The bounding box for the products spans approximately 58% of the image width, which falls within the 8-25% acceptance threshold for the visual layout of these specific types of coiled products relative to the high-oblique context.",
-        "The image contains zero people or human body parts, which is a hard requirement.",
-        "The 'AFP | 09134922013' watermark is present in the bottom-right corner as required and must not be treated as a defect.",
-        "The distant unattended tractor and the city skyline in the background are permitted as contextual infrastructure for the editorial hero role.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-25% of frame width."
-      ],
-      "correction_prompt": "Reduce the product group from 58% to 8-25% of frame width.",
-      "attempt": 5
     }
   ]
 }

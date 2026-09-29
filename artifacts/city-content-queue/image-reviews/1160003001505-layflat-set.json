@@ -1,0 +1,55 @@
+{
+  "source_id": "1160003001505-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails 'EDITORIAL HERO' brief: Camera angle is a low horizontal perspective, not the required 'wide high-oblique' viewpoint.",
+        "Role 1 fails 'off-center' requirement: The two-coil product pair is centered in the frame rather than placed small and separate off-center.",
+        "Role 2 fails 'SELECTION EVIDENCE' brief: An extra commercial object (a large, unconnected metal hose coupling/adapter) is visible at the bottom right, violating the 'no extra commercial object' rule.",
+        "Role 3 fails 'HEADWORKS DETAIL' brief: The image shows only the product pair on a concrete slab; required technical components (pump, gauge, manifold) are completely absent."
+      ],
+      "correction_prompt": "Regenerate panel 1 with a wide high-oblique perspective placing the coils small and off-center; remove the loose coupling from panel 2 to show only the two coils; and add a fixed pump, gauge, and manifold to panel 3 on the concrete pad.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 presents the coils as the primary foreground subject against a green crop background, failing the requirement for a 'wide high-oblique water-transfer context' where coils remain small and off-center.",
+        "Role 3 places a large, oversized pump in the foreground, violating the constraint that the approved product pair must remain small, separate, and secondary.",
+        "Roles 2 and 3 depict nearly identical hardware setups (pump, gauge, and two coils on a concrete pad) with only slight variations in equipment styling, resulting in layout and visual duplication.",
+        "The background in Role 3 includes hay bales and farm structures that constitute 'farm activity' or a 'generic farm' context, which is explicitly prohibited for the equipment-only role."
+      ],
+      "correction_prompt": "Recreate Role 1 as a wide aerial/high-oblique shot of a water-transfer infrastructure with coils small and off-center; for Role 3, significantly scale down the pump and coils so the equipment-only record remains secondary to the headworks setting, and remove farm-specific clutter like hay bales from the background.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 violates the 'EDITORIAL HERO' specification by failing to place the product coils small, separate, and off-center; the coils are oversized and tightly grouped.",
+        "Role 3 violates the 'HEADWORKS DETAIL' requirement, which mandates an equipment-only record photograph of a fixed pump, gauge, and manifold. Instead, it shows two coiled hoses laid on a pad, functioning merely as a static product shot rather than a technical installation view."
+      ],
+      "correction_prompt": "Regenerate Panel 1 to depict the coils small, off-center, and separate to provide a wide water-transfer context, and regenerate Panel 3 to show a fixed pump, gauge, and manifold installation on an empty pad with the two coils kept small and secondary.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

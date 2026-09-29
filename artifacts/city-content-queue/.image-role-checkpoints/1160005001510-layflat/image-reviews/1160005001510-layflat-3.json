@@ -1,0 +1,53 @@
+{
+  "source_id": "1160005001510-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 37,
+      "product_height_percent": 30,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Mandatory 'HEADWORKS DETAIL' role (fixed pump, gauge, manifold on empty pad) is missing; the image features no plumbing infrastructure or equipment.",
+        "Watermark text 'AFP | 09134922013' is visible on the product in the center of the image rather than being the correct isolated box in the bottom-right corner."
+      ],
+      "correction_prompt": "Regenerate to show the mandatory HEADWORKS DETAIL: a fixed pump, gauge, and manifold on an empty concrete pad. The two coils must be small, separate, and secondary to the infrastructure. Move the 'AFP | 09134922013' watermark to a clean isolated box in the bottom-right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 45,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains three items in the foreground (the packaged AFP coil, the loose black coil, and a third object wrapped in blue/white packaging) which violates the constraint to show only the approved two-coil pair.",
+        "Missing mandatory equipment: The brief explicitly requests a 'fixed pump, gauge and manifold' as the primary subject for the HEADWORKS DETAIL role, which are not present in the image.",
+        "The two required products are not clearly identifiable as the primary subjects requested by the visual brief."
+      ],
+      "correction_prompt": "Remove the third blue wrapped object. Add a large fixed pump unit, gauge, and manifold on the concrete pad as the primary subject. Reduce the size of the packaged and bare hose coils and move them to the secondary position in the background.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 15,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The image contains zero people or body parts, avoiding all hard reject conditions.",
+        "The two visible coil products (black woven and black ribbed) are fully visible, separate, and physically plausible without any floating or intersecting issues.",
+        "A packaged coil is also present in the background, aligning with the 'layflat' family context without introducing prohibited 'third commercial packages' (only one of each type is shown).",
+        "The required bottom-right watermark 'AFP | 09134922013' is correctly displayed and not rejected.",
+        "Fixed infrastructure such as the pump and gauge on the concrete pad are present and treated as allowed components rather than prohibited products.",
+        "The product placement and proportions fit comfortably within the 8-65% acceptance window for this specific role."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
