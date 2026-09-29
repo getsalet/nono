@@ -25,8 +25,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  rebuild_gate:
+    runs-on: ubuntu-latest
+    outputs:
+      allow_production: ${{ steps.check.outputs.allow_production }}
+    steps:
+      - name: Checkout rebuild state
+        uses: actions/checkout@v7
+      - name: Pause normal generation until posts 567-632 are repaired
+        id: check
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          remaining="$(python - <<'PY2'
+          import json
+          from pathlib import Path
+          path=Path('artifacts/city-content-queue/image-rebuild-article-parity-v14-three-image.json')
+          print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 0)
+          PY2
+          )"
+          if [ "$remaining" -gt 0 ]; then
+            echo "allow_production=false" >> "$GITHUB_OUTPUT"
+            echo "Normal city generation is paused; strict restoration still has $remaining posts remaining."
+            active="$(gh run list --workflow rebuild-reference-images.yml --limit 20 --json status --jq '[.[] | select(.status == "queued" or .status == "in_progress" or .status == "waiting" or .status == "pending" or .status == "requested")] | length')"
+            if [ "$active" -eq 0 ]; then
+              echo "No repair run is active; dispatching the strict image rebuild."
+              gh workflow run rebuild-reference-images.yml --ref main
+            fi
+          else
+            echo "allow_production=true" >> "$GITHUB_OUTPUT"
+            echo "Strict restoration is complete; normal city generation is released."
+          fi
+
   generate:
-    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[image-rebuild]')
+    needs: rebuild_gate
+    if: needs.rebuild_gate.outputs.allow_production == 'true' && (github.event_name != 'push' || !contains(github.event.head_commit.message, '[image-rebuild]'))
     runs-on: ubuntu-latest
     timeout-minutes: 240
 
