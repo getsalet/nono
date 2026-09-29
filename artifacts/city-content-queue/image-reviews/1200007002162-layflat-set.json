@@ -1,25 +1,7 @@
 {
   "source_id": "1200007002162-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
-    {
-      "pass": false,
-      "score": 52,
-      "duplicate_roles": [
-        1,
-        2
-      ],
-      "reasons": [
-        "Duplicate roles: 1 and 2 use identical camera angles (low-oblique eye-level), identical environment (open dirt field), and identical composition (two coils placed foreground-center), violating the requirement for distinct camera height/angle and environment structure.",
-        "Role 1 fails the 'EDITORIAL HERO' specification: the shot is not a wide high-oblique view and the coils are large and centrally placed, rather than small, separate, and off-center.",
-        "Role 2 fails the 'SELECTION EVIDENCE' specification: the camera is not elevated, the framing is generic and ground-level, and the 'technical comparison' narrative is not visually prioritized; the background includes farm activity (tractors working) rather than a focused technical environment."
-      ],
-      "correction_prompt": "Replace Panel 1 with a high-oblique wide shot of the field where the two coils appear small and off-center against the landscape. Replace Panel 2 with an elevated, tight technical shot of the two coils on a clean surface (e.g., wooden crate or concrete pad) showing diameter/construction differences, with no tractors or field context.",
-      "panel_scores": [
-        52
-      ],
-      "set_attempt": 1
-    },
     {
       "pass": false,
       "score": 42,
@@ -28,30 +10,51 @@
         2
       ],
       "reasons": [
-        "Role 1 fails the EDITORIAL HERO requirement: the coils are large, centered subjects in a low-angle ground shot rather than small, separate, and off-center in a wide high-oblique water-transfer context.",
-        "Role 2 is not distinct from Role 1: it repeats the same two-coil pair layout on a slab, adding a small central tube that does not fulfill the requested elevated technical comparison of diameter/construction, making the two roles feel like variations of the same product-only shot rather than a distinct SELECTION EVIDENCE narrative.",
-        "The layouts of roles 1 and 2 are too similar (two coils side-by-side on a flat slab, wide field background), which violates the requirement that the roles be visibly distinct in camera height/angle and environment structure."
+        "Panel 1 fails EDITORIAL HERO: the two coils are oversized and centrally placed rather than small/separate/off-center; the scene is a generic tilled field with a city skyline backdrop rather than a wide high-oblique water-transfer context. ",
+        "Panel 2 fails SELECTION EVIDENCE: the image is a generic farm-field product shot with no technical comparison narrative or visible construction/diameter differentiation; composition duplicates Panel 1's elevated-product-foreground approach. ",
+        "Panel 3 fails HEADWORKS DETAIL entirely: it shows coils and a cardboard package on concrete with no pump, gauge, or manifold present, violating the equipment-only record-photograph requirement."
       ],
-      "correction_prompt": "Regenerate role 1 as a wide high-oblique water-transfer landscape with the packaged and bare coils kept small, separate, and off-center; regenerate role 2 as an elevated technical comparison framing the same two coils to clearly show their diameter/construction difference without adding extra tubes or repeating role 1's composition.",
+      "correction_prompt": "Generate Panel 1 as a wide high-oblique agricultural water-transfer scene (irrigation channels, furrows, or pivot infrastructure) with the two coils appearing small and off-center; Panel 2 as an elevated side-by-side technical comparison of the two coils emphasizing visible diameter and weave-construction differences on a neutral surface with no third objects; Panel 3 as an equipment-only elevated photo of one fixed pump, pressure gauge, and manifold on an empty concrete pad with the coils small and secondary in the background.",
       "panel_scores": [
         42
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 28,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panel 1 and Panel 2 are visually near-identical in camera height/angle and environment structure — both are low field-level shots looking down an irrigation channel with crop rows and a single coil in the foreground. They do not constitute distinct editorial roles.",
+        "Panel 1 (EDITORIAL HERO) fails to show the approved two-coil pair (packaged coil + bare woven coil) small and off-center; it shows only one coil and a prominent pump apparatus mis-suited for a hero role.",
+        "Panel 2 (SELECTION EVIDENCE) must display an elevated technical comparison with the approved two-coil pair side-by-side to show diameter/construction difference; instead it shows a single coil and a different pump — no comparison pair exists.",
+        "Panel 3 (HEADWORKS DETAIL) is fundamentally wrong: it shows a cutaway product display and a brown cardboard package on concrete, with no pump, gauge, or manifold. The cardboard package is an unauthorized third commercial item.",
+        "The consistent required AFP two-coil identity is absent across all panels; the product is never shown as the specified paired reference."
+      ],
+      "correction_prompt": "Redesign Panel 1 as a wide high-oblique aerial-style hero shot of a water-transfer scene in Miami/Semnan with both the packaged coil and bare black woven coil placed small and off-center. Redesign Panel 2 as an elevated overhead technical shot showing the approved two-coil pair side by side so diameter and construction differences are immediately readable, with no extra packages, bottles, or people. Redesign Panel 3 as an equipment-only elevated record of one fixed pump, pressure gauge, and manifold sitting on an empty concrete pad, with the approved two-coil pair small and secondary in the frame.",
+      "panel_scores": [
+        28
       ],
       "set_attempt": 2
     },
     {
-      "pass": true,
-      "score": 92,
-      "duplicate_roles": [],
-      "reasons": [
-        "All three panels maintain distinct camera perspectives: Role 1 uses a high-angle wide shot for context, Role 2 employs an elevated eye-level shot for product detail, and Role 3 uses a low-angle close-up for equipment focus.",
-        "Role 1 correctly functions as the Editorial Hero with the two-coil pair kept small, separate, and off-center within a water-transfer field context.",
-        "Role 2 effectively acts as Selection Evidence by highlighting the two coils (showing construction/diameter differences) at an elevated angle, with no prohibited commercial packaging or people present.",
-        "Role 3 is a valid Headworks Detail featuring the fixed pump and gauge on a concrete pad, with the approved product evidence kept secondary and small.",
-        "The bottom-right watermark 'AFP | 09134922013' is correctly present in all panels and is treated as a requirement rather than an obstruction."
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "",
+      "reasons": [
+        "Panel 2: The two coils shown are nearly identical in diameter—no clear diameter or construction difference is visible through the pair. Also contains an unauthorized wooden/metal connector tool beside the coils.",
+        "Panel 3: Completely misses the required headworks subject—a fixed pump, gauge, and manifold are absent. Instead shows an unauthorized brown cardboard commercial package, which violates the no-third-package rule. The scene is a product still-life on bare concrete, not an equipment-record photograph.",
+        "Panel 1 passes the EDITORIAL HERO role correctly (wide oblique water-transfer context, coils small and off-center, distant tractor allowed)."
+      ],
+      "correction_prompt": "Panel 2: Replace with an elevated shot of two distinctly different-diameter coils (one noticeably larger bore than the other) on a clean surface, no tools or extra objects, background blurred field context. Panel 3: Replace with an equipment-only elevated view of a single fixed pump assembly with pressure gauge and manifold valves mounted on a bare concrete pad; place the approved two-coil pair small and secondary in frame; no person, no packaging, no product staging focus.",
       "panel_scores": [
-        92
+        42
       ],
       "set_attempt": 3
     }
