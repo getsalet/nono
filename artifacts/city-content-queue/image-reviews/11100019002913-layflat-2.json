@@ -1,18 +1,66 @@
 {
   "source_id": "11100019002913-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: image contains a person (male worker/farmer in overalls) holding a coil — violates zero-people rule. Additionally, there is a fixed pump/device on the right side that may be construed as an extra commercial object rather than allowed infrastructure.",
+        "correction_prompt",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the scene. Show only the approved two-coil layflat pair (one packaged AFP coil and one bare black woven coil) on ground with no human presence, no extra commercial devices, and ensure the AFP | 09134922013 watermark remains in the bottom-right corner. Enlarge the product group from 0% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 15,
+      "product_height_percent": 22,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "HARD REJECT: Clear presence of a person (man kneeling) visible in the foreground - face, arms, hands, legs all clearly shown",
+        "Only one coil visible instead of required approved layflat pair (packaged AFP coil + bare black woven coil)",
+        "Missing second coil needed to demonstrate diameter/construction difference for selection evidence role"
+      ],
+      "correction_prompt": "Remove all humans from image. Show exactly two coils side-by-side: one packaged AFP coil and one bare black woven coil, demonstrating diameter or construction difference. No people, no third objects.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "HARD REJECT: A third commercial object (tan connector/pipe piece) is visible to the right of the black coil, violating the rule against a third commercial package or third coil.",
+        "The image contains more than the approved two-coil pair required for the SELECTION EVIDENCE role."
+      ],
+      "correction_prompt": "Remove the tan connector/pipe piece on the right. Show only the packaged AFP coil and the bare black woven coil side-by-side. Keep the 'AFP | 09134922013' watermark in the bottom-right corner. Ensure zero third commercial objects are present.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 37,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Two-coil pair present and fully visible: left = packaged silver AFP coil (folded/reflective, showing construction difference); right = bare black woven coil (open diameter, rope-like texture).",
+        "Zero people, zero hands, zero silhouettes, zero body parts.",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "No third commercial package or extra coil; only two products in frame.",
+        "Distant unattended tractor and farm building are infrastructure, not extra commercial products.",
+        "Combined width ~37% of frame; elevated technical comparison through pair; both objects recognizable and physically plausible."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 4
     }
   ]
 }

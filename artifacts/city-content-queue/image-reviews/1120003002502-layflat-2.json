@@ -1,18 +1,38 @@
 {
   "source_id": "1120003002502-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 8,
+      "product_width_percent": 18,
+      "product_height_percent": 6,
+      "product_x_center_percent": 55,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: two people (men kneeling) are present in the foreground, directly violating the zero-people requirement. Their faces, hands, arms, and legs are all clearly visible."
+      ],
+      "correction_prompt": "Regenerate image with only the two-coil layflat pair (one packaged AFP coil and one bare black woven coil) on the ground with zero people, faces, hands, arms, legs, or human silhouettes anywhere in the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 12,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Approved two-coil pair present: one packaged AFP coil (silver/blue wrap) and one bare black woven coil",
+        "Zero people, human body parts, or silhouettes visible",
+        "Both objects clearly visible, separate, physically plausible",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Pair width ~28% of frame, within acceptable range",
+        "Distant farm buildings and crops are infrastructure, not third commercial products",
+        "Diameter/construction difference evident through the pair itself"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

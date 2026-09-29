@@ -1,26 +1,41 @@
 {
   "source_id": "11100019002913-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 28,
-      "product_height_percent": 15,
-      "product_x_center_percent": 25,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 8,
+      "product_x_center_percent": 38,
       "reasons": [
-        "The image displays the two required objects: one packaged coil and one bare black woven coil.",
-        "The combined width is approximately 28% of the frame, which falls within the accepted 8-42% range for this role.",
-        "The objects are off-center, placed in the lower-left, which is an acceptable editorial preference.",
-        "The 'AFP | 09134922013' watermark is present in the bottom-right corner as required.",
-        "The background contains a distant tractor and farm infrastructure, which are permitted and do not trigger a hard reject.",
-        "No visible human body parts, bottles, or extra commercial products are present."
+        "Hard reject: human person present (farmer/worker standing in field). The image must contain zero people and zero human body parts. Additionally, the two coils are too large and centrally placed; the brief requires them to be small, separate, and off-center in an editorial hero wide high-oblique water-transfer context."
+      ],
+      "correction_prompt": "Regenerate image with exactly two coils (one packaged AFP coil, one bare black woven coil) placed small and off-center in a wide high-oblique irrigation scene. Remove all people, workers, farmers, and human figures entirely. Include distant unattended farm infrastructure if relevant. Add bottom-right watermark AFP | 09134922013.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 36,
+      "product_height_percent": 9,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Packaged AFP coil (silver/white wrapping) clearly visible on the left",
+        "Bare black woven/draped coil clearly visible on the right",
+        "Two products are separate, distinct, and physically plausible",
+        "No humans or human body parts in the image",
+        "Distant unattended tractor and farm building are infrastructure, not commercial products",
+        "Water channel/irrigation context appropriately shown",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Editorial hero shot composition with wide high-oblique perspective",
+        "Products are off-center and in lower portion of frame",
+        "Combined product width (~36%) within acceptable 8-42% range"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
