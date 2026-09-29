@@ -1,18 +1,48 @@
 {
   "source_id": "1150006002257-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 0,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "visual reviewer unavailable: TimeoutError"
+      ],
+      "correction_prompt": "Regenerate and retry strict visual review.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 35,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Image contains three people - hard reject per requirements. Multiple human figures (faces, arms, hands, bodies) visible. Zero people requirement violated.",
+        "Watermark 'AFP | 09134922013' correctly placed in bottom right corner.",
+        "Agricultural setting appropriate (Ghorveh/Kuhdasht region fields visible).",
+        "Black coiled hoses/pipes present but displayed by people rather than as product-only comparison."
+      ],
+      "correction_prompt": "Regenerate image showing ONLY the two hose coils (one packaged AFP, one bare black woven) positioned side-by-side in agricultural field without any people, human figures, faces, hands, or body parts. Maintain technical composition showing diameter/construction difference between coils. Keep required watermark in bottom-right.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil.",
+        "No people, body parts, or third commercial products.",
+        "Diameter and construction differences clearly visible.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Placement is off-center/lower-third, satisfying editorial preferences."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

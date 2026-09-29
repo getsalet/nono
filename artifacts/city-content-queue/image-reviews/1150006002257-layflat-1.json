@@ -1,25 +1,39 @@
 {
   "source_id": "1150006002257-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 38,
-      "product_height_percent": 26,
-      "product_x_center_percent": 38,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 12,
+      "product_height_percent": 8,
+      "product_x_center_percent": 48,
       "reasons": [
-        "The image displays the required pair of one packaged AFP coil and one bare black woven coil clearly and separately.",
-        "Zero people or human body parts are visible in the scene.",
-        "The exact watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
-        "The product width (38%) falls within the accepted 8-42% range for this role, even though it exceeds the preferred 12-20%.",
-        "The placement is off-center and lower-third, aligning with the editorial hero brief."
+        "Only one bare black coil visible in foreground; no packaged AFP coil present — required layflat pair (one packaged + one bare) is incomplete",
+        "Missing the second commercial product entirely breaks the editorial hero brief"
+      ],
+      "correction_prompt": "Regenerate with both products visible in the frame: one packaged AFP coil and one bare black woven coil, placed off-center and small within the wide water-transfer context, with zero people and the required watermark intact",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 11.5,
+      "product_height_percent": 6.8,
+      "product_x_center_percent": 46.2,
+      "reasons": [
+        "Image shows exactly one packaged AFP coil and one bare black woven coil as required.",
+        "Both coils are fully visible, separate, and physically plausible on the irrigation channel bank.",
+        "Combined product width is approximately 11.5% of frame, within acceptable 8-42% range.",
+        "No people, hands, or human body parts present anywhere in the image.",
+        "Mandatory watermark 'AFP | 09134922013' is correctly placed in bottom-right corner.",
+        "Distant farm building is acceptable infrastructure and not treated as extra commercial product.",
+        "Products are off-center and small relative to the wide editorial context as required."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
