@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-29T01:20:56+00:00`
+- آخرین بروزرسانی: `2026-09-29T01:35:57+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **554 از 1894 (29.25٪)**
-- تکمیل‌شده: **554**
+- پیشرفت: **557 از 1894 (29.41٪)**
+- تکمیل‌شده: **557**
 - در حال پردازش: **0**
-- در انتظار: **506**
-- آماده انتخاب در اجرای بعدی: **506**
+- در انتظار: **486**
+- آماده انتخاب در اجرای بعدی: **486**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **834**
+- ناموفق: **851**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,9 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **شاهو** — کرمانشاه — `layflat` — 1101 کلمه — `2026-09-29T01:30:53+00:00`
+- **روانسر** — کرمانشاه — `layflat` — 1096 کلمه — `2026-09-29T01:28:42+00:00`
+- **باجگیران** — خراسان رضوی — `layflat` — 1240 کلمه — `2026-09-29T01:28:25+00:00`
 - **شهداد** — کرمان — `layflat` — 1138 کلمه — `2026-09-29T00:35:29+00:00`
 - **باخرز** — خراسان رضوی — `layflat` — 1457 کلمه — `2026-09-29T00:35:26+00:00`
 - **کیانشهر** — کرمان — `layflat` — 1215 کلمه — `2026-09-29T00:28:30+00:00`
@@ -49,22 +52,19 @@
 - **بیرجند** — خراسان جنوبی — `tape20` — 1146 کلمه — `2026-09-28T16:48:08+00:00`
 - **تیتکانلو** — خراسان شمالی — `tape20` — 1445 کلمه — `2026-09-28T16:39:27+00:00`
 - **خانلق** — خراسان شمالی — `tape20` — 1855 کلمه — `2026-09-28T16:22:12+00:00`
-- **گرگان** — گلستان — `tape20` — 1170 کلمه — `2026-09-28T16:04:34+00:00`
-- **آزادشهر** — گلستان — `tape20` — 1091 کلمه — `2026-09-28T15:54:25+00:00`
-- **زیوه** — اردبیل — `tape20` — 1131 کلمه — `2026-09-28T15:02:22+00:00`
 
 ## خطاهای اخیر
 
-- **سده** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **مشکان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کدکن** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **نقاب** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کندر** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **انابد** — `layflat`: `Editorial review failed: internal link count must equal minimum`
-- **جغتای** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **داورزن** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **شروینه** — `layflat`: `Editorial review failed: internal link count must equal minimum`
-- **شهرآباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **شاندیز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **شادمهر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **سطر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **جنگل** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **سرخس** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **طرقبه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **مزرج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **رشتخوار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **فرهادگرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **شامکان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

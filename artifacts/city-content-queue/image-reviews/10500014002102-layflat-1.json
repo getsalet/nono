@@ -1,0 +1,40 @@
+{
+  "source_id": "10500014002102-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 40,
+      "product_height_percent": 35,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "The image contains a visible person standing in the background (hard reject condition).",
+        "The required bottom-right watermark is 'RSP | 09134922013', but the mandatory watermark for this role is 'AFP | 09134922013'.",
+        "The scene is not a wide high-oblique aerial shot as requested by the 'EDITORIAL HERO' role, and instead shows a person walking in the field.",
+        "There is a third commercial object (the 'RSP' label instead of 'AFP') and an extra person violating the zero-person rule."
+      ],
+      "correction_prompt": "Regenerate the image from a high-oblique or aerial view showing the water-transfer channel without any people (strictly zero humans, no silhouettes). Ensure only the packaged AFP coil and the bare black woven coil are visible. Replace the 'RSP' watermark in the bottom right with the exact text 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 25,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Both required objects (packaged AFP coil and bare black woven coil) are present, separate, and fully visible.",
+        "The products are positioned in the lower-left, which aligns with the 'off-center' editorial preference.",
+        "No people or body parts are present.",
+        "The combined width of the products is approximately 24%, which falls within the acceptable range.",
+        "The required watermark 'AFP | 09134922013' is correctly displayed in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
