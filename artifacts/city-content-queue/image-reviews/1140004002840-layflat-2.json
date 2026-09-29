@@ -1,18 +1,33 @@
 {
   "source_id": "1140004002840-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 62,
+      "product_height_percent": 45,
+      "product_x_center_percent": 42,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: person present — a man is kneeling in the frame handling the coils, violating the zero-people requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Remove the person entirely; regenerate with only the two-coil layflat pair (one packaged AFP coil, one bare black woven coil) on field ground with no humans visible. Reduce the product group from 62% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 18,
+      "product_height_percent": 11,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Both required objects present: one packaged AFP coil (silver/blue reflective) and one bare black woven coil. Combined width approximately 18%, within preferred 12-20% range and acceptable 8-42% tolerance. Lower-third placement confirmed. Zero people or body parts visible. Distant barn and unattended equipment are infrastructure, not commercial products. Diameter/construction difference clearly shown through the pair itself. Required watermark 'AFP | 09134922013' present in bottom-right. No hard rejects detected."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
