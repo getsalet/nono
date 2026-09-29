@@ -1,6 +1,6 @@
 {
   "source_id": "1240001002882-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
     {
       "pass": false,
@@ -36,6 +36,60 @@
         88
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 48,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panel 1 shows a wide tilled field with a prominent city skyline — inconsistent with the water-transfer/agricultural context for an article about agricultural hose procurement in Ardabil. The urban backdrop belongs to a generic cityscape, not a farm water-transfer hero shot.",
+        "Panels 1 and 2 share an identical low-ground-camera composition: same camera height, same angle looking down the crop rows, same framing with the two coils in the lower-center foreground. They are visually duplicative layouts that only differ by background elements.",
+        "Panel 3 shows a small metal cylinder labeled 'AFP' sitting on bare soil next to the two coils, rather than an elevated record photo of a fixed pump, gauge, and manifold on a concrete pad as required. The background remains open field rows, not the specified headworks infrastructure."
+      ],
+      "correction_prompt": "Regenerate Panel 1 as a wide high-oblique shot of an active agricultural water-transfer scene (irrigated field or furrows with flowing water) with the two coils small and off-center. Regenerate Panel 2 keeping the side-by-side coil comparison but shift camera height/angle enough to differ visibly from Panel 1 (e.g., tighter, slightly elevated). Regenerate Panel 3 as an elevated equipment-only photo of a fixed pump, pressure gauge, and manifold assembly on an empty concrete pad, with the two coils small and secondary in the frame, no person, no active farming.",
+      "panel_scores": [
+        48
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 2 fails SELECTION EVIDENCE role: it shows only a plain ground-level product photo of the two coils with no technical comparison, no diameter/construction differentiation, no measuring or spec elements, and no elevated viewpoint",
+        "Panel 3 is misassigned — it shows the coils as prominent foreground subjects on a concrete pad with a small metallic object, which fits HEADWORKS DETAIL as the primary focus rather than the coils being small and secondary; Panel 1's wide high-oblique water-channel through farmland better serves EDITORIAL HERO",
+        "Panel 1's context is valid (irrigation canal + crops + distant city) and the coils are correctly small/separate/off-center, but the overall set lacks a clear role-specific assignment matching the brief's technical narrative for each panel"
+      ],
+      "correction_prompt": "Panel 2 must be re-shot as an elevated technical comparison frame: same AFP coil pair on a neutral surface with visible diameter or weave-construction contrast highlighted, no bottles, no people, no extra coils; Panel 3 must show one fixed pump/gauge/manifold assembly as the primary equipment subject on an empty concrete pad with the AFP coil pair small and secondary in the frame; Panel 1 remains as-is for EDITORIAL HERO.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 32,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 1 fails EDITORIAL HERO: product pair dominates foreground rather than being small/separate/off-center; no clear water-transfer context shown; camera is low ground-level, not high-oblique.",
+        "Panel 2 fails SELECTION EVIDENCE: product pair is oversized and centered as the sole subject; no diameter/construction difference communicated visually; background is generic field rows, not a technical comparison setup.",
+        "Panel 3 fails HEADWORKS DETAIL: completely missing required pump, gauge, and manifold on concrete; only the two coils are present, repeating the same product-only composition.",
+        "All three panels use nearly identical low-angle camera height and product-centered framing, making roles visually indistinguishable. Backgrounds are generic farmland in panels 1 and 2, not matching the article brief context (Thamarin/Ardebil, agricultural water transfer).",
+        "Role-3 specification (equipment-only elevated record on empty concrete pad) is entirely unmet."
+      ],
+      "correction_prompt": "Panel 1: wide high-oblique hero shot of a water-transfer scene (irrigation channels, open fields, farm infrastructure) with the two coils placed small and off-center in the distance; Panel 2: elevated side-by-side technical comparison of the two coil pairs showing clear diameter/construction difference, simple neutral background, no extra objects; Panel 3: top-down or elevated fixed photograph of one blue pump with pressure gauge and manifold assembly on an empty concrete pad, with the approved two-coil pair sitting small and secondary at the edge of frame.",
+      "panel_scores": [
+        32
+      ],
+      "set_attempt": 3
     }
   ]
 }

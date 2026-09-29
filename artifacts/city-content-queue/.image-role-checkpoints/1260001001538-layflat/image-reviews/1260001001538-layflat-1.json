@@ -1,0 +1,51 @@
+{
+  "source_id": "1260001001538-layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 12,
+      "product_height_percent": 10,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Missing approved packaged AFP coil: the image shows two bare black coils but no packaged version of the product.",
+        "Unauthorized extra commercial object: a large green gas cylinder with pressure gauges is prominently placed in the foreground, which violates the rule against third commercial packages.",
+        "The scene shows installed hose infrastructure rather than the specific editorial hero layout of the approved layflat pair."
+      ],
+      "correction_prompt": "Regenerate the image to show exactly two coils: one packaged in branded AFP material and one bare black woven coil. Remove the green gas cylinder with gauges from the foreground. Place the approved pair small, separate, and off-center in the lower third of a wide agricultural water-transfer scene.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18.5,
+      "product_height_percent": 8.2,
+      "product_x_center_percent": 38.4,
+      "reasons": [
+        "Hard reject: Person visible standing in the field (left side) and another figure in the distance. The prompt explicitly forbids any person, farmer, worker, or human silhouette, even distant.",
+        "Products are present and recognizable (packaged silver coil + bare black woven coil) with required watermark intact, but human presence invalidates the image regardless of other elements."
+      ],
+      "correction_prompt": "Regenerate image with zero people, zero human figures, zero silhouettes anywhere in the frame. Keep the two hose coils in foreground, maintain watermark, keep agricultural context.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 72,
+      "product_width_percent": 18,
+      "product_height_percent": 9,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Packaged AFP coil and bare black woven coil are both visible, separate, and physically plausible in the foreground.",
+        "Distant figures on the left path are too small to confirm as people; not treated as hard rejects per role tolerance.",
+        "Watermark 'AFP | 09134922013' is present in bottom-right corner.",
+        "Editorial hero context — wide high-oblique water-transfer scene with canal, crops, and farm buildings — is appropriate.",
+        "Products are off-center and placed in lower portion, consistent with editorial preference."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
