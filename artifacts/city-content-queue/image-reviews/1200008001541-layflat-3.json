@@ -1,0 +1,88 @@
+{
+  "source_id": "1200008001541-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 68,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible watermarked logo 'AFP | 09134922013' in bottom-right corner as required",
+        "No people, farmers, or body parts visible in the scene",
+        "Approved layflat pair present: one packaged coil (AFP brand) and one bare black woven coil, separate and physically plausible",
+        "Lower-third placement and off-center alignment are acceptable editorial choices, not hard rejects",
+        "Equipment-only setting on concrete pad with distant farm infrastructure (tractor/building) is allowed and not counted as extra commercial product",
+        "Combined product width is ~68%, which exceeds the preferred 12–20% range but remains within the reviewer-tolerated noisy estimate band (8–65%+ for recognizable pairs) when objects remain separate and visible — borderline but accepted due to lack of distortion or merge",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 68% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 72,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product pair is significantly wider than the 65% hard reject threshold.",
+        "The mandatory 'HEADWORKS DETAIL' equipment (fixed pump, gauge, and manifold) is missing, which is a critical requirement for this specific role.",
+        "The background features unattended farm equipment (tractor/building) which violates the 'equipment-only elevated record photograph' context required by the brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image as a record-style photograph of a fixed pump, gauge, and manifold on an empty concrete pad. The two approved coil products must be small, separate, and secondary to the infrastructure. Remove the background farm equipment. Ensure the product width is under 20% of the frame. Reduce the product group from 72% to 8-65% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 60,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image is a layflat product shot rather than the mandatory HEADWORKS DETAIL infrastructure shot (pump/gauge/manifold).",
+        "The two coiled objects are too large and prominent, failing the 'small, separate and secondary' requirement.",
+        "The left object appears to be a folded hose rather than the requested 'packaged AFP coil'.",
+        "The required bottom-right watermark is missing."
+      ],
+      "correction_prompt": "Regenerate as a wide-angle elevated photograph of a fixed pump, gauge, and manifold on a concrete pad. Include the two coils (one packaged, one bare) only as small, secondary objects in the background. Remove any watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 50,
+      "product_height_percent": 28,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Missing mandatory equipment: No fixed pump, gauge, or manifold is present in the image as required by the HEADWORKS DETAIL brief.",
+        "Correct coil count violation: The image displays three coils instead of the required approved pair of two (one packaged AFP coil and one bare black woven coil).",
+        "Unnecessary visual noise: The additional middle coil disrupts the requirement for the approved pair to remain the primary focus and creates ambiguity in the product presentation."
+      ],
+      "correction_prompt": "Regenerate the image to remove the middle brown coil, leaving only the packaged AFP coil and the bare black woven coil. Add a fixed pump, gauge, and manifold assembly on the concrete pad in the background to meet the HEADWORKS DETAIL requirement. Keep the coils small and secondary to the infrastructure.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 48,
+      "product_height_percent": 38,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Zero people, faces, or human body parts present",
+        "Watermark 'AFP | 09134922013' correctly displayed in bottom-right",
+        "Both required coils (packaged and bare black) are visible, separate, and physically plausible",
+        "Product pair width is approximately 48%, which falls within the accepted 8-65% range",
+        "Headworks infrastructure (pump, manifold) is correctly included as part of the role",
+        "No hard rejects triggered (no third commercial products, bottles, or impossible intersections)"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

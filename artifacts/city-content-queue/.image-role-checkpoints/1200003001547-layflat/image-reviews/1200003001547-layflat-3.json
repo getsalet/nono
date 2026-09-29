@@ -1,0 +1,85 @@
+{
+  "source_id": "1200003001547-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 65,
+      "product_height_percent": 48,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Image displays the required pair: one packaged coil (left) and one bare black woven coil (right).",
+        "Zero people or human body parts visible.",
+        "Bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "Distant tractors and farm buildings are treated as allowed background elements, not commercial products.",
+        "The coils are separate, physically plausible, and fully visible.",
+        "Placement on a concrete pad aligns with the 'elevated record' brief.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 65,
+      "product_height_percent": 25,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Image contains a third commercial package (the cardboard box labeled 'APP')",
+        "The left 'coil' features a thick, clay-like central core which is not a 'packaged AFP coil' and appears to be an invented or distorted product dimension",
+        "The arrangement of two coils plus a box constitutes three objects, violating the hard reject rule against a third commercial product or invented package"
+      ],
+      "correction_prompt": "Regenerate the image showing only two coils (one with standard AFP packaging and one bare black) on a concrete pad. Remove the cardboard box and the clay-like core inside the left coil. Keep the pump and gauge in the background and retain the bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 50,
+      "product_height_percent": 60,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Product pair (packaged AFP coil and bare black woven coil) is fully visible and physically plausible",
+        "Width 50% is within the 8-65% acceptance range for this role",
+        "Zero people or body parts present",
+        "Infrastructure elements (pump, gauge, manifold) are allowed as equipment-only",
+        "Required watermark 'AFP | 09134922013' is present in bottom-right",
+        "machine-enforced bounding-box check failed: Reduce product height from 60% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 60% to at most 45% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 62,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing required infrastructure: The Headworks Detail role mandates the visual presence of fixed pumps, gauges, and manifolds on the concrete pad, none of which are visible in this image.",
+        "Object Distortion: The 'packaged AFP coil' on the left exhibits physically impossible geometry and artificial-looking, high-gloss surfaces that represent a 'severely distorted dimension' hard reject."
+      ],
+      "correction_prompt": "Regenerate with a fixed pump, gauges, and manifold assembly prominently positioned on the empty concrete pad. Ensure the two coiled hoses (one packaged, one bare) appear as small, secondary elements with realistic, physically plausible shapes and materials.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 78,
+      "product_height_percent": 58,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Pair wider than 65 percent of frame",
+        "Object passing through coil (box resting inside/on coil)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-65% of frame width.; Reduce product height from 58% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce pair width to 12-20 percent, ensure coils are fully separate without objects passing through them, maintain empty concrete pad and distant unattended tractor, preserve bottom-right watermark. Reduce the product group from 78% to 8-65% of frame width. Reduce product height from 58% to at most 45% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

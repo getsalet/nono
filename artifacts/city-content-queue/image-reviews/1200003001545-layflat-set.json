@@ -1,0 +1,57 @@
+{
+  "source_id": "1200003001545-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 2 includes prohibited commercial objects (cardboard box and bottle-like container) and the third extra coil, failing the 'no third package/container' constraint.",
+        "Role 1 and Role 2 are nearly identical in camera height, angle, and environmental composition (ground-level in a dirt field), creating a repeated layout.",
+        "Role 3 places the product coils prominently next to the pump, violating the requirement that they remain small and secondary; furthermore, it lacks the specific fixed pump, gauge, and manifold configuration."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panel 1 (Role 1): Fails the 'Editorial Hero' role. It features active farm equipment (a wheeled sprayer pump) and a large tractor in the background, which violates the 'no farm activity' constraint and makes the coils excessively prominent (oversized) rather than the small, off-center 'approved packaged coil' required.",
+        "Panel 2 (Role 2): Fails the 'Selection Evidence' role. It uses a moving tractor as the central subject and includes an unapproved commercial 'APP' cardboard label on the packaging, which violates the ban on extra commercial objects.",
+        "Panel 3 (Role 3): Fails the 'Headworks' role. The required fixed pump, gauge, and manifold are missing entirely; instead, the image shows the coils mounted on bare concrete/wood spools, which is just a different arrangement of product coils rather than the required technical 'headworks' equipment.",
+        "Overall: No panel fulfills the technical or environmental structure required for its specific role; Panels 1 and 2 are effectively duplicates of the 'product-in-field' concept."
+      ],
+      "correction_prompt": "Regenerate the set to strictly match roles: Role 1 (High-oblique editorial landscape with tiny, off-center coils, no active machinery); Role 2 (Elevated macro/technical comparison of two coils showing construction, with no moving tractors or commercial 'APP' packaging); Role 3 (Concrete pad featuring a fixed pump and manifold as the main subject, with the two coils small and secondary in the background).",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 requires the 'approved two-coil pair' to remain 'small, separate, and secondary' next to the headworks equipment. In the provided image for Role 3, the two coils are the primary subject, occupying the center foreground at a large scale, rather than appearing as small background elements. This violates the specific constraint that the product evidence must remain secondary to the equipment focus.",
+        "Role 3 mandates an 'elevated record photograph', but the image for Role 3 is a low-angle, ground-level close-up shot that matches the camera height of Role 1, failing to provide the required visual distinctiveness in camera angle for that specific panel role."
+      ],
+      "correction_prompt": "Regenerate Role 3 by using a high, elevated camera angle shot looking down at a fixed pump station (gauge and manifold) on a concrete pad, placing the two coils small in the background so they remain secondary to the equipment.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

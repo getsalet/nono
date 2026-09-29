@@ -2,25 +2,79 @@
   "source_id": "1060009002796-tape20",
   "family": "tape20",
   "kind": 1,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
-  "fast_mode": false,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
   "history": [
     {
-      "pass": true,
-      "score": 88,
+      "pass": false,
+      "score": 60,
       "product_width_percent": 26,
-      "product_height_percent": 32,
-      "product_x_center_percent": 48,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
       "reasons": [
-        "The image contains exactly one wide, low cylindrical roll of drip tape.",
-        "The product packaging matches the required white and blue color scheme.",
-        "The 'AFP' logo and irrigation-related text are clearly visible on the product.",
-        "The required 'AFP | 09134922013' watermark is present in the bottom-right corner.",
-        "The background is a plausible farm context with crop rows, soil texture, and distant unattended equipment (tractor), which matches the editorial brief.",
-        "The product is fully visible and located in the lower half of the frame, maintaining physical plausibility in scale relative to the background."
+        "The carton roll is centered on the image's horizontal axis, whereas the mandatory role requires it to be 'off-center' and 'small' to let the farm context dominate.",
+        "The product placement directly contradicts the 'EDITORIAL HERO' brief requirement that the farm and irrigation context should dominate the visual while the product remains small and off-center.",
+        "Text on the carton roll contains gibberish/illegible characters instead of clean labeling."
+      ],
+      "correction_prompt": "Move the single white-and-blue carton roll to the lower-left third and reduce its scale to approximately 15-20% width to strictly follow the 'off-center' and 'small' editorial requirement.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Product geometry is hard rejected: The roll is cylindrical but the text '20' (referring to 20cm tape width) is printed horizontally across the side of the roll, which implies the tape width corresponds to the roll's diameter. This makes the roll too short/wide for the '20' label to be valid, as drip tape is wound along the length of the roll. In reality, the '20' would be on the end face (the hole side), not the outer cylindrical wall.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image correcting the packaging logic. The white cylindrical roll must have the blue 'AFP' logo on the side face. The number '20' must appear on the flat end cap of the roll (facing the camera), not on the curved side. Ensure the roll proportions are realistic for 20cm tape (elongated cylinder). Keep the watermarks and background context identical. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 19,
+      "product_height_percent": 29,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "The hard-reject condition of 'zero people' is violated. A person is clearly standing in the field near the tractor in the mid-background, which triggers an immediate failure.",
+        "The required bottom-right watermark has an incorrect phone number ('09134922013' instead of '09134922001').",
+        "The roll is not 'low' as per the strict description; it appears tall relative to its width, failing the 'low cylindrical' descriptor despite the dimensions falling within the tolerance."
+      ],
+      "correction_prompt": "Regenerate the image to remove all people from the field completely. Change the bottom-right phone number to '09134922001'. Replace the tall roll with a low, wide, cylindrical drip-tape carton that fits in the lower-left third of the frame.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: The product shown is a large industrial roll of paper or fabric (with a large hollow center) rather than a 'cylindrical drip-tape carton roll'.",
+        "Incorrect product geometry: The object has the appearance of a raw material spool, not a consumer-facing irrigation drip-tape package.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Replace the large hollow paper roll with a smaller, solid cylindrical white and blue drip-tape carton roll (no visible central spool) positioned on the lower-left. Keep the farm context, crop rows, and distant tractor visible. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 19,
+      "product_height_percent": 18,
+      "product_x_center_percent": 21,
+      "reasons": [
+        "Matches editorial hero requirements",
+        "Correct AFP branding and white/blue packaging",
+        "No people, hard rejects, or foreign objects",
+        "Contains the required bottom-right watermark",
+        "Placement and proportions within accepted tolerance"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 5
     }
   ]
 }

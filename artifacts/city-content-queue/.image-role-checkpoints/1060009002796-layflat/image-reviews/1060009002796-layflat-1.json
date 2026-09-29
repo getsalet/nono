@@ -2,38 +2,77 @@
   "source_id": "1060009002796-layflat",
   "family": "layflat",
   "kind": 1,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "fast_mode": true,
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 38,
-      "product_height_percent": 35,
-      "product_x_center_percent": 35,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 26,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Product pair combined width significantly exceeds the 25 percent hard reject limit (approx. 38% of frame width).",
-        "Composition conflict: Mandatory EDITORIAL HERO role requires the products to be 'small and off-center', but the image shows them in the immediate foreground occupying a large portion of the frame.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 8-25% of frame width."
+        "Hard reject: A visible human person is present in the image, which is strictly prohibited.",
+        "Hard reject: The person's body parts (arms, face) violate the 'zero human' constraint."
       ],
-      "correction_prompt": "Shrink the product pair to 12-15% of the total frame width, positioning them small in the lower-left foreground while maintaining the wide water-transfer context with the irrigation channel running through the middle. Reduce the product group from 38% to 8-25% of frame width.",
+      "correction_prompt": "Remove the person and their shadow. Keep the farm field, water channel, and distant tractor. Reposition the packaged coil and bare black woven coil to be smaller (approx 15% width) and placed in the lower-left or lower-right off-center area of the concrete structure, leaving the center open.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 24,
-      "product_height_percent": 14,
-      "product_x_center_percent": 28,
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 41,
+      "product_height_percent": 27,
+      "product_x_center_percent": 40,
       "reasons": [
-        "Correctly displays the required pair: one packaged AFP coil and one bare black woven coil.",
-        "Product dimensions are within the 8-25% width noise floor and under the 35% height limit.",
-        "Scene correctly depicts the wide high-oblique water-transfer editorial context with no visible people or rejected objects.",
-        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Unattended distant tractor is treated as permissible infrastructure rather than a hard reject."
+        "Hard reject: a human figure (worker) is clearly visible seated on the tractor in the background.",
+        "The image contains a visible person, which violates the strict 'zero people' constraint."
+      ],
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 48,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains a person (driver) operating a tractor in the background, which is a hard reject under the 'zero people' rule.",
+        "Product pair width is approximately 48%, which exceeds the hard reject threshold of 42%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate without any human operators in the background (tractor must be unattended or remove the tractor); adjust the two coils to be closer together so the combined bounding box width is under 42%. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 52,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Presence of a person (distant man in the background)",
+        "Product pair width estimate (~52%) exceeds the maximum threshold of 42%",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image removing the human figure in the background and reducing the size of the two product coils so their combined width is less than 20 percent of the frame. Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 42,
+      "product_height_percent": 40,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Both the packaged coil and the bare black woven coil are clearly visible, separate, and physically plausible.",
+        "The scene correctly depicts a water-transfer context in a field with a channel.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "No humans, faces, or body parts are visible in the image.",
+        "No prohibited third commercial packages or containers are present."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 5
     }
   ]
 }

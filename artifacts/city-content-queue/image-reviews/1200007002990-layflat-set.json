@@ -1,0 +1,58 @@
+{
+  "source_id": "1200007002990-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "The three images show almost the same framing: the same two coils (packaged white and black woven) placed side by side in the bottom-center of the frame, which is a repeated layout across all panels.",
+        "The coils are consistently oversized and central in all panels, directly violating role 1 which requires the coils to be small, separate, and off-center.",
+        "Role 3 mandates a 'HEADWORKS DETAIL' of a fixed pump, gauge, and manifold on an empty concrete pad, but this image shows only the coils on a path with no required equipment narrative.",
+        "The camera angles are too similar (low/eye level) between panels 1 and 2, failing to provide the required visibly distinct technical narratives and camera heights."
+      ],
+      "correction_prompt": "Reframe Panel 1 as a high-oblique wide shot with the coils as small off-center details; elevate Panel 2 to a technical close-up comparison; and replace Panel 3 with an equipment-only headworks scene featuring a pump and manifold on a concrete pad, with the coils as small secondary evidence.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 32,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Role 1 fails: Product is centered and in the foreground, but the requirement for a 'wide high-oblique' perspective is not met.",
+        "Role 2 fails: Prohibited elements are present, specifically 'persons' (a person sitting in the background and a hand visible on the right), and 'bottles/extra containers' (a blue-capped container is visible in the packaged product on the left).",
+        "Role 3 fails: The required 'pump, gauge, and manifold' are missing from the equipment shot; it features unrequested plumbing fixtures instead."
+      ],
+      "correction_prompt": "Regenerate Role 1 with a high-oblique wide angle; Regenerate Role 2 to strictly exclude all persons, blue containers, and background activity, keeping only the two-coil pair; Regenerate Role 3 to include a fixed pump, gauge, and manifold on a concrete pad, with the two-coil pair as a small secondary element.",
+      "panel_scores": [
+        32
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 (Image 2) fails the 'elevated technical comparison' requirement; it is a flat, ground-level shot that includes farm infrastructure (pump) which is strictly forbidden in this specific role.",
+        "Role 3 (Image 3) fails the 'fixed pump, gauge, and manifold' requirement; it depicts only the product on a concrete floor with no equipment, violating the equipment-only headworks instruction.",
+        "All three images depict the product in a 'product-on-ground' layout (Roles 1-3), failing to establish the required variation in camera height/angle."
+      ],
+      "correction_prompt": "Role 2 must be an elevated, close-up view of only the two coils to show construction; Role 3 must include the specified headworks pump and gauge on an empty concrete pad with the product appearing small and secondary.",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 3
+    }
+  ]
+}
