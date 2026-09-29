@@ -1,22 +1,63 @@
 {
   "source_id": "11100020002049-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
     {
-      "pass": true,
-      "score": 94,
-      "duplicate_roles": [],
-      "reasons": [
-        "The three panels successfully maintain distinct visual narratives and technical roles. Panel 1 acts as a hero shot with a wide, high-oblique perspective, establishing the agricultural scale and keeping the product secondary.",
-        "Panel 2 functions as a comparison view, elevating the technical detail of the two different coil types (packaged vs. bare) side-by-side, allowing the reader to easily distinguish construction differences.",
-        "Panel 3 is clearly differentiated as an equipment detail shot, featuring the concrete pad and pump assembly with the required secondary product evidence.",
-        "All images include the required bottom-right watermark and maintain relevance to the specified article brief."
+      "pass": false,
+      "score": 22,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "No major corrections needed; ensure the technical labeling of the two coils in Panel 2 remains crisp to emphasize the diameter/construction difference.",
+      "reasons": [
+        "GEOGRAPHIC FAIL: All three panels show generic American Midwestern farms (red barns, cornfields, wide planted rows) — article requires Mohammadan/Bampour/Sistan & Baluchestan, an arid Iranian context. No visual link to the brief.",
+        "ROLE 1 violation: Hero image shows product coils large and centered, not 'small, separate and off-center' on a water-transfer context.",
+        "ROLE 2 violation: A silver connector/fitting lies on the ground in the lower right — 'no third commercial package, bottle, person or extra coil' is broken.",
+        "ROLE 3 violation: Large red tractor with implement is clearly active farm machinery in the background; brief states 'no farm activity' (only distant unattended tractor/building allowed).",
+        "WRONG WATERMARK: All panels show 'AFP | 09134922013'; required exact watermark is 'AFP | 09134922013' — digits differ.",
+        "VISUAL REPETITION: Panels 1 and 2 use nearly identical composition — ground-level coiled products with converging furrows leading to a barn. Role 1 vs Role 2 is not visibly distinct enough in camera height/angle or environment structure."
+      ],
+      "correction_prompt": "Re-shoot all three panels in an arid Iranian farmland setting (dusty soil, no lush green rows, Middle Eastern farm architecture) matching Sistan & Baluchestan. Panel 1: wide oblique water-transfer scene, coiled products small/off-center. Panel 2: elevated technical close-up of the two coils side-by-side showing diameter/construction difference — remove all connectors, fittings, bottles, extras. Panel 3: elevated record of pump + gauge + manifold on bare concrete pad, coils small in background, zero farm machinery or activity visible. Use exact watermark 'AFP | 09134922013' bottom-right on every panel.",
       "panel_scores": [
-        94
+        22
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panels 1 and 2 are effectively duplicate layouts: both are ground-level product shots with the two-coil pair as dominant foreground subjects on bare soil, similar camera height and framing, and both backed by generic Western farm scenery. The editorial brief requires Panel 1 as a wide high-oblique hero with the coils small and off-center, and Panel 2 as an elevated technical comparison; neither requirement is met.",
+        "Geographic and cultural mismatch: the brief specifies Mohammedan/Bamper, Sistan and Baluchestan, Iran, yet all three images show red barns, American-style tractors, and temperate flat-field landscapes — entirely inconsistent with the Iranian arid-region irrigation context.",
+        "Panel 3: background is a blank concrete expanse (not specifically an empty concrete pad in a relevant context), and no manifold is visible — only a pump and gauge. The approved coils are oversized and central rather than small and secondary."
+      ],
+      "correction_prompt": "Redraw: Panel 1 — wide high-oblique shot of an arid Iranian agricultural water-transfer scene (dirt terrain, simple farm structures appropriate to Sistan and Baluchestan) with the two coils small and off-center in the mid-ground; Panel 2 — elevated angle looking down at the two-coil pair positioned to visibly communicate diameter or weave-construction difference, no extra objects, on bare dry earth with distant rural Iranian context; Panel 3 — equipment-only close-up of one fixed pump with visible gauge and manifold on a plain concrete pad, coils small and secondary at the edge, no farm activity.",
+      "panel_scores": [
+        38
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 2: tractor pulling farm equipment in background is active farm machinery suggesting ongoing work rather than distant unattended context; overly large promotional packaging on left coil undermines 'no third commercial package' requirement. Panel 3: the pump unit rests directly on top of the packaged coil instead of being an independent equipment shot on empty concrete; product placement too dominant breaking the 'small, separate and secondary' rule. Overall: panels share similar sandy-field environment with red-barn aesthetic and identical lighting tone, making roles less visibly distinct than required despite differing camera heights."
+      ],
+      "correction_prompt": "Regenerate: Panel 1 keep wide hero water-channel shot. Panel 2 replace with clean elevated technical side-by-side showing only the two hose coils (no packaging cover, no tractor/machinery) highlighting diameter/wall-thickness contrast. Panel 3 shoot the pump+gauge+manifold alone on bare concrete pad with coils placed flat on ground in background as small secondary elements, no overlapping equipment.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 3
     }
   ]
 }

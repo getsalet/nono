@@ -1,26 +1,58 @@
 {
   "source_id": "1050002002412-tape20",
-  "family": "tape20",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 20,
-      "product_height_percent": 28,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
       "product_x_center_percent": 50,
       "reasons": [
-        "Contains exactly one approved AFP white-and-blue drip-tape roll.",
-        "Zero visible people or human body parts.",
-        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Product dimensions and placement are within acceptable bounds.",
-        "Background context (farm field) aligns with the article brief.",
-        "Minor editorial deviation: product is centered horizontally rather than off-center in the lower third."
+        "Hard reject: visible person standing near tractor in the mid-ground (right side).",
+        "Hard reject: carton is too large and centered, failing the EDITORIAL HERO requirement that the product stays small, fully visible and off-center on the lower third while farm context dominates."
+      ],
+      "correction_prompt": "Remove the person and tractor; resize the AFP drip-tape carton to be significantly smaller and place it off-center on the lower third of a wide farm landscape shot.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 11,
+      "product_height_percent": 6,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll shown",
+        "Product width (~11%) within acceptable 12-30% range with reviewer estimation",
+        "Product height (~6%) well below 35% maximum",
+        "Lower-third, off-center placement as preferred",
+        "Zero people or human body parts present",
+        "Agricultural field context with crop rows and distant farm building matches article brief",
+        "Required 'AFP | 09134922013' watermark present in bottom-right corner",
+        "No hard reject violations detected",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 11% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 11% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 78,
+      "product_width_percent": 22,
+      "product_height_percent": 23,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "AFP white-and-blue drip-tape carton roll present, single roll, physically plausible dimensions.",
+        "Zero people or human body parts in frame.",
+        "Farm context dominates — neat crop rows, sunset, distant unattended pump/tractor and farm building all contextually appropriate.",
+        "Mandatory 'AFP | 09134922013' watermark present in bottom-right corner.",
+        "Product placement is near-lower-third, slightly left-of-center; farm/irrigation background matches article brief for کوزران.",
+        "No hard-reject elements detected: no second package, layflat hose, pipe through roll, fake text, or distorted geometry."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }
