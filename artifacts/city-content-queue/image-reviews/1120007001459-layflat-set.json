@@ -1,21 +1,55 @@
 {
   "source_id": "1120007001459-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
     {
-      "pass": true,
-      "score": 82,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 aligns with Role 1 (Editorial Hero) by showing a wide, high-oblique view of a field with two coiled hoses on the ground, establishing the agricultural water-transfer context.",
-        "Panel 2 aligns with Role 2 (Selection Evidence) by presenting an elevated technical view of the hose coils, visually emphasizing the construction and diameter difference between the packaged product and the coiled version on a bare soil surface.",
-        "Panel 3 aligns with Role 3 (Headworks Detail) by showing the equipment on a concrete pad; it includes the gauge and manifold components and clearly maintains the required 'equipment-only' environment without people or extra farm activity."
+      "pass": false,
+      "score": 48,
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "Ensure the product identity (packaged coil and bare black woven coil) remains small, secondary, and separate from the main technical focus of the gauge and manifold in the headworks detail.",
+      "reasons": [
+        "Panel 2 and Panel 3 both show the same packaged-coil plus bare-coil pair on a flat surface from similar elevated angles; only the background changes (tillage + tractor vs concrete pad + tractors), making the roles visually redundant rather than narratively distinct.",
+        "Panel 3 fails its required role entirely: the brief calls for one fixed pump, gauge, and manifold as the primary subject with the coil pair secondary, but no pump/gauge/manifold appears — only the product pair and a brown cylindrical plug.",
+        "Watermark is wrong in all three panels: displayed as 'AFP | 09134922013' instead of the required 'AFP | 09134922013'.",
+        "Panel 2 includes an unapproved extra black connector tube lying beside the coils, violating the 'no third commercial package/bottle/person/extra coil' rule.",
+        "Panel 1 positions the product pair too centrally and prominently rather than keeping them small, separate, and off-center within a wide hero shot."
+      ],
+      "correction_prompt": "Regenerate Panel 3 as a true headworks-detail shot: replace the product pair with a fixed diesel/petrol pump, pressure gauge, and manifold assembly mounted on the empty concrete pad; keep the approved packaged-coil and bare-black-coil pair as small, secondary elements in the far foreground or corner, not the main subject. Regenerate Panel 2 by removing the unapproved black connector tube. Fix watermark to exact 'AFP | 09134922013' on all panels.",
       "panel_scores": [
-        82
+        48
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 28,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 1: Camera is low/eye-level road-side, not high-oblique; product coils are large foreground subjects rather than small, separate, and off-center; lacks clear water-transfer context.",
+        "Panel 2: Includes a third commercial package (product box) and two tractors, violating the strict no-third-package/no-extra-coil rule; not an elevated technical comparison.",
+        "Panel 3: Completely absent required equipment — no fixed pump, no gauge, no manifold; only shows the two coil products on bare concrete, failing the headworks detail role entirely."
+      ],
+      "correction_prompt": "Panel 1: Recompose as a wide high-oblique shot of an irrigation water-transfer scene (field channels or furrows) with the two small hose coils placed off-center on the road or edge. Panel 2: Elevated camera looking down at the two bare coils side by side on soil, showing visible diameter/construction difference; remove the product box and all tractors. Panel 3: Equipment-only elevated photo of one fixed pump, pressure gauge, and manifold on an empty cracked concrete pad; place the two coils small and secondary in the frame; no persons or farm activity.",
+      "panel_scores": [
+        28
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 3 (HEADWORKS DETAIL) is missing all required headworks equipment — there is no pump, gauge, or manifold present. The image shows only the two coils on a bare concrete pad, failing the role's core requirement of an equipment-only elevated record photograph.",
+        "The water channel scene in Panel 1 with the city skyline does not reflect the Diwandareh/Kurdistan agricultural context specified in the brief; the distant urban skyline is inconsistent with the regional setting."
+      ],
+      "correction_prompt": "Redo Panel 3 as an elevated detail shot of a fixed agricultural pump, pressure gauge, and manifold assembly mounted on a concrete pad, with the two AFP coils small and secondary in the frame. Redo Panel 1 to remove the city skyline and show a rural Diwandareh/Kurdistan agricultural landscape with a water-transfer channel.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 3
     }
   ]
 }
