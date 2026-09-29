@@ -1,38 +1,49 @@
 {
   "source_id": "1220007002663-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 20,
-      "product_width_percent": 0,
-      "product_height_percent": 0,
-      "product_x_center_percent": 0,
+      "score": 0,
+      "product_width_percent": 12,
+      "product_height_percent": 8,
+      "product_x_center_percent": 72,
       "reasons": [
-        "Visible human figure (face/body) standing next to the tractor on the far left of the frame, which is a hard reject.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+        "HARD REJECT: Two people (men/farmers) clearly visible in foreground - one in light blue shirt, one in green work clothes. Both faces, bodies, hands, and arms are fully visible. Violates zero-person rule."
       ],
-      "correction_prompt": "Remove all visible human figures, workers, or farmers from the background, ensuring zero people or body parts are present in the image. Enlarge the product group from 0% to 8-42% of frame width.",
+      "correction_prompt": "Remove both people from the image. The scene should show only the agricultural field, irrigation furrow, black woven coils, pump equipment, distant tractor and farm building - with zero humans or human body parts visible anywhere in the frame.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 92,
-      "product_width_percent": 36,
-      "product_height_percent": 38,
-      "product_x_center_percent": 43,
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 12,
+      "product_height_percent": 6,
+      "product_x_center_percent": 35,
       "reasons": [
-        "Contains both required elements: packaged AFP coil and bare black woven coil",
-        "Watermark 'AFP | 09134922013' correctly present in bottom right",
-        "No people, body parts, or human silhouettes visible",
-        "Both objects are separate, recognizable, and physically plausible",
-        "Scene includes farm building and cityscape which are acceptable infrastructure/context"
+        "Hard reject: Person/farmer visible operating farming equipment on the left side of the image. Policy prohibits any human presence.",
+        "Corrected width estimate: ~12% (lower end of acceptable range)."
+      ],
+      "correction_prompt": "Regenerate image with zero people, farmers, workers, or human silhouettes. Remove the person operating the tiller. Keep the approved layflat pair (packaged coil and bare black woven coil) small, separate, and off-center in a wide high-oblique water-transfer context.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 14,
+      "product_height_percent": 6,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil, both fully visible, separate, and physically plausible.",
+        "Combined product width approximately 14% of frame, within the 12-20% preferred and 8-42% accepted range.",
+        "Zero people, body parts, or human silhouettes present; distant farm buildings and crop rows are infrastructure only.",
+        "Mandatory watermark 'AFP | 09134922013' clearly visible in bottom-right corner.",
+        "Wide high-oblique editorial hero composition with products small, off-center, and appropriate to water-transfer agricultural context."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }

@@ -1,18 +1,41 @@
 {
   "source_id": "1220007002663-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: person visible - man kneeling and handling the coil. Image must contain zero people and zero human body parts.",
+        "Hard reject: missing approved layflat pair - needs both a packaged AFP coil and a bare black woven coil shown together.",
+        "Hard reject: no second coil visible for the required pair comparison.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Generate an image with exactly two hose coils only - one packaged AFP coil and one bare black woven coil - showing diameter/construction difference for selection evidence. No people, no extra commercial products. Required watermark: AFP | 09134922013 in bottom-right corner. Enlarge the product group from 0% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 21,
+      "product_height_percent": 14,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Approved two-coil pair present: one packaged AFP coil (left) and one bare black woven coil (right), clearly showing diameter and construction difference",
+        "Zero people, zero human body parts in frame",
+        "No third commercial package or extra coil; distant unattended tractor is permitted infrastructure",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Coils are fully visible, separate, and physically plausible on ground",
+        "Combined width ~21% of frame (within acceptable 8-42% noisy estimate range)",
+        "Elevated technical comparison role satisfied via diameter/construction contrast between the two coils"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

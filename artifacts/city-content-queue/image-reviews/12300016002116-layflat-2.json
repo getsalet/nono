@@ -1,18 +1,40 @@
 {
   "source_id": "12300016002116-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 58,
+      "product_height_percent": 36,
+      "product_x_center_percent": 49,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Left coil has a blue shirt/fabric draped over it in an unnatural way that resembles a person's garment rather than legitimate packaging — could be interpreted as a human clothing element violating the zero-person rule. The 'packaged' appearance is not a recognized commercial coil package.",
+        "Combined product width of ~58% exceeds the hard reject threshold of 42% of the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the blue shirt/fabric from the left coil. Show only a clean packaged AFP coil (with proper industrial wrapping/labeling) and a bare black woven layflat coil side by side. Reduce combined width to between 12-20% of frame. Keep distant tractor acceptable. Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 40,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Approved layflat pair present with one packaged coil and one bare black woven coil",
+        "Both objects are recognizable, separate and physically plausible",
+        "Combined width approximately 40% - within acceptable range",
+        "Required watermark AFP | 09134922013 is present",
+        "Distant tractor and farm equipment are infrastructure, not commercial products",
+        "No people or human body parts visible",
+        "Agricultural field setting appropriate for product comparison role"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
