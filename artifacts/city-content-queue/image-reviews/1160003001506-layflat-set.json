@@ -1,42 +1,64 @@
 {
   "source_id": "1160003001506-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "strict-restoration-posts-567-632-20260929",
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 22,
       "duplicate_roles": [
         1,
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Roles 1 and 2 are visually near-identical duplicates featuring the same ground-level camera angle, soil texture, and lighting.",
-        "Role 1 fails to meet the 'EDITORIAL HERO' brief; it lacks a wide high-oblique perspective and instead places the coils in the immediate foreground, making them too prominent.",
-        "Role 3 contains a packaged coil (likely in a box or plastic wrap), which violates the strict requirement for 'exactly the approved packaged coil and bare black woven coil' to remain small, separate, and secondary.",
-        "Roles 1 and 2 do not show the required technical construction comparison (diameter/cross-section) for the 'SELECTION EVIDENCE' role."
+        "Panel 1: Product coils are oversized and foreground-centered instead of small/off-center; no water-transfer context shown (no laid hose, no irrigation activity); generic crop field without water infrastructure.",
+        "Panel 2: Contains a third commercial package (blue AFP box), violating the 'no third commercial package' rule; no technical comparison between the two coils is demonstrated; both product and packaging dominate the frame rather than being secondary to the evidence.",
+        "Panel 3: Shows only two coils on concrete with no pump, gauge, or manifold present—completely missing the headworks equipment required for this role; the product is foreground-centered instead of small and secondary."
       ],
-      "correction_prompt": "For Role 1: Re-compose to a wide high-oblique angle showing the water-transfer landscape, keeping the two coils small and off-center in the foreground. For Role 2: Ensure the two coils are clearly distinct in scale or show internal construction, and maintain a separate composition from Role 1. For Role 3: Remove the boxed/packaged object; only the bare packaged coil and bare black coil should appear small and secondary next to the pump.",
+      "correction_prompt": "Regenerate all three panels: Panel 1 as a wide high-angle shot emphasizing a long unrolled black woven hose running across a field toward water source with both coils tiny and off-center in distance; Panel 2 as an elevated technical side-by-side of the two coils on neutral surface showing diameter/layer-construction difference with no boxes or extras; Panel 3 as an elevated equipment photo of a fixed pump with pressure gauge and manifold on an empty concrete pad with both coils small and relegated to a corner.",
       "panel_scores": [
-        45
+        22
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 95,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 provides a distinct wide, high-oblique perspective showing the water channel in the context of the agricultural field, meeting the 'HERO' requirement.",
-        "Role 2 offers a ground-level 'SELECTION EVIDENCE' view that highlights the two coiled hoses in the foreground, with a tractor visible in the distant background, successfully distinguishing the layout from Role 1.",
-        "Role 3 presents an 'ELEVATED RECORD' shot on a concrete pad showing the pump and gauges with the hoses as secondary evidence, providing the required technical hardware context.",
-        "All three roles maintain visual separation in camera height and environment structure without being simple duplicates.",
-        "The required watermark is present in all images."
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "No replacement instruction required; panels meet the visual brief.",
+      "reasons": [
+        "Role 3 (HEADWORKS DETAIL) is fundamentally wrong: shows the same two-coil pair on a plain concrete surface with no pump, gauge, or manifold. This is a duplicate of the role-2 composition, not an equipment-only record shot.",
+        "Role 2 and Role 3 are visually nearly identical — both present the approved two-coil pair as the primary subject on ground/concrete with no distinguishing technical narrative.",
+        "Role 1 (EDITORIAL HERO) has oversized product coils dominating the foreground; the two-coil pair should remain small, separate, and off-center in a wide water-transfer context.",
+        "No panel delivers the required distinct camera height/angle and environment structure for all three roles simultaneously."
+      ],
+      "correction_prompt": "Redraw Role 1 as a wide high-oblique field scene with water flowing along the hose run; keep the packaged coil and bare woven coil as small off-center elements. Redraw Role 2 as an elevated technical comparison shot of the two coils side by side on soil with a distant unattended tractor. Redraw Role 3 as an equipment-only elevated photograph of a single fixed pump with pressure gauge and manifold on an empty concrete pad, with the two-coil pair placed small and secondary in the frame.",
       "panel_scores": [
-        95
+        42
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 1 (Role 1 EDITORIAL HERO): incorrectly includes a pump/gauge assembly and pressure gauge on the right side of frame, violating the role's requirement for a wide high-oblique water-transfer context with only small off-center coils; also contains a rectangular inset photo overlay of a coil which disrupts the editorial hero composition.",
+        "Panel 3 (Role 3 HEADWORKS DETAIL): the background shows a tractor actively operating in the field, contradicting the 'no farm activity' requirement; additionally the two-coil pair sits too prominently in the foreground rather than remaining small and secondary to the equipment.",
+        "Panels 2 and 3 both feature the same two-coil product pair as primary subjects in similar foreground-dominant compositions, creating role duplication.",
+        "Panel 3 should show an empty concrete pad with only the fixed pump/gauge/manifold as the subject, not the coils as foreground elements.",
+        "Panel 1's water-transfer hero scene is conceptually correct but contaminated by Role 3 hardware and the inset photo overlay."
+      ],
+      "correction_prompt": "Panel 1: show only the wide oblique field with water flowing through the laid hose and the two coils small/off-center in a corner, remove all pump/gauge hardware and the inset overlay. Panel 2: keep as-is. Panel 3: remove both coils from the frame entirely; show only the fixed pump, gauge and manifold on an empty concrete pad with no tractor or farm activity in background.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 3
     }
   ]
 }

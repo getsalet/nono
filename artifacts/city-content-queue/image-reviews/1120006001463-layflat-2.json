@@ -1,18 +1,38 @@
 {
   "source_id": "1120006001463-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Image contains a kneeling person with visible face, arms, hands, and legs - hard reject per rules requiring zero people and zero human body parts",
+        "Person is actively handling the coils, making it a worker/farmer presence"
+      ],
+      "correction_prompt": "Regenerate image with only the two coils (one packaged AFP coil and one bare black woven coil) on the ground with connector fitting, no person or human body parts visible anywhere in the frame",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Two-coil pair present: one packaged folded hose and one bare black coiled hose",
+        "Watermark 'AFP | 09134922013' present in bottom right",
+        "No people or human body parts visible",
+        "Distant unattended tractor and farm building are infrastructure, not commercial products",
+        "Pair width approximately 28% of frame, within acceptable range",
+        "Objects are fully visible, separate, and physically plausible"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

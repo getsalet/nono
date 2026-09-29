@@ -1,34 +1,43 @@
 {
   "source_id": "1160007002476-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 27,
-      "product_height_percent": 22,
-      "product_x_center_percent": 39,
+      "score": 78,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 58,
       "reasons": [
-        "Hard reject: The image contains two distinct human figures (a man and a woman), which violates the mandatory 'zero people' rule."
+        "Wide high-oblique agricultural water-transfer context with plowed field and barns",
+        "Packaged coil (white/blue wrap) and bare black woven coil present, separate and visible",
+        "Green pump with gauge included as relevant infrastructure, not extra commercial product",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner",
+        "No people or human body parts in frame",
+        "Products positioned off-center, small relative to full scene",
+        "Product bounding box within 42% threshold, acceptable for editorial context",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 40% of frame height."
       ],
-      "correction_prompt": "Regenerate the image to remove all human figures and faces. Maintain the rural water-transfer setting with the two required products (packaged AFP coil and bare black woven coil) placed small, separate, and off-center in the frame.",
+      "correction_prompt": "Reduce product height from 42% to at most 40% of frame height.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 94,
-      "product_width_percent": 39,
-      "product_height_percent": 35,
-      "product_x_center_percent": 44,
+      "score": 88,
+      "product_width_percent": 14,
+      "product_height_percent": 5,
+      "product_x_center_percent": 35,
       "reasons": [
-        "Both coils are fully visible, separate, and physically plausible.",
-        "Estimated combined width of 39% falls within the acceptable 'noisy reviewer estimate' range (8-42%).",
-        "Zero people or human body parts detected.",
-        "Required bottom-right watermark 'AFP | 09134922013' is clearly present.",
-        "Water-transfer context (irrigation channel and crop rows) is well-represented."
+        "Both required coils are present and fully visible in bottom-left foreground",
+        "One packaged coil with white/blue sheen and one bare black woven coil - both recognizable, separate and physically plausible",
+        "No person or human body parts anywhere in frame",
+        "Off-center bottom-right editorial placement satisfies brief without hard rejection",
+        "Water irrigation context with distant farm building and crop rows supports agricultural role",
+        "AFP | 09134922013 watermark present and correctly positioned in bottom-right",
+        "Product bounding box is approximately 14% of image width - within 12-20% preferred range",
+        "No merged, floating, or impossible intersections between objects"
       ],
       "correction_prompt": "",
       "attempt": 2
