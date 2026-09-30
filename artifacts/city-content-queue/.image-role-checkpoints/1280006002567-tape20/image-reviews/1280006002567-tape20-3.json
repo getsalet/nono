@@ -1,0 +1,77 @@
+{
+  "source_id": "1280006002567-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: multiple people (human figures) are clearly visible in the background on the left side of the image."
+      ],
+      "correction_prompt": "Remove all human figures from the background to strictly comply with the 'zero people' hard reject rule. Keep the unattended equipment and the product roll.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 33,
+      "product_height_percent": 26,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Human silhouette visible in the background behind the tractor",
+        "Product width exceeds the 30% maximum hard reject limit",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person in the background entirely. Reduce the size of the drip tape roll so its width is under 30% of the frame. Add a filter, gauge, and manifold infrastructure on the concrete pad to match the article brief. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 31,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Second commercial package present: An open cardboard box is visible to the left of the product roll, which violates the hard reject rule against 'second commercial package'.",
+        "Product width exceeds limit: The drip-tape roll is approximately 31% of the frame width, which exceeds the hard reject limit of 30%.",
+        "Primary object mismatch: The mandatory visual role is 'HEADWORKS DETAIL' (equipment-only record photograph of filter/gauge/manifold), but the image features the drip-tape carton as a primary, central object rather than a secondary element.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the open cardboard box on the left to eliminate the second commercial package. Reduce the width of the drip-tape roll to under 30% of the frame. Refocus the image on the irrigation manifold, gauges, and filter on the right to make the drip-tape carton secondary, ensuring it appears as a background element. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Contains multiple people (two visible humans) in the background, violating the 'zero people' requirement.",
+        "Hard reject: Contains a large red and green tractor in the background, which violates the 'no farm activity' and 'distant unattended tractor' nuance (the prompt explicitly allows distant *unattended* tractors, but the presence of two active workers and a foreground tractor suggests active farm activity, or at least violates the 'no farm activity' strict interpretation combined with the 'equipment-only' brief)."
+      ],
+      "correction_prompt": "Remove all people and the tractor from the background. Keep only the concrete pad, the single small drip tape roll, and the fixed equipment (filter/gauge manifold). Ensure the setting is strictly 'equipment-only elevated' with no human presence or active farm machinery.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 16,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Visible human body parts (arm/hand and leg) in the background left area",
+        "Hard reject: Visible bucket and red container in the background",
+        "Role mismatch: Image depicts a product hero shot, not the required 'HEADWORKS DETAIL' (equipment-only filter/gauge/manifold on concrete pad with carton as secondary)"
+      ],
+      "correction_prompt": "Regenerate image with zero visible people or body parts in the background. Remove the red bucket. Ensure the primary subject is a complex headwork assembly (filter, gauge, manifold) on a concrete pad with the AFP carton visible as a small, secondary object.",
+      "attempt": 5
+    }
+  ]
+}

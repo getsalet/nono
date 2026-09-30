@@ -7,46 +7,58 @@
   "history": [
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 27,
-      "product_height_percent": 33,
-      "product_x_center_percent": 45,
+      "score": 55,
+      "product_width_percent": 20,
+      "product_height_percent": 15,
+      "product_x_center_percent": 30,
       "reasons": [
-        "The image contains a human silhouette in the driver's seat of the red tractor in the background, which is a hard reject trigger.",
-        "The product roll is centered horizontally rather than placed in the lower-third off-center as preferred for the EDITORIAL HERO role.",
-        "The text on the carton ('Olip Irrygeton Tapa') appears gibberish and is not the requested 'AFP' branding."
+        "A blue and white bottle with a cap is visible in the bottom-left foreground, which constitutes a hard reject for a bottle or container.",
+        "The 'AFP' watermark is missing from the bottom-right corner, failing a mandatory requirement.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present but is incorrectly colored and lacks the specific text string '09134922013', though the core issue is the bottle presence."
       ],
-      "correction_prompt": "Regenerate the image without any people or silhouettes in the tractor. Shift the drip tape roll to the bottom-left or bottom-right corner to achieve an off-center composition. Ensure the carton label clearly reads 'AFP'.",
+      "correction_prompt": "Remove the blue and white bottle from the bottom-left. Add the exact white watermark 'AFP | 09134922013' in the bottom-right corner. Ensure the drip-tape roll is positioned slightly higher to be clearly visible above the schematic paper.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 21,
-      "product_height_percent": 21,
-      "product_x_center_percent": 75,
+      "score": 25,
+      "product_width_percent": 20,
+      "product_height_percent": 18,
+      "product_x_center_percent": 45,
       "reasons": [
-        "The image contains two rolls, violating the 'exactly one' requirement."
+        "Hard reject: Presence of two people (one in the foreground using equipment, one standing in the background) violates the zero-person requirement.",
+        "Hard reject: The product is placed on top of a large open cardboard box containing schematic paper (blueprints), which counts as a 'second commercial package' or 'fake headline/caption' (gibberish technical drawing)."
       ],
-      "correction_prompt": "Remove the small roll on the left. Keep only the large white carton roll on the right, positioned in the bottom third of the frame. Ensure no farmers or workers are visible.",
+      "correction_prompt": "Remove all humans. Remove the open cardboard box and schematic paper; place the carton roll directly on the dirt soil in the lower third. Ensure the roll is small, off-center, and fully visible without being on top of other items.",
       "attempt": 2
     },
     {
-      "pass": true,
-      "score": 88,
-      "product_width_percent": 23,
-      "product_height_percent": 32,
-      "product_x_center_percent": 48,
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 14,
+      "product_height_percent": 17,
+      "product_x_center_percent": 52,
       "reasons": [
-        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present and fully visible.",
-        "The product is correctly placed off-center in the lower third of the frame, consistent with editorial hero preferences.",
-        "No people, human body parts, or silhouettes are visible.",
-        "No hard-reject items (bottles, extra rolls, pipes through the roll, or fake headlines) are present.",
-        "The exact bottom-right watermark 'AFP | 09134922013' is included as required.",
-        "Background includes contextual farm and irrigation infrastructure (tractor, fields, drip lines), matching the article brief."
+        "Hard reject: A standing human figure (farmer/person) is visible on the left side of the image."
+      ],
+      "correction_prompt": "Regenerate the image with zero people or human silhouettes; keep the farm, tractor, and AFP drip-tape roll exactly as shown, maintaining the bottom-right watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 24,
+      "product_height_percent": 18,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product dimensions are within the preferred and acceptable ranges for width and height.",
+        "Zero people or body parts are visible in the frame.",
+        "Contains exactly one approved AFP drip-tape carton roll.",
+        "Background matches the editorial brief with a farm and irrigation context dominating the high-oblique view.",
+        "Mandatory watermark is present in the bottom-right corner."
       ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 4
     }
   ]
 }

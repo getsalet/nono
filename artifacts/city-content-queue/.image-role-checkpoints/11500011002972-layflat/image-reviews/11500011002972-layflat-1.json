@@ -1,0 +1,52 @@
+{
+  "source_id": "11500011002972-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 52,
+      "product_height_percent": 45,
+      "product_x_center_percent": 54,
+      "reasons": [
+        "Contains a third commercial product (an extra small coiled hose) in the foreground, which is a hard reject condition.",
+        "The product cluster is too wide (52% of frame), exceeding the hard reject limit of 42%.",
+        "The product pair is placed centrally, failing the requirement for off-center placement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Remove the small extra coiled hose in the foreground, ensuring only the packaged coil and the large black coil remain. Reduce the combined width of the two coils to 20% and move them to the lower-left third of the frame. Keep the bottom-right watermark and agricultural context intact. Reduce the product group from 52% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 60,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Both required products (packaged coil and bare black woven coil) are fully visible and separate.",
+        "Zero people or human body parts detected.",
+        "The distant unattended tractor is correctly treated as farm equipment rather than a commercial product.",
+        "The mandatory watermark is present in the bottom-right corner.",
+        "The product pair is placed off-center and in the lower third, satisfying editorial preferences.",
+        "Combined width is approximately 60%, which exceeds the 12-20% preference but remains outside the 42% hard-reject threshold, allowing noisy estimation.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 60% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "review_unavailable": true,
+      "reasons": [
+        "visual reviewer unavailable after 3 retries: HTTPError"
+      ],
+      "correction_prompt": "Retry visual review of the preserved candidate without regenerating it.",
+      "attempt": 3
+    }
+  ]
+}

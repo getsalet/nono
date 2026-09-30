@@ -1,53 +1,20 @@
 {
   "source_id": "1280003001350-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 70,
+      "score": 45,
       "duplicate_roles": [],
       "reasons": [
-        "Role 3 requirement violation: The prompt explicitly states 'exactly one approved carton remains small and secondary'. In the provided image, the carton is a primary subject and is not 'small and secondary' relative to the technical hardware.",
-        "Role 3 environmental violation: The prompt specifies 'no farm activity'. The background of the third image prominently features a large tractor and a field, which constitutes farm activity and violates the 'empty concrete pad' constraint."
+        "Role 2 (SELECTION EVIDENCE) lacks the required technical arrangement; it shows the same centered, close-range product shot as Role 1 instead of an elevated technical setup with visible emitter-spacing or field-selection evidence.",
+        "Role 3 (HEADWORKS DETAIL) includes farm activity and a tractor in the background, which violates the strict 'no farm activity' requirement; the brief permits a distant farm building but not active machinery/operation."
       ],
-      "correction_prompt": "Regenerate role 3 with a plain, empty concrete background (no tractors or fields) and reduce the size of the AFP carton so it is clearly secondary to the manifold hardware.",
+      "correction_prompt": "Reshoot Role 2 to show an elevated technical arrangement with visible field/row-selection evidence (do not repeat Role 1's centered product shot), and reshoot Role 3 on an empty concrete pad with zero background machinery or people (a distant static farm building is acceptable, but a tractor or active scene is not).",
       "panel_scores": [
-        70
+        45
       ],
       "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 85,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Editorial Hero) fails the brief requirement that the product must be 'small and off-center on the lower third'; in the image, the carton is centered and disproportionately large relative to the farm context.",
-        "Role 3 (Headworks Detail) fails the 'no farm activity' constraint; a tractor and farm building are clearly visible in the background, whereas the brief specifies a focus on the equipment on an empty concrete pad."
-      ],
-      "correction_prompt": "Resize and reposition the product in the hero shot to be small and in the lower left; remove the tractor and building from the background of the equipment shot to focus on the empty concrete pad.",
-      "panel_scores": [
-        85
-      ],
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        2,
-        3
-      ],
-      "reasons": [
-        "Panel 1 fails as an EDITORIAL HERO because it places the product in the immediate center foreground, violating the 'small, off-center on the lower third' instruction.",
-        "Panel 3 completely omits the required fixed filter, gauge, regulator, and manifold equipment; it shows only the product on an empty pad, failing the specific 'HEADWORKS DETAIL' equipment narrative.",
-        "Panels 2 and 3 share the identical composition of the product in the bottom-left corner on a concrete surface, constituting a visual and narrative duplication.",
-        "Panel 3 includes an unrelated tractor and building in the background, violating the 'no farm activity' constraint for that role."
-      ],
-      "correction_prompt": "Resize the product to 15% of frame height in panel 1 and move it to the right lower third. In panels 2 and 3, add prominent hardware (valves, filters, and gauges) to the concrete pad and reposition the product to be visibly distinct between the two shots.",
-      "panel_scores": [
-        35
-      ],
-      "set_attempt": 3
     }
   ]
 }

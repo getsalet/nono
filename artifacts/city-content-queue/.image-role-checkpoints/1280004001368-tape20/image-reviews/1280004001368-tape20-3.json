@@ -1,0 +1,55 @@
+{
+  "source_id": "1280004001368-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: multiple people visible in the background (farmer in red shirt, others standing near the tractor).",
+        "Hard reject: multiple visible human body parts (arms, legs, faces).",
+        "Hard reject: second commercial package (brown cardboard box) is visible next to the product.",
+        "Hard reject: a second roll or pipe structure (circular irrigation lines) is visible on the ground to the left, violating the 'exactly one' requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people, human silhouettes, and body parts from the background. Remove the brown cardboard box on the right and any other visible rolls or pipe structures. Ensure only a single AFP drip-tape roll and the infrastructure (filter, gauges, manifold) are present. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 28,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: A visible person (farmer/worker) sitting in the background on the left side.",
+        "Hard reject: There is no visible fixed filter, gauge, regulator, or manifold required by the mandatory 'HEADWORKS DETAIL' role; the image only shows a generic concrete pad.",
+        "Missing required infrastructure elements to match the specific visual brief."
+      ],
+      "correction_prompt": "Remove the person from the background. Add a fixed irrigation filter, pressure gauge, regulator, and manifold to the foreground concrete pad. Keep the white-and-blue drip tape roll small and secondary to the equipment. Ensure no human body parts are visible.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 27.5,
+      "product_height_percent": 28.0,
+      "product_x_center_percent": 37.0,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue cylindrical drip-tape carton roll.",
+        "Product dimensions are physically plausible and within acceptable tolerances (27.5% width, 28% height).",
+        "No people or human body parts visible.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right.",
+        "Fixed irrigation infrastructure (filter, gauge, manifold) is present on a concrete pad, aligning with the role context despite the 'empty pad' brief discrepancy, and the unattended tractor in the background is allowed."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
