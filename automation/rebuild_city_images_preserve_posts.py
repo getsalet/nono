@@ -24,10 +24,11 @@ import city_content_queue_cloudflare as backend
 import image_prompt_policy
 import image_quality_gate
 
-POLICY = "strict-restoration-posts-567-632-20260929"
+POLICY = "recent-strict-visual-audit-rebuild-v1-20260930"
 MODE = "article-parity-three-image-reference-conditioned-rerender"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
-MARKER = OUT / "image-rebuild-article-parity-v14-three-image.json"
+MARKER = OUT / "recent-image-rebuild-v1.json"
+AUDIT_MARKER = OUT / "recent-image-audit-v1.json"
 CHECKPOINT_ROOT = OUT / ".image-role-checkpoints"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")
 API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
@@ -436,6 +437,9 @@ def main() -> int:
             if str(x.get("completed_at") or "") >= COMPLETED_SINCE
         ]
     completed = completed_all[FROM_POST - 1:]
+    audit = json.loads(AUDIT_MARKER.read_text(encoding="utf-8")) if AUDIT_MARKER.exists() else {}
+    audit_failed_ids = {str(x) for x in audit.get("failed_source_ids", [])}
+    completed = [x for x in completed if str(x.get("source_id") or "") in audit_failed_ids]
     records, skipped = {}, []
     for item in completed:
         source_id = str(item.get("source_id") or "")
