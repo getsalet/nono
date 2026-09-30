@@ -1,18 +1,43 @@
 {
   "source_id": "1270001002194-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 38.0,
+      "product_height_percent": 62.0,
+      "product_x_center_percent": 61.0,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Missing required two-coil pair (one packaged, one bare).",
+        "Image shows a green pump unit, not the requested layflat coils.",
+        "Contains an unauthorized bottle/container on the right side.",
+        "Fails mandatory selection evidence role entirely.",
+        "machine-enforced bounding-box check failed: Reduce product height from 62% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Regenerate image as a technical comparison of two coil products: one packaged AFP coil and one bare black woven coil. Remove the pump, remove the bottle, and remove all people. Place both coils side-by-side on the ground. Reduce product height from 62% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 39,
+      "product_height_percent": 30,
+      "product_x_center_percent": 53,
+      "reasons": [
+        "Approved layflat pair present: one packaged box-labeled coil and one bare black woven coil, both fully visible and separate.",
+        "No people, body parts, or human silhouettes detected anywhere in the frame.",
+        "No third commercial package, bottle, jar, or invented product visible.",
+        "No impossible intersections, floating, or merged objects.",
+        "Distant unattended barn and crop rows are permitted infrastructure elements.",
+        "Required watermark AFP | 09134922013 present in bottom-right corner.",
+        "Combined product width approximately 39% of frame, within the 8-42% acceptable range.",
+        "Lower-third placement supports editorial presentation for selection evidence role."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
