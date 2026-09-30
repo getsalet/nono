@@ -1,0 +1,41 @@
+{
+  "source_id": "1220004002487-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 27,
+      "product_height_percent": 28,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: A human male (farmer) is visible in the foreground right, including face, hands, arms, and legs.",
+        "Hard reject: A second commercial package (small cardboard box) is visible next to the main roll.",
+        "Hard reject: Layflat hoses and coiled pipe are visible on the table, violating the 'zero layflat hose' constraint.",
+        "The image does not meet the 'zero people' mandatory requirement."
+      ],
+      "correction_prompt": "Remove the man, the second cardboard box, and all visible hoses/pipes. Ensure only the single AFP drip tape carton roll remains on the white sheet in a farm context.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue cylindrical drip-tape roll.",
+        "Zero visible people, human body parts, or silhouettes.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "Product dimensions are within the 12-30% width and <35% height tolerances.",
+        "Background context (farm rows, irrigation lines, distant unattended tractor) is appropriate for the article brief.",
+        "Placement is near the bottom center; while the brief requested lower-third off-center, centered placement is an editorial preference rather than a hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

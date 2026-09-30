@@ -1,0 +1,79 @@
+{
+  "source_id": "1220004001033-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 36,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Multiple people are visible in the background (farmers/standby workers near the tractors and equipment).",
+        "Hard reject: The product (the AFP roll) exceeds the 30% width hard limit and the 35% height hard limit.",
+        "Hard reject: Presence of a large industrial/chemical tanker trailer in the background violates the equipment-only/headworks focus and creates an unsafe/incorrect context for a drip-tape packaging shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people, tractors, and the industrial tanker. Show only the single AFP white-and-blue wide low cylindrical drip-tape carton roll on the concrete pad (center frame), with a small secondary carton. Ensure the roll is 20-25% of the image width. Retain the 'AFP | 09134922013' watermark. Reduce the product group from 36% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 26,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible people in the background (two figures standing near the truck)",
+        "Hard reject triggered by the presence of human silhouettes in the distant background"
+      ],
+      "correction_prompt": "Remove all visible people and human silhouettes from the background to maintain an empty concrete pad with no farm activity or workers.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Multiple people visible in the background (left, right, and near the tractor)",
+        "Hard reject: Visible human body parts and silhouettes present",
+        "Fails mandatory role: Background shows a farm with people rather than the required 'equipment-only' setting"
+      ],
+      "correction_prompt": "Regenerate image to show the product on an empty concrete pad with absolutely no people, faces, or workers visible anywhere in the frame. Remove all humans in the background.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 38,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product roll's width (~38%) and height (~35%) exceed the preferred 20-23% and borderline acceptance thresholds for a 'secondary' object.",
+        "The object is centrally placed, conflicting with the editorial preference for lower-third/off-center composition.",
+        "Critical equipment required for the 'HEADWORKS DETAIL' role (filter, gauge, regulator, manifold) is missing from the immediate foreground composition.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the drip tape roll to approximately 20-23% width, move it to the lower-right third of the frame, and include a filter, gauge, and manifold setup on the concrete pad in the mid-ground. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 16,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Hard reject: Visible person (farmer) sitting on the tractor in the background.",
+        "Hard reject: Multiple commercial packages present (a large carton box and the primary drip-tape roll)."
+      ],
+      "correction_prompt": "Remove the person sitting on the tractor. Remove the large 'AFP' cardboard box entirely. Keep only the drip tape roll and fixed infrastructure hardware on the concrete pad.",
+      "attempt": 5
+    }
+  ]
+}

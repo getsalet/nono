@@ -1,0 +1,79 @@
+{
+  "source_id": "1220005002064-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 40,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Person is visible in the background",
+        "Tractors are visible in the background, violating the 'equipment-only' (specifically filters/gauges/manifolds) detail requirement for the role",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person and tractors from the background; ensure the background shows only a concrete pad and the required filter/gauge equipment setup to match the 'HEADWORKS DETAIL' brief. Reduce the product group from 40% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Mandatory role violation: The brief strictly requires a 'HEADWORKS DETAIL' showing one fixed filter, gauge, regulator, and manifold on a concrete pad, but the image shows only a roll of tape",
+        "Product size violation: The tape roll is approx 30% wide and 35% tall, which is at the maximum edge of acceptance, whereas the brief specified the roll should be small and secondary to the infrastructure"
+      ],
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A human is visible in the background.",
+        "Hard reject: The object's bounding box is too large (width ~38% > 30% limit; height ~42% > 35% limit).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the human in the background. Reduce the scale of the white cylindrical roll so its width is less than 25% and height is less than 30% of the frame. Maintain the AFP watermark. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Visible human silhouette/face inside the tractor cabin",
+        "Role Mismatch: Image does not show a 'fixed filter, gauge, regulator and manifold' as required by the brief",
+        "Second roll/coil visible in the background on the right, violating 'exactly one roll' rule",
+        "Second commercial package (white container) visible in the far right background"
+      ],
+      "correction_prompt": "Remove all visible human silhouettes or drivers from any vehicle cabins. Regenerate scene on a concrete pad showing only one fixed filter, a pressure gauge, and a manifold system. Place one AFP drip-tape carton in the foreground as a secondary element. Remove the coiled hose/pipe and any background containers. Keep the AFP | 09134922013 watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Multiple human figures and workers are clearly visible in the background",
+        "A second commercial package (roll) is visible in the bottom-left corner, violating the single-object rule",
+        "The primary roll is positioned off-center rather than in the lower-third as preferred",
+        "The presence of people triggers a hard reject regardless of other composition elements"
+      ],
+      "correction_prompt": "Remove all human figures and the secondary roll in the bottom-left corner. Reframe the shot to place exactly one roll in the lower-third of the image, maintaining the background infrastructure elements.",
+      "attempt": 5
+    }
+  ]
+}

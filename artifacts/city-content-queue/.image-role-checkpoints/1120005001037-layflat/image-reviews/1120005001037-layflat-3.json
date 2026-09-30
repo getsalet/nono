@@ -1,0 +1,52 @@
+{
+  "source_id": "1120005001037-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing mandatory equipment-only elements (fixed pump, gauge, and manifold) specified in the HEADWORKS DETAIL role",
+        "Distant tractor is present but the specific required infrastructure equipment (pump/gauge/manifold) is absent, failing the mandatory role requirement"
+      ],
+      "correction_prompt": "Add an elevated, equipment-only fixed pump with a visible gauge and manifold on the empty concrete pad in the background. The pump must not be a commercial product. Keep the two coils in the foreground small, separate, and secondary. Ensure zero people.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 85,
+      "product_height_percent": 55,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The total bounding box for the two product coils and the pump assembly is approximately 85% of the frame width, which exceeds the hard reject limit of 65%.",
+        "The required 'AFP | 09134922013' watermark is missing from the bottom right; instead, a different label 'APP' is visible on the equipment.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 8-65% of frame width.; Reduce product height from 55% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Shrink the entire assembly so the total width is between 20-40% of the frame, keep the two coils separate and small in the foreground, ensure the pump/gauge is small and elevated in the background, and replace the text with the required watermark 'AFP | 09134922013' in the bottom right. Reduce the product group from 85% to 8-65% of frame width. Reduce product height from 55% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 40,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image displays the required pair: one packaged coil (box with hose) and one bare black woven coil.",
+        "The third object (spliced/reel mechanism) is accepted as infrastructure/equipment per the article visual brief allowing pumps and manifolds, and does not count as an unapproved third commercial product.",
+        "No people or human body parts are visible in the frame.",
+        "The pair's width is approximately 40% of the frame, which falls within the accepted 8-65% range.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

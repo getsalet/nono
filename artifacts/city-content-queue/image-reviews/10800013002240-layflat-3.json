@@ -1,0 +1,48 @@
+{
+  "source_id": "10800013002240-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 68,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image is missing the mandatory 'HEADWORKS DETAIL' content: it shows two coils on a concrete pad, but lacks the required equipment (fixed pump, gauge, manifold) on an elevated concrete pad.",
+        "The product pair exceeds the 65 percent hard reject threshold (estimated width is ~68 percent).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate to show a record photograph of one fixed pump, gauge, and manifold on an empty concrete pad. Make the two approved coils small, separate, and secondary. Ensure the total product width is under 65 percent of the frame. Reduce the product group from 68% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: A visible person (farmer/worker) is present in the background on the right side.",
+        "Hard reject: The background contains farm activity (person walking) which violates the mandatory 'no farm activity' rule for the headline equipment detail role.",
+        "The image fails the 'zero people' strict constraint.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate: An empty concrete pad with no people, no walking figures, and no active farm machinery. Feature the two coils (one packaged, one bare) and the required fixed pump/gauge/manifold infrastructure. Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 35,
+      "product_height_percent": 25,
+      "product_x_center_percent": 55,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

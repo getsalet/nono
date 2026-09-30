@@ -1,0 +1,38 @@
+{
+  "source_id": "1220005002003-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A human figure (distant worker/farmer) is visible in the background on the right side",
+        "Hard reject: The background shows a modern city skyline rather than the farm/irrigation context required for the Heshbandan article brief"
+      ],
+      "correction_prompt": "Regenerate image removing the distant human figure and city skyline; replace background with rows of farmland and fixed irrigation hardware (pipes/filters) to match the farm context; keep the single AFP roll in the foreground.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Product dimensions (25% width) fall within the 12-30% acceptance range.",
+        "Zero visible people or human body parts.",
+        "Required bottom-right watermark 'AFP | 09134922013' is clearly visible.",
+        "Editorial hero role is achieved: the irrigation context dominates while the product is off-center on the lower third.",
+        "Tractor and farm infrastructure are contextually relevant and do not violate the 'no second commercial package' rule."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

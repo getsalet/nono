@@ -1,0 +1,76 @@
+{
+  "source_id": "1220004001573-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 31,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains multiple people (human silhouettes and full figures in the background), which is a hard reject trigger.",
+        "The product roll exceeds the maximum width limit of 30 percent (estimated at ~31 percent).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and silhouettes from the background entirely. Adjust the framing or perspective so the drip-tape roll occupies less than 30 percent of the image width while keeping the gauges and manifold context. Ensure the product remains clearly visible but secondary to the filter infrastructure. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Human visible in background (right side, near the tractor).",
+        "Fail: Mandatory role 'HEADWORKS DETAIL' not met; image shows a general landscape instead of a fixed filter/gauge/manifold on a concrete pad."
+      ],
+      "correction_prompt": "Remove the person on the right side entirely. Replace the background with an empty concrete pad featuring fixed irrigation hardware (filter, gauge, manifold) to match the 'HEADWORKS DETAIL' role. Keep the AFP drip-tape roll in the foreground as a secondary element.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 27,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Second commercial package present: The brown 'AFP' cardboard box in the background is a second commercial package, which triggers a hard reject.",
+        "Role mismatch: The mandatory image role is 'HEADWORKS DETAIL' which requires the filter/gauge/regulator manifold to be the primary focus (elevated record). The current framing makes the drip tape roll the primary focus, which fails to match the specified role where the carton should remain small and secondary."
+      ],
+      "correction_prompt": "Refocus the shot to be an elevated detail of the filter, gauge, and regulator on the concrete pad. The filter assembly must be the clear foreground focus. Ensure the drip-tape carton and any brown cardboard boxes are in the background, small, and unobtrusive. Do not include any secondary cardboard packaging as a visual element. Retain the distant tractors and the bottom-right watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 34,
+      "product_height_percent": 28,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The product (drip-tape carton roll) is too wide (34%), exceeding the maximum allowed width of 30% and the preferred 20-23% range.",
+        "The mandatory 'HEADWORKS DETAIL' role is not met; the image shows the carton roll as the primary hero subject rather than a secondary element with equipment (filter, gauge, manifold) as the focus.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with the AFP white-and-blue carton roll scaled down to 22% width to act as a secondary element. Add a detailed filter, pressure gauge, and manifold on the concrete pad as the main visual focus to satisfy the 'HEADWORKS DETAIL' role. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 19,
+      "product_height_percent": 24,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: Two people are visible in the background (left side).",
+        "The brief for the 'HEADWORKS DETAIL' role explicitly forbids farm activity and specifies 'no farm activity' with an empty concrete pad."
+      ],
+      "correction_prompt": "Regenerate image removing all visible human figures. The concrete pad must contain only the single small AFP carton and the fixed irrigation equipment (filter, gauges, manifold). Background should be static context without people.",
+      "attempt": 5
+    }
+  ]
+}

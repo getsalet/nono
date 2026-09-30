@@ -1,0 +1,78 @@
+{
+  "source_id": "1220004001034-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 35,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The approved carton roll is too large, violating the requirement that it remains 'small and secondary' in this equipment-only detail shot.",
+        "Visible gibberish text on the carton (e.g. 'Orip II Rhoiuc 5FPS') violates the hard reject condition for illegible writing.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Scale down the AFP carton roll to occupy approximately 15% of the frame width to make the equipment manifold the clear subject. Replace the gibberish text on the carton with realistic, legible technical labels. Ensure the roll remains small and secondary while the manifold, gauge, and filter occupy the primary focus. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 14,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: The image contains two visible people (one on the left and one on the right) and one individual driving a tractor, violating the zero-person rule.",
+        "The image fails the specific 'HEADWORKS DETAIL' role which requires a close-up of a fixed filter/gauge manifold on a concrete pad with the roll as a secondary small element; instead, it shows a wide field view with a roll on a tarmac road."
+      ],
+      "correction_prompt": "Regenerate a close-up 'HEADWORKS DETAIL' shot of a fixed irrigation manifold (filter, gauges, regulator) on an empty concrete pad. Include a small AFP 20cm drip-tape roll (white and blue) as a secondary object. The background must have zero people or human body parts. Ensure the 'AFP | 09134922013' watermark is in the bottom-right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 68,
+      "product_width_percent": 38,
+      "product_height_percent": 26,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Product width is ~38% of the frame width, exceeding the hard reject threshold of 30%.",
+        "The scene depicts the roll placed on the ground in an open field, whereas the brief explicitly requires an 'elevated record photograph of one fixed filter, gauge, regulator and manifold on an empty concrete pad' with the roll being small and secondary.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image showing a smaller drip-tape roll (width <25%) placed next to a fixed irrigation manifold and filter system on a concrete pad, with the infrastructure clearly visible and no people present. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 26,
+      "product_height_percent": 23,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Visible person standing in the background field (violates zero people/body parts rule).",
+        "Product packaging has gibberish/text-artifacts ('Ohp' and illegible characters), failing the text legibility requirement.",
+        "Visual role mismatch: The product is shown as the primary foreground subject on the ground, whereas the brief requires a HEADWORKS DETAIL of equipment on an elevated pad with the roll remaining small and secondary."
+      ],
+      "correction_prompt": "Regenerate with zero people in the background. Ensure all text on the roll is the 'AFP' brand logo only with no gibberish. Reframe to show the filter/gauge equipment as the main subject on a concrete pad, with the drip-tape roll appearing smaller and secondary in the foreground.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible human body parts (multiple farmers/people standing and working in the background)",
+        "Second commercial package (a second drip-tape roll is visible to the left of the main one)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people and body parts; remove the second small roll; show only one AFP drip-tape roll on an empty concrete pad with visible infrastructure like gauges or manifolds. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

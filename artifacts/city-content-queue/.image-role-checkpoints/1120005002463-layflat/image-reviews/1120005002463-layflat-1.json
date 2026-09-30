@@ -1,0 +1,39 @@
+{
+  "source_id": "1120005002463-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The total width of the product pair (packaged coil and bare coil) is approximately 58% of the frame, which exceeds the 42% hard limit",
+        "The presence of the large pump unit on the right side significantly impacts the overall bounding box of the product cluster, making it too dominant for the required 'small' editorial hero role",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Reduce the size of the pump unit on the right to create a wider gap between the product pair and the infrastructure; ensure the combined width of the packaged coil and bare coil is less than 40% of the image frame Reduce the product group from 58% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains the required packaged AFP coil and bare black woven coil, both separate and physically plausible.",
+        "The pair is small, off-center, and consistent with an editorial hero context showing a wide high-oblique water-transfer field.",
+        "The bottom-right watermark 'AFP | 09134922013' is present.",
+        "No people, human body parts, or hard-reject third commercial products/bottles/jars are visible.",
+        "The background crop rows, dirt, and distance are acceptable context and not standalone rejects."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
