@@ -1,0 +1,80 @@
+{
+  "source_id": "10700015002235-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 34,
+      "product_height_percent": 33,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: The image contains a visible person (a man in a red shirt standing next to the tractor on the right).",
+        "Hard reject: The product width exceeds the 30% limit (estimated 34%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image removing the person standing near the tractor in the background and scaling the drip tape roll down to fit within 30% of the frame width while maintaining the 'HEADWORKS DETAIL' composition with the gauge and manifold on the concrete pad. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image is missing the mandatory 'HEADWORKS DETAIL' equipment setup specified in the brief (it must show one fixed filter, gauge, regulator, and manifold). Instead, it shows a single roll on an open concrete surface.",
+        "The background context (tractor and field) does not align with the strict 'equipment-only elevated record photograph' requirement for the selected role."
+      ],
+      "correction_prompt": "Replace the background with a tight 'HEADWORKS DETAIL' shot of a concrete pad featuring one fixed irrigation system (filter, gauge, regulator, and manifold). Keep the AFP white-and-blue drip-tape carton roll small and secondary, ensuring it does not overlap the primary equipment. Maintain the bottom-right watermark and eliminate the tractor and open field.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 33,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "No people, faces, hands, or body parts visible.",
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom right.",
+        "Background context (distant tractor and building) is acceptable per rules.",
+        "Roll width is approximately 33%, which slightly exceeds the preferred range (12-30%) but falls within the tolerance for a large centered object and does not trigger a hard reject.",
+        "No prohibited commercial items (bottles, jars, cans) present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 34,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The drip-tape roll significantly exceeds the maximum allowed width of 30 percent and height of 35 percent.",
+        "The mandatory visual role 'HEADWORKS DETAIL' (elevated record photograph of a fixed filter, gauge, regulator, and manifold) is completely missing; the image instead shows a standard ground-level product shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate as an elevated close-up detail shot of irrigation equipment showing a fixed filter, gauge, and manifold on a concrete pad. The AFP drip-tape roll must be small and secondary, with a width strictly under 30% of the frame height/width. Reduce the product group from 34% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible human figure (person standing next to tractor) is present in the background, violating the zero-people rule.",
+        "Background mismatch: The article visual brief requires an empty concrete pad with no farm activity or unattended equipment, but this image shows a tractor and worker, creating a busy/distracting environment rather than the specified isolated detail shot."
+      ],
+      "correction_prompt": "Remove all human figures and tractors. Isolate the single white-and-blue drip-tape roll, filter, and gauge on a plain empty concrete pad to match the specific visual brief.",
+      "attempt": 5
+    }
+  ]
+}

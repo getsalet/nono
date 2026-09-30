@@ -1,53 +1,51 @@
 {
   "source_id": "1070008002652-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 38,
-      "duplicate_roles": [
-        1,
-        4,
-        3
-      ],
+      "score": 20,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails the 'off-center' constraint: the carton is placed squarely in the lower-center of the frame. Additionally, the crop is barely visible (just sprouting), which undermines the requirement for the farm and irrigation context to be the dominant visual.",
-        "Role 4 exhibits a generic centered vanishing point layout, violating the requirement for an 'asymmetric view' and 'no centered vanishing point.'",
-        "Roles 1 and 4 are functionally identical in composition: both use a central perspective looking down a straight furrow with the product centered, failing to provide a distinct visual narrative for the installation proof.",
-        "Role 2 shows the roll at an incorrect, large scale relative to the field (oversized product).",
-        "Role 3 includes a cardboard carton, violating the 'exactly one approved carton' rule and acting as an irrelevant commercial container.",
-        "Role 4 uses a highly symmetrical centering with a strong vanishing point, violating the 'no centered vanishing point' constraint.",
-        "Role 4 depicts a heavy machinery installation frame, which is hardware-duplicative of Role 3's technical focus rather than a distinct detail view."
+        "Role 1 (Panel 1) fails to meet the 'EDITORIAL HERO' criteria; the product is placed in the center rather than the lower third and appears too prominent relative to the field context.",
+        "Role 2 (Panel 2) fails the strict 'no person' rule, as two human figures are clearly visible in the background of the scene.",
+        "Role 3 (Panel 3) fails the 'HEADWORKS DETAIL' role specification; it depicts an empty concrete pad with equipment in the background but completely omits the required technical close-up of a fixed filter, gauge, regulator, and manifold."
       ],
-      "correction_prompt": "Shift the product in Role 1 to the lower-left or lower-right third; increase crop maturity in Role 1 to establish the farm context. Recreate Role 4 as a lateral, asymmetric crop-row view with the product at a field edge, removing the symmetrical centered perspective. Redesign the series to ensure the product remains small and proportional; remove all extra cardboard boxes; make the installation view asymmetric without a centered vanishing point; and replace the installation hardware with a macro close-up of an emitter or connector detail.",
+      "correction_prompt": "Repaint all three panels: Panel 1 must be a wide, high-oblique shot with a single small carton in the lower third off-center; Panel 2 must feature a technical field arrangement with zero people visible; Panel 3 must be an extreme close-up of a filter, gauge, and regulator assembly on a concrete pad.",
       "panel_scores": [
-        45,
-        38
+        20
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 15,
-      "duplicate_roles": [
-        3,
-        4
-      ],
+      "score": 45,
+      "duplicate_roles": [],
       "reasons": [
-        "ROLE 1 VIOLATION: The product (drip tape roll) is oversized and centered in the foreground. The brief requires a 'small, fully visible and off-center' product on the lower third of a high-oblique view. This image is a low-angle eye-level shot, not a high-oblique view, and the centered product placement acts as the primary focal point.",
-        "ROLE 3 VIOLATION: The brief requires a 'medium side view of unattended fixed filter, gauge, regulator and manifold.' This image shows a random single valve/fitting and the field rows, not the complete headworks assembly described. The product is also front-and-center rather than 'small and secondary.'",
-        "DUPLICATE LAYOUTS (ROLE 4): Role 4 shows a low-angle eye-level shot of tilled field rows with the product centered in the foreground. This layout is visually indistinguishable from Role 1 (which also features centered product on tilled rows from a low angle). Both roles lack the specific 'asymmetric unattended view of installed drip tape' required for Role 4.",
-        "GLOBAL CONSISTENCY: All four images utilize the same low-angle, product-centered composition, failing to provide the distinct camera heights and narrative progression required by the editorial brief.",
-        "Role 2 (semitransparent): Product is oversized and not part of a technical arrangement; a floating ruler is not valid selection evidence.",
-        "Role 3 (unlabeled): Shows a generic field with a random connector, lacking the required unattended fixed filter, gauge, and regulator manifold setup.",
-        "Role 4 (unlabeled): Product is oversized, centered on the row, and features a centered vanishing point, violating the asymmetric and 'small carton at field edge' requirements."
+        "Role 2 lacks technical evidence such as visible emitter-spacing or labeled field-selection criteria, presenting generic irrigation equipment instead.",
+        "Role 3 contains farm activity in the background (active tractor with operator) which violates the 'no farm activity' requirement."
       ],
-      "correction_prompt": "Strictly enforce role-specific compositions: Role 1 must be a high-oblique shot with small, off-center product; Role 3 must feature the complete headworks assembly (filter/gauge/manifold); Role 4 must show installed drip tape lines asymmetrically with the product small at the edge. Prevent layout duplication between roles 1 and 4. Re-render Role 3 with a medium side view of a complete unattended fixed filtration unit (filter, gauge, regulator) and Role 4 as an asymmetric wide shot with the product small at the field edge, avoiding a centered perspective.",
+      "correction_prompt": "For Role 2, add a ruler or scale marker showing specific emitter spacing (e.g., 20cm) on a drip line. For Role 3, replace the active tractor in the background with a static, distant unattended tractor or farm building, ensuring no people are present.",
       "panel_scores": [
-        15,
-        30
+        45
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 96,
+      "duplicate_roles": [],
+      "reasons": [
+        "All three roles are distinct in narrative: Role 1 (Hero) establishes the irrigation context with a wide field view; Role 2 (Selection Evidence) demonstrates product measurement in a field setting; Role 3 (Headworks Detail) focuses on the equipment setup on a concrete pad.",
+        "The 'Hero' and 'Headworks' roles are visibly distinct in both camera angle (high-oblique vs. low-angle) and environment structure (open soil vs. concrete pad).",
+        "The specified product (AFP Tape 20cm) is consistent across all panels without being the primary subject in the hero shot.",
+        "No generic farms or repeated layouts are observed; each image serves its specific editorial purpose."
+      ],
+      "correction_prompt": "No correction needed.",
+      "panel_scores": [
+        96
+      ],
+      "set_attempt": 3
     }
   ]
 }

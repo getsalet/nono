@@ -1,0 +1,84 @@
+{
+  "source_id": "1070009001314-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 35,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Human presence detected: two people (one crouching, one standing) are clearly visible in the background, which is a hard reject under the 'zero people' constraint.",
+        "Role mismatch: The mandatory image role is 'HEADWORKS DETAIL' requiring specific equipment like filters, gauges, and manifolds on an empty pad. This image shows a general farm scene with a tractor and people.",
+        "Product scale violation: The product roll is approximately 35% wide, exceeding the maximum 30% width limit for a pass.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people and the large tractor from the scene. Generate a close-up 'HEADWORKS DETAIL' shot of a concrete pad featuring fixed irrigation filters, gauges, and a manifold. Include a small AFP drip-tape roll (width ~20%) as a secondary element. Keep the 'AFP | 09134922013' watermark in the bottom right. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "A human figure is clearly visible in the background, standing near the tractor, which violates the 'zero people' hard reject criteria.",
+        "A human arm is extended from the figure in the background.",
+        "Red industrial drums/tanks are visible on the left side of the frame, which fall under hard rejects for 'fertilizer or pesticide container' or 'second commercial package'.",
+        "The presence of the person and containers in the background disqualifies the image under strict visual safety and product purity rules."
+      ],
+      "correction_prompt": "Remove the person and arm from the background and remove the red industrial drums on the left side to strictly comply with the 'zero people' and 'zero containers' hard rejects.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 48,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible person/farmer present on the far left",
+        "Visible person/worker present on the far right",
+        "Product roll width (~48%) significantly exceeds the 30% hard reject limit",
+        "Image role 'HEADWORKS DETAIL' not met: missing mandatory filter, gauge, regulator, and manifold infrastructure",
+        "Label text on the carton is gibberish instead of proper product information",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Replace the large roll with a small, secondary white-and-blue drip-tape carton (less than 23% width) on the far side of the concrete pad. In the foreground, add a fixed irrigation assembly including a filter, gauge, regulator, and manifold on the empty pad. Replace gibberish text on the carton with legible product details. Reduce the product group from 48% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 30,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Second commercial package (cardboard box) is present in the foreground, violating the 'exactly one' rule and the 'no second commercial package' hard reject condition.",
+        "Product height exceeds the 35 percent maximum limit.",
+        "Text on the product packaging is gibberish/AI-generated garbling rather than clear, legible details.",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate to strictly feature only the single drip-tape roll and the filtration equipment; remove the white cardboard box on the right. Reduce the roll height to under 35 percent of the frame and ensure clear, legible text on the packaging. Keep the bottom-right watermark 'AFP | 09134922013' exactly as shown. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 20,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Human visible on the left side (farmer/worker).",
+        "Hard reject: Human visible in the background right (person holding phone)."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the image. Keep the AFP drip-tape roll and the filter manifold unit on the concrete pad. Remove the tractor and background field to focus on the equipment-only detail.",
+      "attempt": 5
+    }
+  ]
+}

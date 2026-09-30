@@ -1,0 +1,54 @@
+{
+  "source_id": "10700011002952-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: multiple people visible in the background (workers standing near tractors).",
+        "Hard reject: visible human body parts (heads, faces, arms, legs) in the mid-ground.",
+        "Article visual brief violation: Mandated 'HEADWORKS DETAIL' (elevated record of fixed filter, gauge, regulator) is completely missing; instead, the image shows an outdoor field scene with farm machinery."
+      ],
+      "correction_prompt": "Regenerate an elevated close-up shot of a fixed irrigation filter, pressure gauge, and regulator manifold on an empty concrete pad. No people, no workers, no tractors, and no background scenery. Ensure exactly one white-and-blue drip-tape carton roll is visible as a small secondary object. Keep the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible human silhouettes in the background (people standing near tractors), which triggers a hard reject for any person or body part.",
+        "The mandatory visual role (HEADWORKS DETAIL) requires the image to show exactly one fixed filter, gauge, regulator, and manifold on an empty concrete pad; this image shows a wide field with farm machinery and people.",
+        "The product roll is too large relative to the frame (width ~30%, height ~45%), exceeding the strict 35% height limit.",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate image to show a macro shot of a fixed filter, gauge, regulator, and manifold on an empty concrete pad. Include one small, secondary white-and-blue AFP drip-tape carton roll (height under 30% of frame). Remove all humans, tractors, and farm buildings. Ensure the bottom-right watermark 'AFP | 09134922013' is visible. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Correct primary product visual: one wide cylindrical AFP drip-tape carton roll is present in the foreground.",
+        "Product dimensions: The roll is physically plausible, wide but within the 20-23% preferred width range and under the 35% height limit.",
+        "Background and context: Empty concrete pad with unattended distant tractor and pipes matches the HEADWORKS DETAIL role (no farm activity visible, infrastructure focused).",
+        "Watermark: Exact required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "No hard rejects: No people, bottles, jars, or second commercial packages are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

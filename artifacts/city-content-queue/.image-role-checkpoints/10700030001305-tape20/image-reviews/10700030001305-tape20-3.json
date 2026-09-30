@@ -75,6 +75,75 @@
       ],
       "correction_prompt": "Remove the farmer/worker completely. Scale down the AFP drip tape carton to 25% width. Keep the filter and manifold infrastructure on the concrete pad as the primary focus. Reduce the product group from 34% to 12-30% of frame width.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 15,
+      "product_height_percent": 18,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Visible people: Two humans are clearly present in the background (one standing, one sitting), which is a hard reject.",
+        "Mandatory role mismatch: The brief explicitly requires 'zero farm activity' and 'HEADWORKS DETAIL' (filters/gauges), but the image shows layflat hose, irrigation lines, and human farm activity.",
+        "Prohibited objects: An open cardboard box is visible on the left, which acts as a 'second commercial package' or disallowed container.",
+        "Layout mismatch: The product is centered, but the brief specifies lower-third and off-center placement."
+      ],
+      "correction_prompt": "Regenerate to strictly show one fixed filter, gauge, regulator, and manifold on a concrete pad. Remove all people, farm activity, hoses, and open cardboard boxes. Keep the small AFP carton secondary. Place the main subject in the lower-third off-center. Retain the exact bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: image contains a standing person in the background, which violates the strict requirement of zero people or body parts."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the person in the background. Ensure the empty concrete pad and unattended tractor are the only elements in the background, keeping the AFP drip-tape roll in the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 31,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Human body parts present in the background (seated person and standing person are clearly visible).",
+        "Hard reject: The mandatory bottom-right watermark 'AFP | 09134922013' is missing from the image."
+      ],
+      "correction_prompt": "Remove all humans from the scene entirely. Add the exact text watermark 'AFP | 09134922013' to the bottom-right corner.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 31,
+      "product_height_percent": 46,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible person standing in the background (hard reject)",
+        "Visible horse/animal in the background (hard reject)",
+        "Product roll is too tall relative to the frame (46% > 35% limit)",
+        "Background contains farm activity and animals, failing the 'equipment-only' and 'empty pad' visual brief requirement",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 46% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with zero people and animals. Show only the white-and-blue AFP drip tape roll on an empty concrete pad with fixed irrigation infrastructure (filter, gauge, manifold) in the immediate vicinity. Ensure the roll height is less than 35% of the frame. Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 46% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "hard reject: visible person (full body) squatting in the right foreground",
+        "hard reject: visible human body parts (face, hands, legs)"
+      ],
+      "correction_prompt": "Remove all people and human body parts; leave only the single AFP drip-tape carton and the fixed irrigation hardware (filter, gauge, regulator, manifold) on the empty concrete pad; no farm activity.",
+      "attempt": 5
     }
   ]
 }

@@ -75,6 +75,77 @@
       ],
       "correction_prompt": "Remove all human figures and the tractor from the scene. Change the setting to a plain empty concrete pad. Focus on an elevated close-up view of one fixed filter, gauge, and manifold. Place the small AFP drip-tape carton roll secondarily in the background. Keep the bottom-right watermark 'AFP | 09134922013' intact.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 45,
+      "product_height_percent": 38,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: second commercial package (second roll) is present in the image",
+        "Hard reject: foreground roll width exceeds 30% of the frame width",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the second background roll. Shrink the foreground AFP drip-tape roll to 20-23% of the frame width. Ensure the scene shows only one approved carton and the fixed irrigation infrastructure on the concrete pad without any duplicate products. Reduce the product group from 45% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 20,
+      "product_height_percent": 30,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Presence of a person (farmer) standing in the background",
+        "Presence of coiled black tubing/hose (identified as 'layflat hose' hard reject)"
+      ],
+      "correction_prompt": "Regenerate the image with an empty concrete pad featuring a filter, gauge, and manifold. Ensure the background is strictly agricultural infrastructure or distant equipment without any visible people or coiled hoses.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 31,
+      "product_height_percent": 42,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: The image contains a person (human silhouette) walking in the background, violating the zero-people constraint.",
+        "Hard reject: The bounding box for the main product (drip tape roll) is approximately 42% in height, exceeding the maximum allowed height of 35%.",
+        "The main product roll is visually dominant rather than being a 'small and secondary' carton as specified in the mandatory role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate image: Remove the person in the background. Shrink the main drip tape roll so its height is less than 35% of the frame to act as a secondary element. Focus on the gauges and manifold as the primary subjects. Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 5,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Presence of a horse (animal) in the background",
+        "Product roll height exceeds maximum limit (40% > 35%)",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image without the horse in the background. Adjust the framing or camera angle to reduce the visible height of the white and blue roll to less than 35% of the frame height. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Mandatory image role 'HEADWORKS DETAIL' requires an elevated photograph of one fixed filter, gauge, regulator, and manifold on an empty concrete pad.",
+        "The specified irrigation infrastructure (filter, gauge, regulator, manifold) is completely missing from the foreground scene.",
+        "Image context features an unattended green truck and a white horse which are not mentioned as relevant infrastructure or equipment in the visual brief.",
+        "Background composition does not match the 'equipment-only' requirement for this specific image role."
+      ],
+      "correction_prompt": "regenerate an elevated close-up of a single fixed irrigation filter, gauge, and manifold resting on an empty concrete pad with a small secondary AFP carton roll, removing all vehicles, animals, and background farm activity.",
+      "attempt": 5
     }
   ]
 }
