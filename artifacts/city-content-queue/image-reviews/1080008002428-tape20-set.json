@@ -1,24 +1,63 @@
 {
   "source_id": "1080008002428-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 2 (Role 2: SELECTION EVIDENCE) contains a person, which is explicitly forbidden for all panels.",
+        "Panel 3 (Role 3: HEADWORKS DETAIL) lacks the required equipment-only arrangement; it features only a product roll on a concrete pad with no visible filter, gauge, regulator, or manifold.",
+        "Panel 3 uses a generic US-style farm backdrop (red barns, tractors) that fails to satisfy the 'Kerman, Iran' article context."
+      ],
+      "correction_prompt": "Remove all people from Panel 2 and replace the active scene with a static technical view of the product and emitters. Redesign Panel 3 to show a clear 'headworks' array with filter, gauge, and manifold on a concrete pad, removing the generic Western farm background.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 1
+    },
     {
       "pass": false,
       "score": 35,
       "duplicate_roles": [
+        2,
         3
       ],
       "reasons": [
-        "Role 3 contains extra containers (cardboard boxes) alongside the product, violating the 'exactly one approved carton' constraint.",
-        "Role 3 features an unattended tractor in the background, which is not part of the 'unattended fixed filter' narrative and distracts from the required hardware focus.",
-        "The camera angle in Role 3 is too low and wide, failing to achieve the requested 'medium side view' of the filtration equipment.",
-        "Role 1 product placement is too large relative to the foreground, lacking the required 'small' scale specified in the brief."
+        "Role 2 and Role 3 share near-identical hardware duplication (filter, manifold, and two gauges) with no technical distinction in camera angle or narrative",
+        "Role 2 contains a person, which is an explicit rejection criterion",
+        "Role 1 fails the 'small carton' requirement: the product roll is oversized and overly dominant compared to the wide high-oblique farm view",
+        "Role 3 fails the 'empty concrete pad' requirement: the background contains a person and active farm equipment, violating the 'no farm activity' constraint"
       ],
-      "correction_prompt": "Regenerate Role 3 as a medium side view focusing exclusively on the unattended fixed filter, gauge, and manifold assembly; remove all extra cardboard boxes and the background tractor; regenerate Role 1 to scale down the product roll significantly to the lower third.",
+      "correction_prompt": "Revoke the person and active tractors from Roles 2 and 3; resize the product roll in Role 1 to be small and off-center; and completely remove all hardware (filters/gauges) from Role 2 to ensure it focuses strictly on emitter spacing or field selection.",
       "panel_scores": [
         35
       ],
-      "set_attempt": 1
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 fails to show a carton; displays a large flat spool which is an oversized/incorrect product representation for the 'small carton' brief.",
+        "Role 2 shows a spool instead of a carton; lacks the required elevated angle and technical selection evidence (emitters/gauges), placing it on the ground with a flat perspective.",
+        "Role 3 lacks required 'HEADWORKS DETAIL' equipment (filter, gauge, manifold) and is on a paved lot with active farm activity (tractor) in the background, violating the 'no farm activity' and 'empty pad' rules.",
+        "All images feature the product as a flat spool rather than a 'carton,' causing uniformity in product identity that conflicts with the brief's specific packaging expectations."
+      ],
+      "correction_prompt": "Replace the spool with a small carton product. Role 1: high-oblique wide shot of the farm with a small carton off-center. Role 2: elevated technical shot of a carton with emitter spacing. Role 3: close-up of a filter, gauge, and manifold on an empty concrete pad with a small carton in the background.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
     }
   ]
 }

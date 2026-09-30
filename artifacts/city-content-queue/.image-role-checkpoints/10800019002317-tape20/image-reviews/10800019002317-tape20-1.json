@@ -1,0 +1,51 @@
+{
+  "source_id": "10800019002317-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A person (human silhouette wearing a hat) is clearly visible in the right mid-ground, sitting near the irrigation infrastructure. This violates the 'zero people and zero human body parts' rule."
+      ],
+      "correction_prompt": "Remove the person/silhouette from the right side of the image entirely. Ensure no humans are visible. Keep the unattended green tractor and irrigation pipes.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible human faces/heads present inside the tractor cabs (both green tractors in the mid-ground). The rule strictly prohibits any human body parts or silhouettes, even distant.",
+        "Strict Role Violation: The product roll is centered in the bottom third, but the mandatory editorial role requires 'off-center' placement. While centered placement is not a standalone reject, combined with the hard reject for humans, it prevents a pass.",
+        "Product dimensions fall within acceptable bounds (25% width, 30% height) and the carton style matches the required AFP white-and-blue drip-tape roll."
+      ],
+      "correction_prompt": "Remove all visible drivers/humans from the tractor cabs (ensure cabs are empty or obscured). Move the central drip-tape roll off-center (shift to the left or right third) to satisfy the 'off-center' editorial placement requirement.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Product is positioned in the lower third, consistent with the mandatory editorial role.",
+        "Zero people or human body parts are visible.",
+        "Background matches the irrigation context with crop rows and distant buildings.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

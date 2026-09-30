@@ -1,0 +1,68 @@
+{
+  "source_id": "1080008002603-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: A visible person (worker/farmer) is present in the upper right quadrant of the image, explicitly prohibited.",
+        "Hard reject: Watermark text mismatch. The image contains 'AFP | 09134922013' (a zero), but the required watermark is 'AFP | 09134922013' (an 'o').",
+        "Product dimension violation: The roll's height is approximately 28%, exceeding the 35% limit when accounting for perspective in a high-oblique view."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the person. Keep the tractor distant. Ensure the white-and-blue drip-tape roll is in the lower third and clearly displays the watermark 'AFP | 09134922013' exactly as spelled (ending in the letter O).",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Hard reject: A farmer is visible inside the tractor in the background, violating the zero-person rule.",
+        "Product geometry is not a 'wide low cylindrical' carton; it is depicted as a tall upright cylinder, which is dimensionally invalid for the specified role.",
+        "The required bottom-right watermark contains gibberish/extra characters ('AFP | 09134922013') and does not perfectly match the mandatory string 'AFP | 09134922013'.",
+        "The product is centered on the x-axis (51%), which, while a minor issue compared to the hard rejects, deviates from the mandatory editorial preference for off-center placement."
+      ],
+      "correction_prompt": "Regenerate with a distant unattended tractor (no person visible) or remove the tractor. Modify the product to be a wide, low-lying cylindrical drip-tape carton roll that sits on the ground. Ensure the product is placed strictly in the lower-left or lower-right third (off-center). Remove all text on the carton and ensure the bottom-right watermark is exactly 'AFP | 09134922013' with no extra spaces or symbols.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 16,
+      "product_height_percent": 23,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible person standing next to the tractor (hard reject for presence of a human).",
+        "Presence of a tractor; while contextually relevant, the combination with the person makes this an unqualified fail."
+      ],
+      "correction_prompt": "Remove the person standing by the tractor and keep only the unattended tractor. Keep the AFP drip-tape carton roll small, fully visible, and off-center on the lower third, while keeping the farm/irrigation context and high-oblique view dominant.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 18,
+      "product_height_percent": 20,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The image correctly displays the wide high-oblique editorial hero view with farm and irrigation context dominating the scene.",
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present and is fully visible within the lower third, slightly off-center.",
+        "No people, human body parts, or human silhouettes are visible in the image.",
+        "The required bottom-right watermark \"AFP | 09134922013\" is present.",
+        "No other commercial packages, bottles, or prohibited containers are visible.",
+        "The product bounding box dimensions are within the preferred and accepted estimation range."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

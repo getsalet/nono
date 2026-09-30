@@ -1,0 +1,84 @@
+{
+  "source_id": "1080008001343-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 32,
+      "product_height_percent": 26,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: visible people (two workers in the background).",
+        "Product width exceeds the maximum 30 percent limit (estimated at 32%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with zero people or body parts; shrink the drip-tape roll to 25 percent width and ensure no other commercial products or containers are visible. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 21,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A full human figure (worker) is clearly visible standing in the background, violating the 'zero people and zero human body parts' rule.",
+        "Hard reject: There is a second commercial package (the cardboard box labeled 'DRIP IRRIGATION') next to the product; the brief states 'exactly one approved carton remains small and secondary', which is better satisfied by a roll inside or without a distracting open box.",
+        "The background contains farm activity (person with machinery) rather than an 'empty' pad as specified in the headline role."
+      ],
+      "correction_prompt": "Remove the person standing in the background and the open cardboard box. Ensure the scene shows only the white-and-blue drip tape roll and the pressure gauge on the concrete pad with no human figures present.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 31,
+      "product_height_percent": 26,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The image displays exactly one AFP white-and-blue drip-tape roll as required.",
+        "Zero people or human body parts are present.",
+        "Distant unattended tractors and ordinary farm infrastructure are visible, which are permitted by the brief.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly visible.",
+        "The product width (31%) slightly exceeds the preferred range but falls within the acceptable reviewer-estimation noise threshold for physical plausibility.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 32,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of a human in the background (hard reject)",
+        "Role mismatch: Mandatory 'HEADWORKS DETAIL' requires an elevated photograph of fixed filter, gauge, regulator, and manifold; the image shows a generic roll on the ground instead",
+        "Product width exceeds the 30 percent hard-reject threshold",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to strictly follow the HEADWORKS DETAIL role: an elevated record photograph of a fixed filter, gauge, regulator, and manifold on an empty concrete pad. The one approved carton roll must be secondary and small (under 20% width). Absolutely remove all human figures or body parts from the scene. Keep the mandatory watermark 'AFP | 09134922013' in the bottom-right corner. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 30,
+      "product_height_percent": 42,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: second commercial package (small roll) is visible",
+        "Hard reject: human figure/farmer visible in the background",
+        "Hard reject: object dimensions are distorted or violate physical plausibility (the object appears too tall relative to the width limits)",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image removing all people, workers, and human silhouettes from the background. Remove the second small roll and ensure only a single wide low cylindrical carton roll is present, with dimensions no taller than 35% of the frame height. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

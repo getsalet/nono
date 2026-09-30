@@ -1,0 +1,53 @@
+{
+  "source_id": "1080008001343-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23.5,
+      "product_height_percent": 26.0,
+      "product_x_center_percent": 51.5,
+      "reasons": [
+        "Placement: The carton is placed centrally and on the bottom edge rather than on the lower third. The rules specify lower-third placement as an editorial preference for this role, and a centered crop fails to convey the intended wide, high-oblique editorial hero shot where the farm context should dominate.",
+        "Product Distortion: The carton roll lacks appropriate environmental interaction and shading for the scale and lighting, making it appear slightly flat and digitally composited."
+      ],
+      "correction_prompt": "Reposition the AFP carton roll to the lower-third area of the frame, slightly off-center to the left or right. Increase the high-oblique angle so the field rows and irrigation context dominate the frame, and add appropriate environmental lighting and soft contact shadows to ground the product plausibly in the soil.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 20,
+      "product_height_percent": 18,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a worker in a blue shirt in the background right side",
+        "Presence of a human silhouette in the left background tractor",
+        "Human body parts visible in the right foreground tractor"
+      ],
+      "correction_prompt": "Remove all humans and human silhouettes from the background and foreground to ensure a zero-person policy.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 19,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product bounding box falls within the acceptable width (12-30%) and height (<35%) thresholds.",
+        "The product is a single, white-and-blue wide cylindrical roll consistent with the drip-tape carton requirement.",
+        "No human figures, body parts, or silhouettes are present.",
+        "No bottles, cans, jars, or secondary commercial packaging are visible.",
+        "The required watermark 'AFP | 09134922013' is present and correctly positioned.",
+        "The background matches the visual brief with an appropriate farm and irrigation context."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

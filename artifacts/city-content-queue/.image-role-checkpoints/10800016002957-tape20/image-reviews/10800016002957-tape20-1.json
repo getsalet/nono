@@ -1,0 +1,53 @@
+{
+  "source_id": "10800016002957-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: multiple people (human silhouettes) are visible in the background, violating the zero-person rule.",
+        "The product roll has severe perspective distortion and lacks a proper drip-tape texture."
+      ],
+      "correction_prompt": "Regenerate the image strictly excluding all people and human silhouettes. Correct the product geometry to a realistic cylindrical drip-tape roll and ensure the text 'AFP | 09134922013' is present in the bottom right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: a standing human figure is clearly visible in the middle of the field, violating the zero-person rule.",
+        "The required bottom-right watermark 'AFP | 09134922013' is missing from the image.",
+        "Second human-adjacent item (a dog) is visible at the person's feet, introducing a non-farm asset and complicating the visual context."
+      ],
+      "correction_prompt": "Regenerate without any people or animals; add the exact bottom-right watermark 'AFP | 09134922013' on a black background; keep the single white and blue AFP carton small, off-center in the lower third, and fully visible against the green field.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 25,
+      "product_height_percent": 18,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Single white-and-blue AFP drip-tape roll is correctly positioned in the lower third",
+        "Product dimensions (width ~25%, height ~18%) fall within accepted tolerance ranges",
+        "Zero visible people, human parts, or silhouettes detected",
+        "Watermark 'AFP | 09134922013' is clearly present in the bottom-right corner",
+        "Widespread farm context with distant unattended tractors matches the required editorial hero perspective",
+        "No prohibited containers, bottles, or secondary commercial packages visible"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

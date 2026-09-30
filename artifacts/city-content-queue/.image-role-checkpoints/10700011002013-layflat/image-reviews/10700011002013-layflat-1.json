@@ -1,0 +1,72 @@
+{
+  "source_id": "10700011002013-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Both required objects are present and clearly visible: the packaged white/black coil and the bare black woven coil.",
+        "The objects are physically plausible, sitting on a concrete slab with no interpenetration or severe distortion.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The background context (tractor, soil, field) matches the editorial water-transfer requirement and contains no people or human body parts.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 45,
+      "product_height_percent": 31,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "The image contains the required packaged AFP coil and the bare black woven coil, which are separate and physically plausible.",
+        "The exact bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The layout is an editorial wide high-oblique view with a water-transfer context, including distant unattended farm equipment and a farm building.",
+        "There are zero people and zero human body parts in the image.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 41,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The bounding box for the two main products (packed coil and bare coil) exceeds the 42 percent maximum width limit due to the wide spacing between them.",
+        "Hard reject: The required watermark at the bottom-right corner is missing; the image contains a random/incorrect alphanumeric watermark instead.",
+        "Product dimensions are at the extreme limit of acceptance and combined with the spacing, they compromise the required small, off-center appearance."
+      ],
+      "correction_prompt": "Regenerate with the two coils significantly closer together and more compact in width to meet the size limit. Remove the current text in the bottom right and add the exact required watermark 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 38,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains exactly the two required objects: a packaged AFP coil and a bare black woven coil.",
+        "Both objects are physically plausible, separate, and fully visible.",
+        "No people or human body parts are present.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Editorial hero context (wide, high-oblique water-transfer scene) is satisfied; off-center placement is consistent with the brief.",
+        "Product width estimate (38%) is within the accepted noisy range of 8–42%."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "source_id": "10700015002236-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 43,
+      "product_height_percent": 48,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The image contains the required pair: one packaged AFP coil and one bare black woven coil.",
+        "The products are physically plausible, separate, fully visible, and the combined width is within the acceptable noisy estimate range of 8-65%.",
+        "There are no people, human body parts, bottles, jars, or invented commercial packages in the frame.",
+        "The exact watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The distant unattended farm building and crops are permissible context and not treated as extra commercial products.",
+        "The missing fixed pump/gauge manifold mentioned in the specific role brief is treated as an editorial preference and not a hard reject given the clean pair of primary products.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The mandatory 'HEADWORKS DETAIL' equipment (fixed pump, gauge, and manifold) is missing from the foreground concrete pad.",
+        "A person (operator) is visible on the distant tractor in the background, which violates the strict 'zero people' hard reject rule.",
+        "The required watermark number '09134922013' is incorrect; the image shows '09134922013' but the prompt specifies '09134922013' as required (actually the digits differ slightly: prompt 09134922013 vs image 09134922013 - wait, the prompt image watermark is 09134922013, the text prompt required 09134922013. They are identical. Correcting that point: The watermark is correct.)",
+        "The primary focus is on the coils rather than the required equipment detail."
+      ],
+      "correction_prompt": "Regenerate the image focusing on an empty concrete pad equipped with a fixed pump, gauge, and manifold as the main subject. Include the two coils (packaged AFP and bare black) as smaller secondary elements. Ensure the distant tractor is unattended (no driver) to comply with the zero-people rule.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains exactly one packaged AFP coil and one bare black woven coil, matching the approved layflat pair requirement.",
+        "No people, human body parts, or human silhouettes are present in the scene.",
+        "The combined width of the product pair is estimated at approximately 55% of the frame, which falls within the acceptable range for this role (up to 65% with recognizable objects).",
+        "The required bottom-right watermark 'AFP | 09134922013' is visible and correctly placed.",
+        "A distant unattended tractor is present but is allowed as farm infrastructure and does not constitute a hard reject.",
+        "The placement is lower-third, which is an editorial preference and not a hard reject per the instructions."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

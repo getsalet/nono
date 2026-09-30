@@ -1,0 +1,80 @@
+{
+  "source_id": "10800013002604-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 36,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Presence of people in the background (two individuals near a tractor).",
+        "Violation of role brief: The image role is 'HEADWORKS DETAIL' which requires equipment-only (filter, gauge, regulator) on a concrete pad. This image shows a field background and the main product is a roll, not fixed irrigation infrastructure.",
+        "Product width exceeds limit: The roll width is estimated at approximately 36% of the frame, exceeding the 30% hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate showing an elevated close-up of fixed drip irrigation hardware (filter, manifold, gauge) on a concrete pad. Include the white and blue AFP roll small in the foreground. Remove all people, tractors, and field backgrounds. Reduce the product group from 36% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 32,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains visible people (bending figure and standing worker) in the background, which is a hard reject.",
+        "Contains a red container/bucket in the background, which is a hard reject for bottles or fertilizer/pesticide containers.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people and the red container from the background. Ensure the scene is an empty concrete pad with only infrastructure (filter, gauge, manifold) and one small secondary carton roll. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The mandatory image role requires an elevated record photograph of fixed infrastructure (filter, gauge, regulator, manifold) on a concrete pad, not a standalone product shot.",
+        "The approved carton must remain 'small and secondary' as part of the infrastructure scene; here it is the primary subject, centered and isolated.",
+        "The image fails to visualize the equipment-only context specified in the brief."
+      ],
+      "correction_prompt": "Regenerate as a high-angle or distant view of a fixed irrigation manifold, filter, and pressure gauge on a concrete pad. Include a small, secondary AFP drip-tape carton in the periphery to match the brief's 'equipment-only' role.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Image contains visible people in the background (farmer/worker near red tractor and others near green tractor), which is a hard reject criterion.",
+        "There is a second commercial package (a smaller roll) visible in the frame, violating the 'exactly one roll' requirement.",
+        "The main roll's dimensions are likely too large (est. 40% height) and exceed the 35% height limit for physical plausibility in this composition.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with zero people or human body parts in the background. Remove the second smaller roll to ensure only one large cylindrical roll is present. Ensure the main roll occupies less than 35% of the image height. Maintain the concrete pad setting with infrastructure hardware and the required bottom-right watermark. Reduce the product group from 35% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "A standing human figure (farmer) is clearly visible in the background, which is a hard reject due to the 'zero people' constraint.",
+        "The mandatory role is 'equipment-only' with no farm activity; the presence of a person in the field violates this visual brief."
+      ],
+      "correction_prompt": "Remove the standing human figure in the background to comply with the 'no people' rule and the equipment-only visual role.",
+      "attempt": 5
+    }
+  ]
+}

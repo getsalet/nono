@@ -1,0 +1,53 @@
+{
+  "source_id": "10800012002602-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 34.0,
+      "product_height_percent": 38.0,
+      "product_x_center_percent": 49.0,
+      "reasons": [
+        "Product width exceeds the 30 percent hard reject threshold",
+        "Product height exceeds the 35 percent hard reject threshold",
+        "Product is centered rather than placed in the lower-third off-center position required for the editorial hero role",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Scale down the drip tape carton roll to under 23% width and 35% height. Move the roll to an off-center position on the left or right side of the lower third. Ensure the farm context and irrigation lines remain dominant. Reduce the product group from 34% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: The image contains multiple human figures (farmers/workers) visible in the background, which is strictly prohibited."
+      ],
+      "correction_prompt": "Regenerate the image completely removing all human figures and workers from the background, keeping only the unattended tractor, farm buildings, and the AFP drip-tape carton roll.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Product is exactly one white AFP drip-tape roll with blue accents, matching the commercial brand brief.",
+        "No people or human body parts are present.",
+        "No forbidden hard reject items (bottles, cans, pipes, extra rolls, gibberish) are visible.",
+        "Contextual elements (tractor, crops, irrigation context) are appropriate for an agricultural hero shot.",
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom right corner.",
+        "Product placement is in the lower third as required for the editorial role."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
