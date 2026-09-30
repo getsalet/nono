@@ -1,0 +1,80 @@
+{
+  "source_id": "10700018001323-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 35,
+      "product_height_percent": 24,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject due to multiple people visible in the background. The visual brief explicitly forbids any human activity.",
+        "The image contains gibberish, pseudo-word text on the cartons ('DRIP AHI...') which violates the clean-label requirement.",
+        "The presence of a second commercial carton package (in the background) violates the 'exactly one' constraint.",
+        "The background setting does not match the required HEADWORKS DETAIL role of an empty concrete pad with no farm activity.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image as an elevated record photo of a single fixed irrigation manifold with gauges on an empty concrete pad. Include exactly one small, secondary AFP drip-tape roll with clean, legible text in the foreground. Remove all people, other cartons, and background farm activity completely. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains visible people (a man in the background on the left and a worker near the tractor on the right), which is a hard reject condition.",
+        "The image shows multiple carton rolls (one in the center and a second one partially visible in the bottom left corner), violating the requirement for exactly one roll.",
+        "The visual role requested was 'HEADWORKS DETAIL' showing filters and gauges, but the image primarily shows a standard product roll on a concrete pad, failing the brief.",
+        "Second commercial package (the roll in the bottom left) is a hard reject."
+      ],
+      "correction_prompt": "Remove all human figures and silhouettes from the scene. Remove the second carton roll in the bottom left. Focus the composition on a fixed irrigation headworks setup with a filter and pressure gauge, keeping the drip-tape carton small and secondary in the background.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Contains visible people in the distant background (left side).",
+        "Text on the product roll is gibberish/illegible."
+      ],
+      "correction_prompt": "Remove all people from the background; replace gibberish text on the roll with clean, legible product labels.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 29,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Two visible human figures are present in the background.",
+        "Role violation: The brief mandated a HEADWORKS DETAIL shot of filters/gauges/manifolds which is not present.",
+        "Visual brief mismatch: Background shows a general farm scene rather than the empty concrete pad with fixed irrigation hardware."
+      ],
+      "correction_prompt": "Regenerate as a HEADWORKS DETAIL shot of a filter, gauge, and manifold on a concrete pad; remove all people and tractors from the background.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The presence of a person in the background is a hard reject.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person from the background. Ensure the background is completely devoid of any human figures, body parts, or silhouettes. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}
