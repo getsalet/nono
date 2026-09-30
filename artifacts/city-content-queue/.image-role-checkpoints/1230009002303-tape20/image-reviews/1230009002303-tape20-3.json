@@ -1,0 +1,80 @@
+{
+  "source_id": "1230009002303-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 36,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible people: Multiple workers/farmers are present in the background, which is a hard reject rule.",
+        "Incorrect Image Role: The brief required an equipment-only detail shot of a filter/gauge/manifold, not a wide product shot on a road/field.",
+        "Roll Size: The product width (~36%) exceeds the 30% maximum hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with no people or human silhouettes. Show the specific required equipment (filter, gauge, manifold) on a concrete pad as the primary subject, keeping the white and blue AFP roll small and secondary. Ensure the roll width is under 30% of the frame. Reduce the product group from 36% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: two people/farmers are clearly visible standing in the background, which violates the zero-person and zero-human-body-part rule.",
+        "Hard reject: The product (tape roll) width is approximately 32% of the frame, which exceeds the 30% maximum width limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the background scene. Ensure the drip tape roll width is resized to be under 30% of the total frame width. Maintain the watermark in the bottom-right corner. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 33,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: A person (farmer) is visible in the background.",
+        "Hard reject: The AFP carton is not a small, secondary element; it dominates the foreground contrary to the 'HEADWORKS DETAIL' role brief."
+      ],
+      "correction_prompt": "Regenerate image with no people visible. Reposition the focus to show only the filter, gauge, and manifold as the primary subject; keep the drip tape carton small and secondary in the background.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Multiple people visible in the background (left and right sides), which is a hard reject.",
+        "Two rolls of tape are present, whereas the brief requires exactly one.",
+        "The image does not match the 'HEADWORKS DETAIL' brief, which specifies an elevated record of equipment (filter, gauge, manifold) on a concrete pad; instead, this is a low-angle shot of just the rolls on the ground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a high-angle 'headworks detail' shot of a fixed filter and manifold on a concrete pad. Remove all background people. Ensure only one roll of drip tape is visible, small and secondary to the equipment. Keep the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Multiple visible people in the background (at least three distinct figures standing on the concrete and fields).",
+        "Hard reject: The 'AFP' roll is excessively wide, occupying approximately 30% of the frame width, which violates the specific dimensional constraints (prefer 20-23%, accept up to 30% if physically plausible, but the presence of the people triggers the primary hard reject).",
+        "Hard reject: The mandatory image role (HEADWORKS DETAIL) requires an equipment-only elevated record photo where the carton is small and secondary; in this image, the carton is the dominant primary subject, failing to meet the brief's structural requirement."
+      ],
+      "correction_prompt": "Regenerate image with zero visible people or body parts. Reposition the AFP drip-tape carton to be a small secondary element (width <25%). Feature an elevated close-up of a filter, gauge, and manifold on a concrete pad as the primary focus.",
+      "attempt": 5
+    }
+  ]
+}

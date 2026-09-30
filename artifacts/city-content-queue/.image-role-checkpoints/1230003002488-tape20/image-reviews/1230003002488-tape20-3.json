@@ -1,0 +1,80 @@
+{
+  "source_id": "1230003002488-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 20,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a person (human silhouette) in the background, which is a hard reject condition",
+        "The primary objects (gauge, filter, manifold) are not on an empty concrete pad as required; they are on soil/gravel"
+      ],
+      "correction_prompt": "Regenerate without the person in the background. Place the filter, gauge, and manifold strictly on a clean, empty concrete pad. Keep the single drip-tape roll small and secondary.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 33,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Violation of exclusive packaging rule: A second commercial package (a second roll/carton) is clearly visible in the foreground to the right of the primary subject.",
+        "Violation of image role: The mandatory role required 'HEADWORKS DETAIL' showing fixed filters, gauges, and regulators; instead, the image depicts an open outdoor pad with tractors, missing the specified equipment infrastructure.",
+        "Violation of dimensional constraints: The bounding box of the main roll exceeds the 30% width hard limit (estimated at ~33%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to show a close-up 'headworks detail' on a concrete pad featuring a filter, gauge, and manifold. Remove the extra carton roll from the foreground. Ensure the main AFP carton is smaller, occupying less than 25% of the frame width. Keep the bottom-right watermark exactly as is. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Multiple human figures are present in the background, which is a hard reject.",
+        "The article brief specifies the image must contain zero people.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the background, keeping only the unattended tractors and farm buildings as context. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 28,
+      "product_height_percent": 26,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "The image contains a person (standing in the background), which is a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the person standing in the background. Ensure the scene is empty and contains zero people or body parts.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 32,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Zero people or human body parts are visible in the frame.",
+        "The image successfully features the required AFP white-and-blue cylindrical drip-tape carton roll.",
+        "The infrastructure elements (filter, gauge, regulator/manifold) are present on the concrete pad as required.",
+        "The specified watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner.",
+        "The product bounding box is slightly wider and taller than the preferred 20-23% width band, though still within the 12-30% width and 35% height physical plausibility thresholds.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

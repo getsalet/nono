@@ -1,0 +1,54 @@
+{
+  "source_id": "1230009002633-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 33,
+      "product_height_percent": 46,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Multiple human figures (farmers/workers) are visible in the background, violating the zero-people rule.",
+        "Hard reject: Product bounding box width (33%) exceeds the 30% maximum limit.",
+        "Hard reject: Product bounding box height (46%) exceeds the 35% maximum limit.",
+        "Hard reject: Presence of a red spray bottle in the scene constitutes an unapproved container.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 46% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image on an empty concrete pad with zero people. Ensure the single white-and-blue AFP drip-tape carton is small and secondary (max 28% width, 32% height). Remove the red spray bottle. Retain the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 46% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 25,
+      "product_height_percent": 12,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Visible human (distant standing figure) in the background."
+      ],
+      "correction_prompt": "Regenerate the image with zero people or human silhouettes. Keep the single small AFP drip-tape roll on the concrete pad. Ensure no tractors or farm workers are present in the background.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 29,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "One AFP drip-tape carton roll present and correctly branded",
+        "Required watermark AFP | 09134922013 visible in bottom-right",
+        "Infrastructure (gauge, manifold, pump) and unattended tractor present as allowed",
+        "Cardboard boxes are not hard-reject containers (not bottles, jars, cans, buckets)",
+        "No human body parts or human silhouettes visible",
+        "Product dimensions within plausibility range, slight overshoot on width (29%) but acceptable"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

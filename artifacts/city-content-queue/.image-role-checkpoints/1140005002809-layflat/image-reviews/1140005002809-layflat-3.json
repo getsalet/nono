@@ -1,0 +1,56 @@
+{
+  "source_id": "1140005002809-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 58,
+      "product_height_percent": 35,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: multiple visible persons (farmers) in the background.",
+        "Hard reject: third commercial product (tractor) visible in the background.",
+        "Mandatory role failure: 'HEADWORKS DETAIL' with equipment-only elevated record photograph is completely missing; image is a low-angle product shot instead."
+      ],
+      "correction_prompt": "Regenerate as an equipment-only elevated record photograph on an empty concrete pad showing a fixed pump, gauge, and manifold. The two approved coils (one packaged AFP, one bare black woven) must be small and secondary. Zero people, zero farm activity, no tractors or extra products in the background. Maintain the bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 72,
+      "product_height_percent": 50,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains three coils: one packaged AFP coil and two bare black coils. The article brief and role 3 requirement specify a pair (one packaged AFP coil and one bare black woven coil).",
+        "The product width (72%) exceeds the 65% hard reject threshold.",
+        "The image lacks the mandatory HEADWORKS DETAIL elements: a fixed pump, gauge, and manifold. The requested 'equipment-only elevated record photograph' is missing.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width.; Reduce product height from 50% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate to show only two coils (one packaged AFP, one bare black) and a fixed pump/gauge/manifold setup on a concrete pad. Remove the extra bare coil. Reduce the product group from 72% to 8-65% of frame width. Reduce product height from 50% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 43,
+      "product_height_percent": 32,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The image correctly displays the approved pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Product width is approximately 43%, which falls within the 8-65% acceptance range for this role.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "No people or human body parts are visible.",
+        "The presence of a distant unattended tractor and farm building is allowed as infrastructure/background context and does not violate the 'no third commercial product' rule.",
+        "While the mandatory role mentions a pump/gauge, the strict 'hard reject' rules do not apply for a missing pump; they only apply to extra bottles, fake labels, or impossible geometry. Since the core product pair is correct and clearly visible, the image is accepted.",
+        "The objects are physically plausible, separate, and clearly recognizable."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
