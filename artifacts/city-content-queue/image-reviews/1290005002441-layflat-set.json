@@ -1,0 +1,56 @@
+{
+  "source_id": "1290005002441-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 12,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 (Image 1) fails the 'EDITORIAL HERO' requirement: it lacks the 'wide high-oblique' context; the camera is low (eye-level relative to the product) and the product is centered/dominant rather than small and off-center.",
+        "Role 2 (Image 2) fails the 'SELECTION EVIDENCE' requirement: the prompt explicitly forbids 'any person', but a driver is clearly visible operating the tractor in the background. Additionally, the layout and camera height are nearly identical to Role 1, creating duplication.",
+        "Role 3 (Image 3) fails the 'HEADWORKS DETAIL' requirement: the specific mandatory elements—a fixed pump, gauge, and manifold—are completely missing; instead, a random cardboard box is included."
+      ],
+      "correction_prompt": "Regenerate panel 1 as a high-oblique wide shot with the small off-center coils; regenerate panel 2 as a person-free elevated close-up of the two coils; regenerate panel 3 to strictly feature a pump, gauge, and manifold setup.",
+      "panel_scores": [
+        12
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Image 1) fails the 'wide high-oblique' requirement as it is shot from a low ground-level angle.",
+        "Role 1 (Image 1) fails to keep the product 'small, separate, and off-center,' featuring a prominent foreground and a large green irrigation pump instead of just the two-coil pair.",
+        "Role 2 (Image 2) fails the 'elevated technical comparison' requirement, presenting a flat product shot of a box and hose rather than a high-angle comparison of two coils.",
+        "Role 3 (Image 3) fails the 'equipment-only' requirement by showing a static product shot on concrete with no pump, gauge, or manifold.",
+        "All three images contain garbled, illegible text on the product packaging, lacking professional print details."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 2 (Role 2) is explicitly forbidden as it contains a person and a tractor, violating the 'no person' and 'no farm activity' constraints (only unattended equipment is allowed).",
+        "Panel 1 (Role 1) fails the layout requirement; the two coils are positioned centrally and are too large, whereas the brief requires them to be small, separate, and off-center.",
+        "Panel 3 (Role 3) fails the equipment requirement; it shows a pressure fitting but is missing the 'fixed pump' and 'manifold' specifically requested for the headworks detail."
+      ],
+      "correction_prompt": "Regenerate the images to strictly exclude people and tractors; for Panel 1, move the coils to the periphery at a smaller scale; for Panel 2, isolate the coils against a technical background; for Panel 3, add a fixed pump and manifold to the equipment setup.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

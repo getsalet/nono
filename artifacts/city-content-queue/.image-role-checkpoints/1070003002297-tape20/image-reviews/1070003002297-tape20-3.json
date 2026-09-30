@@ -1,0 +1,78 @@
+{
+  "source_id": "1070003002297-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 27,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human body parts present. A full-body person (farmer/worker) is visible in the mid-ground on the left side.",
+        "Strict violation of 'zero people' requirement: Presence of a human silhouette and face in the background."
+      ],
+      "correction_prompt": "Remove the human figure and tractor from the background to maintain a strictly equipment-only scene. Keep the AFP carton roll and gauges on the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Background contains tractors, farm machinery, and visible human silhouettes, violating the 'zero people' hard reject.",
+        "Mandatory image role 'HEADWORKS DETAIL' required a specific equipment-only scene (filter/gauge on concrete pad) which is not present; instead, the scene shows a large open field with active farming.",
+        "The carton is not 'small and secondary' as required; it is the dominant central object in the frame."
+      ],
+      "correction_prompt": "Elevated, tight crop of one fixed filter, gauge, and manifold on an empty concrete pad. The carton roll must be small and secondary to the hardware. Remove all people, silhouettes, and distant farm machinery. Ensure the background is a clean, empty concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 29,
+      "product_height_percent": 34,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image is missing the required fixed filter or regulator on the pad (only gauges are present).",
+        "The secondary commercial package (carton) is not 'small' as mandated by the role; it is a large primary object in the foreground, violating the 'secondary' condition."
+      ],
+      "correction_prompt": "Regenerate showing a small AFP carton roll placed far in the background next to a large metal manifold with a filter and gauge on a concrete pad.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 36,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Visible person (farmer) in the background",
+        "Second roll of drip tape is present",
+        "Primary product width exceeds the maximum 30% limit",
+        "Primary product height exceeds the maximum 35% limit",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the person and the second roll in the background. Crop tighter so the foreground AFP roll is under 28% width and 32% height. Maintain the filter and manifold on the concrete pad. Keep the AFP | 09134922013 watermark. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 31,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Human worker visible on the large combine harvester in the background.",
+        "Hard reject: A second roll or white container (appears to be a pipe or tank) is visible in the background on the right, violating the 'exactly one roll' constraint."
+      ],
+      "correction_prompt": "Regenerate the image to remove the human worker from the harvester and delete the second white pipe/container in the background, ensuring only one AFP drip tape roll is present.",
+      "attempt": 5
+    }
+  ]
+}

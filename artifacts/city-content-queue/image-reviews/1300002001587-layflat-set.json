@@ -1,0 +1,55 @@
+{
+  "source_id": "1300002001587-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 62,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 1 fails the 'EDITORIAL HERO' role specification: it uses a low-angle ground shot rather than the required 'wide high-oblique' view.",
+        "Panel 1 and Panel 2 are nearly identical in composition, camera height, and framing; the roles are not 'visibly distinct in camera height/angle' or 'environment structure'.",
+        "Panel 2 fails the 'SELECTION EVIDENCE' role: it is a low-angle shot, not the required 'elevated technical comparison'.",
+        "Panel 3 fails the 'HEADWORKS DETAIL' role: the brief specifically requires 'one fixed pump, gauge and manifold', but the image displays a portable pump unit on the ground."
+      ],
+      "correction_prompt": "Differentiate the three panels by forcing high-oblique camera angles for panels 1 and 2, placing panel 1 on an elevated wide context and panel 2 as a close-up elevated product comparison, while specifically replacing the portable pump in panel 3 with a fixed headworks pump, gauge, and manifold.",
+      "panel_scores": [
+        62
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (EDITORIAL HERO): The product pair (coil and pump) is centered and too large in the frame, violating the instruction that they remain 'small, separate and off-center' within a wide high-oblique context.",
+        "Role 2 (SELECTION EVIDENCE): Shows an active farm implement (tractor) and machinery, violating the 'no third commercial package, bottle, person or extra coil' rule, and failing to be a clean elevated technical comparison of the two coils.",
+        "Role 3 (HEADWORKS DETAIL): Features the product pair as the primary subject on a concrete pad, omitting the required 'fixed pump, gauge and manifold' setup, which is necessary for the 'equipment-only' narrative."
+      ],
+      "correction_prompt": "Panel 1: Reframe to a wide, high-oblique shot where the small product pair sits off-center in a vast field. Panel 2: Remove the tractor and farm implements; focus strictly on the two coils with a technical diagrammatic overlay or elevated angle to show the diameter difference. Panel 3: Replace the product focus with a close-up of a fixed pump, gauge, and manifold on the concrete pad, relegating the small coil pair to the background.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 2 (Role 2) fails the 'SELECTION EVIDENCE' requirement by including a pressure gauge and manifold assembly in the frame, which are prohibited commercial/hardware elements for this specific technical comparison shot.",
+        "Panel 3 (Role 3) fails the 'HEADWORKS DETAIL' requirement because it lacks the mandatory equipment (pump, gauge, manifold) and instead presents a generic top-down product shot on a concrete slab, which is not an 'elevated record photograph' of headworks infrastructure.",
+        "There is duplication of product-pair layout between Panel 2 and Panel 3, where the two coils are shown in the same relative proximity on a concrete surface, despite the intent to distinguish a technical comparison (Role 2) from equipment detail (Role 3)."
+      ],
+      "correction_prompt": "Regenerate Panel 2 to show only the two coil products on a surface without any plumbing hardware, and regenerate Panel 3 to feature a fixed pump, gauge, and manifold on an empty concrete pad with the two coils kept small and in the background.",
+      "panel_scores": [
+        20
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

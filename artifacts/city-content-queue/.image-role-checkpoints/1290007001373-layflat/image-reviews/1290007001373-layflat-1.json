@@ -1,0 +1,39 @@
+{
+  "source_id": "1290007001373-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 48,
+      "product_height_percent": 27,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The combined bounding box of the two coils spans roughly 48% of the image width, exceeding the 42% hard limit for noisy reviewer estimates.",
+        "The products are placed centrally and low in the frame, whereas the editorial brief explicitly mandates an off-center placement for the small coils within the wide hero context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the combined width of the coil pair to under 40% and move the cluster off-center to the lower left or right while maintaining the wide high-oblique agricultural context. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 41,
+      "product_height_percent": 25,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image correctly displays the approved product pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "No people, faces, or human body parts are present.",
+        "The background features a distant unattended tractor and farm infrastructure, which are explicitly allowed.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right.",
+        "Product bounding box estimated from pixels: width ~41%, height ~25%, x-center ~46%."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

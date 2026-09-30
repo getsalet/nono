@@ -1,0 +1,62 @@
+{
+  "source_id": "1300005001584-layflat",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Images 1 and 2 have nearly identical compositions, camera angles, and product placements, failing to provide distinct narrative roles for EDITORIAL HERO and SELECTION EVIDENCE.",
+        "Image 3 lacks the specific equipment required for the HEADWORKS DETAIL role: a fixed pump, gauge, and manifold on an empty concrete pad are absent.",
+        "A wooden handle-like object is visible on the right side of Image 1, which appears to be a prohibited extra container/accessory or a rendering artifact."
+      ],
+      "correction_prompt": "Generate three visibly distinct panels: (1) a high-oblique wide shot of the two coils on a field; (2) a close-up technical comparison of the two coils showing construction details; (3) a record shot of a pump, gauge, and manifold on an empty concrete pad with the coils in the background.",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 fails the 'SELECTION EVIDENCE' brief by showing three distinct coils in the foreground (one packaged, two bare) when the prompt strictly requires 'the approved two-coil pair' and explicitly states 'no extra coil'.",
+        "Role 3 fails the 'HEADWORKS DETAIL' brief; while it includes the concrete pad, it is missing the 'one fixed pump' required by the narrative. It also displays the coils as large, foreground focal points, contradicting the instruction that the pair must remain 'small, separate and secondary'.",
+        "Roles 2 and 3 are structurally similar: both are high-angle shots on a concrete surface where the coils are the primary subject, leading to a duplicate role failure."
+      ],
+      "correction_prompt": "For Role 2: reduce the foreground to exactly two coils (one packaged, one bare) and remove the third loose coil. For Role 3: remove or significantly minimize the foreground coils so the 'fixed pump' becomes the clear focal point.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 fails to meet the 'wide high-oblique' requirement, showing a low-angle shot instead.",
+        "Role 2 fails the 'elevated technical comparison' requirement, repeating the low-angle hero layout from Role 1.",
+        "Role 3 fails to display the required 'equipment-only... pump, gauge and manifold'; it only shows the coils on a concrete pad.",
+        "All three images use nearly identical camera angles and product framing, failing the requirement for distinct camera height/angle and technical narrative."
+      ],
+      "correction_prompt": "Replace the images with a high-oblique wide shot, an elevated technical comparison emphasizing diameter differences, and a close-up of a fixed pump and manifold on a concrete pad.",
+      "panel_scores": [
+        15
+      ],
+      "set_attempt": 3
+    }
+  ]
+}
