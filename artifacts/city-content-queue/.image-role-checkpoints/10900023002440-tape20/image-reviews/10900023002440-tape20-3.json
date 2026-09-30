@@ -1,0 +1,78 @@
+{
+  "source_id": "10900023002440-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: visible person walking in the background (human silhouette/body parts present).",
+        "Role mismatch: missing mandatory HEADWORKS DETAIL equipment (filter, gauge, regulator, manifold) on concrete pad."
+      ],
+      "correction_prompt": "Regenerate to include the mandatory HEADWORKS DETAIL setup: an elevated fixed filter, gauge, regulator, and manifold on an empty concrete pad. Remove all people and human body parts from the scene. Keep the single AFP white-and-blue drip-tape roll small and secondary.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 33,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Visible people (farmers/workers) in the background violating the 'zero people' rule.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is missing.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the background. Add the exact text 'AFP | 09134922013' as a watermark in the bottom-right corner. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 33,
+      "product_height_percent": 35,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Visible human figure in the background (standing between the two pieces of farm machinery).",
+        "Product width exceeds the hard reject threshold of 30% of the frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person from the background completely. Reduce the scale of the AFP drip-tape carton in the foreground so it occupies less than 25% of the image width. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 19,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: Person (human silhouette) visible in the background",
+        "The article's mandatory role specifies 'no farm activity' and an 'empty concrete pad', but the image clearly contains background activity and clutter",
+        "Image role conflict: The roll is the primary focus, whereas the brief states the carton should remain 'small and secondary'"
+      ],
+      "correction_prompt": "Regenerate to show a completely empty concrete pad with a fixed filter, gauge, and manifold setup in the foreground. Include a small, distant AFP drip-tape carton as secondary. Ensure absolutely no people or human silhouettes are present.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 20,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Presence of a human figure standing in the background between the tractors violates the 'zero people' rule.",
+        "Editorial fail: A large airplane wing is visible in the background, which is contextually irrelevant to the irrigation topic and constitutes impossible/improbable geometry for the brief.",
+        "Editorial fail: The 'gauge' is a pressure meter with text 'AIPF' (reversed/misspelled logo), which falls under gibberish/fake text rejection."
+      ],
+      "correction_prompt": "Remove the human figure and the airplane wing. Regenerate the pressure gauge to have correct readable 'AFP' text and no gibberish. Ensure the background is a neutral farm environment or clear sky.",
+      "attempt": 5
+    }
+  ]
+}

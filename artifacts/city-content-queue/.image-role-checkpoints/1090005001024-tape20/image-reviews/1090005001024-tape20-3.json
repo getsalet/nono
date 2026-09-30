@@ -1,0 +1,76 @@
+{
+  "source_id": "1090005001024-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Multiple visible human beings and body parts (face, hands, arms) are present in the frame, violating the zero-people constraint.",
+        "Hard reject: An unauthorized, unbranded cardboard carton box is present on the left side.",
+        "The visible 'AFP' carton does not match the specified mandatory visual of a 'white-and-blue wide low cylindrical drip-tape carton roll', which is absent."
+      ],
+      "correction_prompt": "Remove all people and human body parts completely. Remove the left-side cardboard box. Replace the roll with a single white-and-blue cylindrical drip-tape carton roll (20-23% frame width). Ensure an empty concrete pad setting with equipment-only focus.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 34.0,
+      "product_height_percent": 21.0,
+      "product_x_center_percent": 51.0,
+      "reasons": [
+        "Hard reject: Human body parts (person and legs) are visible in the background.",
+        "Hard reject: The product's width (~34% of frame width) exceeds the 30% maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all humans from the scene. Reduce the drip-tape carton roll width to less than 30% of the frame. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Visible human silhouette (farmer) standing on the left side of the frame in the background.",
+        "Mandatory role mismatch: Image shows a product-on-concrete-pad shot, not a HEADWORKS DETAIL shot of fixed filter, gauge, regulator, and manifold infrastructure.",
+        "Missing required elements: No irrigation infrastructure (manifold, gauges, filters) visible as required by the visual brief."
+      ],
+      "correction_prompt": "Regenerate image as a HEADWORKS DETAIL shot: show one fixed filter, gauge, regulator and manifold on a concrete pad with the AFP 20cm drip tape roll as a small secondary element. Remove all human figures or silhouettes from the frame. Keep the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 39,
+      "product_height_percent": 33,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Human body parts and silhouette visible: A person is clearly standing next to the red tractor in the background, violating the hard reject rule for any visible human or body parts.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 39% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image without any people or human silhouettes; remove the worker standing next to the tractor in the background, leaving only the unattended equipment. Reduce the product group from 39% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 32,
+      "product_height_percent": 48,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 48% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 48% to at most 35% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

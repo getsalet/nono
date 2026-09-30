@@ -1,0 +1,53 @@
+{
+  "source_id": "10700028002904-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 68,
+      "product_width_percent": 48,
+      "product_height_percent": 32,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The total combined width of the two coil packages (packaged coil and bare black coil) exceeds the strict 42 percent hard reject threshold, occupying roughly 48 percent of the frame width.",
+        "The products are placed centrally in the foreground, which deviates from the mandatory 'EDITORIAL HERO' role requirement that the objects remain 'off-center'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the combined visual width of the two coils to strictly less than 40 percent of the image width, and reposition them clearly off-center in a lower third location to align with the editorial hero specification. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 42,
+      "product_height_percent": 25,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Human presence: A visible person is driving the red tractor in the background, which is a hard reject.",
+        "Product pair width: The combined width of the packaged coil and the bare coil occupies nearly 42% of the frame width, leaving no margin and violating the strict upper bound for this role.",
+        "Context placement: The products are placed in the immediate foreground bottom-center, violating the 'editorial high-oblique water-transfer context' requirement where they should be small, off-center, and integrated into the wide field context."
+      ],
+      "correction_prompt": "Remove the human operator from the tractor completely (use an unattended tractor or remove it). Drastically reduce the size of the two coils to occupy 10-15% of the frame width and reposition them off-center to the right, ensuring they do not touch the bottom edge, acting as small visual anchors in a high-oblique wide shot of the irrigation field.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 22,
+      "product_height_percent": 15,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Correctly displays the approved layflat pair (one packaged AFP coil and one bare black woven coil) as separate, recognizable objects.",
+        "The pair maintains a physically plausible layout, occupying an appropriate width (22%) without exceeding the 42% hard limit or merging into a single object.",
+        "The required bottom-right watermark is clearly visible and not obstructed.",
+        "The image is free of people, human body parts, and prohibited third-party commercial packaging (no bottles, cans, or extra coils).",
+        "Environmental elements such as the agricultural field and distant farm buildings are contextually appropriate and not improperly flagged."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

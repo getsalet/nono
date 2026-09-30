@@ -1,0 +1,52 @@
+{
+  "source_id": "10900034002901-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 27,
+      "product_height_percent": 33,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains a human silhouette in the driver's seat of the red tractor in the background, which is a hard reject trigger.",
+        "The product roll is centered horizontally rather than placed in the lower-third off-center as preferred for the EDITORIAL HERO role.",
+        "The text on the carton ('Olip Irrygeton Tapa') appears gibberish and is not the requested 'AFP' branding."
+      ],
+      "correction_prompt": "Regenerate the image without any people or silhouettes in the tractor. Shift the drip tape roll to the bottom-left or bottom-right corner to achieve an off-center composition. Ensure the carton label clearly reads 'AFP'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 21,
+      "product_height_percent": 21,
+      "product_x_center_percent": 75,
+      "reasons": [
+        "The image contains two rolls, violating the 'exactly one' requirement."
+      ],
+      "correction_prompt": "Remove the small roll on the left. Keep only the large white carton roll on the right, positioned in the bottom third of the frame. Ensure no farmers or workers are visible.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 23,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present and fully visible.",
+        "The product is correctly placed off-center in the lower third of the frame, consistent with editorial hero preferences.",
+        "No people, human body parts, or silhouettes are visible.",
+        "No hard-reject items (bottles, extra rolls, pipes through the roll, or fake headlines) are present.",
+        "The exact bottom-right watermark 'AFP | 09134922013' is included as required.",
+        "Background includes contextual farm and irrigation infrastructure (tractor, fields, drip lines), matching the article brief."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

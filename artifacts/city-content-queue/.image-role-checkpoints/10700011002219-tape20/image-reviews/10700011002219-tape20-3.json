@@ -77,6 +77,77 @@
       ],
       "correction_prompt": "Regenerate the image showing a macro close-up of a fixed drip irrigation manifold, filter, and pressure gauge on a concrete pad. Position one small, white and blue AFP drip tape roll in the background or side as a secondary element. Ensure there are no people or active farm workers in the frame.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 45,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Image contains two carton rolls, violating the 'exactly one' requirement",
+        "The mandatory role 'HEADWORKS DETAIL' is not met (lacks fixed filter, regulator, and manifold configuration)",
+        "Product width exceeds the 30% rejection threshold",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate image showing a single elevated record photograph of a fixed filter, gauge, regulator, and manifold on an empty concrete pad; include only one small secondary AFP tape carton roll; remove the second roll and any active farm work. Reduce the product group from 45% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains two rolls (a second commercial package), hard reject",
+        "Watermark 'AFP | 09134922013' is missing from the bottom-right corner"
+      ],
+      "correction_prompt": "Regenerate to show exactly one large drip-tape roll with a small, secondary 20m filter/gauge infrastructure component in the background on a concrete pad; remove the second roll in the foreground. Ensure the exact bottom-right watermark 'AFP | 09134922013' is clearly visible.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a human farmer in the background (a person with a tool in the field) which violates the 'zero people' hard reject constraint.",
+        "Gibberish/unreadable text on the carton label."
+      ],
+      "correction_prompt": "Remove the farmer and any human figures from the background to make it an equipment-only shot. Replace the text on the carton with clear, legible branding or leave it neutral to avoid gibberish.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Visible human figures (farmers/workers) in the background violate the zero-person rule.",
+        "Hard reject: The image depicts a roll of tape instead of the mandated 'HEADWORKS DETAIL' which requires one fixed filter, gauge, regulator and manifold on a concrete pad with the carton remaining small and secondary.",
+        "Hard reject: Product width estimate exceeds the 30% maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a close-up macro shot of fixed filtration infrastructure (filter, gauge, regulator) on a bare concrete pad with a small roll of tape as a secondary element. Ensure zero people or visible human silhouettes are present. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 32,
+      "product_height_percent": 20,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Second commercial package (unbranded roll) is visible on the right side of the frame.",
+        "Gibberish writing is present on the main carton label beneath the AFP logo.",
+        "Product roll is wider than the 30 percent hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the secondary unbranded roll and any extra packages. Clean the main carton label to remove gibberish text, ensuring only 'AFP' is legible. Reduce the width of the main roll to 20 percent. Ensure the bottom-right watermark 'AFP | 09134922013' is present. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 5
     }
   ]
 }
