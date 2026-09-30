@@ -1,37 +1,38 @@
 {
   "source_id": "10800010002241-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 42,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Image 1) is too close to ground level rather than the required wide high-oblique view where the farm context should dominate.",
-        "Role 2 (Image 2) lacks the required technical arrangement and visible emitter-spacing/field-selection evidence needed for a SELECTION EVIDENCE narrative."
+      "score": 58,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "Re-shoot Role 1 with a wide high-oblique angle so the irrigation context dominates and the carton remains small in the lower third; re-shoot Role 2 as an elevated technical arrangement showing one small carton and visible emitter-spacing evidence.",
+      "reasons": [
+        "Role 3 contains background farm activity (unattended tractors and a vehicle), which violates the strict 'no farm activity' requirement for the 'Headworks Detail' shot.",
+        "Role 1 features a high-oblique view of the farm context, which heavily overlaps with Role 2's 'Selection Evidence' layout, reducing the necessary visual distinction between the camera heights and technical narratives.",
+        "Role 3 is required to show specific equipment (filter, gauge, regulator) on an empty pad, but it only displays the product carton."
+      ],
+      "correction_prompt": "Regenerate Role 3 as a strict equipment-only record photograph on an empty concrete pad with zero background activity; for Role 1, crop wider to make the farm context dominant and shrink the product size significantly to contrast with Role 2.",
       "panel_scores": [
-        42
+        58
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 40,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 38,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Image 1) is oversized and centered, violating the 'small off-center lower third' requirement",
-        "Role 2 (Image 2) contains a cardboard box which is a prohibited container item",
-        "Role 3 (Image 3) features a large red tractor which acts as a prohibited person/vehicle distraction",
-        "Roles 2 and 3 share a nearly identical ground-level camera angle and framing, making them visually indistinguishable in layout"
+        "Role 2 fails the 'SELECTION EVIDENCE' requirement by lacking visible emitter-spacing or field-selection evidence, resulting in a generic field background.",
+        "Role 3 fails the 'HEADWORKS DETAIL' requirement by including an unapproved tire in the foreground and busy farm equipment (tractors/trucks) in the background instead of a simple empty concrete pad.",
+        "The 'farm and irrigation context' in Role 1 is generic as it shows a distant city skyline on the horizon rather than a specific farm environment (Golar/Bardsir/Kerman)."
       ],
-      "correction_prompt": "Scale Role 1 down to the lower-right third; replace the box in Role 2 with an emitter-spacing demonstration; and swap Role 3 for a close-up of filter hardware without a tractor.",
+      "correction_prompt": "Regenerate Role 2 to include visible drip-line emitter-spacing measurements or a technical layout card. Regenerate Role 3 to feature an empty concrete pad with only a fixed headworks assembly (filter, gauge, regulator, manifold) and the secondary product carton, removing the tire and moving background tractors to a distant, out-of-focus farm building context.",
       "panel_scores": [
-        40
+        38
       ],
       "set_attempt": 2
     },
@@ -39,15 +40,15 @@
       "pass": false,
       "score": 35,
       "duplicate_roles": [
-        1,
+        2,
         3
       ],
       "reasons": [
-        "Role 1 (Image 1) fails to meet the EDITORIAL HERO requirement: The product (the AFp tape roll) is placed in the immediate foreground, center-frame, and is not 'small' nor 'off-center'. Additionally, the wide view shows city buildings in the horizon which contradicts the rural/farm context of the brief (Golezar/Bardsir/Kerman).",
-        "Role 3 (Image 3) violates the 'exactly one approved carton' rule by including a generic cardboard box next to the AFp roll. It also fails the technical narrative requirement: the hardware shown is a complex mechanical valve/meter unit, not the 'unattended fixed filter, gauge, regulator and manifold' described for HEADWORKS STORY.",
-        "Role 2 (Image 2) is weakly compliant: While the background elements (barn) are permitted, it lacks the specific 'emitter-spacing or field-selection evidence' required for SELECTION EVIDENCE, resembling instead a static outdoor product shot."
+        "Role 3 fails the 'HEADWORKS DETAIL' spec by including a red emitter strip (a bottle/container violation) instead of the required fixed filter, regulator, and manifold assembly.",
+        "Roles 2 and 3 display the exact same hardware set (carton, schematic paper, and gauge) and nearly identical farm backgrounds (tiled field, distant red tractor, grey barn), resulting in a duplicate layout and environment structure.",
+        "Role 1 shows a wide field context with a high-oblique angle, which is visually distinct, but the set fails overall due to the duplication between the selection and headworks panels."
       ],
-      "correction_prompt": "For Role 1, shift to a high-oblique wide shot where the AFp roll is small and off-center in the lower third, removing city backgrounds. For Role 3, remove the cardboard box and replace the mechanical valve with a clear setup of a fixed filter, gauge, and manifold as the primary technical subject.",
+      "correction_prompt": "Regenerate Roles 2 and 3 with distinct camera angles and backgrounds; for Role 3, strictly exclude any red emitter strip and display only the approved carton with a manifold, filter, regulator, and gauge on a concrete pad.",
       "panel_scores": [
         35
       ],

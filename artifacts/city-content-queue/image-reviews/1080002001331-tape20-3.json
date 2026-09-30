@@ -1,0 +1,42 @@
+{
+  "source_id": "1080002001331-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 33,
+      "product_height_percent": 42,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: A person (worker in a yellow hardhat) is clearly visible standing in the background.",
+        "Hard reject: Product dimensions exceed limits (width 33% > 30%, height 42% > 35%).",
+        "Role mismatch: Missing mandatory 'HEADWORKS DETAIL' infrastructure (filter, gauge, manifold); instead, the roll is the primary, oversized subject.",
+        "Text gibberish: The text on the carton label reads 'DRIP IRYKTON' (gibberish) instead of the expected product text.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the person from the background. Reduce the size of the drip-tape roll to <25% width and <30% height. Add a fixed filter, gauge, and manifold setup on the concrete pad as the primary subject. Correct the gibberish text on the carton label. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Product is exactly one white-and-blue AFP drip-tape carton roll.",
+        "Zero people or body parts visible in frame.",
+        "Roll dimensions are within acceptable limits (width ~18%, height ~22%).",
+        "Image matches the mandatory 'HEADWORKS DETAIL' role: equipment on an empty concrete pad with the roll placed small and secondary.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Infrastructure (gauges, manifold) and distant unattended tractor are contextually permitted."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

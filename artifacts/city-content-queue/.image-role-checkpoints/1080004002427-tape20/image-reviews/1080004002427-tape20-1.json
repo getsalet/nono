@@ -1,0 +1,77 @@
+{
+  "source_id": "1080004002427-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 34,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject detected: The image contains two people (a farmer crouching and a standing man) in the background, which violates the strict 'zero people and zero human body parts' rule.",
+        "Hard reject detected: The product roll contains gibberish text below the 'AFP' logo, which is a standalone hard reject criterion.",
+        "Watermark: The mandatory bottom-right watermark 'AFP | 09134922013' is present and correct."
+      ],
+      "correction_prompt": "Regenerate the image with the farm context and high-oblique view, but completely remove all human figures and workers. Ensure the carton roll is exactly one and features clean, legible text or no text, and maintain the mandatory watermark at the bottom right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 20,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Rejected due to the presence of a visible human silhouette operating the tractor in the background (hard reject for any person or human body part).",
+        "The product is centered in the frame (product_x_center_percent: 50) rather than being off-center as specified by the image role."
+      ],
+      "correction_prompt": "Remove all human figures and people from the scene, including the person on the tractor. Move the single AFP drip-tape roll to an off-center position within the lower third of the frame to match the editorial layout.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: Human body parts are visible on the tractors in the background (drivers/riders are present on the equipment).",
+        "Hard reject: The product label text appears as 'KfD' or gibberish rather than the required 'AFP' branding.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people and riders from the tractors in the background to ensure no human silhouettes are visible. Correct the text on the drip tape carton to clearly read 'AFP' with clear, legible typography. Maintain the low-oblique editorial hero composition with the carton on the lower third. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: A person (male farmer) is clearly visible standing in the field to the right of the crop rows.",
+        "Hard reject: A white bucket is visible on the ground next to the person, which is an extra container not allowed in the brief.",
+        "Hard reject: A green tractor is visible in the background; while unattended equipment can sometimes be allowed, the presence of the person makes this a fail."
+      ],
+      "correction_prompt": "Regenerate the image to strictly exclude all humans, human silhouettes, and buckets. Keep only the single white-and-blue drip-tape roll and the tractor in the distant background if needed, ensuring no people are present.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Human operator is visible inside the tractor in the background, which is a hard reject for any visible person or silhouette.",
+        "The water drop logo on the carton has significant visual distortion and resembles a bottle or container shape, risking the 'bottle/jar' hard reject."
+      ],
+      "correction_prompt": "Regenerate the scene with a completely unattended tractor in the background or remove it entirely to eliminate the human operator. Redesign the logo on the carton to be flat text or a simple geometric shape without bottle-like contours.",
+      "attempt": 5
+    }
+  ]
+}
