@@ -1,20 +1,23 @@
 {
   "source_id": "1270009001185-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 shows an oversized product that dominates the foreground, violating the requirement to keep the carton small and off-center in the lower third.",
-        "Panel 2 lacks the required 'elevated' camera angle and fails to show specific technical selection evidence (like emitter spacing close-ups); it presents a generic ground-level shot instead.",
-        "Panel 3 shows two distinct people in the background, which strictly triggers an immediate rejection.",
-        "Panel 3 lacks the required headworks equipment (filter, gauge, regulator, and manifold) and instead shows a full-sized product on a concrete pad without the necessary technical components."
+      "score": 20,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "Re-crop Panel 1 to make the product small and off-center in the lower third; raise the camera angle in Panel 2 to an elevated perspective and add close-up visual evidence of emitter spacing; remove all people from Panel 3 and replace the full-sized product with a small secondary carton accompanied by a visible fixed filter, gauge, regulator, and manifold on the concrete pad.",
+      "reasons": [
+        "Role 3 ('HEADWORKS DETAIL') is completely mismatched; it features a large tractor and hoses instead of an 'equipment-only' record of a fixed filter, gauge, and manifold on an empty pad, failing the 'no farm activity' requirement.",
+        "Role 1 fails composition: the product is centered and oversized relative to the 'small, off-center on the lower third' requirement.",
+        "Role 2 fails the 'elevated technical' requirement; it is a low-angle shot where the product remains large and central rather than small and secondary."
+      ],
+      "correction_prompt": "Regenerate all panels to strictly enforce role-specific camera angles (wide high-oblique for 1, elevated technical for 2, equipment-only low-level for 3) and ensure the product is consistently small and secondary in the background.",
       "panel_scores": [
-        35
+        20
       ],
       "set_attempt": 1
     }

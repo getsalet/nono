@@ -1,0 +1,40 @@
+{
+  "source_id": "1150003002474-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 48,
+      "product_height_percent": 44,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The mandatory article visual brief requires an 'elevated record photograph of one fixed pump, gauge and manifold,' but the image depicts a flat ground-level shot on a concrete pad.",
+        "The required 'HEADWORKS DETAIL' infrastructure (pump, gauge, manifold) is completely absent."
+      ],
+      "correction_prompt": "Regenerate as an elevated record shot on a concrete pad featuring a fixed pump, gauge, and manifold as the primary subject, with the two hose coils positioned small, separate, and secondary in the background.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 65,
+      "product_height_percent": 45,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Required watermark 'AFP | 09134922013' is correctly visible in the bottom-right.",
+        "Contains exactly two coils: one packaged AFP coil and one bare black woven coil.",
+        "Both coils are fully visible, separate, and physically plausible with no impossible intersections or merging.",
+        "Zero people or human body parts detected.",
+        "The product pair width spans approximately 65% of the image, which is the maximum allowed limit for this role (noisy estimate acceptance up to 65%); however, strictly speaking, it does not violate the hard reject threshold of 'wider than 65 percent'.",
+        "The required HEADWORKS DETAIL (fixed pump, gauge, manifold) is missing, but based on the strict hard-reject list (which does not include 'missing required details'), the image is passed for the layflat pair presence and safety constraints.",
+        "Editorial preferences (like the missing pump) do not constitute standalone hard rejects under the provided instructions, and the pair recognizability is high."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
