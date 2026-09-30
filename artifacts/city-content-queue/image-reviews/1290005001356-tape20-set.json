@@ -1,40 +1,60 @@
 {
   "source_id": "1290005001356-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 32,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "Role 3 violates the 'HEADWORKS DETAIL' brief by completely missing the required equipment (filter, gauge, regulator, and manifold); instead of an equipment-only record, it shows a generic farm scene that duplicates the layout and visual narrative of Role 2 (a single product shot on a surface with background farm activity).",
-        "Role 3's background contains active farm work (tractors and machinery), which explicitly contradicts the 'no farm activity' requirement.",
-        "Role 2 fails the 'SELECTION EVIDENCE' requirement as it lacks visible emitter-spacing or specific field-selection technical evidence.",
-        "The product is oversized in all three panels, violating the expectation that it should remain small and secondary."
+        "Role 1 (EDITORIAL HERO): The carton is centered horizontally and occupies a significant portion of the lower frame, appearing larger than 'small' or 'secondary'; the wide irrigation context (tubes on soil) is generic and doesn't clearly establish the farm/irrigation system context.",
+        "Role 2 (SELECTION EVIDENCE): The shot is essentially a ground-level crop of the product and ribbon. It lacks 'elevated technical arrangement', the farm building/tractor background makes it generic, and it shares the ground-level angle and subject treatment of Role 1, causing layout duplication.",
+        "Role 3 (HEADWORKS DETAIL): The concrete pad is empty except for the carton; it is missing the required technical hardware (fixed filter, gauge, regulator, manifold) that defines the 'equipment-only' role."
       ],
-      "correction_prompt": "For Role 3, replace the current image with an equipment-only record of a fixed filter, gauge, regulator, and manifold on an empty concrete pad with no background farm activity, and ensure all panels feature a smaller, more secondary product scale.",
+      "correction_prompt": "Re-position the carton in Role 1 to be small and strictly off-center; elevate Role 2 to a technical angle emphasizing the ribbon's emitters with a simplified field edge; add a filter, gauge, and manifold arrangement to the pad in Role 3.",
       "panel_scores": [
-        45
+        32
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Editorial Hero) features multiple large tractors and farm vehicles in the background that distract from the product and violate the requirement for the farm/irrigation context to be the sole dominant element aside from the small product.",
-        "Role 3 (Headworks Detail) fails the 'equipment-only' and 'no farm activity' requirements by displaying a complex, wheeled mobile filtration unit and control system rather than the specific 'fixed filter, gauge, regulator and manifold' requested on an empty pad.",
-        "The environmental structure in Role 3 (concrete pad) is too similar to the placement in Role 2, lacking sufficient distinct separation between the 'selection evidence' and 'hardware detail' narratives."
+      "score": 40,
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "Role 1: Remove the tractors to ensure only the crop field and irrigation lines dominate. Role 3: Replace the wheeled filter unit with a stationary arrangement of a single fixed filter, gauge, regulator and manifold on a bare concrete pad.",
+      "reasons": [
+        "Role 2 fails to show 'visible emitter-spacing' as required for SELECTION EVIDENCE.",
+        "Role 3 fails to show 'one fixed filter, gauge, regulator and manifold' on an empty concrete pad, which is required for HEADWORKS DETAIL.",
+        "Roles 2 and 3 are conceptually similar in narrative and camera height, effectively duplicating the 'technical arrangement' role."
+      ],
+      "correction_prompt": "For Role 2, clearly show the drip tape coiled with specific emitter spacing marked or visible; for Role 3, display a manifold equipped with a filter, gauge, and regulator on a concrete pad, with no tape coil present.",
       "panel_scores": [
-        45
+        40
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 2 contains a person, which is an automatic rejection criterion ('any person').",
+        "Panel 3 features tractors in the background, which constitutes 'farm activity' and violates the 'no farm activity' constraint for the Headworks Detail role.",
+        "Panel 3 shows the product on the ground rather than on a concrete pad as explicitly required by the 'empty concrete pad' instruction for role 3."
+      ],
+      "correction_prompt": "Regenerate panels 2 and 3: remove the person from panel 2; replace the background of panel 3 with an empty concrete pad and remove the tractors.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
     }
   ]
 }

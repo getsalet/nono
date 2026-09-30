@@ -1,0 +1,67 @@
+{
+  "source_id": "1300006002282-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 33,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Presence of multiple people in the background (yellow jacket, blue shirt)",
+        "Failed Mandatory Role: Image shows a single roll in an open field, not the required 'elevated record photograph of one fixed filter, gauge, regulator and manifold on an empty concrete pad'",
+        "Product width estimate (33%) exceeds the hard reject threshold of 30%",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an elevated detail shot of a drip-tape equipment assembly (filter, gauge, regulator, manifold) on a concrete pad. The carton roll must be small and secondary to the equipment. Ensure the background contains zero people. Include the required watermark in the bottom-right corner. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 34,
+      "product_height_percent": 26,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The visible product bounding box is approximately 34% of the image width, which violates the hard rejection limit of >30% width.",
+        "Required HEADWORKS DETAIL elements (filter, gauge, regulator, manifold on a concrete pad) are missing; only the standalone carton roll is present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image showing an elevated detail of fixed irrigation hardware including a filter, gauge, regulator, and manifold on a concrete pad, with the small secondary AFP drip-tape roll included in the frame so it occupies less than 20% of the image width, maintaining the exact bottom-right watermark. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 22,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Presence of two standing people in the background (hard reject rule: zero people)",
+        "Visual role mismatch: Image shows a farm scene with a truck and hose, rather than the requested 'equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold'"
+      ],
+      "correction_prompt": "Regenerate the image as an elevated close-up of fixed irrigation infrastructure (filter, gauge, regulator, manifold) on a concrete pad. Remove all human figures and the background truck. Keep the small AFP drip-tape roll secondary in the foreground. Retain the bottom-right watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The primary subject is a single wide, low cylindrical drip-tape carton roll (AFP white and blue) that physically matches the requested object geometry and material.",
+        "The roll dimensions approximate the upper limits of the acceptable range (30% width, 35% height) but remain within the physical plausibility and noise thresholds specified.",
+        "The scene is an empty concrete pad with no visible people or body parts, strictly adhering to the safety constraints.",
+        "While the background contains agricultural equipment, it does not contain prohibited commercial containers (bottles, jars) or 'fake headline/caption' gibberish text.",
+        "The exact required watermark 'AFP | 09134922013' is correctly present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

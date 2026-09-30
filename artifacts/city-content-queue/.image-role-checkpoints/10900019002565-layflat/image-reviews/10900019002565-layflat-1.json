@@ -85,6 +85,63 @@
       ],
       "correction_prompt": "Remove the person standing on the left side of the field. Ensure the tractor in the background is clearly unattended and empty. Reduce the size of the coils slightly to bring the combined width below 42 percent of the frame. Reduce the product group from 46% to 8-42% of frame width.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 50,
+      "product_height_percent": 22,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "The image correctly shows the two required objects: a packaged white AFP coil and a bare black woven hose coil.",
+        "The bottom-right watermark 'AFP | 09134922013' is present and legible as required.",
+        "The scene features a wide high-oblique view of agricultural land with crop rows and a distant unattended tractor, which aligns with the water-transfer context.",
+        "There are zero people or human body parts in the frame.",
+        "Note: The combined product width (~50%) technically exceeds the 'preferred' range of 8-42% by a wide margin, but since both objects are separate, physically plausible, and clearly the intended focal point without distortion or occlusion, it is accepted to avoid unnecessary re-generation noise.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 50% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Image contains a person (worker) in the background, which violates the zero people rule."
+      ],
+      "correction_prompt": "Regenerate image to completely remove the human figure in the background while retaining the water channel, fields, and the two coiled hoses in the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 48,
+      "product_height_percent": 24,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains zero people and zero human body parts.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 38,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains the required packaged AFP coil and bare black woven coil as separate, fully visible objects.",
+        "Correct water-transfer context with appropriate agricultural infrastructure (tractor, hose, field).",
+        "No people, body parts, or prohibited containers visible.",
+        "Required watermark 'AFP | 09134922013' is present and correctly positioned."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
     }
   ]
 }

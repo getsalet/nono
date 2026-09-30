@@ -1,0 +1,82 @@
+{
+  "source_id": "1300002001587-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: presence of four people (human silhouettes) in the background",
+        "Hard reject: additional cardboard packaging (brown carton) in the background violates single product requirement",
+        "Product dimensions exceed maximum thresholds: width 30% and height 38% vs max 35%",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people and distant farm equipment/tractor from the background. Remove the brown cardboard box. Reposition the white and blue AFP drip tape roll so it is a secondary element (occupying less than 25% width and 25% height of the frame) to fit the 'HEADWORKS DETAIL' role. Maintain the infrastructure elements (filter, gauge, manifold) as the primary focus. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 18,
+      "product_height_percent": 14,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Visible human figures (farmers/workers) are present in the background.",
+        "Hard reject: A person is clearly visible in the middle distance, which is forbidden even if distant.",
+        "Hard reject: A person is visible in the background on the left side."
+      ],
+      "correction_prompt": "Regenerate the image to remove all people. Keep the white and blue AFP drip tape roll on the concrete pad and the irrigation equipment (filter, gauge, manifold) as the main focus. Ensure the background shows only an empty farm landscape and unattended tractor, with zero human silhouettes or body parts visible. Maintain the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 31,
+      "product_height_percent": 32,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Mandatory HEADWORKS role failed: The image does not feature a 'fixed filter, gauge, regulator and manifold' on a concrete pad. Instead, it shows a roll of tape on a pad with a tractor in the background, which does not match the 'elevated record photograph of one fixed filter' requirement.",
+        "Product Width Exceeded: The product is approximately 31% of the frame width, which exceeds the hard rejection threshold of 30%.",
+        "Secondary element missing: The brief required the carton to be 'small and secondary,' but it is the dominant object in the foreground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Generate an image showing a detailed, low-angle close-up of a fixed drip irrigation assembly (filter, pressure gauge, and manifold) mounted on a concrete pad. Include a single small, white and blue AFP drip-tape carton in the background or lower corner to serve as a size reference. Ensure the carton is less than 20% of the image width. No tractors or farm equipment visible in the primary focus. Keep the required watermark. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains multiple humans (a standing worker and a person operating a tractor), which is a hard reject.",
+        "The background shows a mix of farm vehicles (tractor, truck) instead of the requested 'HEADWORKS DETAIL: equipment-only... on an empty concrete pad' with no farm activity.",
+        "The product (drip-tape roll) exceeds the 30% width limit for the frame, which is a hard reject.",
+        "The text on the carton is partially gibberish/illegible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate an 'HEADWORKS DETAIL' shot of a single empty drip-tape roll on a concrete pad, next to fixed irrigation equipment (filter, gauge, manifold). No people, no farm vehicles (no tractors or trucks). Ensure the roll is small (under 25% of frame width). Add the required watermark 'AFP | 09134922013' in the bottom right. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 32,
+      "product_width_percent": 21,
+      "product_height_percent": 24,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject: multiple human figures and workers are visible in the background (one near the tractor, one on the far-left), violating the zero-people constraint.",
+        "The background is too busy with human activity and machinery, whereas the brief requires an empty concrete pad with no farm activity."
+      ],
+      "correction_prompt": "Remove all human figures, workers, and silhouettes from the background. Ensure the concrete pad is completely empty of people. Keep the AFP drip-tape roll and the fixed equipment infrastructure only.",
+      "attempt": 5
+    }
+  ]
+}

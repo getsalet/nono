@@ -4,18 +4,57 @@
   "history": [
     {
       "pass": false,
-      "score": 30,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 fails the 'off-center' requirement as the product pair is centered in the foreground.",
-        "Panel 3 fails the 'equipment-only' requirement by showing a completely empty concrete pad with no fixed pump, gauge, or manifold.",
-        "Panel 3 fails the 'secondary' product requirement by showing the coils and a third spool of tubing as large foreground subjects rather than small background elements."
+      "score": 35,
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "In panel 1, shift the coil pair to the far right; in panel 3, place a pump, gauge, and manifold as the primary subject on the pad while making the coils tiny and backgrounded, and remove the extra spool.",
+      "reasons": [
+        "Role 2 fails to provide the required technical narrative of comparing diameter or construction difference between the two coils, instead showing the identical product pair in a generic empty field context similar to Role 1.",
+        "Role 3 lacks the specific 'headworks detail' equipment (fixed pump, gauge, and manifold) on the concrete pad, leaving it visually redundant to the previous panels and failing to advance the editorial set."
+      ],
+      "correction_prompt": "Recompose Role 2 with a close-up technical comparison of the two coil types (e.g., measuring diameter or showing cross-sections) and rebuild Role 3 to feature a pump and gauge manifold on an empty concrete pad with the coils secondary in the background.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 contains a person, which is strictly prohibited.",
+        "Role 3 is nearly identical to Role 2, featuring the same two coils on a concrete pad with a field background (failed to show required headworks equipment).",
+        "Roles 2 and 3 are duplicate layouts."
+      ],
+      "correction_prompt": "Regenerate panel 3 as an elevated 'record' photo of a fixed pump, gauge, and manifold on a pad with the two coils appearing small/secondary, and regenerate panel 2 to remove the person.",
       "panel_scores": [
         30
       ],
-      "set_attempt": 1
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 fails: The brief requires an 'elevated technical comparison' showing construction differences, but the image displays the coils on a loose field of gravel next to a disconnected, un-realistic floating gauge assembly, failing to provide the intended technical narrative for the product.",
+        "Role 3 fails: The brief explicitly requires a 'pump, gauge, and manifold' setup on an empty concrete pad, but the image shows only the two coils with no equipment or headworks hardware present.",
+        "Role 1 fails: The product coils are oversized and centered in the foreground, violating the requirement that they remain 'small, separate, and off-center'.",
+        "Role 3 fails: The 'empty concrete pad' described in the brief is completely absent from the visual evidence."
+      ],
+      "correction_prompt": "For Role 1, drastically reduce the product size and move it to the periphery of a high-oblique water channel shot. For Role 2, present the two coils on a technical surface for a side-by-side diameter comparison. For Role 3, replace the gravel field with a concrete pad featuring a visible pump and gauge manifold in the background while keeping the coils secondary.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
     }
   ]
 }
