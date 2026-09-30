@@ -1,36 +1,38 @@
 {
   "source_id": "1240006001032-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 0,
-      "product_width_percent": 0,
-      "product_height_percent": 0,
-      "product_x_center_percent": 0,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 68,
       "reasons": [
-        "Presence of a person (a farmer) violates the hard reject criteria",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+        "Hard reject: Two visible people (man and woman) present in the foreground handling the coil. This violates the zero-people requirement.",
+        "Hard reject: Human faces, hands, arms, and bodies are clearly visible, violating the strict no-human-elements rule.",
+        "The image does not match the editorial hero brief showing only the approved coils in a wide high-oblique water-transfer context.",
+        "The watermark 'AFP | 09134922013' is correctly placed in the bottom-right corner."
       ],
-      "correction_prompt": "Remove all human figures, faces, and body parts from the image. Ensure only the approved packaged AFP coil and the bare black woven coil are visible in the water-transfer context. Enlarge the product group from 0% to 8-42% of frame width.",
+      "correction_prompt": "Regenerate without any people, farmers, workers, or human body parts. Show only the packaged AFP coil and bare black woven coil in a wide agricultural water-transfer context, small and off-center.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 95,
-      "product_width_percent": 30,
-      "product_height_percent": 22,
-      "product_x_center_percent": 31,
+      "score": 92,
+      "product_width_percent": 15,
+      "product_height_percent": 8,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Successfully depicts both the packaged AFP coil and the bare black woven coil.",
-        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
-        "The context is a valid water-transfer scene with a flowing irrigation channel.",
-        "No people or human body parts are visible.",
-        "The pair width is approximately 30%, which is well within the preferred 12-20% range and accepted tolerance.",
-        "No forbidden extra commercial products (bottles, jars, etc.) are present."
+        "Approved layflat pair visible: one packaged AFP coil and one bare black woven coil",
+        "Combined product width approximately 15% (within acceptable 8-42% range)",
+        "Zero people and zero human body parts present",
+        "Distant unattended tractor and farm buildings are allowed infrastructure elements",
+        "Watermark AFP | 09134922013 is present and correctly placed",
+        "Editorial hero context with wide high-oblique water-transfer setting achieved",
+        "Products are small, separate, off-center, and physically plausible"
       ],
       "correction_prompt": "",
       "attempt": 2
