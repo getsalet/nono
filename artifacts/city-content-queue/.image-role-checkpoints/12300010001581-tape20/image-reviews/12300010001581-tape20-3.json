@@ -1,0 +1,51 @@
+{
+  "source_id": "12300010001581-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 24,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Visible human body parts (two people standing near the tractors in the background)"
+      ],
+      "correction_prompt": "Regenerate the image ensuring the background is completely free of any human figures or body parts; retain the fixed filter/gauge hardware and single product roll",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 33,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: multiple human figures (farmers/works) are visible in the background field (two individuals standing near the rows and hay bales). The prompt explicitly forbids 'zero people and zero human body parts', 'Hard reject any person, farmer, worker... even distant'",
+        "The product is not a 'carton roll' but a bulk roll of tape on a concrete pad, which conflicts with the 'selected image role' of 'HEADWORKS DETAIL: equipment-only... exactly one approved carton remains small and secondary'",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with exactly one AFP drip tape carton roll on an empty concrete pad. Include a fixed filter, gauge, and manifold on the pad. Remove all humans, farmers, and field workers from the background. Replace the distant field and tractor with a clean infrastructure background or a distant unattended farm building. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image displays a single white-and-blue drip-tape roll that matches the required AFP branding and dimensions.",
+        "Zero people, human body parts, or forbidden objects (bottles, jars, cans) are present in the frame.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "The roll dimensions fall within the acceptable width range (25%) and height range (28%).",
+        "The background context with farm infrastructure and a distant unattended tractor aligns with the article brief, though the specific 'HEADWORKS DETAIL' is present but the roll appears slightly more prominent than 'secondary'."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

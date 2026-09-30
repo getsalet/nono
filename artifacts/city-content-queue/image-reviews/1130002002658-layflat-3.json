@@ -1,0 +1,68 @@
+{
+  "source_id": "1130002002658-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 65,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Mandatory 'HEADWORKS DETAIL' role (fixed pump, gauge, and manifold on a concrete pad) is completely missing from the image.",
+        "The product pair is too large and dominant (estimated ~65% width), conflicting with the requirement that the two-coil pair remain 'small, separate and secondary' in the context of the pump infrastructure.",
+        "No pump, gauge, or manifold infrastructure is visible."
+      ],
+      "correction_prompt": "Regenerate image showing a fixed pump, gauge, and manifold on an empty concrete pad as the main subject; place the packaged AFP coil and bare black woven coil small in the background/secondary position; do not include the pump equipment in the current shot.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 70,
+      "product_height_percent": 28,
+      "product_x_center_percent": 53,
+      "reasons": [
+        "Visible human in the top right corner violates the strict zero-person policy.",
+        "Product pair bounding box exceeds the 65 percent width limit.",
+        "Image composition is an environmental field shot, failing the 'equipment-only' headworks requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Remove the visible person and crop the scene to show a fixed pump, gauge and manifold on an empty concrete pad, keeping the coils small and secondary. Reduce the product group from 70% to 8-65% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL equipment: no fixed pump, gauge, or manifold is visible on the concrete pad as required by the brief.",
+        "The left packaged coil is wrapped in a distorted, unrecognizable metallic film that resembles a plastic bag or garbage rather than a standard AFP product packaging, likely constituting an 'invented package' or 'severely distorted dimension'.",
+        "The combined width of the two coils is approximately 55% of the frame, which significantly exceeds the preferred range of 12-20% for this secondary role."
+      ],
+      "correction_prompt": "Add a large fixed pump, manifold, and gauge on the concrete pad as the main focal point. Shrink the two coils (one packaged AFP, one bare black woven) to be very small (approx 15% width) and positioned in the background or as a minor secondary element. Ensure the packaging on the left coil looks like standard industrial wrapping, not a distorted plastic bag.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 42,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Approved layflat pair is present: one packaged coil and one bare black woven coil",
+        "Required equipment detail visible: fixed pump, gauge, and manifold on concrete pad",
+        "Zero people or human body parts visible",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correct",
+        "Width estimate of ~42% is noisy but acceptable (within 8-65% range) with objects fully visible and separate"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "source_id": "12300019002665-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 27,
+      "product_height_percent": 25,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "The required exact bottom-right watermark 'AFP | 09134922013' contains an extra zero compared to the mandated string 'AFP | 09134922013' (required has 8 digits, image has 9).",
+        "Placement is centered horizontally rather than off-center on the lower third as required for the EDITORIAL HERO role."
+      ],
+      "correction_prompt": "Regenerate to fix the bottom-right watermark to exactly 'AFP | 09134922013' (8 digits) and shift the white-and-blue roll off-center to the left or right side of the lower third.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Visible farmer/worker standing in the field background violates the 'zero people' hard reject rule."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the farmer standing in the background. Retain the single AFP drip-tape roll in the lower-left or lower-right foreground, the agricultural field rows, and the distant tractor, while keeping the bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 34,
+      "product_height_percent": 38,
+      "product_x_center_percent": 78,
+      "reasons": [
+        "Product width (~34%) and height (~38%) exceed the acceptable maximum limits of 30% and 35% respectively.",
+        "The carton appears to be cut off at the bottom edge of the frame rather than being fully visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the size of the white-and-blue drip-tape carton significantly so that its width is under 20% and height under 30% of the frame. Ensure the entire roll is fully visible and not cropped by the bottom edge. Keep the farm and irrigation context as the main focus with the roll positioned small in the lower third. Reduce the product group from 34% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 15,
+      "product_height_percent": 12,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The required watermark 'AFP | 09134922013' is not visible in the bottom-right corner.",
+        "An unattended tractor is visible in the background, which is not allowed."
+      ],
+      "correction_prompt": "Add the bottom-right watermark 'AFP | 09134922013' and remove the unattended tractor from the background.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 19,
+      "product_height_percent": 18,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip-tape roll, wide low cylindrical carton, physically plausible",
+        "Roll is small, fully visible, off-center on the lower third as required",
+        "Zero people or human body parts",
+        "Background matches editorial hero role: wide high-oblique farm and irrigation context with crop rows and distant buildings",
+        "Watermark 'AFP | 09134922013' present in bottom-right as required",
+        "No hard-reject elements: no second roll, bottle, container, hose through roll, fake text, or impossible geometry"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

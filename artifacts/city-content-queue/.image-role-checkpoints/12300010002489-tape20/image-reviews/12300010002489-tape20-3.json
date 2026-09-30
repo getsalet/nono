@@ -1,0 +1,84 @@
+{
+  "source_id": "12300010002489-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 38,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains a single AFP white-and-blue wide low cylindrical drip-tape carton roll as the primary subject.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "There are zero people or human body parts present in the image.",
+        "The background includes relevant context such as an unattended tractor and farm building, which are allowed under the brief.",
+        "The roll is appropriately sized relative to the frame and maintains physical plausibility.",
+        "The image aligns with the editorial preferences for a detailed equipment record without extraneous commercial products.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human silhouette/person visible in the mid-ground background.",
+        "Product width exceeds the 30 percent hard reject threshold.",
+        "Mandatory image role 'HEADWORKS DETAIL' not met; image shows the roll in isolation rather than an elevated record of fixed infrastructure (filter, gauge, regulator, manifold).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to strictly match the 'HEADWORKS DETAIL' role: a high-angle record photo of a fixed filter, gauge, regulator, and manifold on a concrete pad. Include the small AFP carton roll as secondary. Ensure the background contains zero humans or silhouettes. Reduce the carton roll width to under 30 percent of the frame. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Two human silhouettes are clearly visible working in the background, violating the zero-person rule.",
+        "Mandatory role mismatch: The brief requires an 'elevated record photograph of one fixed filter, gauge, regulator and manifold' as the primary subject, but the image shows a simple drip-tape roll on a concrete pad without the required equipment setup.",
+        "Product size violation: The estimated bounding box width (~38%) significantly exceeds the maximum 30% physical plausibility limit for this specific role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an elevated, top-down close-up of a fixed filter, gauge, and regulator system on a concrete pad; remove all human figures from the background; ensure the drip-tape roll is secondary and occupies no more than 20% of the frame width. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 23,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Image fails to meet the mandatory 'HEADWORKS DETAIL' brief which requires an elevated view of fixed filters, gauges, and regulators; instead, the image shows a product-centric shot of the roll on a concrete pad.",
+        "Roll width (23%) is within the preferred range, but the specific 'elevated equipment detail' context is completely missing."
+      ],
+      "correction_prompt": "Generate an elevated 'HEADWORKS DETAIL' photograph showing fixed irrigation infrastructure (filter, gauge, manifold) on a concrete pad. A small secondary AFP white-and-blue drip-tape roll must be visible as a minor element, not the main focus. No people.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Multiple human figures (faces, body parts) are clearly visible in the background",
+        "Visible human silhouettes and workers hard-reject the image",
+        "Image shows a gauge but does not match the strict 'equipment-only' role requirement with no farm activity or people"
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the background; show a clean concrete pad with only the drip-tape carton, a filter, gauge, and regulator as an equipment-only detail shot with no farm activity or humans.",
+      "attempt": 5
+    }
+  ]
+}

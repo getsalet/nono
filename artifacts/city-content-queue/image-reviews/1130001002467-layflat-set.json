@@ -4,52 +4,53 @@
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 violation: The 'Selection Evidence' panel explicitly forbids a person, and this image shows two green tractors with visible drivers in the background, which acts as a 'person' and 'farm activity' distractor.",
-        "Role 3 violation: The 'Headworks Detail' panel requires the two approved coils to remain 'secondary' relative to the fixed pump and gauge equipment. In this image, the coils dominate the foreground while the required pump/gauge equipment is either missing or disproportionately small in the distance, failing to establish the required equipment-only technical narrative."
+      "score": 62,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Re-generate Role 2 without the tractor drivers and without active farm machinery; strictly limit the background to empty fields to serve as 'selection evidence' only. For Role 3, scale up the fixed pump, gauge, and manifold assembly on the concrete pad to be the primary focal point, ensuring the two coils are small, unobtrusive, and clearly secondary in the background.",
+      "reasons": [
+        "Role 1 requires the packaged and bare coils to be 'small and off-center', but they are large, centrally positioned, and dominate the frame, violating the 'oversized product' rejection rule.",
+        "Roles 1 and 2 are visual duplicates: both use the identical 'side-by-side coil' layout at a low angle, failing to provide the 'elevated technical comparison' required for Role 2 or the 'wide high-oblique' perspective required for Role 1.",
+        "The product identity is repeated in the same physical position in the bottom-left of both Role 1 and Role 2 images."
+      ],
+      "correction_prompt": "Role 1: Reposition the coils to the bottom-right corner to reduce their scale relative to the wide city-agriculture background. Role 2: Shift to an elevated/overhead perspective that clearly compares the diameter difference between the bare coil and the packaged coil.",
       "panel_scores": [
-        35
+        62
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 25,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 55,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 2 fails to show the required 'elevated technical comparison' highlighting diameter or construction difference; it presents a static catalog-style arrangement with no visible comparative evidence.",
-        "Role 3 completely omits the required 'fixed pump, gauge and manifold' equipment on a concrete pad; it shows only the coils on a plain background, effectively duplicating the product-only narrative of Role 2.",
-        "Roles 2 and 3 are not distinct enough in camera height/angle or technical narrative, both acting as isolated product shots without the specified headworks context.",
-        "The environmental context in Role 2 (bare tilled field) is generic and does not contribute to the specific water-transfer technical narrative requested."
+        "Role 1 (Image 1): Fails the environment requirement. The brief for an editorial hero in Hamadan/Toeysarkan context implies a specific regional landscape, but the image shows a generic suburban background with high-rise apartment buildings, which is irrelevant to the agricultural product brief.",
+        "Role 2 (Image 2): Contains a forbidden element. The presence of a person standing in the background is a strict rejection criterion ('any person'). Additionally, the composition is a low-angle 'product shot on dirt' rather than the 'elevated technical comparison' specified, and it does not clearly demonstrate diameter or construction differences between the coils.",
+        "Role 3 (Image 3): Product violation. The brief requires the two-coil pair to remain 'small, separate and secondary' to the pump. Here, the coils are placed in the immediate foreground and are oversized relative to the pump, competing for primary focus.",
+        "Set-level Layout Repetition: Roles 1 and 2 utilize nearly identical low-angle camera heights, flat ground planes, and foreground product placement, failing the requirement for 'visibly distinct in camera height/angle'."
       ],
-      "correction_prompt": "Regenerate Role 3 to explicitly feature a fixed pump, gauge, and manifold on a concrete pad with the coils as secondary elements, and improve Role 2 to a close-up elevated shot that clearly contrasts the diameter and construction of the two coils.",
+      "correction_prompt": "Image 1: Reshoot from a high oblique angle showing the specific Hamadan agricultural landscape (hills/terraces) without city buildings; keep coils small and off-center. Image 2: Remove the person completely; use a top-down perspective to contrast the two coils and their diameters on a clean technical surface. Image 3: Push the coils to the background or make them significantly smaller so the pump and manifold on the concrete pad remain the sole primary focus.",
       "panel_scores": [
-        25
+        55
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 45,
+      "score": 30,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "Role 2 (Panel 2) violates the role specification: it includes a 'third commercial package' (a cardboard box) and 'extra commercial objects' (pressure gauge and valve) in the middle of the frame, whereas the brief strictly requires an elevated comparison of only the two-coil pair showing diameter difference.",
-        "Role 2 and Role 3 share the exact 'approved two-coil pair' layout (parallel arrangement of two black coils) in the foreground, which triggers the 'repeated layouts' rejection criterion despite the different backgrounds (dirt vs. concrete).",
-        "Role 1 (Panel 1) fails to meet the 'small, separate and off-center' requirement; the hero product shots are significantly oversized and occupy the bottom foreground center of the frame."
+        "Role 1 and Role 2 use an identical layout structure: a wide shot of a concrete pad with the packaged and bare coils in the foreground and a large pump unit on the right, making the roles functionally indistinguishable.",
+        "Role 1 contains a large pump unit, which contradicts the 'small, separate and off-center' requirement for coils and introduces non-relevant foreground hardware.",
+        "Role 3 fails to include the required 'fixed pump, gauge and manifold' configuration, showing only the two coils on a flat surface instead of the necessary equipment setup on an empty pad."
       ],
-      "correction_prompt": "Regenerate Role 2 as a high-angle close-up of ONLY the two coils side-by-side to show diameter contrast, strictly removing all boxes, gauges, and bottles; regenerate Role 1 to shrink the product coils to small off-center figures on the lower left; regenerate Role 3 so the coils are tucked behind or far to the side of the pump assembly, ensuring they do not compete with the equipment layout in Role 2.",
+      "correction_prompt": "Role 1: Wide shot of a hillside with water channels, small coils off-center, no pump; Role 2: Top-down close-up showing two coils side-by-side on soil, no pump; Role 3: Concrete pad with a stationary manifold, gauge and pump, with the two coils small and placed in the background.",
       "panel_scores": [
-        45
+        30
       ],
       "set_attempt": 3
     }

@@ -1,21 +1,52 @@
 {
   "source_id": "12200011002004-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 60,
+      "score": 45,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Hero): The product carton is significantly oversized relative to the field perspective and is not placed on the 'lower third' as requested; the camera angle is not a high-oblique 'Editorial Hero' view.",
-        "Role 3 (Detail): The approved carton is not 'small and secondary'; instead, the headworks equipment is mounted directly on top of the large carton, making the carton a primary element of the composition.",
-        "Role 3 (Detail): The background contains farm activity (visible tractor), which violates the 'no farm activity' constraint for this specific technical detail role."
+        "Panel 2 shows the product in a centered mid-ground position, but fails to clearly display the 'emitter-spacing' or 'field-selection evidence' required for the SELECTION EVIDENCE role.",
+        "Panel 3's background (open farm buildings and active field lines with tractors) contradicts the requirement for an 'empty concrete pad' and 'no farm activity' for the HEADWORKS DETAIL role.",
+        "In Panel 3, the irrigation equipment cluster is too prominent and visually competes with the product, whereas the brief requires the product carton to remain 'small and secondary'."
       ],
-      "correction_prompt": "Reshoot Role 1 with a smaller carton on the lower third; redesign Role 3 to isolate the headworks on an empty concrete pad with the carton placed small and separate.",
+      "correction_prompt": "For Panel 2, reframe to show close-up detail of drip line emitter spacing to establish selection evidence. For Panel 3, replace the active farm background with an isolated, empty concrete headworks pad and ensure the single product carton is significantly smaller and less dominant than the filter, gauge, and manifold assembly.",
       "panel_scores": [
-        60
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 includes a person in the background, which violates the 'no person' constraint",
+        "Role 3 includes a farm tractor in the background, which is considered farm activity and violates the 'no farm activity' constraint for this specific hardware detail shot"
+      ],
+      "correction_prompt": "Regenerate image 2 without any people in the background; regenerate image 3 with an empty concrete pad and no farm activity or vehicles in the background.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Role 2 fails the 'SELECTION EVIDENCE' requirement: The image shows a generic farm building and a tractor with a trailer in the background instead of the specified 'field edge or farm building' alone. More critically, the prompt asks for 'visible emitter-spacing or field-selection evidence' in a 'technical arrangement,' which is completely missing; it is just a product on a block in a field, making it indistinguishable from a generic 'hero' shot and lacking the required technical narrative depth.",
+        "Role 2 is too similar to Role 1 in composition: Both images use a low-angle perspective with a blurred background and place the product on a concrete block. The visual narrative does not advance to the 'technical' level required for role 2, resulting in a layout duplication between the hero and selection shots.",
+        "Role 3 lacks the required 'empty concrete pad' environment: The equipment and product are placed on a massive concrete apron or apron-slab (likely a storage yard), not the specified 'empty concrete pad' for equipment-only record photography."
+      ],
+      "correction_prompt": "Re-shoot Role 2 to show a close-up technical arrangement of the hose reel on the edge of a drip-irrigated bed with visible emitter lines, removing the generic tractor context; ensure Role 3 is placed on a small, isolated concrete pad to distinguish it from the wide yard.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
     }
   ]
 }

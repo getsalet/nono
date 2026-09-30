@@ -4,32 +4,35 @@
   "history": [
     {
       "pass": false,
-      "score": 62,
+      "score": 45,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Image 1): The carton is placed on the lower-center line, which is not 'off-center on the lower third' as required by the specific spatial constraint of the brief. Additionally, the tractor is actively driving with a dust cloud, which contradicts the rule that a tractor must be 'distant/unattended' and not 'farm activity'."
+        "Role 1 (Hero): The product (carton) is significantly oversized, dominating the foreground and violating the 'product stays small' instruction. The tractor is actively 'spraying,' which contradicts the requirement for a static/contextual background with no active farm activity.",
+        "Role 2 (Selection Evidence): The product is oversized and lacks the required technical narrative elements such as visible emitter spacing or specific field-selection evidence.",
+        "Role 3 (Headworks Detail): The background is cluttered with multiple active tractors and heavy machinery, violating the 'empty concrete pad' and 'no farm activity' constraints. The hardware is incomplete; it lacks the required fixed filter and manifold, showing only two loose components."
       ],
-      "correction_prompt": "In Role 1, reposition the carton to the far left or right (lower third) and change the tractor to a static, parked state to remove the 'active' farm context.",
+      "correction_prompt": "Scale the AFP product to a small, secondary size in all panels. Remove active machinery from backgrounds, keeping only static context (like distant buildings). For Role 3, place a complete headworks assembly (filter, gauge, regulator, manifold) on a clean empty concrete pad without tractors.",
       "panel_scores": [
-        62
+        45
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 78,
+      "score": 35,
       "duplicate_roles": [
+        1,
         3
       ],
       "reasons": [
-        "The watermark in the top-right of image 3 displays 'AFP | 09136992013', which differs from the required bottom-right format and the exact number seen in images 1 and 2 ('AFP | 09134922013').",
-        "Image 1 features an active tractor with visible operator/dust, violating the 'no farm activity' rule for the hero role (allowed is only distant/unattended).",
-        "Image 3's concrete pad is not visible in the surrounding environment structure as strictly required by the role 3 brief, and the product placement is central rather than 'small and secondary'.",
-        "Image 2 shows unattached 'irrigation string' on the ground rather than visible 'emitter-spacing' or 'field-selection evidence' (like unboxing/dry-fit)."
+        "Role 1 (Editorial Hero) is misassigned: the image contains headworks equipment (gauge, manifold) which contradicts the role brief of 'exactly one approved carton stays small... farm context dominates'. The equipment makes the product context 'technical' rather than 'editorial'.",
+        "Role 3 (Headworks Detail) is misassigned: The image shows only the irrigation tape roll on a concrete pad with farm buildings in the background, completely missing the required 'fixed filter, gauge, regulator and manifold' equipment described in the role brief.",
+        "Role 2 (Selection Evidence) fails the 'visible emitter-spacing or field-selection evidence' requirement, showing only a tilled field rather than an arrangement that proves selection criteria.",
+        "Role 3 fails the 'no farm activity' requirement by showing active farm machinery (tractors) in the background, and critically, it lacks the mandatory technical hardware for the Headworks Detail role."
       ],
-      "correction_prompt": "Re-shoot with the 'AFP | 09134922013' watermark in the bottom-right corner for all images; ensure image 1 shows only a distant/unattended tractor; provide visible emitter-spacing/dry-fit evidence in image 2; and ensure the concrete pad is clearly visible and the carton is secondary in image 3.",
+      "correction_prompt": "Regenerate Role 1 to show the wide farm field with the tape roll small and off-center, removing all headworks equipment; regenerate Role 3 to feature the filter, gauge, and manifold hardware on the concrete pad without farm machinery in the background; regenerate Role 2 to include visible emitter spacing evidence.",
       "panel_scores": [
-        78
+        35
       ],
       "set_attempt": 2
     }

@@ -1,0 +1,81 @@
+{
+  "source_id": "1230002001578-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 33,
+      "product_height_percent": 40,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: visible person crouching next to the product.",
+        "Hard reject: second person standing in the background.",
+        "Hard reject: visible hands, legs, and body parts.",
+        "Product roll exceeds hard reject threshold for height (40% > 35%).",
+        "Product roll exceeds hard reject threshold for width (33% > 30%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate as an equipment-only HEADWORKS DETAIL shot: an empty concrete pad featuring one fixed filter, gauge, regulator, and manifold. Remove ALL human figures, body parts, and workers. Ensure the small AFP white-and-blue drip-tape roll (secondary to the equipment) remains under 30% width and under 35% height. Preserve the bottom-right 'AFP | 09134922013' watermark exactly as-is. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 14,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Visible human figure in the background (farmer/worker) on the left side violates the strict 'zero people' requirement for an equipment-only photograph.",
+        "Failure to include mandatory infrastructure elements (fixed filter, gauge, regulator, and manifold) required for the HEADWORKS DETAIL role.",
+        "Unattended agricultural machinery (tractor and sprayer) in the background conflicts with the 'empty concrete pad' and 'no farm activity' brief."
+      ],
+      "correction_prompt": "Regenerate the image to strictly exclude all human figures. Show a close-up of fixed irrigation infrastructure (filter, gauge, manifold) on an empty concrete pad with the single AFP drip-tape roll as a secondary element. Ensure the background is plain or contains only static infrastructure, removing all farm machinery.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Missing required fixed irrigation hardware (filter, gauge, regulator, manifold) on a concrete pad",
+        "The product is presented alone without the required infrastructure context (HEADWORKS DETAIL role)",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Add a fixed irrigation manifold, filter, and gauge on an empty concrete pad next to the small secondary tape roll, removing the open dirt background. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 28,
+      "product_height_percent": 26,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The image contains a clearly visible human figure (a person standing near a piece of farm equipment in the left-mid ground), which is a hard reject.",
+        "The primary visual focus of the image is the large vertical filtration system and gauges, rather than the drip tape, which fails to meet the article brief's requirement for the carton to be small and secondary."
+      ],
+      "correction_prompt": "Remove the visible person standing in the background on the left. Reposition the white and blue 'AFP' drip tape carton roll so it is small and secondary in the frame, and change the camera angle to be elevated, making the fixed filters, gauges, and manifold on the concrete pad the primary focus.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 18,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Presence of a human figure (farmer/person) in the background, which is a hard reject per the strict zero-human rule.",
+        "Visible bottles and containers in the background near the person, which are hard rejects.",
+        "The required specific infrastructure elements (fixed filter, gauge, regulator, manifold) on the concrete pad are missing; the image shows a product roll instead of the required equipment detail scene."
+      ],
+      "correction_prompt": "Regenerate the image to show an elevated, equipment-only detail view of a fixed filter, gauge, regulator, and manifold on an empty concrete pad. Include the exact bottom-right watermark 'AFP | 09134922013'. Ensure there are absolutely no people or human body parts in the frame. Remove all visible bottles or cans from the background. The background should be clean or show distant unattended farm equipment only, with no farm activity.",
+      "attempt": 5
+    }
+  ]
+}

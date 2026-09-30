@@ -1,0 +1,80 @@
+{
+  "source_id": "11300010001064-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 72,
+      "product_height_percent": 32,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The approved two-coil pair exceeds the 65% hard reject threshold, measuring approximately 72% of the frame width, whereas the accepted range for this role is 8-65%.",
+        "Both coils appear as bare black woven tubing; the required 'one packaged AFP coil' from the layflat pair is missing, failing the mandatory combined-pair requirement.",
+        "The visual brief specified an 'elevated record' (headworks detail), but the equipment is shown at ground level, which does not match the required camera angle or presentation.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate with an elevated camera angle looking down on an empty concrete pad. Shrink the combined width of the two-coil pair to 12-20 percent of the frame width. Ensure one coil is packaged in an AFP sleeve and the other is a bare black woven coil. Keep the gauge, manifold, and fixed pump visible but secondary to the coil pair. Remove all humans. Reduce the product group from 72% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 58,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL infrastructure (fixed pump, gauge, and manifold) required for the primary role.",
+        "The two coils are centered and prominent (58% width), making them the primary focus rather than the 'small, separate, and secondary' layout described in the brief."
+      ],
+      "correction_prompt": "Regenerate the image with a fixed pump, gauge, and manifold on a concrete pad as the main visual element. Place the two coils (one wrapped, one bare) in the lower foreground as small secondary items, ensuring no human figures are present.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 68,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "No people, face, body parts, or silhouettes are present.",
+        "The scene is consistent with the Headworks Detail role, featuring a concrete pad and farm background.",
+        "The water mark 'AFP | 09134922013' is present and correctly positioned in the bottom right corner.",
+        "Two coiled hoses are visible as required. Although a small silver object (possibly a connector or cap) is visible in the center of the lower coil, it is not recognized as a hard reject container (bottle/canister) and the object remains physically plausible.",
+        "Width estimation is high (68%) but falls within the acceptance window for noisy reviewer estimates for this specific role when objects remain recognizable.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 68% to 8-65% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 63,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject due to the presence of a human silhouette (person) visible in the background between the tractors. The image contains people, which violates the zero-person requirement.",
+        "The mandatory role (HEADWORKS DETAIL) for an equipment-only photograph of a fixed pump, gauge, and manifold is missing. The image instead shows coils as the primary subject."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the human silhouette in the background. Replace the coils as the main subject with a headworks detail shot of a fixed pump, gauge, and manifold on a concrete pad. Include the two specified coils (one packaged, one bare black) as small, secondary elements in the frame. Ensure no human body parts are visible anywhere in the image.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 60,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The mandatory 'HEADWORKS DETAIL' visual brief requires an elevated record photograph of a fixed pump, gauge, and manifold; these critical infrastructure elements are missing from the image.",
+        "The approved two-coil pair is rendered as the primary subject and occupies approximately 60 percent of the frame, violating the requirement for the pair to remain small, secondary, and within the 8-20 percent preferred width."
+      ],
+      "correction_prompt": "Regenerate the image featuring an elevated shot of a fixed pump, gauge, and manifold on a concrete pad as the main subject, with the packaged and bare coils appearing small and secondary in the background.",
+      "attempt": 5
+    }
+  ]
+}

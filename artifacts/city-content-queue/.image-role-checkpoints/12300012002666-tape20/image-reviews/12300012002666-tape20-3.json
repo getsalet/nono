@@ -1,0 +1,84 @@
+{
+  "source_id": "12300012002666-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Critical hard reject: multiple human figures (farmers/workers) visible in the background, violating the zero-person requirement.",
+        "Article role violation: The mandatory role is 'HEADWORKS DETAIL: equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold', but the image shows an empty concrete pad and farm tractors instead.",
+        "The image does not show the required filtration/irrigation infrastructure (filter, gauge, manifold).",
+        "The presence of visible tractors and truck makes it a general farm scene, inconsistent with the specific equipment brief provided."
+      ],
+      "correction_prompt": "Regenerate a high-angle close-up of a concrete irrigation headbox (headworks) featuring a disc filter, pressure gauge, and flow regulator manifold on a concrete block. Keep the AFP 2cm drip tape carton very small and in the background. Ensure zero human figures or tractors are visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Multiple people are visible in the background on the left, violating the zero-person rule.",
+        "A second commercial package (a second roll) is present on the right, violating the 'exactly one' rule.",
+        "Hard reject triggered for visible human figures.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures from the background and delete the second roll on the right to ensure only one approved carton remains. Recreate the scene with an empty concrete pad and infrastructure only. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of multiple people and human figures in the background, violating the zero-person rule",
+        "Visible second commercial packaging (carton) on the right, which is a hard reject"
+      ],
+      "correction_prompt": "Regenerate a clean outdoor shot of a single white and blue drip tape roll on an empty concrete pad. Remove all people and farm workers from the background. Remove any additional cardboard boxes or packaging. Ensure no other objects are visible.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 36,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "A person is visible standing in the background, which is a hard reject",
+        "Gibberish/fake writing on the drip tape roll",
+        "Product width (~36%) exceeds the 30% maximum limit",
+        "Missing required infrastructure (filter, gauge, regulator, manifold) on a concrete pad",
+        "The scene shows farm equipment and open dirt instead of the specified clean concrete pad setup",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with zero people. Place one small, secondary white-and-blue 'AFP' drip-tape roll (width under 30% of frame) on an empty concrete pad next to a fixed filter, gauge, and manifold. Ensure the roll has clear, legible text. Keep the 'AFP | 09134922013' watermark in the bottom-right. Reduce the product group from 36% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 34,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of human figures: Two distinct people are visible in the background, which is a hard reject trigger.",
+        "Product width exceeds limit: The estimated width of the carton roll is approximately 34% of the frame, exceeding the 30% hard reject limit.",
+        "Product height exceeds limit: The estimated height of the carton roll is approximately 34%, exceeding the 35% limit for acceptable physical plausibility relative to width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people, cows, and background activity from the concrete pad. Regenerate a clean, empty concrete pad setting with a red truck parked in the distance. Resize the AFP drip-tape carton roll so its width is 22% of the image frame to ensure it meets the size constraint. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "source_id": "1230002001579-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 26,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: visible human (farmer) in the right foreground",
+        "Hard reject: multiple human body parts visible (head, hands, legs)",
+        "Hard reject: holds a second commercial package (drip tape roll) in hands"
+      ],
+      "correction_prompt": "Remove all people and human body parts; remove the held roll; show only one small AFP white-and-blue carton roll on the ground in the lower third, off-center, with a wide high-oblique farm irrigation context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 15,
+      "product_height_percent": 11,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Visible human/farmer (left side of field) is present.",
+        "Hard reject: Hand and arm visible in the foreground.",
+        "Hard reject: The image contains a person, violating the zero-person rule."
+      ],
+      "correction_prompt": "Remove the man and the hand pulling the equipment in the foreground. Keep only the unattended farm context with the drip tape roll.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Required AFP white and blue wide low cylindrical drip-tape roll present",
+        "Exactly one commercial package shown",
+        "Zero people or human body parts visible",
+        "Background contextually matches agricultural article brief (Rudhen, Tehran)",
+        "Off-center lower-third placement aligns with editorial hero role",
+        "Required bottom-right watermark 'AFP | 09134922013' is present"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
