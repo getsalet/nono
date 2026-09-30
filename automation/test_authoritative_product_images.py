@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate clean backgrounds, then add only approved product pixels."""
 from __future__ import annotations
-import base64,io,json,os,urllib.request
+import base64,io,json,os,time,urllib.error,urllib.request
 from pathlib import Path
 from PIL import Image
 import city_content_queue_cloudflare as backend
@@ -11,13 +11,23 @@ API=(os.getenv('IMAGE_ENDPOINT') or os.getenv('AGNES_API_BASE','https://apihub.a
 
 def background(prompt):
     payload={'model':MODEL,'prompt':prompt,'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}}
-    req=urllib.request.Request(API,data=json.dumps(payload).encode(),headers={'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Accept':'application/json'},method='POST')
-    with urllib.request.urlopen(req,timeout=600) as response:data=json.loads(response.read())
-    row=(data.get('data') or [{}])[0];blob=base64.b64decode(row['b64_json']) if row.get('b64_json') else urllib.request.urlopen(row['url'],timeout=300).read()
-    image=Image.open(io.BytesIO(blob)).convert('RGB');w,h=image.size;target=16/9
-    if w/h>target:nw=int(h*target);left=(w-nw)//2;image=image.crop((left,0,left+nw,h))
-    else:nh=int(w/target);top=(h-nh)//2;image=image.crop((0,top,w,top+nh))
-    return image.resize((1200,675),Image.Resampling.LANCZOS)
+    last=None
+    for attempt in range(1,7):
+        try:
+            req=urllib.request.Request(API,data=json.dumps(payload).encode(),headers={'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Accept':'application/json'},method='POST')
+            with urllib.request.urlopen(req,timeout=600) as response:data=json.loads(response.read())
+            row=(data.get('data') or [{}])[0];blob=base64.b64decode(row['b64_json']) if row.get('b64_json') else urllib.request.urlopen(row['url'],timeout=300).read()
+            image=Image.open(io.BytesIO(blob)).convert('RGB');w,h=image.size;target=16/9
+            if w/h>target:nw=int(h*target);left=(w-nw)//2;image=image.crop((left,0,left+nw,h))
+            else:nh=int(w/target);top=(h-nh)//2;image=image.crop((0,top,w,top+nh))
+            return image.resize((1200,675),Image.Resampling.LANCZOS)
+        except Exception as exc:
+            last=exc
+            if attempt==6:break
+            delay=min(120,10*(2**(attempt-1)))
+            print(f'background_attempt={attempt}/6 failed={exc!r} backoff_seconds={delay}',flush=True)
+            time.sleep(delay)
+    raise RuntimeError(f'background generation failed after retries: {last!r}')
 
 def save(name,image):
     stage=io.BytesIO();image.save(stage,'JPEG',quality=95,optimize=True);marked=Image.open(io.BytesIO(backend.watermark(stage.getvalue()))).convert('RGB');OUT.mkdir(parents=True,exist_ok=True);marked.save(OUT/name,'WEBP',quality=82,method=6)
