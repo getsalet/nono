@@ -7,69 +7,68 @@
   "history": [
     {
       "pass": false,
-      "score": 65,
-      "product_width_percent": 22,
-      "product_height_percent": 38,
-      "product_x_center_percent": 42,
+      "score": 40,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Product height exceeds the 35 percent hard limit",
-        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+        "Hard reject: A full body human figure is visible on the left side of the frame, violating the zero-people and zero-body-parts requirement."
       ],
-      "correction_prompt": "Regenerate the image to reduce the height of the drip-tape carton to 32 percent of the frame, maintaining the wide high-oblique perspective with the farm context dominating the background and the object remaining fully visible in the lower third. Reduce product height from 38% to at most 35% of frame height.",
+      "correction_prompt": "Remove the person on the left. Regenerate a high-oblique wide shot of a field with rows of crops. Place a small, wide cylindrical white and blue 'AFP' drip-tape carton roll off-center in the lower third. Ensure no humans are present.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 25,
-      "product_width_percent": 22,
+      "score": 10,
+      "product_width_percent": 17,
       "product_height_percent": 20,
-      "product_x_center_percent": 48,
+      "product_x_center_percent": 49,
       "reasons": [
-        "Visible person/farmer standing next to the tractor on the left side",
-        "Visible person/worker near the distant tractor on the right side",
-        "Presence of human silhouettes in the background violates zero-person hard reject criteria"
+        "Hard reject: A distant person (farmer) is visible on the field path in the upper-right middle area, and the strict requirement is zero people.",
+        "The product is centered horizontally rather than off-center on the lower third as required for the editorial hero role.",
+        "The roll is a cylindrical drum rather than the specified wide low cylindrical drip-tape carton roll."
       ],
-      "correction_prompt": "Regenerate the image completely removing all people and human figures. Ensure no farmers, workers, or human silhouettes are visible anywhere in the background or near the equipment.",
+      "correction_prompt": "Remove all people from the scene. Reposition the wide low cylindrical drip-tape carton roll so it is off-center on the lower third of the frame. Set the width to 20% of the frame and ensure it is fully visible.",
       "attempt": 2
     },
     {
       "pass": false,
-      "score": 85,
-      "product_width_percent": 23,
-      "product_height_percent": 25,
+      "score": 20,
+      "product_width_percent": 18,
+      "product_height_percent": 28,
       "product_x_center_percent": 50,
       "reasons": [
-        "The product placement is centered horizontally (50% x-center), which contradicts the strict mandate that the product must be off-center on the lower third."
+        "Presence of human silhouettes (farmers/workers) in the middle ground of the field, which is a hard reject criteria."
       ],
-      "correction_prompt": "Regenerate the image, moving the white and blue drip-tape roll off-center to the far left or far right within the lower third while maintaining the current perspective and background details.",
+      "correction_prompt": "Remove all human figures and silhouettes from the field; ensure no people are visible in the background. Keep the AFP drip tape roll in the same position and size.",
       "attempt": 3
     },
     {
       "pass": false,
-      "score": 30,
-      "product_width_percent": 23,
-      "product_height_percent": 33,
-      "product_x_center_percent": 46,
+      "score": 62,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
       "reasons": [
-        "Placement violation: The image mandates an 'off-center' position for the product; it is placed at the horizontal center (x=46%), which conflicts with the mandatory editorial hero requirements.",
-        "Dimension violation: The object height (33%) is uncomfortably close to the 35% hard-reject limit, causing it to dominate the foreground and fail the 'small' size requirement for an editorial hero image.",
-        "Context violation: The background shows a dense urban city skyline, which does not match the agricultural context required for an article about drip tape irrigation in Kheyrabad/Fars."
+        "The required wide high-oblique view is missing; the crop rows are oriented vertically, leading the eye upward toward the horizon and city skyline rather than across a wide oblique field plane.",
+        "The city skyline on the horizon is contextually irrelevant and contradicts the rural farm brief for the city of Khairabad, which should be represented by an ordinary farm building or crop landscape."
       ],
-      "correction_prompt": "Shift the drip-tape roll off-center to the right. Scale the roll down to approximately 15-20% of the frame width. Replace the urban skyline background with an open agricultural landscape of soil and distant crops.",
+      "correction_prompt": "Regenerate using a wide high-oblique viewpoint where the field recedes diagonally, removing the city skyline and replacing it with a distant ordinary farm building, soil, and crop rows.",
       "attempt": 4
     },
     {
       "pass": true,
-      "score": 82,
-      "product_width_percent": 21,
-      "product_height_percent": 31,
-      "product_x_center_percent": 78,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 46,
       "reasons": [
-        "Required exact bottom-right watermark is present and clear",
-        "Exactly one white-and-blue wide low cylindrical AFP carton roll is fully visible and off-center in the lower-right/lower-third area",
-        "No people, faces, hands, arms, legs, or body parts are visible",
-        "No bottles, jars, canisters, buckets, fertilizer/pesticide containers, second roll, pipe through the roll, fake headline/caption, or impossible geometry detected",
-        "Background and context are farm/irrelevant and acceptable for the editorial role"
+        "Single white-and-blue AFP drip-tape roll clearly visible and physically plausible in the foreground.",
+        "Editorial hero context dominates with farm and irrigation layout in a wide high-oblique view.",
+        "Unattended distant tractor and ordinary farm building are allowed infrastructure, not hard rejects.",
+        "Zero people or human body parts visible in the image.",
+        "Exact watermark 'AFP | 09134922013' present in bottom-right corner as required.",
+        "Product bounding box is off-center (lower half) with preferred width and acceptable height."
       ],
       "correction_prompt": "",
       "attempt": 5

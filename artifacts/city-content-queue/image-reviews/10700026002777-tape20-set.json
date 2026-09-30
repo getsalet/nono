@@ -4,36 +4,17 @@
   "history": [
     {
       "pass": false,
-      "score": 30,
+      "score": 45,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 violates the 'exactly one approved carton stays small' instruction; the product is oversized and dominates the foreground instead of the farm context.",
-        "Role 2 does not feature a 'technical arrangement' with visible emitter-spacing or field-selection evidence; instead, it depicts a generic installation scene with a distant unattended tractor, failing to provide the requested selection information.",
-        "Role 3 violates 'equipment-only' and 'no farm activity' by including a person sitting in the background and a tractor moving, which are prohibited."
+        "Role 2 contains multiple people (farmers on and near tractors), which is a strict rejection trigger.",
+        "Role 3 fails to meet the specific composition requirements: it shows multiple pieces of equipment (a reel, gauge, and pump) instead of a single fixed manifold setup, and the background contains farm activity/equipment rather than being an empty concrete pad with no farm activity."
       ],
-      "correction_prompt": "Shrink the carton in image 1 to be off-center and small, replace the generic field in image 2 with a technical diagrammatic setup showing tape emitter spacing, and remove all persons and moving vehicles from the concrete pad in image 3.",
+      "correction_prompt": "For Role 2: remove all persons from the background. For Role 3: replace the equipment cluster with a single fixed manifold containing one filter, gauge, and regulator on an empty concrete pad, ensuring the background is strictly farm-activity-free.",
       "panel_scores": [
-        30
+        45
       ],
       "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 1 (Panel 1): Fails to meet the EDITORIAL HERO requirement. The instruction mandates that the carton be 'small, fully visible and off-center on the lower third.' In Panel 1, the carton is placed directly in the center-foreground and is oversized relative to the scene, failing the 'off-center' and 'small' constraints.",
-        "Role 2 (Panel 2): The environment (dirt ground, distant tractor) and the primary lighting angle match Role 3 exactly. The only difference is the addition of the unrolled tape, which does not constitute a distinct 'SELECTION EVIDENCE' environment change (such as specific emitter-spacing evidence or a new structural context).",
-        "Role 3 (Panel 3): While the concrete pad is appropriate, the specific arrangement of the tractor and farm building in the background is visually identical to the arrangement in Role 2, resulting in a 'Repeated Layout' rejection."
-      ],
-      "correction_prompt": "Re-crop Role 1 to move the carton off-center to the lower-left or lower-right; Re-shoot Role 2 using the concrete pad background (like Role 3) to isolate the tape unrolling, ensuring the background context matches the technical sequence.",
-      "panel_scores": [
-        35
-      ],
-      "set_attempt": 2
     }
   ]
 }

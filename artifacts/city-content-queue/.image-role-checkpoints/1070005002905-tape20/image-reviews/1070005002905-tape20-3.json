@@ -74,6 +74,73 @@
       ],
       "correction_prompt": "Regenerate the image completely removing all people and human silhouettes from the background. Reduce the product group from 38% to 12-30% of frame width.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: image contains multiple visible people (farmers/worker) in the background, violating the strict 'zero people' requirement.",
+        "Image role mismatch: The brief mandates a 'HEADWORKS DETAIL' (equipment-only, fixed filter, gauge, etc.), but the image shows a general field scene with a tractor and active farm work."
+      ],
+      "correction_prompt": "Regenerate as a close-up detail shot of irrigation infrastructure (filters, gauges, manifold) on a concrete pad. Remove all people, workers, and active farm machinery from the background. Keep only a small secondary AFP drip-tape roll in the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 36,
+      "product_height_percent": 32,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Second commercial package/roll is visible in the bottom-right foreground (Hard Reject)",
+        "Mandatory image role (HEADWORKS DETAIL: equipment-only with filter, gauge, regulator, manifold) is not met; the image shows only rolls on a pad",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate to remove the small secondary roll in the foreground. Include a visible irrigation infrastructure setup (filter, gauge, regulator, manifold) on the concrete pad with a single small AFP carton roll as secondary. Ensure zero people or body parts. Reduce the product group from 36% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: visible human figure in the background (farmer on the left side of the field)"
+      ],
+      "correction_prompt": "Remove the human figure from the background, keeping the scene fully equipment-only.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 37.1,
+      "product_height_percent": 42.9,
+      "product_x_center_percent": 48.2,
+      "reasons": [
+        "Product bounding box estimation shows the carton roll's height at approximately 43% of the frame, exceeding the maximum plausibility threshold of 35% required for the 'physically plausible' override.",
+        "Product width is estimated at 37%, which also exceeds the 30% hard reject limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 37.1% to 12-30% of frame width.; Reduce product height from 42.9% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the AFP drip-tape roll positioned further from the camera (scaled down to under 30% width and under 35% height) to satisfy plausibility constraints, while keeping the 'AFP | 09134922013' watermark and equipment-only brief. Reduce the product group from 37.1% to 12-30% of frame width. Reduce product height from 42.9% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 15,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Visible humans (workers) in the background violate the zero-person rule",
+        "Second commercial package present on the large wheeled machine",
+        "Machine with wheels contradicts the 'fixed equipment' brief"
+      ],
+      "correction_prompt": "Remove all humans and the large wheeled machine; keep only the fixed filter manifold on the concrete pad and the single small AFp carton.",
+      "attempt": 5
     }
   ]
 }

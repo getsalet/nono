@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-30T13:54:29+00:00`
+- آخرین بروزرسانی: `2026-09-30T14:09:59+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **649 از 1894 (34.27٪)**
-- تکمیل‌شده: **649**
+- پیشرفت: **650 از 1894 (34.32٪)**
+- تکمیل‌شده: **650**
 - در حال پردازش: **0**
-- در انتظار: **25**
-- آماده انتخاب در اجرای بعدی: **25**
+- در انتظار: **29**
+- آماده انتخاب در اجرای بعدی: **29**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1220**
+- ناموفق: **1215**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -18,8 +18,7 @@
 
 ## بسته‌های آماده آپلود
 
-- بسته‌های 50تایی آماده: **12**
-- [batch-003-posts-0101-0150.zip](./packages/batch-003-posts-0101-0150.zip) — 50 پست — 18707430 بایت
+- بسته‌های 50تایی آماده: **13**
 - [batch-004-posts-0151-0200.zip](./packages/batch-004-posts-0151-0200.zip) — 50 پست — 18632681 بایت
 - [batch-005-posts-0201-0250.zip](./packages/batch-005-posts-0201-0250.zip) — 50 پست — 18787501 بایت
 - [batch-006-posts-0251-0300.zip](./packages/batch-006-posts-0251-0300.zip) — 50 پست — 16759414 بایت
@@ -29,9 +28,11 @@
 - [batch-010-posts-0451-0500.zip](./packages/batch-010-posts-0451-0500.zip) — 50 پست — 13986604 بایت
 - [batch-011-posts-0501-0550.zip](./packages/batch-011-posts-0501-0550.zip) — 50 پست — 12330394 بایت
 - [batch-012-posts-0551-0600.zip](./packages/batch-012-posts-0551-0600.zip) — 50 پست — 10846317 بایت
+- [batch-013-posts-0601-0650.zip](./packages/batch-013-posts-0601-0650.zip) — 50 پست — 10384826 بایت
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **خرامه** — فارس — `tape20` — 1213 کلمه — `2026-09-30T14:04:28+00:00`
 - **مشراگه** — خوزستان — `layflat` — 1482 کلمه — `2026-09-30T13:52:18+00:00`
 - **بستان** — خوزستان — `tape20` — 1229 کلمه — `2026-09-30T13:49:39+00:00`
 - **دژکرد** — فارس — `tape20` — 1584 کلمه — `2026-09-30T13:48:06+00:00`
@@ -51,20 +52,19 @@
 - **سده** — فارس — `layflat` — 1264 کلمه — `2026-09-30T03:15:22+00:00`
 - **شیروان** — خراسان شمالی — `layflat` — 1226 کلمه — `2026-09-29T10:43:11+00:00`
 - **رونیز** — فارس — `tape20` — 1176 کلمه — `2026-09-29T10:39:02+00:00`
-- **سورمق** — فارس — `tape20` — 1346 کلمه — `2026-09-29T10:37:34+00:00`
 
 ## خطاهای اخیر
 
-- **مزایجان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **بستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **سوسنگرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **خنافره** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **دارخوین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **چغامیش** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **فدامی** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **صغاد** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **عنبر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بهمن** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **خیراباد** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **معزآبادجابری** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **جویم** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **خرامه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **صفاشهر** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **گلگیر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **خاوران** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **مصیری** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **گوریه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

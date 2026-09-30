@@ -1,0 +1,53 @@
+{
+  "source_id": "10700026002337-tape20",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1: The product is placed in the lower-center foreground but is significantly oversized relative to the farm context and rows, violating the 'small, fully visible, and off-center' requirement.",
+        "Role 2: Contains multiple 'approved' cartons (one large, one small) in addition to the required single carton plus technical evidence, violating the 'exactly one approved carton' rule.",
+        "Role 3: The image only features a carton on a concrete pad with a tractor in the background. It fails to show the required specific equipment set: 'one fixed filter, gauge, regulator and manifold'. The brief required an equipment-only detailed view, which is absent."
+      ],
+      "correction_prompt": "Resize the product to be small and off-center in Role 1; remove the extra carton in Role 2; in Role 3, replace the generic scene with a detailed view of a fixed filter, gauge, regulator, and manifold on an empty concrete pad.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 fails the 'no farm activity' requirement; the background features a tractor with a worker visible on the platform, which is explicitly prohibited in this role.",
+        "Role 2 and Role 3 fail to be visibly distinct; both utilize nearly identical camera angles, product placement on the left, and concrete pads with blurred farm vehicles in the background, resulting in repetitive layouts."
+      ],
+      "correction_prompt": "Regenerate Role 3 with a completely empty background (no vehicles, buildings, or people) and a distinct close-up composition; differentiate Role 2 by shifting the camera angle to high-oblique and using a grassy or dirt field edge to break the visual redundancy.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 1 (Hero): Contains unattended tractors and high-rise city buildings in the background, which are inconsistent with the intended agricultural context and visual narrative of a standard farm field.",
+        "Panel 3 (Detail): The secondary 'approved carton' is a square box with a solid logo printed on it, which is not a roll of drip tape; the role specifically requires the same AFP product (roll) to be visible.",
+        "Panels 2 & 3: Share a highly repetitive environment structure (tans dirt/soil foreground and sky background), failing to maintain sufficient distinctiveness between the 'Selection Evidence' and 'Headworks Detail' roles."
+      ],
+      "correction_prompt": "Remove city buildings and tractors from Panel 1 to establish a consistent rural farm environment; replace the square cardboard box in Panel 3 with a small secondary AFP drip tape roll; and add specific technical evidence (like emitter spacing or a filter system) to Panel 2 to clearly differentiate its narrative.",
+      "panel_scores": [
+        62
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

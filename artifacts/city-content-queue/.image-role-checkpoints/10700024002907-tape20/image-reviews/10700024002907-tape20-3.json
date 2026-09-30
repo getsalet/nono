@@ -76,6 +76,82 @@
       ],
       "correction_prompt": "Remove all people and human body parts from the image. Keep the AFP drip tape roll and the concrete pad, ensuring the background contains only farm infrastructure like buildings or tractors without any workers or silhouettes.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 31,
+      "product_height_percent": 47,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted",
+        "Exactly one wide cylindrical drip-tape carton roll with white top and blue branding visible",
+        "Zero people, faces, hands, or body parts in the frame",
+        "Background shows distant unattended tractor and farm building on a concrete pad, which are contextually allowed",
+        "Product width and height are slightly outside preferred 20-23% range but within acceptable 12-30% width and physical plausibility thresholds",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 47% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 47% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 26,
+      "product_height_percent": 31,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Visible human figure present in the background",
+        "Hard reject: Tractor is not unattended and is being operated by a person",
+        "Mandatory role violation: Missing elevated record of fixed filter, gauge, regulator, and manifold on a concrete pad",
+        "Background shows active farm work (tractor and tiller) instead of the required 'no farm activity' condition"
+      ],
+      "correction_prompt": "Regenerate image with a person-free background; remove the active tractor; add a fixed irrigation equipment assembly (filter, gauge, regulator, and manifold) on an empty concrete pad; keep the drip tape carton small and secondary in the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 35,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Multiple rolls are visible in the image, but the rule explicitly states 'zero second roll'.",
+        "Hard reject: The main product roll is too large (width > 30% of frame).",
+        "Hard reject: Human silhouettes are visible inside the tractors in the background.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image showing a single large AFP drip-tape roll. Completely remove the second, smaller roll. Replace the tractors in the background with static farm infrastructure or simply crop to show only the empty field horizon to ensure no people are visible. Ensure the main roll does not occupy more than 30% of the frame's width. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 37,
+      "product_height_percent": 33,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Visible people (human figures) in the background hard-reject the image",
+        "Product roll width exceeds the 30% maximum hard-rejection threshold",
+        "Role mismatch: brief required 'HEADWORKS DETAIL' (filter/gauge/manifold) but image shows tape roll",
+        "machine-enforced bounding-box check failed: Reduce the product group from 37% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Reduce the drip-tape roll width to under 25% of the frame. Ensure the primary subject matches the 'HEADWORKS DETAIL' brief by showing fixed filters/gauges, or strictly adhere to the 'single roll' brief with correct proportions. Reduce the product group from 37% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject due to the presence of a visible human (farmer) standing in the middle ground between the two tractors, violating the zero-people rule.",
+        "Image fails to match the mandatory 'HEADWORKS DETAIL' role which requires a fixed filter, gauge, regulator, and manifold on an empty pad; the image instead shows open field equipment (tractors).",
+        "The carton roll is oversized relative to the brief's 'small and secondary' requirement."
+      ],
+      "correction_prompt": "Remove the human figure entirely. Rearrange the scene to focus on a close-up of a filter, gauge, and manifold on a concrete pad as the main subject. Shrink the AFP drip-tape carton to be a small background detail (approx. 10% width). Ensure the scene is equipment-only with no human presence.",
+      "attempt": 5
     }
   ]
 }
