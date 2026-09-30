@@ -1,0 +1,82 @@
+{
+  "source_id": "12700012002498-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 20,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The image contains two visible people (a man in the center and a man on the right), which violates the rule 'zero people and zero human body parts'.",
+        "The product is not 'secondary' and 'small' as required by the brief for a 'HEADWORKS DETAIL' role; it is the primary subject.",
+        "The mandatory role 'HEADWORKS DETAIL' required an equipment-only elevated record photograph of specific hardware (filter, gauge, regulator) which is missing.",
+        "Gibberish/incorrect text on the carton label ('DRIP', 'IRRIGOOD 32 PES')."
+      ],
+      "correction_prompt": "Regenerate image: An elevated 'record photograph' of a fixed irrigation assembly (filter, gauge, regulator, manifold) on a concrete pad. Include exactly one small, secondary white-and-blue wide cylindrical drip-tape carton roll (AFP) in the frame. Ensure zero people, workers, or human body parts are visible. Include the mandatory bottom-right watermark 'AFP | 09134922013'. Ensure clear text on the carton.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38.0,
+      "product_height_percent": 42.0,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Hard reject: A human silhouette/person is visible in the background (standing near the red barn).",
+        "Hard reject: Product dimensions exceed limits (width 38% > 30%, height 42% > 35%).",
+        "Failure: Image role mismatch (shows product-only instead of equipment-only manifold).",
+        "Failure: Missing required infrastructure (filter, gauge, regulator, manifold) on a concrete pad.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the person in the background. Replace the product roll with a close-up, low-angle shot of a fixed irrigation manifold assembly (filter, gauge, regulator) on an empty concrete pad. Keep the drip tape carton small and secondary to the manifold. Ensure the main product is under 30% frame width. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Hard reject: visible human figure in the background (center-left) violates the 'zero people' requirement.",
+        "Hard reject: visible text inside the product bounding box is gibberish/distorted rather than the approved carton labeling."
+      ],
+      "correction_prompt": "Remove the human figure in the background and clear all visible text or labels from the carton's surface to maintain a clean product focus.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 27,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing required bottom-right watermark 'AFP | 09134922013'",
+        "Contains a second commercial package (brown cardboard carton), which is a hard reject"
+      ],
+      "correction_prompt": "Remove the brown cardboard carton to ensure only one commercial package remains. Add the exact bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 42,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Multiple people (workers) are visible in the background.",
+        "Hard reject: The text on the carton is gibberish ('RIK7TEED') rather than accurate labeling.",
+        "Hard reject: The image role is a 'HEADWORKS DETAIL' of fixed infrastructure (filters/gauges), but shows a roll on a pad with no relevant equipment.",
+        "The product width (approx 42%) exceeds the hard reject threshold of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image. Remove all people and human figures from the scene. Show close-up detail of an empty concrete pad with fixed irrigation infrastructure (filter, gauge, manifold). Include a small, secondary AFP drip tape roll (width <30%) with clear, legible English text 'DRIPE TAPES'. Keep the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 42% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

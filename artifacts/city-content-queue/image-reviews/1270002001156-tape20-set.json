@@ -1,54 +1,40 @@
 {
   "source_id": "1270002001156-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Image 1) fails the 'small and off-center' constraint: the product carton is large and centered in the foreground, not 'exactly one approved carton stays small, fully visible and off-center'.",
-        "Role 3 (Image 3) fails the 'HEADWORKS DETAIL' specification: the image shows a concrete pad but completely lacks the required 'fixed filter, gauge, regulator and manifold' equipment, containing only the product carton and background tractors.",
-        "Role 3 (Image 3) fails the 'no farm activity' constraint: visible tractors and farm vehicles in the background constitute farm activity."
-      ],
-      "correction_prompt": "In Image 1, move the product to the lower-right third to make it appear smaller and off-center; in Image 3, remove all background vehicles and add a technical irrigation manifold (filter, gauge, regulator) on the concrete pad, keeping the product small and secondary.",
-      "panel_scores": [
-        45
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 3 (image 3) fails the 'no farm activity' constraint by including an active tractor and farm buildings in the background; the brief requires an empty concrete pad with only the specific filter/gauge/manifold assembly shown (not a large pump/spool unit).",
-        "Role 2 (image 2) fails the 'technical arrangement' constraint by showing generic field edges and farm buildings instead of a simple background with visible emitter-spacing or field-selection evidence.",
-        "The hardware in Role 3 is not the specified 'one fixed filter, gauge, regulator and manifold' but a different pump/reel assembly."
-      ],
-      "correction_prompt": "Regenerate image 3 as an isolated record photograph on an empty concrete pad showing only a fixed filter, gauge, regulator, and manifold with one small secondary carton (no farm activity or background); regenerate image 2 with a simple background showing clear emitter-spacing or field-selection evidence (no farm buildings).",
-      "panel_scores": [
-        45
-      ],
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 45,
+      "score": 35,
       "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Role 3 significantly deviates from the brief by omitting the required hardware (filter, gauge, regulator, manifold) and instead showing a single product on concrete with farm activity in the background.",
-        "Roles 2 and 3 share an identical background environment (red barn, tractors, plowed field) with minor shifts in camera angle, resulting in repeated layouts.",
-        "The background in Role 3 violates the 'no farm activity' constraint for the HEADWORKS DETAIL role."
+        "Panel 1 places the 'carton' (roll) in the immediate foreground, violating the requirement to be small, fully visible, and off-center on the lower third in the background.",
+        "Panel 2 contains a visible person standing near the tractor, which is a strict rejection criterion.",
+        "Panel 3 displays an airplane, trucks, and multiple tractors, which are entirely irrelevant to the Golestan/Turkmenistan irrigation farm article brief.",
+        "Panels 2 and 3 are structurally similar, both showing the roll on the ground against a blurry background of farm vehicles and buildings."
       ],
-      "correction_prompt": "Replace Role 3 with a close-up technical shot of a filter, gauge, regulator, and manifold on an empty concrete pad with a solid, neutral background to strictly distinguish it from Role 2.",
+      "correction_prompt": "Regenerate: 1) High-oblique hero shot of Golestan crop rows with a small AFP roll in the lower third background. 2) Elevated technical shot of the roll showing emitter spacing on a simple field edge with no people. 3) Strict detail shot of a fixed filter, gauge, and manifold on an empty concrete pad with the roll small and secondary, removing all aircraft and irrelevant vehicles.",
       "panel_scores": [
-        45
+        35
       ],
-      "set_attempt": 3
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails the specific placement requirement: the approved product is positioned in the lower-center rather than the required off-center lower third.",
+        "Role 2 fails the technical narrative requirement: it includes a pressure gauge/valve assembly, which duplicates the hardware intended for Role 3 and violates the 'simple background/evidence' requirement for Role 2.",
+        "Role 3 fails the hardware requirement: it does not show the mandated fixed filter, gauge, regulator, and manifold on an empty concrete pad."
+      ],
+      "correction_prompt": "Reframe Role 1 to position the product off-center in the lower third; remove all hardware from Role 2 to show only the product and selection evidence; update Role 3 to display a complete filter, gauge, regulator, and manifold assembly on an empty concrete pad.",
+      "panel_scores": [
+        65
+      ],
+      "set_attempt": 2
     }
   ]
 }
