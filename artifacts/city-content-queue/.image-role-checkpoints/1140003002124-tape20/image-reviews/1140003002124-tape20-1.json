@@ -1,0 +1,67 @@
+{
+  "source_id": "1140003002124-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 20,
+      "product_height_percent": 15,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains two visible persons, which is a hard reject for the 'zero people' requirement.",
+        "Extra object (measuring tape) present in the foreground; only one approved carton roll is allowed."
+      ],
+      "correction_prompt": "Remove all human figures and the measuring tape. Retain only the single AFP drip-tape carton roll on the wooden surface.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 25,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Product bounding box width (~28%) exceeds the preferred range (20-23%); although within the 30% hard reject limit, it reduces the dominance of the farm context required for the EDITORIAL HERO role.",
+        "Object is not positioned in the lower-third; it is visually centered in the bottom area rather than off-center on the lower third as per the mandatory role.",
+        "The presence of a measuring tape/ruler next to the roll is not an authorized object; instructions specify only 'exactly one approved carton', and this extra item is not part of the fixed irrigation hardware or infrastructure list."
+      ],
+      "correction_prompt": "Regenerate the image to ensure the AFP drip-tape roll is smaller (approx 20% width), positioned clearly in the bottom-left lower third, and remove the measuring tape ruler. Keep the wide high-oblique farm view and the bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: Human silhouette (farmer) is visible standing on the unattended tractor in the upper-right section of the frame.",
+        "Product bounding box estimate: width ~22%, height ~18%, x-center ~19%.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the farmer from the tractor; keep the tractor and the AFP drip-tape carton in the lower-left as the sole visible objects. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 28,
+      "product_height_percent": 25,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is present and correct.",
+        "Product is a single roll of drip tape, white with blue branding (AFP).",
+        "Placement is off-center in the lower third, consistent with the editorial hero role.",
+        "No people or human body parts are visible.",
+        "Background shows farm context with irrigation lines and distant equipment.",
+        "Product dimensions (width 28%, height 25%) are within acceptable tolerance (width up to 30%, height up to 35%)."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

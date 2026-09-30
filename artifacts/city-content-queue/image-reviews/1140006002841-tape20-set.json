@@ -1,6 +1,6 @@
 {
   "source_id": "1140006002841-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
@@ -10,12 +10,13 @@
         2
       ],
       "reasons": [
-        "Role 1 violation: The environment features a city skyline (skyscrapers), which is completely irrelevant to the specified article brief of 'Kohrang' in 'Chaharmahal and Bakhtiari' (a rural/forest region).",
-        "Role 1 violation: The product (carton) is centered in the bottom foreground rather than off-center on the lower third as required.",
-        "Role 2 violation: The product is placed centrally in the frame, violating the compositional requirements of the other roles.",
-        "Duplicate 1 & 2: Both images show a high-angle/low-angle close-up of the product on a field row with the same logo and layout. They lack distinct technical narrative; role 2 requires specific selection evidence like emitter spacing, which is not clearly visible compared to the generic crop rows in role 1."
+        "Panel 1 violates the EDITORIAL HERO role by featuring an active tractor with a visible driver, which constitutes farm activity and is explicitly prohibited.",
+        "The product in Panel 1 is too large, occupying a prominent foreground position rather than being a small, secondary object in the lower third.",
+        "Panel 2 violates the SELECTION EVIDENCE role by placing the product in a low, foreground position and failing to show an elevated technical arrangement or clear field-selection evidence.",
+        "Panels 1 and 2 share a repetitive layout structure where the product anchors the foreground of a generic field scene, resulting in a lack of visual distinctiveness in camera angle and narrative.",
+        "Panel 3 fails to fully satisfy the HEADWORKS role because the background is not empty; it contains a large, active farm implement and tractor, which contradicts the 'no farm activity' requirement."
       ],
-      "correction_prompt": "Regenerate roles 1 and 2 to feature a rural landscape (green mountains/fields, no city skylines). For Role 1, move the carton to the far right of the lower third. For Role 2, explicitly show a close-up of the irrigation line emitters to demonstrate spacing, and keep the carton small to the side.",
+      "correction_prompt": "Reconstruct the set: 1) High wide-angle field with a small product in the lower third and no active machinery; 2) Elevated technical shot of the product alongside drip tape and field markers; 3) Isolated hardware still-life on an empty concrete pad with a clean, uncluttered background.",
       "panel_scores": [
         25
       ],
@@ -25,36 +26,20 @@
       "pass": false,
       "score": 45,
       "duplicate_roles": [
-        1,
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Role 1 and Role 2 are visually indistinguishable, both featuring the product in the same low-angle position on an open field; the only difference is a building in the background, which fails to satisfy Role 2's requirement for technical or 'emitter-spacing' evidence.",
-        "Role 2 is required to be an 'elevated technical arrangement' showing 'visible emitter-spacing' or field-selection evidence; the image instead shows a generic ground-level crop row that repeats the visual layout of Role 1.",
-        "Role 1's product placement is centered in the lower third rather than off-center, violating the specific editorial instruction for the 'Editorial Hero'.",
-        "The 'hardware' in Role 3 is a large wheeled pump, which deviates from the specific request for a fixed filter/gauge/regulator assembly."
+        "Role 3 fails to isolate the hardware; the unattended tractor and trailer in the background constitute 'farm activity' which is explicitly prohibited for the HEADWORKS DETAIL role.",
+        "Role 3 lacks the required 'manifold' component; only a gauge and regulator are shown.",
+        "Role 2 fails to provide 'technical evidence' (such as visible emitter spacing) and instead uses a generic field background with flag markers, which does not meet the brief for SELECTION EVIDENCE.",
+        "Role 1's product is placed on active crop soil, which lacks the stability and context of an approved display area compared to the concrete pads used in roles 2 and 3."
       ],
-      "correction_prompt": "Re-shoot Role 1 with the product clearly offset to the right on the lower third. Replace Role 2 with an overhead or high-angle shot showing the product next to a measuring tape or a specific emitter pattern on a drip line. Adjust Role 3 to show a compact, fixed inline filtration head instead of the current wheeled pump.",
+      "correction_prompt": "Re-shoot Role 3 on a clean concrete pad using only a fixed filter, gauge, regulator and manifold with a completely blurred, non-distracting sky background to eliminate the tractor; for Role 2, replace the flag markers with a visible irrigation line showing distinct emitter spacing and an empty field edge background.",
       "panel_scores": [
         45
       ],
       "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 15,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Panel 1) fails the editorial hero requirement: the 'approved carton' (spool) is placed in the center-foreground and is large, rather than being small and off-center in the lower third.",
-        "Role 2 (Panel 2) fails the selection evidence requirement: the spool is centered and large, obscuring the field view, and lacks the required visual evidence of emitter spacing or a clear technical selection arrangement.",
-        "Role 3 (Panel 3) fails the headworks story requirement: it features a large, complex, non-standard wheeled machine that distracts from the 'unattended fixed filter, gauge, regulator and manifold' narrative, which should be the primary focus.",
-        "All three panels exhibit similar layout repetition, featuring a large centered spool and a similar wheeled/spray machine, lacking the required variety in camera angles and technical narrative."
-      ],
-      "correction_prompt": "Redesign the panels to strictly follow role-specific layouts: Role 1 must be a wide high-oblique shot with a small spool in the lower-left/right; Role 2 must show a spool with visible emitter spacing in the foreground; Role 3 must feature a close-up of a fixed filter/gauge manifold with the spool secondary in the background.",
-      "panel_scores": [
-        15
-      ],
-      "set_attempt": 3
     }
   ]
 }

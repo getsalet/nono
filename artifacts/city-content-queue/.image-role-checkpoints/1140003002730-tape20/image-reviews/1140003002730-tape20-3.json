@@ -1,0 +1,84 @@
+{
+  "source_id": "1140003002730-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 33,
+      "product_height_percent": 36,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Multiple people (farmers/workers) are visible in the background, which is a hard reject.",
+        "An unauthorized second commercial cardboard package is visible in the background, which is a hard reject.",
+        "The presence of active farm workers violates the mandatory role requirement of 'no farm activity'.",
+        "The product roll is physically larger than the preferred ratio (width >30% and height >35%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove all human figures and the brown cardboard box. Shrink the AFP drip-tape carton so it occupies 20-23% of the image width. Ensure the concrete pad and irrigation hardware (gauge, manifold) are visible with no people or secondary commercial packages. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 16,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Person visible sitting on equipment in the mid-ground"
+      ],
+      "correction_prompt": "Remove all people from the image, including the man sitting on the green farm vehicle in the background.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 31,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Object is the correct AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero people or human body parts present.",
+        "Watermark 'AFP | 09134922013' present in bottom-right.",
+        "Contains fixed irrigation hardware (gauge/regulator) on a concrete pad as required for 'HEADWORKS DETAIL'.",
+        "Background contains unattended tractor and farm equipment, which is contextually allowed.",
+        "Roll width (~31%) is within the 'accept reviewer-estimation noise' range (12-30% preferred, up to 30% allowed, 31% is minor noise).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 29,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a prominent standing person in the mid-ground (hard reject)",
+        "Multiple visible human figures/silhouettes near the farm building and tractor (hard reject)",
+        "Product (carton roll) size is too large; target is small and secondary but this occupies ~29% width",
+        "Role mismatch: missing required fixed infrastructure (filter, gauge, regulator, manifold) to match the 'HEADWORKS DETAIL' brief"
+      ],
+      "correction_prompt": "Remove all persons and human silhouettes. Reduce the white-and-blue AFP drip-tape roll to 15% width and position it secondary/behind. Include a fixed irrigation headworks assembly (filter, gauge, regulator, manifold) on the concrete pad. Keep the watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: A person is clearly visible standing in the background near the red tractor.",
+        "Hard reject: The product width (32%) exceeds the maximum limit of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the human silhouette standing near the tractor in the background. Resize the product bounding box so the width is under 30% (approx 1/3 of image width). Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

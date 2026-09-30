@@ -1,0 +1,83 @@
+{
+  "source_id": "1140007002729-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 40,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible people in the background (a man in a hat on the left and another person behind him)",
+        "Hard reject: Roll width is too large (approx. 40% of frame, exceeding the 30% limit)",
+        "Hard reject: Roll height is too large (approx. 35% of frame, exceeding the 30% preferred limit)",
+        "Hard reject: Background does not match the mandatory role 'HEADWORKS DETAIL' which requires an empty concrete pad with equipment and no farm activity/people",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with zero people. Shrink the white and blue AFP drip-tape roll significantly (approx 12-20% width). Move the roll to the right or a lower position so it is secondary. Background must be an empty concrete pad with a filter, gauge, regulator, and manifold; no farm paths, gates, or distant people. Reduce the product group from 40% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 16.5,
+      "product_height_percent": 14.5,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Multiple people are visible in the background (left side, working with equipment) and a person is visible in the distance near the tractor (right side).",
+        "Presence of human body parts and full silhouettes violates the mandatory constraint of 'zero people and zero human body parts'."
+      ],
+      "correction_prompt": "Regenerate the image to remove all human figures and people from the background. The scene must contain only the AFP drip tape roll, the filter manifold, tractors, and farm buildings, with absolutely no humans present.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: The image contains a prominent person (male) with visible face, hand, arm, leg, and body parts.",
+        "The primary subject is a person interacting with the product rather than the product in isolation.",
+        "Violates the mandatory role of 'equipment-only' elevated record photograph; the human presence contradicts the 'no farm activity' and 'zero people' constraints."
+      ],
+      "correction_prompt": "Regenerate the image as a strictly equipment-only shot of a single white-and-blue AFP drip-tape roll sitting on a concrete pad. Include fixed filter, gauge, and manifold in the background. Completely remove the crouching person and any hands or body parts. Ensure no second commercial package is visible. Maintain the exact bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 33,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image features exactly one AFP drip-tape carton, which fits the 'equipment-only' role and maintains the correct white-and-blue branding.",
+        "The bottom-right watermark 'AFP | 09134922013' is present as required.",
+        "The background includes fixed irrigation hardware (a gauge and manifold) on a concrete pad, which aligns with the specific 'HEADWORKS DETAIL' visual brief.",
+        "The product width (33%) is slightly above the preferred 20-23% range but remains within the maximum acceptable limit of 30% of frame width when accounting for estimation noise and its physical plausibility as the primary subject.",
+        "No people, human body parts, or unapproved containers are visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 22,
+      "product_width_percent": 25,
+      "product_height_percent": 24,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Multiple people are clearly visible in the background, including a worker in a vest and a group of individuals.",
+        "Violation: The image role is specified as 'equipment-only' with 'no farm activity', but the background shows people and farm equipment.",
+        "Violation: The mandatory role requested a 'fixed filter, gauge, regulator and manifold', but the image displays a portable pressure gauge and standalone valve setup rather than the required fixed manifold assembly."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the background entirely. Replace the portable gauge assembly with a fixed concrete-pad manifold setup. Ensure the background shows only empty land and unattended machinery or a building with zero human presence.",
+      "attempt": 5
+    }
+  ]
+}

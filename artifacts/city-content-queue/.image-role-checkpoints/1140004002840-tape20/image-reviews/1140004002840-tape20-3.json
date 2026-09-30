@@ -1,0 +1,80 @@
+{
+  "source_id": "1140004002840-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: visible people (three farmers/workers in the background), which violates the 'zero people' rule.",
+        "Fail: The article brief requires a specific 'HEADWORKS DETAIL' role showing a filter/gauge/manifold as the primary subject with the roll as a 'small and secondary' object. This image features the roll as the main subject, violating the image role constraint."
+      ],
+      "correction_prompt": "Regenerate an elevated record photograph focused on a fixed filter, gauge, regulator, and manifold on a concrete pad. The drip-tape carton must be small and secondary in the composition. Completely remove all people and human silhouettes from the scene.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product width estimate (32%) exceeds the maximum hard-reject threshold of 30%.",
+        "Image does not contain the mandatory 'HEADWORKS DETAIL' elements (fixed filter, gauge, regulator, manifold).",
+        "The roll is the primary subject and is not secondary, failing the role requirement.",
+        "Gibberish/unreadable text is visible on the roll label.",
+        "Missing mandatory 'AFP | 09134922013' bottom-right watermark.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce roll width to 20% of frame. Add small secondary roll to concrete pad with fixed irrigation hardware (filter, manifold, gauge) as primary focus. Fix roll label text. Add 'AFP | 09134922013' bottom-right watermark. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Visible human figure (legs and torso) in the top-right background violates the hard reject rule for any person or body part."
+      ],
+      "correction_prompt": "Regenerate the image to remove all visible humans, faces, or body parts from the background, specifically the figure standing near the tractor and the boxes on the right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Image contains visible people (farmer/worker), which is a hard reject.",
+        "The drip tape roll is disproportionately large, significantly exceeding the preferred width of 20-23% and violating the 30% hard reject threshold.",
+        "The presence of a person breaks the mandatory 'equipment-only' visual brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people and hands from the scene. Regenerate the image with the AFP white and blue drip tape carton significantly smaller (width between 20-23% of the frame) on the concrete pad, keeping the background context and watermark. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible human figure (farmer with hat) in the background hard rejects the image",
+        "Visible hand/arm operating equipment on the left side hard rejects",
+        "Watermark number mismatch (prompt required 09134922013, image shows 09134922011)"
+      ],
+      "correction_prompt": "Regenerate with zero people or body parts (completely empty field or distant blurred landscape only). Ensure the bottom-right watermark reads exactly 'AFP | 09134922013'. Keep the single drip tape roll in focus on the concrete pad.",
+      "attempt": 5
+    }
+  ]
+}

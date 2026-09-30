@@ -1,0 +1,53 @@
+{
+  "source_id": "11000019002573-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 61,
+      "product_height_percent": 39,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image fails the primary requirement of the mandatory role: HEADWORKS DETAIL. The visual brief explicitly mandates an 'equipment-only elevated record photograph of one fixed pump, gauge and manifold on an empty concrete pad'. The provided image only displays the two hose coils; it lacks the required fixed pump, gauge, and manifold.",
+        "The product pair's combined width (~61%) is at the maximum absolute limit (65%). The preferred width range is 12–20%, making these objects too dominant in the frame relative to the requested secondary role.",
+        "Missing the required 'elevated' camera angle specified in the role description."
+      ],
+      "correction_prompt": "Regenerate as an elevated-angle record shot featuring a fixed pump, gauge, and manifold on a concrete pad as the main focus; position the required two-coil pair (AFP and black woven) as small, secondary objects, set on an empty concrete pad with no farm activity.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 55,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing required infrastructure: No fixed pump, gauge, or manifold visible.",
+        "Contains a third unrelated object (black tape reel) which violates the 'zero third commercial product' rule."
+      ],
+      "correction_prompt": "Regenerate image to show ONLY a packaged AFP coil and a bare black woven hose on a concrete pad. Must include a fixed pump, gauge, and manifold installed on the pad as infrastructure. Remove the black tape reel and any other unrelated items. Keep the two coils small and secondary to the equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Image contains the approved two-coil pair: one packaged AFP coil and one bare black woven coil.",
+        "Fixed pump, gauge, and manifold are present on an empty concrete pad as requested in the HEADWORKS DETAIL role.",
+        "No people, faces, hands, arms, legs, or human body parts are visible.",
+        "No third commercial packages, bottles, or impossible intersections are detected.",
+        "The exact required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Product width estimate is within the accepted range (8-65 percent) for noisy reviewer estimates."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
