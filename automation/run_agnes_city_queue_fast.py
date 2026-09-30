@@ -10,11 +10,13 @@ IMAGE_RETRY_POLICY='retry-after-v17-role3-throughput-safe-metrics'
 # Same-group workflow concurrency means any committed processing item belongs to
 # an interrupted earlier run. Return it to pending without consuming an attempt.
 if base.QUEUE.exists():
-    state=json.loads(base.QUEUE.read_text(encoding='utf-8'));recovered=0;repairable=0;transient_review=0;saturated_pending=0
+    state=json.loads(base.QUEUE.read_text(encoding='utf-8'));recovered=0;repairable=0;transient_review=0;saturated_pending=0;retry_wave=0
     # Reserve most of every parallel batch for fresh pending work. Retrying all
     # quarantined failures at once previously consumed all three worker slots
     # and made successful progress appear frozen.
     repair_limit=max(0,int(os.getenv('REPAIR_FAILED_LIMIT','1')))
+    retry_wave_policy=os.getenv('FAILED_RETRY_WAVE_POLICY','').strip()
+    retry_wave_limit=max(0,int(os.getenv('FAILED_RETRY_WAVE_LIMIT','0')))
     repaired_signals=('unexpected Latin words: AFP','PVC claim for irrigation tape','image hard gate rejected role','Image-set diversity gate rejected')
     for item in state.get('items',[]):
         if item.get('status')=='processing':
@@ -29,13 +31,22 @@ if base.QUEUE.exists():
         elif item.get('status')=='failed' and 'visual reviewer unavailable after retries' in item.get('last_error',''):
             item['status']='pending';item['attempts']=max(0,int(item.get('attempts',0))-1)
             item.pop('failed_at',None);item.pop('started_at',None);transient_review+=1
+        elif (item.get('status')=='failed' and retry_wave_policy
+              and item.get('failed_retry_wave_policy')!=retry_wave_policy
+              and retry_wave<retry_wave_limit):
+            # Reopen every terminal failure exactly once for this named wave.
+            # The marker is retained if it fails again, preventing an endless
+            # reset loop while allowing the whole queue to move in batches.
+            item['status']='pending';item['attempts']=0
+            item['failed_retry_wave_policy']=retry_wave_policy
+            item.pop('failed_at',None);item.pop('started_at',None);retry_wave+=1
         elif (item.get('status')=='failed' and any(x in item.get('last_error','') for x in repaired_signals)
               and item.get('retry_policy')!=IMAGE_RETRY_POLICY and repairable<repair_limit):
             item['status']='pending';item['attempts']=0;item['retry_policy']=IMAGE_RETRY_POLICY
             item.pop('failed_at',None);item.pop('started_at',None);repairable+=1
-    if recovered or repairable or transient_review or saturated_pending:
+    if recovered or repairable or transient_review or saturated_pending or retry_wave:
         state['updated_at']=base.now();base.QUEUE.write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf-8')
-        print(f'recovered_processing_items={recovered} saturated_pending_reset={saturated_pending} transient_reviews_reset={transient_review} repairable_failures_reset={repairable}',flush=True)
+        print(f'recovered_processing_items={recovered} saturated_pending_reset={saturated_pending} transient_reviews_reset={transient_review} repairable_failures_reset={repairable} failed_retry_wave_reset={retry_wave}',flush=True)
 
 if os.getenv('RETRY_FAILED','0')=='1':
     try:
