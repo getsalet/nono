@@ -1,0 +1,51 @@
+{
+  "source_id": "1290002002725-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 21,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Hard reject: Visible human figures (farmers) in the background field",
+        "Hard reject: Visible human silhouette on the small tractor in the distance"
+      ],
+      "correction_prompt": "Remove all human figures and people from the image while maintaining the farm context and the exact product placement and required watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 24,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Visible human (person) present on the tractor in the background.",
+        "Hard reject: The required bottom-right watermark 'AFP | 09134922013' is missing from the image."
+      ],
+      "correction_prompt": "Remove the person on the tractor completely and ensure the field is unattended. Add the required white text watermark 'AFP | 09134922013' to the bottom-right corner. Keep the existing carton roll, irrigation context, and lighting conditions.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Exactly one approved AFP white-and-blue drip-tape roll is fully visible and correctly proportioned.",
+        "Roll placement in the lower third and slightly off-center aligns with the editorial hero brief.",
+        "Background context of farm irrigation crop rows and distant unattended tractor is relevant and acceptable.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner and correctly retained.",
+        "No people, human body parts, extra rolls, or prohibited commercial containers are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

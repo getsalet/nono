@@ -4,17 +4,36 @@
   "history": [
     {
       "pass": false,
-      "score": 40,
+      "score": 60,
       "duplicate_roles": [],
       "reasons": [
-        "Panel 1 (Role 1) fails the 'EDITORIAL HERO' requirement; the product roll is centered and dominant (oversized) rather than being a small, off-center element on the lower third where the farm context should dominate.",
-        "Panel 3 (Role 3) violates the strict 'equipment-only' and 'no farm activity' constraints; a large red tractor occupies the mid-ground and the setup is on a wooden bench rather than an empty concrete pad as specified."
+        "Role 2 contains a visible person standing in the background, which strictly violates the negative constraint of 'any person' (only unattended tractors or farm buildings are allowed as background context).",
+        "Role 3 fails to meet the specific content requirements for a 'HEADWORKS DETAIL' shot; instead of showing fixed filters, gauges, or regulators on an empty concrete pad, the image shows a tractor and an open building, which constitutes farm activity (not allowed in role 3) and lacks the required technical hardware."
       ],
-      "correction_prompt": "In Panel 1, drastically reduce the product roll's scale and position it off-center in the lower third to let the wide farm view dominate; in Panel 3, remove the red tractor and wooden bench to create a strict equipment-only record photo on an empty concrete pad.",
+      "correction_prompt": "Regenerate Role 2 removing the person from the background, and regenerate Role 3 replacing the tractor/building background with an empty concrete pad and placing a fixed irrigation filter, gauge, and manifold unit next to the carton.",
+      "panel_scores": [
+        60
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 fails the 'HEADWORKS DETAIL' requirement: the image shows only the product on a concrete pad and is completely missing the required technical equipment (fixed filter, gauge, regulator, and manifold).",
+        "Role 2 fails the 'SELECTION EVIDENCE' requirement: the image is an equipment-only arrangement with a background field that does not provide the necessary field-selection evidence (such as visible emitter spacing) required for that specific role.",
+        "Roles 2 and 3 suffer from hardware duplication and structural redundancy, as both feature the product on a foreground concrete surface with a simple, repetitive layout.",
+        "Role 3 background is a generic white/void space, which is not relevant to the article's brief on farm/irrigation context."
+      ],
+      "correction_prompt": "Reposition Role 3 to include the required manifold, regulator, and filter equipment in the foreground on a concrete pad. Adjust Role 2 to clearly include background field evidence, such as visible emitter spacing or crops, to distinguish the selection narrative from the equipment detail.",
       "panel_scores": [
         40
       ],
-      "set_attempt": 1
+      "set_attempt": 2
     }
   ]
 }

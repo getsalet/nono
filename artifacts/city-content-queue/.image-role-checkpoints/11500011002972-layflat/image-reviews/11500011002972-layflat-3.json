@@ -6,20 +6,47 @@
   "fast_mode": true,
   "history": [
     {
-      "pass": true,
-      "score": 92,
-      "product_width_percent": 52,
-      "product_height_percent": 38,
-      "product_x_center_percent": 35,
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 58,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
       "reasons": [
-        "Required AFP watermark present in bottom-right corner",
-        "Both target objects (one packaged AFP coil, one bare black woven coil) are present, recognizable, and separate",
-        "No people or human body parts visible",
-        "No third commercial packages or invalid objects",
-        "Layout matches the 'secondary coil pair' visual role on the concrete pad"
+        "The mandatory visual brief requires an 'equipment-only elevated record photograph of one fixed pump, gauge and manifold', but the image displays only the coils without the necessary pump or manifold infrastructure.",
+        "The product pair (both coils combined) occupies roughly 58% of the frame width, which exceeds the 'preferred' 20% and falls in the upper range of the noisy accept band, making it a bit too dominant for the required 'secondary' role."
+      ],
+      "correction_prompt": "Regenerate image showing a fixed pump, gauge, and manifold on a concrete pad as the primary subject; place the packaged and bare coils small and secondary in the lower third. Remove the large empty foreground.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 58,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Human body parts visible in the background (distant person/legs standing on the right side), which is a hard reject condition for this role.",
+        "Visual brief required a fixed pump, gauge, and manifold on an empty concrete pad, but the scene instead shows large farm machinery (trucks and tractors) that does not align with the specific 'equipment-only elevated record' requirement."
+      ],
+      "correction_prompt": "Remove all human figures and body parts from the image completely. Replace the large farm trucks and tractors with the required infrastructure: a single fixed pump, gauge, and manifold on the empty concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 50,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image correctly displays the two required coil products: one packaged AFP coil and one bare black woven coil.",
+        "The layout is a clean 'layflat' arrangement on a concrete pad as requested.",
+        "The combined width of the product pair is approximately 50% of the frame, which falls comfortably within the acceptable 8-65% range.",
+        "The required 'AFP | 09134922013' watermark is present and correctly formatted in the bottom-right corner.",
+        "Zero human body parts, silhouettes, or extraneous commercial containers (bottles, jars, etc.) are visible.",
+        "The physical plausibility of the scene is high, with no objects floating or intersecting inappropriately."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

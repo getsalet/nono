@@ -4,17 +4,54 @@
   "history": [
     {
       "pass": false,
-      "score": 58,
+      "score": 30,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails: The product is not small and off-center in the lower third as required; it is large and obstructs the foreground, failing the 'EDITORIAL HERO' structural layout.",
-        "Role 2 fails: The product is presented as a large, foreground-dominant object, which violates the requirement for a technical arrangement where the product should be one element among evidence (like visible emitter spacing), resulting in an oversized product presentation."
+        "Panel 1: The product carton is placed centrally in the foreground rather than on the lower third off-center.",
+        "Panel 1: The viewpoint is low and close to the ground, failing to satisfy the 'high-oblique' view requirement.",
+        "Panel 2: A person (farmer) is visible in the mid-ground, which is strictly prohibited.",
+        "Panel 2: The arrangement does not clearly depict 'emitter-spacing' or technical field-selection evidence, making it look like a generic scene rather than selection evidence.",
+        "Panel 3: The filter, gauge, and manifold are in the background rather than being the primary subject on the foreground concrete pad as required.",
+        "Panel 3: The large tractor in the background constitutes active farm equipment presence, whereas the requirement for the 'equipment-only' record implies a static or empty field context."
       ],
-      "correction_prompt": "Adjust Role 1 to place the product small and off-center in the lower third to allow the farm context to dominate; adjust Role 2 to shrink the product and clearly show a spool of dripper tape on the field ground to demonstrate selection evidence.",
+      "correction_prompt": "Recompose Panel 1 as a high-oblique wide shot with the product off-center on the lower third. Remove the person from Panel 2 and add visible emitter spacing or drip lines on the ground. In Panel 3, move the filter and manifold to the foreground concrete pad as the primary subject and remove the large active tractor.",
       "panel_scores": [
-        58
+        30
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "The product is not a 'carton' in any of the images; it is consistently depicted as a roll of tape, which violates the specific packaging requirement for an 'approved carton'.",
+        "Role 1 requires a 'wide high-oblique view', but the provided image is a low-angle, eye-level shot from within the rows, failing to show the 'farm and irrigation context' from an elevated perspective.",
+        "Role 3 requires 'no farm activity' in the background; the image clearly features tractors and large hay bales in the background, which introduces unrelated or distracting farm elements contrary to the 'empty concrete pad' and 'equipment-only' specification.",
+        "Image 2 features a highly specific 'red barn' which is likely an environmental mismatch for the Iranian regions mentioned in the article brief (Sahadeh/Khawarizmi), and the camera angle is too similar to Role 1 to be considered distinct."
+      ],
+      "correction_prompt": "Regenerate with an 'approved carton' instead of a tape roll; for Role 1, shift to a high-oblique aerial view where the carton is small and off-center; for Role 3, remove all tractors, bales, and machinery from the background to leave only the equipment on an isolated concrete pad.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 80,
+      "duplicate_roles": [],
+      "reasons": [
+        "In Panel 3, the specified filter system is visibly placed on the left side of the frame, leaving the right side empty and unbalanced. The role 'HEADWORKS DETAIL' is best served by the equipment on the right.",
+        "In Panel 1, the product is shown on a concrete block instead of directly on the field, which disrupts the 'farmer and irrigation context dominate' narrative for a wide view."
+      ],
+      "correction_prompt": "Recompose panel 3 by moving the filter system from the left to the right side of the concrete pad to frame the technical evidence more symmetrically.",
+      "panel_scores": [
+        80
+      ],
+      "set_attempt": 3
     }
   ]
 }
