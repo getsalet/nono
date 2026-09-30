@@ -1,41 +1,37 @@
 {
   "source_id": "12400010002881-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 92,
-      "product_width_percent": 60,
-      "product_height_percent": 42,
-      "product_x_center_percent": 46,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 35,
       "reasons": [
-        "Both mandatory products (packaged AFP coil and bare black woven coil) are present, fully visible, and physically plausible.",
-        "The exact required watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
-        "Image contains zero people, faces, or body parts.",
-        "High-oblique context and off-center product placement align with the editorial role requirements.",
-        "Distant tractor and urban infrastructure are acceptable contextual elements.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-42% of frame width.; Reduce product height from 42% to at most 40% of frame height."
+        "Hard reject: person present in image - woman crouching by water channel, violates zero-person requirement",
+        "Contains human body parts (face, arms, hands, legs) - immediate disqualification per policy",
+        "Two coils (packaged and bare black woven) are present with watermark intact",
+        "Product placement and visible elements otherwise acceptable but overridden by human presence"
       ],
-      "correction_prompt": "Reduce the product group from 60% to 8-42% of frame width. Reduce product height from 42% to at most 40% of frame height.",
+      "correction_prompt": "Remove all people and human body parts from the image. Only the packaged AFP coil and bare black woven coil should be visible in the scene. No humans, faces, hands, or any body parts permitted.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 95,
-      "product_width_percent": 28,
-      "product_height_percent": 32,
+      "score": 90,
+      "product_width_percent": 15,
+      "product_height_percent": 6,
       "product_x_center_percent": 42,
       "reasons": [
-        "Contains exactly the required pair: one packaged coil and one bare black woven coil.",
-        "Product combined width is ~28% (within 12-42% tolerance range).",
-        "Placement is in the lower third and slightly off-center, consistent with editorial hero guidelines.",
-        "Zero people or human body parts visible.",
-        "Required watermark 'AFP | 09134922013' is present in the bottom right.",
-        "No third commercial packages or containers detected.",
-        "Background includes relevant infrastructure context (field, crops) without disallowed elements."
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil, both fully visible and separate.",
+        "Combined product width ~15% of frame, within preferred 12-20% range.",
+        "Zero people or human body parts in image.",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Wide high-oblique water-transfer editorial context: irrigation channel with crop field, distant farm buildings allowed as infrastructure.",
+        "Products are off-center and placed in lower portion of frame, consistent with editorial preference."
       ],
       "correction_prompt": "",
       "attempt": 2
