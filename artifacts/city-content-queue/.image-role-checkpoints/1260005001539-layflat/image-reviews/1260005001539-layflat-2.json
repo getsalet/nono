@@ -1,0 +1,68 @@
+{
+  "source_id": "1260005001539-layflat",
+  "kind": 2,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 52,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Only one black coiled hose visible instead of mandatory two-coil pair (one packaged AFP coil + one bare black woven coil)",
+        "Missing second coil for diameter/construction comparison",
+        "Green pump/filter unit with gauge dominates foreground but does not fulfill two-coil pair requirement",
+        "machine-enforced bounding-box check failed: Reduce product height from 52% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Regenerate image showing exactly two hose coils side-by-side: one packaged AFP coil and one bare black woven coil, demonstrating diameter or construction difference, no pump unit dominating, zero people, watermark AFP | 09134922013 in bottom-right Reduce product height from 52% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 52,
+      "product_height_percent": 22,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: combined width of the two-coil pair is approximately 52% of the frame, exceeding the 42% hard limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the combined footprint of the two coils so they occupy no more than 42% of the image width. Keep both coils clearly visible and separate, place them lower in the frame, and maintain the AFP | 09134922013 watermark in the bottom-right corner. Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 38,
+      "product_height_percent": 11,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: third commercial product present — a cylindrical bottle/container with a metallic cap and label sits to the right of the two hose coils, violating the no-third-package rule.",
+        "Hard reject: image shows two identical bare coiled hoses rather than the approved layflat pair of one packaged AFP coil and one bare black woven coil; no diameter or construction difference is visible.",
+        "Missing selection evidence: the two coils lie flat on the ground without elevation or side-by-side technical comparison to demonstrate diameter/construction differences."
+      ],
+      "correction_prompt": "Replace the two identical bare coils with one packaged AFP coil and one bare black woven coil, elevated for technical comparison. Remove the cylindrical bottle/container object entirely.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 33,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil (blue/white wrap, left) and one bare black woven coil (right), both fully visible and separate.",
+        "Combined product width approximately 33% of frame, within acceptable 8–42% range.",
+        "No people, human body parts, or silhouettes present.",
+        "Distant unattended green tractor allowed per guidelines — not treated as third commercial product.",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "No third commercial package, bottle, jar, canister, bucket, fake label, impossible intersection, floating, or merged objects detected.",
+        "Seeds/texture difference between coiled types clearly visible, supporting SELECTION EVIDENCE role."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

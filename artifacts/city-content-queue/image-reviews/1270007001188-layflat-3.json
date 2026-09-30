@@ -1,27 +1,40 @@
 {
   "source_id": "1270007001188-layflat",
-  "family": "layflat",
   "kind": 3,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 92,
-      "product_width_percent": 60,
-      "product_height_percent": 45,
-      "product_x_center_percent": 50,
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 62,
+      "product_height_percent": 22,
+      "product_x_center_percent": 60,
       "reasons": [
-        "Watermark 'AFP | 09134922013' present in bottom-right.",
-        "Zero people or body parts detected.",
-        "Approved pair visible: one packaged coil (with cardboard label) and one bare black woven coil.",
-        "Third object in background is identified as infrastructure (fixed pump/manifold assembly) on a concrete pad, which aligns with the 'HEADWORKS DETAIL' role and is not a commercial product reject.",
-        "Product pair width (~60%) is within the accepted range of 8-65%.",
-        "Objects are separate, physically plausible, and well-lit.",
-        "Background elements (farm building, field) are unattended and relevant to the agricultural context."
+        "Missing mandatory infrastructure: the required fixed pump, gauge, and manifold are not visible in the image.",
+        "Composition violation: the two-coil pair is the primary subject and occupies ~62% width, violating the requirement for the pair to be 'small, separate and secondary' in a HEADWORKS DETAIL shot.",
+        "The image shows only coils on a pad without the specified equipment."
+      ],
+      "correction_prompt": "Generate an elevated record photo showing a fixed pump, gauge, and manifold on a concrete pad as the main subject, with the two approved hose coils placed small and secondary in the foreground.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Fixed pump with gauge and manifold correctly featured as primary equipment on concrete pad",
+        "Two-coil pair present and separate — one packaged AFP coil and one bare black woven coil",
+        "Watermark AFP | 09134922013 correctly placed in bottom-right",
+        "No people or human body parts visible",
+        "Distant field background consistent with agricultural context",
+        "Combined product width slightly above preferred 12-20% range but within acceptable 8-65% tolerance",
+        "All objects fully visible and physically plausible"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
