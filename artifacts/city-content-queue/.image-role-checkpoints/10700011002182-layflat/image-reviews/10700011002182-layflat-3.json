@@ -1,0 +1,43 @@
+{
+  "source_id": "10700011002182-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 70,
+      "product_height_percent": 50,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The product pair occupies more than 65% of the frame width (estimated 70%), violating the hard reject threshold.",
+        "Mandatory role 'HEADWORKS DETAIL' is missing: the image does not show an elevated record photograph of equipment (fixed pump, gauge, manifold) on an empty concrete pad.",
+        "The background shows open fields and a distant barn, which does not align with the specific equipment-only infrastructure role requested.",
+        "The product objects are in the foreground as the main subject, whereas the role requires them to be small, separate, and secondary to the infrastructure.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-65% of frame width.; Reduce product height from 50% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate as a high-angle equipment-only photograph of a fixed pump, gauge, and manifold on an empty concrete pad. Include the two small secondary coils (one AFP packaged, one bare black woven) in the distance (occupying less than 20% width). Ensure zero human presence and maintain the required 'AFP | 09134922013' watermark in the bottom-right corner. Reduce the product group from 70% to 8-65% of frame width. Reduce product height from 50% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 62,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains the approved pair: one packaged AFP coil (left) and one bare black coil (right).",
+        "Both coils are fully visible, separate, and physically plausible.",
+        "Zero people or human body parts are present.",
+        "The exact bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The estimated combined width of the product pair is approximately 62%, which falls within the 8-65% acceptability range for this role when objects remain recognizable.",
+        "No third commercial packages, bottles, or jars are visible.",
+        "The setting appears to be a neutral concrete pad, consistent with the equipment/record aesthetic requested."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

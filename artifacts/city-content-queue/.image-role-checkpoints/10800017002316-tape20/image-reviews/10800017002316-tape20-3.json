@@ -1,0 +1,83 @@
+{
+  "source_id": "10800017002316-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: multiple visible people (man in background, crouching person) violate the zero-person rule",
+        "Hard reject: roll width estimated at 32%, exceeding the 30% maximum width limit",
+        "Hard reject: text on the carton appears to be gibberish/unreadable characters instead of correct branding",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with exactly one AFP drip-tape roll on a concrete pad, removing all human figures, reducing the roll width to under 30% of the frame, and ensuring the product label text is clearly readable with the AFP logo. Keep the 'AFP | 09134922013' watermark in the bottom-right corner. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The image is a ground-level shot rather than the mandatory 'elevated record photograph' specified in the article brief.",
+        "The image contains additional unidentified white rolls on a wooden pallet in the background, failing the requirement that 'exactly one approved carton remains small and secondary.'",
+        "The background shows a generic farmyard with tractors, whereas the brief specifically requested a concrete pad setup showing 'fixed filter, gauge, regulator and manifold.'",
+        "The product is centered rather than preferred lower-third placement (though not a hard reject).",
+        "The image is a 3D render, not a 'record photograph' as requested by the role."
+      ],
+      "correction_prompt": "Regenerate as an elevated, high-angle photograph of an empty concrete pad featuring a fixed filtration unit and manifold (no farm activity). Place exactly one small AFP drip-tape roll (10% of frame) in the lower third of the frame. Do not include any wooden pallets or unidentified background rolls.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 32,
+      "product_height_percent": 48,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains a second carton roll in the foreground, violating the 'exactly one' constraint",
+        "Primary product roll is wider than the 30% hard limit",
+        "Primary product roll is taller than the 35% hard limit",
+        "Brief required 'exactly one approved carton remains small and secondary', but the image shows two large cartons",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 48% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to show only one small AFP white-and-blue drip tape carton roll in the background to keep it secondary. Ensure the filter/regulator assembly is the prominent headworks detail. Strictly remove the second carton roll and ensure the primary roll width is under 30% of frame width. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 48% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Presence of multiple people in the background (hard reject)",
+        "Carton roll is not white-and-blue wide low cylindrical (hard reject)"
+      ],
+      "correction_prompt": "Regenerate the image without any people in the background. Ensure the main object is a white and blue wide low cylindrical drip-tape carton roll.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 32,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Multiple people are visible in the background, violating the hard reject rule for human presence.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is missing.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image to remove all people from the background and add the watermark 'AFP | 09134922013' in the bottom-right corner. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

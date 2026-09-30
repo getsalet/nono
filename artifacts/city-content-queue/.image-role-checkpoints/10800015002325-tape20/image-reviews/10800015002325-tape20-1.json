@@ -1,0 +1,68 @@
+{
+  "source_id": "10800015002325-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 35,
+      "product_height_percent": 35,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Visible human (farmer) in the background is a hard reject violation.",
+        "Visible human body parts (arms/hands) on the farmer are a hard reject violation.",
+        "Product bounding box width is 35%, which exceeds the maximum 30% hard reject threshold.",
+        "Product placement is too central (46%), deviating from the mandatory off-center lower-third requirement for the EDITORIAL HERO role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate to remove the human and all body parts entirely. Ensure the single white-and-blue AFP carton roll is strictly under 30% width and under 35% height. Reposition the carton to the lower-third left or right (off-center) so the farm and irrigation context dominate the high-oblique view. Retain the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 5,
+      "product_width_percent": 17,
+      "product_height_percent": 14,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains a red tractor in the upper right section of the field. Looking closely at the cab of the tractor, a human figure (the driver) is clearly visible. This is an absolute hard reject as the rules mandate zero people or body parts.",
+        "The product (AFP carton roll) is positioned in the bottom-center of the image, directly overlapping with the crop rows in a way that looks artificially composited, though the primary reason for failure is the visible human.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right corner."
+      ],
+      "correction_prompt": "Regenerate the image to remove the red tractor and the human driver in the upper right background. Replace the tractor with an empty field or distant farm infrastructure that contains no people. Keep the AFP white and blue drip-tape carton roll in the bottom foreground, and retain the watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Watermark violation: The image displays 'AFP | 09134922013', but the mandatory rule requires the exact string 'AFP | 09134922013' (matching the specific phone number in the prompt text provided). *Correction*: Wait, looking at the strict instruction: 'The exact bottom-right watermark \"AFP | 09134922013\" is REQUIRED'. The image shows 'AFP | 09134922013'. These match perfectly. The watermark is NOT the reject reason.",
+        "Hard reject: The drip tape roll is clearly not a 'carton roll' (the required object), but rather a raw roll of white plastic tape/tube. The brief explicitly requires a 'drip-tape carton roll' (implying packaging). Showing the raw material fails the specific object description of 'carton'."
+      ],
+      "correction_prompt": "Replace the raw drip tape roll with a rectangular product carton/packaging box for the drip tape. Keep the same farm field background, high-oblique angle, and required watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 17,
+      "product_height_percent": 14,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Shows exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero people, human body parts, or human silhouettes are present.",
+        "The image matches the EDITORIAL HERO role: wide high-oblique view where the farm and irrigation context dominate.",
+        "The approved carton stays small, is fully visible, and is placed in the lower third of the frame.",
+        "Product bounding box is well within the preferred dimensions (width 17%, height 14%)."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

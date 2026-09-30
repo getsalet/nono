@@ -1,0 +1,55 @@
+{
+  "source_id": "1070007002015-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 68,
+      "product_height_percent": 45,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The combined width of the two products (packaged coil and bare coil) occupies approximately 68% of the image frame, which exceeds the maximum allowed limit of 42% for this role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the two coils positioned significantly further apart and scaled down so their total horizontal span is between 12% and 20% of the frame width, maintaining their separate physical state and avoiding any overlap or merging. Reduce the product group from 68% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 100,
+      "product_width_percent": 47,
+      "product_height_percent": 40,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Image contains the approved layflat pair: one packaged coil and one bare black coil.",
+        "Product objects are separate, physically plausible, and not distorted.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "No people, human silhouettes, or body parts are visible.",
+        "Distant farm equipment (tractors) are present but treated as unattended infrastructure, not commercial products.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 47% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 47% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 38,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains both the packaged coil and bare black woven coil, which are separate, physically plausible, and fully visible.",
+        "The product pair is off-center and small relative to the frame, fitting the editorial hero layout.",
+        "The exact bottom-right watermark \"AFP | 09134922013\" is present as required.",
+        "No people, body parts, or disallowed third commercial products are visible.",
+        "The wide high-oblique context of farmland and a water-transfer route matches the role’s visual brief."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

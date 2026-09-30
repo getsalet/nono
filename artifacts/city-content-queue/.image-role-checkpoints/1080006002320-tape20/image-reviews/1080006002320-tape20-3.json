@@ -1,0 +1,80 @@
+{
+  "source_id": "1080006002320-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The image contains two visible human figures (one standing and one sitting) in the left background, which violates the zero-people requirement.",
+        "Dimension violation: The product's bounding box exceeds the accepted limits, with an estimated width of ~38% (limit 30%) and height of ~42% (limit 35%).",
+        "Role violation: The image fails the mandatory 'HEADWORKS DETAIL' role; it is a general product shot rather than an elevated record photograph of fixed infrastructure (filter, gauge, manifold) where the carton is secondary.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Reduce the visual size of the drip-tape carton so it occupies less than 30% of the frame width and height. Reframe as a close-up of irrigation infrastructure (filter, gauge, manifold) on a concrete pad with the carton appearing small and secondary in the background. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Multiple AFP rolls are visible (2 rolls), which violates the 'exactly one' requirement and the hard reject for a 'second roll'.",
+        "The image role fails the 'HEADWORKS DETAIL' requirement, which mandates an elevated record photograph of fixed irrigation infrastructure (filter, gauge, manifold); the image shows only a wide landscape with rolls on a pad and no such equipment.",
+        "The primary roll is too wide (estimated ~38%), violating the 'roll wider than 30 percent' hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Generate a close-up, high-angle record photograph of fixed irrigation infrastructure (filter, gauge, and manifold) on a concrete pad. Place exactly one small AFP white-and-blue drip tape roll (width < 30%) in the background or as a secondary element. Remove the second roll. Do not include any people or bottles. Retain the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human figures (people) are clearly visible in the background near the tractors and buildings.",
+        "Role mismatch: The mandatory role 'HEADWORKS DETAIL' requires an elevated record of a fixed filter/gauge/manifold on a concrete pad, whereas the image shows a single roll lying flat on an open expanse."
+      ],
+      "correction_prompt": "Remove all people from the background and replace the ground-level roll with a close-up record photograph of a fixed irrigation manifold, filter, and gauge assembly on a clean concrete pad.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 34,
+      "product_height_percent": 31,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A visible human standing in the background between the two tractors violates the zero-people rule.",
+        "Hard reject: The product (drip tape roll) is wider than 30 percent of the frame (approx. 34%), exceeding the size constraint.",
+        "Role mismatch: The brief mandated an 'elevated record photograph of one fixed filter, gauge, regulator and manifold', which are completely missing from this image.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a top-down view of a concrete irrigation manifold station (filter, gauge, and manifold) on a pad. Place a small AFP drip-tape roll on the ground nearby, less than 30 percent of the frame width. Ensure zero people in the scene. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Visible human figures (farmers/workers) are present in the background field, which is a hard reject.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image without any people, workers, or human silhouettes in the background. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

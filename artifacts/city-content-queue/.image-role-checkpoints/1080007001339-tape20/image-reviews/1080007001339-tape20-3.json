@@ -1,0 +1,78 @@
+{
+  "source_id": "1080007001339-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a human figure (farmer) in the background, which is a hard reject",
+        "Presence of a livestock animal (horse), which is not allowed in the 'no farm activity' context and distracts from the product",
+        "Product bounding box dimensions exceed the acceptable limits for a 'small and secondary' placement relative to the infrastructure role (width > 30%, height > 35%)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the human farmer and the horse from the background. Shrink the drip tape roll to appear smaller and secondary (approx 20% width). Ensure the focus is on the concrete pad and infrastructure, or simply make the roll the sole subject with a clean background. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 16,
+      "product_height_percent": 15,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Mandatory image role 'HEADWORKS DETAIL' is not met; the image shows a plain concrete pad without the required filter, gauge, regulator, and manifold setup.",
+        "The approved carton is placed centrally and is the primary subject, failing the requirement to be 'small and secondary'."
+      ],
+      "correction_prompt": "Regenerate as an elevated close-up of a fixed irrigation manifold with filter, gauge, and regulator on a concrete pad. Place the small AFP carton as a secondary element in the background.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 36,
+      "product_height_percent": 44,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: A visible human figure stands in the background, violating the zero-person rule.",
+        "Product dimensions are out of bounds: The roll's width (~36%) and height (~44%) both exceed the maximum threshold of 35%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width.; Reduce product height from 44% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people from the scene. Reduce the scale of the roll so its width and height do not exceed 35% of the frame, maintaining a low cylindrical shape. Reduce the product group from 36% to 12-30% of frame width. Reduce product height from 44% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 20,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: multiple people are visible in the background (left and right).",
+        "The mandatory image role is 'HEADWORKS DETAIL' requiring an equipment-only setup on a concrete pad without farm activity. The presence of two standing workers and active agricultural equipment violates this constraint."
+      ],
+      "correction_prompt": "Regenerate the image strictly as an elevated headworks detail shot on an empty concrete pad. Include only the AFP drip-tape roll, a fixed filter, gauge, and manifold. Remove all people and the background tractor/water tank. Ensure the drip-tape roll is small and secondary.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 33,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing mandatory infrastructure (filter, gauge, regulator, manifold) required for the HEADWORKS DETAIL role.",
+        "Product width exceeds the maximum acceptable limit of 30 percent.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate to show a fixed irrigation manifold with a gauge and regulator on a concrete pad. The AFP drip tape carton must be small and secondary, with a width under 25 percent of the frame. Maintain the required bottom-right watermark. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

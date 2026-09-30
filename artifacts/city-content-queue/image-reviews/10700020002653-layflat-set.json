@@ -1,19 +1,22 @@
 {
   "source_id": "10700020002653-layflat",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Layout Duplication: Roles 1 and 2 present a near-identical visual composition. Both place the two-coil pair in the foreground with farm machinery (tractors) on the horizon, failing to establish the required difference in camera angle or environment structure between a 'hero' wide shot and a 'selection' close-up.",
-        "Role 1 Deviation: The editorial hero role requires a wide high-oblique water-transfer context. The image instead displays a standard field view with the product placed large and centered in the foreground, failing to maintain the required 'small, separate and off-center' framing.",
-        "Role 2 Ambiguity: The product is not elevated or isolated to serve as 'technical evidence'. It is placed on the ground just like in Role 1, making the distinction between the two panels unclear."
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Differentiate Role 1 and Role 2 by making Role 1 a wide high-oblique landscape with the coils small and off-center, while Role 2 should be an elevated close-up macro shot of the coils to emphasize their diameter difference.",
+      "reasons": [
+        "Roles 1 and 2 both feature the two-coil pair as the primary subject in a low-angle field view, failing to provide the required narrative contrast between a water-transfer hero shot and a technical selection comparison.",
+        "Role 3 is incorrectly populated with the two-coil product pair; the brief strictly requires an 'equipment-only' shot of a pump, gauge, and manifold on a concrete pad for the 'HEADWORKS DETAIL' role.",
+        "All three images exhibit low-angle compositions, failing to incorporate the 'elevated' technical or record viewpoints required for roles 2 and 3."
+      ],
+      "correction_prompt": "Regenerate Role 3 as a high-angle equipment-only shot of a fixed pump, gauge, and manifold on a concrete pad, keeping the two-coil product pair small, separate, and secondary; regenerate Roles 1 and 2 to ensure Role 1 is a wide high-oblique water-transfer context and Role 2 is a distinct elevated technical close-up of the two coils.",
       "panel_scores": [
-        35
+        40
       ],
       "set_attempt": 1
     },
@@ -21,19 +24,37 @@
       "pass": false,
       "score": 45,
       "duplicate_roles": [
-        1,
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Panel 1 fails the EDITORIAL HERO requirement by using a low, ground-level angle instead of the specified 'wide high-oblique' camera height.",
-        "Panel 2 fails the SELECTION EVIDENCE requirement by using a low ground-level angle instead of an 'elevated' shot for the technical comparison.",
-        "Panels 1 and 2 present nearly identical low-angle farm environments, making them repetitive layouts rather than distinct visual narratives."
+        "Panel 2 fails the 'SELECTION EVIDENCE' requirement by including a large mechanical pump, which is an 'extra' object disallowed in this specific comparison shot.",
+        "Panel 2 and Panel 3 display the exact same hardware duplication (pump, gauge, and manifold), violating the brief which assigns the pump only to role 3 (HEADWORKS).",
+        "Panel 3's 'empty concrete pad' is not isolated from farm activity; the large, active green pump contradicts the 'equipment-only' record photograph intent for this specific role's secondary layout.",
+        "Panel 3 places the two coils as the primary subject, whereas the brief requested they remain 'small, separate, and secondary' to the headworks equipment."
       ],
-      "correction_prompt": "Crop and re-frame Panels 1 and 2 from a wide high-oblique or elevated aerial perspective to satisfy the required camera heights and improve distinctness from Panel 3.",
+      "correction_prompt": "Regenerate Panel 2 to show only the two coils on an elevated surface without the pump, and regenerate Panel 3 to feature the pump and manifold as the primary focus with the two coils scaled down to the background.",
       "panel_scores": [
         45
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Panel 1: The product coils are positioned too large and too close to the bottom of the frame, failing the 'off-center' and 'small' requirements for the hero shot.",
+        "Panel 2: Includes a third coil in the background, which is explicitly prohibited by the requirement to show only the 'approved two-coil pair'.",
+        "Panel 3: Lacks the required 'elevated record photograph' perspective; it is a ground-level shot, and the coils in the foreground are oversized and not secondary to the pump equipment."
+      ],
+      "correction_prompt": "Resize and shift coils off-center in Panel 1; remove the third coil in Panel 2; and elevate the camera angle in Panel 3 to focus on the equipment with the coils as small secondary elements.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
     }
   ]
 }
