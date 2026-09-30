@@ -1,0 +1,72 @@
+{
+  "source_id": "1180005002484-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 65,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Approved pair present: One packaged AFP coil and one bare black woven coil are clearly visible and separate.",
+        "Mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Zero people or human body parts visible in the frame.",
+        "Infrastructure (unattended tractors, farm building, soil texture) is permitted and contextually relevant.",
+        "Objects are physically plausible and not merged.",
+        "Score deduction: The pair of products is significantly wider than the preferred 12-20% and the allowable 8-42% range, occupying about 65% of the frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 65% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 62,
+      "product_height_percent": 25,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: A full-body human figure is standing in the mid-ground, violating the zero-person rule.",
+        "There is a third large coil visible in the background to the right, which conflicts with the 'exactly the approved pair' requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with zero people in the frame. Remove the extra background coil, keeping only one packaged coil and one bare black coil in the foreground. Reduce the product group from 62% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 58,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: A person is visible standing in the field on the right side of the image.",
+        "Hard reject: The product pair is wider than the 42% maximum limit (approx. 58% of the frame).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the person standing in the field. Resize the product pair to take up approximately 15% of the frame width. Keep the pair off-center in the lower-left. Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 33.0,
+      "product_height_percent": 28.0,
+      "product_x_center_percent": 28.0,
+      "reasons": [
+        "The image contains the required approved layflat pair: one packaged coil and one bare black woven coil.",
+        "The product placement is off-center in the lower-left, satisfying the editorial preference without violating hard rejects.",
+        "There are zero people, faces, or body parts visible in the image.",
+        "The water channel provides the necessary high-oblique water-transfer context for the agricultural hose.",
+        "The required watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "No third commercial products, bottles, or containers are visible; the distant farm building and tractor are permitted as infrastructure/context."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

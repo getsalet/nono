@@ -1,0 +1,67 @@
+{
+  "source_id": "1180004002050-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Hard reject: Human silhouettes are visible in the distant background along the canal bank, violating the zero-person constraint."
+      ],
+      "correction_prompt": "Regenerate the image to remove all distant human figures and silhouettes from the background; keep the two coils (packaged AFP and bare black woven) small, separate, and off-center in the foreground with the required water-transfer context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 48,
+      "product_height_percent": 33,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Exact bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "Approved product pair is visible: one packaged blue/white AFP coil and one bare black woven coil.",
+        "Image contains zero people, zero human body parts, and zero faces or silhouettes.",
+        "No third commercial packages, bottles, jars, cans, or invented products are present; visible tractor and infrastructure are permitted context elements.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: visible person in the background left (worker/farmer)",
+        "Product pair exceeds maximum allowed combined width threshold (42%)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Remove all visible people and body parts. Shrink and separate the packaged and bare coils to fit within 20% of the total frame width. Regenerate with a wider water-transfer perspective. Reduce the product group from 58% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 20,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Correctly displays the required pair of one packaged AFP coil and one bare black woven coil.",
+        "Zero people or human body parts present.",
+        "The product placement is small, separate, and off-center (lower-left), which aligns with editorial preferences for this role.",
+        "The required watermark \"AFP | 09134922013\" is present and correctly formatted in the bottom-right.",
+        "Context shows relevant water-transfer infrastructure (water channel) and distant farm equipment without introducing extraneous commercial products."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
