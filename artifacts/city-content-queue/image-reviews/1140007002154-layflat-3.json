@@ -1,0 +1,67 @@
+{
+  "source_id": "1140007002154-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 68,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Missing required 'HEADWORKS DETAIL' elements: The image lacks the mandatory equipment-only record photograph of a fixed pump, gauge, and manifold. It only shows two coils on a pad, which violates the specific role requirements.",
+        "Product width exceeds hard reject threshold: The combined width of the two coils spans approximately 68% of the frame, which is wider than the strict 65% limit for hard rejection.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate image to include a fixed pump, gauge, and manifold on the concrete pad as the primary focus; reduce the size of the two coils so they occupy less than 65% of the frame width. Reduce the product group from 68% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 52,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing mandatory HEADWORKS equipment: no fixed pump, gauge, or manifold visible on the concrete pad.",
+        "The left object is a gray and blue multi-segmented mechanical unit, not the required 'packaged AFP coil'.",
+        "The right object's center is a square block rather than a proper wound hose spiral, resembling a belt or strap.",
+        "The image lacks the specific infrastructure context requested for the 'HEADWORKS DETAIL' role."
+      ],
+      "correction_prompt": "Regenerate the image to show a central equipment-only fixed pump, pressure gauge, and manifold setup on the concrete pad. Include one small packaged AFP coil and one bare black woven hose coil in the secondary background. Remove the mechanical gray/blue segmented object.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 48,
+      "product_height_percent": 42,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Fail: Role 3 requires a HEADWORKS DETAIL showing a fixed pump, gauge, and manifold; the image only shows layflat hose coils and lacks the mandatory infrastructure.",
+        "Fail: The two-coil pair is the primary subject, violating the requirement for it to be small, separate, and secondary to the equipment."
+      ],
+      "correction_prompt": "Regenerate image to include a fixed pump, gauge, and manifold on a concrete pad as the primary subject. Include the packaged AFP coil and bare black woven coil as small, secondary objects in the background. Ensure no farm activity or human presence is visible.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 50,
+      "product_height_percent": 42,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Image contains the required exact watermark 'AFP | 09134922013' in the bottom-right corner.",
+        "Visible zero humans or body parts.",
+        "Features a packaged AFP coil and a bare black woven coil that are separate and fully visible.",
+        "Product bounding box dimensions fall within the 12-20% preferred range, and the pair is not wide relative to the overall frame width.",
+        "Scene is an empty concrete pad consistent with the 'equipment-only elevated record' requirement."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

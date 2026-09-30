@@ -1,0 +1,79 @@
+{
+  "source_id": "10900037002134-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of two people (farmers/workers) on the tractor in the background is a hard reject.",
+        "Hard reject due to visible faces and body parts of the people."
+      ],
+      "correction_prompt": "Regenerate the image without any people, workers, or human silhouettes in the background. Ensure only unattended equipment or an empty field is visible behind the subject to strictly meet the 'zero people' requirement.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 31,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: visible people (farmers) present in the background.",
+        "Hard reject: The required image role (HEADWORKS DETAIL) is not met; no equipment (filter, gauge, regulator, or manifold) is visible on the pad.",
+        "Fail: The product width (31%) exceeds the maximum allowable limit of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people, animals, and distant background elements. Recreate the scene as an equipment-only record photo on a concrete pad showing a fixed filter, gauge, and manifold. Shrink the white and blue AFP drip-tape carton so its width is between 12 and 25 percent of the frame. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 27,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Multiple people and human silhouettes are visible in the background.",
+        "Height violation: The roll appears to occupy approximately 38 percent of the image height, exceeding the 35 percent maximum limit.",
+        "Brief mismatch: The image role requires 'HEADWORKS DETAIL' showing equipment on an empty concrete pad, but instead displays a wide field with people and a tractor.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people, tractors, and background farm activity; regenerate as an equipment-only close-up record photograph on a plain empty concrete pad with zero visible humans. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A visible person and farmer (human body parts/silhouette) are present in the background.",
+        "Hard reject: A tractor (unattended equipment) is operated by the visible person, violating the 'no people' and contextual requirements."
+      ],
+      "correction_prompt": "Regenerate the image ensuring zero people and zero human body parts are visible anywhere in the frame, including the background; show only empty farm infrastructure.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Gibberish writing on product label ('DRIP HIRIAED TAPE' instead of 'DRIP IRRIGATION TAPE')",
+        "Missing mandatory 'HEADWORKS DETAIL' required equipment: no fixed filter, gauge, regulator, or manifold on the concrete pad",
+        "Cow grazing in the background conflicts with the 'empty concrete pad' requirement"
+      ],
+      "correction_prompt": "Regenerate with mandatory irrigation infrastructure (fixed filter, gauge, regulator, manifold) on an empty concrete pad, correct the product label to 'DRIP IRRIGATION TAPE', and remove the background grazing cows.",
+      "attempt": 5
+    }
+  ]
+}
