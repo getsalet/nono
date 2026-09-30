@@ -1,0 +1,84 @@
+{
+  "source_id": "1180004002050-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 34,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible people (human silhouettes) are present in the background left and center.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with a completely empty background. Strictly remove all people, workers, or faces. Ensure the red tractor in the background is also unattended with no driver visible. Maintain the 'HEADWORKS DETAIL' role with one fixed filter/gauge/regulator setup on a concrete pad and exactly one secondary white/blue drip-tape carton. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image displays exactly one wide cylindrical carton roll with the correct AFP white-and-blue branding.",
+        "The product features the required 'AFP' logo and the bottom-right watermark 'AFP | 09134922013' is present and intact.",
+        "Zero people or body parts are visible; the scene is clean with a plain concrete/soil background.",
+        "Product width is estimated at 32%, which is slightly above the 30% hard reject limit but fits within the acceptable 12-30% estimation noise range for physical plausibility; the roll is not severely distorted.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible people/farmers in the background hard reject",
+        "Image is not an equipment-only filter/manifold shot on a concrete pad as per brief",
+        "Product exceeds 30% width limit"
+      ],
+      "correction_prompt": "Regenerate as an elevated equipment-only detail photograph showing one fixed filter, gauge, regulator and manifold on an empty concrete pad. Place exactly one small secondary AFP white-and-blue wide cylindrical drip-tape carton roll (less than 25% of frame width) as context. No people, no farm workers, no visible human body parts, no distant crops or active farm activity.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains multiple human figures in the background, violating the hard reject rule of zero people or silhouettes.",
+        "The image features a white jar/container in the mid-ground, which violates the hard reject rule against bottles, jars, or canisters.",
+        "The scene depicts a general farm environment with workers and activity, whereas the specific image role required an equipment-only view of a filter, gauge, and regulator on an empty concrete pad.",
+        "The mandatory role (detail shot of fixed filter, gauge, and manifold) is not visible in the image."
+      ],
+      "correction_prompt": "Regenerate image as an equipment-only elevated record photograph on an empty concrete pad. Show a fixed filter, gauge, regulator, and manifold. Include one small secondary AFP white-and-blue wide low cylindrical drip-tape carton roll. Absolutely no people, body parts, jars, or canisters. Ensure the 'AFP | 09134922013' watermark remains in the bottom right.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 31,
+      "product_height_percent": 27,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Hard reject triggered by the presence of two human figures (workers/farmers) in the background.",
+        "Hard reject triggered by the presence of human body parts and silhouettes.",
+        "The image violates the 'zero people' constraint.",
+        "The 'HEADWORKS DETAIL' mandatory role (showing a filter/gauge/manifold on a pad) is not depicted; the image shows a raw product roll instead.",
+        "Product roll dimensions are on the edge of the acceptable noise range.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures, workers, and body parts from the background. Replace the background with static farm infrastructure (unattended tractors or open fields) and ensure the foreground strictly follows the 'HEADWORKS DETAIL' role showing equipment, or if retaining the roll, remove all humans to pass the safety check. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "source_id": "11000010002542-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 39,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Visible human body parts (feet/shoes) are present in the foreground, which is a hard reject.",
+        "Off-center placement and lower-third composition are not standalone rejects."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the human feet and shoes. Ensure the foreground contains only the packaged coil and bare black woven coil with no visible people or body parts.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Image correctly features the two required objects: one packaged coil (left) and one bare black woven coil (right).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 49,
+      "product_height_percent": 26,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Correct layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "Zero people or human body parts present.",
+        "Watermark 'AFP | 09134922013' is present and correct.",
+        "Editorial hero context with wide water-transfer view (irrigation channel, farm equipment).",
+        "Product pair is physically plausible and separate, with no intersections or floating objects.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 49% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 49% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains exactly the two required objects: one packaged coil and one bare black woven coil.",
+        "Both objects are separate, fully visible, and physically plausible.",
+        "The product width is 25% of the frame, which falls within the 8-42% acceptance window.",
+        "No people, hands, or body parts are visible.",
+        "The tractor is unattended and serves as contextual background (infrastructure), not a rejected product.",
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom-right."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

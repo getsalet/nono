@@ -1,0 +1,68 @@
+{
+  "source_id": "1180005002483-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The image clearly shows multiple human figures (workers) in the background on the left side and right side, and human silhouettes inside the building, which violates the mandatory 'zero people' rule.",
+        "Strict role violation: The image displays a standalone wide low cylindrical roll, whereas the mandatory role requires an 'elevated record photograph of one fixed filter, gauge, regulator and manifold on an empty concrete pad' with the roll being small and secondary."
+      ],
+      "correction_prompt": "Regenerate as a low-angle detail photograph of fixed irrigation infrastructure: one filter, gauge, regulator, and manifold on a concrete pad; place one small AFP white-and-blue roll secondary in the foreground; zero people, no trucks or humans in the background",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: The image contains multiple visible people (farmers/workers) in the background, which violates the rule of 'zero people and zero human body parts'.",
+        "Brief mismatch: The role requires an 'equipment-only' detail shot of a filter, gauge, or manifold; this image shows a drip tape roll in an active farm scene with farm equipment."
+      ],
+      "correction_prompt": "Regenerate the image to show a high-angle close-up of the drip tape carton roll on an empty concrete pad, completely removing all people, human silhouettes, and background farm equipment or machinery from the frame.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 35,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Zero People Violation: Two clear silhouettes of people are standing near the red truck in the upper-right background. The strict 'zero people' requirement results in a hard reject.",
+        "Role Mismatch: The mandatory visual role requires a 'HEADWORKS DETAIL' featuring specific infrastructure (filter, gauge, regulator, and manifold). This image is a product-only shot lacking the required fixed infrastructure.",
+        "Gibberish Text: The text on the carton face is nonsensical and illegible ('ORIP 112E168300 TATE'), which triggers a reject for fake/gibberish writing.",
+        "Dimension Breach: The cylindrical roll's diameter and height are slightly excessive, estimated at 35% width and 38% height, exceeding the maximum physical plausibility limits defined in the instructions.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human silhouettes from the background completely. Reframe the scene to show an elevated detail of a fixed irrigation system including a filter, gauge, regulator, and manifold on a concrete pad. Ensure the white-and-blue AFP drip-tape roll is present but small and secondary to the infrastructure. Replace all gibberish text on the packaging with clean, professional branding labels. Reduce the roll's scale to less than 30% of the frame width. Reduce the product group from 35% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 18,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Object is a single wide low cylindrical drip-tape carton roll matching the product brief.",
+        "Contains no people or human body parts.",
+        "Placement and scale are consistent with the 'small and secondary' instruction for the HEADWORKS DETAIL role.",
+        "Infrastructure (filter, gauge, manifold) is present on a concrete pad as required.",
+        "Required watermark 'AFP | 09134922013' is visible in the bottom-right corner.",
+        "No hard reject items (bottles, extra rolls, gibberish text, etc.) are present."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

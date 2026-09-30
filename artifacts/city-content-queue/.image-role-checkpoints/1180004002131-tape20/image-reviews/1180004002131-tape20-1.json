@@ -1,0 +1,42 @@
+{
+  "source_id": "1180004002131-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 42,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "product_width_percent exceeds the 30% hard reject limit",
+        "product_height_percent exceeds the 35% hard reject limit",
+        "Editorial role violation: the product roll is placed in the center and foreground, dominating the frame rather than remaining small and off-center on the lower third as specified for the hero image",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the wide high-oblique farm shot. Move the AFP carton roll to the right side of the lower third and significantly reduce its relative size so it does not dominate the frame. Ensure the roll width is less than 25% of the image width. Keep the background tractor and farm building in the distance. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "No visible people, human body parts, or prohibited containers (bottles, jars, etc.).",
+        "The roll is located in the lower third and off-center, meeting the editorial hero role requirements.",
+        "Product width and height are within the acceptable estimation noise and physical plausibility limits.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Background context (farm, tractors, crops, irrigation lines) aligns with the article brief.",
+        "No hard rejects detected: no fake headlines, no impossible geometry, no second commercial package."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

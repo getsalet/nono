@@ -1,0 +1,95 @@
+{
+  "source_id": "1080006001338-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 31,
+      "product_height_percent": 33,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Product bounding box width is estimated at 31 percent of the frame, which exceeds the strict 30 percent hard reject limit for wide carton rolls.",
+        "Visible 'AFP' label on the roll contains additional stylized text ('DRIP HfRgant', 'Hfo', and illegible block text) that resembles gibberish or fake captions, violating the text purity requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the width of the drip-tape roll to less than 30% of the frame width to strictly meet physical plausibility limits. Clean up the side labels on the roll to remove gibberish and illegible text, keeping only clear 'AFP' branding. Preserve the concrete pad, filter gauge hardware, distant farm equipment, and the bottom-right watermark exactly as they are. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Second commercial package (open cardboard box) is clearly visible and violates the 'exactly one carton' rule",
+        "Mandatory role 'HEADWORKS DETAIL' requires fixed equipment (filter, gauge, regulator, manifold) on an empty pad; this image shows a drip tape roll and unattended farm equipment, failing the specific role description"
+      ],
+      "correction_prompt": "Regenerate image to match HEADWORKS DETAIL role: Show one fixed filter, gauge, regulator, and manifold on an empty concrete pad. Include exactly one small, secondary AFP white-and-blue wide low cylindrical drip-tape carton roll. Background must be an empty concrete pad with no active farm machinery or open boxes.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Visible people in the background (one standing near the tractor, one partially visible near the hay), violating the zero-person rule.",
+        "Wrong image role: The image shows a low-angle shot of the roll on concrete rather than the requested elevated record photograph of equipment-only infrastructure (filter, gauge, regulator, manifold).",
+        "Missing required infrastructure: No fixed filter, gauge, regulator, or manifold is visible as the primary subject."
+      ],
+      "correction_prompt": "Regenerate an elevated, high-angle record photograph of a fixed drip-irrigation filter, gauge, regulator, and manifold on an empty concrete pad. Include a small AFP white-and-blue drip-tape roll in the background. Strictly zero people or body parts. Keep the bottom-right watermark \"AFP | 09134922013\".",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 27,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A second roll of drip tape is clearly visible in the background to the right, violating the 'exactly one' and 'zero second commercial package' constraints.",
+        "The mandatory role required an 'elevated record photograph of one fixed filter, gauge, regulator and manifold', which is completely missing; instead, the image shows rolls on the ground.",
+        "Product height is estimated at 40%, exceeding the 35% hard reject limit for height.",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate image to show exactly one AFP white-and-blue drip tape roll on an empty concrete pad as the primary subject. Include one fixed filter, gauge, regulator, and manifold in the background. Remove the second roll in the distance. Ensure the main roll does not exceed 35% of the image height. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image shows a large wheelbarrow carrying filter infrastructure. The visual brief explicitly mandates an 'empty concrete pad' for the equipment. The presence of a wheeled cart contradicts the 'fixed filter... on an empty concrete pad' requirement.",
+        "The coiled hose in the background is indistinct and does not clearly satisfy the 'drip-tape carton roll' subject focus; the main subject is currently the filter assembly on a cart."
+      ],
+      "correction_prompt": "Regenerate the image to show the drip tape carton roll in the foreground. In the background, place the filter, gauge, and manifold assembly directly on the concrete ground (no wheels, no wheelbarrow) to match the 'fixed filter on an empty pad' brief.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 29,
+      "product_height_percent": 28,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll",
+        "Zero visible people, faces, or body parts in the frame",
+        "No bottles, jars, cans, or forbidden commercial containers present",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner",
+        "Background matches the 'HEADWORKS DETAIL' role with fixed infrastructure (pump/filtration equipment) on a concrete pad",
+        "Product dimensions are physically plausible within the accepted tolerance range"
+      ],
+      "correction_prompt": "",
+      "attempt": 1
+    }
+  ]
+}

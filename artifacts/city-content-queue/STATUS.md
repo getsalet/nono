@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-30T19:36:14+00:00`
+- آخرین بروزرسانی: `2026-09-30T19:45:54+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **713 از 1894 (37.65٪)**
-- تکمیل‌شده: **713**
+- پیشرفت: **719 از 1894 (37.96٪)**
+- تکمیل‌شده: **719**
 - در حال پردازش: **0**
-- در انتظار: **145**
-- آماده انتخاب در اجرای بعدی: **145**
+- در انتظار: **149**
+- آماده انتخاب در اجرای بعدی: **149**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1036**
+- ناموفق: **1026**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,12 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **زیدآباد** — کرمان — `layflat` — 1248 کلمه — `2026-09-30T19:44:46+00:00`
+- **ورزنه** — اصفهان — `layflat` — 1242 کلمه — `2026-09-30T19:43:38+00:00`
+- **بردخون** — بوشهر — `tape20` — 1528 کلمه — `2026-09-30T19:42:46+00:00`
+- **مشکات** — اصفهان — `layflat` — 1362 کلمه — `2026-09-30T19:42:15+00:00`
+- **شبانکاره** — بوشهر — `tape20` — 1112 کلمه — `2026-09-30T19:42:11+00:00`
+- **سیرجان** — کرمان — `tape20` — 1714 کلمه — `2026-09-30T19:42:00+00:00`
 - **یاسوج** — کهگیلویه و بویراحمد — `tape20` — 1423 کلمه — `2026-09-30T19:34:17+00:00`
 - **علویجه** — اصفهان — `layflat` — 1208 کلمه — `2026-09-30T19:33:20+00:00`
 - **پیربکران** — اصفهان — `layflat` — 1269 کلمه — `2026-09-30T19:23:28+00:00`
@@ -46,25 +52,19 @@
 - **دشتکار** — کرمان — `layflat` — 1651 کلمه — `2026-09-30T18:31:31+00:00`
 - **شامکان** — خراسان رضوی — `layflat` — 1302 کلمه — `2026-09-30T18:22:57+00:00`
 - **صاحب** — کردستان — `tape20` — 1604 کلمه — `2026-09-30T18:15:42+00:00`
-- **ششتمد** — خراسان رضوی — `layflat` — 1088 کلمه — `2026-09-30T18:14:44+00:00`
-- **بافت** — کرمان — `layflat` — 1669 کلمه — `2026-09-30T18:14:22+00:00`
-- **آشار** — سیستان و بلوچستان — `tape20` — 1163 کلمه — `2026-09-30T18:03:15+00:00`
-- **سوران** — سیستان و بلوچستان — `tape20` — 1277 کلمه — `2026-09-30T17:56:04+00:00`
-- **هیدوچ** — سیستان و بلوچستان — `tape20` — 1413 کلمه — `2026-09-30T17:55:33+00:00`
-- **چگرد** — سیستان و بلوچستان — `tape20` — 1349 کلمه — `2026-09-30T17:55:26+00:00`
 
 ## خطاهای اخیر
 
-- **گلدشت** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **سپیدار** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **بافران** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **مادوان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **خارک** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **کهریزسنگ** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **بوستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **چیتاب** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **مجلسی** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **خانوک** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **برازجان** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **نطنز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بوشکان** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **اژیه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بردستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **شنبه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **برزک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **آبدان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **زیدآباد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **بادرود** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

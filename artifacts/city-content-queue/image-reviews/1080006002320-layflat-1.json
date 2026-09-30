@@ -1,0 +1,40 @@
+{
+  "source_id": "1080006002320-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 60,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Persons (farmers/workers) are visible in the background on the left.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove all people and human figures from the background. Keep the water channel, crop rows, and the two coils in the foreground. Reduce the product group from 60% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 33,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image correctly displays the required pair of products: one packaged AFP coil and one bare black woven coil.",
+        "Both objects are fully visible, separate, and physically plausible.",
+        "The image contains zero people or human body parts.",
+        "The product width is approximately 33%, which falls within the accepted range of 8 to 42% for this role.",
+        "The bottom-right watermark 'AFP | 09134922013' is present as required.",
+        "The water-transfer context and distant tractor are acceptable infrastructure elements, not hard rejects.",
+        "Placement is off-center and appropriate for the editorial hero role."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
