@@ -1,0 +1,72 @@
+{
+  "source_id": "10900032001389-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains people (farmer/worker) in the background which is a hard reject.",
+        "Product roll width (approx 38%) exceeds the 30% hard reject limit.",
+        "Product roll height (approx 45%) exceeds the 35% hard reject limit.",
+        "Background shows farm activity (workers, tractor) instead of an empty concrete pad as requested.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with zero people, zero farm activity, and an empty concrete pad background. Reduce the size of the drip tape roll so the bounding box width is under 30% and height is under 35% of the frame. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 30,
+      "product_height_percent": 32,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Missing the exact required bottom-right watermark 'AFP | 09134922013'.",
+        "Visible gibberish on the carton label ('Owlip lli?egrasoo' etc.) which is a hard reject.",
+        "Primary focus is a single rolling carton; the mandatory equipment detail (fixed filter, gauge, regulator, manifold) is missing.",
+        "Watermark appears without the required vertical pipe separator."
+      ],
+      "correction_prompt": "Regenerate with primary focus on a fixed irrigation assembly (filter, gauge, regulator, manifold) on a concrete pad; replace the carton with a small secondary label showing 'AFP 20mm' cleanly without gibberish; add exact bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A human figure (farmer/worker) is clearly visible in the background.",
+        "The product bounding box width is approximately 32%, which exceeds the hard reject threshold of 30%.",
+        "The image role 'HEADWORKS DETAIL' requires specific fixed filter/gauge infrastructure, which is absent.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and the red tractor from the background. Shrink the white and blue drip tape roll to occupy 20-22% of the image width. Add a detailed close-up view of a fixed irrigation filter and pressure gauge on the concrete pad to match the 'HEADWORKS DETAIL' role. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Meets the mandatory visual brief of an equipment-only elevated record photograph.",
+        "Shows exactly one AFP white-and-blue drip-tape roll positioned on an empty concrete pad.",
+        "Includes required fixed infrastructure (gauge and regulator) and allows distant unattended tractor.",
+        "Zero people or human body parts visible in the frame.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Roll dimensions are physically plausible and within the preferred size ranges."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

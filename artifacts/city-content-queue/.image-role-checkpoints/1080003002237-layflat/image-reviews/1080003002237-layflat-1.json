@@ -1,0 +1,55 @@
+{
+  "source_id": "1080003002237-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: Visible human (farmer/worker) standing in the background field on the left side.",
+        "Hard reject: The combined bounding box width of the products and foreground infrastructure exceeds the 42 percent limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure from the background completely. Reduce the foreground object composition so that the total product width including the cart and pumps fits within 42 percent of the image frame. Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 53,
+      "product_height_percent": 41,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Zero people or human body parts visible in the frame.",
+        "The required paired products are clearly displayed: a packaged coil and a bare black woven coil.",
+        "The approved bottom-right watermark is present and legible.",
+        "Infrastructure (tractor, city skyline) is distant and does not act as a conflicting commercial product.",
+        "Placement is off-center and physically plausible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 53% to 8-42% of frame width.; Reduce product height from 41% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 53% to 8-42% of frame width. Reduce product height from 41% to at most 40% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 30,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains exactly one packaged coil and one bare black coil, satisfying the mandatory pair requirement.",
+        "No people, human body parts, or unapproved commercial products are visible.",
+        "Watermark 'AFP | 09134922013' is present in the correct bottom-right position.",
+        "Product placement and sizing are well within acceptable parameters (30% width, 45% x-center)."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

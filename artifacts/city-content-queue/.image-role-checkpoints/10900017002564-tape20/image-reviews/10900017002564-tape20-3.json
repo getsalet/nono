@@ -1,0 +1,77 @@
+{
+  "source_id": "10900017002564-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: presence of two visible people in the background.",
+        "Hard reject: the carton roll is wider than the 30% maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the background and reduce the size of the AFP drip-tape roll so its width does not exceed 30% of the frame width. Ensure the roll is clearly smaller relative to the equipment on the concrete pad. Reduce the product group from 45% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Presence of humans in the background.",
+        "Role Mismatch: Brief requires an 'elevated record photograph of one fixed filter, gauge, regulator and manifold'; image shows an empty concrete pad without any irrigation infrastructure."
+      ],
+      "correction_prompt": "Remove all people and background farm activity; add a fixed irrigation filter, gauge, and manifold to the concrete pad so the carton appears secondary.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 29,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: A person is clearly visible in the background on the right side of the image.",
+        "Hard reject: A second commercial package (open cardboard box) is present in the scene.",
+        "Failed to meet mandatory visual brief: The 'HEADWORKS DETAIL' role specifically requires an elevated record photograph showing fixed infrastructure (filter, gauge, regulator, manifold), which is not depicted; instead, the focus is on the drip tape roll itself.",
+        "Failed to meet mandatory visual brief: The approved carton is meant to be 'small and secondary,' but in this image, it is a prominent open box that violates the 'zero extra packages' constraint."
+      ],
+      "correction_prompt": "Remove the person in the background, remove the open cardboard box, and crop the frame to focus on the installed irrigation infrastructure (filter and manifold) with the drip tape roll as a small secondary element.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 34,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Presence of people/farmers/worker figures in the background (left, right).",
+        "Hard reject: Missing mandatory HEADWORKS DETAIL infrastructure (fixed filter, gauge, regulator, manifold on concrete pad) required by the brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image removing all people and human figures from the background. Add a prominent assembly of a fixed filter, pressure gauge, and manifold on a concrete pad on the right side of the frame to match the required 'HEADWORKS DETAIL' role, keeping the single white-and-blue drip tape roll as a secondary element. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 27,
+      "product_height_percent": 31,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: visible human subject (farmer) present in the background, violating the 'zero people' and 'no farm activity' requirements."
+      ],
+      "correction_prompt": "Remove the farmer and human silhouette from the background. Ensure the scene is completely devoid of people. Maintain the empty concrete pad setting with only the filter system and secondary drip-tape roll.",
+      "attempt": 5
+    }
+  ]
+}

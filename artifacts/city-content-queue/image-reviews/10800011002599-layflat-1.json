@@ -1,0 +1,83 @@
+{
+  "source_id": "10800011002599-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 60,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Contains the two required approved objects: a packaged coil (left) and a bare black woven coil (right).",
+        "No people or human body parts are visible.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The pair is physically plausible and not merged or distorted.",
+        "Context (crop rows/farm setting) is appropriate for the editorial hero role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 60% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 82,
+      "product_height_percent": 35,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Product pair is significantly wider than the 42% hard reject limit (estimated at 82%).",
+        "Placement is centered along the bottom horizontal, violating the 'off-center' requirement for the hero shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 82% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reposition the AFP packaged coil and bare black woven coil significantly further apart to the left and right, lowering the combined width to under 20% of the frame width and ensuring they are clearly off-center. Reduce the product group from 82% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "A vertical pipe segment is protruding from the center of the bare black coil, creating a visually impossible intersection (object passing through the coil) and adding an extra unapproved component.",
+        "The combined width of the two product coils spans from approximately 13% to 58% of the frame, resulting in a total width of ~45%, which exceeds the strict hard-reject threshold of 42%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the vertical pipe protruding from the center of the bare black coil. Ensure the combined width of the two coils is less than 42% of the total frame width. Keep the coils separate, physically grounded, and clearly visible. Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35.0,
+      "product_height_percent": 35.0,
+      "product_x_center_percent": 40.0,
+      "reasons": [
+        "The far right of the image contains a figure operating a tractor, which is visible enough to count as a human presence; the requirements hard-reject any person, even a distant one.",
+        "The product pair (packaged coil and bare coil) is placed in the center-bottom of the frame rather than off-center, conflicting with the editor hero brief (minor issue)."
+      ],
+      "correction_prompt": "Regenerate the image with a clean far-right field (no human or person visible; show only an unattended distant tractor, farm building, and crop rows). Keep the packaged coil and bare black woven coil in the bottom-left of the frame (off-center), small, separate, and physically plausible; preserve the required bottom-right watermark ",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 35,
+      "product_height_percent": 20,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Approved packaged coil and bare black woven coil are both visible, separate and plausible",
+        "Product placement is off-center and small relative to the frame",
+        "Zero people or human body parts visible",
+        "Watermark present and correct",
+        "No forbidden third packages or hard reject elements present"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

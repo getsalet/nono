@@ -1,23 +1,42 @@
 {
   "source_id": "10900018002998-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 30,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Editorial Hero): The product (carton) is significantly oversized, dominating the frame instead of being 'small' in the 'lower third' as required.",
-        "Role 1 (Editorial Hero): The camera angle is a low perspective looking down the furrows, not a 'wide high-oblique view' as specified in the brief.",
-        "Role 2 (Selection Evidence): The background is too complex (barns, tractor), violating the requirement to keep it simple.",
-        "Role 2 (Selection Evidence): Lacks the required 'technical arrangement' and 'emitter-spacing' or specific 'field-selection evidence' (only generic pipes and a farm are shown).",
-        "Role 3 (Headworks Story): The layout places the product in the foreground, which is acceptable, but the 'medium side view' requirement is not clearly met; the hardware arrangement is acceptable but the composition is generic."
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Regenerate all panels: Role 1 must be a high wide-angle view where the landscape dominates and the carton is a small element in the lower third; Role 2 must be an elevated technical shot showing specific drip line emitter spacing with a simplified background; Role 3 must be a medium side view focusing on the fixed filtration/pressure units with the carton strictly as a secondary element.",
+      "reasons": [
+        "Role 1 fails the 'EDITORIAL HERO' requirement: the farm and irrigation context do not dominate the composition, as the large central product obstructs the field view. Additionally, the 'exactly one approved carton' rule is violated by the presence of two distinct cartons.",
+        "Role 2 fails the 'SELECTION EVIDENCE' requirement: the background is not simple; instead of showing technical evidence like emitter-spacing or field-specific selection criteria, it features an unrelated red barn and multiple tractors, which introduces visual clutter and contradicts the technical narrative.",
+        "Roles 1 and 2 exhibit structural duplication: both rely on a similar low-level ground shot in a dirt field with a central product, failing to provide the required variety in camera height and environment structure between the hero shot and the technical shot.",
+        "Role 2 violates the 'no person' constraint: a person is visible in the background on the far left side of the image."
+      ],
+      "correction_prompt": "Replace Role 1 with a wide high-oblique shot where the irrigation field dominates and only one approved carton is visible in the lower third. Update Role 2 to a clean technical arrangement on a neutral background with no farm clutter (no barns/tractors) and no people, focusing strictly on the product's technical features or emitter spacing.",
       "panel_scores": [
-        30
+        35
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 98,
+      "duplicate_roles": [],
+      "reasons": [
+        "All three images clearly distinguish the required roles.",
+        "Role 1 presents a wide, high-oblique view of a lush crop field with the product correctly framed in the lower third.",
+        "Role 2 demonstrates selection evidence by placing the product on bare soil with visible drip lines and a background farm building.",
+        "Role 3 successfully isolates the technical equipment (filter, gauge, regulator) on a concrete pad while keeping the product secondary.",
+        "No forbidden elements (people, bottles, oversized products) are present, and the duplicate product identity is correctly maintained."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        98
+      ],
+      "set_attempt": 2
     }
   ]
 }
