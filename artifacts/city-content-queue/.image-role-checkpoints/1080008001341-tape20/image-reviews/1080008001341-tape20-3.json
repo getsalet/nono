@@ -73,6 +73,76 @@
       ],
       "correction_prompt": "Regenerate the image to remove all people and background workers completely. Change the setting to an isolated empty concrete pad showing only one fixed irrigation manifold/filter unit and the specified drip-tape carton, with no distant active farm equipment or trucks.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 36,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The image depicts a large, standalone drip tape carton roll as the primary subject. The mandatory image role was specified as 'HEADWORKS DETAIL: equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold', which is completely missing from the image. There are no gauges, manifolds, or filters present.",
+        "The product dimensions exceed the hard reject thresholds. The roll is approximately 33% of the frame width and 36% of the frame height, exceeding the maximum allowable 30% width and 35% height limits for a physical roll of this type in the image.",
+        "The article brief explicitly states that 'exactly one approved carton remains small and secondary'. In this image, the carton is the largest and most prominent object, acting as the hero shot rather than a secondary detail.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate an elevated record photograph of a fixed irrigation infrastructure setup on an empty concrete pad. The shot must prominently feature a fixed filter, a pressure gauge, a regulator, and a manifold. Include a small, secondary white-and-blue AFP carton roll in the background or foreground, ensuring the roll is strictly less than 20% of the frame width and does not serve as the main subject. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: Human figure (farmer) visible in the background.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the human figure standing in the background field to ensure zero people or human silhouettes are present. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 31,
+      "product_height_percent": 32,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "A human figure is clearly visible in the mid-left background area standing in the crop rows, which triggers a hard reject for any visible person or silhouette.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image and remove all human figures from the background and crop rows; ensure the scene is strictly 'no farm activity' with only fixed infrastructure and the single roll. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: The image contains multiple human figures (one farmer standing in the center and one bending over near the barn), which violates the 'zero people' rule.",
+        "Hard reject: The visual brief for 'HEADWORKS DETAIL' explicitly requires a record photograph of one fixed filter, gauge, regulator, and manifold on an empty concrete pad, which are completely absent from this scene.",
+        "Hard reject: The product bounding box width is approximately 30%, which falls outside the preferred range (20-23%) and hits the maximum upper limit."
+      ],
+      "correction_prompt": "Regenerate an elevated close-up shot of a specific irrigation filter head, gauge, and regulator on a concrete pad. The AFP drip-tape roll must be present but small in the background (roughly 15% width). The concrete pad must be empty with zero people, zero farmers, and zero workers. Keep the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 31,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a second commercial package (second roll of tape in the background).",
+        "Primary product width exceeds the hard reject threshold of 30% (estimated at 31%).",
+        "Image role mismatch: The brief required an equipment-only elevated record photograph of filter/gauge infrastructure, but the image shows carton rolls on the ground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the background roll entirely. Reduce the width of the foreground drip tape roll to approximately 20% of the frame width. Position the roll on an elevated concrete pad alongside a fixed irrigation manifold, filter, and gauge assembly. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 5
     }
   ]
 }

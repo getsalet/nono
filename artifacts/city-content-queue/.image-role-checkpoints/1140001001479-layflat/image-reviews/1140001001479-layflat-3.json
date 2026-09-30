@@ -1,0 +1,42 @@
+{
+  "source_id": "1140001001479-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 72,
+      "product_height_percent": 42,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "The image contains zero people or human body parts.",
+        "The watermark 'AFP | 09134922013' is correctly present in the bottom-right.",
+        "The approved two-coil pair (one packaged AFP, one bare black) is fully visible, separate, and physically plausible.",
+        "However, the mandatory role 'HEADWORKS DETAIL: equipment-only... of one fixed pump, gauge and manifold' is NOT met.",
+        "The image shows an empty concrete pad with distant tractors and a building, but lacks the required equipment-only focus (pump, gauge, manifold) where the coils are secondary.",
+        "The combined width of the two coils (~72% of frame) exceeds the 65% hard-reject threshold for a pair wider than the limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an equipment-only record shot: place one fixed pump, gauge, and manifold on a concrete pad, with the two coils (packaged AFP and bare black) small (~15% width), separate, and secondary in the background. Remove distant tractors. Reduce the product group from 72% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 56,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Correctly displays the required layflat pair: one packaged coil (left) and one black woven layflat coil (right).",
+        "Required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "No human figures or body parts are present.",
+        "Products are physically plausible and clearly visible without distortion or merging."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

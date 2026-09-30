@@ -1,0 +1,53 @@
+{
+  "source_id": "12300020002628-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 28,
+      "product_height_percent": 36,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product height percentage (36%) exceeds the hard reject threshold of 35%.",
+        "The product's center of mass is positioned centrally (x=48%) rather than clearly off-center on the lower third as required for the EDITORIAL HERO role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a slightly smaller object size relative to the frame (height under 35%) and explicitly off-center placement (e.g., bottom-right or bottom-left) to better match the editorial brief. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 18,
+      "product_height_percent": 15,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Image contains a person (human body parts visible: legs, torso, head, arms).",
+        "Presence of a human violates the mandatory 'zero people' and 'zero human body parts' hard rejection criteria."
+      ],
+      "correction_prompt": "Regenerate image without the person walking in the field; maintain the wide high-oblique farm view with the single AFP drip-tape roll in the lower third and required watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 23,
+      "product_height_percent": 20,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Exactly one AFP drip-tape carton roll is present, matching the required white-and-blue visual identity.",
+        "Product size is physically plausible and falls within the preferred 20-23% width range.",
+        "No people, body parts, or human silhouettes are visible.",
+        "No prohibited items (bottles, jars, extra containers) are present.",
+        "The background features farm crop rows and a city skyline, matching the editorial brief for Pardis/Tehran.",
+        "The required 'AFP | 09134922013' watermark is correctly present in the bottom right."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

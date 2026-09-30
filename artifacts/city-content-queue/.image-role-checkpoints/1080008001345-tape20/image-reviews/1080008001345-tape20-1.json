@@ -7,70 +7,56 @@
   "history": [
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 24,
-      "product_height_percent": 26,
-      "product_x_center_percent": 38,
+      "score": 55,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
       "reasons": [
-        "Hard reject: a human figure (silhouette/driver) is visible inside the tractor cab in the background",
-        "Hard reject: a roll of black tape (drip line tubing) is placed next to the carton on the table, violating the 'exactly one approved carton roll' rule"
+        "Product is centered (x=50%) rather than off-center on the lower third as required for the EDITORIAL HERO role",
+        "Product is placed on a prominent block which competes with the background; the brief asks for the farm context to dominate",
+        "Watermark 'AFP | 09134922013' is present but partially obscured by a graphic shape at the bottom right, potentially affecting legibility"
       ],
-      "correction_prompt": "Remove all human figures from the tractor and remove the black tape roll from the table, keeping only the white AFP carton as the single foreground object.",
+      "correction_prompt": "Reposition the roll to the right side of the lower third (x>60%). Make the background field context more dominant. Ensure the bottom-right watermark is clearly visible on a clean background.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 50,
-      "product_width_percent": 26,
+      "score": 25,
+      "product_width_percent": 33,
       "product_height_percent": 28,
-      "product_x_center_percent": 48,
+      "product_x_center_percent": 57,
       "reasons": [
-        "Product is centered horizontally; the editorial brief specifically requires the roll to be 'off-center on the lower third'.",
-        "Product is placed directly on the drip line, suggesting a 'pipe through the roll' which is a hard reject condition.",
-        "Placement of the carton roll in the middle of the irrigation lane creates physically implausible geometry for a static product shot."
+        "Hard reject: Visible person standing in the field (upper-left quadrant of the mid-ground).",
+        "Hard reject: Visible person seated or crouching in the field (left side, mid-ground).",
+        "Product width exceeds the 30% maximum limit (estimated at 33%).",
+        "The roll is positioned too large relative to the editorial preference for a 'small' product in the hero shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
       ],
-      "correction_prompt": "Reposition the AFP tape roll significantly to the left or right side of the frame (off-center). Ensure the roll is sitting on the ground next to the crop rows, not overlapping or resting on the irrigation pipeline.",
+      "correction_prompt": "Remove all human figures and silhouettes from the background. Reduce the size of the drip tape carton roll so it is approximately 20% of the frame width. Maintain the wide high-oblique view and the required bottom-right watermark. Reduce the product group from 33% to 12-30% of frame width.",
       "attempt": 2
     },
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 27,
-      "product_height_percent": 30,
-      "product_x_center_percent": 55,
+      "score": 20,
+      "product_width_percent": 21,
+      "product_height_percent": 16,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Hard reject: Pipe/hose passes directly through the roll (violates geometry constraint).",
-        "Placement fails the mandatory 'Editorial Hero' brief; the roll is centered and too large/prominent, not 'small' and 'off-center' as required."
+        "Hard reject: Presence of a human figure (farmer/worker) in the image",
+        "Role mismatch: The image shows a low-angle perspective where the crop context is dominant rather than a wide high-oblique view from above"
       ],
-      "correction_prompt": "Remove the pipe running through the roll. Resize the roll to be approx. 20% width and 20% height. Move the roll to the far bottom-left corner. Expand the wide farm context to dominate the frame.",
+      "correction_prompt": "Regenerate the image to remove the person entirely. Change the camera angle to a wide high-oblique view (looking down at the field). Keep the single AFP drip-tape roll in the lower-third off-center, fully visible and small. Ensure the farm context remains strong.",
       "attempt": 3
     },
     {
       "pass": false,
-      "score": 25,
-      "product_width_percent": 18,
-      "product_height_percent": 22,
-      "product_x_center_percent": 18,
+      "score": 0,
+      "review_unavailable": true,
       "reasons": [
-        "A visible human (worker/farmer) is present in the image, which is a strict hard reject condition.",
-        "Product dimensions and aspect ratio are significantly incorrect; the carton roll appears far too tall and narrow (22% height vs. the required wide, low profile) rather than a wide cylinder."
+        "visual reviewer unavailable after 3 retries: HTTPError"
       ],
-      "correction_prompt": "Remove the human worker entirely. Regenerate the AFP carton roll to be much wider and flatter (low profile cylinder). Keep the carton small, fully visible, and off-center on the lower third.",
+      "correction_prompt": "Retry visual review of the preserved candidate without regenerating it.",
       "attempt": 4
-    },
-    {
-      "pass": false,
-      "score": 55,
-      "product_width_percent": 30,
-      "product_height_percent": 20,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "A worker/figure is visible in the distant field background, violating the 'zero people' rule (hard reject).",
-        "The product bounding box extends past the 30% width hard limit and is centered, conflicting with the 'off-center' editorial requirement.",
-        "The product text is slightly gibberish/distorted ('Orig' and 'Tzo')."
-      ],
-      "correction_prompt": "Remove the distant worker from the background. Move the carton roll to the lower-right (off-center). Shrink the product bounding box to less than 30% of the frame width and correct the label text to be legible.",
-      "attempt": 5
     }
   ]
 }
