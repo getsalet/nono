@@ -1,0 +1,56 @@
+{
+  "source_id": "10800010002824-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 70,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible packaged AFP coil and bare black woven coil are both clearly recognizable, separate, and physically plausible",
+        "Zero visible people, body parts, or human silhouettes",
+        "No forbidden extra commercial packages or impossible object interactions detected",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right as required",
+        "Fixed pump, gauge, and manifold in the scene are treated as infrastructure, not extra products",
+        "Combined product width slightly exceeds the 42% strict limit but falls within the allowable noisy reviewer estimate range (8-42% + tolerance)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Two human figures are visible in the background of the crop field, violating the strict 'zero people' rule.",
+        "The product bounding box (including both coils) spans 8% to 46%, which is outside the 'noisy' accept range of 8% to 42% for the total combined width."
+      ],
+      "correction_prompt": "Regenerate image without the two human figures in the background rows. Rescale the two coils slightly to reduce their total combined width to approximately 30-35% of the frame while maintaining the 'AFP | 09134922013' watermark in the bottom right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 41,
+      "product_height_percent": 33,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Correct product pair: packaged white coil and bare black woven coil are present, separate, and physically plausible",
+        "Zero people, body parts, or human silhouettes detected",
+        "Product width is 41%, which is within the accepted noisy reviewer range of 8 to 42 percent",
+        "Approved bottom-right watermark 'AFP | 09134922013' is present",
+        "Context shows a relevant agricultural field without prohibited commercial packages or bottles"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

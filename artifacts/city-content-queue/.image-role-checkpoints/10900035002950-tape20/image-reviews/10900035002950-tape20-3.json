@@ -1,0 +1,78 @@
+{
+  "source_id": "10900035002950-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 38,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product width exceeds the 30% hard reject threshold",
+        "The article brief mandates a 'HEADWORKS DETAIL' image showing a fixed filter, gauge, regulator, and manifold on a concrete pad, which is completely missing",
+        "The image shows only the roll, failing to fulfill the specific role required by the brief",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a HEADWORKS DETAIL shot: show a fixed filter, gauge, regulator, and manifold on a concrete pad. Include the AFP drip-tape carton as a small, secondary element (width < 20%). Maintain the bottom-right watermark. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 31,
+      "product_height_percent": 33,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: a person (farmer) is clearly visible in the background; all persons, body parts and human silhouettes are disallowed.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with zero people: remove the standing figure; keep one small AFP white-and-blue wide low cylindrical drip-tape carton roll on an empty concrete pad; no second roll; include a bottom-right watermark \"AFP | 09134922013\". Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 29,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains multiple visible people in the background (farmer on the left, workers on the right).",
+        "Human silhouettes are hard rejects regardless of distance or focus.",
+        "Background contains a large truck with people, which introduces a heavy commercial context rather than the requested 'HEADWORKS DETAIL' isolated context."
+      ],
+      "correction_prompt": "Regenerate image to focus on a concrete irrigation pad with a filter, gauge, and regulator. Include one small white-and-blue AFP drip-tape carton roll on the ground. Remove all people and the large truck from the background to maintain a clean, equipment-only shot.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 31,
+      "product_height_percent": 32,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "The image contains a visible human figure in the background. The instruction to 'hard reject any person... even distant' makes this a strict failure. If we follow the hard reject rule for any person, the score must be 0 or very low, and pass must be false. Re-reading carefully: 'Hard reject any person... even distant.' This means the image fails the hard constraint.",
+        "Wait, the prompt is asking me to evaluate it. Since there is a person in the background, I must reject it.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with absolutely no people or human figures visible anywhere in the background, ensuring the concrete pad and distant farm equipment are completely unattended and empty. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 26,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Two distinct people (farmers/workers) are visible in the background (one walking on the left, one standing on the right).",
+        "Hard reject: Presence of human body parts in the background violates the 'zero people' constraint."
+      ],
+      "correction_prompt": "Regenerate the image without any people in the background. The scene must show only the concrete pad, the drip tape carton, the filter/gauge assembly, and the tractor in the distance. No humans or body parts must be visible.",
+      "attempt": 5
+    }
+  ]
+}

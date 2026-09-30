@@ -1,0 +1,78 @@
+{
+  "source_id": "10900020001387-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 36,
+      "product_height_percent": 42,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: A person (human silhouette) is visible in the background, violating the 'zero people' constraint.",
+        "Hard reject: The object exceeds maximum allowable dimensions (width > 30%, height > 35%).",
+        "Brief violation: The image shows a generic roll, not the specific 'one fixed filter, gauge, regulator and manifold' required for the HEADWORKS role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Shrink the roll significantly to occupy under 20% of the frame width. Replace the standalone roll with an assembly of a fixed filter, gauge, and manifold on a concrete pad, keeping the roll small and secondary. Reduce the product group from 36% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 23,
+      "product_height_percent": 21,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Animal (elephant) visible in background"
+      ],
+      "correction_prompt": "Regenerate the image removing the elephant from the background; keep the irrigation equipment and AFP roll on the concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 26,
+      "product_height_percent": 22,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Visible people (farmer/worker and another person) are present in the background.",
+        "Image role mismatch: The required role is 'HEADWORKS DETAIL' showing a filter/gauge/manifold, but this image shows a standalone carton on the ground.",
+        "Context violation: The image depicts a farm setting with equipment rather than the specific infrastructure detail shot requested."
+      ],
+      "correction_prompt": "Regenerate as a close-up equipment-only photograph of a fixed irrigation filter, gauge, and manifold on a concrete pad. Remove all human figures and the large standing carton roll. The AFP drip-tape carton must be present only as a small secondary object within the composition.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 39,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject due to the presence of a visible person (farmer) in the left background, violating the 'zero people' constraint.",
+        "Product width exceeds the 30% hard reject threshold.",
+        "Missing the required fixed filter, gauge, regulator, and manifold infrastructure on the concrete pad; only the roll is present.",
+        "Label text on the carton is partially gibberish/unclear ('DRIP ...'), which is a soft reject but noted alongside hard fails.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 39% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person from the background. Add a filter, gauge, and manifold on the concrete pad. Ensure the carton roll width does not exceed 30% of the frame. Clean up all label text to ensure legibility. Reduce the product group from 39% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 32,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Two people (human figures) are clearly visible in the background."
+      ],
+      "correction_prompt": "Remove all human figures and workers from the image completely. Keep only the equipment, the carton roll, the empty field, and the distant tractor.",
+      "attempt": 5
+    }
+  ]
+}

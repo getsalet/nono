@@ -1,0 +1,41 @@
+{
+  "source_id": "10900027002606-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 32,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Visible human subject (male farmer) on the right side of the image is a hard reject.",
+        "Multiple additional rolls of tubing/hardware are visible on the concrete slab (second roll and small accessory), violating the 'exactly one roll' requirement.",
+        "Product bounding box dimensions (width 28%, height 32%) exceed the recommended 23% width and 35% height thresholds, making the object too large for the requested small-scale editorial hero role."
+      ],
+      "correction_prompt": "Remove the farmer entirely. Regenerate to show a single, small white-and-blue drip-tape roll off-center on the lower third. Ensure no other rolls, pipes, or equipment are visible on the concrete slab.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Image contains exactly one white and blue drip-tape roll with correct AFP branding.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Zero people, faces, or human body parts are visible.",
+        "No forbidden items such as bottles, cans, or secondary commercial packages are present.",
+        "Product dimensions (25% width) and height (20% height) are well within the acceptable review limits.",
+        "Product is placed on the lower third, aligned with the editorial hero role.",
+        "Background (irrigated field with tractor and building) is contextually relevant and free of hard-reject elements."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

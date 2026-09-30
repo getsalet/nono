@@ -1,0 +1,77 @@
+{
+  "source_id": "1090007002202-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 39,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of human figures (farmers/workers) in the background, which is a hard reject.",
+        "The roll's dimensions (approx 39% width, 45% height) exceed the 30% width and 35% height limits.",
+        "Visible gibberish/garbled text on the carton branding (e.g. 'DRI IP iRRigat ATE').",
+        "machine-enforced bounding-box check failed: Reduce the product group from 39% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Shrink the white and blue AFP drip tape carton roll to 20-23% width and under 35% height. Ensure all text on the carton is legible and professional. Keep the concrete pad, filter, and gauge as required infrastructure. Reduce the product group from 39% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 12,
+      "product_height_percent": 12,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "A visible person (farmer/worker) is present in the background"
+      ],
+      "correction_prompt": "Regenerate the image with a completely unattended scene. Remove the person in the background entirely. Retain the concrete pad, the equipment (filter/gauge/manifold) on the right, and the small AFP drip tape carton roll on the left.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 33,
+      "product_height_percent": 30,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The required role 'HEADWORKS DETAIL' specifically mandates an elevated record photograph of fixed infrastructure like a filter, gauge, regulator, and manifold on a concrete pad. This image shows only a large carton of drip tape on a bare concrete surface, lacking the required infrastructure elements to satisfy the mandatory role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to strictly follow the HEADWORKS DETAIL role: an elevated close-up photograph of a fixed irrigation headworks assembly including a white filter, pressure gauge, regulator, and manifold on an empty concrete pad. Ensure the single white and blue AFP drip tape carton is visible but significantly smaller in frame (width < 20%), acting as a secondary element rather than the main subject. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible human body parts (legs/torso) in the distant background on the left.",
+        "Hard reject: A second roll object is visible on the far left of the concrete pad.",
+        "The required equipment configuration (filter, regulator, and manifold) is not clearly depicted or is obscured; the 'fixed filter' mandatory element is missing."
+      ],
+      "correction_prompt": "Regenerate the image on an empty concrete pad. Include one small AFP white-and-blue drip tape carton roll in the foreground. Add a clear fixed irrigation filter, gauge, and manifold on the right. Ensure there are NO people, NO humans, and NO extra rolls or commercial products in the background. Keep the required bottom-right watermark 'AFP | 09134922013' visible.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The product roll is larger than the preferred 20-23% width, measuring ~38% width and ~42% height, which falls outside the strict plausibility limits (30% width / 35% height).",
+        "The presence of the large gauge/regulator assembly next to the roll conflicts with the 'equipment-only' brief requirement that the carton remains small and secondary.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Shrink the drip-tape carton roll to approximately 20% width. Make the gauge and manifold assembly significantly smaller and less prominent, placing them in the far background to ensure the roll is the dominant but secondary element. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

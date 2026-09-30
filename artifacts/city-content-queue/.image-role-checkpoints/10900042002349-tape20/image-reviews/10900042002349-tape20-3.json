@@ -1,0 +1,53 @@
+{
+  "source_id": "10900042002349-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 35,
+      "product_height_percent": 26,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product roll is clearly visible and centered, matching the required object type and appearance",
+        "Image contains zero people or human body parts",
+        "Watermark is present in bottom-right as required",
+        "Product width is slightly outside preferred 12-23% range but within acceptable 12-30% tolerance",
+        "Background includes relevant farm infrastructure without violating any hard reject criteria",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 34,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: visible human figures (people and body parts) in the background",
+        "Product roll exceeds maximum width constraint (>30%)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all visible people and regenerate an image featuring only the AFP drip-tape roll as the primary subject, ensuring it is sized to approximately 20-23% of the frame width with a clean background. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 42,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Visible people/human silhouettes in the background near the tractors.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with a completely empty background (no people, no farmers, no workers). Ensure the AFP white-and-blue drip tape carton is the primary product and is clearly visible, ideally occupying approximately 20-23% of the width. Keep the exact bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 42% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    }
+  ]
+}
