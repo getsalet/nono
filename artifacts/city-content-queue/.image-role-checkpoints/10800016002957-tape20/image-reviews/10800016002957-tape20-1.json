@@ -7,44 +7,46 @@
   "history": [
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 20,
-      "product_height_percent": 25,
-      "product_x_center_percent": 45,
+      "score": 35,
+      "product_width_percent": 40,
+      "product_height_percent": 32,
+      "product_x_center_percent": 40,
       "reasons": [
-        "Hard reject: multiple people (human silhouettes) are visible in the background, violating the zero-person rule.",
-        "The product roll has severe perspective distortion and lacks a proper drip-tape texture."
+        "Product width estimated at 40% exceeds the 30% hard-reject limit.",
+        "Image contains a second commercial package (open brown cardboard box) which is a hard reject.",
+        "The 'AFP' label on the roll includes gibberish or illegible sub-text, violating the text rules.",
+        "Product is not placed off-center in the lower third as required by the editorial role; it is too prominent and central.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 12-30% of frame width."
       ],
-      "correction_prompt": "Regenerate the image strictly excluding all people and human silhouettes. Correct the product geometry to a realistic cylindrical drip-tape roll and ensure the text 'AFP | 09134922013' is present in the bottom right corner.",
+      "correction_prompt": "Regenerate image with the single white and blue carton roll significantly smaller (approx 20% width) and placed in the bottom-left off-center. Completely remove the cardboard box, gauge, and cylinder on the right. Ensure roll text is clean without gibberish sub-text. Keep the wide farm background and bottom-right watermark. Reduce the product group from 40% to 12-30% of frame width.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 30,
+      "score": 15,
       "product_width_percent": 22,
-      "product_height_percent": 25,
-      "product_x_center_percent": 44,
+      "product_height_percent": 12,
+      "product_x_center_percent": 18,
       "reasons": [
-        "Hard reject: a standing human figure is clearly visible in the middle of the field, violating the zero-person rule.",
-        "The required bottom-right watermark 'AFP | 09134922013' is missing from the image.",
-        "Second human-adjacent item (a dog) is visible at the person's feet, introducing a non-farm asset and complicating the visual context."
+        "A person is prominently visible in the center of the image, which is a hard reject.",
+        "The required watermark 'AFP | 09134922013' is missing."
       ],
-      "correction_prompt": "Regenerate without any people or animals; add the exact bottom-right watermark 'AFP | 09134922013' on a black background; keep the single white and blue AFP carton small, off-center in the lower third, and fully visible against the green field.",
+      "correction_prompt": "Remove the person from the center of the frame and add the required watermark 'AFP | 09134922013' in the bottom-right corner.",
       "attempt": 2
     },
     {
       "pass": true,
-      "score": 95,
-      "product_width_percent": 25,
-      "product_height_percent": 18,
-      "product_x_center_percent": 45,
+      "score": 88,
+      "product_width_percent": 18,
+      "product_height_percent": 14,
+      "product_x_center_percent": 50,
       "reasons": [
-        "Single white-and-blue AFP drip-tape roll is correctly positioned in the lower third",
-        "Product dimensions (width ~25%, height ~18%) fall within accepted tolerance ranges",
-        "Zero visible people, human parts, or silhouettes detected",
-        "Watermark 'AFP | 09134922013' is clearly present in the bottom-right corner",
-        "Widespread farm context with distant unattended tractors matches the required editorial hero perspective",
-        "No prohibited containers, bottles, or secondary commercial packages visible"
+        "Correct AFP drip-tape roll with white-and-blue wide cylindrical carton",
+        "Roll size within acceptable 12–30% width and under 35% height",
+        "Off-center placement on lower third",
+        "No people or human body parts",
+        "Required watermark present in bottom-right",
+        "Background farm/irrigation context matches article brief"
       ],
       "correction_prompt": "",
       "attempt": 3

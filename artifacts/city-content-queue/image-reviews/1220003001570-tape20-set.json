@@ -1,43 +1,64 @@
 {
   "source_id": "1220003001570-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 55,
+      "score": 32,
       "duplicate_roles": [
-        1,
+        2,
         3
       ],
       "reasons": [
-        "The product carton in Role 1 is significantly oversized and placed in the foreground, violating the 'small, fully visible' requirement for the EDITORIAL HERO panel.",
-        "The environment and camera angle for Role 1 and Role 3 are nearly identical (eye-level view of green crop rows), creating a repeated layout that fails to distinguish the EDITORIAL HERO from the HARDWARE STORY.",
-        "Role 3 fails to show the required 'unattended fixed filter, gauge, regulator, and manifold' hardware; instead, it displays a wheeled sprayer machine, which deviates from the specific technical narrative of the role.",
-        "Role 2 includes small bottles/containers next to the main carton, which are prohibited elements for the selection evidence panel."
+        "Role 3 is not an equipment-only record: it contains multiple background tractors (person-in-cabin activity on the right), which is explicitly prohibited for the HEADWORKS DETAIL role.",
+        "The required hardware for Role 3 (fixed filter, regulator, manifold) is missing; only a pressure gauge is shown next to the product.",
+        "Role 2 lacks the specific technical narrative required: no visible emitter spacing or field-selection evidence is present, only a generic product placement on tilled soil.",
+        "The product carton is centrally positioned in all three frames, violating the 'off-center' requirement for Role 1 and the 'secondary' requirement for Role 3.",
+        "The same tractor and barn background assets are repeated in Roles 2 and 3, reducing the visual distinctiveness of the environments as requested by the editorial set structure."
       ],
-      "correction_prompt": "Shrink the AFP carton in roles 1 and 3 to be small and off-center; replace the sprayer in role 3 with a fixed manifold and filter head; and remove the extra bottles from role 2.",
+      "correction_prompt": "Role 2: Add clear close-up evidence of emitter spacing on a 20cm drip line unrolled on the field; Role 3: Replace the background farm scene with an empty concrete pad and remove all tractors/persons, then add a fixed filter, brass pressure regulator, and manifold alongside the gauge and the small off-center carton.",
       "panel_scores": [
-        55
+        32
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
+      "score": 35,
       "duplicate_roles": [
-        1,
+        2,
         3
       ],
       "reasons": [
-        "Role 1: The approved carton is not on the 'lower third'; it is centered in the foreground/eye-level, and a generic pump device is present which acts as a container obstruction.",
-        "Role 3: The hardware shown is a field pipe/valve, missing the specific 'filter, gauge, and regulator' required for the Headworks Story role.",
-        "Roles 1 and 3 share a duplicate layout: both are medium/low-angle side views of green crop rows with the product centered in the foreground, resulting in a lack of distinct camera heights."
+        "The requested editorial roles [1, 2, 3] are not visually distinct; specifically, roles 2 and 3 show nearly identical layouts, equipment types, and camera angles.",
+        "Role 2 depicts an elevated technical arrangement on a concrete pad that does not clearly display 'emitter-spacing or field-selection evidence' as required for the SELECTION EVIDENCE narrative.",
+        "Roles 2 and 3 both feature the same generic headworks composition (gauge and valve) on a concrete pad with a red farm building in the background, violating the prohibition against role-3/role-5 hardware duplication and repeated layouts.",
+        "Role 3 requires a 'fixed filter' as part of the equipment set, which is absent in the shown panel."
       ],
-      "correction_prompt": "For Role 1, move the carton to the lower-third off-center position and remove the pump; for Role 3, replace the field pipe with a high-mounted stationary headworks assembly featuring a filter, gauge, and regulator.",
+      "correction_prompt": "Replace Role 2 with a macro-shot of the 20cm drip line laid on soil showing emitter spacing, and replace Role 3 with an isolated record shot of a fixed disc filter, gauge, and regulator on a blank concrete slab without a farm background or red barn.",
       "panel_scores": [
-        45
+        35
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 violates the 'SELECTION EVIDENCE' brief by including a complete headworks assembly (filter, gauge, regulator) instead of showing field-selection or emitter-spacing evidence.",
+        "Role 3 is nearly a duplicate of Role 2, using the same camera angle and equipment configuration on a concrete pad, failing to provide a distinct 'HEADWORKS DETAIL' narrative.",
+        "Role 1 is a strong 'EDITORIAL HERO' image.",
+        "The two provided hardware images (2 & 3) are effectively repetitions of the headworks detail concept, violating the requirement for visibly distinct role narratives."
+      ],
+      "correction_prompt": "Regenerate Role 2 to feature elevated 'SELECTION EVIDENCE' (visible drip tape emitter spacing, soil cross-section, or comparison of tape widths in a field context) and ensure Role 3 remains the dedicated 'HEADWORKS DETAIL' close-up on an empty pad.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 3
     }
   ]
 }

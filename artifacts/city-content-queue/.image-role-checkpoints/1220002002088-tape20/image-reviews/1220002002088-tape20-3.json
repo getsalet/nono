@@ -1,0 +1,81 @@
+{
+  "source_id": "1220002002088-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24.5,
+      "product_height_percent": 28.0,
+      "product_x_center_percent": 48.0,
+      "reasons": [
+        "Hard reject: visible human figures (farmers/workers) in the background, including faces and full bodies, violating the zero-person requirement.",
+        "The image role specified was 'HEADWORKS DETAIL', which requires an elevated record photograph of fixed filter, gauge, regulator, and manifold. While fixed hardware is present, the presence of active people and farm machinery in the immediate mid-ground conflicts with the 'no farm activity' requirement for this specific elevated detail shot."
+      ],
+      "correction_prompt": "Regenerate the image to strictly exclude all human figures and farm workers from the frame. Ensure the background is a clean concrete pad with distant, unattended infrastructure only, maintaining the elevated 'HEADWORKS DETAIL' perspective of the fixed filter, gauge, and manifold with the secondary roll.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 24,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Role violation: The mandatory role requires 'HEADWORKS DETAIL' (elevated photograph of fixed filters, gauges, regulator, manifold on a concrete pad), but the image shows a ground-level product shot on flat pavement with agricultural machinery in the background.",
+        "Background mismatch: The scene depicts a farm or grain-drying facility with tractors, conflicting with the required 'infrastructure only' visual context.",
+        "Dimension limit: The roll's width (approx 32%) exceeds the 30% maximum hard limit.",
+        "Missing element: No 'secondary approved carton' is visible as required by the specific role description.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an elevated close-up detail shot of a fixed drip irrigation manifold, filter, and pressure gauge on a concrete pad. Include one small, secondary AFP white-and-blue wide low cylindrical drip-tape carton in the background. Remove the tractors and grain facility; keep the focus strictly on the infrastructure hardware with no visible people. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 35,
+      "product_height_percent": 35,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Contains two rolls instead of exactly one (violation of single-product rule)",
+        "Fails the mandatory 'HEADWORKS DETAIL' role which requires exactly one fixed filter, gauge, regulator, and manifold on an empty concrete pad",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate an elevated record photograph of a single fixed filter, gauge, regulator, and manifold on an empty concrete pad, with exactly one small secondary AFP drip-tape carton roll, no farm activity, and no second roll. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 31,
+      "product_height_percent": 22,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The image contains multiple visible people in the background, violating the 'zero people' hard reject rule.",
+        "The visual brief requires the product to be a small, secondary element, but the roll occupies over 30% of the frame width, violating size constraints.",
+        "Missing the required 'HEADWORKS DETAIL' elements such as a filter, gauge, regulator, or manifold on a concrete pad.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to strictly feature the equipment infrastructure on the concrete pad with zero people. Make the AFP roll a small, secondary element in the background; the primary focus must be the filter, gauge, and manifold setup. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject due to presence of a person (human silhouette) in the background",
+        "The text on the carton is gibberish/unclear, failing the legibility requirement",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to remove the person in the background. Ensure the carton text is legible or replaced with clean placeholder text. Keep the roll secondary and equipment-focused. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}
