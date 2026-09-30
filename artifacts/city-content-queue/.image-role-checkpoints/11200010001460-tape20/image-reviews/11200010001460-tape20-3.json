@@ -1,0 +1,80 @@
+{
+  "source_id": "11200010001460-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a human figure (farmer) in the background, which is a hard reject criterion.",
+        "Product dimensions (width and height) exceed the maximum acceptable threshold of 30% and 35% respectively, violating the size constraints.",
+        "The image contains a second commercial package/role (the secondary small box on the left), which is a hard reject for single-product focus.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with no people or human silhouettes. Shrink the main drip-tape carton roll to fit within 30% width and 35% height of the frame. Remove the secondary small box on the left. Maintain the fixed infrastructure (filter, gauge, manifold) on the concrete pad. Reduce the product group from 35% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 20,
+      "product_height_percent": 18,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "The image contains two human figures in the background (a worker standing near a tractor and a person crouching by equipment), which violates the hard reject policy for any visible people or human silhouettes.",
+        "The mandatory image role requires an 'equipment-only' scene on an 'empty concrete pad', but the presence of distant farm activity and personnel contradicts the brief."
+      ],
+      "correction_prompt": "Remove all human figures and farm activity from the background. Ensure the scene strictly contains only the fixed filter, gauge, regulator, and manifold on an empty concrete pad with a secondary carton roll.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 31,
+      "product_height_percent": 38,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Hard reject: The image clearly contains a person (a worker) standing in the background on the left side, which is a strict violation of the zero-person requirement.",
+        "Hard reject: The drip-tape carton appears to exceed the maximum physical plausibility limit, measuring approximately 38 percent in height and 31 percent in width, violating the 35 percent and 30 percent constraints respectively.",
+        "The object is positioned in the foreground, acting as the primary subject rather than a small, secondary element.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Completely remove the human figure from the background. Ensure the carton roll is significantly smaller and receded into the scene so its bounding box is under 30% in both width and height. Keep the infrastructure hardware (gauges/regulators) on the concrete pad. Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Image contains multiple visible people (human silhouettes and full body) working with tractors in the background, violating the 'zero people' requirement.",
+        "Wrong visual role: The mandatory role was 'HEADWORKS DETAIL' featuring equipment-only on a concrete pad. The provided image shows a wide open field with background activity and lacks the required infrastructure details (gauge, regulator, manifold)."
+      ],
+      "correction_prompt": "Regenerate to remove all people, human body parts, and farm activity. Focus on a single fixed filter, gauge, and regulator on a concrete pad. Keep the AFP white-and-blue drip-tape roll as a small secondary object in the foreground. Do not include any humans.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A person (human silhouette) is visible in the background.",
+        "Hard reject: The article brief mandates 'no farm activity' and 'zero people'; the presence of a worker and a tractor violates this context.",
+        "Hard reject: Product width (~45%) exceeds the maximum allowable limit of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with a completely empty background (no humans, no tractor, no farm activity) and a significantly smaller drip-tape roll centered on a concrete pad. Reduce the product group from 45% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

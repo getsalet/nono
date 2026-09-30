@@ -1,0 +1,55 @@
+{
+  "source_id": "1120004002462-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 23,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "A person (man in plaid shirt) is visible in the background, which is a hard reject per instructions.",
+        "The product roll lacks the mandatory 'AFP | 09134922013' watermark directly on the packaging."
+      ],
+      "correction_prompt": "Regenerate without any humans or body parts. Add the specific text 'AFP | 09134922013' as a watermark on the bottom right of the image. Ensure the white and blue drip-tape roll is the only commercial product shown.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 32,
+      "product_height_percent": 33,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product width is estimated at 32%, which exceeds the maximum allowed threshold of 30%.",
+        "Product is centered (50% x-center), whereas the editorial brief explicitly requires an off-center placement.",
+        "The 'low' cylindrical proportion described in the brief is not met; the object appears vertically high.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with a smaller product width (approx 20-23% of frame width) and shift the roll slightly to the left or right so it is no longer horizontally centered. Maintain the wide high-oblique farm view and keep the bottom-right watermark. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 20,
+      "product_height_percent": 14,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is visible.",
+        "The product is positioned in the lower third and off-center.",
+        "Product dimensions are physically plausible and within the preferred 20-23 percent width range.",
+        "The background features a dominant farm and irrigation context with crop rows, matching the EDITORIAL HERO role.",
+        "Zero people or human body parts are present.",
+        "A distant unattended tractor is visible, which is allowed as relevant infrastructure/equipment.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

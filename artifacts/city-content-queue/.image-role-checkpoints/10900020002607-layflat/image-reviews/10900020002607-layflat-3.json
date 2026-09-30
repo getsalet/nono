@@ -1,0 +1,56 @@
+{
+  "source_id": "10900020002607-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 54,
+      "product_height_percent": 53,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image correctly displays the approved layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right.",
+        "Infrastructure elements like the fixed gauge and unattended tractor are present and appropriately contextual.",
+        "No people or human body parts are visible.",
+        "The combined width of the products is estimated at 54%, which falls within the noisy reviewer acceptance threshold of 8 to 65% while keeping objects recognizable and separate.",
+        "machine-enforced bounding-box check failed: Reduce product height from 53% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 53% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 65,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Visible human body part (standing person) in the background.",
+        "Hard reject: Product bounding box is wider than the 65 percent limit.",
+        "Mandatory role mismatch: Missing required elevated equipment-only details (pump, gauge, manifold)."
+      ],
+      "correction_prompt": "Remove the human and animal from the background. Add an elevated fixed pump, gauge, and manifold setup on the concrete pad. Scale down the two coils to fit the 12-20 percent width preference and ensure they remain small and secondary to the infrastructure.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Strict adherence to the 'HEADWORKS DETAIL' role, featuring a fixed pump, gauge, and manifold on a clean concrete pad.",
+        "Correctly displays the required two-coil pair: one packaged coil (left) and one bare black woven coil (right).",
+        "Zero people or human body parts are visible in the frame.",
+        "Approved infrastructure is present without any prohibited commercial packages, containers, or fake labels.",
+        "Required watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

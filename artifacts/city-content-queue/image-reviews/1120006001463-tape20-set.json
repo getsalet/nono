@@ -1,45 +1,21 @@
 {
   "source_id": "1120006001463-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 55,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
+      "score": 45,
+      "duplicate_roles": [],
       "reasons": [
-        "Product is oversized in all panels: The AFP roll is shown as a dominant foreground object in every image, failing the requirement that it must be 'small' or 'secondary' in roles 1 and 3.",
-        "Role 1 failure: The image is not a 'wide high-oblique view' (it is a low, ground-level shot). It also contains a prohibited vehicle (tractor) and the product is centered at the bottom rather than off-center in the lower third.",
-        "Role 3 failure: The required 'unattended fixed filter, gauge, regulator and manifold' are missing. Instead, the image shows a tractor and mobile pipes, violating the 'hardware duplication' and 'technical narrative' constraints.",
-        "Visual Repetition: All three images share the same camera angle (low ground-level), the same product orientation/size, and the same generic farm context, resulting in a lack of distinct visual narrative."
+        "Role 3 (HEADWORKS DETAIL) fails the technical requirement: The prompt explicitly demands a 'fixed filter, gauge, regulator and manifold' on the concrete pad. The image only shows the product carton on the pad with a tractor in the background, completely missing the required irrigation equipment layout.",
+        "Role 2 (SELECTION EVIDENCE) is weak: While the drip tape is visible in the foreground, the 'technical arrangement' is generic, and the 'field-selection evidence' is not clearly represented or explained, making it look like a standard product shot rather than a specific selection scenario.",
+        "Role 1 is strong but inconsistent with the article context: It depicts a lush green crop field, whereas the article brief implies a setup/purchase context which is better matched by the bare earth in Roles 2 and 3."
       ],
-      "correction_prompt": "Role 1: Switch to a high-oblique aerial view of the farm with a tiny, off-center AFP carton and no vehicles; Role 3: Replace the tractor scene with a medium shot of a fixed irrigation headworks assembly (filter, gauge, manifold) where the carton is small and secondary in the background.",
+      "correction_prompt": "Regenerate Role 3 to clearly depict a technical record shot of a drip line manifold (including filter and gauge) on the concrete pad with the small carton secondary, and regenerate Role 2 to emphasize field-selection evidence such as measuring tape or spacing markers.",
       "panel_scores": [
-        55
+        45
       ],
       "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 1: The AFP carton/roll is overly prominent (oversized), appearing nearly as large as the crop rows and violating the 'small, off-center' requirement for an editorial hero shot.",
-        "Role 2: The AFP roll is again oversized, occupying a dominant position in the foreground and failing the 'small' constraint for selection evidence.",
-        "Role 3: Violation of 'exactly one approved carton' by including both a large roll AND a smaller carton box; the focus on a wheeled robot/sprayer deviates from the required 'unattended fixed filter, gauge, regulator' narrative."
-      ],
-      "correction_prompt": "Reduce the scale of the AFP product in all three images to ensure it remains secondary and small; remove the duplicate carton in image 3; and replace the robot in image 3 with a static filter/regulator assembly.",
-      "panel_scores": [
-        35
-      ],
-      "set_attempt": 2
     }
   ]
 }

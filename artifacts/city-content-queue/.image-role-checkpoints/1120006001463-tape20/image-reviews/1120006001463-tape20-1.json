@@ -1,0 +1,72 @@
+{
+  "source_id": "1120006001463-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 18,
+      "product_height_percent": 26,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Visible persons (a man crouching in the center and a man standing in the background)",
+        "Visible human body parts including faces, arms, and legs"
+      ],
+      "correction_prompt": "Regenerate the image without any people; remove the crouching man and the standing man, keeping only the farm context and the low AFP drip-tape roll in the foreground.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 24,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Watermark in the bottom-right corner does not match the required text (shows '09134922013' instead of '0913492013').",
+        "The product placement (centered in the lower foreground) does not align with the mandatory role of being 'off-center'."
+      ],
+      "correction_prompt": "Regenerate the image with the required watermark 'AFP | 09134922013' in the bottom-right. Move the AFP drip-tape carton roll to an off-center position (left or right) in the lower third to better fit the editorial hero composition. Keep the farm context and unattended tractor.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 12,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Visible human body parts (farmer) present in the image, which is a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image to remove the human driver from the tractor, ensuring the tractor and farm context are unattended while keeping the AFP white-and-blue drip-tape carton roll in the lower-left foreground.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 30,
+      "product_height_percent": 25,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Two rolls of drip tape are visible in the image (one large in the lower-left and one small in the mid-right), violating the 'exactly one' requirement.",
+        "The foreground roll is excessively wide and tall relative to the frame (estimated 30% width, 25% height), making it look disproportionate and failing the 'small' size preference for an editorial hero shot."
+      ],
+      "correction_prompt": "Regenerate the image showing only a single, small drip tape roll placed in the lower third to allow the farm field context to dominate the frame. Ensure the product width is under 20% of the image width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 21,
+      "product_height_percent": 16,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A person/farmer wearing a red shirt is clearly visible sitting inside the tractor cab on the left side of the image."
+      ],
+      "correction_prompt": "Regenerate the image to strictly exclude any people or human silhouettes. Remove the driver from the green tractor on the left, leaving only empty, unattended farm equipment.",
+      "attempt": 5
+    }
+  ]
+}

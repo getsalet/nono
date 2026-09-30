@@ -1,0 +1,51 @@
+{
+  "source_id": "1120009002205-tape20",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Editorial Hero) fails to meet the brief's spatial constraints: the product carton is large in the frame, not 'small and off-center on the lower third' as required, failing the 'exactly one approved carton stays small' check.",
+        "Role 3 (Headworks Detail) includes background farm activity: a red tractor is present in the foreground, which violates the 'no farm activity' rule for this specific role.",
+        "The layout of the product and equipment in Role 3 is not visually distinct from Role 2 in terms of camera angle (both are low-angle/elevated record style) and arrangement (product to the left), leading to a rejection based on layout repetition."
+      ],
+      "correction_prompt": "Regenerate Role 1 with the carton appearing small and strictly in the lower-third off-center. Regenerate Role 3 by removing the red tractor and all background machinery, isolating the hardware on the concrete pad with a clean, activity-free background.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Image 3 contains a tractor, which constitutes farm activity and violates the 'no farm activity' constraint for Role 3.",
+        "Image 3 fails to show a 'manifold' or 'fixed filter', violating the specific technical equipment requirements for Role 3."
+      ],
+      "correction_prompt": "Reshoot Role 3 to exclude the tractor (ensuring no farm activity) and add a clear manifold and fixed filter to the concrete pad setup.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails the 'exactly one approved carton' requirement by showing two identical AFP cartons in the foreground.",
+        "Role 1 also shows an oversized product that does not fit the 'small, off-center on the lower third' positioning instruction."
+      ],
+      "correction_prompt": "Regenerate Role 1 to include exactly one AFP carton, sized smaller and off-center on the lower third, with one tractor and a dominant farm field background.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

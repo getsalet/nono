@@ -1,0 +1,56 @@
+{
+  "source_id": "10900043002344-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 55,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Visible people in the background (left walking figure, person next to green tractor) trigger hard reject.",
+        "Product pair width (~55%) exceeds the maximum 42% limit.",
+        "Watermark 'AFP | 09134922013' is missing from the image.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove all visible people. Rescale the product pair to occupy 12-20% of the width. Add watermark 'AFP | 09134922013' in bottom-right corner. Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 44,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains exactly the two approved products: one packaged AFP coil and one bare black woven coil.",
+        "Zero people or human body parts visible.",
+        "Watermark 'AFP | 09134922013' is present and correctly placed in bottom-right.",
+        "Context matches editorial hero role: wide field, farm horizon, relevant water-transfer/agricultural setting.",
+        "Products are separate, fully visible, and physically plausible; width is within the 8-42% noisy reviewer tolerance band.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 44% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 32,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil.",
+        "Zero people or human body parts visible.",
+        "Products are separate, physically plausible, and fully visible.",
+        "Required watermark 'AFP | 09134922013' is visible in the bottom right."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

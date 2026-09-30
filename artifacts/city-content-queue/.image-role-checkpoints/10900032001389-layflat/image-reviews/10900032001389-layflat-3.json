@@ -1,0 +1,65 @@
+{
+  "source_id": "10900032001389-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 64,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Mandatory 'HEADWORKS DETAIL' role is missing: there is no visible fixed pump, gauge, or manifold; instead, the image shows a generic layflat shot on a concrete pad.",
+        "Pair width is 64% of the frame width, which significantly exceeds the preferred 12-20% and is right at the limit of the noisy reviewer tolerance (8-65%)."
+      ],
+      "correction_prompt": "Regenerate the image to include a fixed pump unit with gauges and manifold on an empty concrete pad. The two layflat coils (one packaged AFP, one bare black) should be secondary and smaller, located near the pump but not dominating the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Missing bare black woven coil; image only contains a packaged coil, a commercial pump, and a third mechanical device",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate to show one packaged AFP coil and one bare black woven hose coil (secondary), with a fixed infrastructure pump/gauge/manifold on an empty concrete pad; remove the third device. Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 44,
+      "product_height_percent": 34,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image fails the mandatory 'HEADWORKS DETAIL' role requirement which specifies an 'equipment-only elevated record photograph of one fixed pump, gauge and manifold'.",
+        "Instead, the image depicts the products directly on a concrete surface in a generic layout, missing the required fixed pump, gauge, and manifold infrastructure.",
+        "The scene lacks the specific 'elevated' perspective and industrial equipment context mandated for this role."
+      ],
+      "correction_prompt": "Regenerate an elevated equipment-only record photograph featuring a fixed pump, gauge, and manifold on an empty concrete pad. Position the approved two-coil pair (one packaged AFP coil and one bare black woven coil) as a small, separate, and secondary element within the scene. Ensure the text 'APP' on the left coil is corrected to 'AFP'. Keep zero people and maintain the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 58,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Image contains the required two-coil pair (packaged AFP coil and bare black coil) as distinct, physically plausible objects.",
+        "Watermark 'AFP | 09134922013' is present and correctly placed in the bottom right.",
+        "No human figures or body parts are visible.",
+        "No disallowed commercial items (bottles, third packages, etc.) are present.",
+        "Product size falls within the acceptable range for this role (8-65%)."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
