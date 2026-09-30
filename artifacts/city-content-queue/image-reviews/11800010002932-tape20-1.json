@@ -1,0 +1,79 @@
+{
+  "source_id": "11800010002932-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 15,
+      "product_height_percent": 20,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Placement violation: The required editorial hero role dictates that the product must be 'off-center', but the carton is placed directly on the central vanishing point of the rows (x_center ~48%).",
+        "Geometry/Physics violation: The irrigation tape originates from inside the central hole of the roll, whereas in reality it exits the outer perimeter of the roll.",
+        "Size constraint: The product (15%) is below the preferred 20-23% range, making it appear disproportionate to the surrounding macro-level texture of the soil."
+      ],
+      "correction_prompt": "Move the drip-tape carton strictly off-center to the lower-right third of the frame. Ensure the white irrigation tape exits the outer side of the roll rather than the central hole. Increase the carton size slightly to be more legible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 30,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Hard reject: Human figures (silhouettes/faces) are visible in the driving seats of the tractor in the background.",
+        "Hard reject: Product bounding box width (32%) exceeds the maximum tolerance of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image to completely remove all human silhouettes or drivers from the background tractor. Reduce the visual scale of the foreground roll by 15% to fit within the 30% width limit. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 15,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of multiple human figures (one seated on the left, two standing in the mid-ground) violates the strict zero-person rule.",
+        "A red tractor is visible in the background, which may be considered unattended equipment but the presence of the driver or operator would also be a reject, and the seated person on the left is definitely a reject trigger."
+      ],
+      "correction_prompt": "Remove all human figures and the driver from the scene. Keep the tractor only if it is clearly unattended, but prioritize removing all people. Maintain the white-and-blue AFP drip-tape carton roll in the lower third.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 24,
+      "product_height_percent": 20,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Driver figure is visible inside the tractor cab, which is a hard reject for any visible human."
+      ],
+      "correction_prompt": "Regenerate with the tractor unattended and empty; remove the driver from the cab while keeping the roll and required bottom-right watermark 'AFP | 09134922013' intact.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 22,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains exactly one white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The product size (width 22%, height 18%) is well within the preferred ranges and physically plausible.",
+        "The lower-third and off-center placement aligns with the editorial hero role.",
+        "The background shows a farm and irrigation context with drip lines, matching the article brief.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Zero people, body parts, or unrelated commercial products are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

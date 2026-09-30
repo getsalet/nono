@@ -1,0 +1,79 @@
+{
+  "source_id": "1080006002561-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 12,
+      "product_height_percent": 10,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Presence of two human figures (a standing man and a seated man) triggers a hard reject for zero people."
+      ],
+      "correction_prompt": "Regenerate the image to remove all people and human body parts, keeping only the AFP drip-tape roll, the tractors, and the crop rows in the field.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "A person is clearly visible sitting on the tractor, which is a hard reject for any human body parts or silhouette.",
+        "The mandatory editorial water mark \"AFP | 09134922013\" is missing from the bottom right corner."
+      ],
+      "correction_prompt": "Remove all people from the image. Add a small, distinct text overlay in the bottom-right corner containing exactly 'AFP | 09134922013'. Ensure the water mark is clearly legible and does not overlap with the main product.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 25,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Human figures visible in the distant field background on crop rows (approx center and right-center)",
+        "Multiple people silhouettes present, which are hard rejects",
+        "Image fails the 'zero people and zero human body parts' mandatory requirement"
+      ],
+      "correction_prompt": "Regenerate image strictly without any human figures in the background. Ensure the distant crop rows are empty of workers. Keep the product placement, watermark, and tractor context identical.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 27,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a human person (driver) on the tractor in the background",
+        "Product is centered horizontally instead of being placed off-center"
+      ],
+      "correction_prompt": "Regenerate the image by removing all people, including the person on the tractor, ensuring the tractor is unattended. Additionally, shift the crop row roll to the left side of the frame so it is off-center.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Meets the EDITORIAL HERO role with a wide high-oblique view where farm context dominates",
+        "Contains exactly one white-and-blue wide low cylindrical drip-tape carton roll",
+        "Product size is within accepted range (width 20-23% preferred, currently 22%; height 30% is under 35% limit)",
+        "Placement is off-center on the lower third as required",
+        "Zero people or human body parts visible",
+        "Background matches the article brief with relevant crop rows and farm infrastructure",
+        "Required watermark 'AFP | 09134922013' is present and correct"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

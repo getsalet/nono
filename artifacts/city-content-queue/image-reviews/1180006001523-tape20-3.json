@@ -1,0 +1,63 @@
+{
+  "source_id": "1180006001523-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject triggered: Product height (38%) exceeds the strict 35% maximum limit.",
+        "Hard reject triggered: Product width (32%) exceeds the strict 30% maximum limit.",
+        "Zero humans detected in the frame.",
+        "Product is the required white and blue cylindrical roll with visible AFP branding.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the carton roll significantly smaller; reduce its height to less than 35% of the frame and its width to less than 30% of the frame. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 21,
+      "product_height_percent": 16,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Hard reject: multiple people are visible in the background (one standing near the open box on the left, two near the tractor on the right).",
+        "Role mismatch: The brief specifies 'HEADWORKS DETAIL... exactly one approved carton remains small and secondary; no farm activity', but the image shows the main product roll in the foreground, an extra unbranded open cardboard box, and active farm equipment (tractor with people nearby).",
+        "Presence of non-approved second commercial package (open brown cardboard box) in the middle ground.",
+        "Visible gibberish/placeholder text on the label of the main carton."
+      ],
+      "correction_prompt": "Regenerate image showing a small, secondary AFP branded carton roll on an empty concrete pad next to a large irrigation manifold, gauge, and regulator. Remove all people from the background, remove the extra brown cardboard box, and ensure the main product roll is not the dominant foreground object. Retain the exact bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 33,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "A clear human figure is visible in the background, which is a hard reject.",
+        "The drip tape roll appears to be a primary subject alongside the equipment, whereas the brief requires it to be small and secondary."
+      ],
+      "correction_prompt": "Regenerate the image to remove the human figure in the background. Ensure the AFP drip tape roll is significantly smaller and placed as a secondary element compared to the main filter and manifold assembly. Ensure no people are visible in the entire frame.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 27,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

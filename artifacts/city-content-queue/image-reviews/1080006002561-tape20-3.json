@@ -1,0 +1,112 @@
+{
+  "source_id": "1080006002561-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 27,
+      "product_height_percent": 42,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Zero people, human silhouettes, or body parts present.",
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is present.",
+        "Correct watermark 'AFP | 09134922013' is visible in the bottom-right corner.",
+        "Object is physically plausible; background contains allowed unattended farm equipment (tractors/harvesters) and building, consistent with the article's agri-tech context.",
+        "Roll dimensions are within accepted tolerance (width ~27%).",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible human silhouettes (farmers in background)",
+        "Second roll of drip tape present in background",
+        "Carton roll width slightly exceeds acceptable range",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures from the scene. Delete the second drip tape roll in the background. Maintain only the single foreground carton roll on the concrete pad. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Multiple human silhouettes visible in the background (left side), which violates the 'zero people' requirement.",
+        "Hard reject: The mandatory 'HEADWORKS DETAIL' role is not met. The brief requires a 'photograph of one fixed filter, gauge, regulator and manifold' where the carton is 'small and secondary'. This image is a record shot of a carton on a pad.",
+        "Hard reject: Contains a large red truck and tanker in the background which acts as a 'second commercial package' or distractor not allowed in the specific equipment-only brief.",
+        "Text on the carton contains gibberish/incorrect language."
+      ],
+      "correction_prompt": "Regenerate as a close-up high-angle detail shot of a fixed irrigation infrastructure (filter, pressure gauge, and manifold) mounted on an empty concrete pad. A small AFP drip-tape carton (20cm) must be visible but secondary to the machinery. Remove all humans, trucks, and background farm scenery. Ensure zero people and no gibberish text.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 33,
+      "product_height_percent": 24,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Second commercial package/roll visible (hard reject)",
+        "Required role 'HEADWORKS DETAIL' with elevated filter/gauge/manifold missing",
+        "Product width exceeds 30% of frame limit",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with exactly one drip tape roll (approx. 20% width) placed small and secondary in the background. Foreground must show an elevated record photograph of one fixed filter, gauge, regulator, and manifold on an empty concrete pad. Ensure zero people and remove the second roll. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 32,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: multiple people visible in the background (one standing, two crouching).",
+        "Hard reject: multiple human body parts visible (arms, legs, torso).",
+        "Mandatory role violation: image is not a close-up/HEADWORKS DETAIL of a filter/gauge/manifold assembly on a concrete pad; instead, it is a wide shot with a tractor.",
+        "Second commercial package violation: a second roll of tape and a meter are visible in the background."
+      ],
+      "correction_prompt": "Regenerate as a tight elevated close-up of a single filter, gauge, regulator, and manifold on an empty concrete pad. Include one small white and blue AFP carton roll. Ensure zero people or human silhouettes are present in the frame.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product is too wide (est. 38% of image width, exceeds 30% hard reject threshold).",
+        "Product is too tall (est. 45% of image height, exceeds 35% hard reject threshold).",
+        "Violation of zero-human rule: A person/farmer is visible in the background (middle ground).",
+        "Violation of 'Detail' role constraints: The scene contains farm activity (tractor, worker), whereas the brief strictly requires 'no farm activity' and only fixed infrastructure (filter/manifold).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the person and the green truck from the background entirely. Replace the central large roll with a very small secondary roll (approx 15% width). The main subject must be a fixed irrigation manifold, gauge, and filter assembly located on the concrete surface. Ensure zero visible people. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 100,
+      "product_width_percent": 27,
+      "product_height_percent": 30,
+      "product_x_center_percent": 43,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "source_id": "1180006002620-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 48,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: visible people in the background (farmers/workers)",
+        "Hard reject: visible human body parts (arms, legs, faces)",
+        "Hard reject: product width is 48% (exceeds max 30% limit)",
+        "Hard reject: product height is 40% (exceeds max 35% limit)",
+        "Hard reject: second small commercial package visible in the foreground bottom-right",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the background. Shrink the main AFP drip-tape roll so it is under 25% of the frame width and 30% of the frame height. Remove the small secondary package from the foreground bottom. Keep the equipment (filter, gauge, regulator) and the required bottom-right watermark. Ensure the product is exactly one wide low cylindrical roll. Reduce the product group from 48% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of a prohibited container: A red thermos bottle/jar is clearly visible on top of the cardboard box in the mid-ground, violating the 'hard reject' rule for bottles, jars, canisters, or buckets.",
+        "Second commercial package: A second cardboard box is visible in the background, which conflicts with the constraint to show 'exactly one approved carton' and hard-rejects 'second commercial package' or extraneous commercial packaging.",
+        "Layout deviation: The mandatory role requires an 'elevated record' of the equipment, but the image is a low-angle ground shot with the primary equipment (filter/gauge) positioned to the far left."
+      ],
+      "correction_prompt": "Remove the red bottle/thermos and the second cardboard box from the background. Reframe the shot from an elevated perspective to show the fixed filter, gauge, and regulator more centrally on the concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 34,
+      "product_height_percent": 31,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: Presence of multiple people (farmer, worker) visible in the background, violating the strict 'zero people and zero human body parts' requirement.",
+        "Role Mismatch: The mandatory visual brief required a 'HEADWORKS DETAIL' (equipment-only with filter, gauge, regulator, manifold) where the carton should be small and secondary. The image instead features a single large close-up of the carton, failing to meet the layout and content requirements.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a high-angle 'headworks detail' photo on an empty concrete pad showing fixed irrigation infrastructure (filter, manifold, gauge, regulator) with zero people. Include the AFP drip-tape carton in the scene but keep it small and secondary, not the primary subject. Keep the bottom-right watermark. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 28,
+      "product_height_percent": 26,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject due to visible human figures (two people) in the background, which is a standalone rejection criterion.",
+        "Image fails to meet the mandatory 'HEADWORKS DETAIL' role which requires an equipment-only photograph of a fixed filter, gauge, regulator, and manifold; the image instead shows a generic pad with a roll and people."
+      ],
+      "correction_prompt": "Regenerate as an elevated record photograph of a fixed irrigation manifold and gauge assembly on an empty concrete pad. Remove all humans from the background. Include a small, secondary AFP white-and-blue drip-tape roll near the equipment. Ensure the background contains only the infrastructure and distant unattended farm equipment.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 38,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Product width is approximately 33%, exceeding the 30% hard reject threshold",
+        "Product height is approximately 38%, exceeding the 35% hard reject threshold",
+        "Image shows a roll lying on the ground, which resembles a 'layflat' presentation and conflicts with the 'elevated' requirement in the visual brief",
+        "A physical gauge is included on the ground, which is not explicitly requested for this specific composition and disrupts the 'single roll' focus",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the roll strictly elevated on a concrete pad. The roll width must be reduced to approximately 20% of the frame width and height to 25%. Do not include any ground-level gauges or extra equipment; keep the composition focused solely on the elevated roll and background infrastructure. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "source_id": "11000011002511-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 45,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Combined product width exceeds the 42% hard reject limit",
+        "Visible red and black hose spools on the right edge constitute prohibited third commercial products",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Cropped the image to the two foreground coils, keeping them under 40% of the total frame width and removing the red and black hoses on the right side. Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 45,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Both required objects are visible: one packaged AFP coil and one bare black woven coil.",
+        "The objects are separate, physically plausible, and clearly identifiable as commercial products.",
+        "The distant tractor and ordinary infrastructure (hose, etc.) are permitted and do not constitute extra commercial products.",
+        "No people or human body parts are visible.",
+        "The image matches the water-transfer / agricultural context for گلشهر. The product pair is slightly off-center and the width exceeds the preferred 12–20% range, but both objects remain fully visible and physically plausible, so this does not trigger a hard reject under the noisy tolerance up to 42%. The exact watermark 'AFP | 09134922013' is present in the bottom-right as required.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "All required role items are present and physically plausible: one packaged AFP coil and one bare black woven coil are separate, visible, and not merged.",
+        "The exact bottom-right watermark \"AFP | 09134922013\" is present and has not been rejected or altered.",
+        "No people or human body parts are visible, meeting the hard reject criteria.",
+        "The combined product width is slightly above the preferred range but falls within the accepted noisy reviewer range for this role.",
+        "The distant tractor and farm context are appropriate for the editorial hero and are not treated as prohibited extra commercial products.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 50,
+      "product_height_percent": 28,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Image contains no people or human body parts",
+        "Correctly displays the required layflat pair: one packaged coil and one bare black woven coil",
+        "Required watermark 'AFP | 09134922013' is present in bottom-right",
+        "Context is an appropriate wide agricultural view",
+        "Placement is off-center and in the lower third as editorially preferred",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 50% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 12,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The bare black woven coil clearly includes a brown cylindrical connector/hub at its center, which violates the hard reject rule against a third commercial package or invented package part."
+      ],
+      "correction_prompt": "Regenerate the bare black woven coil so it is shown with a clean open center hole, completely removing the brown connector/hub in the middle.",
+      "attempt": 5
+    }
+  ]
+}

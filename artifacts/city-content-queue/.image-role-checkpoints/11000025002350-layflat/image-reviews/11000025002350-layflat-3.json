@@ -1,0 +1,82 @@
+{
+  "source_id": "11000025002350-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 72.0,
+      "product_height_percent": 35.0,
+      "product_x_center_percent": 45.0,
+      "reasons": [
+        "Visible human body parts (legs and silhouettes) in the background violate the zero-people rule.",
+        "Product width (~72%) significantly exceeds the 65% hard rejection threshold.",
+        "The required 'HEADWORKS DETAIL' of fixed pump, gauge, and manifold on an empty concrete pad is completely missing.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Remove all humans from the background entirely. Reduce the size of the two coils so their combined width is less than 65% of the frame. Add a visible fixed pump, gauge, and manifold on a concrete pad in the foreground to satisfy the 'HEADWORKS DETAIL' role. Reduce the product group from 72% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 58,
+      "product_height_percent": 55,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Contains the required approved pair: one packaged coil and one bare black woven coil.",
+        "Watermark 'AFP | 09134922013' is present in the bottom right as required.",
+        "No visible people or human body parts.",
+        "Fixed pump, gauge, and manifold are present as infrastructure/secondary equipment, consistent with the HEADWORKS DETAIL role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 55% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 55% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 35,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Presence of a person (human silhouette) visible in the background near the tractor.",
+        "Hard reject: The mandatory role is 'HEADWORKS DETAIL' of equipment-only pumps/gauges; this image shows only the two coils without the required fixed pump/gauge infrastructure.",
+        "Hard reject: No visible evidence of a third commercial product is good, but the primary hard fail is the human figure which is explicitly forbidden even if distant."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the image. Replace the foreground product focus with a close-up elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad. Keep the two coils visible but small and secondary in the background. Ensure no persons are visible in the distance.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 45,
+      "product_height_percent": 40,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The image fails the mandatory 'HEADWORKS DETAIL' role which requires an elevated equipment-only photograph of a fixed pump, gauge, and manifold; instead, it shows the coils as the primary foreground focus on a concrete surface.",
+        "The mandatory approved pair layout is incorrect: the image displays three items (one silver pump head, one black coil, and one smaller flat black reel) rather than the specified 'one packaged AFP coil and one bare black woven coil'.",
+        "A 'distant unattended farm building' is not visible, which contradicts the context of a pump pad, but more importantly, the 'packaged' coil is not distinct from the pump equipment shown."
+      ],
+      "correction_prompt": "Regenerate image showing an elevated, distant record photograph of a fixed pump and manifold on a concrete pad with no farm activity. Include only one packaged AFP coil and one bare black woven coil as small, separate secondary objects in the frame. Remove the extra silver pump head from the foreground. Add a distant unattended farm building to the background.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The required image role is 'HEADWORKS DETAIL', but the image shows two coils placed on a flat concrete pad rather than depicting the required headworks equipment details as the primary focus.",
+        "A connector/hose segment protrudes from the coil on the right, which risks violating the ban on 'impossible intersections' or 'object passing through a coil'.",
+        "The two coils are large relative to the frame, contradicting the requirement that the 'two-coil pair remains small, separate and secondary'.",
+        "The red farm building and field in the background are visually distracting and suggest a general farm scene rather than the focused 'equipment-only' aesthetic requested."
+      ],
+      "attempt": 5
+    }
+  ]
+}

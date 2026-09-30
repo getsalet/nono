@@ -1,0 +1,80 @@
+{
+  "source_id": "1190003002039-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 40,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: One clearly visible human body part/figure on the mid-left horizon near the red tractor.",
+        "Hard reject: Two visible standing figures in the background near the green tractor and bales.",
+        "Product width approx. 40% of the frame exceeds the maximum 30% limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and silhouettes from the background. Shrink the drip tape carton to 22% of the frame width. Regenerate the scene on the empty concrete pad with exactly one small secondary carton, zero people, and the required bottom-right watermark. Reduce the product group from 40% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 20,
+      "product_height_percent": 20,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: The image contains a human (a man standing between the tractor and the machine in the background).",
+        "Strict role violation: The image role required 'equipment-only' with 'no farm activity', but the image displays a tractor, a field cultivator, and a man in the background, which constitutes farm activity."
+      ],
+      "correction_prompt": "Regenerate the image with an empty concrete pad background and absolutely no people, tractors, or machinery in the background. Only show the single AFP drip-tape roll and the required water infrastructure (filter, gauge, manifold). Remove all farm vehicles.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: multiple people (farmer/worker) are visible in the background.",
+        "Hard reject: roll width is approximately 32 percent, exceeding the 30 percent maximum limit.",
+        "The visual brief for role 3 (HEADWORKS DETAIL) requires fixed filter/gauge/manifold infrastructure to be prominent; this image shows only the roll on a concrete pad.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Include a fixed irrigation manifold, filter, and gauges in the mid-ground to match the equipment-only brief. Reduce the width of the drip tape roll to below 25 percent of the frame. Retain the exact bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 25,
+      "product_height_percent": 25,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains a visible person (farmer) in the background, which is a hard reject criterion.",
+        "The required watermark is missing from the bottom right corner of the image."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the human figure in the background. Ensure the equipment-only context on the concrete pad is preserved. Add the exact text watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 31,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "The image contains a clearly visible human figure (person) in the background, which is a hard reject violation.",
+        "The mandatory visual brief requires an 'equipment-only' scene with no farm activity and exactly one filter/gauge/manifold setup on a concrete pad; this image shows an empty dirt/sand pad and lacks the required infrastructure.",
+        "The visual brief specifies the carton roll should be small and secondary, but in this image it is the primary subject and too large (approx 38% width).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with zero humans. Set the scene on a clean concrete pad containing a fixed filter, gauge, and manifold. Place the white-and-blue AFP drip-tape roll as a small secondary element in the background. Ensure the roll width is approx 15%. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "source_id": "11000011001427-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 62,
+      "product_height_percent": 28,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Mandatory role violation: The brief requires a HEADWORKS DETAIL (elevated photograph of a fixed pump, gauge, and manifold) with the two-coil pair remaining small and secondary. The submitted image is a horizontal eye-level wide shot where the products are the primary subject.",
+        "Product pair width violation: The combined bounding box of the two objects spans 62% of the frame width, falling below the 65% hard reject threshold for this specific scenario.",
+        "Incorrect image composition: The image does not match the requested 'elevated' angle or the specific focus on pump/gauge infrastructure as the primary detail.",
+        "Hard Reject Trigger: No visible humans, but the overall composition and framing fail the structural requirements of the mandatory role."
+      ],
+      "correction_prompt": "Regen with an elevated bird's-eye view on a concrete pad, prominently featuring a fixed pump and manifold assembly; place the two coiled tubes small and in the background to satisfy the detail role.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 84,
+      "product_width_percent": 66,
+      "product_height_percent": 36,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains the required bottom-right watermark 'AFP | 09134922013'.",
+        "Shows the approved two-coil pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Zero visible people, human body parts, or human silhouettes.",
+        "No third commercial product, bottle, or jar present.",
+        "Objects are fully visible, separate, and physically plausible.",
+        "The pair is slightly wider than the 65% limit, but remains recognizable and not severely distorted.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 66% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 66% to 8-65% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 55,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Image lacks required 'equipment-only' infrastructure (fixed pump, gauge, and manifold) on the concrete pad as specified in the HEADWORKS DETAIL role.",
+        "A visible human figure (driver) is present in the distant tractor, which violates the 'zero people' hard reject rule."
+      ],
+      "correction_prompt": "Regenerate with zero people (ensure the distant tractor is empty and unattended). Include a fixed pump unit with a gauge and manifold on the concrete pad as the main focus, keeping the two coils (one packaged, one bare) small and separate. Keep the watermark 'AFP | 09134922013' in the bottom right.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 38,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Approved two-coil pair visible: one packaged coil and one bare black woven coil",
+        "Exact bottom-right watermark 'AFP | 09134922013' present as required",
+        "Zero people and zero human body parts",
+        "Width (38%) within accepted noisy estimate range",
+        "Objects separate, fully visible, and physically plausible",
+        "Lower-third and off-center placement treated as editorial, not hard reject"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

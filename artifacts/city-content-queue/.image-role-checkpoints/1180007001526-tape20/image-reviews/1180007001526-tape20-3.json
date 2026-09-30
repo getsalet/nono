@@ -1,0 +1,77 @@
+{
+  "source_id": "1180007001526-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 32,
+      "product_height_percent": 31,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible 'AFP | 09134922013' watermark in bottom-right corner (required).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 33,
+      "product_height_percent": 30,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: visible human figure (man standing in the background) violates the zero-people and zero-human-silhouette rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image removing the human standing in the background. The scene must contain zero people or human body parts. Focus on the single AFP drip-tape carton roll on the concrete pad with the required watermark 'AFP | 09134922013' in the bottom-right corner. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 31,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Product width exceeds 30 percent hard reject threshold",
+        "Mandatory HEADWORKS DETAIL role missing: no filter, gauge, regulator, or manifold shown on an empty concrete pad",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an elevated equipment-only record photograph: show one fixed filter, gauge, regulator, and manifold on an empty concrete pad. Include the AFP white-and-blue drip-tape carton roll as a small secondary object (width 20-23 percent). Keep zero people/body parts and preserve the bottom-right watermark. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing the required 'HEADWORKS DETAIL' infrastructure elements such as fixed filters, gauges, regulators, and manifolds on a concrete pad.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is missing.",
+        "The background context (open field with a tractor) does not align with the specific equipment-only record photograph role described in the brief."
+      ],
+      "correction_prompt": "Re-render the image on an empty concrete pad to show an elevated record of one fixed filter, gauge, regulator, and manifold. Include a small, secondary AFP white-and-blue wide low cylindrical drip-tape carton roll. Ensure the mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner. Remove the tractor and open field context.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 27,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The visual brief mandates a HEADWORKS DETAIL shot featuring 'exactly one approved carton remains small and secondary' but clearly shows a fixed filter, gauge, regulator, and manifold on an empty concrete pad.",
+        "The background is a vast, empty cracked asphalt or concrete field without the required irrigation hardware (filter, gauge, regulator, manifold) mentioned in the article brief.",
+        "Product dimensions are near the rejection threshold (width ~27% vs preferred 20-23%; height ~31% vs max 35%), and the lack of required infrastructure context prevents a pass score of 70."
+      ],
+      "correction_prompt": "Redesign the background to be a clean concrete pad showing a headworks setup with a visible fixed filter, pressure gauge, regulator, and manifold. Reduce the size of the drip-tape carton roll to make it secondary to the irrigation equipment, removing it from the wide-open cracked ground.",
+      "attempt": 5
+    }
+  ]
+}
