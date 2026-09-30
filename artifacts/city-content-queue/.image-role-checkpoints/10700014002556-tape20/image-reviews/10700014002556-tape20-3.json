@@ -1,0 +1,75 @@
+{
+  "source_id": "10700014002556-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 20,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "Hard reject: Visible person (male farmer) in the scene"
+      ],
+      "correction_prompt": "Regenerate the image to remove all human figures, ensuring the scene is a completely empty concrete pad with only the fixed equipment and one secondary drip tape roll visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible people in the background (next to the tractors)",
+        "Missing the required specific manifold/regulator configuration on a dedicated pad (only a gauge is present)"
+      ],
+      "correction_prompt": "Regenerate an elevated shot of a complex irrigation manifold with regulators and filters on an empty concrete pad, strictly no people, small secondary carton roll",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 30,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The approved carton roll is too prominent and large relative to the filter equipment, which contradicts the role requirement for it to be small and secondary.",
+        "The product height (38%) exceeds the 35% hard-reject threshold.",
+        "The presence of a second commercial package (blue box) in the background triggers a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the size of the AFP drip-tape carton significantly to make it secondary to the large filter manifold in the foreground. Remove the blue box in the background. Ensure the roll width and height are under 30% and 35% of the frame respectively. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 33,
+      "product_height_percent": 36,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Hard reject: Multiple human figures (two clear people in the background) are visible.",
+        "The product roll's estimated width (~33%) and height (~36%) slightly exceed the absolute maximum hard-reject thresholds of 30% and 35%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image completely removing all human figures (farmer, worker) from the background. Ensure the empty concrete pad and unattended tractor setup remains. Shrink the white and blue AFP drip tape carton roll so its bounding box width is under 30% of the image width and height is under 35% of the image height. Keep the text on the roll legible as 'AFP DRIP', keeping the required 'AFP | 09134922013' watermark intact in the bottom right. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 23.7,
+      "product_height_percent": 22.3,
+      "product_x_center_percent": 18.6,
+      "reasons": [
+        "Hard reject: Two human figures (farmers/workers) are visible in the mid-ground, which violates the strict 'zero people' requirement."
+      ],
+      "correction_prompt": "Remove all human figures from the image. Generate an empty field with the drip tape roll in the foreground and unattended farm equipment in the background only.",
+      "attempt": 5
+    }
+  ]
+}

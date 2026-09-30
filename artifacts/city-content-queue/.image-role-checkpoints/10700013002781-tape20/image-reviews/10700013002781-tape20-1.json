@@ -1,0 +1,74 @@
+{
+  "source_id": "10700013002781-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 31.5,
+      "product_height_percent": 34.0,
+      "product_x_center_percent": 47.0,
+      "reasons": [
+        "Hard reject: Product bounding box width is estimated at 31.5% of the image frame, which exceeds the maximum allowable width of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31.5% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Slightly reduce the scale of the drip tape carton roll so its width occupies no more than 30% of the image frame width. Keep the roll small, fully visible, and strictly on the lower third of the frame. Reduce the product group from 31.5% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 17,
+      "product_height_percent": 18,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "A human figure (driver) is clearly visible inside the distant red tractor",
+        "The image fails the mandatory 'zero people and zero human body parts' requirement"
+      ],
+      "correction_prompt": "Regenerate the image so the distant red tractor contains no visible driver or person; ensure zero humans are present anywhere in the frame.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 17,
+      "product_height_percent": 20,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject due to the presence of a human body part: a person is clearly visible operating the red tractor in the background.",
+        "Role mismatch: The required role is EDITORIAL HERO where the product must be a small, off-center object in the lower third, but the product appears too large (17% width) relative to the required 'small' descriptor."
+      ],
+      "correction_prompt": "Regenerate with an unattended red tractor in the background to remove all human figures. Reduce the visual size of the white and blue AFP drip-tape carton roll to make it appear smaller, and position it further to the bottom-left corner to ensure it is fully off-center and clearly distinct from the horizon line.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 16,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "hard_reject_person",
+        "operator_visible_in_tractor_cab"
+      ],
+      "correction_prompt": "Regenerate image keeping the farm context and lower-left AFP drip tape roll, but remove the tractor operator entirely; show only an unattended red tractor or remove the vehicle so no human silhouette is visible.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Visible person (farmer) inside the tractor cabin violates the mandatory 'zero people' rule",
+        "Tractor is attended by a driver, making it non-compliant with the 'distant unattended tractor' allowance"
+      ],
+      "correction_prompt": "Remove the driver from the tractor cabin to ensure no humans are visible in the scene, keeping the tractor as unattended distant equipment.",
+      "attempt": 5
+    }
+  ]
+}

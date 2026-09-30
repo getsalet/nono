@@ -4,19 +4,52 @@
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 20,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Editorial Hero) fails the composition constraint: the product is oversized and centered in the foreground rather than staying 'small' and 'off-center on the lower third.'",
-        "Role 2 (Selection Evidence) fails the technical narrative requirement: the image shows a generic dirt field with a hose but lacks the required 'visible emitter-spacing' or 'field-selection evidence.'",
-        "Role 3 (Headworks Detail) fails the equipment constraint: the required 'one fixed filter, gauge, regulator and manifold' are completely missing; the image only shows a product roll on a concrete pad.",
-        "All three images focus overwhelmingly on the product roll as the central subject, failing to clearly distinguish the 'technical narrative' and 'environment structure' required for their specific editorial roles."
+        "Panel 2 contains a visible person, which is explicitly prohibited by the editorial set instructions ('...or any person...').",
+        "Panel 3 lacks the required technical equipment: the 'fixed filter, gauge, regulator and manifold' specified for the HEADWORKS DETAIL role are missing; instead, large farm machinery (tractor, sprayer) is visible, which conflicts with the 'no farm activity' requirement."
       ],
-      "correction_prompt": "Regenerate Role 1 with the product scaled down to the bottom-right off-center; Redo Role 2 to clearly show drip tape layout and emitter spacing; Redo Role 3 to include the required hardware set (filter, gauge, regulator, manifold) on the concrete pad.",
+      "correction_prompt": "Regenerate panel 2 without any people, and regenerate panel 3 to show a headworks equipment setup (filter, manifold, gauge) on an empty concrete pad with the product, removing all tractors and machinery.",
       "panel_scores": [
-        35
+        20
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 1 features a generic farm environment with active farm equipment (tractors moving and dust), which violates the requirement for a static high-oblique view of the irrigation context.",
+        "Panel 3 incorrectly features a large foreground product carton, violating the requirement that the product remain small and secondary to the headworks equipment.",
+        "Panel 3 displays only the product on an empty concrete pad without the required technical arrangement (filter, gauge, regulator, manifold).",
+        "Panel 2 fails to display the required evidence of emitter-spacing or field-selection for the 20cm drip tape."
+      ],
+      "correction_prompt": "Redesign Panel 1 as a static high-oblique wide shot of an irrigation field without active tractors; redesign Panel 3 as a technical headworks-only shot featuring a fixed filter, gauge, and manifold on an empty concrete pad with a small secondary AFP carton, while ensuring Panel 2 includes visible drip tape emitter-spacing.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        1,
+        3
+      ],
+      "reasons": [
+        "Panel 1 rejects the visual brief by placing the product large and centered in the foreground rather than small, off-center, and on the lower third as a secondary element.",
+        "Panel 3 fails the 'HEADWORKS DETAIL' role entirely because the concrete pad is empty and missing the required technical equipment (filter, gauge, regulator, manifold), showing only the product.",
+        "Panel 1 and Panel 3 feature nearly identical product sizes, angles, and framing, resulting in a layout duplication.",
+        "Panel 2 includes an unapproved box-shaped container alongside the primary carton, violating the rule against any extra bottles or containers."
+      ],
+      "correction_prompt": "Re-frame Panel 1 as a high-oblique hero shot with the product made small and positioned off-center in the lower third; replace Panel 3 with an equipment-only shot on a concrete pad including a fixed filter, gauge, and manifold; remove the extra box container from Panel 2.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 3
     }
   ]
 }

@@ -1,0 +1,80 @@
+{
+  "source_id": "10700013002781-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Multiple people (two individuals) and human body parts (face, hands, arms, legs) are visible in the background.",
+        "The mandatory role is 'HEADWORKS DETAIL' (equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold). The image displays an open field with farm vehicles and people instead of the required infrastructure detail."
+      ],
+      "correction_prompt": "Strictly regenerate to match the 'HEADWORKS DETAIL' role: show a high-detail close-up of a fixed filter, gauge, regulator, and manifold on an empty concrete pad with the carton roll secondary. Absolutely zero people, zero human body parts, no farm vehicles.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 38,
+      "product_height_percent": 42,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Human figures (farmers/workers) are clearly visible in the background on the left, which violates the zero-person rule and the 'equipment-only' brief.",
+        "Product dimensions are oversized: The roll's width (approx 38%) and height (approx 42%) exceed the 30% width limit and 35% height limit for physical plausibility, making it the dominant element rather than a small secondary object.",
+        "Role violation: The image shows a standard product display with the roll as the main subject, rather than the required 'HEADWORKS DETAIL' role where the fixed filter/gauge manifold should be the primary focus and the roll is small/secondary.",
+        "Background violation: The presence of active farm staff contradicts the 'no farm activity' and 'empty concrete pad' specific brief constraints.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures from the background completely; scale the drip tape roll down to 25% width and 30% height so it acts as a secondary element; crop the frame to focus on the filter manifold as the primary subject on an empty pad. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 21,
+      "product_height_percent": 28,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Contains multiple visible people in the background, violating the zero-person hard reject criterion."
+      ],
+      "correction_prompt": "Remove all people from the image and focus only on the equipment and roll.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 33,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The primary product (wide low cylindrical drip-tape carton roll) matches the specified visual requirements and is the sole focus of the subject.",
+        "The white-and-blue AFP roll is properly framed, positioned slightly off-center as an editorial preference, and maintains physical plausibility.",
+        "Zero people, faces, or human body parts are visible, strictly adhering to hard rejection criteria.",
+        "Background context (field, tractors, equipment) is relevant to the 'filter/gauge/manifold' role, with the roll correctly presented as a secondary element.",
+        "Product dimensions and x-center placement fall well within the reviewer-estimation noise range of 12–30% width.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly visible and intact.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 26,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: The image contains three visible people (one standing in the center, two others near the building), which violates the strict rule of zero people and zero human body parts."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Ensure the scene contains only the drip tape roll on the concrete pad with unattended equipment or a distant landscape. Preserve the AFP watermark in the bottom-right corner.",
+      "attempt": 5
+    }
+  ]
+}

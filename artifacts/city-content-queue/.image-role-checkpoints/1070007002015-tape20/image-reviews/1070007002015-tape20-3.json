@@ -78,6 +78,77 @@
       ],
       "correction_prompt": "Remove the person in the background. Remove the second brown roll. Remove the orange container. Ensure the drip-tape roll height is under 35%. Remove the foreground hose crossing. Reduce product height from 38% to at most 35% of frame height.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 26,
+      "product_height_percent": 19,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: The image contains text on the product carton that is gibberish/legible nonsense ('DNP', 'Iafpo', 'HFO') rather than matching the required clear labels.",
+        "Role Mismatch: The mandatory role is 'HEADWORKS DETAIL' showing a filter, gauge, regulator, and manifold on an empty concrete pad with the carton being 'secondary'. This image features the carton as the main foreground subject with no irrigation infrastructure visible.",
+        "Role Mismatch: No required infrastructure (filter, manifold, gauges) is present in the frame."
+      ],
+      "correction_prompt": "Regenerate as a low-angle detail shot of a complex irrigation manifold, pressure gauges, and filter on a concrete pad. Place the white and blue AFP drip tape carton in the background, small and secondary. Remove gibberish text on the carton. Include the exact bottom-right watermark 'AFP | 09134922013'. Do not include tractors or distant farm buildings in the immediate foreground.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 27,
+      "product_height_percent": 33,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Second commercial package/roll detected",
+        "Two drip tape cartons are visible instead of exactly one"
+      ],
+      "correction_prompt": "Remove the secondary small carton roll from the right background, keeping only one AFP white-and-blue wide low cylindrical drip-tape carton in the foreground, while maintaining the fixed filter/gauge/manifold setup on the concrete pad and the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 18,
+      "product_width_percent": 29,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Visible people (two human figures in the background).",
+        "Hard reject: The carton roll exceeds the maximum allowed height of 35 percent.",
+        "The product bounding box is larger than the preferred target range for this image role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image strictly removing all people and human silhouettes. Rescale the AFP drip-tape carton roll to be smaller, ensuring its height does not exceed 35% of the frame width. Keep the filter, gauge, and manifold infrastructure and the bottom-right watermark as requested. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 10,
+      "product_height_percent": 15,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Human silhouettes visible in the background near the truck and car",
+        "Headworks equipment (filter, gauge, regulator, manifold) missing as per mandatory visual brief",
+        "Second commercial roll of tape visible in the foreground",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 10% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image: Remove all people. Add fixed filter, gauge, regulator, and manifold on the concrete pad. Ensure only one secondary carton of tape is present. Place the 'AFP | 09134922013' watermark in the bottom-right. Enlarge the product group from 10% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 33,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The product roll is placed in the foreground rather than being 'small and secondary' as required by the HEADWORKS DETAIL role.",
+        "The image layout (large foreground product and separate cardboard box) functions as a product display rather than an equipment-focused infrastructure shot.",
+        "The role requires the filter/gauge/manifold setup to be the primary subject with the roll integrated but minimized, which is not the case here."
+      ],
+      "correction_prompt": "Regenerate with the infrastructure (filter, gauge, manifold) as the central visual focus. Make the AFP drip tape roll significantly smaller and place it in the background or as a secondary element to align with the equipment-only elevated record role.",
+      "attempt": 5
     }
   ]
 }
