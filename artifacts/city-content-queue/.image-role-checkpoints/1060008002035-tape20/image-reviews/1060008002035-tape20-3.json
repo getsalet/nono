@@ -1,0 +1,78 @@
+{
+  "source_id": "1060008002035-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Image contains multiple visible people (farmers/workers in the background).",
+        "Role Mismatch: The brief specifies an 'elevated' photograph and a 'fixed' manifold on a concrete pad, but the gauge/regulator shown is a mobile unit on wheels.",
+        "Distorted Product: The roll in the image is excessively wide and tall relative to the required dimensions for a 20cm tape, and the 'AFIP' text is illegible gibberish."
+      ],
+      "correction_prompt": "Regenerate as an elevated close-up of a single drip-tape carton (small and secondary) placed on a concrete pad next to a permanently fixed irrigation manifold and gauge. Remove all people and farm equipment from the background entirely. Ensure the carton roll is clearly visible and correctly labeled.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 35,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 30,
+      "product_height_percent": 33,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Multiple people (farmers/workers) are visible in the background, violating the rule of zero people or human body parts.",
+        "Hard reject: Second commercial product (silver dual-gauge manifold) is present next to the roll, violating the single-object limit.",
+        "Hard reject: The text 'Drip Irrigation Tape' on the carton is partially gibberish/illegible (bottom right section of the text).",
+        "Background: Unattended tractors are present, which are not permitted unless 'contextually relevant' (an empty concrete pad with active farm machinery is a safety hazard/visual noise), and the mandatory 'elevated' recording angle is not met (this is a low-level eye/perspective shot).",
+        "Watermark: The required watermark format was not visible in the source (the crop suggests it may be present or obscured, but the presence of hard rejects takes precedence)."
+      ],
+      "correction_prompt": "Regenerate an elevated, high-angle detail photograph of a fixed irrigation assembly (filter, gauge, and manifold) on an empty concrete pad. Exactly one AFP white-and-blue wide drip-tape carton must be small and secondary to the assembly. Ensure the background is clean and clear of people, tractors, or human silhouettes. Ensure all text on the carton is crisp and legible.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human body parts (legs/feet) are visible in the top-right background, which violates the strict no-human rule and the brief requirement for an empty concrete pad with no farm activity.",
+        "Hard reject: A second commercial package (a small roll) is present in the foreground, violating the 'exactly one' carton rule and the 'second roll' rejection criteria.",
+        "Hard reject: The primary roll's dimensions (approx 33% width, 38% height) exceed the maximum acceptable thresholds of 30% width and 35% height, and are significantly larger than the preferred 20-23% range.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate image on an empty concrete pad with absolutely no people or body parts visible. Remove the small secondary roll entirely. Scale the main AFP carton roll down to approximately 20% of the frame width to ensure it is clearly smaller than the 30% limit. Ensure the background remains clean infrastructure only. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 18,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Visible person (farmer/worker) in the background."
+      ],
+      "correction_prompt": "Remove all human figures and workers from the background; ensure only farm equipment or empty landscape is present behind the roll.",
+      "attempt": 5
+    }
+  ]
+}
