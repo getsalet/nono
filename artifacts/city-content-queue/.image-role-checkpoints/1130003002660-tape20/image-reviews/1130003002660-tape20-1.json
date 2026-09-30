@@ -1,0 +1,51 @@
+{
+  "source_id": "1130003002660-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Human figures are clearly visible in the distance on the left side of the field, violating the zero-person/zero-body-part constraint."
+      ],
+      "correction_prompt": "Remove all distant human figures and silhouettes from the background; keep the unattended tractor or infrastructure if present. Maintain the off-center placement of the AFP roll on the lower third and the bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 25,
+      "product_height_percent": 25,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The required exact bottom-right watermark 'AFP | 09134922013' is missing.",
+        "The product is not placed on the lower third, instead being located centrally near the bottom edge.",
+        "The image depicts a roll of tape (resembling tape or cable) rather than the specified 'wide low cylindrical drip-tape carton' packaging."
+      ],
+      "correction_prompt": "Regenerate the image with the exact text 'AFP | 09134922013' clearly visible in the bottom-right corner. Move the white-and-blue wide cylindrical drip-tape carton roll to the bottom-right area of the lower third. Replace the flat tape roll with a wide, low, cylindrical cardboard carton package.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 23,
+      "product_height_percent": 20,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Product is clearly an AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Dims are within acceptable ranges and physically plausible.",
+        "Zero people or human body parts are present.",
+        "Editorial hero role is met: high-oblique view, farm context dominates, and the product is small, fully visible, and off-center on the lower third.",
+        "Required watermark 'AFP | 09134922013' is present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

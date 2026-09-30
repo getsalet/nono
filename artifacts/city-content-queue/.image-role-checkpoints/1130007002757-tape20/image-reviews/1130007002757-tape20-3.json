@@ -1,0 +1,82 @@
+{
+  "source_id": "1130007002757-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 26,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of animals (horses) in the background, which are strictly prohibited under the 'zero people and zero human body parts' rule and violate the 'no farm activity' requirement for a HEADWORKS DETAIL role.",
+        "Failure to meet the mandatory 'HEADWORKS DETAIL' role: the image lacks the required 'equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold'. Instead, it shows a low-angle product shot on a flat concrete pad.",
+        "A second commercial package or roll of tape is visible on the far right side (near the building), which triggers a hard reject for 'second commercial package'.",
+        "The presence of a large red tractor and red combine in the background constitutes 'farm activity', conflicting with the 'no farm activity' directive for this specific image role."
+      ],
+      "correction_prompt": "Regenerate as an elevated close-up detail of a fixed irrigation manifold with filter and gauge on a concrete pad. Include a small, secondary AFP drip tape roll. Remove all tractors, horses, and background farm activity. Ensure the AFP watermark is present.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 33.33,
+      "product_height_percent": 36.0,
+      "product_x_center_percent": 48.89,
+      "reasons": [
+        "Hard reject: A horse (animal body part) is visible in the background.",
+        "Hard reject: The mandatory image role requires a 'HEADWORKS DETAIL' featuring a filter, gauge, regulator, and manifold, which are completely absent.",
+        "Product width exceeds the 30% hard reject limit (est. 33.33%).",
+        "Product height exceeds the 35% hard reject limit (est. 36%).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33.33% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate to show a close-up equipment detail (filter, gauge, and manifold) on a concrete pad. Remove all animals (the horse in the background). Shrink the drip tape roll to be under 30% width and 35% height, making it secondary to the infrastructure equipment. Retain the required bottom-right watermark. Reduce the product group from 33.33% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 28,
+      "product_height_percent": 20,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Contains a person (farmer) in the background, violating the zero-person constraint.",
+        "Image depicts a drip tape roll, not the mandated 'HEADWORKS DETAIL' equipment (filter, gauge, regulator, and manifold on a pad)."
+      ],
+      "correction_prompt": "Regenerate an overhead close-up shot of a fixed irrigation manifold, gauge, and filter setup on a concrete pad. Remove all people and people silhouettes. If a carton is included, it must be small and secondary. No drip tape rolls in the foreground.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 36,
+      "product_height_percent": 28,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Hard reject: Multiple visible people (farmers/workers) present in the background",
+        "Hard reject: Product bounding box width exceeds the 30% maximum limit",
+        "Role violation: Brief requires 'equipment-only' with filter/gauge/manifold and an empty pad, which are missing",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate an elevated record photograph of one fixed filter, gauge, regulator, and manifold on an empty concrete pad with no people. Include exactly one small, secondary AFP white-and-blue drip-tape carton roll (no wider than 30% of the frame) and retain the bottom-right watermark. Reduce the product group from 36% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33.0,
+      "product_height_percent": 34.0,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Product width exceeds the hard reject limit of 30 percent of the frame width.",
+        "Missing mandatory HEADWORKS DETAIL equipment (filter, gauge, regulator, and manifold on an elevated concrete pad).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate to show the tape roll at 20-25 percent width. Add mandatory HEADWORKS DETAIL: an elevated concrete pad with a fixed filter, gauge, regulator, and manifold. Ensure the roll remains secondary and no people or bottles are visible. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

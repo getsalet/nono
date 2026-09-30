@@ -4,21 +4,56 @@
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 40,
       "duplicate_roles": [
         1,
+        2
+      ],
+      "reasons": [
+        "Panel 1 fails the EDITORIAL HERO requirement: the two coils are oversized and centered, not small and off-center.",
+        "Panel 2 lacks the elevated technical camera height/angle required for SELECTION EVIDENCE, appearing as a near-duplicate layout to Panel 1.",
+        "Panel 3 completely fails the HEADWORKS DETAIL role, missing the fixed pump, gauge, and manifold on an empty concrete pad, showing only the two coils."
+      ],
+      "correction_prompt": "Reshoot all three panels: 1) Wide high-oblique shot with coils small and off-center; 2) Elevated close-up of the coil pair showing diameter difference; 3) Equipment-only shot of a pump, gauge, and manifold on a concrete pad with the coils as a secondary background element.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2,
         3
       ],
       "reasons": [
-        "Role 3 (Image 3) fails the core 'HEADWORKS DETAIL' requirement; it completely lacks the mandated pump, gauge, and manifold equipment, showing only coils on a concrete pad.",
-        "Role 2 (Image 2) fails the 'SELECTION EVIDENCE' requirement by including a third commercial package (the blue/white bag) and a third physical coil spool, violating the restriction of showing only the two-coil pair.",
-        "Role 1 and Role 3 share a nearly identical 'product-on-surface' layout with two coils side-by-side, lacking the distinct high-oblique context required for the hero shot vs the detail shot."
+        "Role 2 (SELECTION EVIDENCE) completely misses the required 'elevated technical comparison'; instead, it depicts the Headworks Detail scenario (pumps, gauges, concrete pad), which is a required element for Role 3.",
+        "Role 3 (HEADWORKS DETAIL) completely misses the required 'pump, gauge, and manifold on an empty concrete pad'; instead, it depicts a clean studio-style comparison of the two coil products side-by-side on a flat surface, which is the required element for Role 2.",
+        "Because Role 2 contains the technical hardware of Role 3, and Role 3 contains the product comparison of Role 2, they are swapped and result in duplicate narratives for their intended sequence."
       ],
-      "correction_prompt": "Re-shoot Role 3 as an elevated equipment-only photo of a pump, gauge, and manifold on a concrete pad with small secondary coils, and re-shoot Role 2 showing only two loose coils of different diameters without any packaging or bags.",
+      "correction_prompt": "Swap the contents of Role 2 and Role 3: Role 2 should be an elevated technical comparison of the two coils to show construction differences without pumps or gauges; Role 3 should be the headworks detail photograph of the pump, gauge, and manifold on a concrete pad.",
       "panel_scores": [
         35
       ],
-      "set_attempt": 1
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 2 is a low-angle shot taken from field level, which fails to provide the 'elevated technical comparison' required for the SELECTION EVIDENCE role.",
+        "Panel 3 is a static tabletop-style photograph that lacks the required 'equipment-only' elements (pump, gauge, and manifold), meaning it fails the HEADWORKS DETAIL role."
+      ],
+      "correction_prompt": "Re-shoot Panel 2 with an elevated overhead camera angle to clearly show the diameter and construction differences between the two coils. Re-shoot Panel 3 to feature a fixed pump, a gauge, and a manifold on an empty concrete pad with the two coils placed in the background as small, secondary elements.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
     }
   ]
 }
