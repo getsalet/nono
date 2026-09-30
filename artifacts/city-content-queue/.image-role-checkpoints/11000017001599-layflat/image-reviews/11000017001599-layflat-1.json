@@ -1,0 +1,94 @@
+{
+  "source_id": "11000017001599-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 48,
+      "product_height_percent": 36,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Visible third commercial coil: The image displays three distinct coil groups (one packaged, two bare), violating the 'exactly two objects' requirement which hard-rejects a third coil.",
+        "Product pair exceeds width limit: The combined bounding box of the products spans approximately 48% of the frame width, exceeding the hard reject threshold of 42%.",
+        "Placement and density: The cluster of coils is centered and dominates the foreground rather than remaining small and off-center.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the scene to feature exactly two coils: one small packaged AFP coil and one bare black woven coil. Remove the third coil. Ensure the combined width of the pair is under 40% of the frame and place them distinctly off-center (left or right). Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 50,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Image displays exactly two approved items: one packaged coil and one bare black woven coil.",
+        "The distant tractor is unattended and serves as contextual infrastructure, not a commercial product.",
+        "No people, hands, faces, or body parts are visible in the frame.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "The objects are physically plausible, separate, and fully visible.",
+        "The wide high-oblique field of view fits the EDITORIAL HERO context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 50% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 40,
+      "product_height_percent": 45,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Visible person (worker) in the mid-ground field, violating the zero-people rule.",
+        "Hard reject: A visible hand/arm is emerging from the center of the black woven coil (an impossible/physical violation and human body part).",
+        "The cityscape in the background is too prominent and dense for a 'water-transfer context' hero shot; the 'majlesi' style usually prefers rural horizon lines without heavy urban silhouettes.",
+        "The products are too large and too central (not 'small' and 'off-center' enough).",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Regenerate with a zero-person field. Remove the worker from the mid-ground and remove the hand/arm inside the coil. Make the packaged and bare coils significantly smaller and positioned off-center. Change the background to a clean rural horizon with distant irrigation infrastructure, removing the dense cityscape. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 45,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains exactly two approved objects: a packaged AFP coil and a bare black woven coil.",
+        "There are no people, human silhouettes, or body parts visible in the frame.",
+        "The 'AFP | 09134922013' watermark is present in the correct bottom-right position.",
+        "The coils are separate, physically plausible, and correctly positioned off-center on the ground.",
+        "Distant unattended farm equipment (tractors and irrigation systems) in the background are consistent with the editorial context and allowed by the guidelines.",
+        "The composition effectively uses the wide high-oblique view of the field as the water-transfer context requested.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image displays exactly two approved products: a packaged coil on the left and a bare black woven coil on the right.",
+        "Zero people or body parts are present.",
+        "The required watermark 'AFP | 09134922013' is visible in the bottom-right corner.",
+        "The scene is a wide high-oblique shot of a water-transfer context (agricultural field).",
+        "The products are separate, physically plausible, and clearly recognizable.",
+        "The bounding box estimate (45% width) is very close to the upper limit of the 8-42% tolerance, but the objects are well-separated and not distorted, justifying acceptance for this role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

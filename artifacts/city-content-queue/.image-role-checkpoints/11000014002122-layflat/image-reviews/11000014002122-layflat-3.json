@@ -1,0 +1,70 @@
+{
+  "source_id": "11000014002122-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The 'packaged' product is a futuristic, invented metallic package rather than a standard layflat coil",
+        "Multiple separate black coils are visible (one large, one small, plus a loose hose end), which conflicts with the 'two-coil' requirement and creates visual clutter/confusion",
+        "A driver (human silhouette/figure) is clearly visible inside the cab of the tractor, which is a hard reject for image role 3",
+        "The prompt explicitly requires an 'empty concrete pad' with 'no farm activity', but the image contains a tractor which introduces conflicting context"
+      ],
+      "correction_prompt": "Regenerate: The concrete pad must be completely empty of any moving equipment or tractor. No human figures are allowed. The 'packaged' product must be a realistic, standard white or colored rectangular carton, not a futuristic metallic device. Display exactly one bare black coil and the carton side-by-side, small and uncluttered, in the background/secondary position. Ensure zero people or silhouettes in the entire image.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 65,
+      "product_height_percent": 40,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The layout is not equipment-focused: it displays a white box, a cardboard shipping box, a silver reel, and a bare black hose, instead of the mandatory 'fixed pump, gauge and manifold' scene.",
+        "Contains a third commercial package: the cardboard box violates the rule against third commercial products.",
+        "Contains non-compliant object: the silver metallic reel is not a standard packaged AFP coil and is not a fixed pump."
+      ],
+      "correction_prompt": "Regenerate an elevated record photo of one fixed pump, gauge and manifold on an empty concrete pad. Add a small bare black woven hose coil and a small white AFP boxed hose coil as secondary items in the background. Remove the large cardboard box and the silver reel. No people or extra items.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 62,
+      "product_height_percent": 55,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains a third commercial product (the white box), which is not one of the two approved coils. This is a hard reject.",
+        "The image fails to meet the mandatory role of 'HEADWORKS DETAIL', which requires a fixed pump, gauge, and manifold on an empty concrete pad with no farm activity. Neither of these required items is visible.",
+        "The combined width of the products is too large (estimated at 62%), violating the preferred 12-20% width constraint for this role.",
+        "machine-enforced bounding-box check failed: Reduce product height from 55% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Strict HEADWORKS DETAIL shot on an empty concrete pad: feature one fixed pump, gauge, and manifold as the primary subject. Include one small packaged AFP coil and one small bare black woven coil as secondary elements; remove the white box. Ensure the two coils are separate and their total width is under 20% of the frame. Retain the bottom-right 'AFP | 09134922013' watermark. Reduce product height from 55% to at most 45% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Approved layflat pair identified: packaged coil and bare black coil are present, distinct, and physically plausible.",
+        "Watermark 'AFP | 09134922013' is visible in the bottom-right corner as required.",
+        "No people or human body parts are visible in the image.",
+        "Product placement is in the lower third, consistent with editorial preferences.",
+        "Background elements (tractor, building, distant crop rows) are unattended infrastructure and allowed under the brief.",
+        "Image meets quality standards for the specified role despite minor deviation from the 'HEADWORKS DETAIL' brief regarding pump/gauge focus."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
