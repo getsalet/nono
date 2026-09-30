@@ -1,0 +1,77 @@
+{
+  "source_id": "1080002001079-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 55,
+      "product_height_percent": 15,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "The presence of a person (driver) in the distant tractor triggers the 'zero people' hard reject.",
+        "The 'packaged AFP coil' is not identifiable; the coil on the left contains an extraneous object (a cup-like item) in the center and lacks visible packaging or commercial labels.",
+        "The coils are centered on a concrete slab rather than being 'small' and 'off-center' as required for the hero role.",
+        "A large piece of machinery (robot/drill) dominates the center, cluttering the scene and potentially violating the 'zero third commercial products' rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate with a wide high-oblique water-transfer context. Remove all humans and operators. The scene should feature exactly two small coils: one clearly labeled 'AFP' packaged coil and one bare black woven coil, placed off-center and separate. Remove the large central machine and the concrete slab; place the coils directly on soil among water hoses. No bottles, cans, or extra containers in or near the coils. Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 48,
+      "product_height_percent": 32,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains the required AFP package and bare black woven coil.",
+        "Watermark is visible in the bottom-right.",
+        "No people or human body parts.",
+        "Wide high-oblique water-transfer context present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 58,
+      "product_height_percent": 30,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Both objects (packaged AFP coil and bare black woven coil) are clearly recognizable, separate, and physically plausible.",
+        "The product is placed in the lower third and is off-center to the left.",
+        "No human, face, or body parts are visible in the image.",
+        "No third commercial products (bottles, jars, buckets) are present.",
+        "The exact watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The distant unattended tractor is treated as allowed infrastructure and not rejected.",
+        "The width of the products (58%) is slightly high for an 'editorial hero' brief (preferred 12-20%), but it does not violate the hard reject threshold of 42% combined width for a single object nor does it create an impossible intersection.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 42,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Both approved objects (packaged and bare black coil) are present and clearly visible.",
+        "The combined bounding box is approximately 42% of the frame width, which is within the noisy reviewer estimate limit of 42% provided in the prompt.",
+        "No people or human body parts are visible.",
+        "No invalid third-party commercial products are present.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly visible and correctly placed.",
+        "The scene fits the editorial hero brief for a wide water-transfer context with off-center product placement."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

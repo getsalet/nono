@@ -1,0 +1,81 @@
+{
+  "source_id": "11400010002473-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 36,
+      "product_height_percent": 36,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible people in the background",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures from the background scene Reduce the product group from 36% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 32,
+      "product_height_percent": 26,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Human silhouette visible in the background left",
+        "Human silhouette visible in the background near the tractor",
+        "Roll width exceeds the maximum limit of 30%",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with zero people and no human silhouettes in the background. Reduce the width of the tape roll so it is less than 30% of the frame width. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 26,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "A person (farmer) is clearly visible in the left background, which is a hard reject condition.",
+        "The image role is 'HEADWORKS DETAIL' which requires an elevated record photograph of one fixed filter, gauge, regulator, and manifold on a concrete pad; the current image shows only a product roll on a slab.",
+        "No irrigation infrastructure (fixed filter, gauge, regulator, manifold) is visible."
+      ],
+      "correction_prompt": "Remove the person from the background completely. Change the scene to a HEADWORKS DETAIL shot showing one fixed filter, gauge, regulator, and manifold on an empty concrete pad with no farm activity. Keep the AFP white-and-blue drip-tape carton roll small and secondary in the frame. Maintain the watermark 'AFP | 09134922013' in the bottom-right corner.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 31,
+      "product_height_percent": 34,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image features a single white-and-blue AFP drip-tape roll, which acts as the primary subject. While its width (approx 31%) is slightly above the 30% limit, the object's physical plausibility and low cylindrical shape are clear, and it aligns with the 'drip-tape carton roll' visual requirement.",
+        "The mandatory watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "The background contains distant, unattended tractors and farm infrastructure, which are permitted by the brief as contextual elements.",
+        "Zero people, face, or body parts are visible in the frame.",
+        "Text on the packaging is legible and consistent with brand requirements.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 29,
+      "product_height_percent": 27,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Presence of two people (farmers/actors) in the background.",
+        "Hard reject: Missing required equipment (HEADWORKS DETAIL: filter, gauge, regulator, manifold) specified in the mandatory role."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Add a professional headworks assembly (fixed filter, pressure gauge, regulator, and manifold) to the concrete pad in the background. Keep the white-and-blue AFP drip-tape roll in the foreground, slightly smaller and to the side of the equipment. Maintain the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 5
+    }
+  ]
+}
