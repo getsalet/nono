@@ -1,0 +1,92 @@
+{
+  "source_id": "1070008002652-tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 14,
+      "product_height_percent": 8,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Image contains a clearly visible person (farmer) kneeling in the field — hard reject",
+        "Second person/arm partially visible on left edge — hard reject",
+        "Multiple commercial packages visible (two rolls on table + one on ground)",
+        "Main roll position is near center-bottom rather than lower-third off-center",
+        "Contains gibberish/unreadable text on product label"
+      ],
+      "correction_prompt": "Regenerate without any people or human body parts; show exactly one AFP white-and-blue drip-tape carton roll placed on the lower third, off-center, with a wide farm/irrigation editorial hero background",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 14,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Multiple people/farmers visible in the field: one on the left and one near center-right. Hard reject triggered — zero people and zero human body parts required.",
+        "Distant unattended tractor is allowed but does not override the hard reject for visible persons."
+      ],
+      "correction_prompt": "Regenerate image with absolutely zero people, farmers, workers, or human silhouettes anywhere in the frame. Remove both visible human figures. Keep the farm/irrigation context, tractor (distant/unattended), and exactly one AFP white-and-blue drip-tape carton roll on the lower third, off-center.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 18,
+      "product_height_percent": 10,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: a person is visible inside the tractor cab on the right side of the image. The guidelines state to hard reject any person or human silhouette, even distant.",
+        "Editorial preference issue: the product is centered rather than off-center on the lower third as required for EDITORIAL HERO role.",
+        "Width is within acceptable range (18%), height is well under 35% limit. The roll correctly shows an AFP white-and-blue drip tape carton. Watermark is present.",
+        "Distant tractor in the left field also has a visible operator inside the cab."
+      ],
+      "correction_prompt": "Regenerate the image with the AFP drip-tape carton placed off-center on the lower third, remove all human figures from tractor cabs and the entire scene, ensure zero people are visible anywhere in the frame.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 11,
+      "product_height_percent": 6,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: a person (tractor driver) is clearly visible inside the red tractor in the upper-right midground. Criteria explicitly state 'Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant.' The AFP white-and-blue drip-tape carton roll and watermark are present and correctly sized/placed.",
+        "correction_prompt",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 11% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 11% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22.5,
+      "product_height_percent": 16.8,
+      "product_x_center_percent": 38.2,
+      "reasons": [
+        "Hard reject: A person is clearly visible standing in the field holding an object.",
+        "The article brief requires zero people and zero human body parts, which is a critical violation."
+      ],
+      "correction_prompt": "Remove the person from the field; regenerate with only the agricultural landscape and the drip tape carton visible.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 78,
+      "product_width_percent": 28,
+      "product_height_percent": 12,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "AFP white-and-blue cylindrical drip-tape carton roll present and fully visible; width ~28% within acceptable range; height ~12% well under 35% limit; zero people or body parts; mandatory watermark present bottom-right; farm context with crop rows and irrigation tape dominates; no extra commercial packages, bottles, or hard-reject items detected; product is physically plausible and clearly identifiable.",
+        ""
+      ],
+      "correction_prompt": "",
+      "attempt": 6
+    }
+  ]
+}

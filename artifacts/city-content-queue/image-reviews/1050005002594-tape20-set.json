@@ -1,6 +1,6 @@
 {
   "source_id": "1050005002594-tape20",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "recent-strict-visual-audit-rebuild-v1-20260930",
   "history": [
     {
       "pass": false,
@@ -31,6 +31,62 @@
         94
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 1: Carton is oversized and centered, not small and off-center on lower third as required for EDITORIAL HERO.",
+        "Panel 2: Lacks selection evidence — no emitter-spacing indicator, field-comparison, or technical detail visible; role functions as generic product placement alongside Panel 1.",
+        "Panel 3: Tractors in background show active farm machinery with an operator present (operator visible in cabin), constituting farm activity which is prohibited.",
+        "All three panels share nearly identical camera height/angle (low-front product hero shot) and composition structure — failing the visibly distinct roles requirement."
+      ],
+      "correction_prompt": "Panel 1: Reduce carton size, place off-center on lower third, emphasize wide oblique farm/irrigation context. Panel 2: Add visible emitter-spacing detail or field-selection evidence alongside the carton; keep simple farm-edge background. Panel 3: Remove all tractors and operators; show only fixed filter, gauge, regulator, and manifold on empty concrete pad with no human or animal presence.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [
+        1,
+        3
+      ],
+      "reasons": [
+        "Panel 1 includes headworks equipment (filter/gauge/regulator on a plate) in the hero shot, violating the requirement that role-1 focus only on the wide farm field with a small secondary carton.",
+        "Panel 3 shows an oversized AFP carton that dominates the frame and violates the 'exactly one approved carton remains small and secondary' requirement for role-3 headworks detail.",
+        "Panel 3 includes a tractor with apparent farm activity in the background, which is prohibited by the 'no farm activity' rule for role-3; only a distant unattended tractor/building is allowed.",
+        "Roles 1 and 3 both display headworks-type hardware (filter, gauge, manifold/regulator) creating role duplication.",
+        "Panel 2 lacks clear emitter-spacing or field-selection visual evidence for the SELECTION EVIDENCE role.",
+        "Camera heights and environment structures overlap between panels 1 and 3, reducing visible role distinction."
+      ],
+      "correction_prompt": "Redesign as three clearly distinct panels: Panel 1 must be a wide high-oblique farm hero shot with only the small AFP carton in the lower third, no headworks equipment; Panel 2 must show an elevated technical close-up of laid-out drip tape with visible 20 cm emitter spacing and the carton as secondary evidence with a simple field-edge background; Panel 3 must show only filter, pressure gauge, and regulator on an empty concrete pad with no product carton and no tractor or any farm activity.",
+      "panel_scores": [
+        38
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Panel 3 shows multiple large tractors as prominent background elements, which constitutes active farm activity/machinery contradicting the 'no farm activity' requirement for HEADWORKS DETAIL. The panel also features an oversized AFP carton that dominates the foreground instead of remaining small and secondary. The scene reads as a farm equipment display rather than an equipment-only elevated record photograph of a fixed filter, gauge, regulator, and manifold on an empty concrete pad."
+      ],
+      "correction_prompt": "Replace Panel 3 with an elevated equipment-only shot of one fixed pressure gauge, filter housing, flow regulator, and manifold assembly mounted on an empty concrete pad; place the small AFP carton discreetly in a corner as secondary; remove all tractors and any farm activity from the scene.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 3
     }
   ]
 }

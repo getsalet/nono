@@ -1,18 +1,136 @@
 {
   "source_id": "10700032002095-tape20",
-  "family": "tape20",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": false,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 42,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Image contains a person crouching in the field, which violates the hard reject rule requiring zero people and human body parts"
       ],
       "correction_prompt": "",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Hard reject: image contains a person (male farmer/worker kneeling) with visible face, hands, arms, legs, and body — violating the zero-people requirement",
+        "Hard reject: two commercial packages present (cardboard carton and separate roll), not exactly one approved carton",
+        "Image role mismatch: depicts manual handling scene rather than elevated technical SELECTION EVIDENCE arrangement",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with exactly one AFP white-and-blue drip-tape carton roll only, no people, no hands, no faces, no body parts; elevated technical display with simple field-edge or farm-building background; include bottom-right watermark AFP | 09134922013 Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 21,
+      "product_height_percent": 18,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Image contains second commercial package (large cardboard box) alongside the approved cylindrical drip-tape carton roll, violating the hard-reject rule for second commercial packages/rolls. The role SELECTION EVIDENCE requires exactly one approved carton with visible emitter-spacing evidence; the extra box introduces a second commercial package and dilutes the selection evidence.",
+        "correction_prompt:A single AFP white-and-blue cylindrical drip-tape carton roll should be shown with visible emitter-spacing or field-selection evidence; remove the secondary cardboard box and any additional commercial packaging."
+      ],
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 12,
+      "product_height_percent": 7,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: image contains a clearly visible person (man crouching in a denim shirt) next to the drip-tape roll. Presence of any human, farmer, worker, body part, or silhouette is a strict hard reject per QA rules.",
+        "Hard reject: person's hand is touching the product roll."
+      ],
+      "correction_prompt": "Remove all people from the image. Show only the AFP white-and-blue drip-tape carton roll on an elevated technical arrangement in a field setting, with no humans or body parts visible anywhere in the frame.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 13,
+      "product_height_percent": 10,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: second commercial package (AFP cardboard box) present alongside the drip-tape roll. Rules state 'second commercial package' is a hard reject. The open carton/box is a separate retail package item and violates the 'exactly one approved carton' requirement.",
+        "Watermark and product appearance otherwise compliant; no people present."
+      ],
+      "correction_prompt": "Remove the second AFP cardboard box/carton from the image. Keep only the single white-and-blue AFP drip-tape carton roll. Preserve the required watermark AFP | 09134922013.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 20,
+      "product_height_percent": 9,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Watermark is 'AFP | 09134922013' but the mandatory required watermark is 'AFP | 09134922013' — mismatch.",
+        "Product is a white-and-blue AFP roll placed on top of a plain brown cardboard box rather than being itself a carton-style roll; presentation deviates from the single approved carton roll specification."
+      ],
+      "correction_prompt": "Remove the brown cardboard box platform; place the AFP white-and-blue drip-tape carton roll directly on the ground or on a simple agricultural surface. Fix the watermark to exactly 'AFP | 09134922013' in the bottom-right corner.",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 14,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: image contains a person (man crouching in field, visible face, arms, hands, legs, and body). This violates the zero-people requirement regardless of product quality or watermark presence."
+      ],
+      "correction_prompt": "Regenerate image showing only the AFP white-and-blue drip-tape carton roll in a field setting with no people, hands, or human body parts visible anywhere in the frame.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 17,
+      "product_height_percent": 12,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Image contains second commercial package (brown AFP box) violating 'zero second commercial package' rule; gibberish text on carton; roll width slightly below preferred 20-23% range",
+        "Mandatory watermark present but hard reject triggered by unapproved secondary packaging object"
+      ],
+      "correction_prompt": "Remove brown AFP box; keep only white-and-blue cylindrical drip-tape roll; ensure gibberish text is replaced with legible product labeling; maintain 20-23% width placement",
+      "attempt": 8
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 12,
+      "product_height_percent": 7,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Hard reject: visible person (woman crouching in field, handling the box) — violates zero-people rule. Multiple body parts visible including face, hands, arms, legs."
+      ],
+      "correction_prompt": "Regenerate image with exactly one AFP white-and-blue drip-tape carton roll on elevated technical display, zero people or body parts anywhere in frame, simple field-edge background.",
+      "attempt": 9
+    },
+    {
+      "pass": false,
+      "score": 48,
+      "product_width_percent": 22,
+      "product_height_percent": 11,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: image contains a second commercial package (large brown AFP cardboard box), violating the strict rule of exactly one approved carton roll.",
+        "Gibberish/illegible writing on the roll label side panels"
+      ],
+      "correction_prompt": "Remove the second brown cardboard box from the scene. Keep only the single white-and-blue AFP drip-tape carton roll. Retain the visible emitter/nipple component for SELECTION EVIDENCE. Preserve the mandatory bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 10
     }
   ]
 }

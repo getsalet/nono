@@ -1,40 +1,65 @@
 {
   "source_id": "1050005002594-tape20",
-  "family": "tape20",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 50,
-      "product_width_percent": 24,
-      "product_height_percent": 26,
-      "product_x_center_percent": 48,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 63,
       "reasons": [
-        "The product is centered horizontally, whereas the editorial brief explicitly required an off-center placement in the lower third.",
-        "The watermark at the bottom-right is missing its required 'AFP |' prefix text, displaying only the numeric ID."
+        "Hard reject: image contains multiple people including a woman holding the drip tape roll and another person in the bottom-left panel. The brief requires zero people and zero human body parts. People present violate absolute rejection criteria.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
       ],
-      "correction_prompt": "Shift the carton roll strictly to the left or right third of the frame to ensure off-center placement, and prepend the text 'AFP |' to the bottom-right watermark to read 'AFP | 09134922013'.",
+      "correction_prompt": "Regenerate without any people, faces, hands, arms, or human silhouettes. Show only the AFP white-and-blue drip-tape carton roll on lower-third off-center in an editorial hero composition with farm/irrigation context. Reduce the product group from 38% to 12-30% of frame width.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 72,
-      "product_width_percent": 24,
-      "product_height_percent": 30,
-      "product_x_center_percent": 47,
+      "pass": false,
+      "score": 68,
+      "product_width_percent": 9,
+      "product_height_percent": 7,
+      "product_x_center_percent": 50,
       "reasons": [
-        "The product is a single AFP wide low cylindrical roll that matches the physical description.",
-        "The roll is fully visible and positioned on the lower third of the frame, slightly to the left of center, satisfying the editorial requirement.",
-        "The surrounding irrigation infrastructure and farm context are appropriate and dominate the composition.",
-        "No people or human body parts are present.",
-        "No unauthorized containers, second rolls, or incompatible pipe/hose are visible.",
-        "The required bottom-right watermark 'AFP | 09134922013' is clearly present and legible.",
-        "Dimensions are within accepted estimation noise for a plausible hero placement."
+        "Product width (9%) falls below the acceptable threshold of 12-30% for reviewer-estimation noise. The carton should be wider to better represent the 20cm drip tape product being featured in the article about purchasing 20cm wide drip tape in Sonqor/Sanqer, Kermanshah region.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 9% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image showing the AFP white-and-blue drip tape carton roll positioned wider (approximately 15-20% of frame width) while maintaining the farm irrigation context with tractor equipment in background and watermarked AFP | 09134922013 in bottom right corner. Enlarge the product group from 9% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 10,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Person visible inside tractor cab driving the vehicle, which violates the hard reject rule for any human or human silhouette"
+      ],
+      "correction_prompt": "Remove the person from the tractor cab; ensure zero humans or human body parts appear anywhere in the image",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 16,
+      "product_height_percent": 9,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Exactly one AFP white-and-blue cylindrical drip-tape carton is present, fully visible and physically plausible.",
+        "Product is off-center on the lower-third, consistent with editorial HERO role.",
+        "Farm and irrigation context dominates the wide high-oblique view with orderly crop rows and installed drip lines.",
+        "Distant unattended tractor and farm buildings are permitted contextual elements.",
+        "Mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Zero people, body parts, or prohibited commercial packaging (bottles, jars, cans, second rolls, layflat hose, etc.).",
+        "No fake headlines, gibberish text, impossible geometry, or severely distorted dimensions.",
+        "Product dimensions (width ~16%, height ~9%) fall well within acceptable bounds (12-30% width, up to 35% height)."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 4
     }
   ]
 }

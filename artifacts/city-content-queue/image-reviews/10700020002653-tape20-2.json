@@ -1,18 +1,79 @@
 {
   "source_id": "10700020002653-tape20",
-  "family": "tape20",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: two commercial packages present — a white-and-blue AFP drip-tape roll AND an AFP cardboard carton box placed side by side. The brief requires exactly one approved carton (or roll), not both.",
+        "The carton is not elevated; it sits directly on the ground, contradicting the 'elevated technical arrangement' SELECTION EVIDENCE role requirement.",
+        "Gibberish/placeholder text is printed on both the carton and the unspooled tape (nonsensical characters like '8.6.18', pseudo-Arabic script, unreadable specs), indicating non-serious, fake product labeling.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Generate an image showing only one AFP white-and-blue drip-tape carton roll, placed on an elevated stand or shelf in a simple field-edge setting, with zero additional commercial packages. Ensure all printed text is legible and realistic. Keep the required bottom-right watermark 'AFP | 09134922013'. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "product_width_percent": 22,
+      "product_height_percent": 17,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Second commercial package present: a cardboard box sits next to the AFP drip-tape roll, violating the single-roll requirement.",
+        "Gibberish text on the adjacent box ('203306 COF PATENIGS ELHJUV2') — non-legible, nonsensical writing triggers a hard reject."
+      ],
+      "correction_prompt": "Remove the cardboard box next to the AFP roll; show only the single AFP white-and-blue drip-tape carton roll with clean, legible branding and no gibberish text anywhere in the frame.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 24,
+      "product_height_percent": 18,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: second roll/coil of drip tape is visible next to the carton, violating the exactly-one-roll requirement. Additionally, the background depicts a Western-style red barn with hay bales, which does not match the article brief set in Afzar, Qir and Karzin, Fars, Iran. The rural American farm aesthetic is inconsistent with the Iranian agricultural context.",
+        "correction_prompt"
+      ],
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: visible person (woman) sitting in the frame, holding a drip-tape roll.",
+        "Hard reject: human face, hands, arms, legs, and body parts are all present.",
+        "Two commercial packages visible (carton on ground + loose roll in hand), violating the single-roll rule.",
+        "Required watermark 'AFP | 09134922013' is present in bottom-right corner."
+      ],
+      "correction_prompt": "Remove all people from the image. Show exactly one AFP white-and-blue drip-tape carton roll only, with no human presence, no second roll, and no additional commercial packaging.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Exactly one AFP white-and-blue cylindrical drip-tape carton roll is shown in a field setting.",
+        "No people, farmers, or human body parts are visible.",
+        "Product width and height are within acceptable percentage ranges (18% width, 12% height).",
+        "Mandatory watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "Background matches the article brief with an ordinary farm building and soil texture, fitting the 'Selection Evidence' role."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 5
     }
   ]
 }
