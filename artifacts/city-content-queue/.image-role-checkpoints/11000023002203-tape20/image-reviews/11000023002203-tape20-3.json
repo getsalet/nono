@@ -1,0 +1,39 @@
+{
+  "source_id": "11000023002203-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 45,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible human person in the background (standing by the tractor), which is a hard reject.",
+        "Product width (approx 45%) exceeds the strict 30% maximum limit, making the roll too large relative to the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with zero people in the scene. Remove the farmer/worker in the background. Shrink the carton roll size so its width is less than 30% of the frame. Reduce the product group from 45% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 25,
+      "product_height_percent": 15,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Single AFP white-and-blue wide low cylindrical drip-tape carton roll is clearly identifiable.",
+        "Product dimensions are physically plausible and within the preferred 20-23% width range.",
+        "Zero people or human body parts are visible.",
+        "The background features an empty concrete pad with distant unattended farm equipment (tractor/manure spreader), matching the infrastructure context.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly present."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

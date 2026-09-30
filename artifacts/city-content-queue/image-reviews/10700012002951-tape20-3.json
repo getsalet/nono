@@ -1,0 +1,56 @@
+{
+  "source_id": "10700012002951-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 38,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: The image contains multiple visible people and human silhouettes (a person on horseback, a standing individual, and people near the tractor in the background), which violates the zero-human constraint.",
+        "Hard reject: There is a second commercial roll visible in the background, violating the requirement for exactly one roll.",
+        "Role mismatch: The 'HEADWORKS DETAIL' brief mandates an elevated record photograph of a fixed filter, gauge, regulator, and manifold on an empty concrete pad. The current image shows a wide-angle scene of a field, not the specified close-up infrastructure equipment.",
+        "Hard reject: The presence of farm activity (horseback riding and people working) directly conflicts with the 'no farm activity' instruction in the role description.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate a high-angle, macro detail photograph focusing strictly on irrigation infrastructure: one fixed blue filter, pressure gauge, regulator, and manifold located on a small, empty concrete pad. Include exactly one white and blue AFP drip-tape carton roll as a small secondary element to the side. Remove all people, animals, and background farm activity. Ensure the background is clean and contextually relevant (e.g., simple horizon or paved ground). Keep the required watermark 'AFP | 09134922013' in the bottom right. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 48,
+      "product_height_percent": 42,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "The mandatory watermark 'AFP | 09134922013' is not present in the bottom-right corner of the image, which is a hard reject requirement.",
+        "The product bounding box (width ~48%, height ~42%) significantly exceeds the hard reject thresholds of 30% width and 35% height.",
+        "The article visual brief specifies that 'equipment-only' should be the focus with the carton remaining 'small and secondary,' but the roll is currently the dominant subject in the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with a clear bottom-right watermark 'AFP | 09134922013'. Reduce the physical size of the white-and-blue roll so it occupies less than 30% of the frame width and 35% of the height. Adjust the framing so the fixed filter, gauge, and manifold are the primary visual focus and the roll appears small and secondary in the background or corner. Reduce the product group from 48% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Image features the mandatory 'AFP | 09134922013' watermark in the bottom-right.",
+        "Contains zero visible people, human body parts, or human silhouettes.",
+        "The white-and-blue carton roll is the primary product subject.",
+        "Includes fixed irrigation hardware (filters, gauges, manifold) and distant farm equipment in a plausible context.",
+        "Product dimensions and placement are within acceptable editorial and physical parameters."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

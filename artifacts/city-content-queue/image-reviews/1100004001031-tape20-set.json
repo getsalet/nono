@@ -1,52 +1,37 @@
 {
   "source_id": "1100004001031-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 55,
       "duplicate_roles": [],
       "reasons": [
-        "Role 2 (Image 2) violates the 'exactly one approved carton' constraint by displaying a loose coil of drip tape next to the main carton.",
-        "Role 2 (Image 2) fails to provide 'visible emitter-spacing or field-selection evidence' required for the SELECTION EVIDENCE narrative.",
-        "Role 3 (Image 3) contains an unapproved brown cardboard box alongside the required tape carton, cluttering the composition and failing the 'exactly one approved carton' constraint."
+        "Role 1 violates 'exactly one approved carton stays small, fully visible and off-center on the lower third': the carton is oversized (fills the foreground), positioned near the bottom center, and is not clearly 'small' or 'off-center' in a controlled editorial sense; it competes with the farm context.",
+        "Role 1 background: the distant city skyline and wide plowed field do not clearly support the specific article brief for ‘narrow 20cm drip tape selection/choice’ and read as a generic farm hero rather than an irrigation-specific context; it lacks any visible irrigation/emitter cues expected for the brief.",
+        "Role 2: while it shows field edge/equipment context, the composition places a person near the farm building on the right; the prompt forbids any person. Even if distant, this triggers a rejection under the 'any person' rule.",
+        "Role 3: meets the equipment-only concrete-pad intent with a manifold/gauge/regulator plus a smaller, secondary carton, but the background tractor is very large and close, making it look like active farm machinery rather than a neutral 'empty concrete pad' record shot; this blurs the 'no farm activity' requirement."
       ],
-      "correction_prompt": "Redraw Role 2 showing only the carton on the ground with visible drip line spacing and no loose tape; Redraw Role 3 as a side view of the filtration system with the carton as the sole product, removing the cardboard box.",
+      "correction_prompt": "Reissue: Role 1 – use a wide high-oblique shot with a clearly small, fully visible carton placed off-center in the lower third while keeping irrigation context; Role 2 – remove all people and keep one approved carton with clear emitter-spacing/field-selection evidence; Role 3 – keep the empty concrete pad equipment-only shot with the single approved carton small/secondary and reduce the background tractor to a distant, unattended silhouette or remove it entirely.",
       "panel_scores": [
-        45
+        55
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 65,
+      "score": 38,
       "duplicate_roles": [],
       "reasons": [
-        "Panel 1 (Role 1): The product carton is placed in the bottom-center and is far too large/dominant relative to the scene, violating the requirement that it must be small, off-center, and in the lower third to let the farm context dominate.",
-        "Panel 2 (Role 2): The scene fails to meet the 'Selection Evidence' technical requirement; it shows a generic empty field with farm buildings but lacks any visible emitter-spacing or field-selection evidence.",
-        "Panel 3 (Role 3): The product carton is cropped at the bottom-left, violating the requirement that the product remain fully visible."
+        "The provided visual content (an unopened tape roll) fundamentally contradicts the 'HEADWORKS DETAIL' requirement (Role 3), which mandates a fixed filter, gauge, regulator, and manifold setup on a concrete pad. Role 3 fails to provide the required technical equipment.",
+        "Role 2 (SELECTION EVIDENCE) lacks the required 'visible emitter-spacing' or 'field-selection evidence.' Instead, it only shows a generic farm layout with unconnected tape, failing to demonstrate the technical selection criteria mentioned in the brief.",
+        "Role 1 fails the 'exactly one approved carton' constraint. The brief requires a small, fully visible carton on the lower third, but the image shows only a generic roll of tape (not a 'carton') placed on a concrete slab, which does not match the specific product identification requirements."
       ],
-      "correction_prompt": "For Panel 1, shrink the product to a small size and shift it off-center to the lower third to emphasize the wide farm view; for Panel 2, add clear visual cues of irrigation row selection or emitter spacing; for Panel 3, pull the camera back to ensure the full product carton is visible.",
+      "correction_prompt": "Generate a new image for Role 3 showing a close-up of irrigation headworks (filter, gauge, regulator, and manifold) on an empty concrete pad with the product roll small in the background; for Role 2, show an installation layout that clearly highlights emitter spacing.",
       "panel_scores": [
-        65
+        38
       ],
       "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 55,
-      "duplicate_roles": [
-        2
-      ],
-      "reasons": [
-        "Role 2 fails the 'elevated technical arrangement' requirement: the image is a generic field perspective with no visible emitter spacing or clear technical evidence for selection; it essentially mirrors the layout of Role 1 with a different crop stage.",
-        "The product carton in Role 2 is oversized relative to the 'small, off-center' requirement."
-      ],
-      "correction_prompt": "Replace Role 2 with an elevated technical arrangement shot that clearly displays emitter-spacing or field-selection evidence, keeping a simple background with an ordinary field edge or farm building and positioning the AFP carton small.",
-      "panel_scores": [
-        55
-      ],
-      "set_attempt": 3
     }
   ]
 }

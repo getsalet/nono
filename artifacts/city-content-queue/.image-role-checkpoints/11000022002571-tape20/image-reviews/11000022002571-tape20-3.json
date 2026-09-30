@@ -1,0 +1,68 @@
+{
+  "source_id": "11000022002571-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 45,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A human figure (worker) is clearly visible in the background standing between the tractors.",
+        "Hard reject: Product dimensions are severely distorted, appearing wider than 30% and taller than 35% of the frame.",
+        "Hard reject: Mandatory role mismatch; the image shows a roll on the ground instead of the required elevated equipment/filter detail shot.",
+        "Hard reject: Gibberish/incorrect text on the roll label ('HIPE' instead of correct labeling).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate a close-up, elevated detail shot of fixed irrigation equipment (filter, gauge, regulator, and manifold) on a concrete pad. Include a very small (under 15% width) AFP drip-tape carton roll as a secondary element. Ensure zero people or human body parts are present in the scene. Keep the text on the roll sharp and correct. Reduce the product group from 45% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 34,
+      "product_height_percent": 28,
+      "product_x_center_percent": 54,
+      "reasons": [
+        "Contains visible human person in the background (hard reject)",
+        "Product bounding box (main roll) exceeds 30% width limit (approx 34% of frame)",
+        "Presence of a second smaller roll in the foreground (extra commercial package/object)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and the secondary small roll; crop closer or zoom in on the concrete pad to ensure the main drip-tape carton roll occupies less than 30 percent of the image width. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: multiple visible people (farmers/workers) and body parts in the background.",
+        "Hard reject: background shows active farm activity and a tractor, contradicting the 'no farm activity' and 'infrastructure-only' requirements of the selected 'HEADWORKS DETAIL' role.",
+        "Hard reject: the foreground is an empty concrete pad without the required elevated view of fixed filters, gauges, or manifolds."
+      ],
+      "correction_prompt": "Regenerate to remove all people, vehicles, and farm activity. Focus on a high-angle close-up of a fixed filtration manifold and gauge on a concrete pad; the drip tape roll should be small and secondary in the background.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 40,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible human figures/farmers in the background (hard reject)",
+        "Second roll of drip tape is visible in the scene (hard reject)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and the second drip tape roll from the background; keep the concrete pad and the single AFP roll with the required infrastructure details. Reduce the product group from 40% to 12-30% of frame width.",
+      "attempt": 4
+    }
+  ]
+}

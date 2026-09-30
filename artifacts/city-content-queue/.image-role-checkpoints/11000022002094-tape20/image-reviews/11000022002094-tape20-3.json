@@ -1,0 +1,51 @@
+{
+  "source_id": "11000022002094-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 44,
+      "product_height_percent": 24,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Visible human figure (farmer kneeling in yellow helmet) on the left side of the frame, which is a hard reject.",
+        "The roll width (44%) exceeds the maximum acceptable limit of 30%.",
+        "Visible text on the roll ('1142148cm') is gibberish and does not match the 20cm brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate: strictly no humans, no farmers, no workers. Crop or adjust so the white-and-blue AFP drip-tape roll is 20-23% of frame width. Remove the kneeling figure in the background. Update roll text to 20cm. Maintain the empty concrete pad and distant tractor. Reduce the product group from 44% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 24,
+      "product_height_percent": 15,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Missing required equipment-only detail: one fixed filter, gauge, regulator, and manifold on an empty concrete pad is not present in the image."
+      ],
+      "correction_prompt": "Regenerate to include an elevated close-up of one fixed filter, gauge, regulator, and manifold on an empty concrete pad, with the single small AFP drip-tape carton roll in the background.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human presence detected in the background (farmers/people visible), violating the zero-human requirement.",
+        "Hard reject: Contains two rolls of drip tape; the brief requires exactly one primary roll with others prohibited.",
+        "Hard reject: The product bounding box (estimated width ~30%, height ~35%) exceeds the maximum allowed physical plausibility limits specified in the rules.",
+        "Failure to role: The image displays a ground-level wide shot of rolls rather than the required 'elevated record photograph of one fixed filter, gauge, regulator and manifold'."
+      ],
+      "correction_prompt": "Regenerate as an elevated, close-up detail shot on a clean concrete pad featuring one fixed irrigation manifold with gauges and regulators; include exactly one small, secondary AFP tape roll in the frame; completely remove all people and extra rolls; keep the tape roll small (under 25% width).",
+      "attempt": 3
+    }
+  ]
+}

@@ -1,20 +1,17 @@
 {
   "source_id": "10700012002555-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
       "score": 35,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 violation: The article brief specifies 'Nawar Tip' (Drip tape/slip). However, Image 1 clearly displays 'Drill & Borehole Pipe' on the carton, which is a generic borehole pipe, not drip tape. This is the wrong product for the brief.",
-        "Role 1/2 duplication: Both Role 1 and Role 2 feature the same 'Drill & Borehole Pipe' cartridge (identical label typography and shape) on the dirt, resulting in a generic layout repetition.",
-        "Role 3 visual anomaly: The main product shown in Role 3 is an inline centrifugal filter, which visually and textually features the 'Drill & Borehole Pipe' branding. This creates a product identity mismatch (drill pipe vs. drip tape) and suggests the images were generated with inconsistent product data."
+        "Role 1 (HERO) places the product dead-center in the foreground instead of off-center on the lower third.",
+        "Role 3 (HEADWORKS) completely fails to show the required technical equipment (filter, gauge, regulator, manifold) and only displays the product carton, which acts as the primary subject rather than a secondary element.",
+        "Rejecting the layout duplication and generic background elements (like the empty tractor) while allowing distant farm context."
       ],
-      "correction_prompt": "Regenerate all images with 'Drip Tape' (slip/ribbon) cartridges to match the 'Nawar Tip' brief; replace the drill/borehole pipe labels with thin, semi-transparent white/green plastic rolls; remove the drill-pipe branding from the filter in Role 3; add emitter/ribbon context in Role 2.",
+      "correction_prompt": "Replace Role 3 with an elevated technical photograph of a fixed filter, gauge, regulator, and manifold on an empty concrete pad where the product carton is small and secondary. Shift the product in Role 1 to an off-center position on the lower third of the frame.",
       "panel_scores": [
         35
       ],
@@ -22,17 +19,16 @@
     },
     {
       "pass": false,
-      "score": 55,
-      "duplicate_roles": [
-        3
-      ],
+      "score": 38,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 3 fails the 'unattended' requirement by prominently featuring a large mobile center-pivot irrigation system, which is an 'attended' (motorized) mechanism rather than fixed headworks hardware like a gate valve or filter. The large pivot machinery visually dominates the scene, contradicting the requirement for a medium side view of unattended components.",
-        "Role 2 fails to provide 'selection evidence' as the visible tubing is a generic coiled pipe without clear emitter-spacing indicators or specific field-selection metrics required for the 'SELECTION EVIDENCE' narrative."
+        "Role 2 explicitly includes people, which triggers a hard rejection criterion for the editorial set.",
+        "Role 1 composition places the product directly in the lower center rather than adhering to the off-center requirement for the lower third.",
+        "Role 3 fails to provide the required technical narrative by omitting the filter, gauge, and regulator; the background shows distant agricultural equipment instead of the intended empty concrete pad."
       ],
-      "correction_prompt": "For Role 3, replace the large mobile center-pivot system with a stationary, manual headworks station (filter, pressure gauge, and manifold) set against a plain background to satisfy the 'unattended' requirement. For Role 2, explicitly add visible drip line with marked spacing or a field-selection diagram overlay to provide the necessary 'selection evidence'.",
+      "correction_prompt": "Remove all individuals from role 2, shift the carton in role 1 to the left or right off-center, and add the required filter/gauge hardware to role 3 on an empty pad.",
       "panel_scores": [
-        55
+        38
       ],
       "set_attempt": 2
     }

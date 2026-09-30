@@ -1,0 +1,80 @@
+{
+  "source_id": "1100004001031-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 33,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The image contains visible people (human silhouettes) in the background, violating the zero-person constraint.",
+        "Role Mismatch: The image role requires an elevated detail record of filters, gauges, and manifolds; instead, it shows a product on a pad with field equipment.",
+        "Dimension Fail: The estimated product width is 33%, which exceeds the hard rejection limit of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an elevated close-up record photograph of a fixed irrigation filter, gauge, and regulator on a concrete pad. Include one small, secondary drip-tape carton. Remove all people, human silhouettes, and background tractor activity. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 42,
+      "product_height_percent": 28,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Second commercial package: There is a second, smaller roll of the product visible in the bottom right, which violates the rule of 'exactly one' carton.",
+        "Product Width Exceeded: The main roll is wider than 30% of the frame (estimated ~42%), which is a hard reject.",
+        "Image Role Mismatch: The role requires 'HEADWORKS DETAIL' of filters, gauges, and manifolds, not just the product roll.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate a high-angle close-up of a complex headworks assembly (filter, pressure gauge, manifold) on a concrete pad. Ensure a small single AFP drip-tape roll is visible in the background but secondary. Remove all people and extra rolls. Reduce the product group from 42% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible people in the background (two distinct figures).",
+        "Hard reject: Multiple rolls present (second and third rolls visible to the right).",
+        "Hard reject: Layflat hose unrolled in the foreground."
+      ],
+      "correction_prompt": "Remove all people, secondary rolls, and the unrolled tape; crop or regenerate to show a single central AFP white-and-blue roll on an empty concrete pad with no farm activity.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 26,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human figures (two people) are clearly visible standing between the tractors in the background.",
+        "Mandatory image role failure: The brief requires a 'HEADWORKS DETAIL' shot of a fixed filter, gauge, and manifold on a concrete pad; instead, this image shows a wide farm scene with multiple unattended tractors and a roll of tape."
+      ],
+      "correction_prompt": "Regenerate an elevated close-up of a drip irrigation filter, gauge, and manifold fixed on a concrete pad. Include one small secondary white and blue AFP tape roll. Ensure zero people are present. Keep the 'AFP | 09134922013' watermark in the bottom-right corner.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 33,
+      "product_height_percent": 24,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Visible people (two farmers) in the background, which is a hard reject.",
+        "Product bounding box width estimated at 33%, which exceeds the 30% hard limit for a 'secondary' object in the 'HEADWORKS DETAIL' role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people and the red tractor. Show only the fixed filtration and manifold equipment on a concrete pad; place the AFP drip tape carton small and secondary in the foreground. Maintain the bottom-right watermark. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

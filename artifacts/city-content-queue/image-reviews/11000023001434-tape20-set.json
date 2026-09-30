@@ -1,39 +1,62 @@
 {
   "source_id": "11000023001434-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 25,
+      "score": 30,
       "duplicate_roles": [
+        1,
         2
       ],
       "reasons": [
-        "Role 2 fails the 'elevated technical arrangement' requirement; it displays a low-angle product shot with a tractor and barn background instead of a technical layout with emitter-spacing evidence.",
-        "Role 3 depicts a mobile irrigation sprayer unit rather than the required 'unattended fixed filter, gauge, regulator and manifold' assembly.",
-        "Role 1 uses a city skyline (likely Isfahan's 'Mama' towers) which may contradict the specific 'Khor and Biabank' rural/desert agricultural context.",
-        "Overall layout lacks the technical narrative distinctness between Roles 2 and 3 required for a successful pass."
+        "Role 1 (Hero) fails placement: The AFP roll is centered in the lower third rather than being 'off-center'.",
+        "Role 2 (Evidence) fails context: The background shows a plowed, empty field with no 'emitter-spacing or field-selection evidence' (crops or irrigation lines).",
+        "Role 2 (Evidence) fails product sizing: The AFP roll is oversized and dominates the foreground, contradicting the 'small' requirement found in other roles.",
+        "Roles 1 and 2 overlap significantly by both featuring a large, central AFP roll set against a background with a distant tractor and farm building.",
+        "Role 3 (Detail) fails composition: The AFP roll is a secondary subject, but the 'manifold' and 'regulator' equipment mentioned in the brief are not clearly distinguishable or present."
       ],
-      "correction_prompt": "Regenerate Role 2 as an elevated technical arrangement focusing on emitter-spacing or field-selection evidence, and regenerate Role 3 to show an unattended, stationary assembly of a fixed filter, gauge, regulator, and manifold without any mobile machinery.",
+      "correction_prompt": "For Role 1, move the AFP roll to the far-right lower third. For Role 2, place the AFP roll small on a tilled edge next to visible crop rows showing emitter spacing. For Role 3, remove the background tractors and clearly display a filter, gauge, and manifold on the concrete pad.",
       "panel_scores": [
-        25
+        30
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 deviation: The product (carton) is centered in the frame, violating the 'off-center' requirement. Additionally, the background features a modern city skyline rather than a context fitting the 'Khor and Biyabanak' (desert/arid) location specified in the brief.",
-        "Role 2 failure: The requirement explicitly calls for 'elevated technical arrangement,' but the image shows a low-angle ground shot. The background (tractor, red barn, hay bales) is generic and irrelevant to the specific article brief, which focuses on selecting/locating for Khor and Biyabanak. There is also no visible 'emitter-spacing' evidence.",
-        "Role 3 violation: The image displays a large, wheeled sprayer/tanker that is not listed in the required equipment (fixed filter, gauge, regulator, manifold). The required 'manifold' is missing, and the large machine dominates the frame rather than serving as a secondary unattended fixed unit."
+      "score": 25,
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "Regenerate: 1. Shift carton off-center and replace city with arid mountains (Khor/Biyabanak). 2. Elevate angle to 45° and add macro detail of dripper spacing; remove tractor/barn. 3. Remove wheeled sprayer; replace with close-up of fixed manifold/filter/gauge assembly.",
+      "reasons": [
+        "Role 2 (SELECTION EVIDENCE) is incorrectly shown as a low-angle product hero in a field, failing to provide the required technical arrangement with visible emitter-spacing.",
+        "Role 3 (HEADWORKS DETAIL) fails to show a clean equipment-only setup on a concrete pad; instead, it depicts a cluttered, active farm scene with running machinery and multiple containers, violating the 'no farm activity' rule."
+      ],
+      "correction_prompt": "Regenerate panel 2 to show an elevated technical arrangement with emitter-spacing evidence, and regenerate panel 3 to show an isolated, static headworks system on an empty concrete pad with no moving machinery.",
       "panel_scores": [
-        35
+        25
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 contains a person, which is a strict rejection trigger.",
+        "Role 3 contains multiple product cartons (three are visible), violating the 'exactly one approved carton' rule.",
+        "Role 3 fails to clearly depict a 'fixed filter, gauge, regulator and manifold' as required for HEADWORKS DETAIL; it shows loose equipment and additional products instead of a technical arrangement.",
+        "Role 3 includes an active tractor and machinery, which conflicts with the 'no farm activity' instruction, although a distant unattended tractor is allowed, an active one or one attached to a trailer is not."
+      ],
+      "correction_prompt": "Remove the person in Role 2 and ensure exactly one visible AFP product. For Role 3, remove all extra product cartons and depict a clear, organized arrangement of a fixed filter, gauge, regulator, and manifold on a concrete pad without active farm machinery.",
+      "panel_scores": [
+        20
+      ],
+      "set_attempt": 3
     }
   ]
 }

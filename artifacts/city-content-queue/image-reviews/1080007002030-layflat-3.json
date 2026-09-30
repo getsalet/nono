@@ -1,0 +1,39 @@
+{
+  "source_id": "1080007002030-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The image contains a visible human body part (a red arm/hand) on the tractor in the background, which triggers a hard reject.",
+        "The mandatory equipment-only record elements (fixed pump, gauge, and manifold) are completely missing.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image by completely removing all human body parts and figures. Add a fixed pump, gauge, and manifold on the empty concrete pad. Keep the two approved coils (packaged AFP coil and bare black woven coil) small and secondary. Ensure no other commercial packages or containers are present. Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 60,
+      "product_height_percent": 45,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Image contains exactly two products: one packaged coil (left) and one bare black woven coil (right).",
+        "No human figures or body parts are visible.",
+        "Infrastructure (fixed pump, gauge, manifold) is present and permitted under the 'HEADWORKS DETAIL' role, treated as equipment rather than a third commercial product.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Layout places products in the lower-third, which is permitted."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

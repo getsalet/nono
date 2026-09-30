@@ -1,22 +1,39 @@
 {
   "source_id": "11000019002449-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [
-        3
-      ],
+      "score": 40,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 3 fails the 'unattended fixed filter' requirement by depicting a large, mobile tow-behind machine instead of a fixed headworks assembly.",
-        "Role 3 exhibits hardware duplication and visual clutter from the prominent blue machine, undermining the required focus on the secondary product carton."
+        "Role 1 (Hero): The product carton is not 'small' as required; it occupies a significant portion of the bottom center, appearing too large and prominent relative to the required 'farm and irrigation context dominates' rule.",
+        "Role 2 (Selection Evidence): The required 'technical arrangement' is missing; the image is a standard low-angle product shot with hoses laid on the ground, lacking the specific equipment or field selection evidence (like emitters on plants or gauges) needed for this role.",
+        "Role 3 (Headworks Detail): Severe role violation; the brief demands 'equipment-only' (filter, gauge, regulator, manifold) on a concrete pad. This image shows only the product carton on the pad with no required equipment visible.",
+        "Role 3 (Headworks Detail): Farm activity violation; the background clearly contains two unattended tractors, violating the 'no farm activity' constraint for this specific role."
       ],
-      "correction_prompt": "Replace the mobile machine in Role 3 with a close-up view of a fixed, stationary filter, pressure gauge, and manifold assembly with the small product carton placed on the ground nearby.",
+      "correction_prompt": "Role 3: Remove tractors and add a complex assembly of fixed filters, pressure gauges, and valve manifolds on the concrete pad so equipment dominates. Role 2: Add technical measurement tools or emitter arrays to show 'selection evidence'. Role 1: Shrink the product carton size to ensure the wide field perspective remains the primary focus.",
       "panel_scores": [
-        45
+        40
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 successfully establishes the farm/irrigation context with a wide high-oblique view, correctly positioning the product small and off-center in the lower third without overpowering the scene.",
+        "Role 2 provides a clear technical arrangement for selection, showing the unspooled irrigation tape and emitter spacing/flow components on a distinct background.",
+        "Role 3 is a distinct equipment-only record photograph featuring the fixed filter, gauge, and regulator assembly on a concrete pad, with the product kept secondary and no farm activity shown.",
+        "The roles are visually distinct in camera angle, environment structure, and technical narrative, with no rejected elements such as persons, unauthorized bottles, or duplicated layouts.",
+        "The required watermark is present on all images and does not interfere with the subject matter."
+      ],
+      "correction_prompt": "The panel is compliant and requires no replacement instruction.",
+      "panel_scores": [
+        90
+      ],
+      "set_attempt": 2
     }
   ]
 }

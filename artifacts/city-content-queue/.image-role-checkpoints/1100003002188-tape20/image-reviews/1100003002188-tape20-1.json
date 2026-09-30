@@ -1,0 +1,80 @@
+{
+  "source_id": "1100003002188-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible human figure standing in the field on the right (hard reject).",
+        "Visible person operating a tractor on the left (hard reject).",
+        "Product is placed centrally in the lower half, violating the required off-center placement for the editorial hero role."
+      ],
+      "correction_prompt": "Remove all people and drivers. Reposition the white-and-blue AFP drip-tape roll to the far-left or far-right lower-third of the frame, off-center. Keep the wide high-oblique farm view and required watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 26,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Human presence: A farmer is clearly visible on the left side of the image interacting with another roll; a second human figure is visible in the distance.",
+        "Second commercial package: The image contains a second roll of drip tape on the left side, violating the 'exactly one roll' requirement.",
+        "Placement error: The required product is centered horizontally (51%), whereas the brief specifies off-center placement.",
+        "Product type: The object in the frame is a plastic roll on the ground, not the required white-and-blue wide low *carton* roll."
+      ],
+      "correction_prompt": "Regenerate to show exactly one white and blue wide low cylindrical *carton* roll of drip tape. Remove all humans. Remove the second plastic roll on the left. Place the carton off-center on the lower third. Maintain the wide high-oblique farm background and bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 31,
+      "product_height_percent": 28,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "The background context of a farm field with a distant unattended tractor is consistent with the editorial role and article brief.",
+        "Zero people or human body parts are present.",
+        "The product is a wide, low cylindrical white and blue roll, matching the approved physical description.",
+        "The required watermark 'AFP | 09134922013' is correctly visible in the bottom right corner.",
+        "Placement in the lower third is accepted as an editorial preference; although slightly wider than the preferred 20-23%, it remains physically plausible and within the noise tolerance range.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 16,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject due to the presence of a man standing in the field (violates 'zero people' rule)."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove all human figures. The scene must depict an empty farm field with the AFP drip-tape roll placed on the soil, maintaining the high-oblique editorial perspective with no people or workers visible.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 31,
+      "product_height_percent": 15,
+      "product_x_center_percent": 53,
+      "reasons": [
+        "Roll width slightly exceeds the 30% hard limit at ~31%",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}
