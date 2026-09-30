@@ -1,0 +1,83 @@
+{
+  "source_id": "1200001002264-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 25,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: A visible person (worker) is present in the left background of the image, violating the 'zero people and zero human body parts' rule."
+      ],
+      "correction_prompt": "Regenerate the image by completely removing the person in the background and any associated objects they are holding or standing near, ensuring only the agricultural field, distant infrastructure, and the two coils in the foreground remain.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 60,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image clearly shows the two required coils: one is packaged (AFP coil) and the other is bare black woven coil.",
+        "The pair is placed in the lower third of the frame, consistent with editorial hero requirements.",
+        "The estimated combined width is approximately 60% of the frame, which exceeds the 42% maximum allowed by the hard-reject criteria.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 60% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 46,
+      "product_height_percent": 38,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Exact required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Correct approved pair displayed: packaged AFP coil and bare black woven coil are separate and physically plausible.",
+        "Zero humans or body parts visible.",
+        "Water-transfer infrastructure (trench, water, unattended distant tractor) correctly contextualized as relevant editorial hero context, not extra commercial products.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 46% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 54,
+      "product_height_percent": 28,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: Image contains a person (standing figure in the midground), violating the 'zero people' rule.",
+        "Hard reject: Product pair width is approximately 54% of the frame, exceeding the maximum accepted limit of 42%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 54% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the person in the background entirely. Reposition the two coils to be significantly smaller and further apart or tighter so their combined width is less than 42% of the frame width. Reduce the product group from 54% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 68,
+      "product_height_percent": 42,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Displays the mandatory pair: one packaged AFP coil and one bare black woven coil.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right as required.",
+        "Zero people or human body parts are visible in the frame.",
+        "The wide, high-oblique editorial context with distant infrastructure is present and appropriately scaled.",
+        "No prohibited objects (bottles, jars, extra commercial packages, or impossible intersections) are visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-42% of frame width.; Reduce product height from 42% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 68% to 8-42% of frame width. Reduce product height from 42% to at most 40% of frame height.",
+      "attempt": 5
+    }
+  ]
+}

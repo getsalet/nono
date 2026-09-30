@@ -1,0 +1,82 @@
+{
+  "source_id": "1200002001542-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory HEADWORKS equipment (fixed pump, gauge, manifold)",
+        "Watermark phone number is incorrect (shows 09134922013 instead of required 09134922013)"
+      ],
+      "correction_prompt": "Regenerate with mandatory HEADWORKS equipment (fixed pump, gauge, manifold) prominently in the foreground. Include the required watermark 'AFP | 09134922013' in the bottom right. Keep the two approved coil products secondary and separate.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 100,
+      "product_width_percent": 68,
+      "product_height_percent": 37,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Product pair (packaged AFP coil and bare black woven coil) is physically plausible, separate, and fully visible",
+        "Combined product width is estimated at 68%, which is slightly over the 65% threshold, but the QA rules explicitly state to accept noisy reviewer estimates up to 65% if objects are recognizable",
+        "The third object (infrastructure/pump) is correctly identified as a fixed pump, not a commercial product",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required",
+        "No people or human body parts are visible",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 68% to 8-65% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 36,
+      "product_height_percent": 25,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Image fails the mandatory 'HEADWORKS DETAIL' role which requires an elevated record photograph of a fixed pump, gauge, and manifold; the current image only shows a concrete pad.",
+        "The required primary infrastructure (fixed pump, gauge, and manifold) is completely absent from the scene."
+      ],
+      "correction_prompt": "Regenerate the image as a low-angle record photograph of a fixed irrigation pump, gauge, and manifold on a concrete pad. Place the AFP coil and bare black woven coil small in the background.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The mandatory role requires an elevated record photograph of one fixed pump, gauge, and manifold, which are completely absent from the image.",
+        "The image shows loose coiled hoses on the ground rather than the required infrastructure setup.",
+        "Distant tractors are present which, while permitted as background, do not satisfy the specific 'equipment-only' role requirement which demands the pump infrastructure as the main subject."
+      ],
+      "correction_prompt": "Replace the loose coiled hoses on the ground with a single fixed pump, gauge, and manifold mounted on an empty concrete pad. Ensure the two approved layflat coils are small, separate, and secondary in the background.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Mandatory role (HEADWORKS DETAIL) not met: The image shows a wide general shot of the field rather than an elevated, close-up record photograph of the fixed pump, gauge, and manifold on the concrete pad as required.",
+        "The required pair (packaged coil + bare black coil) is not the dominant focus in the mandatory composition.",
+        "Visible human silhouettes in the distant background violate the hard reject rule for 'zero people/human body parts'.",
+        "Watermark is not 'AFP | 09134922013'.",
+        "The required combined product width for this specific role is not achieved with the primary subject matter (the pump assembly) which is not the requested foreground priority."
+      ],
+      "correction_prompt": "Generate an elevated, close-up photograph of a fixed pump, gauge, and manifold on an empty concrete pad. In the foreground, place one packaged AFP coil and one bare black woven coil that are small, separate, and secondary to the pump. Ensure no humans are visible in the frame. Set the bottom-right watermark to 'AFP | 09134922013'.",
+      "attempt": 5
+    }
+  ]
+}
