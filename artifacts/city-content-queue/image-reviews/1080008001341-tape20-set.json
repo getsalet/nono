@@ -1,17 +1,19 @@
 {
   "source_id": "1080008001341-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
       "score": 55,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 contains a person driving the tractor, which is a strict rejection criterion.",
-        "Role 3 is a clear hardware duplication of Role 5 (same fixed filter/regulator setup, medium side view), which is explicitly prohibited.",
-        "In Role 3, the filter assembly is oversized and dominates the scene, failing to keep the narrative focused on the unattended hardware while making the product secondary."
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "Remove the person from the Role 1 tractor; replace Role 3's complex filtration stack with a distinct, standalone manifold and headworks view to avoid duplication with the Role 5 hardware set.",
+      "reasons": [
+        "Role 3 (Image 3) fails the specific technical requirement to show 'one fixed filter, gauge, regulator and manifold' on the concrete pad; the image shows only the product carton on the pad.",
+        "Role 1 (Image 1) places the product in the immediate foreground center rather than strictly 'small... off-center on the lower third', making it visually oversized relative to the hero context.",
+        "Role 2 (Image 2) is weak on 'technical evidence' as the emitter spacing or field selection details are not clearly visible against the tilled earth background."
+      ],
+      "correction_prompt": "Re-shoot Role 3 to clearly feature the filter, gauge, regulator, and manifold assembly on the concrete pad with the product carton placed small and secondary in the background; adjust Role 1 to zoom out or move the camera to make the carton appear small and off-center in the lower third of the wide frame.",
       "panel_scores": [
         55
       ],

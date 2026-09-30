@@ -1,0 +1,78 @@
+{
+  "source_id": "1080008001341-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Presence of two human figures in the background (one crouching, one standing), which triggers a hard reject due to the zero-people policy.",
+        "Visual brief 'HEADWORKS DETAIL' was ignored; the image shows a standalone drip-tape roll rather than an equipment-only record of fixed filters/gauges/manifolds on an empty pad.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to include exactly one small AFP drip-tape carton as a secondary element. In the foreground, include elevated fixed irrigation hardware (filter, gauge, regulator, manifold) on an empty concrete pad. Completely remove all human figures, body parts, and silhouettes from the scene. Ensure no other commercial containers are visible. Reduce the product group from 45% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: visible people (one standing, one sitting) in the background",
+        "Wrong image role: image shows general farm activity instead of the required 'equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold'"
+      ],
+      "correction_prompt": "Remove all human figures from the background. Replace the scene with an elevated close-up of a fixed irrigation filter, gauge, and manifold on an empty concrete pad, with the drip tape roll kept small and secondary.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 38,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A person (man) is clearly visible in the background.",
+        "Hard reject: Product dimensions (width and height approx. 38%) exceed the maximum limits of 30% and 35% respectively.",
+        "Role mismatch: The mandatory role requires 'equipment-only... exactly one fixed filter, gauge, regulator and manifold' as the primary focus, which is absent.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate as a close-up detail shot of a fixed filter, gauge, and manifold on a concrete pad with no people. Include a small, secondary drip-tape carton roll (<30% width) and maintain the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 36,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of a person standing in the background",
+        "Second commercial package (small roll) is visible on the ground",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate an image of a single AFP drip-tape roll on a concrete pad with no people, no small second roll, and no farm animals or trucks in the background. Reduce the product group from 36% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Presence of multiple people (workers) in the background violates the 'zero people' hard reject criteria.",
+        "Background scene contains heavy machinery and active farm work, contradicting the mandated 'equipment-only elevated record photograph' role."
+      ],
+      "correction_prompt": "Regenerate the image to remove all people and background workers completely. Change the setting to an isolated empty concrete pad showing only one fixed irrigation manifold/filter unit and the specified drip-tape carton, with no distant active farm equipment or trucks.",
+      "attempt": 5
+    }
+  ]
+}

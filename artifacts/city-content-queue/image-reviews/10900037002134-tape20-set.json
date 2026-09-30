@@ -1,21 +1,44 @@
 {
   "source_id": "10900037002134-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 42,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Editorial Hero) fails the 'product identity' and 'environment' criteria: the AFP product is excessively large and dominates the foreground (oversized product violation). Additionally, the background is a generic farm/field with a tractor, lacking specific references to the article brief (Khorasan Razavi / Bakhrez region).",
-        "Role 2 (Selection Evidence) fails the 'product identity' criteria: the AFP roll is placed centrally and is significantly oversized relative to the ground texture, rather than being small and secondary.",
-        "Role 3 (Headworks Story) contains multiple violations: it includes a cardboard box (unapproved container) mounted on the cart, and the AFP roll is still oversized and not sufficiently 'secondary' to the hardware narrative."
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "Reduce the size of the AFP tape roll in all three panels so it appears small and secondary to the environment; remove the cardboard box from the cart in Role 3; and replace generic farm backgrounds with visuals specifically referencing the Khorasan Razavi region (e.g., distinctive orchards or local infrastructure).",
+      "reasons": [
+        "Presence of a person in the background of Image 2 (standing near the tractor) is an immediate rejection cause.",
+        "Inconsistency in product identification: The product in Image 3 is a coiled roll, whereas Images 1 and 2 are cylinders, violating the requirement that the same product is expected in every image.",
+        "All three images feature the product as a large, central focal point in the foreground, violating the requirement for the product to be 'small' or 'secondary' in role 3, and resulting in repeated layouts."
+      ],
+      "correction_prompt": "Remove the person from Image 2, standardize the product shape (roll vs cylinder) across all panels, and reframe Image 3 to feature the hardware on the concrete pad with the product as a small secondary element.",
       "panel_scores": [
-        42
+        35
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 requires 'equipment-only elevated record' with a fixed filter, gauge, regulator, and manifold, but the image shows only the product with no hardware, violating the specific requirement.",
+        "All three roles use the exact same product size, shape, and center-foreground positioning; the editorial distinction relies only on the background and slight camera angle changes, which constitutes a repeated layout.",
+        "Roles 2 and 3 are nearly identical in composition (centered product, distant tractor/barn, similar camera angle), failing to maintain distinct visual narratives as required."
+      ],
+      "correction_prompt": "Role 1: Re-shoot from a high oblique 'hero' perspective with the product small and off-center; Role 2: Lower camera angle to show emitter spacing and field context with the product secondary; Role 3: Replace the product-only shot with an elevated close-up of drip filter/gauge hardware on an empty concrete pad.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 2
     },
     {
       "pass": false,
@@ -26,28 +49,13 @@
         3
       ],
       "reasons": [
-        "All three panels use a nearly identical composition: the AFP product is statically composited in the foreground/lower section, leaving only the background context to differentiate the shots.",
-        "Panel 1 fails the 'EDITORIAL HERO' brief by including a driver in the tractor, which is a prohibited element ('any person').",
-        "Panel 3 fails the 'HEADWORKS STORY' requirement by showing an entire tractor and irrigation trailer (hardware duplication) instead of a focused, unattended technical arrangement of filters, gauges, and manifolds."
+        "Role 3 (Image 3) violates the strict 'equipment-only' and 'no farm activity' constraints by including a tractor in the background instead of the required filter/gauge/manifold on an empty pad.",
+        "Role 2 (Image 2) lacks the required 'technical arrangement' or 'emitter-spacing evidence' and instead shows a standard field-edge background similar to the hero shot, failing to provide distinct selection evidence.",
+        "The camera angle and environmental structure are too similar between Roles 1 and 2, both featuring the carton on a raised block at the edge of a plowed field with similar background building/tractor elements."
       ],
-      "correction_prompt": "Replace all panels: (1) remove the driver from the tractor; (2) integrate the product naturally into the soil rather than overlaying it; (3) crop Panel 3 to focus strictly on the headworks components (filters/manifolds) without the tractor or trailer.",
+      "correction_prompt": "Shooting role 3: replace the tractor background with an empty concrete pad and strictly feature a manifold, gauge, regulator, and filter; ensure no farm activity is visible. Shooting role 2: add a visible drip tape sample laid out to show emitter spacing or a technical selection cue to differentiate it from the hero shot.",
       "panel_scores": [
         35
-      ],
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 42,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 fails the 'exactly one approved carton' constraint by showing a generic product spool instead of the required carton.",
-        "Role 3 contains multiple physical product cartons and an open package alongside the spool, violating the 'exactly one approved carton' limit.",
-        "Role 1 is set against a city skyline background, which is irrelevant to the Khuzestan agricultural article brief."
-      ],
-      "correction_prompt": "Replace the product in Role 1 with a single approved carton (off-center) and an agricultural farm building background; for Role 3, remove all open boxes and secondary cartons so only one approved carton remains next to the headworks setup.",
-      "panel_scores": [
-        42
       ],
       "set_attempt": 3
     }
