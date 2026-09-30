@@ -4,35 +4,34 @@
   "history": [
     {
       "pass": false,
-      "score": 18,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
+      "score": 55,
+      "duplicate_roles": [],
       "reasons": [
-        "The provided set is incomplete: only 1 image was submitted instead of the required 3 distinct roles (1, 2, and 3).",
-        "The submitted image (Panel 1) shows the coiled product prominently in the foreground, which violates the specific 'EDITORIAL HERO' brief requirement that the coil must be small, separate, and off-center.",
-        "Roles 2 and 3 (Selection Evidence and Headworks Detail) are completely missing from the submission.",
-        "The brief required a panel 3 showing a pump, gauge, and manifold; this was not provided."
+        "Panel 1 fails role 1 (EDITORIAL HERO) requirements: it depicts a close-up ground level view rather than a wide high-oblique shot.",
+        "Panel 2 fails role 2 (SELECTION EVIDENCE) requirements: it does not provide an elevated technical view or effectively highlight diameter/construction differences, acting instead as a generic repeat of the product layout.",
+        "Panel 3 fails role 3 (HEADWORKS DETAIL) requirements: it completely omits the required equipment elements (pump, gauge, and manifold) and shows no active headworks environment."
       ],
-      "correction_prompt": "Submit the missing panels for roles 2 and 3. Role 2 must be an elevated comparison of the two coils showing diameter differences without extra objects. Role 3 must be an equipment-only photo of a pump, gauge, and manifold on a concrete pad with the coils kept small and in the background.",
+      "correction_prompt": "Recreate the images to distinctly fulfill the specified roles: ensure image 1 is a wide high-oblique view with small secondary products, image 2 is an elevated close-up technical comparison, and image 3 features a pump, gauge, and manifold on a concrete pad.",
       "panel_scores": [
-        18
+        55
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
       "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 layout violates the 'off-center' instruction by placing the product directly in the foreground center.",
-        "Panel 2 fails the 'SELECTION EVIDENCE' role because it includes a heavy-duty mobile pump cart and connector, rather than focusing on an elevated technical comparison of the coil pair itself.",
-        "Panel 3 introduces an unauthorized 'person' via the pump handle/lever extending from the side of the equipment, which is a strict rejection factor.",
-        "The 'technical narrative' for selection is weak; the coils are merely arranged side-by-side without clearly indicating a diameter or construction difference."
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "Move the product pair off-center in Panel 1. Remove the mobile cart from Panel 2 and focus solely on the two coils to show construction contrast. Modify the pump in Panel 3 to remove the side lever that resembles a person.",
+      "reasons": [
+        "Panel 1 fails Role 1 (Editorial Hero) by using a low-angle shot instead of the required wide high-oblique view; it does not establish the water-transfer context effectively and is visually too similar to Panel 2.",
+        "Panel 2 fails Role 2 (Selection Evidence) by including the required pump and gauge, which are explicitly prohibited in the requirements ('no third commercial package, bottle, person or extra coil' implies a focus solely on the coils, and Role 3 claims the pump/gauge). It also fails to show the technical construction difference of the coils.",
+        "Panel 3 fails Role 3 (Headworks Detail) by missing the required pump, gauge, and empty concrete pad; it merely shows a studio-style shot of two coils on a generic floor, effectively duplicating the content of Role 2 (packaged vs bare coil) without the required equipment.",
+        "Role 2 and Role 3 are functionally duplicates because both focus on the two-coil pair as the primary subject without the technical narrative or equipment context required to distinguish them.",
+        "The 'fixed pump' requirement in Role 3 is misinterpreted in Panel 1 as a mobile wheeled pump, which contradicts the 'equipment-only... on an empty concrete pad' instruction."
+      ],
+      "correction_prompt": "Regenerate Panel 1 as a wide high-oblique shot of a field irrigation context with the two coils small and off-center. Regenerate Panel 2 to show ONLY the two coils side-by-side on a pad, highlighting their diameter differences without any pump or gauge. Regenerate Panel 3 to show a stationary, fixed pump and manifold on a concrete pad with the two coils visible only in the background as secondary elements.",
       "panel_scores": [
         35
       ],
@@ -41,13 +40,16 @@
     {
       "pass": false,
       "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Image 1) fails to meet the EDITORIAL HERO requirement; it lacks the specific wide high-oblique water-transfer context requested and the coils are oversized and central.",
-        "Role 2 (Image 2) includes a cardboard box, which is an 'extra commercial package' and a violation of the SELECTION EVIDENCE constraints.",
-        "Role 3 (Image 3) completely misses the required HEADWORKS DETAIL (pump, gauge, and manifold on an empty concrete pad), showing only coils on pavement with no technical equipment."
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Recreate the set: Image 1 needs a wide high-oblique shot of a water-transfer field with off-center small coils; Image 2 must show an elevated two-coil comparison without any packaging boxes; Image 3 must feature a pump and gauge on a concrete pad with the two coils as small secondary elements.",
+      "reasons": [
+        "Panel 1 (Hero) fails role-1 specification: It is not a wide high-oblique water-transfer context; the equipment is the primary subject rather than being 'small, separate and off-center' as requested.",
+        "Panel 2 (Selection Evidence) fails role-2 specification: It incorrectly includes a large third machine (the wheeled pump) and farm background. It is required to be an 'elevated technical comparison' with no extra machinery or farm activity.",
+        "Panel 3 (Headworks Detail) fails role-3 specification: It lacks the required 'equipment-only' context (single fixed pump, gauge, and manifold). It is a flat-lay product shot on bare concrete without any functional hardware narrative."
+      ],
+      "correction_prompt": "Regenerate Panel 1 to be a wide high-oblique landscape where the coils are small and off-center; regenerate Panel 2 to be an overhead close-up of just the two coils; regenerate Panel 3 to show a fixed pump and gauge on a concrete pad with secondary coils.",
       "panel_scores": [
         35
       ],

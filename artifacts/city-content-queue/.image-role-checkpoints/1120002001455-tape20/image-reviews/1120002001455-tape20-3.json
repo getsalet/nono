@@ -1,0 +1,83 @@
+{
+  "source_id": "1120002001455-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 32,
+      "product_height_percent": 26,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll, matching the required image role.",
+        "Zero people or human body parts are visible.",
+        "The background matches the 'equipment-only' brief: an empty concrete pad with no farm activity.",
+        "Fixed/unattended equipment (tractor) is in the distance and contextually relevant.",
+        "The exact required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Product dimensions and placement fall within the specified 'reviewer-estimation noise' acceptance ranges.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 31,
+      "product_height_percent": 36,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible person (standing figure) on the right side of the background triggers a hard reject for any human presence.",
+        "Product width appears to exceed the maximum 30 percent threshold for the frame.",
+        "Product height appears to exceed the maximum 35 percent threshold for the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the visible person on the right side. Resize the drip-tape carton roll to fit within the preferred width of 20-23 percent and height of under 35 percent while maintaining its physical proportions and central placement. Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 35,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Human figures visible in the background (two people shaking hands), which is a hard reject.",
+        "Product width is estimated at 35%, exceeding the hard limit of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with no human figures, reducing the roll's width to approximately 22% of the frame to meet dimensional requirements. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 29,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Human figure present in background left, which is a hard reject",
+        "Watermark 'AFP | 09134922013' is present in the bottom right corner, which is a hard reject"
+      ],
+      "correction_prompt": "Remove the human figure and the bottom-right watermark from the scene.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 31,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of a person (human silhouette standing in the background near the building)",
+        "Role mismatch: brief requires 'HEADWORKS DETAIL' (filter, gauge, regulator, manifold) as the primary subject, but the image features the drip-tape roll as the main subject",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure in the background. Reconstruct the image as an elevated detail shot of fixed irrigation infrastructure (filter, gauge, regulator, manifold) on a concrete pad, with the single drip-tape roll positioned small and secondary in the foreground. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "source_id": "11100016002354-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 31,
+      "product_height_percent": 30,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Visible human figures present in the background (standing person and crouching person), which triggers a hard reject",
+        "Product width is approximately 31%, which exceeds the hard reject threshold of 30%",
+        "Multiple second commercial packages (open cardboard boxes) are visible in the scene",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and open cardboard boxes from the background; resize the drip tape roll to be strictly less than 30% of the image width; keep the required gauge and filter on the concrete pad. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 30,
+      "product_height_percent": 32,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject due to visible people (farmers and workers) in the background.",
+        "Contains human body parts which are strictly prohibited."
+      ],
+      "correction_prompt": "Regenerate the image to show the single AFP white-and-blue drip tape roll on an empty concrete pad with a filter and manifold, completely removing all people, farmers, and body parts from the background while keeping the tractor in the distance.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 31,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Visible text on the product carton (e.g., 'Oup', 'torgetress') appears as gibberish or illegible noise rather than clean commercial text.",
+        "Hard reject criterion triggered: the image contains a 'fake headline/caption' element in the bottom right corner ('AFP | 09134922013'). The specific formatting (white text on a solid black box) looks like a fake graphic overlay/caption box rather than a realistic photographic watermark, which violates the 'fake caption' rule."
+      ],
+      "correction_prompt": "Remove the black box background from the 'AFP | 09134922013' watermark in the bottom right corner; the text must be a simple overlay without a solid rectangular background. Remove all gibberish or small illegible text from the side of the drip-tape roll, keeping only the large, sharp 'AFP' logo.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 34,
+      "product_height_percent": 24,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: multiple human figures (farmers/workers) are visible in the background.",
+        "Hard reject: required infrastructure components (filter, gauge, regulator, manifold) are missing; the image shows only a roll of tape.",
+        "Hard reject: the mandatory bottom-right watermark 'AFP | 09134922013' is missing.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate an elevated view of a fixed filter, gauge, regulator, and manifold on an empty concrete pad. Remove all people and the tractor from the background. Include exactly one small, secondary AFP white-and-blue drip-tape carton roll. Ensure the product width is less than 30%. Add the mandatory bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 34,
+      "product_height_percent": 35,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Missing mandatory infrastructure (filter, gauge, regulator, manifold)",
+        "Product is oversized (width 34%, height 35%) relative to the brief requirements",
+        "Background is a generic pad rather than the required infrastructure detail shot",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an elevated close-up showing one fixed irrigation filter unit with gauges and manifold on a concrete pad; a small, secondary white-and-blue AFP drip-tape roll (max 15% width) is present on the side; no humans. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

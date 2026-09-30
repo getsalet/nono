@@ -1,0 +1,83 @@
+{
+  "source_id": "1120001002457-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 32,
+      "product_height_percent": 34,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: A human figure (person) is clearly visible in the background.",
+        "Hard reject: Product width exceeds the 30% maximum limit.",
+        "Role mismatch: The brief requires a HEADWORKS DETAIL shot with fixed infrastructure (filter, gauge, manifold). This is a general product/environment shot with a loose faucet attached, not the specified infrastructure setup.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person from the background. Reposition the roll to be smaller and secondary. Replace the loose faucet with a proper fixed filter, gauge, and manifold assembly on a concrete pad as per the HEADWORKS DETAIL brief. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 36,
+      "product_height_percent": 33,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Roll width is approximately 36% of the image, which exceeds the 30% hard reject limit",
+        "Gibberish writing (cyrillic-style text) is visible on the carton label",
+        "Two humans are visible in the background (near the red tractor), which is a hard reject",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Regenerate the carton label with clean, legible text. Reduce the width of the roll to under 30% of the frame to match the secondary element requirement. Reduce the product group from 36% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 19,
+      "product_height_percent": 16,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject due to visible people (a farmer near the tractor and another in the distance); the brief requires zero people or body parts.",
+        "Visible tractor and hay bales in the background contradict the mandatory 'equipment-only' and 'empty concrete pad' requirement."
+      ],
+      "correction_prompt": "Remove all people, tractors, and hay bales. Show only the water carton on an empty concrete pad with fixed filter, gauge, and manifold equipment in the background. No other commercial products or farm activity.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 34,
+      "product_height_percent": 32,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Two people are clearly visible in the background (one near the hay bales, one standing near the tractor), which constitutes a hard reject for visible humans.",
+        "The role 'HEADWORKS DETAIL' requires the carton to be 'small and secondary' and secondary to the equipment (filter/gauge/manifold), but the carton is the primary subject in the foreground.",
+        "The product bounding box exceeds the preferred width and height tolerances.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate to remove all people and faces; position the AFP carton small and in the background or secondary area, focusing on the filter, gauge, and manifold on the concrete pad. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Presence of a human silhouette (standing figure in the background) which is a hard reject.",
+        "Violation of the mandatory image role which requires 'exactly one' carton; the image displays two visible rolls.",
+        "Violation of the mandatory image role which requires 'no farm activity' and an 'equipment-only' scene; the presence of a tractor and a person constitutes farm activity.",
+        "Missing required infrastructure such as a fixed filter, gauge, or regulator which must be the primary subject.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with exactly one white and blue cylindrical drip-tape roll centered on an empty concrete pad, removing all people, tractors, and farm buildings to match the equipment-only visual brief. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

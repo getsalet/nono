@@ -1,0 +1,41 @@
+{
+  "source_id": "11100013002893-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 36,
+      "product_height_percent": 24,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The visible human (blue shirt) working near the background equipment constitutes a hard reject.",
+        "The 'drip tape' roll is excessively wide (36% of the frame width) compared to the 20-23% preference range and the limit of 30% maximum.",
+        "A second commercial package (brown cardboard box) is visible on the right, violating the 'exactly one approved carton' requirement.",
+        "Visible gibberish text (e.g., 'YKICHCB') on the cardboard box is a hard reject factor.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image without any humans or people. Remove the brown cardboard box on the right. Rescale the central white and blue drip tape roll to be visibly narrower (approx 22% of image width) to meet size guidelines. Ensure the image contains only the drip tape roll, the fixed irrigation infrastructure (filter, manifold, gauges) and a distant tractor/field background. Maintain the 'AFP | 09134922013' watermark. Reduce the product group from 36% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 18,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Correct object identified: Single white and blue cylindrical drip-tape carton roll is clearly visible and dominant but not oversized.",
+        "Size and placement: The product dimensions (~22% width) are within the preferred range (20-23%), and the lower-third placement is an editorial preference, not a hard reject.",
+        "Role compliance: The image functions as a HEADWORKS DETAIL showing an elevated record photograph of a fixed filter, gauge, and regulator on a concrete pad, with the roll acting as a secondary element.",
+        "Contextual relevance: The background features an unattended tractor and farm field, which are allowed infrastructure/context elements without violating the 'no human' rule.",
+        "Watermark: The mandatory 'AFP | 09134922013' watermark is present in the bottom-right corner as required."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
