@@ -1,0 +1,61 @@
+{
+  "source_id": "10600021002799-tape20",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 fails the 'HEADWORKS DETAIL' requirement: it displays the main product carton on a concrete pad, but completely omits the required technical assembly of 'one fixed filter, gauge, regulator and manifold'. The image is a repetition of the product-on-surface layout rather than a technical equipment record.",
+        "Role 3 contains farm activity: The brief for Role 3 explicitly forbids farm activity, and the background clearly shows a tractor (red/green) actively moving or working in the field.",
+        "Role 2 lacks required technical evidence: The brief demands 'emitter-spacing or field-selection evidence' to support the 'SELECTION EVIDENCE' narrative. The image only shows a coil of drip tape which does not provide the necessary evidence of spacing or selection criteria.",
+        "Role 1 is too restrictive: The view is a standard eye-level perspective rather than a 'high-oblique' aerial view, and the farm context is not dominant compared to the product's placement in the center."
+      ],
+      "correction_prompt": "Regenerate Role 3 as an elevated, equipment-only record photo on a concrete pad showing a fixed filter, gauge, regulator, and manifold next to a small secondary carton, with a strictly static background and no moving tractors or farm activity. Regenerate Role 1 as a wide high-oblique view where the irrigation context is dominant and the carton is small, off-center, and on the lower third. Regenerate Role 2 to specifically show emitter-spacing details or a field-selection chart alongside the carton.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 is required to be a 'SELECTION EVIDENCE' arrangement with visible emitter-spacing or field-selection evidence. While the sheet is present, it is generic and the equipment cluster is too similar to Role 3.",
+        "Role 3 is required to be an 'equipment-only' detail on an empty concrete pad with no farm activity. The image shows a red tractor and buildings in the background, which is not 'empty' context, and the equipment cluster is visually nearly identical to Role 2.",
+        "Roles 2 and 3 are effectively the same image composition (equipment cluster + large product roll on a concrete surface with a rural background), failing the distinctness requirement."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Role 2 contains a person standing next to the tractor, which is strictly prohibited by the prompt rules.",
+        "Role 1 contains a person driving the tractor in the background, violating the 'no person' rule.",
+        "Role 1's product carton is significantly oversized and central relative to the scale of the field, violating the 'small' and 'off-center' requirements.",
+        "Role 3 contains farm equipment (tractors/irrigators) in the background, which violates the 'no farm activity' requirement for the equipment-only detail shot."
+      ],
+      "correction_prompt": "Remove all humans from Roles 1, 2, and 3; rescale the product in Role 1 to be small and off-center in the lower third; remove all farm equipment and vehicles from Role 3's background to show only the concrete pad and equipment.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 3
+    }
+  ]
+}

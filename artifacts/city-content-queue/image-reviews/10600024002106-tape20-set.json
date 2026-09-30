@@ -1,51 +1,25 @@
 {
   "source_id": "10600024002106-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 3 (Image 3) fails the 'unattended' narrative requirement by including a person working on a tractor in the background.",
-        "Role 1 (Image 1) fails the off-center product placement constraint, as the product carton is centered in the lower third rather than being small and off-center."
-      ],
-      "correction_prompt": "Regenerate Role 3 to show an unattended technical setup (no persons) with the product small and secondary; adjust Role 1 to place the product small and off-center within the lower third.",
-      "panel_scores": [
-        45
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
       "score": 30,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (EDITORIAL HERO) explicitly requires the product carton to be small and off-center on the lower third, but the image displays a large, prominent roll of tape in the foreground.",
-        "Role 2 (SELECTION EVIDENCE) requires 'visible emitter-spacing or field-selection evidence' to accompany the product, which is absent; the background shows only generic field edges and a barn without specific drip line layout.",
-        "Role 3 (HEADWORKS STORY) mandates 'exactly one approved carton remains small and secondary' with the focus on unattended hardware, but the image features a large roll in the foreground that dominates the frame and obscures the hardware.",
-        "There is a significant layout duplication between Role 2 and Role 3: both use an identical composition (foreground product roll, background tractors/field), failing to show a 'visibly distinct camera height/angle'."
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "Reshoot Role 1 with a wide high-oblique view and a small, off-center product; Role 2 must show the product next to visible drip tape or emitters; Role 3 should shift focus to the fixed hardware, with the product appearing small and secondary.",
+      "reasons": [
+        "Role 1 (Editorial Hero): Violates the 'off-center' requirement; the carton is placed in the exact center of the frame. Also, the active tractor with a human operator constitutes 'farm activity' which is not permitted in the hero role, which should be dominated by the irrigation context.",
+        "Role 2 (Selection Evidence): Violates the 'no person' constraint; a person is clearly standing next to the tractor in the background.",
+        "Role 3 (Headworks Detail): Violates the 'empty concrete pad' requirement; the pad is set within a busy field environment rather than an isolated/empty space. Additionally, the product carton is significantly larger than specified ('small and secondary'), appearing roughly the same size as the headworks assembly."
+      ],
+      "correction_prompt": "Regenerate all three images: ensure the product carton is small, off-center, and completely empty of people; replace the active tractor and human operator in roles 1 and 2 with unattended context; place role 3's concrete pad in an isolated empty space with the product clearly secondary to the hardware.",
       "panel_scores": [
         30
       ],
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1: The product carton is excessively large, dominating the foreground instead of remaining small in the lower third as required.",
-        "Role 2: The background contains a person operating a tractor, which is an explicit rejection criterion.",
-        "Role 3: The 'headworks' assembly is mounted on a heavy, moving wheeled vehicle rather than being a fixed setup as the 'unattended fixed filter' brief requires."
-      ],
-      "correction_prompt": "Shrink the product carton in all images to 15% of its current size; remove the person from the tractor in Role 2; mount the Role 3 filtration and gauge system on a static concrete base instead of a moving machine.",
-      "panel_scores": [
-        35
-      ],
-      "set_attempt": 3
+      "set_attempt": 1
     }
   ]
 }

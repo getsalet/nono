@@ -1,0 +1,54 @@
+{
+  "source_id": "1050002002412-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 65,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "A visible human (farmer) is present in the background, which is a hard reject criteria.",
+        "An invented object (a small cup or bucket) is placed in the center of the bare coil, creating an impossible intersection/hard reject.",
+        "Product pair is extremely wide (>42% of frame) and occupies the foreground, contradicting the brief which requested them to be 'small, separate and off-center'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate without any people, and ensure the center of the bare black woven coil is empty with no objects. The two coils must be significantly smaller and positioned off-center in the frame. Reduce the product group from 65% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject due to the presence of a human figure (farmer/worker) operating the tractor in the background.",
+        "Violation of the zero people/human body parts requirement."
+      ],
+      "correction_prompt": "Regenerate the image without any human figures. Remove the driver from the tractor in the background, keeping only the unattended equipment and the two coiled hoses in the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image correctly displays the two required objects: a packaged coil on the left and a bare black woven coil on the right.",
+        "Both products are separate, physically plausible, and clearly recognizable without any distortion or merging.",
+        "The combined width of the products is within the acceptable range of 8 to 42 percent of the frame.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "No people, human body parts, or unauthorized third commercial items are present.",
+        "The background context of a wide farm field with distant equipment aligns with the requested editorial hero role."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

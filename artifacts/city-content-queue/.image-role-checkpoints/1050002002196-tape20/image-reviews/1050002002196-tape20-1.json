@@ -7,47 +7,59 @@
   "history": [
     {
       "pass": false,
-      "score": 20,
-      "product_width_percent": 21,
+      "score": 40,
+      "product_width_percent": 16,
       "product_height_percent": 23,
-      "product_x_center_percent": 45,
+      "product_x_center_percent": 47,
       "reasons": [
-        "Visible human body parts present (arm, hand, torso, head)."
+        "Hard reject: Multiple people (human figures) are visible in the background.",
+        "The required watermark text is incorrect: the image shows '09134922013' instead of '09134922013' (missing a '4')."
       ],
-      "correction_prompt": "Regenerate the image with zero visible people or human body parts. Show the field, the irrigation pump on the right, and the single small AFP drip-tape carton roll centered in the lower-left third, keeping the required bottom-right watermark.",
+      "correction_prompt": "Remove all human figures from the background fields and correct the bottom-right watermark to exactly 'AFP | 09134922013'.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 20,
-      "product_width_percent": 18,
-      "product_height_percent": 15,
-      "product_x_center_percent": 38,
+      "score": 12,
+      "product_width_percent": 20,
+      "product_height_percent": 27,
+      "product_x_center_percent": 49,
       "reasons": [
-        "Hard reject: The image contains two visible people (one standing and one crouching).",
-        "Hard reject: The human hands, arms, faces, and bodies are clearly visible.",
-        "Hard reject: The crouching person is holding a second roll of tape, violating the 'exactly one' and 'zero body parts' rules."
+        "Hard reject: Image contains multiple human figures (two workers in the field), which is an explicit hard reject condition.",
+        "The presence of human silhouettes (faces, arms, bodies) violates the 'zero people' requirement."
       ],
-      "correction_prompt": "Regenerate the image with zero people or human body parts. Remove the crouching man and the second roll of tape in his hand. Keep the AFP drip-tape roll in the foreground and the farm context with the standing man's position empty.",
+      "correction_prompt": "Regenerate the image to strictly remove all humans, workers, and human body parts. The image must contain only the landscape, the farm, and the single AFP drip-tape roll.",
       "attempt": 2
     },
     {
-      "pass": true,
-      "score": 82,
+      "pass": false,
+      "score": 45,
       "product_width_percent": 22,
-      "product_height_percent": 25,
-      "product_x_center_percent": 42,
+      "product_height_percent": 34,
+      "product_x_center_percent": 39,
       "reasons": [
-        "The image displays exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
-        "The roll's dimensions fall within the accepted range (width approx. 22%, height approx. 25%).",
-        "The product is placed off-center on the lower third of the frame, as per the editorial preference.",
-        "There are zero people or human body parts visible in the image.",
-        "The background context (farm fields, distant tractors, and horizon) matches the article brief without violating hard rejects.",
-        "The required bottom-right watermark 'AFP | 09134922013' is present.",
-        "No forbidden items such as second rolls, bottles, or other commercial packages are visible."
+        "Product is a cylindrical spool roll, not a white-and-blue wide low cylindrical drip-tape carton roll",
+        "Product is centrally placed, violating the mandatory editorial hero requirement for off-center lower-third placement",
+        "Product height is at the maximum allowable limit (34%)"
+      ],
+      "correction_prompt": "Replace the central cylindrical spool roll with a single white and blue wide low cylindrical drip tape carton roll. Position the roll off-center in the lower third, ensuring it is small relative to the frame (width 20-23%, height <35%).",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 96,
+      "product_width_percent": 21,
+      "product_height_percent": 14,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Single, approved wide low cylindrical drip-tape carton roll is fully visible and physically plausible.",
+        "The roll is positioned on the lower third of the frame, consistent with the required EDITORIAL HERO placement.",
+        "Farm and irrigation context (crop rows, drip lines, distant equipment) correctly dominate the scene.",
+        "Zero people or human body parts are present.",
+        "Required bottom-right watermark 'AFP | 09134922013' is clearly visible."
       ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 4
     }
   ]
 }

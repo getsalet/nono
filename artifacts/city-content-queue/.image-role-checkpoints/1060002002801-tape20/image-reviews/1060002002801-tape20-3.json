@@ -1,0 +1,79 @@
+{
+  "source_id": "1060002002801-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 42,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Multiple human figures are visible: two workers in the mid-ground and one person sitting on a bench on the right side, which is a hard reject.",
+        "The drip tape carton is significantly oversized, exceeding the 30% width limit.",
+        "The image does not fulfill the required 'HEADWORKS DETAIL' role; it is a general scene shot rather than a close-up of the fixed filter and gauge equipment specified in the brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 35% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 28,
+      "product_height_percent": 34,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Visible people (human silhouettes and body parts) present in the background near the tractors and building, which is a strict violation.",
+        "Role Mismatch: The mandatory role requires a 'HEADWORKS DETAIL' (equipment-only elevated record of a filter, gauge, regulator, and manifold). The current image is a wide landscape shot of a roll on a concrete pad with distant farm equipment.",
+        "Missing Elements: The required specific infrastructure (filter, gauge, regulator, manifold) is completely absent from the frame."
+      ],
+      "correction_prompt": "Remove all people and background farm tractors. Regenerate as a high-angle, close-up 'HEADWORKS DETAIL' shot focused on a fixed irrigation filter, gauge, and manifold on a concrete pad. Include exactly one small white-and-blue AFP drip-tape roll (approx 20% width) positioned in the lower-right corner as a secondary element. Ensure no human body parts are visible.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 25,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Second commercial package/roll visible (bottom right)"
+      ],
+      "correction_prompt": "Regenerate with exactly one AFP drip-tape carton roll; remove the second roll at the bottom right; keep the single primary roll small and secondary relative to the filter, gauge, regulator, and manifold on an empty concrete pad; no people, no bottles or containers; keep required watermark 'AFP | 09134922013' in bottom-right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 28.5,
+      "product_height_percent": 34.0,
+      "product_x_center_percent": 48.0,
+      "reasons": [
+        "Human figure (farmer/worker) visible in the background",
+        "Background scene does not match the mandatory 'HEADWORKS DETAIL' role",
+        "Required visible components (filter, gauge, regulator, manifold on concrete pad) are missing"
+      ],
+      "correction_prompt": "Remove all human figures from the background. Replace the tractor scene with a low-angle close-up on a concrete pad showing a fixed irrigation system (filter, gauge, regulator, manifold). Keep the drip tape roll small and secondary to the hardware infrastructure.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of human figures/farmers in the background (hard reject)",
+        "Taller than 35% height limit for the product carton",
+        "Tractor is too prominent and in the active/working zone, not strictly 'distant unattended' context",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures and silhouettes from the background. Move the tractor further away into the distant background or remove it. Reduce the vertical scale of the product carton so its height is less than 30% of the frame. Keep the bottom-right watermark exactly as 'AFP | 09134922013'. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 5
+    }
+  ]
+}
