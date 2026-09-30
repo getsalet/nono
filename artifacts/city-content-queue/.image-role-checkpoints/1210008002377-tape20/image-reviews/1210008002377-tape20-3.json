@@ -1,0 +1,85 @@
+{
+  "source_id": "1210008002377-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 34,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains zero people or human body parts.",
+        "The AFP white-and-blue wide low cylindrical drip-tape carton roll is clearly visible and physically plausible.",
+        "The exact bottom-right watermark \"AFP | 09134922013\" is present as required.",
+        "The width exceeds the preferred 20-23% range but falls within the acceptable reviewer-estimation noise limit of 12-30% (34% is estimated but visually consistent with the scale relative to the large background objects and pad), while height (28%) is well under the 35% maximum.",
+        "Lower-third placement is noted as an editorial preference and not a standalone hard reject.",
+        "No forbidden items (bottles, second rolls, hoses, gibberish text) are present.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Multiple human figures are visible in the background, which is a hard reject.",
+        "The required 'HEADWORKS DETAIL' (fixed filter, gauge, regulator, manifold on a concrete pad) is completely missing; the setting is a general field pad.",
+        "Various containers and bottles are visible near the people in the background, which are hard rejects."
+      ],
+      "correction_prompt": "Remove all people and containers. Set the scene on an empty concrete pad with a fixed irrigation manifold, gauge, and filter. Place a small, secondary drip-tape carton roll on the ground. Keep the required watermark in the bottom-right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 45,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains clearly visible people (a man and a worker) in the background, which is a hard reject criterion.",
+        "There is a secondary commercial product (a smaller drip tape roll) visible in the foreground, which is not allowed.",
+        "The main product is significantly larger than the 30% width limit, making it the primary focus rather than secondary.",
+        "The image does not fit the 'HEADWORKS DETAIL' role which requires an equipment-only focus on fixed filtration infrastructure without visible human activity.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image strictly as an empty infrastructure scene with no people, no farm workers, and no farm activity in the background. Include a fixed filtration system (filter, gauge, regulator, manifold) on a concrete pad. Position exactly one AFP drip-tape carton roll to the side, scaled down to be secondary (under 25% width). Do not include any additional rolls or bottles. Reduce the product group from 45% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 17,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Person visible in the background (left side of image)",
+        "Presence of a human silhouette/figure violates the hard reject criteria for zero people and human body parts"
+      ],
+      "correction_prompt": "Regenerate the image removing all people and human figures from the background to ensure zero human presence, maintaining the filter/gauge equipment and the secondary AFP carton roll on the concrete pad.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 26,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Visible human figures (silhouettes and face) in the background violate the zero-person rule.",
+        "The role requires a close-up headworks detail focusing on the filter, gauge, and regulator, which is not the primary focus of this wide shot.",
+        "Presence of text on the roll reads as gibberish/unclear rather than 'DRIP TAPE'.",
+        "The roll is too large relative to the frame compared to the 'small and secondary' brief."
+      ],
+      "correction_prompt": "Regenerate as a close-up headworks detail on a concrete pad. Focus on a clear pressure gauge, regulator, and manifold. Include one small, secondary AFP white-and-blue roll in the background. Remove all human figures, faces, and silhouettes completely. Ensure the text 'DRIP TAPE' is clearly legible and accurate. Keep the existing watermark.",
+      "attempt": 5
+    }
+  ]
+}

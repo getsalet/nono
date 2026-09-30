@@ -1,0 +1,39 @@
+{
+  "source_id": "11100014002613-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 50,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "A standing man is visible in the mid-ground of the image, which is an immediate hard reject according to the requirement for zero people.",
+        "The 'AFP | 09134922013' watermark in the bottom-right corner has a black background box. This box overlaps and obscures the edge of the bare black coil, violating the 'zero body parts' and physical plausibility constraints.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with the standing man completely removed from the scene. The bottom-right watermark must be applied without a black background box so it does not obscure the coils. Reduce the product group from 50% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 40,
+      "product_height_percent": 20,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Correctly displays the required pair: one packaged AFP coil and one bare black woven coil.",
+        "Zero visible people, hands, or body parts in the frame (tractor in the distance is unattended and acceptable infrastructure).",
+        "Both coils are separate, physically plausible, and fully visible.",
+        "Watermark 'AFP | 09134922013' is correctly placed in the bottom-right.",
+        "Combined product width of 40% is within the 8-42% acceptable range."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

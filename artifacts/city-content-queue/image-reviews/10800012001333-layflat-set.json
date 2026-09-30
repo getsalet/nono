@@ -5,13 +5,17 @@
     {
       "pass": false,
       "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 3 fails to depict the required equipment (pump, gauge, manifold); instead, it shows a gauge mounted on the coil, which is not a headworks detail.",
-        "Roles 1 and 2 are highly repetitive, showing the same product pair on farm soil with very similar camera angles and environments, which violates the requirement for distinct environments and camera setups.",
-        "Role 2 includes a person/tractor context that may be irrelevant or unnecessary compared to the strictly technical narrative required."
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Replace Role 3 with a shot of a fixed pump, gauge, and manifold on a concrete pad; differentiate Role 1 and 2 by changing environments and camera angles to show technical context versus ground-level comparison.",
+      "reasons": [
+        "Role 1 (Image 1) fails the 'small, off-center' requirement: the two-coil pair is prominent in the foreground and centered, functioning as the main subject rather than a minor element in a wide hero shot.",
+        "Role 2 (Image 2) is nearly identical in layout and framing to Role 1 (Image 1); both feature the two-coil pair in the foreground with a distant tractor and field context, failing to provide the required 'elevated technical comparison' narrative for Role 2.",
+        "Role 3 (Image 3) lacks required 'HEADWORKS DETAIL' hardware: the fixed pump, gauge, and manifold are not visible; the scene shows only the two coils on a concrete surface, which is an insufficient match for the 'equipment-only' role requirement.",
+        "Visual distinctiveness between Roles 1 and 2 is minimal (repeated layouts), violating the requirement that roles are visibly distinct in environment and technical narrative."
+      ],
+      "correction_prompt": "For Role 1: Move the two-coil pair to a small, off-center position to establish the water-transfer context. For Role 2: Use an elevated, technical close-up of the pair to explicitly highlight construction/diameter differences. For Role 3: Add a visible pump, gauge, and manifold on the concrete pad, with the two-coil pair remaining small and secondary in the background.",
       "panel_scores": [
         35
       ],
@@ -25,11 +29,12 @@
         3
       ],
       "reasons": [
-        "Role 3 (Panel 3) includes a commercial box (container), which violates the equipment-only instruction.",
-        "Roles 2 and 3 are visually and narratively similar (duplicate_roles), featuring elevated equipment shots on a concrete pad rather than a distinct 'comparison' narrative.",
-        "Role 2 fails the 'SELECTION EVIDENCE' requirement to show a diameter difference, instead relying on hardware/gauges which causes it to duplicate Role 3's intent."
+        "Role 3 fails the 'HEADWORKS DETAIL' requirement: The image shows only two coils of pipe on a concrete slab, completely missing the required 'fixed pump, gauge and manifold' equipment context.",
+        "Role 2 fails the 'SELECTION EVIDENCE' requirement: It includes a large pump in the foreground which acts as a third commercial object and competes for focus, violating the constraint 'no third commercial package... or extra coil'.",
+        "Layout Repetition: Roles 2 and 3 are both elevated close-up shots focusing on the two-coil pair on a concrete pad, with no significant difference in environment structure or technical narrative.",
+        "Role 1 contains a violation: It shows a 'farm building' in the immediate mid-ground, whereas the brief allows 'distant' buildings only as context, not as a main background element for the hero shot."
       ],
-      "correction_prompt": "Differentiate Role 2 by removing hardware and highlighting a side-by-side scale comparison of the coils' diameters; remove the box from Role 3 to strictly adhere to the equipment-only requirement.",
+      "correction_prompt": "Role 3: Remove the pumps and show the coils small in the background of a large pump head; Role 2: Crop the pump out to show only the two coils at an eye-level technical angle.",
       "panel_scores": [
         45
       ],
@@ -37,21 +42,16 @@
     },
     {
       "pass": false,
-      "score": 38,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 55,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 3 is missing required equipment: the approved two-coil pair, fixed pump, gauge, and manifold are not visible as described",
-        "The gauge in Role 3 is attached to a packaged coil instead of a pump system",
-        "The product in Role 3 is oversized relative to the empty concrete pad context",
-        "Role 2 does not show a diameter difference between the two coils as required",
-        "Role 1 and Role 2 have nearly identical compositions with the two coils placed in the same foreground positions"
+        "Role 1 requires a wide high-oblique perspective of the water-transfer context, but the image shows a low-angle shot with crops in the immediate foreground, lacking the required spatial scale and high-angle view.",
+        "The hero image features the packaged and bare coils oversized and centered, violating the brief's specific instruction that the approved product pair remains small, separate, and off-center.",
+        "Role 2 (Selection Evidence) includes an extraneous wooden connector in the center of the bare coil, which is not part of the approved two-coil pair and distracts from the required technical comparison of diameter and construction."
       ],
-      "correction_prompt": "Recreate Role 3 to display a fixed pump with an attached gauge and manifold on an empty concrete pad, keeping the two coils small and in the background, and adjust Role 2 to show a clear diameter difference between the coils.",
+      "correction_prompt": "Regenerate Panel 1 to be a wide high-oblique shot where the coils are small and off-center against a broad water-transfer background; regenerate Panel 2 as a clean technical comparison of only the two-coil pair without extra connectors or clutter.",
       "panel_scores": [
-        38
+        55
       ],
       "set_attempt": 3
     }

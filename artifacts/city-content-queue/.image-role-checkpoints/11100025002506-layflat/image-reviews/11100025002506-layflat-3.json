@@ -1,0 +1,38 @@
+{
+  "source_id": "11100025002506-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 71,
+      "product_height_percent": 56,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The combined width of the product pair (the wrapped coil and the open coil) is approximately 71 percent of the frame width, which exceeds the maximum acceptable threshold of 65 percent. The objects are too close together, making them appear as a single wide unit rather than two separate, secondary objects. The product occupies the foreground too prominently, failing to keep the coils 'small, separate and secondary' as required for this role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 71% to 8-65% of frame width.; Reduce product height from 56% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Move the two coils further apart and reduce their relative scale to fit within 65% of the frame width, ensuring the coils remain separate and do not overlap. Add a fixed pump, gauge, and manifold on the concrete pad as the primary focus, making the two coils smaller and secondary in the background. Reduce the product group from 71% to 8-65% of frame width. Reduce product height from 56% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 55,
+      "product_height_percent": 45,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Both required coils (one packaged and one bare) are visible and separate.",
+        "The mandatory 'HEADWORKS DETAIL' elements (fixed pump, gauge, manifold) are present on an empty concrete pad.",
+        "Zero people or human body parts are visible.",
+        "The required bottom-right watermark is present and readable.",
+        "The product pair is physically plausible with no impossible intersections or floating objects."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

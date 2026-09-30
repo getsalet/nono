@@ -1,0 +1,81 @@
+{
+  "source_id": "1200003002161-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 27,
+      "product_height_percent": 26,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible in the frame, which violates the 'zero second commercial package' rule and the brief requirement that 'exactly one approved carton remains small and secondary'.",
+        "The product bounding box (drip-tape roll) overlaps with the secondary carton, creating visual clutter that conflicts with the 'equipment-only' and 'isolated' product presentation goals."
+      ],
+      "correction_prompt": "Regenerate the image showing only the single white-and-blue AFP drip-tape roll on the concrete pad, completely removing the cardboard box and the coiled hose to ensure a clean, isolated product view without secondary packaging.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 32,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject due to the presence of people in the background (visible human figures).",
+        "Hard reject because the image depicts a roll of white material (tape) rather than a fixed filter, gauge, regulator, and manifold as required by the mandatory image role."
+      ],
+      "correction_prompt": "Regenerate the image to show a fixed filter, gauge, regulator, and manifold on a concrete pad; completely remove all people from the background; ensure the carton roll of drip tape is small and secondary to the equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 35,
+      "product_height_percent": 28,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' present in bottom-right as required",
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll visible",
+        "Object placement is editorially acceptable",
+        "Background infrastructure (tractors, silos, building) matches farm context without farm activity",
+        "No people, body parts, or human silhouettes detected",
+        "Carton roll physically plausible, no severe distortion or impossible geometry",
+        "Approved carton remains primary focus, secondary to infrastructure context",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Multiple visible people and human body parts (workers standing and crouching in the background).",
+        "The roll's bounding box exceeds the maximum allowed dimensions (32% width, 38% height).",
+        "Failure to match the mandatory 'HEADWORKS DETAIL' role which requires an empty concrete pad and no farm activity.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people from the background. Shrink the carton roll to approximately 22% width and 30% height to fit on-frame requirements. Adjust the scene to an empty concrete pad with a fixed filter and gauge, ensuring zero human presence. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 21,
+      "product_height_percent": 18,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Presence of visible humans (one person standing in the background left, one person crouching in the background right) triggers a hard reject, which is incompatible with the 'zero people' requirement."
+      ],
+      "correction_prompt": "Regenerate the image with zero humans visible; ensure the background is completely free of people and silhouettes.",
+      "attempt": 5
+    }
+  ]
+}
