@@ -1,0 +1,84 @@
+{
+  "source_id": "10700016002780-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 98,
+      "product_width_percent": 50,
+      "product_height_percent": 65,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The image strictly contains the mandatory two-coil pair: one packaged coil in a cardboard sleeve and one bare black woven coil, both fully visible and separate.",
+        "The 'HEADWORKS DETAIL' requirement is met with an elevated, equipment-only photograph of a manifold on a concrete pad.",
+        "The combined product width is approximately 50% of the frame, which aligns with the 8-65% tolerance for this role.",
+        "The required watermark 'AFP | 09134922013' is present and accurate in the bottom-right corner.",
+        "The scene is free of any people, human body parts, or disallowed commercial objects like bottles or jars.",
+        "machine-enforced bounding-box check failed: Reduce product height from 65% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 65% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Mandatory HEADWORKS DETAIL role (fixed pump, gauge, and manifold on empty concrete pad) is completely missing from the image.",
+        "The scene depicts only two coils in a field; while they are separate, the lack of required infrastructure (pump/manifold) makes the image fail the mandatory role requirement."
+      ],
+      "correction_prompt": "Regenerate the image on an empty concrete pad. In the foreground (small and separate), place one packaged AFP coil and one bare black woven coil. In the background, prominently feature a fixed pump, a pressure gauge, and a manifold to fulfill the HEADWORKS DETAIL role. Ensure no people or farm activity are present.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL role: image features two prominent foreground coils rather than focusing on the pump, gauge, and manifold as the primary subject.",
+        "The 'equipment-only elevated record photograph' requirement is not met because the coiled products are given equal or greater visual weight than the infrastructure.",
+        "Product pair is too large (38% width) for the 'secondary' role specified in the brief, where it should remain small."
+      ],
+      "correction_prompt": "Reframed high-angle shot of the pump, manifold, and gauge on the concrete pad; shrink the two coils to a small background cluster (15% width) to satisfy the HEADWORKS DETAIL role.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 72,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Role violation: The image does not show the required HEADWORKS DETAIL of a fixed pump, gauge, and manifold on a concrete pad; it shows a group of three coils instead.",
+        "Hard reject: Presence of a third commercial package (there are three distinct coil objects in the main grouping, whereas only two are allowed).",
+        "Hard reject: The pair width exceeds the 65 percent limit when considering the span of the three coils in the foreground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to show a single elevated close-up photograph of a fixed pump assembly with a pressure gauge and manifold mounted on an empty concrete pad. In the background or edge, include only one small packaged AFP coil and one small bare black woven coil to represent the 'two-coil pair' secondary context. Ensure there are exactly two coils total in the scene, absolutely no people, and maintain the bottom-right watermark. Reduce the product group from 72% to 8-65% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Contains required two-coil pair: one packaged coil (AFP-style) and one bare black woven coil, both separate and fully visible",
+        "Combined coil width is within the acceptable noisy reviewer range (8–65%)",
+        "Zero people or human body parts",
+        "Watermark 'AFP | 09134922013' present in bottom-right as required",
+        "Fixed pump, gauge and manifold on empty concrete pad match the HEADWORKS DETAIL role; no farm activity or third commercial product"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

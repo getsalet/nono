@@ -1,0 +1,80 @@
+{
+  "source_id": "1300007002631-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 62,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: The combined width of the product bounding box is estimated at 62%, which significantly exceeds the maximum acceptable limit of 42% for this role.",
+        "Hard reject: There is a visible person standing in the middle distance of the field, which violates the 'zero people' requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Scale down both coils to ensure the combined width is under 42% of the frame. Remove the standing person entirely from the background. Maintain the bottom-right watermark. Reduce the product group from 62% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: A visible human figure (farmer) is present in the background of the field",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate image to remove all human figures and faces completely; keep the two coils and tractor visible Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 44,
+      "product_height_percent": 30,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "The left object is severely distorted, appearing as an impossible faceted geometric shape rather than a recognizable packaged coil (hard reject for impossible dimensions).",
+        "The combined product width of 44% exceeds the hard limit of 42% of the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to replace the faceted shape with a standard cylindrical rolled coil wrapped in plastic, ensuring both coils are clearly recognizable, physically plausible, and the total combined width of the products is less than 40% of the image width. Reduce the product group from 44% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 44,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains the approved pair of one packaged AFP coil and one bare black woven coil.",
+        "Zero people and zero human body parts present.",
+        "Distant unattended tractor and farm building are allowed as farm context.",
+        "Product placement is off-center and in the foreground.",
+        "Visible watermark 'AFP | 09134922013' is correctly present and preserved.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 44% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 44% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Presence of two visible human figures (workers/farmers) in the background. This violates the zero-human policy.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image strictly without any people, faces, or human body parts. Retain the foreground products (one packaged coil, one bare black coil) and the background agricultural context (tractor, crops, soil) but remove all human workers. Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}
