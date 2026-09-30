@@ -1,0 +1,53 @@
+{
+  "source_id": "10700024001317-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 18,
+      "product_height_percent": 14,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject due to the presence of a full human body (male farmer) in the center of the image",
+        "Presence of a large unattended vehicle (tractor with tank) which is not the required context"
+      ],
+      "correction_prompt": "Regenerate the image removing the person and the tractor. Show a wide high-oblique view of an agricultural field with drip-tape lines. Place a single small AFP white-and-blue wide low cylindrical drip-tape carton roll in the lower third, off-center. Keep the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 16,
+      "product_height_percent": 14,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Image contains a visible person (farmer sitting on a small tractor) in the middle ground.",
+        "Hard reject: Presence of a human silhouette and body parts violates the zero-people constraint."
+      ],
+      "correction_prompt": "Remove the farmer and the small tractor from the field. Keep the wide farm landscape and the single white-and-blue AFP drip-tape carton in the lower third.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 21,
+      "product_height_percent": 24,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Product is exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Dimensions (21% width, 24% height) fall comfortably within the specified 12-30% width and <35% height limits.",
+        "Placement is in the lower-middle (near lower third) and fully visible.",
+        "Background features a farm context with crop rows, which aligns with the article brief.",
+        "Required watermark 'AFP | 09134922013' is present.",
+        "No hard rejects observed: zero people, no extra commercial products or bottles.",
+        "Score reduced slightly as the product is slightly left of the center (46% x) rather than the preferred 'off-center' lower third (e.g., 70% x), but this is not a standalone hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

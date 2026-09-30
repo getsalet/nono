@@ -1,0 +1,81 @@
+{
+  "source_id": "10700024001317-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 45,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Two human figures (persons) are clearly visible in the background.",
+        "Hard reject: The product roll is too large (height ~45% > 35% limit; width ~38% > 30% limit).",
+        "Gibberish writing: The text below 'AFP' on the packaging appears to be stylized gibberish rather than standard readable text, violating the readability constraint.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all humans from the background. Significantly reduce the size of the drip tape roll (target width <20%, height <20%) to make it a secondary element. Replace the gibberish text on the roll with standard readable English labels. Maintain the concrete pad and gauge infrastructure. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 26,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Visible person (farmer) in the background, which is a hard reject trigger",
+        "Product width (32%) exceeds the maximum 30% limit for the bounding box",
+        "Visible white bucket near the background person, which is a hard reject trigger for container/bottle type items",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to strictly exclude all human figures and white buckets. The background must show only a distant empty field and an unattended red tractor on a plain concrete pad. The drip-tape roll (20cm) must be the only commercial package, positioned in the lower-left, with its width strictly less than 30% of the frame width. Include the fixed manifold with gauge, regulator, and filter. Ensure the bottom-right watermark 'AFP | 09134922013' is present. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 15,
+      "product_height_percent": 20,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "The image depicts a large, complex pump assembly (filters, gauges, manifold, regulator) in the foreground rather than an 'equipment-only elevated' composition where the focus is clearly the machinery without visual clutter.",
+        "The drip-tape roll is positioned in the lower-left corner rather than 'small and secondary' in the broader composition, dominating the frame's visual weight alongside the pump.",
+        "The massive tractor and farm equipment in the background visually overpower the primary subject of the 'detail' shot."
+      ],
+      "correction_prompt": "Tight crop the shot to focus exclusively on the elevated filter manifold and gauges. Reduce the visual prominence of the pump body and background tractor to make the drip-tape roll appear small, secondary, and contextually correct.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Object is a blue and white PVC pipe assembly (fitting/manifold) on top of a white and blue pail/tote, not the required 'cylindrical drip-tape carton roll'.",
+        "The presence of a pail/tote (container) is a hard reject (hard rejects 'bottle, jar, canister, bucket, fertilizer or pesticide container').",
+        "The object lacks the required 'wide low cylindrical' geometry associated with a carton roll; it is a vertical stack of PVC pipe."
+      ],
+      "correction_prompt": "Regenerate as an equipment-only elevated close-up of a white and blue wide low cylindrical drip-tape carton roll on an empty concrete pad. The role 'HEADWORKS DETAIL' means the required filter and manifold must be visible in the shot (perhaps on the carton or adjacent) but no active farm work. Remove the pail/tote and vertical PVC pipe assembly. Include the 'AFP | 09134922013' watermark in the bottom-right.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: Missing required infrastructure components (fixed filter, gauge, regulator, and manifold).",
+        "Hard reject: Image role 'HEADWORKS DETAIL' requires exactly one small secondary carton, but the main object is the carton itself, not a filtered headwork assembly.",
+        "Hard reject: Text on the roll label appears to be gibberish/distorted (e.g., 'EFFEIEGIC'), violating the no-gibberish writing rule."
+      ],
+      "correction_prompt": "Regenerate image to show agricultural headworks on a concrete pad (filter, gauge, manifold). Include one small secondary carton. Fix gibberish text on the carton to show 'DRIP 20'.",
+      "attempt": 5
+    }
+  ]
+}

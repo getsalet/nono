@@ -1,0 +1,81 @@
+{
+  "source_id": "10700024002907-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of a second commercial package (brown 'TABORFGRKIE' box) which is a hard reject trigger",
+        "Product width exceeds the 30% limit for hard rejection",
+        "Product height exceeds the 35% limit for hard rejection",
+        "Gibberish/fake text on the secondary packaging",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the second brown commercial box and any gibberish text. Rescale the AFP drip-tape roll to be significantly smaller (12-20% width, <35% height) to fit the 'secondary' role while maintaining the background infrastructure. Reduce the product group from 35% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 24,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible human body parts",
+        "Multiple people present in background",
+        "Farmers and workers clearly visible"
+      ],
+      "correction_prompt": "Regenerate image with strictly zero human figures, no people, no body parts or silhouettes; ensure background contains only static infrastructure and equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 37,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible person in the background (left side, standing near hay bales)",
+        "Visible human body parts/silhouette",
+        "Product appears taller than the 35% maximum limit",
+        "machine-enforced bounding-box check failed: Reduce product height from 37% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the person in the background completely; ensure the scene contains zero humans. Reduce the vertical height of the drip-tape carton roll so it occupies less than 35% of the frame height while maintaining physical plausibility. Reduce product height from 37% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 35,
+      "product_height_percent": 30,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Presence of a second commercial package (the smaller roll of tape next to the main carton) which violates the 'exactly one AFP... carton roll' and 'hard reject second commercial package/second roll' constraints.",
+        "Product width estimate exceeds the hard reject threshold of 30%.",
+        "Mandatory role violation: The brief requires the carton to be small and secondary to the infrastructure, but here the carton is the dominant subject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the second small roll of drip tape entirely. Scale down the main AFP white-and-blue carton roll to approximately 18-20% of the frame width so it appears small and secondary. Keep the filter, gauge, regulator, and manifold on the concrete pad as the primary focus. Maintain the required bottom-right watermark exactly. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible human person in the background (standing by the cardboard boxes)."
+      ],
+      "correction_prompt": "Remove all people and human body parts from the image. Keep the AFP drip tape roll and the concrete pad, ensuring the background contains only farm infrastructure like buildings or tractors without any workers or silhouettes.",
+      "attempt": 5
+    }
+  ]
+}
