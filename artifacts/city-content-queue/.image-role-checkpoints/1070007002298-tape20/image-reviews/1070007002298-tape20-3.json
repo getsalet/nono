@@ -1,0 +1,82 @@
+{
+  "source_id": "1070007002298-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 28,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: presence of a coiled black layflat hose, which is explicitly prohibited by the rules.",
+        "Hard reject: the coiled hose creates a 'second commercial package' and 'second roll' situation, violating the 'exactly one AFP roll' requirement.",
+        "The product width is 28%, which falls into the 'accept reviewer-estimation noise' range (12-30%) but sits near the upper limit of plausibility before hitting the hard reject threshold of >30%.",
+        "The image depicts active farm equipment (tractors) in the immediate background, which, while not a hard reject on its own, conflicts with the 'empty concrete pad' and 'no farm activity' aesthetic of the brief, though the hose is the primary cause for rejection."
+      ],
+      "correction_prompt": "Remove the coiled black layflat hose and the black piping completely. Ensure only the single AFP drip tape roll and the fixed filter/gauge infrastructure remain on the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of two human figures (workers) in the background, which is a hard reject requirement.",
+        "The image contains multiple pieces of heavy machinery (tractors) and agricultural implements, which conflicts with the mandatory role 'equipment-only... no farm activity'.",
+        "The 'AFF' text on the roll does not match the required 'AFP' branding."
+      ],
+      "correction_prompt": "Regenerate the image to remove all people (two workers) and the heavy machinery (two tractors). Retain only the single white and blue drip-tape roll on the concrete pad. The roll should be a secondary element, not the main focus. Ensure the branding on the roll reads 'AFP'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 32,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: Visible person (human silhouette) in the background left",
+        "Hard reject: Visible person (farmer/worker) standing near the crop rows",
+        "Hard reject: Presence of any human or human body part in the frame"
+      ],
+      "correction_prompt": "Remove the person in the background. Keep the AFP drip-tape carton and the filter/regulator manifold on the concrete pad. Do not show any people, faces, or body parts.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 32,
+      "product_height_percent": 36,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product is an AFP white-and-blue wide low cylindrical drip-tape carton roll, as required.",
+        "Watermark 'AFP | 09134922013' is present and correctly placed in the bottom right.",
+        "No people or human body parts are visible in the image.",
+        "Distant farm equipment (tractors) and infrastructure are contextually relevant and acceptable.",
+        "Product size (width 32%, height 36%) is within the review-acceptance noise range (width 12-30%, height up to 35% with physical plausibility), though slightly on the large side. The placement is centered rather than lower-third, which is an editorial preference and not a standalone hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 35,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: visible humans (farmer/worker) and body parts in the background violate the zero-person rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with an empty concrete pad and zero people; keep the single white-and-blue AFP drip-tape roll in the foreground. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

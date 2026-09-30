@@ -1,0 +1,66 @@
+{
+  "source_id": "1070001002335-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 45,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The mandatory HEADWORKS DETAIL role requires an 'elevated record photograph of one fixed pump, gauge and manifold'; this image only shows two coils on the ground, missing all required equipment (pump, gauge, manifold).",
+        "The required bottom-right watermark 'AFP | 09134922013' is missing from the image."
+      ],
+      "correction_prompt": "Regenerate an elevated close-up detail shot of a fixed pump, gauge, and manifold on a concrete pad. Include one small packaged AFP coil and one small bare black coil as secondary elements in the background. Add the watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 72,
+      "product_height_percent": 48,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: The combined width of the two product coils approximates 72% of the frame, which exceeds the maximum hard-reject threshold of 65%.",
+        "Hard reject: Missing mandatory 'HEADWORKS DETAIL' elements; the image lacks the required fixed pump, gauge, and manifold infrastructure in the composition.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width.; Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate with the combined width of the two coils reduced to 15% of the frame. Add an elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad as the primary focus, keeping the two coils small and secondary in the foreground. Reduce the product group from 72% to 8-65% of frame width. Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 15,
+      "product_height_percent": 10,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The image shows one packaged AFP coil and one bare black coiled hose segment, not the approved layflat pair (one packaged AFP coil and one bare black woven coil).",
+        "The mandatory role requires a focused 'equipment-only' record of the pump/gauge manifold with the two-coil pair small and secondary, but the layout gives the pump too much dominance, pushing the coils to the edge and making the required pair secondary to the machinery."
+      ],
+      "correction_prompt": "Regenerate to show a fixed pump and gauge manifold on a concrete pad with a packaged AFP layflat coil and a bare black woven layflat coil as two distinct secondary products; ensure the coils are clearly layflat (not coiled hose) and positioned as secondary details near the equipment.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 55,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Correct product pairing: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Physical plausibility: Coils are separate, fully visible, and do not intersect or merge.",
+        "Zero human presence: No people, body parts, or silhouettes are visible.",
+        "Required watermark: The specific string 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Environmental context: The concrete pad and distant farm buildings are acceptable infrastructure/setting.",
+        "Minor deviation: The specific 'elevated' angle requested for the HEADWORKS role is not perfectly matched (image is near eye-level), but the scene otherwise fits the quiet, equipment-focused aesthetic."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

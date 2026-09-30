@@ -1,0 +1,52 @@
+{
+  "source_id": "10700022002059-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 19,
+      "product_height_percent": 22,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: Visible human person (woman) is present in the image, violating the strict 'zero people' and 'zero human body parts' requirement."
+      ],
+      "correction_prompt": "Remove the woman and her hands from the image. Ensure the AFP drip-tape roll remains in the same position and size. Keep the background, crops, and tractor exactly the same.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 21,
+      "product_height_percent": 18,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Human person (farmer/worker) is clearly visible standing next to the tractor in the background.",
+        "Placement failure: The product is centered rather than off-center on the lower third as requested for the EDITORIAL HERO role."
+      ],
+      "correction_prompt": "Remove the person standing next to the tractor. Move the roll of drip tape to the lower-left or lower-right quadrant, keeping it small relative to the wide landscape view. Retain the text 'AFP | 09134922013' in the bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 15,
+      "product_height_percent": 14,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Product is exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll",
+        "Width and height dimensions are within acceptable tolerance ranges (12-30% width, up to 35% height)",
+        "Placement is off-center on the lower third as required for the editorial hero role",
+        "Zero people or human body parts visible",
+        "Background matches the agricultural/irrigation article brief with a city skyline on the horizon",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right corner",
+        "No prohibited items (bottles, second packages, pipes) are visible"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

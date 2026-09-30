@@ -1,50 +1,38 @@
 {
   "source_id": "1070008002107-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 20,
+      "score": 55,
       "duplicate_roles": [
-        1,
+        2,
         3
       ],
       "reasons": [
-        "Role 1 (Editorial Hero) failed: The product is centered on the ground, violating the requirement to be 'small, fully visible and off-center on the lower third' of a 'wide high-oblique view'. The view is a low-angle perspective shot, not a high-oblique one.",
-        "Role 3 (Headworks Story) failed: The scene depicts two tractors in the background and a coiled hose/pipe, but completely lacks the specific unattended fixed filter, gauge, regulator, and manifold hardware required for this role. The product is also too prominent and not a 'secondary' element.",
-        "Distinct visual narratives: The four images successfully differentiate their roles through camera height (elevated, eye-level, and ground-level) and environment structure (bare field, headworks assembly, installed crop field, and detailed crop bed view).",
-        "Role 2 (Selection): Features an 'elevated technical arrangement' in a bare field with a visible strip of tape with emitters, fulfilling the selection evidence requirement.",
-        "Role 3 (Headworks): Clearly distinguishes itself by including the unattended fixed filter, gauge, and regulator assembly, with the single product roll kept secondary.",
-        "Role 4 (Installation): Shows an asymmetric view of installed drip tape and crop beds; the lack of a centered vanishing point makes it distinct from Role 5.",
-        "Role 5 (Maintenance): Provides a distinct ground-level detail of a crop bed with irrigation lines, avoiding a direct repeat of the Role 3 hardware or the Role 4 wide shot.",
-        "Compliance: No people, bottles, or second rolls/boxes are present in any of the frames. The watermark 'AFP | 09134922013' is present and correctly positioned."
+        "Role 1 is oversized: the product carton occupies the visual center and foreground rather than remaining small on the lower third as required.",
+        "Role 2 lacks selection evidence: there are no visible emitters, emitter-spacing markers, or selection indicators—only an unconnected drip hose looped on the ground.",
+        "Role 3 fails the 'no farm activity' requirement: a tractor and red barn are prominently visible in the background, violating the equipment-only restriction."
       ],
-      "correction_prompt": "Re-shoot Role 1 as a high-oblique aerial view with the product small in the lower-left; replace Role 3 with a medium shot of a static filter head featuring a visible gauge and pressure regulator, keeping the product secondary. None.",
+      "correction_prompt": "Reshoot Role 1 with the carton scaled down and placed off-center on the lower third. In Role 2, add visible drip emitters or spacing markers to demonstrate selection criteria. In Role 3, remove the background tractor and farm buildings to create an empty concrete pad environment with only the irrigation components (filter, gauge, regulator, manifold) and the carton.",
       "panel_scores": [
-        20,
-        95
+        55
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 10,
-      "duplicate_roles": [
-        3,
-        4
-      ],
+      "score": 45,
+      "duplicate_roles": [],
       "reasons": [
-        "The product carton in all four panels is significantly oversized relative to the required 'small and secondary' placement, particularly violating the hero and installation proof constraints.",
-        "Panel 3 fails the technical narrative for the HEADWORKS STORY role by missing the required 'unattended' fixed filter and manifold; instead, it displays a portable field regulator and coiled hose with a powered tractor in the immediate background.",
-        "The camera angles and framing across the panels are too similar (all low-angle ground views), failing to provide the visibly distinct environmental structure required for an editorial progression.",
-        "Role 4 violates the 'no centered vanishing point' constraint by using a strong central perspective down the crop row.",
-        "Role 5 contains unrelated commercial containers (a tractor in the background) in addition to the required product, which is a rejection cause.",
-        "Role 4 and Role 5 share the same generic environment structure (tractor + crop row) with no change in camera angle or height, making them duplicate layouts."
+        "Panel 3 is missing required technical components: the role specifies an 'equipment-only' view of a fixed filter, gauge, regulator, and manifold, none of which are visible in the image.",
+        "Panel 3 contains farm activity (a large, prominent tractor in the foreground) which violates the role requirement of 'no farm activity'.",
+        "Panel 1 places the carton at the bottom center rather than 'off-center on the lower third' as specified in the editorial hero role.",
+        "Panel 2's technical evidence (emitters) is present but the layout (carton on concrete pad) closely overlaps with the physical setup required for Panel 3, creating a narrative conflict."
       ],
-      "correction_prompt": "Reshoot the set with the product carton scaled down to exactly 10-15% of frame height in a strict off-center position; replace the portable equipment in panel 3 with a static headworks manifold and filter setup away from any active machinery; and increase the height differential between the hero and evidence shots to establish a distinct editorial narrative. Regenerate panel 4 as an asymmetric wide shot from a side angle showing a field edge, and regenerate panel 5 as a close-up macro of an emitter or connector with only the carton and soil visible in the background, strictly removing all vehicles.",
+      "correction_prompt": "For Panel 3, replace the prominent tractor with a concrete pad and a static arrangement of filtration equipment (filter, manifold, gauge, regulator); for Panel 1, shift the carton to the left or right third to achieve a true off-center composition.",
       "panel_scores": [
-        40,
-        10
+        45
       ],
       "set_attempt": 2
     }

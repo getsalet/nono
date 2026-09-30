@@ -1,0 +1,83 @@
+{
+  "source_id": "1070001002335-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 45,
+      "product_height_percent": 22,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Both required items (packaged AFP coil and bare black woven coil) are present, separate, and physically plausible.",
+        "Zero people, faces, or body parts are visible.",
+        "No third commercial packages, bottles, or containers are present.",
+        "Required watermark 'AFP | 09134922013' is correctly placed in the bottom right.",
+        "Image fits the 'EDITORIAL HERO' brief with a wide high-oblique water-transfer context, showing the products off-center in a small scale relative to the landscape.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 55,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible human figure standing in the background (center horizon) is a hard reject.",
+        "Product bounding box covers approximately 55% of the frame width, which exceeds the strict hard-reject limit of 42%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures completely from the scene. Reduce the foreground product pair size significantly to meet the width requirement (less than 40% of frame width) while maintaining the editorial off-center composition. Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 42,
+      "product_height_percent": 30,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Visible human figure in the mid-ground violates the mandatory 'zero people' requirement."
+      ],
+      "correction_prompt": "Remove the standing person in the field. Keep the two coils and the distant tractor. Ensure no humans are visible.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 45,
+      "product_height_percent": 55,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Image displays the approved pair of one packaged coil (left) and one bare black coil (right).",
+        "The combined width (approx. 45%) exceeds the preferred range (12-20%) but remains within the accept limit of 42-45% for 'noisy estimates' where objects are recognizable and separate.",
+        "Watermark 'AFP | 09134922013' is present in the bottom right corner as required.",
+        "No humans, body parts, or extra commercial items are present.",
+        "The placement in the foreground is consistent with the editorial requirement to remain off-center relative to the main background horizon.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width.; Reduce product height from 55% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width. Reduce product height from 55% to at most 40% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 40,
+      "product_height_percent": 20,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "A third commercial package is visible to the far right (green coiled object)",
+        "The bare black woven coil does not have a visible cardboard core, making it less plausible",
+        "Products are centered rather than distinctly off-center in the editorial composition"
+      ],
+      "correction_prompt": "Remove the green coiled object on the right to ensure only the approved packaged and bare black woven coils are visible; add a physical cardboard core to the bare black coil; position the two products slightly more towards the left-center off-center position.",
+      "attempt": 5
+    }
+  ]
+}

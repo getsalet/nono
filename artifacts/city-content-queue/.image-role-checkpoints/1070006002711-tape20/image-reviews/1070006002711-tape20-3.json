@@ -1,0 +1,79 @@
+{
+  "source_id": "1070006002711-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 29,
+      "product_height_percent": 36,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Human presence (a crouching man is clearly visible on the right side of the image).",
+        "Hard reject: Human body parts (head, hands, arms, and legs are visible).",
+        "Hard reject: The image role 'HEADWORKS DETAIL' was not followed, as the main subject is a roll of tape rather than a fixed filter/gauge/manifold assembly.",
+        "Product height exceeds the 35 percent threshold for physical plausibility in this context.",
+        "machine-enforced bounding-box check failed: Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people from the frame. Replace the foreground drip-tape roll with an elevated, close-up record photograph of a fixed irrigation filter, gauge, and manifold on an empty concrete pad. Keep the drip-tape roll small and secondary in the background or remove it entirely. Ensure the 'AFP | 09134922013' watermark remains in the bottom-right corner. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Multiple visible humans (one seated in foreground-left, two standing in the background) violate the mandatory 'zero people' requirement.",
+        "Headworks detail setup includes an active farm environment and workers, conflicting with the brief's 'no farm activity' instruction."
+      ],
+      "correction_prompt": "Regenerate with zero people or human body parts visible. Remove the seated farmer and background figures. Maintain the drip-tape roll and irrigation manifold on the concrete pad without any human activity.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 33,
+      "product_height_percent": 48,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Product width exceeds the 30 percent maximum threshold",
+        "Product height exceeds the 35 percent maximum threshold",
+        "Fails the mandatory visual brief which requires the carton to be small and secondary to the equipment",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 48% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Resize the AFP roll so its width is 20-23% and height is below 35% of the frame; ensure it appears small and secondary in the composition. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 48% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains a person squatting in the background on the left",
+        "Contains a person standing in the background on the right"
+      ],
+      "correction_prompt": "Regenerate image to remove the people standing and squatting in the background. Keep the empty field, tractor, and the AFP carton roll on the concrete pad. Maintain the bottom-right watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24.5,
+      "product_height_percent": 31.0,
+      "product_x_center_percent": 46.0,
+      "reasons": [
+        "The image shows 'gibberish writing' instead of the required watermark; the text in the image is nonsensical (e.g., 'ORIP') rather than the mandatory 'AFP | 09134922013' (though the latter is also visible in a separate overlay, the print on the carton itself violates the gibberish rule).",
+        "The required watermark 'AFP | 09134922013' is not visible in the bottom-right corner of the actual image file; a partial different string is visible at the bottom edge, failing the hard requirement."
+      ],
+      "correction_prompt": "Regenerate the image ensuring the carton has clear, legible 'AFP' branding without gibberish text, and place the specific watermark 'AFP | 09134922013' clearly in the bottom-right corner of the frame.",
+      "attempt": 5
+    }
+  ]
+}

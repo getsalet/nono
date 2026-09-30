@@ -4,37 +4,37 @@
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        2
-      ],
+      "score": 25,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails the 'exactly one approved carton' constraint: the central white roll is unapproved; the correct product is missing.",
-        "Role 2 fails the 'exactly one approved carton' constraint: the central white roll is unapproved; the correct product is missing.",
-        "Role 2 fails the 'simple background' constraint: the presence of a large red/green tractor directly conflicts with the requirement for a simple or empty background.",
-        "Role 3 fails the 'empty concrete pad' constraint: the concrete pad contains multiple unapproved hardware units and equipment activity, violating the 'no farm activity' and 'equipment-only' requirements."
+        "Role 1 violation: The brief requires a 'high-oblique view' where the farm context dominates, but the image shows a low-angle, ground-level perspective. Additionally, the product roll is positioned in the center rather than 'off-center on the lower third', acting as the dominant subject.",
+        "Role 2 violation: The brief requires 'exactly one approved carton', but the image displays two product rolls side-by-side.",
+        "Role 3 violation: The brief specifies an 'equipment-only' shot with 'no farm activity'. The image includes a toy tractor and a second cardboard box, which are explicitly forbidden distractors.",
+        "Product inconsistency: The visual asset (a roll of white material, likely drip tubing) does not align with the article brief for 'irrigation strip tape' (نوار تیپ), which is typically black plastic."
       ],
-      "correction_prompt": "Regenerate all three images: 1. Replace the white rolls with the correct approved blue carton. 2. Ensure Role 2 has a clean field edge background without large machinery. 3. Ensure Role 3 features a single set of hardware (filter, gauge, regulator, manifold) on an otherwise empty concrete pad.",
+      "correction_prompt": "Role 1: Shift to a high-oblique aerial view with the product roll small and off-center on the lower third. Role 2: Remove the extra roll so only one product is visible. Role 3: Remove the toy tractor and the cardboard box; keep only the filter/gauge equipment and the primary product roll.",
       "panel_scores": [
-        35
+        25
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
+      "score": 38,
       "duplicate_roles": [
+        1,
         2,
         3
       ],
       "reasons": [
-        "Role 2 (Image 2) fails the 'SELECTION EVIDENCE' requirement: it depicts 'headworks' hardware (filter, gauges, regulator) on a concrete pad instead of visible emitter-spacing or a field-selection context.",
-        "Role 3 (Image 3) depicts 'headworks' hardware, which structurally duplicates the layout and subject of Role 2.",
-        "Role 3 contains visible farm machinery (tractors/sprayers) in the background, violating the 'no farm activity' constraint (unattended static equipment was permitted, but these are active agricultural machines)."
+        "Image 2 contains a person, which is explicitly prohibited.",
+        "Image 3 is missing the required headworks equipment (filter, gauge, regulator, manifold) on the concrete pad, showing only the product.",
+        "Image 1 fails the layout requirement: the product is located in the bottom-right corner rather than off-center on the lower third.",
+        "Images 2 and 3 feature a large unattended tractor in the background, constituting farm activity which is prohibited."
       ],
-      "correction_prompt": "Regenerate Role 2 to show the AFP drip tape on a field edge with visible emitter-spacing and crop rows; regenerate Role 3 to show an isolated, clean concrete pad with only the headworks and the small carton, removing all farm activity and tractors from the background.",
+      "correction_prompt": "Re-shoot Image 2 without any personnel, ensure Image 1's product is off-center (not corner-placed), and reconstruct Image 3 to include the specific headworks hardware (filter, gauge, regulator, manifold) on the concrete pad with a clean background.",
       "panel_scores": [
-        45
+        38
       ],
       "set_attempt": 2
     }

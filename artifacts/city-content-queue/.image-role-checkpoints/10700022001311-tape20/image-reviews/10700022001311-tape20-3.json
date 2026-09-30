@@ -1,0 +1,78 @@
+{
+  "source_id": "10700022001311-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Two human figures are visible in the background, triggering the hard reject for any person or human silhouette.",
+        "Visible fertilizer/pesticide containers and loose hardware on the ground are present, violating the clean pad requirement.",
+        "The image shows a layflat hose unspooled from the roll, conflicting with the brief's requirement for an equipment-only static record of fixed infrastructure."
+      ],
+      "correction_prompt": "Regenerate image without any human figures. Remove all loose bottles and containers. Show only the single white and blue AFP carton roll on a clean concrete pad, with fixed irrigation infrastructure (filter, gauge, manifold) in the background, and no unspooled hose.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product height exceeds the 35 percent limit",
+        "Image content does not match the mandatory HEADWORKS DETAIL role which requires fixed filter, gauge, regulator, and manifold",
+        "machine-enforced bounding-box check failed: Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate image to feature fixed filter, gauge, regulator, and manifold on a concrete pad with the drip tape roll appearing small and secondary; ensure roll height is under 35 percent of the frame. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 23,
+      "product_height_percent": 30,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: multiple human figures and workers are clearly visible in the background, which is a standalone hard reject regardless of placement.",
+        "Violation of mandatory role: The brief required an 'empty concrete pad' with 'no farm activity,' but the image depicts a busy worksite with active workers and vehicles."
+      ],
+      "correction_prompt": "Remove all humans, workers, and the red tractor from the background. Ensure the concrete pad is completely empty with no human silhouettes. Keep the single AFP carton roll in the foreground and the fixed irrigation hardware on the left.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Hard reject: Multiple people visible in the background (two figures near the green tractor).",
+        "Hard reject: Two gauges/regulators visible in the background, which the brief describes as being part of an 'elevated record photograph' of fixed infrastructure, but the current crop does not clearly match the 'HEADWORKS DETAIL' intent, which is specifically defined as equipment-only with the carton remaining secondary. The carton is too large here.",
+        "The product (carton) is significantly larger than the 'small and secondary' requirement of the mandatory 'HEADWORKS DETAIL' role."
+      ],
+      "correction_prompt": "Regenerate a close-up, low-angle shot of the 'HEADWORKS' infrastructure (filter, gauge, regulator, manifold) on a concrete pad. The white-and-blue AFP carton must be visible but significantly smaller and further in the background. Remove all people and tractors from the frame.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Second commercial package (distant drip tape roll) visible, which is a hard reject.",
+        "Text on the product labels is gibberish/distorted.",
+        "Mandatory image role 'HEADWORKS DETAIL' (equipment-only filter, gauge, manifold) not met."
+      ],
+      "correction_prompt": "Remove the second roll in the background. Fix the gibberish text on the carton to be clear and legible. Generate the headworks infrastructure (filter, gauge, manifold) on the concrete pad as the main focus, keeping the carton small and secondary.",
+      "attempt": 5
+    }
+  ]
+}

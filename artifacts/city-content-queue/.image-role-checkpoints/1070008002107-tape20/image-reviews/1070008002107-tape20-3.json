@@ -1,0 +1,78 @@
+{
+  "source_id": "1070008002107-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 42,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Person (farmer) visible in the background.",
+        "Hard reject: Second commercial package (cardboard box) present.",
+        "Hard reject: Product height exceeds the 35% limit.",
+        "Role violation: Image does not match the 'HEADWORKS DETAIL' brief (missing filter, gauge, and manifold).",
+        "machine-enforced bounding-box check failed: Reduce product height from 42% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate an elevated close-up of a filter, gauge, and manifold on a concrete pad. Remove the person and the cardboard box. Ensure the drip tape roll is not the main subject and fits within height limits. Reduce product height from 42% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 25,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Human figures (faces/bodies) are visible in the background, which is a hard reject based on the requirement for zero people or human silhouettes."
+      ],
+      "correction_prompt": "Regenerate the image with no people or human silhouettes visible in the background. Ensure the background is empty or contains only unattended equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 29,
+      "product_height_percent": 23,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Image role violation: Brief required 'HEADWORKS DETAIL' (elevated record photograph of fixed filter, gauge, regulator and manifold), but image displays a ground-level product shot.",
+        "Missing mandatory infrastructure: The required fixed filter, gauge, regulator, and manifold infrastructure are absent from the frame."
+      ],
+      "correction_prompt": "Regenerate to show an elevated close-up of irrigation headworks infrastructure including a fixed filter, gauge, regulator, and manifold on a concrete pad; the AFP carton roll must appear small and secondary to the hardware.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 29,
+      "product_height_percent": 36,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of people (two visible men in the background) which is a hard reject",
+        "Presence of an animal (horse) which violates the equipment-only and no-life constraints for this context",
+        "Secondary AFP cardboard box is visible, violating the 'exactly one approved carton remains small and secondary' or generally the cleanliness of the shot",
+        "Product height is on the edge of the 35% limit, appearing slightly taller than ideal",
+        "machine-enforced bounding-box check failed: Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image on an empty concrete pad with the filter, gauge, regulator, and manifold, but strictly NO people, NO animals, and NO secondary cardboard boxes. Keep the drip tape roll as the primary subject. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 20.0,
+      "product_height_percent": 28.0,
+      "product_x_center_percent": 48.0,
+      "reasons": [
+        "Hard reject: Image contains multiple people (farmers) standing in the background, which violates the 'zero people' rule."
+      ],
+      "correction_prompt": "Regenerate image to remove all people (human silhouettes) from the background. Ensure only the AFP drip-tape roll and the manifold equipment remain on the concrete pad.",
+      "attempt": 5
+    }
+  ]
+}

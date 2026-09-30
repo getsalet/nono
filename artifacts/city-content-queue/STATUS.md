@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-30T14:09:59+00:00`
+- آخرین بروزرسانی: `2026-09-30T14:23:52+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **650 از 1894 (34.32٪)**
-- تکمیل‌شده: **650**
+- پیشرفت: **652 از 1894 (34.42٪)**
+- تکمیل‌شده: **652**
 - در حال پردازش: **0**
-- در انتظار: **29**
-- آماده انتخاب در اجرای بعدی: **29**
+- در انتظار: **33**
+- آماده انتخاب در اجرای بعدی: **33**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1215**
+- ناموفق: **1209**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **توجردی** — فارس — `tape20` — 1431 کلمه — `2026-09-30T14:19:14+00:00`
+- **سماله** — خوزستان — `layflat` — 1707 کلمه — `2026-09-30T14:16:51+00:00`
 - **خرامه** — فارس — `tape20` — 1213 کلمه — `2026-09-30T14:04:28+00:00`
 - **مشراگه** — خوزستان — `layflat` — 1482 کلمه — `2026-09-30T13:52:18+00:00`
 - **بستان** — خوزستان — `tape20` — 1229 کلمه — `2026-09-30T13:49:39+00:00`
@@ -50,21 +52,19 @@
 - **مزایجان** — فارس — `layflat` — 1341 کلمه — `2026-09-30T03:35:20+00:00`
 - **نیمبلوک** — خراسان جنوبی — `layflat` — 1620 کلمه — `2026-09-30T03:17:27+00:00`
 - **سده** — فارس — `layflat` — 1264 کلمه — `2026-09-30T03:15:22+00:00`
-- **شیروان** — خراسان شمالی — `layflat` — 1226 کلمه — `2026-09-29T10:43:11+00:00`
-- **رونیز** — فارس — `tape20` — 1176 کلمه — `2026-09-29T10:39:02+00:00`
 
 ## خطاهای اخیر
 
-- **فدامی** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **صغاد** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **عنبر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **بهمن** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **خیراباد** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **صفاشهر** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **گلگیر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **خاوران** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **مصیری** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **گوریه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **دهرم** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **شهرپیر** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **تراز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **حسامی** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **داریان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **فراشبند** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **زهره** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **زاهدشهر** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **ایزدخواست** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **ششده** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 
