@@ -1,0 +1,83 @@
+{
+  "source_id": "10900029002656-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 60,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains visible people (human silhouettes) in the background middle ground, which is a hard reject.",
+        "A third commercial package or coil is partially visible in the bottom right corner (black coil/rope), which violates the requirement for exactly two coils.",
+        "Product bounding box estimate from pixels.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove all people/human figures in the background. Remove the extra coil visible in the bottom right corner. Keep the two central coils (packaged and bare) and the tractors as context. Retain the watermark. Reduce the product group from 60% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 61,
+      "product_height_percent": 32,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Product pair spans approximately 61% of the image width, significantly exceeding the 42% hard reject threshold.",
+        "The pair is too prominent and centered, failing to meet the requirement of remaining small and off-center for the editorial hero role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 61% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reshoot or render the scene from a much higher distance or wide angle so the two product coils occupy less than 20% of the total frame width. Place the products in the lower corner (e.g., bottom-left or bottom-right) to ensure they are off-center and small relative to the vast agricultural landscape. Reduce the product group from 61% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 46,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains the required editorial hero pair: one packaged coil and one bare black coil.",
+        "Watermark 'AFP | 09134922013' is present and intact in the bottom-right.",
+        "Context is a high-oblique farm landscape consistent with the water-transfer role.",
+        "No people or human body parts are visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 46% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 50,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Presence of a human figure in the background, which violates the 'zero people' hard reject rule",
+        "Product bounding box is approximately 50% wide, exceeding the maximum 42% width limit",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the man in the background; ensure the two coils are small and separate, occupying less than 42% of the image width Reduce the product group from 50% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 62,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product width estimated at 62% exceeds the strict 42% hard reject limit",
+        "The approved pair is clustered centrally and dominates the foreground, violating the brief's instruction that the products 'remain small, separate and off-center'",
+        "The layout does not achieve the required 'EDITORIAL HERO' scale where the wide context dominates the frame",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Significantly shrink the scale of the product pair (combined width under 15%) and reposition them to the lower-left quadrant. Keep the coils small and separate so the wide farm and water-transfer context dominates the frame. Retain the bottom-right watermark. Reduce the product group from 62% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

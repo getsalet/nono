@@ -1,0 +1,85 @@
+{
+  "source_id": "11100022001444-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 33,
+      "product_height_percent": 36,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject triggered: visible person (farmer) in the background, zero people rule violated.",
+        "Product bounding box (width 33%, height 36%) exceeds the maximum tolerated dimensions of 30% width and 35% height.",
+        "Visual role mismatch: The image shows the tape roll as the primary subject, failing to meet the 'HEADWORKS DETAIL' requirement of focusing on an elevated fixed filter, gauge, and regulator on an empty pad with the roll remaining small/secondary.",
+        "Text errors: Visible gibberish text on the carton label ('ORIP ILITZUDORAPTA') instead of the expected specific article data.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures from the background completely. Regenerate the scene to feature an elevated fixed irrigation manifold with a filter and pressure gauge on an empty concrete pad. Position the AFP drip-tape carton roll as a small secondary element on the pad, ensuring its bounding box does not exceed 30% width or 35% height. Ensure the label text 'نوار تیپ ۲۰ سانتی' is rendered clearly and accurately. Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 31,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing mandatory equipment: The image lacks the fixed filter, gauge, regulator, and manifold on a concrete pad required by the HEADWORKS DETAIL role; instead, it features an open pit.",
+        "Product dimensions: The estimated bounding box width (~31%) exceeds the hard reject threshold of 30%.",
+        "Missing required element: The second commercial package/infrastrucure detail specified in the image role is absent.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Redraw the scene to include a fixed filter, gauge, regulator, and manifold on an empty concrete pad with the open pit removed or de-emphasized. The white-and-blue AFP roll should be secondary and reduced to a width of approximately 20% of the frame. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: A visible person (farmer in a hat) is present in the background on the left side.",
+        "Hard reject: The required bottom-right watermark must be 'AFP | 09134922013', but the image displays 'AFP | 09134922013'.",
+        "The bounding box for the product appears slightly too wide and tall (approx 32% width / 38% height), exceeding the allowed limits for a 12-30% width constraint.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the person visible in the background on the left to ensure zero people. Crop the frame closer to the roll and equipment to make the carton roll approximately 20-23% of the image width. Ensure the watermark at the bottom right reads 'AFP | 09134922013'. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 35,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: The image contains a human body (a person standing in the mid-ground). The instructions strictly require zero people or human silhouettes.",
+        "Hard reject: The image does not contain the mandatory role of 'one fixed filter, gauge, regulator and manifold'. It only shows the roll.",
+        "Hard reject: The product (drip-tape carton roll) is wider than the 30% limit for frame width.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to show an equipment-only shot of a fixed filter, gauge, regulator, and manifold on an empty concrete pad. Include a small, secondary AFP drip-tape roll (width < 30%). Remove all humans and farm activity. Ensure the bottom-right watermark 'AFP | 09134922013' is present. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 33,
+      "product_height_percent": 26,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Contains multiple visible people (farmers/workers) in the background.",
+        "Contains a second commercial container/bucket (orange and yellow) in the background.",
+        "Contains gibberish/wrong watermark text in the mid-right area ('BEARX RREO...').",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with zero people, zero vehicles, and zero secondary containers. Ensure the background is clean and shows only agricultural infrastructure or distant crops. The watermark must be exactly 'AFP | 09134922013' in the bottom-right corner with no extra text. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

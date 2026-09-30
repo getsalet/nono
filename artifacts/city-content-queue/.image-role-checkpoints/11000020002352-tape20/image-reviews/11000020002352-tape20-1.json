@@ -1,0 +1,68 @@
+{
+  "source_id": "11000020002352-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 40,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Hard reject: visible person (man standing next to tractor) violates the 'zero people' rule.",
+        "Product geometry is too large; width (~32%) and height (~40%) exceed maximum acceptable limits of 30% and 35%.",
+        "Product is positioned near the bottom-center rather than being small and clearly off-center in the lower-third as per the 'Editorial Hero' brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the man and the tractor entirely. Shrink the white and blue AFP drip tape roll significantly (width ~20%, height ~25%) and move it to the lower-left or lower-right (off-center) to fit the editorial hero composition without any human presence. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 19,
+      "product_height_percent": 23,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Product placement is centered rather than 'off-center' on the lower third as required by the mandatory EDITORIAL HERO role.",
+        "The carton is too prominent and large relative to the scene, failing the 'stays small' requirement for this editorial context.",
+        "The required bottom-right watermark text is incorrect (it displays '09134922013' instead of the mandatory '09134922013' which is actually correct, but the visual rendering is too much of a hard black box compared to a standard watermark, though this is a minor style point. The primary fail is placement and scale).",
+        "Hard reject for placement and scale: The brief demands the carton be 'small' and 'off-center', but this image features a relatively large, centered object in the foreground that disrupts the 'farm context dominates' instruction."
+      ],
+      "correction_prompt": "Regenerate with the AFP carton significantly smaller (approx 10% width), positioned strictly in the lower-left or lower-right corner (off-center). The farm rows must dominate the high-oblique view.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 17,
+      "product_height_percent": 11,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Hard reject: A full person (farmer) is prominently visible on the right side of the image.",
+        "Hard reject: The presence of a human silhouette violates the zero-person rule."
+      ],
+      "correction_prompt": "Remove the person completely. Keep the cartoned drip-tape roll in the lower-left and the agricultural landscape background.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "Product is a wide, low cylindrical carton roll matching the required shape.",
+        "Placement is in the lower-left, which aligns with the editorial preference for lower-third, off-center positioning.",
+        "Zero people or body parts are visible.",
+        "The background shows a farm field with crop rows, dominating the scene as required.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

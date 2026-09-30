@@ -1,0 +1,63 @@
+{
+  "source_id": "11000025002350-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 41,
+      "product_height_percent": 43,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product bounding box width (41%) and height (43%) exceed the specified hard limit of 30% and 35% respectively.",
+        "Visible human figures (two people) in the background violate the hard rejection for 'zero people'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 41% to 12-30% of frame width.; Reduce product height from 43% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reshape the image to make the water roll significantly smaller (approx 20% width) and remove all human figures from the background. Ensure the roll remains centered on the concrete pad. Reduce the product group from 41% to 12-30% of frame width. Reduce product height from 43% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Visible human in the background (standing figure in blue shirt).",
+        "Role violation: Image role 'HEADWORKS DETAIL' required one fixed filter/gauge/manifold; these mandatory equipment items are missing.",
+        "Context mismatch: Background shows a tractor which is not listed in the allowed context for this specific image role, and the 'empty concrete pad' setting is not isolated."
+      ],
+      "correction_prompt": "Regenerate to strictly include one fixed filter, gauge, regulator and manifold on an empty concrete pad. Remove all people, the standing figure, and the tractor from the scene. The carton roll must remain small and secondary.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 31,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Person visible in background (hard reject for zero people/human body parts)",
+        "Product roll height exceeds 35% threshold",
+        "Product roll width exceeds 30% threshold",
+        "Second commercial package not present but infrastructure (gauge/manifold) is visible alongside the roll, whereas the brief specified the carton should remain small and secondary",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Regenerate with a standard empty concrete pad setup, ensuring the white-and-blue drip-tape roll is significantly smaller (width ~15-20%, height <30%) and positioned as a secondary element next to a clearly visible, prominent fixed irrigation manifold and gauge. Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "review_unavailable": true,
+      "reasons": [
+        "visual reviewer unavailable after 3 retries: HTTPError"
+      ],
+      "correction_prompt": "Retry visual review of the preserved candidate without regenerating it.",
+      "attempt": 4
+    }
+  ]
+}

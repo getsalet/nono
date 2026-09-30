@@ -1,0 +1,72 @@
+{
+  "source_id": "11000010002302-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 15,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The image contains a visible person (farmer/worker) standing in the field, which violates the zero-person and zero-human-body-part requirement."
+      ],
+      "correction_prompt": "Remove the person standing in the field to comply with the zero-person requirement.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product (drip-tape carton) is centered horizontally in the lower third, but the visual brief specifically requests the approved carton to be 'off-center'. While off-center placement is an editorial preference and not a hard reject on its own, the combination of the centered placement and the relatively wide crop (28% width, near the 30% hard limit) makes the product the dominant focal point, failing to meet the 'EDITORIAL HERO' requirement where 'the farm and irrigation context dominate' and the product should 'stay small'.",
+        "Product width is 28%, which is close to the 30% hard reject threshold.",
+        "The product is centered (48% x-coordinate) rather than off-center, which conflicts with the mandatory role's specific editorial preference."
+      ],
+      "correction_prompt": "Regenerate with the AFP drip-tape roll placed distinctly off-center (left or right) and significantly smaller (width < 20%) so the farm field context dominates the frame.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 16,
+      "product_height_percent": 14,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains a visible human figure (a person walking) in the field, which is a strict hard reject under the 'zero people' rule."
+      ],
+      "correction_prompt": "Remove the human figure walking in the field. Ensure no people or body parts are visible anywhere in the image while maintaining the farm context and the placement of the drip tape roll.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product placement is centered in the lower third, whereas the editorial brief requires an off-center composition.",
+        "Product dimensions are too large; width is at the hard-reject limit (30%), violating the preferred 20-23% range and standard 'small' criteria."
+      ],
+      "correction_prompt": "Reposition the AFP carton to the lower-left or lower-right third (off-center) and reduce its scale to approximately 20% of the frame width. Maintain the high-oblique farm view with zero people.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 14,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Presence of people (farmers) and a manned tractor in the background. The brief explicitly requires 'zero people and zero human body parts' and mandates 'hard reject' for any person or worker, even distant. A manned tractor also violates the 'distant unattended tractor' rule."
+      ],
+      "correction_prompt": "Regenerate the image strictly without any human figures or workers. The tractor in the background must be unattended. Keep the white and blue AFP drip-tape roll centered in the lower third, and preserve the bottom-right watermark.",
+      "attempt": 5
+    }
+  ]
+}

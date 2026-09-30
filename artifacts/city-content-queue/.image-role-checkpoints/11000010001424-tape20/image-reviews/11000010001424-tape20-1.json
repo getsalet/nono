@@ -1,0 +1,52 @@
+{
+  "source_id": "11000010001424-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 38,
+      "product_height_percent": 33,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The product width is approximately 38% of the image, which exceeds the hard reject threshold of 30%.",
+        "Mandatory 'EDITORIAL HERO' role requires the farm context to dominate and the product to remain small; this image places the product in the foreground, dominating the lower half.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to strictly follow the EDITORIAL HERO role: show a wide, high-oblique view of the farm field with the irrigation context dominant. The single AFP white-and-blue drip-tape roll must be positioned on the lower-third, off-center, and significantly smaller in scale (approx. 15-20% width) to avoid dominating the foreground. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 13,
+      "product_height_percent": 17,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The image contains thin layflat hoses or pipes running directly through the center of the drip-tape roll, violating the constraint against 'pipe through the roll'.",
+        "Placement is centered horizontally (48% center), whereas the mandatory role requires the carton to be off-center on the lower third."
+      ],
+      "correction_prompt": "Remove the vertical white pipe/hose passing through the center of the drip-tape roll and move the single carton roll to the left or right side of the lower third frame.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 28,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Object identification successful: Single AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Geometry compliance: Product dimensions are physically plausible and within the 30% width and 35% height hard-reject limits.",
+        "Safety check passed: Zero people or body parts visible.",
+        "Context match: Background features distant unattended farm equipment (sprayers) and crop rows, consistent with the 'EDITORIAL HERO' visual brief.",
+        "Watermark requirement: The required bottom-right watermark 'AFP | 09134922013' is present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

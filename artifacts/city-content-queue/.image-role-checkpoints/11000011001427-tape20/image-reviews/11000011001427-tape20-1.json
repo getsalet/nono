@@ -1,0 +1,77 @@
+{
+  "source_id": "11000011001427-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: visible human (male farmer/worker) standing on the right side of the frame."
+      ],
+      "correction_prompt": "Remove the person and any human silhouettes from the scene; keep the farm context, unattended equipment, and the single AFP drip-tape roll in the lower third.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 22,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The central object is a solid white pipe/hose, not the required 'wide low cylindrical drip-tape carton roll' (which should be flat and wide).",
+        "The presence of a long vertical pipe extending from the product to the horizon creates 'impossible geometry' and 'severely distorted dimensions' for a physical carton roll.",
+        "The product placement is centered (or near center) rather than off-center on the lower third as requested in the editorial role description."
+      ],
+      "correction_prompt": "Remove the vertical pipe. Regenerate a wide, flat, low cylindrical white carton roll of drip tape sitting on the ground in the lower third of the frame, positioned off-center to the left or right, not directly in the middle.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 29,
+      "product_height_percent": 31,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Hard reject: Visible person standing in the field on the right side.",
+        "Hard reject: Visible person driving a tractor on the left side.",
+        "Roll width approx 29% exceeds the 30% limit or is at the absolute maximum, and the roll appears center-placed rather than off-center.",
+        "Watermark text in image ('AFP | 09134922013') is partially obscured/clipped compared to strict requirements or layout standards"
+      ],
+      "correction_prompt": "Regenerate image without any people or farmers. Remove the person on the right and the person on the tractor. Move the drip tape roll to the lower-right corner (approx x-center 75%) to satisfy the off-center requirement and reduce its relative width to 22%.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 12,
+      "product_height_percent": 15,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Human figures are clearly visible in the background fields on the right side.",
+        "The required bottom-right watermark 'AFP | 09134922013' is missing from the image."
+      ],
+      "correction_prompt": "Remove all human figures from the background fields. Add the exact black box with white text 'AFP | 09134922013' at the bottom right corner.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 27,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible human silhouette is present on the distant tractor, which constitutes a hard reject for any human body part or person.",
+        "Editorial role requirement for a wide high-oblique view is not met; the image is a standard horizontal perspective shot.",
+        "The tractor in the image does not appear 'unattended' due to the visible operator."
+      ],
+      "correction_prompt": "Remove the person from the distant tractor to ensure no human presence. Apply a wide high-oblique camera angle to emphasize the vast farm context while keeping the white-and-blue AFP roll small and positioned in the lower third.",
+      "attempt": 5
+    }
+  ]
+}

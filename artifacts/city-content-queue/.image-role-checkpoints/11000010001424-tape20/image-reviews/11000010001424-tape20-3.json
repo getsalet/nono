@@ -1,0 +1,80 @@
+{
+  "source_id": "11000010001424-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 35,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product width (~35% of frame) exceeds the hard-reject limit of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the drip-tape carton roll to ~20-23% of the frame width, keeping it as a secondary element; emphasize the fixed filter, gauge, regulator, and manifold on the concrete pad as the main subject. Keep the AFP | 09134922013 watermark. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Visible human figures present in the background (one near the tractor, one on the right).",
+        "Hard reject: Roll width exceeds the maximum 30 percent limit.",
+        "The product is not an 'AFP carton' as required by the strict headworks detail brief, but rather the general tape roll."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Reduce the relative scale of the roll so its width is approximately 20-23 percent of the frame. Ensure the equipment and filter setup are clearly visible on the concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 24,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Product width exceeds 30% hard reject limit",
+        "Visible human figure in the background violating zero-person policy",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with smaller drip tape roll (under 30% width) and ensure an empty background with no people. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of multiple people (farmer/worker silhouettes) in the background, which is a hard reject.",
+        "Image role mismatch: The brief requires a 'HEADWORKS DETAIL' (close-up of fixed equipment on a concrete pad), but the image shows a wide landscape with distant tractors and standing figures.",
+        "Human presence violates the 'zero people' requirement."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the background. Focus on the 'HEADWORKS DETAIL' role: show the carton roll placed on a concrete pad next to irrigation infrastructure (filters, gauges, manifold), rather than a wide landscape with distant farm vehicles.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 33,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible human silhouette (person) in the background violates the 'zero people' requirement.",
+        "The product (carton roll) is positioned centrally rather than in the required lower-third position.",
+        "The approved carton roll appears as a primary object rather than being 'small and secondary' as dictated by the mandatory image role.",
+        "The visual brief specified a HEADWORKS DETAIL role for equipment (filter/gauge/manifold), but the image is a general shot of a tape roll in a field.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with no humans or silhouettes in the background. Reposition the AFP carton roll to the lower-left third to make it smaller and secondary. The primary focus must be an elevated, detailed view of the filter, gauge, and manifold fixed on a concrete pad, aligning with the 'HEADWORKS DETAIL' role. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

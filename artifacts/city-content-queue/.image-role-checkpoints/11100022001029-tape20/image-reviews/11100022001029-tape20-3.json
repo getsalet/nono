@@ -1,0 +1,69 @@
+{
+  "source_id": "11100022001029-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 38,
+      "product_height_percent": 34,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The required exact bottom-right watermark 'AFP | 09134922013' is missing; the image instead displays a fabricated watermark 'AFP | 09134922013' which is strictly prohibited and triggers a hard reject.",
+        "The main object (the cartridge/roll) is too large relative to the frame; its width exceeds 30% of the frame width, violating the dimensional limit for passing.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with the object scaled down so its width is between 20-23% of the frame. Replace the specific watermark text 'AFP | 09134922013' with the required exact string 'AFP | 09134922013' placed in the bottom right corner. Remove the fake caption 'DRIP IRRIGATION TAPE' and use standard product labeling. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Hard reject: presence of visible people (farmers/stand-in actors in the background and one person sitting near the hay bales).",
+        "Hard reject: image role mismatch; the article brief requires a 'HEADWORKS DETAIL' shot (close-up of filter/gauge/manifold on a concrete pad) with the carton small and secondary, but this image is a wide shot where the carton is the primary subject."
+      ],
+      "correction_prompt": "Regenerate image as an equipment-only close-up of a fixed irrigation filter, gauge, and manifold installed on an empty concrete pad. Include one AFP white-and-blue wide low cylindrical drip-tape carton in the background, kept small and secondary to the hardware. Remove all people, workers, and farm activity completely.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 52,
+      "product_height_percent": 45,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Two commercial carton rolls are visible, violating the strict requirement for exactly one product.",
+        "Missing mandatory equipment-only infrastructure: no fixed filter, gauge, regulator, or manifold on a concrete pad.",
+        "Scene features farm buildings and a tractor, which do not match the required editorial role of 'equipment-only elevated record photograph'.",
+        "Product size significantly exceeds the acceptable maximum width (30%) and height (35%) thresholds.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate: Strictly one white and blue cylindrical drip-tape carton roll on a small empty concrete pad. Include a fixed metal filter, pressure gauge, and regulator manifold. The background should be a neutral, elevated view of a concrete foundation with no farm buildings or distant tractors. Roll must be small (less than 20% width). Maintain 'AFP | 09134922013' watermark. Reduce the product group from 52% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 15,
+      "product_height_percent": 24,
+      "product_x_center_percent": 23,
+      "reasons": [
+        "The image successfully displays exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll on a fixed concrete pad.",
+        "The product width and height fall within the acceptable 12-30% and up to 35% ranges, meeting the 'small and secondary' requirement of the HEADWORKS DETAIL role.",
+        "The image correctly features one fixed filter, gauge, and regulator, consistent with the equipment-only brief.",
+        "Zero people or human body parts are present.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly visible and included as an accepted infrastructure element.",
+        "The background contextually includes distant unattended tractors and soil, which are permitted under the prompt rules."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
