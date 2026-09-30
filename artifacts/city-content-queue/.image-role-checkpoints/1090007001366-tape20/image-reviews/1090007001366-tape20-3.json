@@ -76,6 +76,78 @@
       ],
       "correction_prompt": "Regenerate an image of fixed irrigation headworks (filter, gauge, manifold) on a concrete pad. Include exactly one small drip-tape carton roll in the background or foreground. Ensure zero people or human body parts are visible.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains multiple people and human silhouettes in the background, which is a hard reject condition.",
+        "The drip tape roll is too large relative to the frame, exceeding the specified width (>30%) and height (>35%) constraints.",
+        "The product lacks the specific 'wide low cylindrical' shape mentioned in the brief; it is depicted as a tall roll.",
+        "The role requires the carton to be small and secondary, but it is the dominant foreground object.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate: A distant wide, low cylindrical drip-tape carton on an empty concrete pad. Absolutely NO people, hands, or faces anywhere in the frame. The carton must be small and secondary to a filter/gauge setup. Watermark 'AFP | 09134922013' in bottom-right. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human figures (a seated person and a standing person) are clearly visible in the background.",
+        "Hard reject: Human body parts (legs and torsos) are present.",
+        "The required mandatory role 'HEADWORKS DETAIL' (showing a filter, gauge, regulator, and manifold) is completely missing; the image only shows the product roll."
+      ],
+      "correction_prompt": "Remove all human figures and body parts from the background. Restructure the scene to be an 'equipment-only' detail shot featuring a fixed filter, gauge, regulator, and manifold on a concrete pad with the AFP roll as a small secondary element.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 31,
+      "product_height_percent": 33,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of a standing person (farmer/worker) in the background, which is a hard reject.",
+        "Product width (approx 31%) exceeds the 30% hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person and all moving tractors. Regenerate the scene as an empty concrete pad with only fixed infrastructure (filter, gauge, manifold) and one smaller AFP drip-tape roll (width <25%). Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 32,
+      "product_height_percent": 26,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Hard reject: Image contains multiple visible people (human silhouettes) standing in the background near the tractors and on the left side.",
+        "Hard reject: Product width estimated at 32%, which exceeds the maximum allowed limit of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image removing all people and tractors from the background to focus strictly on the infrastructure (filter, gauge, manifold) on a concrete pad. Rescale the drip tape carton to be small and secondary (less than 25% width) without distorting its cylindrical shape. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 31,
+      "product_height_percent": 33,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: A human figure (person standing in the background) is visible in the center of the image, violating the zero-people requirement.",
+        "The product roll is positioned too low in the frame, extending past the 35% height limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure in the background completely. Adjust the framing so the drip tape roll is positioned higher to keep its height under 35% of the frame. Maintain the required 'AFP | 09134922013' watermark in the bottom right. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 5
     }
   ]
 }

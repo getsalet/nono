@@ -4,50 +4,55 @@
   "history": [
     {
       "pass": false,
-      "score": 18,
-      "duplicate_roles": [],
-      "reasons": [
-        "Image 1: Contains a visible person standing by the tractor in the background, which is explicitly forbidden.",
-        "Image 2: Features an extra commercial object (a beige connector fitting) on the ground and an awkward, redundant composition (the coil is wrapped twice), violating the 'no extra commercial objects' rule.",
-        "Image 3: Displays four distinct coil objects instead of the required 'approved two-coil pair', resulting in hardware duplication and a generic farm equipment layout rather than a specific fixed headworks record."
+      "score": 40,
+      "duplicate_roles": [
+        2
       ],
-      "correction_prompt": "Regenerate Image 1 strictly without any human figures; regenerate Image 2 with a single, clean coil and no loose accessories; regenerate Image 3 to show exactly two coils (one packaged, one bare) as a small secondary detail next to a pump/gauge setup.",
+      "reasons": [
+        "Role 2 (image 2) fails the SELECTION EVIDENCE requirement: it displays nearly the exact same camera angle, product arrangement, and soil environment as Role 1 (image 1), making them visually indistinguishable in layout and narrative (duplicating the role 5 pattern of repeated layouts).",
+        "Role 1 (image 1) is rejected because the product coils are significantly oversized, dominating the foreground instead of remaining 'small, separate and off-center' as requested for the EDITORIAL HERO.",
+        "Role 3 (image 3) is rejected because it does not feature the required specific equipment (pump, gauge, and manifold); instead, it shows a generic motor unit and lacks the technical details requested for the HEADWORKS DETAIL role."
+      ],
+      "correction_prompt": "Redesign image 1 to show the coils as small, off-center elements within a wide high-oblique landscape; design image 2 as a low-angle technical close-up of just the two coils highlighting diameter difference on a neutral background; and redesign image 3 to feature a specific pump with a visible gauge and manifold on an empty concrete pad.",
       "panel_scores": [
-        18
+        40
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 30,
-      "duplicate_roles": [
-        2
-      ],
-      "reasons": [
-        "Panel 2 violates Role 2 constraints by showing three coils (a packaged unit plus two bare coils) instead of the required 'approved two-coil pair', and includes an unapproved commercial object (tire) in the foreground.",
-        "Panel 1 violates Role 1 constraints by displaying the products prominently and oversized in the immediate foreground; the brief required them to remain small, separate, and off-center within a wide high-oblique context.",
-        "Panel 3 contains an unapproved cardboard box packaging the coil, which conflicts with the 'equipment-only' and 'no extra commercial objects' directives."
-      ],
-      "correction_prompt": "Regenerate: Panel 1 must feature a wide high-oblique landscape where the coils are small, separate and off-center; Panel 2 must show exactly two coils (packaged and bare) on a plain surface with no tires, boxes, or extra coils; Panel 3 must show the two coils small and secondary to a fixed pump on a concrete pad without any cardboard packaging.",
-      "panel_scores": [
-        30
-      ],
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 50,
+      "score": 65,
       "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Role 2 and Role 3 are nearly identical in composition: the same side-by-side arrangement of the packaged coil and bare black coil, with a nearly identical camera angle and framing (distant horizontal shot), making them duplicate layouts.",
-        "Role 3 fails the 'HEADWORKS DETAIL' requirement: it lacks the specific requested 'fixed pump, gauge and manifold' setup, instead showing the product pair and a hose on a concrete pad. It looks like a duplicate of Role 2 rather than a distinct equipment-focused shot."
+        "Role 2 requires the two-coil pair to be the sole subject for technical comparison, but the image includes a prominent pump and tire which violates the 'no third commercial package' rule.",
+        "Role 3 specifies a 'one fixed pump, gauge and manifold' setup, but the image shows a distinct industrial electric motor without a gauge, failing to match the required narrative.",
+        "The layout for Roles 2 and 3 is nearly identical (static concrete pad, equipment and product side-by-side), violating the requirement for distinct environments and structures."
       ],
-      "correction_prompt": "Regenerate Role 3 to be visually distinct from Role 2 by including a fixed headworks setup (pump, pressure gauge, and manifold) as the primary focus, with the two-coil product pair appearing small and secondary in the background.",
+      "correction_prompt": "Regenerate Role 2 to show ONLY the two coils on the concrete pad (remove pump/tire). Regenerate Role 3 to feature the specific gauge and manifold hardware (remove the industrial motor) on a distinct pad or background.",
       "panel_scores": [
-        50
+        65
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 (Hero) and Role 2 (Evidence) use an identical low-angle ground-level perspective and identical spatial arrangement of the product pair.",
+        "Role 1 violates the 'Editorial Hero' requirement by failing to provide a wide high-oblique shot; the coils are oversized and off-center.",
+        "Role 2 does not distinctly demonstrate the 'diameter or construction difference' through the pair itself; the product sizes appear uniform.",
+        "Role 3 is weak because it lacks the required 'pump' and 'manifold' equipment, showing only a disconnected valve on a generic concrete slab."
+      ],
+      "correction_prompt": "Role 1: Regenerate as a wide high-oblique aerial shot with the two coils significantly smaller and off-center. Role 2: Regenerate to show the two coils at distinctly different diameters (thick vs thin). Role 3: Regenerate to include a visible centrifugal pump and a multi-port manifold on the concrete pad, keeping the coils small in the background.",
+      "panel_scores": [
+        25
       ],
       "set_attempt": 3
     }

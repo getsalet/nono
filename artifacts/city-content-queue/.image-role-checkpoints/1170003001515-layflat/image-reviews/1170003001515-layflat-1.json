@@ -1,0 +1,80 @@
+{
+  "source_id": "1170003001515-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 65,
+      "product_height_percent": 35,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Both required objects are present: one packaged coil and one bare black woven coil.",
+        "The objects are separate, physically plausible, and fully visible.",
+        "No people or human body parts are present.",
+        "The required watermark is visible in the bottom right.",
+        "The context (farmland) is appropriate for the editorial hero role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 65% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 58,
+      "product_height_percent": 35,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 85,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Combined product width significantly exceeds the 42% hard reject threshold (estimated ~85% width).",
+        "Required watermark text 'AFP | 09134922013' is incorrectly formatted with spaces on both sides of the pipe symbol.",
+        "Editorial hero requirements for wide context with small, separate off-center products are not met; products are too large and centered.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate with products occupying <20% width, far off-center in lower-left, strictly formatted bottom-right watermark 'AFP | 09134922013', and wide high-oblique farm context. Reduce the product group from 85% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 58,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product pair width (58%) significantly exceeds the 42% maximum hard reject limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the overall width of the product pair (packaged coil and bare black coil) to under 40% of the image frame while keeping them separate, clear, and in the lower-left. Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 65,
+      "product_height_percent": 40,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Pair bounding box is approximately 65% of the frame width, which is significantly wider than the 42% hard reject limit.",
+        "The two coils are large relative to the image, failing the 'small, separate and off-center' requirement for the editorial hero role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 65% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate with a much tighter crop on the foreground coils so their combined bounding box is under 42% of the frame width, or zoom out to make the coils appear smaller relative to the field context. Reduce the product group from 65% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "source_id": "1180009002933-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 78,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is present and correct in the bottom-right corner.",
+        "Zero people or body parts are visible.",
+        "The image contains the approved layflat pair: one packaged AFP coil (left) and one bare black woven coil with a connector (right).",
+        "Both coils are distinct, physically plausible, and fully visible on a concrete pad, meeting the 'equipment-only elevated record photograph' mandatory role.",
+        "Distant unattended tractors are visible in the background, which is allowed and not treated as a third commercial product.",
+        "Product bounding box spans the width of the two coils and their shadow, with the left and right objects remaining within the acceptable 'noisy' range for this specific role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 78% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 52,
+      "product_height_percent": 48,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Contains exactly one packaged AFP coil and one bare black woven coil as required for the layflat pair.",
+        "The approved two-coil pair is clearly visible, separate, and physically plausible.",
+        "The product pair is large (52% width), but this falls within the allowed 'noisy' estimate limit of 8 to 65 percent, keeping it from being a hard reject.",
+        "The bottom-right watermark 'AFP | 09134922013' is present as required.",
+        "Zero people or body parts are visible; background infrastructure (distant tractor, building, pump) is accepted as relevant context.",
+        "The layout places the products in the lower-center/secondary position, consistent with the request that the equipment/pump be the primary focus while the coils are secondary.",
+        "machine-enforced bounding-box check failed: Reduce product height from 48% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 48% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 50,
+      "product_height_percent": 31,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image correctly displays the required pair of products: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "The placement of the coils on the concrete pad is physically plausible and they are clearly separate, fully visible objects.",
+        "Zero people or body parts are visible in the frame, meeting the strict exclusion criteria.",
+        "The 'AFP | 09134922013' watermark is present as required.",
+        "Background elements (tractor, red barn, distant equipment) are consistent with the 'empty concrete pad' context and are not considered extra commercial products.",
+        "Estimated product width is approximately 50%, falling well within the 8-65% acceptance range."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

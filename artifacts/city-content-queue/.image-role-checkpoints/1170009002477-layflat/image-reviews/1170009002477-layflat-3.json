@@ -1,0 +1,53 @@
+{
+  "source_id": "1170009002477-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 55,
+      "product_height_percent": 42,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image contains a third commercial product, which is a coiled clear hose lying on the ground between the pump assembly and the large black coil.",
+        "This third coil violates the strict requirement to only have the packaged AFP coil and the bare black woven coil present.",
+        "The presence of this extra object forces a hard reject regardless of the correct positioning of the other required elements."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the small coiled clear hose lying on the concrete pad in the foreground. Keep only the packaged AFP coil, the bare black woven coil, the pump, gauge, and manifold. Ensure the watermark remains at the bottom right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 50,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Mandatory role failure: The brief requires a 'HEADWORKS DETAIL' elevated record photograph of a fixed pump, gauge, and manifold. The image instead shows a low-angle shot of coils on a pad, completely missing the required primary equipment focus.",
+        "Contextual failure: The brief specifies an 'empty concrete pad' with no farm activity. The image background shows a large red tractor (active farm equipment) and farm buildings, which is not permitted for this specific headworks role."
+      ],
+      "correction_prompt": "Regenerate as an elevated, detail-focused photograph of a fixed pump, gauge, and manifold on an empty concrete pad. The two coils (one packaged AFP, one bare black woven) must be small and secondary in the foreground. Ensure the background is clean infrastructure with no tractors or farm buildings.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 50,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image clearly displays the required pair of one packaged AFP coil and one bare black woven coil.",
+        "Zero people or human body parts are visible in the scene.",
+        "The combined width of the coils is approximately 50%, which falls within the acceptable noisy estimate range of 8 to 65%.",
+        "The exact required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "A farm building is visible in the distance, which is permitted as it is not a commercial product.",
+        "No hard reject conditions (like third coils, bottles, or people) are present."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
