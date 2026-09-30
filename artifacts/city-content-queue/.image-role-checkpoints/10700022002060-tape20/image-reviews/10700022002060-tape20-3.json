@@ -76,6 +76,77 @@
       ],
       "correction_prompt": "Remove all people from the background. Ensure the scene is strictly equipment-only on a concrete pad, keeping the single white and blue carton as the primary focus without any visible workers.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 33,
+      "product_height_percent": 24,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject due to the presence of human figures (farmers/workers) standing near the machinery in the background, violating the zero-people requirement.",
+        "Product width is 33 percent, which exceeds the 30 percent hard reject limit for a single roll.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people and human silhouettes from the background completely. Shrink the drip tape roll width to approximately 22 percent of the frame to ensure it remains a small, secondary element, focusing the shot on the irrigation infrastructure instead. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 22,
+      "product_height_percent": 20,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "A human figure (farmer) is clearly visible in the background, hard reject"
+      ],
+      "correction_prompt": "Regenerate the image ensuring zero people or human body parts are visible. The equipment must be unattended. Maintain the specific roll size and composition.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 32,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Zero people, faces, or body parts present.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Only one approved commercial package (the white-and-blue drip-tape carton) is visible in the foreground.",
+        "Background contains permitted elements: distant unattended tractors, farm buildings, open soil, and fixed irrigation hardware (gauge).",
+        "No bottles, jars, cans, buckets, or secondary commercial packages are present.",
+        "Roll proportions are wide but remain within the accepted physical-plausibility range for a low cylindrical drip-tape carton. Centered placement is an editorial preference, not a standalone reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 45% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 45% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 26,
+      "product_height_percent": 33,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Visible person (farmer) in the background",
+        "Second commercial package (box with equipment) is visible in the image",
+        "Image includes active farm equipment (tractors) which conflicts with the 'no farm activity' and 'empty pad' requirement"
+      ],
+      "correction_prompt": "Regenerate the image with an empty concrete pad and exactly one small secondary carton roll. Remove the standing farmer, the equipment box, and the large green tractors from the scene. Keep the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 35,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product width estimated at 35%, which exceeds the maximum threshold of 30% and is well outside the preferred 12-23% range.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with the drip-tape carton roll significantly smaller (approx. 15-20% width) and positioned lower and off-center to serve as a secondary element, while clearly showing the filter, gauge, and manifold on the concrete pad to align with the mandatory 'HEADWORKS DETAIL' role. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 5
     }
   ]
 }

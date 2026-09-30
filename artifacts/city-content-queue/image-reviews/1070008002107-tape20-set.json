@@ -4,37 +4,57 @@
   "history": [
     {
       "pass": false,
-      "score": 55,
+      "score": 25,
       "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Role 1 is oversized: the product carton occupies the visual center and foreground rather than remaining small on the lower third as required.",
-        "Role 2 lacks selection evidence: there are no visible emitters, emitter-spacing markers, or selection indicators—only an unconnected drip hose looped on the ground.",
-        "Role 3 fails the 'no farm activity' requirement: a tractor and red barn are prominently visible in the background, violating the equipment-only restriction."
+        "Role 1: The AFP product is central and large, not positioned 'small and off-center' as required.",
+        "Role 2: The image shows a full headworks assembly, which belongs to Role 3's narrative; it is missing the required 'emitter-spacing' or 'field-selection' technical evidence for the crop.",
+        "Role 3: The image shows only the product on a pad, missing the required 'filter, gauge, regulator and manifold' equipment.",
+        "Roles 2 and 3 are functionally swapped, leading to a breakdown in the specific technical narrative and hardware duplication/repetition issues."
       ],
-      "correction_prompt": "Reshoot Role 1 with the carton scaled down and placed off-center on the lower third. In Role 2, add visible drip emitters or spacing markers to demonstrate selection criteria. In Role 3, remove the background tractor and farm buildings to create an empty concrete pad environment with only the irrigation components (filter, gauge, regulator, manifold) and the carton.",
+      "correction_prompt": "Re-shoot/replace Role 2 to include visible emitter-spacing or crop rows for selection context; replace Role 3 to show a detailed technical layout of filter, gauge, regulator, and manifold on the concrete pad.",
       "panel_scores": [
-        55
+        25
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
       "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 3 is missing required technical components: the role specifies an 'equipment-only' view of a fixed filter, gauge, regulator, and manifold, none of which are visible in the image.",
-        "Panel 3 contains farm activity (a large, prominent tractor in the foreground) which violates the role requirement of 'no farm activity'.",
-        "Panel 1 places the carton at the bottom center rather than 'off-center on the lower third' as specified in the editorial hero role.",
-        "Panel 2's technical evidence (emitters) is present but the layout (carton on concrete pad) closely overlaps with the physical setup required for Panel 3, creating a narrative conflict."
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "For Panel 3, replace the prominent tractor with a concrete pad and a static arrangement of filtration equipment (filter, manifold, gauge, regulator); for Panel 1, shift the carton to the left or right third to achieve a true off-center composition.",
+      "reasons": [
+        "Role 3 (image 3) is rejected due to strict violation of the 'exactly one fixed filter, gauge, regulator and manifold' requirement; the specified equipment is completely absent from the concrete pad, leaving only the product carton and background farm activity.",
+        "The visual narrative for Role 3 fails to provide the required 'equipment-only' technical record, instead showing an empty stage with distant, unattended tractors which contradicts the 'no farm activity' instruction for the detail shot."
+      ],
+      "correction_prompt": "Edit image 3 to remove all farm activity (tractors) and the product carton, and insert a fixed irrigation manifold equipped with a filter, pressure gauge, and regulator on the empty concrete pad to serve as the primary subject.",
       "panel_scores": [
         45
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Panel 3 (HEADWORKS DETAIL) violates the role requirement by missing the specified fixed filter, gauge, regulator, and manifold on the concrete pad.",
+        "The 'equipment-only' aspect of Panel 3 is missing, as the concrete pad is shown without the required hardware.",
+        "Panels 2 and 3 share nearly identical environmental compositions (farm building on left, tractor on right, brown soil), resulting in duplicated layout structures.",
+        "The visual narrative fails to distinguish between the 'selection evidence' and 'headworks detail' roles, reducing the diversity of the editorial set."
+      ],
+      "correction_prompt": "Re-shoot Panel 3 to clearly display one fixed filter, a gauge, a regulator, and a manifold on an empty concrete pad with the approved carton as a secondary element, and adjust Panel 2 to differentiate the background composition and camera angle.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 3
     }
   ]
 }

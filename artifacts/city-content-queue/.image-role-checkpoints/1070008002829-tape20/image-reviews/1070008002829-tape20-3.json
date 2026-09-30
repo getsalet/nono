@@ -1,0 +1,40 @@
+{
+  "source_id": "1070008002829-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24.5,
+      "product_height_percent": 28.5,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: Visible person standing in the background left",
+        "Hard reject: Visible distant human silhouette in the background center",
+        "Violation: Article brief strictly requires an 'equipment-only' role with 'no farm activity', but the image includes human figures",
+        "Violation: Mandatory detail role requiring 'one fixed filter, gauge, regulator and manifold' on the concrete pad is completely missing; the pad is empty"
+      ],
+      "correction_prompt": "Regenerate to strictly remove all human figures, silhouettes, and farm personnel from the background. Replace the empty concrete pad with a detailed, high-angle close-up (Headworks Detail) of a drip irrigation filter, pressure gauge, regulator, and manifold. The AFP drip tape carton should be visible but small and secondary to the infrastructure hardware. Ensure 'AFP | 09134922013' watermark is present.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Image contains exactly one AFP drip tape roll with the correct white and blue branding.",
+        "The roll's dimensions (24% width, 32% height) fall within the preferred and acceptable ranges (width 20-23%, max 30%; height max 35%).",
+        "Infrastructure elements (filter, gauge, manifold) are present on a concrete pad, matching the 'HEADWORKS DETAIL' role, without any human presence.",
+        "Distant unattended tractors and farm buildings are allowed contextual elements.",
+        "The required watermark 'AFP | 09134922013' is correctly present in the bottom right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

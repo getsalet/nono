@@ -1,0 +1,86 @@
+{
+  "source_id": "10700028002904-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 35,
+      "product_height_percent": 48,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: The image contains a visible human subject (a farmer or worker) squatting next to the product, which violates the zero-person rule.",
+        "Hard reject: There is a second commercial package (a cardboard box) visible on the left side of the frame, violating the 'exactly one carton' requirement.",
+        "Dimension check: The product roll is too large relative to the frame (approx 35% width) and exceeds the height limit of 35% (approx 48%).",
+        "Role violation: The 'HEADWORKS DETAIL' role required the primary subject to be a filter, gauge, and regulator on an empty pad, with the product being secondary. Here, the product and the person are the primary subjects.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width.; Reduce product height from 48% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the person and the cardboard box. Reposition the single white-and-blue drip-tape roll to be a small, secondary object on the concrete pad. Frame the shot to feature the fixed filter, gauge, regulator, and manifold as the main subject. Reduce the product group from 35% to 12-30% of frame width. Reduce product height from 48% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Visible human body parts and full human silhouettes are present in the background left side of the image.",
+        "Contains a small jar/container in the foreground left, which is a hard reject object.",
+        "Image role mismatch: The brief explicitly requests 'equipment-only elevated record photograph' with filter/gauge hardware, but the image is a low-angle ground shot of the package.",
+        "Placement violation: The product is centered in the lower third, violating the 'lower-third placement' editorial preference."
+      ],
+      "correction_prompt": "Regenerate the image as an elevated top-down record photograph of a concrete irrigation pad showing a filter and gauge. Place one small AFP drip-tape carton roll in the corner. Completely remove all human figures, face, hands, tractors, and the small foreground jar. Ensure the background is clean soil.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains a second smaller roll of tape alongside the main product roll.",
+        "The mandatory visual role 'HEADWORKS DETAIL' is not met; the image lacks a filter, gauge, regulator, and manifold.",
+        "There is no background context of farm infrastructure, only a concrete slab on soil."
+      ],
+      "correction_prompt": "Regenerate the image to include only one large AFP drip-tape carton roll as a secondary element. Add a fixed irrigation manifold, gauge, and filter system as the main focus on a concrete pad in a farm setting to match the 'HEADWORKS DETAIL' role. Ensure no second roll of tape is present.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Hard reject: Visible human figures in the background (farmers/workers).",
+        "Hard reject: Excessive product height. The roll is significantly taller than 35% of the frame.",
+        "Hard reject: Excessive product width. The roll is wider than 30% of the frame.",
+        "The 'HEADWORKS DETAIL' role implies a tighter focus where the carton should be 'small and secondary', whereas here it is prominent and close-up.",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Reframe to make the roll carton appear smaller (less than 25% of frame height) and slightly further away to serve as a secondary element alongside the infrastructure, ensuring width and height stay within accepted limits. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 33,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Product width exceeds the 30 percent hard reject threshold (estimated ~33%).",
+        "Role mismatch: The image shows a drip tape roll as the primary subject on a generic concrete pad, but the brief mandates a 'HEADWORKS DETAIL' role featuring one fixed filter, gauge, regulator, and manifold with the tape roll remaining small and secondary.",
+        "Missing mandatory infrastructure: No filter, gauge, regulator, or manifold is visible in the scene.",
+        "Unnecessary background: The presence of two large tractors as dominant background elements is not permitted for the specified 'equipment-only' role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate a detailed, elevated record photograph of a drip irrigation headworks system (one fixed filter, gauge, regulator, and manifold) on an empty concrete pad. Include one small, secondary AFP white-and-blue drip-tape carton roll (width ~20-23% of frame). No tractors, no people, no farm activity. Retain the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}
