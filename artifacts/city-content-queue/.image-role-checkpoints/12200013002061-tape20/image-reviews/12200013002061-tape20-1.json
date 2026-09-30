@@ -1,0 +1,52 @@
+{
+  "source_id": "12200013002061-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 31,
+      "product_height_percent": 33,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Hard reject: Human figure (farmer/worker) is visible in the background on the right side; images must contain zero people or body parts.",
+        "Hard reject: The width of the drip-tape roll is approximately 31% of the frame width, exceeding the hard reject limit of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image removing the person in the background completely. Reduce the scale of the white-and-blue drip-tape roll so its width is 20% of the frame width. Ensure the roll is located in the lower third, off-center, and remains a wide low cylindrical carton roll. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 12,
+      "product_height_percent": 15,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Presence of a human figure (farmer) standing in the crop rows.",
+        "Hard reject: Visible body parts (head, face, arms, legs) which are explicitly forbidden in this image role."
+      ],
+      "correction_prompt": "Remove the human figure and the red tractor from the scene. Keep the AFP white-and-blue drip-tape roll in the lower center on the soil. Ensure the background remains an open farm field with visible crop rows and no people.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 96,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image correctly features a wide high-oblique view where the farm and irrigation context dominate.",
+        "The single white-and-blue drip-tape roll is small, fully visible, and placed on the lower third off-center.",
+        "The required bottom-right watermark is clearly visible.",
+        "There are zero people or body parts, and the product dimensions fall within acceptable limits.",
+        "The background matches the article's visual brief for an agricultural context."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

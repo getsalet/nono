@@ -6,21 +6,73 @@
   "fast_mode": true,
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 58,
-      "product_height_percent": 28,
-      "product_x_center_percent": 52,
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 65,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
       "reasons": [
-        "The required HEADWORKS DETAIL role is well represented by the prominent, elevated recording of the fixed pump, gauge, and manifold on a concrete pad.",
-        "The approved two-coil pair is present: one packaged AFP coil (blue/grey) and one bare black woven coil.",
-        "The pair is separate, fully visible, and physically plausible; no merged or floating products.",
-        "The required bottom-right watermark 'AFP | 09134922013' is exactly present.",
-        "No people, human body parts, or hard-reject objects such as bottles, jars, canisters, or third commercial packages are visible.",
-        "Product bounding box (both coils): x ≈ 165–750 px → ~58% width; y ≈ 305–655 px → ~28% height; x-center ≈ 52%."
+        "The prompt explicitly and mandatorily requires a pair of only two objects (one packaged AFP coil and one bare black woven coil), but this image contains three visible products: one top blue packaged coil, one bottom-left coiled product with a tan strap, and one bottom-right large bare woven coil. The presence of a third commercial product/coil is a hard reject condition.",
+        "The 'product' group includes a third item, which violates the strict 'zero third commercial package or third coil' rule and the 'approved layflat pair' specification."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Regenerate image to show exactly two objects (one packaged AFP coil and one bare black woven coil) with a combined width of 12-20% placed on an empty concrete pad. Absolutely remove the third coiled object and add an elevated fixed pump, gauge, and manifold in the foreground/background as the main equipment focus.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image contains a visible human (a person in the background near farm equipment)."
+      ],
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 58,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Missing mandatory required elements: The image does not contain the 'fixed pump, gauge and manifold' specified as the mandatory role detail (HEADWORKS DETAIL).",
+        "Coil description mismatch: The required 'packaged AFP coil' is missing; instead, the image displays an unidentified dark casing/drum which does not fit the product specification."
+      ],
+      "correction_prompt": "Add a fixed pump, gauge and manifold on a concrete pad. Replace the unidentified dark casing with an AFP-branded layflat coil in its original packaging. Ensure the two coils are separate, secondary elements and remove any visible human presence.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 85,
+      "product_height_percent": 60,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "Zero people or human body parts are visible.",
+        "The image contains one packaged AFP reel and one bare black woven hose.",
+        "The pump station, gauges, and manifold are present, fulfilling the 'HEADWORKS DETAIL' role as allowed infrastructure.",
+        "Objects are fully visible, separate, and physically plausible without impossible intersections.",
+        "Product width is estimated at 85%, which is a noisy estimate but includes the fixed infrastructure requested in the role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 8-65% of frame width.; Reduce product height from 60% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 85% to 8-65% of frame width. Reduce product height from 60% to at most 45% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: The mandatory role specifies 'zero people' and 'zero human body parts', but the background contains a clear view of a horse (quadruped animal), which violates the strict 'equipment-only' and no-other-life-activity constraint typically associated with this specific industrial shot, or at minimum introduces an unintended biological subject.",
+        "The presence of a large animal (horse) in the background contradicts the clean, infrastructure-focused nature of the required 'record photograph' which should emphasize the pump, gauge, and manifold without distracting biological elements.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Remove the horse from the background. Retain the two coils, the pump/metric unit on the pad, and the distant tractor. Ensure the background is a clean, empty field with no animals. Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 5
     }
   ]
 }

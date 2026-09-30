@@ -1,0 +1,58 @@
+{
+  "source_id": "11100011002916-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 40,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image is missing the mandatory 'HEADWORKS DETAIL' equipment (fixed pump, gauge, and manifold) on a concrete pad.",
+        "A commercial potted plant (terracotta pot and container) is visible on the far right, which violates the 'zero commercial products' rule (invented package/extra item).",
+        "A person is operating the distant tractor in the background, which violates the 'zero people' hard reject rule.",
+        "The composition is a general farm product shot rather than an 'elevated equipment record' photograph."
+      ],
+      "correction_prompt": "Regenerate as an elevated detail shot of a fixed irrigation pump, gauge, and manifold on a concrete pad. Include the two small hose coils (one packaged, one black woven) in the foreground. Remove all people, tractors, and potted plants/containers from the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 50,
+      "product_height_percent": 60,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The image clearly displays the required layflat hose pair: one packaged coil and one bare black woven coil.",
+        "Both objects are separate, fully visible, and physically plausible.",
+        "The product width (approx. 50%) falls within the accepted range for this role (8-65%), although it exceeds the preferred 12-20% width.",
+        "No people or human body parts are present in the frame.",
+        "The required watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner.",
+        "machine-enforced bounding-box check failed: Reduce product height from 60% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 60% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 45,
+      "product_height_percent": 10,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains zero people or human body parts.",
+        "Approved layflat pair is present: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "The objects are fully visible, separate, and physically plausible with no merging or impossible intersections.",
+        "Product width estimate is approximately 45% (40%-50% range), which falls within the allowed noisy reviewer range of 8-65% for this role.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right as required.",
+        "The concrete pad setting and distant background elements align with the 'equipment-only' role without being hard rejects."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

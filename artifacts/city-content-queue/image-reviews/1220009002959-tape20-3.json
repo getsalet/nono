@@ -1,0 +1,65 @@
+{
+  "source_id": "1220009002959-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 35,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The article brief specifically describes equipment on an empty concrete pad with the carton being small and secondary, but in the image the drip-tape roll is the dominant foreground subject and not 'small and secondary' relative to the manifold hardware.",
+        "The product bounding box exceeds the 30% width limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the size of the drip-tape roll to be less than 20% of the frame width. Position the roll in the background, behind the filter and manifold, making the irrigation hardware the primary focus. Ensure the concrete pad remains visible. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Image contains a human figure (farmer/worker) standing in the background.",
+        "Hard reject: Image contains a second commercial package (a second roll of tape in the background); the brief requires exactly one approved carton."
+      ],
+      "correction_prompt": "Regenerate the image to show a single, empty concrete pad with one fixed irrigation filter assembly, gauge, and manifold. Include exactly one small, white-and-blue AFP drip tape roll placed as a secondary element on the pad. Ensure there are zero people or human silhouettes in the scene.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Two human figures (farmers/workers) are clearly visible in the background, which triggers a hard reject for any visible person or human body part.",
+        "The scene shows a busy farm environment with people and a tractor, which directly contradicts the mandatory 'no farm activity' and 'empty concrete pad' visual brief."
+      ],
+      "correction_prompt": "Regenerate with an empty concrete pad featuring a fixed irrigation manifold in the background; completely remove all human figures, workers, and active farm machinery; keep the white-and-blue AFP drip-tape roll as the sole foreground object.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 25,
+      "product_height_percent": 23,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Product dimensions (approx. 25% width, 23% height) are within the 12-30% acceptance threshold.",
+        "Zero people or human body parts are visible in the frame.",
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom right.",
+        "Background infrastructure (filter and reel system on a concrete pad) matches the brief without violating hard rejects."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

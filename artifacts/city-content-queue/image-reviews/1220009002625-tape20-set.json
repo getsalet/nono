@@ -1,53 +1,57 @@
 {
   "source_id": "1220009002625-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 22,
       "duplicate_roles": [
-        1
+        1,
+        2
       ],
       "reasons": [
-        "Role 1 is not distinct: its camera height, layout, and 'farm context' environment are nearly identical to Role 2, resulting in a duplicated layout (a wide shot of the product on dirt with tractors in the background).",
-        "Role 1 violates the requirement for the carton to be small and off-center; instead, it is dominant and centered.",
-        "Role 3 lacks the specific technical narrative required (fixed filter, gauge, regulator, manifold) and instead uses a generic tractor setup to depict the product.",
-        "Role 3 contains a cardboard box, which violates the 'no generic containers' rule for an approved editorial flow."
+        "Panel 2 (Selection Evidence) fails to show visible emitter-spacing or field-selection evidence as required; it depicts a generic farm scene with distant equipment.",
+        "Panel 3 (Headworks Detail) is completely incorrect; it displays a large, standalone product on concrete with farm vehicles in the background, but lacks the required headworks hardware (fixed filter, gauge, regulator, and manifold).",
+        "In Panel 3, the product is oversized and dominates the frame, violating the rule that it must remain small and secondary.",
+        "Panel 1 fails the 'high-oblique' requirement and the 'off-center lower third' placement for the carton."
       ],
-      "correction_prompt": "Generate a distinct Role 1 with a high-oblique aerial perspective where the field dominates and the product is small/off-center; replace the tractor in Role 3 with a static close-up of a fixed filtration and regulation unit (filter, gauge, manifold) to ensure narrative variety.",
+      "correction_prompt": "Replace Panel 2 with a technical layout showing visible emitter-spacing; replace Panel 3 with an equipment-only headworks setup (filter, manifold, gauge) on concrete with the carton positioned small and secondary in the background.",
       "panel_scores": [
-        45
+        22
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
+      "score": 55,
       "duplicate_roles": [
-        1
+        1,
+        2,
+        3
       ],
       "reasons": [
-        "The layout of Image 1 does not strictly conform to the Role 1 specification (EDITORIAL HERO) which requires a 'wide high-oblique view' where the farm context dominates and the product is 'small and fully visible off-center on the lower third'. Instead, the product is prominently placed in the center foreground, competing visually with the high-tech manifold assembly on the right, making it too large to be described as 'secondary' or 'small'.",
-        "The hardware arrangement in Image 1 (the large filtration/gauge stack) is visually very similar to the hardware expected in Role 3, violating the requirement that roles be distinct in technical narrative. This hardware setup belongs to the 'Headworks Story' rather than the 'Selection Evidence' (Role 1) which should focus on field evidence like emitter spacing or tape laying."
+        "Role 2 (SELECTION EVIDENCE) shows two approved cartons (one upright and one on the side), whereas the brief strictly requires exactly one.",
+        "Role 3 (HEADWORKS DETAIL) is missing the mandatory headworks equipment (filter, gauge, regulator, manifold); the equipment shown in Role 2 was omitted from the concrete pad scene.",
+        "Role 3 (HEADWORKS DETAIL) contains farm activity (tractor and green machinery) in the background, which violates the 'no farm activity' constraint."
       ],
-      "correction_prompt": "Reframing of Image 1: Execute a high-oblique wide shot that makes the farm context dominant and places the 'selection evidence' (e.g., tape running in a furrow) as the primary visual subject; the product carton must be moved to a smaller, off-center scale on the lower third, and the hardware should be replaced with visible field-selection evidence rather than a headworks assembly.",
+      "correction_prompt": "Remove the second carton from Role 2 to ensure only one is shown. For Role 3, add the headworks equipment (filter, gauge, regulator, and manifold) arranged next to the single remaining carton on the concrete pad and replace the background to remove the tractor and farm machinery.",
       "panel_scores": [
-        45
+        55
       ],
       "set_attempt": 2
     },
     {
-      "pass": false,
-      "score": 25,
+      "pass": true,
+      "score": 92,
       "duplicate_roles": [],
       "reasons": [
-        "Role 2 (Selection Evidence) fails technical requirements: It depicts a low-angle ground view rather than an elevated technical arrangement, and lacks the specified evidence of 'emitter-spacing or field-selection' (e.g., no visible drip lines, tags, or spacing markers).",
-        "Role 3 (Headworks Story) contains prohibited visual elements: A tractor and a large empty cardboard box are visible in the frame. The brief for this role specifically requires an unattended 'fixed filter, gauge, regulator and manifold', and explicitly bans 'any bottle/container' (the box) and generic machinery that distracts from the specific hardware narrative.",
-        "Role 1 places the product on the central vertical axis, violating the instruction to keep it 'off-center on the lower third'."
+        "Role 1 provides the required wide high-oblique view of a crop field with tractors, establishing the farm context.",
+        "Role 2 shows a distinct technical arrangement of an irrigation machine and the product carton on a pad, fulfilling the selection evidence narrative.",
+        "Role 3 offers an equipment-only detail shot of the filter, gauge, and manifold on a concrete pad, distinct from the irrigation machine in Role 2."
       ],
-      "correction_prompt": "Regenerate role 2 as a high-angle shot focusing on tape spacing or emitter details on a simple field edge, and regenerate role 3 to feature a close-up of fixed irrigation hardware (filters, gauges) with the product small and secondary, strictly removing all tractors and cardboard boxes.",
+      "correction_prompt": "",
       "panel_scores": [
-        25
+        92
       ],
       "set_attempt": 3
     }

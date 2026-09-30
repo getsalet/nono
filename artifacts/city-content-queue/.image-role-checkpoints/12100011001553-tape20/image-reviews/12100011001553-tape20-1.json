@@ -1,0 +1,65 @@
+{
+  "source_id": "12100011001553-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 23,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "A farmer/w_worker is clearly visible operating the tractor in the background, which is a hard reject criterion.",
+        "The product roll is centered in the lower third, whereas the editorial brief requires it to be off-center."
+      ],
+      "correction_prompt": "Remove the farmer from the tractor (make the tractor unattended) and shift the drip-tape carton roll to the right (approx 25% from left edge) to satisfy the off-center placement requirement.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 24,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Background includes a city skyline, which conflicts with the 'city بهاباد' (Bahabad, a desert agricultural city in Yazd province) context.",
+        "Exact required watermark 'AFP | 09134922013' is missing (image shows '09134922015')."
+      ],
+      "correction_prompt": "Change the background city skyline to a rural Yazd/Bahabad context. Update the bottom-right watermark number to 09134922013.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 24,
+      "product_height_percent": 24,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Tractor visible on the right contains a human driver (head/body part visible), which is a hard reject per the zero-human rule.",
+        "The required editorial composition (high-oblique view with the carton small and off-center in the lower third) is not met; the roll is placed centrally and occupies a large foreground area."
+      ],
+      "correction_prompt": "Remove all visible human figures or silhouettes from the image. Re-shoot using a high-oblique perspective from a distance so the farm landscape and crop rows dominate the frame. Place the white and blue AFP drip-tape roll as a small, off-center object in the lower-third of the field, preserving the bottom-right watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 14,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The scene features a wide, high-oblique view with a dominant farm/irrigation context.",
+        "The product (white carton roll) is exactly one item, fully visible, off-center in the lower third.",
+        "No human figures or body parts are visible.",
+        "Product dimensions are within the 12-30% width and <35% height acceptance range.",
+        "A small white container (bucket) is visible next to the tractor, but as infrastructure/hardware it does not trigger a hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
