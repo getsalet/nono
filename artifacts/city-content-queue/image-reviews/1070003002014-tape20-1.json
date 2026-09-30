@@ -1,0 +1,69 @@
+{
+  "source_id": "1070003002014-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a coiled hose/pipe on the manifold, which is explicitly a hard reject condition.",
+        "Missing the required watermark 'AFP | 09134922013' in the bottom right corner.",
+        "Text on the product packaging is illegible gibberish, which is a hard reject condition."
+      ],
+      "correction_prompt": "Remove the coiled black hose from the right side of the manifold. Ensure the product packaging has legible 'AFP' branding. Add the mandatory watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 35,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product (drip-tape roll) is too large relative to the frame (width >30%, height >35%), failing the size constraint.",
+        "The product placement is not in the 'lower third' or 'off-center' as required by the mandatory role; it is positioned too high and centrally.",
+        "The watermark contains a typo 'AFP' instead of 'AFP'.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Resize the AFP drip-tape roll so it occupies less than 25% of the image width and height. Move the roll to the lower third and off-center (left or right). The background should be a wide, high-oblique view of the farm field. Ensure the watermark 'AFP | 09134922013' is correct. Reduce the product group from 35% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Presence of a person operating farm equipment in the background",
+        "Presence of a human silhouette/farmer in the middle distance",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person and the tractor/farm machinery; keep only the unattended irrigation context Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 22,
+      "product_height_percent": 20,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide cylindrical drip-tape carton roll is visible in the foreground.",
+        "Product dimensions are physically plausible and within the specified limits: width is ~22% (within 12-30%) and height is ~20% (under 35%).",
+        "The farm and irrigation context dominates the image, with rows of crops leading into the distance.",
+        "Zero people or human body parts are present.",
+        "The required bottom-right watermark 'AFP | 09134922013' is correctly placed.",
+        "The product is fully visible and located in the lower third of the frame."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

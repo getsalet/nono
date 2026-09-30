@@ -7,33 +7,59 @@
   "history": [
     {
       "pass": false,
-      "score": 25,
+      "score": 10,
       "product_width_percent": 18,
-      "product_height_percent": 14,
-      "product_x_center_percent": 38,
+      "product_height_percent": 25,
+      "product_x_center_percent": 22,
       "reasons": [
-        "Presence of a person (male farmer) standing next to the tractor, which is a strict hard reject."
+        "Presence of a human (farmer) and visible body parts (face, arms, legs, hands), which is a hard reject trigger."
       ],
-      "correction_prompt": "Remove the person from the image. Keep the tractor, the field context, and the single small AFP tape roll in the lower-third left area.",
+      "correction_prompt": "Regenerate the image without any people or human body parts. Keep the single white and blue AFP drip tape roll positioned small in the lower-left area. Maintain the wide, high-oblique view of the agricultural field with distant infrastructure. Retain the 'AFP | 09134922013' watermark in the bottom-right corner.",
       "attempt": 1
     },
     {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 19,
+      "product_height_percent": 23,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Presence of a human (farmer) in the background, which is a hard reject condition.",
+        "The image fails the mandatory condition of containing 'zero people and zero human body parts'."
+      ],
+      "correction_prompt": "Remove the person/farmer from the background entirely. Keep the AFP drip tape roll in the lower-left foreground and the farm/irrigation context. Ensure the background contains only the agricultural landscape and distant farm equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 29,
+      "product_height_percent": 34,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "Visible human or farmer (operator) seated in the unattended tractor",
+        "Roll is cut off and not fully visible",
+        "Roll extends below the frame bottom, violating 'fully visible' and 'lower-third' requirements"
+      ],
+      "correction_prompt": "Regenerate the image to show exactly one fully visible AFP drip-tape roll in the lower-third, left of center. Remove the tractor, farmer, and any operator from the scene. Ensure the roll is complete, not cut off by the frame, and the background contains only farm context without people.",
+      "attempt": 3
+    },
+    {
       "pass": true,
-      "score": 92,
-      "product_width_percent": 22,
-      "product_height_percent": 27,
+      "score": 95,
+      "product_width_percent": 23,
+      "product_height_percent": 20,
       "product_x_center_percent": 36,
       "reasons": [
-        "The image displays exactly one white-and-blue wide low cylindrical drip-tape carton roll.",
-        "The product placement is off-center in the lower third, adhering to the editorial hero role.",
-        "The bounding box dimensions (approx. 22% width, 27% height) fall within the acceptable range and maintain physical plausibility.",
-        "The scene includes a distant unattended tractor which is allowed as contextual farm infrastructure.",
-        "Zero people or human body parts are visible.",
-        "No forbidden items (bottles, second rolls, fake headlines) are present.",
-        "The required watermark 'AFP | 09134922013' is correctly present in the bottom right corner."
+        "The image matches the EDITORIAL HERO role with a dominant high-oblique view of the farm and crop rows.",
+        "The specified carton roll is the sole commercial object, is fully visible, and is positioned off-center in the lower third.",
+        "The physical dimensions of the product are within the specified acceptable range (12-30% width, up to 35% height).",
+        "No human figures, body parts, or silhouettes are present.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom-right corner.",
+        "The background effectively supports the article brief regarding irrigation in Duzheh, Jهرm, and Fars."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 4
     }
   ]
 }

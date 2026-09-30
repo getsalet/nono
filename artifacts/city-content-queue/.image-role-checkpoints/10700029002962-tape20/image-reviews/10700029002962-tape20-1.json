@@ -1,0 +1,52 @@
+{
+  "source_id": "10700029002962-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 26,
+      "product_height_percent": 15,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Presence of two human figures (workers) in the background.",
+        "Hard reject: A second commercial package/roll is visible being held by the person on the right.",
+        "Visual brief violation: The foreground roll is centered, but the brief requested the approved carton to be 'small, fully visible and off-center on the lower third', implying a larger context or smaller packaging."
+      ],
+      "correction_prompt": "Regenerate image with zero human figures and zero extra product rolls. Ensure the context is strictly an unattended field. Place a single AFP drip-tape carton roll small and off-center in the lower third of the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 19,
+      "product_height_percent": 18,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: A human figure (farmer) is clearly visible standing next to the tractor in the background.",
+        "Hard reject: A human figure is visible seated inside the tractor cab."
+      ],
+      "correction_prompt": "Remove all human figures from the image. Keep the unattended tractor and the product roll exactly as shown.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product dimensions fall within the 12-30% width and 35% height acceptable ranges",
+        "Contains zero people or human body parts",
+        "Required watermark is present",
+        "Only one approved carton roll is visible",
+        "Background context of a tilled field matches the agricultural brief"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

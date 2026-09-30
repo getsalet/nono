@@ -1,0 +1,58 @@
+{
+  "source_id": "1060009002796-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 45,
+      "product_height_percent": 25,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Presence of a person visible in the distance (hard reject).",
+        "Presence of a bottle/container (the tan-colored container inside the bare coil) which is a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the person in the background. Remove the bottle or container inside the coil. Ensure only the two coils are visible as products. Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 45.0,
+      "product_height_percent": 26.0,
+      "product_x_center_percent": 40.0,
+      "reasons": [
+        "Image contains the required AFP watermark 'AFP | 09134922013' in the bottom right corner.",
+        "Two product coils are present: one packaged (left) and one bare black (right), consistent with the approved 'layflat' pair.",
+        "The coils are physically separate and fully visible without impossible intersections.",
+        "No people, human body parts, or prohibited third commercial packages are visible.",
+        "Distant infrastructure such as the tractor, pump, and city skyline is permitted within the editorial context and does not trigger rejection.",
+        "The product placement is off-center to the left, adhering to editorial preferences for the hero image.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 38,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Required watermarks are present and correct",
+        "Exactly two approved products (packaged and bare coil) are visible",
+        "No people or body parts are present",
+        "No prohibited third-party items or containers found",
+        "Products are separate, fully visible, and physically plausible",
+        "Contextual agricultural setting fits the editorial brief"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

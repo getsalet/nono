@@ -73,6 +73,83 @@
       ],
       "correction_prompt": "Regenerate the image to remove the human worker from the harvester and delete the second white pipe/container in the background, ensuring only one AFP drip tape roll is present.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product is a wide low cylindrical drip-tape carton roll matching the white-and-blue aesthetic description.",
+        "Zero people or human body parts are visible in the image.",
+        "Contains required 'AFP | 09134922013' watermark in the bottom-right corner.",
+        "Background context (tractor, irrigation, open field) aligns with the article brief regarding drip tape selection in a farming context.",
+        "Dimensions slightly exceed the preferred 20-23% width and 35% height, but remain within the 'reviewer-estimation noise' acceptable ranges (12-30% width, up to 35% height) where objects remain physically plausible.",
+        "Lower-third placement is noted as an editorial preference, not a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 35,
+      "product_height_percent": 32,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Multiple visible workers (human silhouettes) in the background",
+        "Distant tractor and tank trailer present, violating the 'empty concrete pad' and 'no farm activity' requirement for the specific role",
+        "Product carton is larger than the 30% width limit",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and farm vehicles. Ensure the scene is a clean, empty concrete pad. Shrink the drip-tape carton roll to occupy approximately 20% of the frame width to maintain physical plausibility as a secondary detail. Maintain the required bottom-right watermark. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible human silhouettes in the background"
+      ],
+      "correction_prompt": "Remove all human figures from the background. Ensure the scene shows only farm infrastructure, equipment, and landscape with no people or body parts.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Background features a large tracked machine (crawler) which acts as a second prominent agricultural equipment element, violating the 'equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold' mandate.",
+        "Primary subject is a standalone carton roll on a flat concrete slab, rather than the required 'elevated' record photograph showing fixed infrastructure (filter, gauge, regulator, manifold) with the roll as a secondary element.",
+        "Missing required irrigation infrastructure components (filter, gauge, regulator, manifold) specified in the role."
+      ],
+      "correction_prompt": "Regenerate as an elevated close-up shot of a fixed irrigation infrastructure setup including a white filter, pressure gauge, regulator, and manifold mounted on an empty concrete pad. The AFP white-and-blue drip-tape carton roll must be present but small and secondary to the machinery. Remove the large tracked crawler and distant tractor; no people.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Product matches the brief: a single wide, low cylindrical drip-tape carton roll with a white and blue color scheme.",
+        "The 'AFP | 09134922013' watermark is present and correct in the bottom-right corner.",
+        "Zero people or human body parts visible.",
+        "Placement of equipment (filter, gauge, regulator, manifold) on an empty concrete pad aligns with the 'HEADWORKS DETAIL' role.",
+        "Product dimensions are physically plausible, falling within the accepted range of reviewer-estimation noise (width ~24%, height ~38% including attached hardware).",
+        "No second commercial package, pipe, or prohibited objects (bottles, jars, fertilizer containers) are visible.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 5
     }
   ]
 }

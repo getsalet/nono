@@ -1,0 +1,61 @@
+{
+  "source_id": "10600010001004-tape20",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 (Image 2) contains a visible person (standing near the tractor in the background), which is an automatic rejection criterion for all panels.",
+        "Role 1 (Image 1) violates the size constraint by displaying the approved carton in the immediate foreground, making it significantly larger than required.",
+        "Role 3 (Image 3) displays the equipment arrangement on a concrete pad but uses a full farmyard environment with prominent, active machinery, failing to maintain the 'equipment-only' and 'no farm activity' context requested for this role.",
+        "All images utilize a nearly identical camera angle and product framing, failing to present distinct narrative perspectives."
+      ],
+      "correction_prompt": "Regenerate a 3-panel sequence: 1) High-oblique farm view with a small off-center carton; 2) Elevated macro shot of the tape line showing spacing/emitters, strictly removing all persons; 3) Isolated product shot on a clean concrete pad with a filter, gauge, and manifold, featuring a soft-blurred empty background and the small carton secondary.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Role 3 fails the specific requirement for a 'HEADWORKS DETAIL' photograph; it must show a fixed filter, gauge, regulator, and manifold on an empty concrete pad, but instead displays a large product carton in a generic field setting with a barn and tractor in the background.",
+        "The product carton in Role 3 is oversized and center-frame, violating the rule that it should remain small, secondary, and fully visible off-center on the lower third.",
+        "The visual narrative of Role 3 does not match the required 'elevated record photograph' of equipment-only technical headworks; it is a generic product shot similar to Role 1.",
+        "The carton is placed centrally on a concrete slab in Role 3 rather than appearing as a small, secondary element in a technical equipment context."
+      ],
+      "correction_prompt": "Replace Role 3 with a high-oblique, equipment-only photograph of a drip irrigation headworks assembly (filter, gauge, regulator, manifold) on a concrete pad, featuring one small, secondary AFP carton in the lower third, with no active farm machinery or field planting context.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Panel 2 fails the role definition by presenting a collage of three different scenes (wide field, macro close-up, and equipment) instead of a single 'elevated technical arrangement'.",
+        "Panel 2 violates the 'exactly one approved carton' constraint by displaying the product three separate times across the different sub-images.",
+        "Panel 1 contains a tractor actively working in the field, which contradicts the static context usually required for 'hero' product shots that do not explicitly ask for active farm machinery."
+      ],
+      "correction_prompt": "Re-generate Panel 2 as a single static shot of one carton and a short strip of tubing on the ground, and regenerate Panel 1 to remove the tractor from the background, keeping only the distant landscape and farm infrastructure.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 3
+    }
+  ]
+}
