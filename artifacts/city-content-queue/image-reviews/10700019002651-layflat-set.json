@@ -1,44 +1,61 @@
 {
   "source_id": "10700019002651-layflat",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 32,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 45,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 violates the composition brief by including a visible tractor and operator, which is explicitly prohibited ('no farm activity', 'no person').",
-        "Role 1 fails the technical requirement that the product coils remain 'small, separate and off-center'; in this image they are dominant and centered in the foreground.",
-        "Roles 2 and 3 are a duplicate pair: both feature the exact same two-coil product setup in a static, isolated environment (bare dirt vs. concrete) without the distinct 'equipment-only' hardware (pump, gauge, manifold) required for Role 3.",
-        "Role 2 lacks the 'elevated technical' camera angle described in the brief, instead using a low, flat angle similar to the hero shot.",
-        "Role 3 fails to include the required 'one fixed pump, gauge and manifold' equipment context."
+        "Role 1 violates 'wide high-oblique' by using a ground-level perspective; the product is dominant and centered rather than 'small, separate and off-center' as required.",
+        "Role 3 fails to depict the required 'equipment-only' scene (fixed pump, gauge, manifold) on a concrete pad; instead, it shows only the two coils on a concrete surface, which duplicates the product display logic of Role 2 despite the background change.",
+        "All three images feature 'generic farm' elements (rows of crops, dirt fields, unattended tractors) which conflicts with the specific technical contexts required for the panel roles."
       ],
-      "correction_prompt": "Role 1: Replace the tractor/field scene with a high-oblique water infrastructure view where the coils are small props in the corner. Roles 2 & 3: Redefine Role 2 as a sharp, high-angle close-up of the coils' texture/diameter difference; redefine Role 3 as a pump-and-gauge headworks setup with the coils placed in the distant background.",
+      "correction_prompt": "Role 1: Shift to a high-oblique wide shot of the agricultural site to provide water-transfer context, keeping the coils small and off-center. Role 3: Replace the coil-only display with an elevated record shot of a fixed pump and gauge on a concrete pad, making the coils secondary background elements.",
       "panel_scores": [
-        32
+        45
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 15,
+      "score": 20,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "All three images are near-identical compositions featuring the pump, gauge, and coil pair on a concrete pad in a similar low-angle environment.",
+        "Roles 1 and 2 are visually indistinguishable in layout and framing; Role 3 is a slight crop of the same scene.",
+        "Role 1 requires a high-oblique wide shot, but instead shows a ground-level composition identical to the other roles.",
+        "Role 2 must show construction differences in the coils, but the coils appear identical without close-up comparison details.",
+        "Role 3 specifies equipment-only with no farm activity, but the background contains active farm machinery (tractors) and a wide field layout typical of the other roles."
+      ],
+      "correction_prompt": "Regenerate the panel: Image 1 must be a high-oblique wide shot; Image 2 must use a close-up macro view to show coil construction differences; Image 3 must be a tight crop of the pump head on the concrete pad with a blurred background excluding the tractors.",
+      "panel_scores": [
+        20
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
       "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Panel 1 features an active farm scene with a large tractor in the center, violating the requirement for a wide high-oblique context where the product remains small, separate, and off-center.",
-        "Panel 2 fails the 'no third commercial package' constraint by showing the two-coil pair plus an additional wrapped coil; it is also duplicated in layout/content by Panel 3.",
-        "Panel 3 is a pure product shot on a flat surface and completely misses the required 'equipment-only elevated record photograph of one fixed pump, gauge and manifold on an empty concrete pad'."
+        "Role 2 (SELECTION EVIDENCE) violates the brief by placing the 'approved two-coil pair' in the center foreground, making them the primary subject rather than secondary or distinct in a technical narrative.",
+        "Role 3 (HEADWORKS DETAIL) completely fails to include the required equipment (one fixed pump, gauge, and manifold). Instead, it duplicates the layout of Role 2 with two coils on a flat surface.",
+        "The layouts of Roles 2 and 3 are nearly identical, showing two coils on a pad, which results in a layout duplication and lacks the specific equipment required for the headworks detail.",
+        "Role 1 contains a 'bottle/container' (the blue box) which is a rejection factor, and the product placement is not 'small' as required."
       ],
-      "correction_prompt": "Rebuild the 3-panel set: 1) High-oblique shot of a field where the two-coil pair is small and off-center with no large tractor; 2) Elevated close-up showing only two coils on soil; 3) Concrete pad showing a fixed pump, gauge, and manifold with the two-coil pair small and secondary in the background.",
+      "correction_prompt": "Redo Role 1 with a high-oblique wide shot where the box and coil are small and off-center. Redo Role 2 to show an elevated technical comparison of the two coil types. Redo Role 3 to show a fixed pump, gauge, and manifold on a concrete pad, with the two coils placed small and secondary in the background.",
       "panel_scores": [
-        15
+        30
       ],
-      "set_attempt": 2
+      "set_attempt": 3
     }
   ]
 }

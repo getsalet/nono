@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-30T10:47:41+00:00`
+- آخرین بروزرسانی: `2026-09-30T11:45:12+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **639 از 1894 (33.74٪)**
 - تکمیل‌شده: **639**
@@ -55,16 +55,16 @@
 
 ## خطاهای اخیر
 
+- **لپویی** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **دبیران** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **دبیران** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **زرقان** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
 - **کوپن** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **کوپن** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **مصیری** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **مصیری** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **پاسخن** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **رستاق** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **فدامی** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **محمله** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **رستاق** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **دوبرجی** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
 
 ## فایل‌های خروجی
 
