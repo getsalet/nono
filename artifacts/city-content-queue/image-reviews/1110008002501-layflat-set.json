@@ -4,49 +4,54 @@
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1: The camera angle is too low (ground-level) for an 'EDITORIAL HERO' shot which requires a 'high-oblique' perspective to establish context. The product coils are also oversized and center-bottom, violating the 'small and off-center' instruction.",
-        "Role 3: The instruction explicitly requires a 'pump' and 'manifold' in addition to the gauge. The image shows a gauge and coils on concrete, but lacks the fixed pump and manifold hardware, failing the equipment-specific requirement."
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Regenerate Role 1 with a high-oblique aerial angle to show the water channel context with small, off-center coils; Regenerate Role 3 to include a visible fixed pump and manifold assembly on the concrete pad alongside the gauge and coils.",
+      "reasons": [
+        "Role 1 (Editorial Hero) fails to show the coils as small and off-center; they dominate the foreground in a generic farm row layout.",
+        "Role 2 (Selection Evidence) visually repeats the composition and framing of Role 1 rather than providing a distinct elevated technical comparison.",
+        "Role 3 (Headworks Detail) is missing required equipment (pump, gauge, manifold), showing only the coils on a plain concrete pad."
+      ],
+      "correction_prompt": "Restructure the set: 1) Reposition the two coils small and off-center in a wide high-oblique water-transfer context; 2) Create a distinct elevated close-up showing the pair's diameter difference without repeating the hero layout; 3) On the concrete pad, add a fixed pump, gauge, and manifold to establish the headworks equipment-only record.",
       "panel_scores": [
-        45
+        35
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 55,
+      "score": 40,
       "duplicate_roles": [
-        1
+        2
       ],
       "reasons": [
-        "Role 1 (Image 1) violates the EDITORIAL HERO brief by including the fixed pump, gauge, and manifold installation, which is the specific requirement for Role 3; this results in role 3/role-5 hardware duplication and layout repetition.",
-        "Role 1 fails to maintain the approved two-coil pair as small, separate, and off-center; instead, the coils are large, foreground, and centered.",
-        "Role 3 (Image 3) is correct, successfully isolating the equipment-only record on the concrete pad.",
-        "Role 2 (Image 2) is correct, providing the necessary elevated technical comparison of the two coil types."
+        "Role 1 (Image 1) fails the 'EDITORIAL HERO' brief: The required 'approved packaged coil' is not depicted correctly; instead, the packaged coil is shown as a separate small mesh-sleeved bundle rather than the specific 'approved' packaged coil, and the coils are positioned in the center-foreground rather than 'off-center' and 'small'.",
+        "Role 2 (Image 2) contains a critical rejection reason: 'any person'. Multiple people are clearly visible working in the field background, violating the 'no farm activity' and 'no person' rules for the editorial set."
       ],
-      "correction_prompt": "Regenerate Role 1 as a wide high-oblique shot of the water-transfer channel (without the pump installation), ensuring the two coils are small, off-center elements in the background to avoid duplication with Role 3.",
+      "correction_prompt": "Re-generate Role 1 to feature the specific approved large packaged coil off-center in a wide high-oblique shot. Re-generate Role 2 to remove all people from the background, keeping the elevated technical comparison of the two coils.",
       "panel_scores": [
-        55
+        40
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 30,
+      "score": 20,
       "duplicate_roles": [
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Role 2 does not fulfill the 'SELECTION EVIDENCE' brief as it lacks the required elevated camera angle and technical framing to show diameter or construction differences; instead, it presents a horizontal layout nearly identical to the Role 1 hero shot.",
-        "Role 3 fails to meet the 'HEADWORKS DETAIL' requirement because it completely lacks the mandatory equipment (fixed pump, gauge, and manifold)."
+        "Role 1 fails because the coils and pump equipment are rendered oversized and centered in the foreground rather than remaining small and off-center as required for the HERO shot.",
+        "Roles 2 and 3 are duplicate layouts; both use the same low-angle perspective with the product pair centered on a flat horizontal surface, lacking the required variation in camera height.",
+        "Role 2 fails because the background features an active truck/tractor, violating the requirement for 'no farm activity'.",
+        "Role 3 fails because the scene is set on a generic concrete pad that lacks the required specific equipment (pump, gauge, and manifold) and appears to have no environmental relevance to the agricultural brief."
       ],
-      "correction_prompt": "Update image 2 to a vertical, top-down close-up comparison of the two coils showing their diameter difference, and update image 3 to include a fixed pump, gauge, and manifold on an empty concrete pad.",
+      "correction_prompt": "Regenerate Role 2 using a high-oblique angle on a static plot to remove the active vehicle; regenerate Role 3 on a distinct empty concrete pad with a fixed pump, gauge, and manifold, keeping the two-coil pair small and secondary in the background.",
       "panel_scores": [
-        30
+        20
       ],
       "set_attempt": 3
     }

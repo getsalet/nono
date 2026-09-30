@@ -1,0 +1,64 @@
+{
+  "source_id": "1200002001542-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 24,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The required AFP carton is not 'small'; it dominates the foreground (25% width) rather than appearing small and off-center on the lower third as per the editorial brief.",
+        "The object is centered horizontally rather than being placed off-center on the lower third."
+      ],
+      "correction_prompt": "Shrink the AFP drip-tape carton to make it significantly smaller, placing it clearly off-center in the bottom third. Expand the wide high-oblique view so the farm and irrigation context dominate the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 15,
+      "product_height_percent": 12,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Presence of multiple people and human body parts (a man standing prominently in the foreground holding a tool, and several other figures working in the background).",
+        "Hard reject: The required product (AFP white-and-blue wide low cylindrical drip-tape carton roll) is missing from the image entirely. The object at the bottom is not the specified product."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove all people and human figures from the field. Ensure exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is placed in the lower third of the frame (off-center or centered is acceptable) as the primary product, while keeping the high-oblique farm irrigation background.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 24,
+      "product_height_percent": 17,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: The image contains two distinct persons (farmers/workers) standing in the field. The rules explicitly state 'Hard reject any person, farmer, worker' and 'The image must contain zero people'."
+      ],
+      "correction_prompt": "Remove the two men standing in the field. Retain the central white-and-blue AFP drip-tape carton, the irrigation infrastructure (pump, pipes, lines), and the rural background. Ensure the carton remains the only commercial product visible, positioned off-center in the lower third.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 17,
+      "product_height_percent": 19,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product is exactly one AFP white-and-blue drip-tape carton roll, matching the mandatory object.",
+        "Product dimensions (width ~17%, height ~19%) fall within the preferred 20-23% width and the 12-30% width / up to 35% height acceptance range.",
+        "The image follows the EDITORIAL HERO role: wide high-oblique farm view, product is small, fully visible, and off-center on the lower third.",
+        "Zero visible people, human body parts, or silhouettes; the distant blue tractor is unattended and allowed as contextual farm equipment.",
+        "The bottom-right watermark 'AFP | 09134922013' is present as required.",
+        "Background matches the article brief for Sمنان drip-tape irrigation, with no hard-reject items (no bottles, containers, second roll, or fake text)."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

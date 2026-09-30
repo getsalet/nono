@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-30T19:55:11+00:00`
+- آخرین بروزرسانی: `2026-09-30T20:04:01+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **724 از 1894 (38.23٪)**
-- تکمیل‌شده: **724**
+- پیشرفت: **727 از 1894 (38.38٪)**
+- تکمیل‌شده: **727**
 - در حال پردازش: **0**
-- در انتظار: **153**
-- آماده انتخاب در اجرای بعدی: **153**
+- در انتظار: **157**
+- آماده انتخاب در اجرای بعدی: **157**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1017**
+- ناموفق: **1010**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,9 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **سرباز** — سیستان و بلوچستان — `layflat` — 1791 کلمه — `2026-09-30T20:00:50+00:00`
+- **دهج** — کرمان — `layflat` — 1274 کلمه — `2026-09-30T20:00:13+00:00`
+- **کلاته** — سمنان — `tape20` — 1172 کلمه — `2026-09-30T19:59:55+00:00`
 - **بیدخون** — بوشهر — `tape20` — 1332 کلمه — `2026-09-30T19:55:09+00:00`
 - **نگور** — سیستان و بلوچستان — `layflat` — 1377 کلمه — `2026-09-30T19:53:50+00:00`
 - **پاریز** — کرمان — `layflat` — 1122 کلمه — `2026-09-30T19:51:56+00:00`
@@ -49,22 +52,19 @@
 - **ماژین** — ایلام — `tape20` — 1269 کلمه — `2026-09-30T19:18:31+00:00`
 - **زازران** — اصفهان — `layflat` — 1581 کلمه — `2026-09-30T19:18:21+00:00`
 - **کمه** — اصفهان — `layflat` — 1323 کلمه — `2026-09-30T19:07:35+00:00`
-- **راور** — کرمان — `layflat` — 1296 کلمه — `2026-09-30T19:05:56+00:00`
-- **گرگاب** — اصفهان — `layflat` — 1481 کلمه — `2026-09-30T19:04:24+00:00`
-- **گوجان** — چهارمحال و بختیاری — `tape20` — 1269 کلمه — `2026-09-30T18:56:30+00:00`
 
 ## خطاهای اخیر
 
-- **نیاسر** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **هماشهر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **دوراهک** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **کوهپایه** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **سهرورد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **گلشهر** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **سیرجان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **بزمان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **سجزی** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **بندرگناوه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **جوزم** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **سرخه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **گلمورتی** — `layflat`: `Editorial review failed: internal link count must equal minimum`
+- **گشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **چورزق** — `tape20`: `Editorial review failed: internal link count must equal minimum`
+- **خورسند** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **جزینک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **دندی** — `tape20`: `Editorial review failed: internal link count must equal minimum`
+- **ارمغانخانه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **پیشین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
