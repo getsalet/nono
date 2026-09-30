@@ -1,0 +1,52 @@
+{
+  "source_id": "1110008002890-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 22,
+      "product_height_percent": 19,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Hard reject: Image contains two visible people (one crouching in the foreground, one standing in the background). The article brief strictly mandates zero people and zero human body parts.",
+        "Hard reject: There are likely container products in the cluster of yellow and gray objects on the wooden board in the bottom right, which violates the 'zero bottles, jars, canisters' rule."
+      ],
+      "correction_prompt": "Completely remove all human figures and body parts. Eliminate the yellow and gray container-like items on the board, leaving only simple irrigation hardware or the bare wooden board. Keep the white AFP roll in the lower-left foreground and the rural farm background. Ensure the bottom-right watermark remains exactly as specified.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 18,
+      "reasons": [
+        "Hard reject: Presence of a person (farmer/man standing in the field).",
+        "Hard reject: A second roll of tape is visible in the field held by the person, violating the 'exactly one approved carton' rule.",
+        "The primary carton roll in the foreground is cut off at the bottom edge, failing the 'fully visible' requirement."
+      ],
+      "correction_prompt": "Regenerate image to remove the human figure entirely. Remove the second roll of tape in the background. Ensure the single AFP carton roll in the foreground is not cropped by the bottom frame edge while maintaining a small, off-center position on the lower third. Keep the 'AFP | 09134922013' watermark in the bottom right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 22,
+      "product_height_percent": 19,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Object matches strict geometry requirements: exactly one white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Dimensions are physically plausible and within accepted tolerance limits.",
+        "Zero visible people or human body parts.",
+        "Background context aligns with the editorial brief (farm/irrigation context).",
+        "Required bottom-right watermark is present and accurate."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

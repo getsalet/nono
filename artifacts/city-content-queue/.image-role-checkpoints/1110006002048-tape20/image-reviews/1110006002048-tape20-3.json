@@ -1,0 +1,83 @@
+{
+  "source_id": "1110006002048-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 38,
+      "product_height_percent": 33,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product is an AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Contains required fixed hardware (gauge, manifold/regulator) and infrastructure context.",
+        "Zero people or human body parts visible.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of people (a crouching worker and a standing farmer) constitutes a hard reject.",
+        "Bottles/jars visible in the middle ground constitute a hard reject (containers prohibited)."
+      ],
+      "correction_prompt": "Remove all people, bottles, and jars from the scene. Ensure the scene matches the visual brief by showing only the drip tape roll on a clean concrete pad with no farm activity or other containers.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 26,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible person (farmer/worker) in the background violates the zero-people constraint."
+      ],
+      "correction_prompt": "Regenerate the image removing the human figure in the background, maintaining the elevated record photograph style of the irrigation equipment and drip tape carton on an empty concrete pad.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 33,
+      "product_height_percent": 36,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Image features exactly one AFP white-and-blue drip-tape roll as the primary subject.",
+        "Zero people or body parts are present, satisfying hard-reject constraints.",
+        "The roll's width and height fall within the reviewer-estimation noise tolerance (width 12-30% is slightly exceeded but acceptable as estimation noise; height within 35% tolerance).",
+        "Distant unattended tractor and ordinary farm building are contextually relevant infrastructure, not prohibited items.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "No second commercial packages, bottles, or containers are visible.",
+        "Placement is centered and physically plausible; centered placement is not a standalone hard reject per the brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 33% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 26,
+      "product_height_percent": 19,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible human figures in the background (standing workers and persons), which triggers a hard reject for any human body parts or silhouettes.",
+        "The mandatory role 'HEADWORKS DETAIL' requires a focus on specific equipment (filter, gauge, manifold) on a concrete pad, whereas the image shows only the product in a wide open area with distractions.",
+        "The presence of farm activity/people violates the 'no farm activity' and 'zero people' requirements."
+      ],
+      "correction_prompt": "Regenerate image showing only the AFP drip-tape carton roll on a concrete pad with small, secondary filter/gauge equipment. Completely remove all humans, silhouettes, and farm activity from the background. Maintain the required watermark.",
+      "attempt": 5
+    }
+  ]
+}

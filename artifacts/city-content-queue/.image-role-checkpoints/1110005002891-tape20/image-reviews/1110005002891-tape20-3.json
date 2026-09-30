@@ -1,0 +1,83 @@
+{
+  "source_id": "1110005002891-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 34,
+      "product_height_percent": 38,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Visible human silhouette/figure in the background stands hard reject, violating the zero-people constraint",
+        "Product bounding box width (~34%) and height (~38%) exceed the 30% width and 35% height hard reject thresholds",
+        "Secondary commercial packaging (green box) visible in the background is a hard reject",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all humans and human silhouettes from the frame. Remove any secondary commercial packaging boxes. Resize the main white AFP drip tape carton to occupy less than 30% of the frame width and less than 35% of the frame height. Reduce the product group from 34% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 27,
+      "product_height_percent": 26,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL: no fixed filter, gauge, regulator, or manifold are visible in the image.",
+        "The scene shows a low-angle record shot of the carton on the ground, which contradicts the brief's requirement for an 'elevated' perspective looking down at the equipment setup.",
+        "The carton roll is the sole subject; the brief requires it to remain 'small and secondary' to the irrigation hardware."
+      ],
+      "correction_prompt": "Elevate the camera to a high angle looking down. Include a fixed filter, gauge, regulator, and manifold on a concrete pad as the main focus. Keep the small AFP drip-tape carton secondary in the composition. Maintain the watermarked bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 45,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Contains exactly two carton rolls instead of one, violating the singular package requirement.",
+        "Includes a second commercial package in the foreground (small roll), violating the hard reject rules for multiple items.",
+        "Image composition does not match the mandatory 'HEADWORKS DETAIL' brief, which requires a record of a fixed filter, gauge, regulator, and manifold with the carton appearing small and secondary.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate with exactly one small AFP drip-tape carton positioned as secondary. The foreground must be dominated by an empty concrete pad equipped with a fixed filter, gauge, regulator, and manifold. Remove the second carton roll entirely. Reduce the product group from 45% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of a person (farmer) and human body parts in the background, which is a hard reject regardless of distance.",
+        "Failure to follow the mandatory 'HEADWORKS DETAIL' role requirement, which specified that the equipment should be a manifold/gauge setup with the product secondary; here the product is the sole subject.",
+        "Presence of a second commercial package (open cardboard box in the background) which violates the 'exactly one' package rule."
+      ],
+      "correction_prompt": "Remove the person and the second open box. Reposition the product to be small and secondary to a visible filtration head and manifold setup on a concrete pad, maintaining the bottom-right watermark.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 35,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product width exceeds the hard reject limit of 30 percent",
+        "Presence of a second commercial package/device (the irrigation control unit next to the roll)",
+        "Mandatory HEADWORKS DETAIL role is not met (specific filter, gauge, regulator, and manifold on a concrete pad are missing)",
+        "Text on the carton is gibberish instead of readable labels",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate to show a small AFP white-and-blue drip-tape carton roll (max 30% width) on an empty concrete pad alongside a fixed filter, gauge, regulator, and manifold; remove the separate control unit and any human elements. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

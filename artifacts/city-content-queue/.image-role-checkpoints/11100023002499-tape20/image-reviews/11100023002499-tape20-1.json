@@ -1,0 +1,78 @@
+{
+  "source_id": "11100023002499-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Watermark phone number does not match required format (09134922013)"
+      ],
+      "correction_prompt": "Regenerate with the exact watermark text 'AFP | 09134922013' in the bottom-right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 22,
+      "reasons": [
+        "Hard reject: A person (human silhouette/body) is visible in the middle distance of the field",
+        "Hard reject: The visible product is a roll of tape on a cardboard core, not the required 'white-and-blue wide low cylindrical drip-tape carton roll'",
+        "Background mismatch: The urban skyline with skyscrapers contradicts the rural farm irrigation context of the article brief",
+        "Distant unattended tractor is visible, which is generally allowed, but the human presence overrides this"
+      ],
+      "correction_prompt": "Regenerate image: remove all human figures and people. Replace the white tape roll on the ground with a wide, low, white-and-blue cylindrical carton roll of drip tape. Move the carton roll to the bottom-left or bottom-right off-center area so it occupies 20% width and 20% height of the frame. Change the background skyline from city skyscrapers to open agricultural landscape or farm buildings.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 25,
+      "product_height_percent": 38,
+      "product_x_center_percent": 57,
+      "reasons": [
+        "The required bottom-right watermark reads 'AFP | 09134922013', but the specification strictly requires 'AFP | 09134922013'. While the numeric sequence matches the target, the watermark is not explicitly required to match the exact target string in a way that differentiates it from a potential typo in the prompt vs image, however, standard QA logic usually treats watermark presence as a hard requirement which is met here. Re-evaluating: The prompt says 'The exact bottom-right watermark AFP | 09134922013 is REQUIRED'. The image has exactly this. Wait, looking closely at the prompt's required string vs the image. Prompt: 'AFP | 09134922013'. Image: 'AFP | 09134922013'. They are identical. ",
+        "The roll is positioned too centrally for the 'off-center' editorial preference mentioned in the brief, though it is on the lower third. However, the primary issue is the object's size relative to the 'small' descriptor for the hero shot. It appears slightly too large/dominant compared to the 'small' descriptor, but more critically, the height percentage (approx 38%) exceeds the strict physical plausibility cap of 35% specified in the hard reject criteria.",
+        "The product bounding box height exceeds the 35% limit, which constitutes a hard reject for 'severely distorted dimensions' or simply out-of-bounds for the specific height constraint.",
+        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the vertical height of the drip-tape roll to less than 35% of the image frame to comply with the physical plausibility limit, while maintaining the off-center lower-third placement. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 15,
+      "product_height_percent": 15,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: The image contains a full-body human figure (man standing in crop rows).",
+        "Hard reject: The primary packaging object is a white square box (cardboard carton), not the required wide low cylindrical drip-tape roll."
+      ],
+      "correction_prompt": "Remove the human figure completely from the crop rows. Replace the square cardboard box on the ground with exactly one wide, low cylindrical drip-tape carton roll in white and blue colors. Maintain the low oblique view of the field and city skyline.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Background shows a major city skyline which does not match the rural, agricultural context required for the article about Sarpaz/Sistan and Baluchestan.",
+        "Product placement is centered horizontally, violating the strict requirement for the roll to be 'off-center'.",
+        "Missing the exact mandatory bottom-right watermark 'AFP | 09134922013'."
+      ],
+      "correction_prompt": "Regenerate with a rural farm field background (no city skyline), position the drip-tape roll clearly in the lower-right or lower-left third (off-center), and add the exact text 'AFP | 09134922013' as a watermark in the bottom right corner.",
+      "attempt": 5
+    }
+  ]
+}
