@@ -1,0 +1,69 @@
+{
+  "source_id": "1100008002215-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 70,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The approved pair consists of two coiled hoses, but the left item is a packaged coil with an incorrect 'AFU' brand label instead of 'AFP'.",
+        "The required 'HEADWORKS DETAIL' role (fixed pump, gauge, and manifold on a concrete pad) is completely missing from the image.",
+        "The product pair combined width exceeds 65% of the frame.",
+        "The right coil contains a physical stick or stake intersecting the product, which is a hard reject feature.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate to include the mandatory headworks detail: a fixed pump, gauge, and manifold on a concrete pad. Replace the AFU branded coil with an AFP branded coil. Ensure the two coils are small and secondary to the infrastructure. Remove the stick intersecting the right coil. Maintain the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 70% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The approved two-coil pair is not shown; instead, there is one coil and a large, unidentified grey/blue package.",
+        "The combined width of the objects is approximately 58%, which exceeds the preferred 12-20% width for this role (secondary status).",
+        "The mandatory 'HEADWORKS DETAIL' (fixed pump, gauge, and manifold on a concrete pad) is missing."
+      ],
+      "correction_prompt": "Remove the large grey/blue package. Generate an equipment-only elevated record photograph on an empty concrete pad featuring a fixed pump, gauge, and manifold. Keep the two-coil pair (one packaged AFP coil and one bare black woven coil) very small (15% width), separate, and secondary to the infrastructure. Maintain zero people.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 55,
+      "product_height_percent": 38,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Missing mandatory 'HEADWORKS DETAIL' role: The image shows two coils of hose on a concrete surface but completely lacks the required 'elevated record photograph of one fixed pump, gauge and manifold'.",
+        "Role mismatch: The brief explicitly states 'no farm activity' and requires infrastructure (pump/gauge) as the primary focus, with coils being secondary. The current image features the coils as the sole subject on a flat plane, failing to meet the visual brief requirements."
+      ],
+      "correction_prompt": "Regenerate as an elevated perspective shot of a stationary fixed pump unit, pressure gauge, and manifold mounted on a concrete pad. Include one small packaged blue AFP coil and one small bare black woven hose coil placed in the lower third as secondary context. No people, no moving farm activity.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 32,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains required two-coil pair: packaged AFP coil and bare black woven coil.",
+        "Coils are separate, fully visible, and physically plausible.",
+        "Width estimate is within the 8-65% acceptance range for this role.",
+        "Includes required infrastructure (fixed pump and gauges) on an empty concrete pad.",
+        "Required bottom-right watermark is present.",
+        "No people, human body parts, or forbidden commercial packages visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

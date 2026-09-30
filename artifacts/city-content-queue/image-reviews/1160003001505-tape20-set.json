@@ -1,17 +1,20 @@
 {
   "source_id": "1160003001505-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
       "score": 30,
-      "duplicate_roles": [],
-      "reasons": [
-        "A person is visible in Panel 3, which is strictly prohibited.",
-        "The product carton in Panel 1 appears oversized relative to the ground, conflicting with the requirement for it to remain small and secondary.",
-        "Panel 1 places the product centered at the bottom foreground rather than 'off-center on the lower third' as specified for the editorial hero role."
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "Regenerate Panel 3 without any people, and regenerate Panel 1 by shifting the product carton to the lower-left or lower-right third and reducing its visual scale to maintain the dominance of the irrigation landscape.",
+      "reasons": [
+        "Role 1: The product (tape roll) is placed in the immediate foreground and is too large ('oversized'), violating the requirement to remain small and off-center on the lower third.",
+        "Role 1: The required high-oblique view is missing; the camera angle is low and ground-level.",
+        "Role 3: The 'fixed filter, gauge, regulator, and manifold' are completely missing. The image is just the tape roll on a concrete pad, failing to provide the required technical narrative.",
+        "Role 3: Contains a person (farmer in the tractor), which is a strict rejection criteria."
+      ],
+      "correction_prompt": "Image 1: Reposition the camera to a high-oblique angle to make the crop field dominate, reducing the tape roll to a small off-center object on the lower third. Image 3: Replace the image with an equipment-only high-angle shot of a fixed filter, pressure gauge, and regulator on a concrete pad with the tape roll as a small secondary element, ensuring absolutely no persons or tractors are visible.",
       "panel_scores": [
         30
       ],

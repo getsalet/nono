@@ -1,0 +1,54 @@
+{
+  "source_id": "11000017002189-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 55,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Multiple human figures (workers/individuals) are visible in the background, which is a hard reject condition.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width.; Reduce product height from 45% to at most 40% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image to remove all human figures from the background while maintaining the high-oblique farm context and keeping the two coils in the foreground. Reduce the product group from 55% to 8-42% of frame width. Reduce product height from 45% to at most 40% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 48,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible person (farmer/worker) standing on the left side of the image",
+        "Visible human body parts (legs, torso, face) of the person on the left",
+        "Product pair width exceeds the 42% maximum rejection threshold",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the person standing on the left. Reduce the size of the water coils to occupy less than 40% of the frame width while maintaining separation and visibility. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image contains exactly two products: a packaged AFP coil and a bare black woven coil, which remain separate and physically plausible.",
+        "There are zero people, human body parts, or human silhouettes in the frame.",
+        "The product pair is clearly visible in the lower section, with a combined width estimated at 28% of the frame, well within the accepted range.",
+        "The image includes the mandatory bottom-right watermark 'AFP | 09134922013'.",
+        "A distant unattended truck is present but is correctly identified as background infrastructure rather than an additional commercial product or a person.",
+        "The editorial wide high-oblique water-transfer context (crop rows and irrigation canal) is successfully established."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

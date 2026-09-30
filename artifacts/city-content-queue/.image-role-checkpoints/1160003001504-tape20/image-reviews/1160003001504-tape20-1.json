@@ -1,0 +1,38 @@
+{
+  "source_id": "1160003001504-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The roll is too wide (exceeds the 30% maximum width limit)",
+        "The product is centered rather than placed in the lower third and off-center as required by the editorial role",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with the drip-tape roll significantly smaller (approx 20-23% width) and positioned in the lower-left or lower-right corner to follow the editorial hero composition. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Zero people or body parts.",
+        "Single white-and-blue carton roll with required AFP watermark visible bottom-right.",
+        "Product is centered rather than off-center, which is an editorial preference and not a hard reject.",
+        "Dimensions are within the physical plausibility limits (width 12-30%, height <35%)."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

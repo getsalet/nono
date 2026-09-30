@@ -1,0 +1,81 @@
+{
+  "source_id": "1160003001506-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 34,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: a person is clearly visible in the background standing next to the tractor",
+        "Violation of mandatory visual brief: the image does not show a detailed close-up of a fixed filter, gauge, regulator, and manifold; instead, it shows a general scene with a truck and a person",
+        "Product width is estimated at approximately 34%, which is slightly above the preferred 20-23% range and close to the 30% limit, though the presence of the human is the primary cause for rejection",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image showing an elevated close-up of fixed irrigation hardware (filters, gauges, manifold) on a concrete pad with zero people. Include a single small AFP white-and-blue drip tape roll in the foreground, keeping it under 25% width. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 32,
+      "product_height_percent": 27,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "A visible person (farmer) is present in the background",
+        "A visible face and body parts (arms, legs) are present in the background",
+        "Product width is approximately 32% of the frame, which exceeds the 30% hard reject limit",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person in the background completely and regenerate the scene with only the drip-tape roll and irrigation infrastructure, ensuring the roll width is under 30% of the frame. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible person in the background (farmer/worker standing on the road)"
+      ],
+      "correction_prompt": "Regenerate the image without any people. Ensure the background consists only of the concrete pad and distant unattended farm equipment or buildings, removing the human figure near the road.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 34,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product width is estimated at 34% of the frame, exceeding the hard limit of 30% for pass.",
+        "The image depicts the carton as the primary central subject rather than the 'HEADWORKS DETAIL' role which requires an equipment-only scene (filter, gauge, regulator) where the carton is secondary.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a HIGH-ANGLE detail shot of a fixed irrigation filter manifold and pressure gauge on a concrete pad. The AFP drip-tape carton should be small (approx 15% width), positioned in the background or periphery as a secondary element. Keep the empty pad and distant tractor context. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 30,
+      "product_height_percent": 37,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Exact required watermark present.",
+        "Zero people or body parts visible.",
+        "Fixed infrastructure (gauge, filter, manifold) and distant unattended tractor contextually relevant.",
+        "Product dimensions at the limit of acceptability but physically plausible; preferred range slightly exceeded but not hard-rejected.",
+        "machine-enforced bounding-box check failed: Reduce product height from 37% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 37% to at most 35% of frame height.",
+      "attempt": 5
+    }
+  ]
+}
