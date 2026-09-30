@@ -1,0 +1,78 @@
+{
+  "source_id": "1150009001493-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 38,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The product bounding box width (38%) exceeds the 30% hard-reject threshold. The 'wide' roll shape is physically plausible, but its horizontal span is too dominant in the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image reducing the apparent width of the drip-tape carton to approximately 22% of the frame (by zooming in slightly or using a longer focal length) while maintaining a height of around 24%. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 24,
+      "product_height_percent": 17,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: The image contains multiple visible people in the background (two individuals on the left side), which strictly violates the 'zero people' and 'zero human body parts' rule."
+      ],
+      "correction_prompt": "Regenerate the image with the background figures completely removed, leaving only the blurred farm infrastructure, tractor, and the foreground carton roll.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory visual elements from the brief: no visible filter, gauge, regulator, or manifold.",
+        "Missing required watermark 'AFP | 09134922013' at bottom-right.",
+        "Product roll is wider than the 30% maximum limit (45% of frame width).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Generate a low-angle elevated shot of a concrete pad containing a single small AFP white-and-blue drip-tape roll (15% width) alongside an elevated fixed filter, gauge, and manifold setup. No people, no bottles. Add a text watermark 'AFP | 09134922013' to the bottom-right. Reduce the product group from 45% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 33,
+      "product_height_percent": 30,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Presence of a person in the background (man sitting on stool) triggers a hard reject condition.",
+        "Visible bottle/container (silver/white jug on left side) triggers a hard reject condition.",
+        "Product bounding box (33% width) exceeds the 30% maximum width constraint.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person sitting on the stool and the jug in the background. Reduce the size of the white 'AFP' carton roll to less than 30% of the frame width while maintaining its presence. Keep the 'AFP | 09134922013' watermark. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 20,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Role mismatch: The article's mandatory visual role requires an 'elevated record photograph of one fixed filter, gauge, regulator and manifold on an empty concrete pad'. The current image shows the tape roll placed on the ground (flat) and lacks the required infrastructure components (filter, gauge, regulator, manifold).",
+        "Role violation: The 'exactly one approved carton remains small and secondary' constraint is not met; the tape roll is the primary subject and is not secondary to the infrastructure.",
+        "Role violation: The brief specifies 'no farm activity', but the background contains multiple prominent unattended tractors and trucks, which contradicts the clean 'equipment-only' requirement of this specific role."
+      ],
+      "correction_prompt": "Re-generate as an elevated record photograph of a fixed irrigation manifold, gauge, and filter assembly on a clean concrete pad. The AFP white-and-blue drip-tape carton roll must be positioned small and secondary relative to the manifold. Remove all visible tractors, trucks, and farm activity from the scene.",
+      "attempt": 5
+    }
+  ]
+}

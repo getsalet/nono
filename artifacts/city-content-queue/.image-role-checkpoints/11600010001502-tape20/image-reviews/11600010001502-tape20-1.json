@@ -1,0 +1,59 @@
+{
+  "source_id": "11600010001502-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 33,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "One approved AFP carton roll present",
+        "Zero people visible",
+        "Distant unattended tractor is allowed infrastructure",
+        "Correct editorial context",
+        "Required watermark present",
+        "Product slightly wider than preferred range but remains plausible and not hard-rejected",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: A human figure (worker) is clearly visible in the mid-ground interacting with the tractor; the brief mandates zero people or body parts.",
+        "Hard reject: A tractor and trailer are prominently featured in the scene; the brief strictly allows only distant, unattended farm equipment.",
+        "Editorial preference violation: The approved carton is placed in the central lower-third rather than off-center."
+      ],
+      "correction_prompt": "Remove the human worker and the tractor/trailer from the mid-ground to leave only distant, unattended farm infrastructure. Move the white and blue AFP drip-tape carton off-center to the lower left or right, and keep the background as a wide, high-oblique view of the farmed land.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Zero people, human body parts, or silhouettes are visible.",
+        "Exactly one drip-tape roll is present, matching the wide, low cylindrical shape.",
+        "Product size falls within the preferred 20-23% width range (estimated 24%).",
+        "Image uses the required high-oblique wide view of the field as an editorial hero.",
+        "The product is placed off-center on the lower third as requested.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Background is a contextual farm/irrigation field without prohibited items."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

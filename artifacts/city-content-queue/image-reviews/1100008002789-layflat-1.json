@@ -1,0 +1,75 @@
+{
+  "source_id": "1100008002789-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 55.0,
+      "product_height_percent": 30.0,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Product pair width is ~55% of the frame, exceeding the maximum threshold of 42%. The bare black coil is overly large and dominates the foreground, conflicting with the requirement for the objects to remain small.",
+        "The 'packaged coil' on the left is depicted as a wrapped object (resembling a wrapped disc or block) rather than a recognizable coiled hose, which fails the recognizability requirement for the specific layflat pair.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the scale of the hose coils to occupy 15% of the frame width. Ensure the bare black coiled hose is on the right and the packaged coiled hose is on the left. Both coils should sit on the concrete pad and be clearly recognizable as coiled hoses. Keep the wide high-oblique agricultural background context. Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 52,
+      "product_height_percent": 30,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Contains both required AFP products: a packaged coil (left) and a bare black woven coil (right)",
+        "Zero people or human body parts present",
+        "Watermark 'AFP | 09134922013' is correctly present in bottom-right",
+        "Wide high-oblique editorial context with crop rows and horizon is appropriate",
+        "Off-center placement in lower foreground matches editorial hero preference",
+        "No third commercial product, bottle, or jar detected; only a standard connector visible at the base of the bare coil",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 57,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains exactly one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Zero people or human body parts are visible.",
+        "No third commercial product, bottle, or container is present.",
+        "The distant tractor is treated as unattended farm equipment/infrastructure, not a commercial product.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly visible.",
+        "The wide high-oblique perspective of the agricultural field matches the editorial hero brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 57% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 57% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 23,
+      "product_height_percent": 22,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Includes one packaged coil and one bare black woven coil, both fully visible and separate.",
+        "Zero people or human body parts.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right as required.",
+        "Editorial hero context with wide water-transfer field view and off-center product placement.",
+        "Coil and packaging are physically plausible with no impossible intersections or merged objects."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
