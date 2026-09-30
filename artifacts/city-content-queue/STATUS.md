@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-30T22:07:28+00:00`
+- آخرین بروزرسانی: `2026-09-30T22:19:05+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **748 از 1894 (39.49٪)**
-- تکمیل‌شده: **748**
+- پیشرفت: **750 از 1894 (39.60٪)**
+- تکمیل‌شده: **750**
 - در حال پردازش: **0**
-- در انتظار: **217**
-- آماده انتخاب در اجرای بعدی: **217**
+- در انتظار: **221**
+- آماده انتخاب در اجرای بعدی: **221**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **929**
+- ناموفق: **923**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -18,8 +18,7 @@
 
 ## بسته‌های آماده آپلود
 
-- بسته‌های 50تایی آماده: **14**
-- [batch-005-posts-0201-0250.zip](./packages/batch-005-posts-0201-0250.zip) — 50 پست — 18787501 بایت
+- بسته‌های 50تایی آماده: **15**
 - [batch-006-posts-0251-0300.zip](./packages/batch-006-posts-0251-0300.zip) — 50 پست — 16759414 بایت
 - [batch-007-posts-0301-0350.zip](./packages/batch-007-posts-0301-0350.zip) — 50 پست — 17664378 بایت
 - [batch-008-posts-0351-0400.zip](./packages/batch-008-posts-0351-0400.zip) — 50 پست — 18827412 بایت
@@ -29,9 +28,12 @@
 - [batch-012-posts-0551-0600.zip](./packages/batch-012-posts-0551-0600.zip) — 50 پست — 10846317 بایت
 - [batch-013-posts-0601-0650.zip](./packages/batch-013-posts-0601-0650.zip) — 50 پست — 10384826 بایت
 - [batch-014-posts-0651-0700.zip](./packages/batch-014-posts-0651-0700.zip) — 50 پست — 11329657 بایت
+- [batch-015-posts-0701-0750.zip](./packages/batch-015-posts-0701-0750.zip) — 50 پست — 11090318 بایت
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **دیهوک** — خراسان جنوبی — `tape20` — 1411 کلمه — `2026-09-30T22:14:50+00:00`
+- **نیمبلوک** — خراسان جنوبی — `tape20` — 1081 کلمه — `2026-09-30T22:12:44+00:00`
 - **آبدانان** — ایلام — `layflat` — 1389 کلمه — `2026-09-30T22:02:15+00:00`
 - **مورموری** — ایلام — `layflat` — 1186 کلمه — `2026-09-30T22:00:24+00:00`
 - **کلاله** — گلستان — `tape20` — 1519 کلمه — `2026-09-30T21:53:32+00:00`
@@ -50,21 +52,19 @@
 - **منوجان** — کرمان — `layflat` — 1414 کلمه — `2026-09-30T20:40:23+00:00`
 - **نودژ** — کرمان — `layflat` — 1310 کلمه — `2026-09-30T20:38:45+00:00`
 - **سقز** — کردستان — `layflat` — 1575 کلمه — `2026-09-30T20:27:56+00:00`
-- **جناح** — هرمزگان — `tape20` — 1398 کلمه — `2026-09-30T20:21:05+00:00`
-- **هنگوییه** — هرمزگان — `tape20` — 1433 کلمه — `2026-09-30T20:19:10+00:00`
 
 ## خطاهای اخیر
 
-- **قهستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **نقاب** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **کندر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **زهان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **نقاب** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **خوسف** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **ماژین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **اسدیه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **ماژان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **بشرویه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **دهلران** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **سنگان** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **اسفدن** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **سنگان** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **سرایان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **سلامی** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **میمه** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
+- **لومار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **ارکواز** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **پهله** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
 
 ## فایل‌های خروجی
 

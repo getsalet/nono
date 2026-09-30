@@ -1,0 +1,84 @@
+{
+  "source_id": "1290005002441-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 34,
+      "product_height_percent": 36,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Contains a person standing near the tank in the background",
+        "Product width (34%) exceeds the maximum limit of 30%",
+        "Product height (36%) exceeds the maximum limit of 35%",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove the person from the background and resize the drip tape carton roll so it occupies 20-23% of the image width and no more than 35% of the image height. Reduce the product group from 34% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 31,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Object (roll) exceeds 30% width hard reject threshold",
+        "Role mismatch: Mandatory 'HEADWORKS DETAIL' requires filter/gauge/manifold infrastructure; image shows a generic product shot",
+        "Background contains an elephant and generic American-style barn which violates the geographic context (Khorasan/Rural Iran)",
+        "Product is the primary subject, contradicting the requirement for it to be 'secondary'",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a HEADWORKS DETAIL shot. Focus on a fixed irrigation filter, gauge, and manifold on a concrete pad. The AFP blue-and-white drip tape roll must be small and secondary (approx 20% width). Replace the elephant and American barn with Iranian rural elements (clay farm building, distant tractor). Include the 'AFP | 09134922013' watermark in the bottom right. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Person (farmer/worker) is visible in the background next to the tractor, which is a hard reject requirement.",
+        "Second commercial package or unidentified black object (resembling a small canister or container) is present on the concrete pad next to the gauge.",
+        "The image role specifies 'equipment-only' and 'no farm activity', but the background shows a person actively standing near equipment."
+      ],
+      "correction_prompt": "Remove the person standing next to the tractor in the background. Ensure only one fixed filter, gauge, regulator, and manifold are on the pad alongside the one AFP drip-tape roll. No other commercial packages, bottles, or containers are permitted.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 32,
+      "product_height_percent": 28,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Image contains exactly one AFP white and blue drip-tape roll.",
+        "Roll dimensions are plausible; width ~32% is within the 12-30% reviewer-estimation noise range.",
+        "Mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "No people or human body parts are visible.",
+        "Secondary infrastructure (gauges, regulator) is visible but does not violate the 'exactly one carton' constraint.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Visible human figures and farmers in the background",
+        "Hard reject: Visible arms and body parts of the people in the image"
+      ],
+      "correction_prompt": "Remove all human figures, farmers, and body parts from the background completely. Retain only the AFP drip-tape roll and the concrete pad with background infrastructure.",
+      "attempt": 5
+    }
+  ]
+}

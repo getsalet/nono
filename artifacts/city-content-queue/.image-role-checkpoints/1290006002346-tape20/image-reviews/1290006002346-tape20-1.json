@@ -1,0 +1,78 @@
+{
+  "source_id": "1290006002346-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 25,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Fake headline and gibberish writing present on the carton (text reads 'Oing', 'rrsignon', and 'Ia pel' instead of coherent information).",
+        "Product branding 'AFP' and visible text do not match the specific article brief requirements for 'آیسک' or 'سرایان' drip-tape. "
+      ],
+      "correction_prompt": "Regenerate image removing all gibberish text from the carton label; replace 'AFP' branding with clean, legible text matching the 'آیسک' or 'سرایان' brief if possible, or remove text entirely to focus on the physical roll.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 18,
+      "product_height_percent": 17,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: presence of a standing person (farmer/worker)."
+      ],
+      "correction_prompt": "Regenerate image with zero people and zero human body parts. Ensure the AFP drip-tape roll remains the sole subject in the foreground, small and off-center.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 17,
+      "product_height_percent": 18,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Product object is a single white cylindrical drip-tape roll, but it lacks the blue coloration and carton packaging texture specified as 'white-and-blue carton roll'.",
+        "The bottom-left area of the object label shows indistinct text that may be gibberish; the 'AFP' logo is clear but lacks the specific carton-style printing.",
+        "The object is not an 'off-center' carton; it is too close to the vertical centerline for the mandated EDITORIAL HERO role.",
+        "The required text watermark 'AFP | 09134922013' is present and correctly placed, but the visual identity of the product carton fails the strict 'white-and-blue' description."
+      ],
+      "correction_prompt": "Generate an EDITORIAL HERO image of a white-and-blue wide low cylindrical drip-tape carton roll (AFP brand). The carton must be placed off-center in the lower third (approx. x: 20% or x: 80%). Ensure the 'AFP' logo is printed clearly on the side of the carton with blue stripes. Include the watermark 'AFP | 09134922013' in the bottom right. The background should be a high-oblique view of a farm field with irrigation context.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is present in the bottom right, violating the strict requirement that it must never be visible or present in the image.",
+        "Product is placed in the exact center of the image (50% x-center), conflicting with the 'Editorial Hero' preference for off-center placement on the lower third."
+      ],
+      "correction_prompt": "Remove the bottom-right watermark completely. Move the drip tape roll off-center to the lower third of the frame while maintaining the farm context and high-oblique view.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 25,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip-tape carton roll is visible, matching the editorial role of staying small and fully visible in the frame.",
+        "Zero human body parts or people are present in the image, meeting the strict rejection criteria.",
+        "The background aligns perfectly with the article brief, showing a wide high-oblique view of a farm with drip irrigation lines and distant crops.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The product is physically plausible with dimensions that fit within the 12-30% width and 35% height tolerance ranges."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

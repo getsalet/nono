@@ -1,0 +1,72 @@
+{
+  "source_id": "10900019002213-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 70,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image contains exactly two commercial products (one packaged AFP coil, one bare black woven coil), which matches the required layflat pair.",
+        "No people or human body parts are visible in the image.",
+        "The required watermark 'AFP | 09134922013' is clearly present in the bottom-right corner.",
+        "The scene features the required infrastructure (gauge/manifold on the packaged coil) without including any third commercial products or prohibited containers (like bottles).",
+        "The objects are physically plausible, separate, and clearly visible on a clean concrete pad.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 70% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 50,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL: The image is missing the required 'equipment-only elevated record photograph of one fixed pump, gauge and manifold on an empty concrete pad'.",
+        "The foreground shows only the two coiled hoses on the pad, failing to include the specific pump and manifold infrastructure required for this role."
+      ],
+      "correction_prompt": "Add a fixed pump unit, pressure gauge, and manifold on the concrete pad in an elevated framing to meet the HEADWORKS DETAIL requirement, while keeping the two coiled hoses small and secondary in the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Critical rejection: The image contains an AI-generated robotic/robot figure in the upper right, which violates the hard reject rule for human silhouettes or 'impossible' objects.",
+        "The 'packaged AFP coil' is shown in the middle of the frame, not on the bottom left as per the approved layout and visual brief for the headworks pair.",
+        "The robot-like object is not the requested infrastructure (pump/gauge) and is a severe distractor that disrupts the professional product photography style.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate: A clean studio shot of one black woven hose coil on the bottom left and one coiled hose in a white and blue cardboard box on the bottom right. No robots, no people, no extraneous items. Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 45,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Image displays the approved pair: one packaged AFP coil and one bare black woven coil.",
+        "Both coils are separate, physically plausible, fully visible, and free of impossible intersections or distortion.",
+        "Combined product width (~45%) falls within the 8-65% acceptable noisy estimate range.",
+        "No people, hands, or human silhouettes are present.",
+        "No third commercial packages, bottles, or containers are visible.",
+        "Background features (concrete pad, farmland) align with editorial preferences and do not trigger hard rejects."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

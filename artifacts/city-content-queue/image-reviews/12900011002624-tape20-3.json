@@ -1,0 +1,39 @@
+{
+  "source_id": "12900011002624-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Contains multiple human silhouettes/figures in the background (left and center) which is a hard reject per rules.",
+        "Carton product dimensions exceed the hard limit of 35% height and 30% width.",
+        "machine-enforced bounding-box check failed: Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate image with an empty concrete pad and no people in the background (remove figures on left and center). Reduce the size of the AFP white-and-blue carton roll so it occupies less than 23% of the image width and less than 35% of the image height, keeping the water-drip equipment in focus. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Required watermark 'AFP | 09134922013' is present.",
+        "No people or human body parts are visible.",
+        "Product is exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Product dimensions are within the acceptable range (width 22%, height 30%).",
+        "Fixed irrigation infrastructure (gauge, regulator) is present on an empty concrete pad, matching the editorial brief."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
