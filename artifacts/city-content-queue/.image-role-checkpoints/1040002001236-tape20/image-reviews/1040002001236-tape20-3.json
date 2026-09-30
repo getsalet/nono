@@ -1,0 +1,78 @@
+{
+  "source_id": "1040002001236-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 12,
+      "product_width_percent": 20,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: second commercial package present (a smaller AFP carton roll in the lower-left foreground), violating the 'exactly one carton' constraint",
+        "Hard reject: 'Drip' brand text is clearly visible on the large carton and the side-facing 'AFP' logo is present; both constitute visible commercial labeling that conflicts with the required equipment-only visual role",
+        "Hard reject: the product appears to be an open spool/roll rather than a sealed white-and-blue cylindrical carton roll, which conflicts with the 'wide low cylindrical drip-tape carton roll' description and role expectations",
+        "Hard reject: the image includes two commercial packages, failing the 'zero second commercial package' rule",
+        "Hard reject: the visual role calls for an 'equipment-only elevated record photograph of one fixed filter, gauge, regulator and manifold' — here the large carton is the primary object, making the carton more than 'small and secondary' and shifting the editorial focus away from the required infrastructure-only composition"
+      ],
+      "correction_prompt": "Regenerate: place a small, sealed white-and-blue cylindrical AFP drip-tape carton roll (20% width) to the far right of a fixed regulator/gauge assembly on a bare concrete pad; the gauge assembly is the primary subject; remove all branding text and the second foreground carton; keep one background tractor and a farm building; retain the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Distant human visible inside the tractor cabin in the background",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to remove the human visible in the tractor cabin, ensuring the scene is completely free of people, faces, or body parts. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 35,
+      "product_height_percent": 30,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Product width exceeds hard reject limit (estimated 35% > 30% maximum)",
+        "Visual role mismatch: Brief requires HEADWORKS DETAIL (elevated equipment, gauge, manifold on concrete pad), but image shows ground-level wide landscape with central product",
+        "machine-enforced bounding-box check failed: Reduce the product group from 35% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regen HEADWORKS DETAIL: Low angle close-up of fixed irrigation equipment (filter, gauge, manifold) on an empty concrete pad. Keep AFP white-and-blue drip-tape roll small, secondary (width < 20%), placed in the background. Ensure zero people. Reduce the product group from 35% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 28,
+      "product_height_percent": 34,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Visible human in background (farmer standing near the tractor).",
+        "Hard reject: Human body parts (head, arms, legs, face) are clearly visible.",
+        "Product label text is partially gibberish/distorted, failing legibility check."
+      ],
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Human figure (farmer/worker) is visible in the background, which is a hard reject.",
+        "The background shows a farm field with tractors instead of the requested empty concrete pad infrastructure detail."
+      ],
+      "correction_prompt": "Remove the man and tractors. Show a close-up, elevated view of a concrete pad containing only a drip tape roll, a filter, a gauge, and a manifold. The background should be empty concrete.",
+      "attempt": 5
+    }
+  ]
+}

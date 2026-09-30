@@ -1,0 +1,78 @@
+{
+  "source_id": "1040002002546-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 30,
+      "product_height_percent": 24,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Contains visible people (two men standing in the background), which is a hard reject.",
+        "Shows a layflat hose coiled on the ground around the carton, which is a hard reject."
+      ],
+      "correction_prompt": "Remove all people and the black layflat hose. Keep the AFP drip tape roll and the fixed irrigation manifold setup (filter, gauge, regulator) on the concrete pad without any farm activity.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The image contains a second commercial package (a roll of black irrigation tubing) next to the carton roll, which violates the 'zero second roll/package' rule.",
+        "The required HEADWORKS (fixed filter, gauge, regulator, and manifold) are not clearly the primary or detailed focus; the background tractors are a prominent editorial distraction.",
+        "The product (the white and blue carton roll) is not small and secondary as required by the specific role; it dominates the foreground equally with the tubing roll.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to strictly show the equipment-only headworks on a concrete pad (filter, gauges, manifold). Remove the second roll of tubing. Make the white and blue AFP carton roll small and clearly secondary to the main irrigation equipment. Remove the large red tractors from the background or make them extremely distant and contextually subtle. Ensure no human figures are present. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 38,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product width (~38%) exceeds the maximum allowed 30% threshold",
+        "Product height (~40%) exceeds the maximum allowed 35% threshold",
+        "The image role 'HEADWORKS DETAIL' requires the carton to be small and secondary, but it is the dominant subject in the foreground",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Regenerate the image with the AFP drip tape carton significantly smaller (target 20-23% width), positioned in the background as a secondary element. The main subject should be a fixed filter, gauge, regulator, and manifold on the concrete pad. Reduce the product group from 38% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 14,
+      "product_height_percent": 15,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Multiple human figures are clearly visible in the background, including workers near the tractor and a person standing near the red barn. The brief strictly requires zero people or human silhouettes.",
+        "Hard reject: The visual role is described as 'HEADWORKS DETAIL' of a filter, gauge, regulator, and manifold on an empty concrete pad. This image shows a wide, open field with a barn and farm activity, failing to match the specific scene requirements of the brief."
+      ],
+      "correction_prompt": "Regenerate the image on an empty, isolated concrete pad featuring a close-up of a fixed filter, gauges, and manifold. The AFP drip-tape roll should be placed as a small, secondary element. Ensure there are absolutely no people, humans, or farm buildings in the background.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Visible human silhouette (person standing on the left side of the frame) is a hard reject.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and silhouettes from the scene. Keep only the inanimate drip-tape roll and the fixed gauge/connector assembly on the concrete pad. Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

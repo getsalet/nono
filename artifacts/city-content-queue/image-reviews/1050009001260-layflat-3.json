@@ -1,0 +1,73 @@
+{
+  "source_id": "1050009001260-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 54,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image is missing the mandatory 'HEADWORKS DETAIL' elements: a fixed pump, gauge, and manifold on an empty concrete pad. The image shows the coils in isolation on a pad, but fails the specific role description for this shot which requires equipment to be the primary subject or at least present.",
+        "The approved two-coil pair is not 'secondary' or 'small' as required by the role; they are the primary subject and occupy roughly 54% of the frame width.",
+        "The watermark 'AFP | 09134922013' is present, which is required, but the composition fails the role-specific constraint of including pump/gauge infrastructure."
+      ],
+      "correction_prompt": "Regenerate the image to include a fixed pump unit with a gauge and manifold sitting on the concrete pad (background or prominent left). The two irrigation coils should be placed smaller in the frame, acting as secondary context, to match the 'equipment-only elevated record photograph' role description.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 55,
+      "product_height_percent": 62,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Approved pair of one packaged AFP coil and one bare black woven coil is present, separate and physically plausible",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and unchanged",
+        "Zero people or human body parts visible",
+        "No third commercial products, bottles, or jars present",
+        "Pump, gauge, and manifold on empty concrete pad match the required HEADWORKS DETAIL role",
+        "Placement is editorially sound with no hard rejects",
+        "machine-enforced bounding-box check failed: Reduce product height from 62% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 62% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 40,
+      "product_height_percent": 17,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL (pump, gauge, and manifold). The image shows only the coils.",
+        "The 'packaged AFP coil' is not a standard flat coil; it is wrapped with a strap/packaging that is not explicitly described as a layflat coil, resembling a different product type or distorted shape.",
+        "The bare black coil is very thick, resembling a standard hose or pipe roll rather than a flat layflat profile, violating the 'layflat' visual requirement."
+      ],
+      "correction_prompt": "Add a fixed pump, gauge, and manifold on a concrete pad to satisfy the 'HEADWORKS DETAIL' role. Ensure the packaged coil is a flat layflat coil, not a thick hose roll, and remove the wrapping strap to show the correct shape.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 32,
+      "product_height_percent": 15,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Correctly identifies the two required coils: one in a cardboard box (packaged) and one bare black coiled hose.",
+        "Both objects are separate, physically plausible, and fully visible.",
+        "The combined bounding box of the product pair is estimated at approximately 32% of the frame width, falling within the preferred 12-20% to acceptable 65% range.",
+        "Contains no people or body parts.",
+        "Contains no forbidden objects such as bottles, jars, canisters, or third commercial packages.",
+        "The required watermark 'AFP | 09134922013' is present and legible in the bottom-right corner.",
+        "Includes the required 'HEADWORKS DETAIL' infrastructure (pump, gauge, manifold) on the concrete pad, which is allowed and relevant to the role."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

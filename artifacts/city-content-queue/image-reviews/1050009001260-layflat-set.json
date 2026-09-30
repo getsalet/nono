@@ -1,39 +1,56 @@
 {
   "source_id": "1050009001260-layflat",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 15,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "score": 25,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails: The shot is not a high-oblique context view, and the product packaging/coil is oversized and centered, rather than small, off-center, and secondary.",
-        "Role 2 fails: The technical comparison is disrupted by a generic field background and the presence of a 'third commercial package' (a wrapped coil) in the center, which is explicitly forbidden.",
-        "Role 1 and 2 are not distinct: Both are low-angle shots that are dominated by the product rather than the specific narrative context required by the editorial brief."
+        "Panel 3 completely omits the required Headworks equipment (pump, gauge, and manifold), featuring only coils on a concrete pad instead of the specified technical infrastructure record.",
+        "Panel 2 includes an oversized product layout where the two-coil pair dominates the frame, violating the instruction for role 3 (and consistent secondary treatment for the others) where they must remain small and secondary.",
+        "The visual narrative for Role 3 is missing entirely, failing the requirement for a 'HEADWORKS DETAIL' environment structure."
       ],
-      "correction_prompt": "Regenerate Role 1 with a wide, high-oblique perspective where the water-transfer context dominates and the product is small/off-center; regenerate Role 2 to remove the third package and show only the two approved coils clearly for comparison against a technical/non-generic background.",
+      "correction_prompt": "Re-generate Panel 3 to feature a headworks setup with a fixed pump, pressure gauge, and manifold on an empty concrete pad, while ensuring the product coils are small, off-center, and secondary.",
       "panel_scores": [
-        15
+        25
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 65,
-      "duplicate_roles": [],
-      "reasons": [
-        "The camera angle for all three panels is nearly identical (ground-level/surface height). Role 1 explicitly requires a 'wide high-oblique' shot to establish water-transfer context, but the provided image is a flat surface-level view.",
-        "Role 2 requires an 'elevated technical comparison', but the image is shot from a low horizontal plane, failing to provide the requested visual elevation and narrative distinction from Role 1.",
-        "The visual environments (bare earth texture) and framing are too repetitive between panels 1, 2, and 3, making them visually redundant despite the slight shift in product packaging."
+      "score": 45,
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "Reshoot Panel 1 from a high-oblique angle to show the full water-transfer landscape; elevate the camera for Panel 2 to create a clear technical comparison; adjust Panel 3 to a side-angle medium shot focusing on the pump hardware.",
+      "reasons": [
+        "The equipment-only fixed pump and manifold in Role 3 violates the brief by featuring a complex automated metering valve instead of the simple required fixed pump.",
+        "Roles 2 and 3 are distinct camera height/angle violations as both use the same low-level eye-record style without the required elevated or comparative perspectives.",
+        "Role 2 does not clearly show the diameter or construction difference of the approved two-coil pair as required for selection evidence."
+      ],
+      "correction_prompt": "Regenerate Role 3 with an elevated record photo of a single simple fixed pump and manifold on an empty concrete pad; regenerate Role 2 with a distinct elevated angle showing a clear visual difference between the two coils.",
       "panel_scores": [
-        65
+        45
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 1 effectively fulfills the 'EDITORIAL HERO' role by showing a high-oblique wide view of the agricultural and urban context, with the two required coils (packaged and bare) remaining small, separate, and off-center.",
+        "Panel 2 provides the 'SELECTION EVIDENCE' with an elevated, clean technical shot of the two coils, allowing for diameter and construction comparison without the prohibited inclusion of a third package, person, or extra coil.",
+        "Panel 3 acts as the 'HEADWORKS DETAIL' by featuring an equipment-only record shot on an empty concrete pad, maintaining the approved two-coil pair as small, separate, and secondary elements while showing the gauge and manifold.",
+        "All panels maintain the 'AFP | 09134922013' watermark in the bottom-right corner as required, with no added captions or obstructions.",
+        "The set avoids generic farms or hardware duplication between roles, with each panel maintaining a distinct camera height and technical narrative relevant to the 'Janvarod' water-transfer brief."
+      ],
+      "correction_prompt": "None.",
+      "panel_scores": [
+        92
+      ],
+      "set_attempt": 3
     }
   ]
 }
