@@ -1,0 +1,89 @@
+{
+  "source_id": "1140003002730-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 55,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Required watermark present at bottom-right",
+        "Zero humans or body parts visible",
+        "Third commercial products (bottles, cans, extra packages) absent",
+        "Objects are separate, recognizable, and physically plausible",
+        "Editorial hero composition with wide high-oblique context is appropriate",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 46,
+      "product_height_percent": 36,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image correctly displays the approved pair: one packaged AFP coil on the left and one bare black woven coil on the right.",
+        "The layout features a wide, high-oblique water-transfer context with crop rows and irrigation, matching the editorial brief.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and legible.",
+        "The scene contains zero people or human body parts.",
+        "There are no third commercial packages, bottles, or containers visible.",
+        "The placement is appropriately off-center (lower half) for an editorial hero shot.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 46% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 48,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product bounding box width (48%) exceeds the maximum hard reject threshold of 42%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the scale of both coils by 25-30% to fit the combined width under 42% while maintaining sharpness and separation. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 48,
+      "product_height_percent": 32,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: distant human figures (faces/bodies) are visible in the middle field area, which violates the zero people rule.",
+        "Hard reject: the combined width of the two product coils is estimated at 48%, which exceeds the maximum allowed limit of 42%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 48% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove all human figures and silhouettes from the field. Shrink the product coils so their combined width is between 12 and 20 percent of the image frame. Reduce the product group from 48% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 52,
+      "product_height_percent": 30,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image displays exactly two products: one packaged AFP coil and one bare black woven coil.",
+        "No human figures, body parts, or faces are visible in the frame.",
+        "The scene context shows a wide field consistent with the editorial hero role.",
+        "The mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Both objects are separate, physically plausible, and fully visible on the soil.",
+        "Product bounding box width is 52%, which is flagged as wide relative to the 12-20% preference, but does not trigger a hard reject or a fail state given the high clarity and absence of other negative constraints.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 52% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 52% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

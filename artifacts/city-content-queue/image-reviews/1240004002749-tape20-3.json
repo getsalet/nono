@@ -1,0 +1,68 @@
+{
+  "source_id": "1240004002749-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 26,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "Visible person in background interacting with tractor violates the 'zero people' and 'no farm activity' hard rejection rules",
+        "Product roll is too wide (32% width) exceeding the maximum allowed limit of 30%",
+        "Missing mandatory equipment (filter, manifold) required for the 'HEADWORKS DETAIL' role",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all visible humans and farm activity; keep the concrete pad empty except for a small secondary carton. Add a fixed filter and gauge assembly on the pad. Reduce the roll width to be no more than 25% of the frame width. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 26,
+      "product_height_percent": 25,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Hard reject: A visible person is present in the distant background, which violates the zero-people requirement.",
+        "Hard reject: The required 'AFP | 09134922013' watermark is missing from the bottom-right corner."
+      ],
+      "correction_prompt": "Remove the person visible in the background entirely; add the required watermark 'AFP | 09134922013' in the bottom-right corner; maintain the empty concrete pad and fixed filter infrastructure context.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 31,
+      "product_height_percent": 38,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Product height is 38%, exceeding the maximum physical plausibility limit of 35%.",
+        "Product width is 31%, exceeding the maximum acceptable width of 30%.",
+        "The mandatory equipment-only context (filter, gauge, regulator, and manifold) is completely missing; the carton is the sole subject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Shrink the drip-tape carton to be small and secondary (width under 20% and height under 30%). Add a fixed white filter unit, pressure gauge, and manifold on a concrete pad in the background to satisfy the equipment-only visual brief. Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 20,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Product meets the mandatory 'elevated record photograph' role with fixed filters, gauges, and manifolds on a concrete pad.",
+        "The carton is the correct white-and-blue cylindrical drip-tape roll and is small/secondary relative to the infrastructure.",
+        "Zero people or human body parts are present.",
+        "Watermark is correctly placed.",
+        "Distant unattended tractor is contextually acceptable."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

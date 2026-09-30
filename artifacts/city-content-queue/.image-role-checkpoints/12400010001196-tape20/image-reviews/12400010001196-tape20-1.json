@@ -1,0 +1,63 @@
+{
+  "source_id": "12400010001196-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 15,
+      "product_height_percent": 14,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: A standing human (male figure) is prominently visible in the upper right quadrant of the image. The prompt explicitly forbids any people, workers, or body parts.",
+        "Object mismatch: The image features a 'drip-tape carton roll' that is not clearly white-and-blue; it appears as a white carton with a black reel hub, resembling a generic plastic water hose rather than the specified product role."
+      ],
+      "correction_prompt": "Remove the human figure completely. Ensure the foreground product is a clearly visible white and blue wide drip-tape carton roll. Maintain the wide high-oblique farm perspective.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 16,
+      "product_height_percent": 19,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible human figures in the distant field mid-ground violate the zero people rule."
+      ],
+      "correction_prompt": "Remove all distant human figures and pedestrians from the field. Ensure the background contains only the city skyline, mountains, and unattended farm infrastructure.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 20,
+      "product_height_percent": 15,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "The mandatory wide high-oblique view is missing; the image uses a standard straight perspective.",
+        "The background shows a city skyline with mountains instead of the rural farm and irrigation context required by the brief."
+      ],
+      "correction_prompt": "Regenerate with a high-oblique camera angle where the farm and irrigation system dominate the view, and replace the distant city skyline with a rural landscape of fields and mountains.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 18,
+      "product_height_percent": 16,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Product matches the AFP white-and-blue drip-tape carton description exactly.",
+        "Positioned on the lower third as requested for the editorial hero role.",
+        "Zero people, human body parts, or silhouettes present.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Farm and irrigation context dominates the frame with a wide high-oblique view."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

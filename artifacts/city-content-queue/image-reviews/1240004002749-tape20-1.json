@@ -1,0 +1,52 @@
+{
+  "source_id": "1240004002749-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Image contains a person (farmer) crouching in the field.",
+        "Hard reject: Human body parts (head, arms, legs, hands) are clearly visible and interacting with the crop.",
+        "Editorial context mismatch: The presence of the worker violates the 'zero people' constraint for this product shot."
+      ],
+      "correction_prompt": "Remove the farmer and all human body parts from the image entirely. Keep the farm, crop rows, and the single AFP drip tape carton in the lower-left third. Retain the bottom-right watermark 'AFP | 09134922013' exactly as shown. Ensure the carton remains fully visible and physically plausible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 18,
+      "reasons": [
+        "Hard reject: A human silhouette/farmer is visible in the middle-left distance near the crop rows."
+      ],
+      "correction_prompt": "Regenerate the image ensuring there are no people or farmers in the background; remove the human silhouette on the left.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Product is a single white and blue wide low cylindrical drip-tape roll, matching the specified visual profile.",
+        "Placement is off-center and in the lower third of the image, consistent with the editorial hero role requirements.",
+        "Background is a farm context with crop rows and a distant unattended tractor, which are allowed contextual elements.",
+        "Zero people or human body parts are visible in the image.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Product dimensions are well within the acceptable 12-30% width and <35% height ranges."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

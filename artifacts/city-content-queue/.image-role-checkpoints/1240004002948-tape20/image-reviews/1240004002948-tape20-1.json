@@ -1,0 +1,77 @@
+{
+  "source_id": "1240004002948-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 12,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Visible man (person) in the image",
+        "Visible human body parts",
+        "Required bottom-right watermark \"AFP | 09134922013\" is present but hard reject due to human",
+        "Product is a white and blue drip-tape roll, but a blue hose is coiled on it or next to it"
+      ],
+      "correction_prompt": "Regenerate: Remove the man completely. Remove any coiled blue hose or pipe from the area near the drip-tape roll. Ensure the roll is a single white-and-blue wide cylindrical drip-tape carton roll (AFP branding). Keep the bottom-right watermark exactly as \"AFP | 09134922013\".",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 24,
+      "product_height_percent": 26,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "A human figure is visible in the background near the tractor, which is a hard reject criterion.",
+        "Only one hard reject is required to fail, so the presence of the person invalidates the image regardless of the correct product placement and watermark."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the human figure in the background near the tractor while keeping the farm, crop rows, tractor, and the AFP drip-tape roll exactly as shown.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product is positioned centered horizontally instead of off-center as required for the editorial hero role.",
+        "The product is significantly larger than the requested width (20-23%) and reaches the 30% hard-reject limit, violating the requirement for the carton to remain small.",
+        "The tractor appears to have a visible driver (human silhouette/figure), which is a hard reject."
+      ],
+      "correction_prompt": "Move the roll off-center to the lower right, significantly reduce its scale to approx 20% width, and remove any visible figure from the tractor.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 21,
+      "product_height_percent": 13,
+      "product_x_center_percent": 61,
+      "reasons": [
+        "The bottom-right watermark text is incorrect: the image displays 'AFP | 09134922013', but the requirement explicitly states the watermark must be 'AFP | 09134922013' (with a zero, not a three, as the second digit).",
+        "The product is positioned on the 'ground plane' within the crop rows (foreground), rather than being an 'off-center element on the lower third' of the frame's overall composition as intended for a hero image. It reads as an item resting on the soil rather than floating in the compositional third."
+      ],
+      "correction_prompt": "Replace the bottom-right watermark text with exactly 'AFP | 09134922013' (change the 3 to a 0). Reposition the AFP drip-tape roll slightly higher to sit within the lower third compositional band without touching the foreground soil, maintaining its size and white/blue color scheme.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Editorial Hero role requirement failed: The brief explicitly requires the product to be 'off-center on the lower third.' The product in the image is centered horizontally.",
+        "Editorial Hero role requirement failed: The brief states the farm and irrigation context should 'dominate' with a 'wide high-oblique view.' The current framing is a close-up that focuses heavily on the foreground product, reducing the dominance of the field context."
+      ],
+      "correction_prompt": "Regenerate with a wide high-oblique long-shot composition where the irrigation field dominates the frame. Position the AFP white-and-blue drip-tape roll in the lower-left or lower-right corner (strictly off-center) to act as a secondary focal point rather than the center.",
+      "attempt": 5
+    }
+  ]
+}

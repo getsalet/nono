@@ -1,0 +1,55 @@
+{
+  "source_id": "1240001002949-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 38,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human visible on the left side of the image (worker near cart)",
+        "Hard reject: Bottle/container visible on the far left (drum/barrel)",
+        "Hard reject: Multiple second commercial cartons/packs visible in the background",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure, the barrel/bottle on the left, and all background cartons. Keep only the single white-and-blue drip tape roll on a clean concrete pad. Ensure no human body parts are visible anywhere. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 31,
+      "product_height_percent": 20,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Human figure (farmer/worker) visible in the background standing near hay bales.",
+        "Hard reject: Product width (estimated 31%) exceeds the 30% maximum limit.",
+        "Role violation: Image shows a generic field setting, not the 'HEADWORKS DETAIL' close-up of a filter, gauge, regulator, and manifold on a concrete pad requested by the brief.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure in the background entirely. Reduce the size of the drip tape roll to ensure it occupies less than 30% of the image width. Change the background to a close-up view of a concrete pad equipped with a fixed irrigation filter, gauge, regulator, and manifold, ensuring no farm activity is visible. Retain the 'AFP | 09134922013' watermark in the bottom right. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 28,
+      "product_height_percent": 25,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Shows exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Zero people, hands, or human body parts visible.",
+        "Required watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "Headworks detail (filter, gauge, regulator) is present on an empty concrete pad, and the tape roll is secondary to it.",
+        "No hard-reject elements (containers, second rolls, or impossible geometry) are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

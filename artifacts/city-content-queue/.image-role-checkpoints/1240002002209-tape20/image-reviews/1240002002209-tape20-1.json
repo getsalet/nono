@@ -1,0 +1,62 @@
+{
+  "source_id": "1240002002209-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: A standing person is visible on the right side of the field (approx x=82%, y=15%), which violates the zero-person rule."
+      ],
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 22,
+      "product_height_percent": 18,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible person in the scene"
+      ],
+      "correction_prompt": "Remove the person from the background entirely to comply with the zero-people rule.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 14,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The visible tractor in the background contains an occupied cab with a driver/worker present, which triggers a hard reject due to the presence of a person.",
+        "The product roll is centered horizontally (50% x-center) and placed high in the foreground rather than being small and off-center on the lower third as specified for the EDITORIAL HERO role.",
+        "The image lacks the required wide high-oblique perspective where the farm and irrigation context dominate."
+      ],
+      "correction_prompt": "Remove all humans or drivers from the scene; reposition the single drip tape roll to be small and off-center in the lower third of the frame; switch to a high-oblique wide shot to allow the field and irrigation infrastructure to dominate the composition.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 22,
+      "product_height_percent": 16,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Image features a valid AFP drip-tape roll with correct white and blue branding.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Scene matches the editorial hero brief with a high-oblique view of the farm.",
+        "No people, human silhouettes, or other commercial containers are present.",
+        "Product dimensions are within acceptable tolerances."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

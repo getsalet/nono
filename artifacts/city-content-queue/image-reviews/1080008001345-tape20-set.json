@@ -4,16 +4,19 @@
   "history": [
     {
       "pass": false,
-      "score": 42,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 (Role 1) features a generic crop row with an active tractor and a large, centered product placement in the immediate foreground, violating the specific instruction to keep the product 'small' and 'off-center on the lower third' and the farm context from 'dominating' the visual weight of the carton.",
-        "Panel 2 (Role 2) includes extraneous documents and a 'selection evidence' layout on a concrete pad that visually overlaps with the 'headworks detail' narrative of Panel 3, making the technical distinction between evidence and hardware weak.",
-        "Panel 3 (Role 3) displays multiple gauges and a complex manifold assembly instead of the specified 'one fixed filter' and 'one regulator' on an 'empty concrete pad'; it lacks the necessary pad isolation and shows a generic paved background rather than the dedicated equipment record space required."
+      "score": 35,
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "Regenerate Panel 1 to feature a high-oblique wide shot where the farm environment dominates and the product is small and off-center; regenerate Panel 3 to show a single filter and regulator on an isolated concrete pad with no background farm elements or extraneous paperwork.",
+      "reasons": [
+        "Role 2 includes a person standing in the field, which is a strict rejection criterion.",
+        "Role 3 depicts an active truck moving in the background, violating the 'no farm activity' requirement for the HEADWORKS DETAIL role.",
+        "Role 3 lacks the required filter and manifold, showing only a gauge and regulator."
+      ],
+      "correction_prompt": "For Role 2, remove the person from the field. For Role 3, replace the moving truck with a static unattended tractor or none, and include a fixed filter and manifold on the concrete pad alongside the gauge.",
       "panel_scores": [
-        42
+        35
       ],
       "set_attempt": 1
     }

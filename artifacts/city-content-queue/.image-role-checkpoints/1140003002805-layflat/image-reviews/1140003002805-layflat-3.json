@@ -1,0 +1,54 @@
+{
+  "source_id": "1140003002805-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 72,
+      "product_height_percent": 35,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image contains a visible human figure in the background (person standing by the field), which triggers a hard reject for this role.",
+        "The combined width of the two coils exceeds the 65% maximum hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Remove all humans from the background and reduce the combined width of the two coils to less than 65% of the frame. Reduce the product group from 72% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 62,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Multiple people and human silhouettes visible in the background",
+        "Approved two-coil pair is wider than the 20% upper limit",
+        "Foreground contains an unfamiliar device/package that does not match the mandatory 'fixed pump, gauge, manifold' headwork detail"
+      ],
+      "correction_prompt": "Remove all human figures from the background entirely. Scale down the two-coil pair so their combined width is under 20% of the frame. Replace the blue/white plastic device in the foreground with a standard fixed pump, gauge, and manifold on an empty concrete pad, keeping the two coils small and secondary to the infrastructure.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Product width (approx 22%) falls just outside the preferred 12-20% window but is well within the strict hard-reject limit (<65%) and allows both objects to remain clearly recognizable and separate.",
+        "Both coils are fully visible, separate, and physically plausible.",
+        "The black coil with the connector and stake is clearly an installed hose segment and associated infrastructure, not a rejected third commercial product.",
+        "The image meets all role-specific requirements: equipment-only elevated record photograph, fixed pump, empty concrete pad, no farm activity.",
+        "Zero people, faces, or body parts present.",
+        "Required watermark \"AFP | 09134922013\" is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

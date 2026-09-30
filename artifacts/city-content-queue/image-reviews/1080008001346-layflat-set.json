@@ -6,14 +6,15 @@
       "pass": false,
       "score": 40,
       "duplicate_roles": [
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Role 2 fails the 'Selection Evidence' requirement: The 'elevated technical comparison' is not distinct from Role 1's ground-level layout; it lacks the specific camera height/angle separation and technical narrative required to show 'diameter or construction difference' through the pair.",
-        "Role 3 fails the 'Headworks Detail' requirement: The image shows only the two coiled product forms on a concrete pad, completely missing the mandatory 'one fixed pump, gauge and manifold' equipment setup required for the editorial narrative.",
-        "Duplicate layout detected between Role 1 and Role 2: The two images use the same 'packed coil on left, bare coil on right' spatial arrangement and product framing, violating the instruction to pass only when roles are 'visibly distinct' in layout and narrative."
+        "Role 2 layout duplicates Role 3: both feature the exact same 'two-coil pair' placed side-by-side on the ground as the primary foreground focus, violating the requirement for distinct camera heights/angles and narrative flow.",
+        "Role 3 does not satisfy the 'HEADWORKS DETAIL' requirement: the prompt explicitly requires an 'elevated record photograph of one fixed pump, gauge and manifold' on a concrete pad, but the image instead shows a low-angle shot of coils with farm machinery (tractor/implement) and barns in the background, lacking the required pump hardware.",
+        "Product scale violation: The coiled hoses are depicted as 'oversized' relative to the tractors and human-scale farm structures in the background, causing the layout to merely 'move the product' rather than establishing a realistic industrial context."
       ],
-      "correction_prompt": "Regenerate Role 2 with a low, high-oblique angle close-up emphasizing the material difference between the two coils to distinguish it from Role 1, and regenerate Role 3 to include the specified pump, gauge, and manifold on the concrete pad with the coils serving only as a secondary background element.",
+      "correction_prompt": "Re-shoot Role 2 with an elevated, top-down angle on an open soil surface to clearly contrast the two coil types; re-shoot Role 3 as a high-angle 'record' shot of a mounted pump head, pressure gauge, and manifold on a concrete pad, keeping the two small hoses in the corner to avoid duplication with Role 2.",
       "panel_scores": [
         40
       ],
@@ -21,33 +22,34 @@
     },
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 40,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 3 (HEADWORKS DETAIL) completely fails its required specification: it shows the product coils on a concrete pad but omits the mandatory equipment (one fixed pump, gauge, and manifold), resulting in an image that is a direct duplicate of the layout and subject matter of Role 2.",
-        "Role 2 (SELECTION EVIDENCE) contains an unapproved, oversized commercial package (a large, crumpled white and blue object), violating the strict prohibition against extra commercial packaging.",
-        "The entire set is compromised by Role 3's execution, which fails to introduce new technical narrative (equipment) and instead repeats the product-only layout of Role 2."
+        "Panel 1 (Editorial Hero) is a flat perspective, failing to deliver the required wide high-oblique shot.",
+        "Panel 2 (Selection Evidence) violates the 'no extra coil' rule by showing two bare black coils instead of one packaged and one bare.",
+        "Panel 3 (Headworks Detail) fails to show the required equipment (pump, gauge, manifold) and instead focuses on product close-up.",
+        "The set lacks visual variety in camera angle and technical narrative across the three roles."
       ],
-      "correction_prompt": "Re-shoot Role 3 to display the required fixed pump, gauge, and manifold on the concrete pad, ensuring the two coil pair remains small and secondary. Re-shoot Role 2 to remove all unapproved commercial packaging, retaining only the approved two-coil pair to clearly show the technical difference.",
+      "correction_prompt": "Recompose Panel 1 as a high-oblique hero shot; remove the second bare coil from Panel 2 to show only the packaged vs. bare comparison; add a pump, gauge, and manifold to Panel 3 to establish the headworks context.",
       "panel_scores": [
-        35
+        40
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 (SELECTION EVIDENCE) fails the 'no third commercial package' constraint: The image displays three distinct coil items (the packaged coil and two bare coils), whereas the brief strictly requires only the approved two-coil pair (packaged + one bare) to avoid commercial clutter.",
-        "Role 3 (HEADWORKS DETAIL) fails the 'equipment-only' constraint: The image displays a packaged coil and a bare coil with a gauge, but completely lacks the required 'fixed pump' and 'manifold' equipment. The presence of the large coil on the foreground violates the requirement that the coil pair remain 'secondary' and 'small' in a pump-centric shot."
+      "score": 22,
+      "duplicate_roles": [
+        2
       ],
-      "correction_prompt": "Regenerate Role 2 to show only two items (the packaged coil and one bare coil) side-by-side to demonstrate diameter difference, removing the extra bare coil. Regenerate Role 3 to feature a fixed centrifugal pump and a metal manifold as the central focus on the concrete pad, keeping the coil pair small and in the background.",
+      "reasons": [
+        "Panel 2 (SELECTION EVIDENCE) and Panel 3 (HEADWORKS DETAIL) contain a duplicate hardware setup (pump, gauge, and manifold), which violates the requirement for distinct technical narratives.",
+        "Panel 1 includes active farm activity (growing crops in rows), which violates the 'no farm activity' constraint.",
+        "Panel 2 includes active farm activity (an operating tractor and machinery in the background), which violates the 'no farm activity' constraint."
+      ],
+      "correction_prompt": "Remove all growing crops and operating farm machinery from all panels. In Panel 2, remove the pump and gauge entirely, keeping only the two hose coils to show construction comparison. Ensure the hardware in Panel 3 is clearly distinct from Panel 1's.",
       "panel_scores": [
-        45
+        22
       ],
       "set_attempt": 3
     }
