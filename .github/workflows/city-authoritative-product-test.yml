@@ -12,14 +12,14 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       AGNES_API_BASE: https://apihub.agnes-ai.com/v1
       AGNES_API_KEY: ${{ secrets.AGNES_API_KEY14 }}
       IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY14 }}
       IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
       AGNES_IMAGE_MODEL: agnes-image-2.5-flash
-      TEST_FAMILY: tape
+      TEST_FAMILY: both
     steps:
       - uses: actions/checkout@v7
         with: {fetch-depth: 0}
@@ -33,7 +33,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f artifacts/city-content-queue/test-images/authoritative-* artifacts/city-content-queue/test-images/composited-*
-          git commit -m 'Add authoritative product reference tests [skip ci]'
+          git add -f artifacts/city-content-queue/test-images/authoritative-*
+          git commit -m 'Add integrated authoritative product tests [skip ci]'
           git pull --rebase origin main
           git push origin main
