@@ -70,6 +70,77 @@
       ],
       "correction_prompt": "Remove all human figures from the image. Generate an empty field with the drip tape roll in the foreground and unattended farm equipment in the background only.",
       "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 26,
+      "product_x_center_percent": 41,
+      "reasons": [
+        "Hard reject: Human body parts (worker) visible standing next to the tractor in the background.",
+        "Hard reject: Second commercial package (bottle/jar container) visible in the background left.",
+        "Product width exceeds the 30% maximum limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with zero people or human silhouettes. Remove the bottle and cardboard box in the background. Reduce the visual scale of the drip-tape roll so it occupies no more than 25% of the frame width. Keep the gauges, regulator, and concrete pad. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: visible human figures (farmers/workers) are present in the background, which violates the mandatory 'zero people' rule and contradicts the 'equipment-only' brief requirement.",
+        "The image role requires an elevated record photograph of fixed filtration hardware (filter, gauge, manifold) on a concrete pad; the current image shows an empty pad with farm activity in the background."
+      ],
+      "correction_prompt": "Remove all humans from the scene. Reposition the camera to an elevated angle focusing on a fixed drip irrigation manifold, filter, and pressure gauge mounted on an empty concrete pad. Keep the single white-and-blue drip tape roll in the foreground, ensuring it is small and secondary to the irrigation hardware. Retain the 'AFP | 09134922013' watermark in the bottom-right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 33,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product width is 33%, which exceeds the 30% hard-reject threshold.",
+        "Visible human silhouettes (raised arms) are present in the background near the distant equipment, triggering a hard reject for any human part.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate with the carton roll scaled down to approximately 20% width and completely remove all background human figures or silhouettes to ensure an empty, equipment-only scene. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 29,
+      "product_height_percent": 26,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: A person (farmer) is visible standing in the background",
+        "Article visual brief violation: The mandatory role requires a 'HEADWORKS DETAIL' with a filter, gauge, and manifold, but the image shows only the drip tape roll in an open field setting"
+      ],
+      "correction_prompt": "Remove all people. Replace the farm field background with an elevated record photo of a fixed irrigation headworks setup (filter, gauge, manifold) on a concrete pad, keeping the drip tape roll small and secondary.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 27,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Visible human faces and full body parts of two farmers standing in the background are present (hard reject)",
+        "A coiled black hose (layflat hose) is visible in the background (hard reject)",
+        "A brown cardboard box (second commercial package) is visible on the right edge (hard reject)",
+        "A tractor with a driver or operator inside the cabin is present, which is an attended vehicle (hard reject)",
+        "Two red reels (pipe/spool) are visible on the left, violating the requirement for exactly one approved carton"
+      ],
+      "correction_prompt": "Generate an elevated 'HEdWORKS DETAIL' photograph of irrigation infrastructure on a concrete pad: a single white and blue AFP drip-tape carton (approx 20% width), a filtration system, and a pressure gauge. Remove all people, the tractor, the coiled hose, the brown box, and the red reels. Ensure the bottom-right watermark 'AFP | 09134922013' is visible.",
+      "attempt": 5
     }
   ]
 }

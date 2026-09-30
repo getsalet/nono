@@ -1,0 +1,76 @@
+{
+  "source_id": "11000013001435-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Hard reject: visible human (farmer/worker) and human body parts (face, arms, legs) are present.",
+        "Text mismatch: the required specific watermark 'AFP | 09134922013' is present, but it is overlaid on a black box which is not standard, though the text itself matches the requirement. The main hard reject is the person."
+      ],
+      "correction_prompt": "Remove the person and tractor. Keep the white and blue AFP drip-tape carton roll in the lower-left off-center position. Maintain the wide farm irrigation context with crop rows and fixed irrigation lines.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "The roll is positioned in the bottom-left corner rather than the required bottom-right area (where the watermark is placed), causing the product to awkwardly overlap the watermark and feel unbalanced.",
+        "The product roll is cut off by the bottom edge of the frame; the brief explicitly requires the carton roll to be 'fully visible'."
+      ],
+      "correction_prompt": "Regenerate the image moving the AFP drip-tape roll from the bottom-left to the bottom-right corner, aligning it just above the 'AFP | 09134922013' watermark. Ensure the entire roll, including the top and bottom, is fully visible and not cropped by the frame edge.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "product_width_percent": 27,
+      "product_height_percent": 22,
+      "product_x_center_percent": 78,
+      "reasons": [
+        "A person is standing in the crop rows, violating the strict zero-people rule.",
+        "The product carton/roll is placed in the bottom-right corner rather than the required off-center lower-third for an EDITORIAL HERO composition.",
+        "The product is cropped/only partially visible and lacks proper framing within the full image."
+      ],
+      "correction_prompt": "Remove the human completely. Recompose as a wide high-oblique EDITORIAL HERO: farm and irrigation context dominate, exactly one white-and-blue cylindrical drip-tape carton roll sits fully visible and smaller (approx 18-22% width) in the off-center lower third (left-of-center), clean crop with no partial framing.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject due to the presence of a human body (person sitting on the farm machine)."
+      ],
+      "correction_prompt": "Remove the person and farm machine from the field; show only the green crop rows and city skyline to maintain a clean agricultural context.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Product dimensions are within acceptable limits (width 25%, height 20%).",
+        "Zero people or human body parts are visible.",
+        "Watermark 'AFP | 09134922013' is present and correct.",
+        "Product placement is centered at 50% x-axis; while off-center is preferred, centered placement is not a standalone hard reject. The composition is editorial but slightly less dynamic than ideal."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

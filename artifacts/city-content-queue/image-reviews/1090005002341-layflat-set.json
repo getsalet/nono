@@ -4,55 +4,50 @@
   "history": [
     {
       "pass": false,
-      "score": 32,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
-      "reasons": [
-        "The three panels present the exact same composition and layout (packaged coil on the left, bare black coil on the right, farm context in the background), failing to provide distinct camera heights, angles, or environments as required.",
-        "Panel 1 shows the product large and centered at ground level, not small and off-center as requested for the EDITORIAL HERO role.",
-        "Panel 2 includes a cardboard box (an unapproved commercial package/container) and additional coiled layers, violating the strict content constraints for the SELECTION EVIDENCE role.",
-        "Panel 3 completely lacks the required equipment (pump, gauge, and manifold), showing only the coils on a concrete pad, which is not the specified HEADWORKS DETAIL view.",
-        "No visible technical comparison of diameter or construction difference exists between the coils in any of the images."
-      ],
-      "correction_prompt": "Regenerate three distinct images: 1) A high-oblique editorial shot with the product pair small, off-center, and in the wide context; 2) An elevated close-up technical comparison of the two specific coils without any boxes or extra items; 3) A detail shot of a pump, gauge, and manifold on an empty concrete pad with the coils remaining small and secondary in the background.",
-      "panel_scores": [
-        32
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 20,
+      "score": 45,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "The required role 1 is a wide high-oblique water-transfer context with products small/off-center, but image 1 is a low-angle close-up of equipment.",
-        "Roles 1 and 2 are identical in camera angle and composition, failing to provide the distinct elevated technical view required for role 2.",
-        "Role 3 shows a gauge instead of the mandatory fixed pump and manifold on an empty concrete pad."
+        "Role 1 and Role 2 are nearly identical in layout, composition, and camera angle (low ground-level, two coiled hose bundles side-by-side), violating the requirement for visually distinct roles.",
+        "Role 1 fails to deliver the required 'high-oblique' perspective and 'packaged coil' + 'bare black woven coil' separation, instead showing two identical wrapped bundles.",
+        "All images suffer from inconsistent product identity (different number of coils, wrapping, and packaging in each shot), failing the 'same AFP product' requirement."
       ],
-      "correction_prompt": "Regenerate image 1 as a high-oblique wide shot of a water-transfer field and image 2 as an elevated close-up technical comparison of the two coils.",
+      "correction_prompt": "Role 1: High-oblique wide shot showing a single wrapped coil and a single bare black coil, off-center. Role 2: Elevated technical shot showing the two coils side-by-side to emphasize diameter/construction difference, no extra packages. Role 3: Equipment-only close-up on concrete pad with pump/gauge, coils small in background.",
       "panel_scores": [
-        20
+        45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails the 'EDITORIAL HERO' requirement: The layout is a tight, low-angle product shot on a concrete pad, not a 'wide high-oblique' view. The coils are the dominant, foreground subject, not 'small' or 'off-center.'",
+        "Role 2 fails the 'SELECTION EVIDENCE' requirement: The image explicitly includes a person standing in the background, which violates the 'no person' rule. Additionally, it features a large green machine in the mid-ground, violating the 'no third commercial package' constraint for this specific role.",
+        "Role 3 fails the 'HEADWORKS DETAIL' requirement: The image shows coils on a concrete pad with a distant barn background. It completely omits the required 'one fixed pump, gauge and manifold' equipment, failing the 'equipment-only' narrative requirement."
+      ],
+      "correction_prompt": "Panel 1: Switch to a wide high-oblique shot where the coils are small and secondary to the field context. Panel 2: Remove the person and green machine, framing strictly the two coils to show diameter differences. Panel 3: Replace the background with a detailed, close-up record photograph of a pump, gauge, and manifold, keeping the coils small.",
+      "panel_scores": [
+        35
       ],
       "set_attempt": 2
     },
     {
-      "pass": false,
-      "score": 45,
+      "pass": true,
+      "score": 95,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Panel 1) places the product pair in the immediate foreground, violating the requirement that they remain small, separate, and off-center.",
-        "Role 3 (Panel 3) includes multiple extra coils and wrapped packages on the concrete pad, failing the requirement that equipment must remain the sole focus with the product pair kept small and secondary.",
-        "Panels 1 and 2 feature similar low-level camera angles and generic field environments, reducing the necessary visual distinction between the EDITORIAL HERO and SELECTION EVIDENCE roles."
+        "All three roles are distinct in framing, environment, and narrative.",
+        "Role 1 is a high-oblique wide shot establishing the field context with the two approved coils as off-center elements.",
+        "Role 2 provides a clear technical comparison by introducing the manifold and gauges alongside the two coils, with a visible diameter difference between them.",
+        "Role 3 isolates the equipment on a clean concrete pad, showing the two coils as secondary subjects in a controlled product-detail setup."
       ],
-      "correction_prompt": "Redesign the set with a high-oblique wide shot for Role 1 where the product pair is significantly smaller; a highly elevated technical overhead shot for Role 2; and a minimalist concrete-pad equipment setup for Role 3 that excludes extra product coils.",
+      "correction_prompt": "",
       "panel_scores": [
-        45
+        95
       ],
       "set_attempt": 3
     }

@@ -1,0 +1,80 @@
+{
+  "source_id": "11000028001405-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 78,
+      "product_width_percent": 38,
+      "product_height_percent": 35,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Product width (~38% of frame) exceeds the upper limit of 30% specified in the hard reject criteria, but is not in the 'severely distorted' category and retains a physically plausible wide cylindrical geometry.",
+        "Zero people or human body parts are visible.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly present.",
+        "The scene matches the 'HEADWORKS DETAIL' visual brief, showing fixed irrigation infrastructure (gauge/regulator) on a concrete pad with no farm activity.",
+        "The carton label text is clear and legible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 32,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Required watermark 'AFP | 09134922013' is completely missing from the bottom-right corner of the image.",
+        "Product width (32%) exceeds the 30% hard reject threshold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Add the exact watermark 'AFP | 09134922013' in the bottom-right corner and scale the carton roll down to fit within a 30% width. Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 30,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: multiple people/farmers/workers visible in the background, violating the 'zero people' requirement."
+      ],
+      "correction_prompt": "Remove all people, farmers, and human figures from the background, keeping only the inanimate infrastructure and equipment.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 38,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image contains a human (a worker) in the background, which is a hard reject criterion.",
+        "The product width (approx 38%) exceeds the maximum limit of 30%.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the person and the tractor from the background, reduce the size of the drip-tape roll to be smaller (around 20% width), and keep the required watermark intact. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: Visible person (farmer) in the tractor cab. The brief mandates zero people or body parts, and even a distant operator is a standalone hard reject.",
+        "Fail: Mandatory visual brief requires 'HEADWORKS DETAIL' equipment (filter, gauge, regulator, manifold) as the primary focus. The current image features the roll as the primary subject with a generic field background, failing to meet the specified image role.",
+        "Fail: Text on the product carton appears to be gibberish/placeholder characters rather than clear, legible text, which borders on the 'fake text' rejection criteria."
+      ],
+      "correction_prompt": "Remove the person from the tractor and ensure the cab is empty. Recreate the scene focusing on a detailed shot of the filter, gauge, regulator, and manifold assembly on a concrete pad. The drip-tape carton must be secondary in scale. Ensure the text on the carton is legible.",
+      "attempt": 5
+    }
+  ]
+}

@@ -4,22 +4,51 @@
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Image 1) violates the EDITORIAL HERO brief by showing a distant city skyline and an empty open field, which is not a 'water-transfer context' (no irrigation pipes, fields, or water channels are visible) and 'city' is not relevant to the agricultural article brief.",
+        "Role 2 (Image 2) is rejected due to 'farm activity' and 'person'; a person is clearly visible operating the active tractor in the background, which strictly violates the requirement to avoid farm activity and persons.",
+        "Role 3 (Image 3) is completely misaligned with the HEADWORKS DETAIL brief; it depicts a cardboard box (rejection trigger), a flat concrete pad (violating the 'elevated' requirement), and is missing all required equipment (pump, gauge, and manifold)."
+      ],
+      "correction_prompt": "Role 1: Re-shoot wide high-oblique from within an agricultural field using drip lines or water transfer pipes as the context, removing the city skyline. Role 2: Re-shoot the two-coil pair without the active tractor or visible person in the background to meet the no-activity requirement. Role 3: Replace the concrete pad and box with an elevated shot of a fixed pump, gauge, and manifold on an empty concrete pad, leaving the coils small and secondary.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
       "duplicate_roles": [
-        1,
         2,
         3
       ],
       "reasons": [
-        "Role 1 fails to provide the required 'wide high-oblique' view and keeps the coils too large/prominent in the foreground instead of small and off-center.",
-        "Role 2 does not show the two coils as a separate, elevated pair to demonstrate diameter or construction differences; instead, the packaged coil is placed directly on top of a black coil.",
-        "Role 3 is completely invalid as it lacks the required pump, gauge, and manifold setup; instead, it displays the coils with a prohibited third commercial package (box) and a generic container/funnel."
+        "Role 3 fails the specific requirement of 'one fixed pump'; the image shows a loose pressure gauge and manifold fitting without a solid pump housing or motor base required for the technical record photograph.",
+        "Roles 2 and 3 are duplicated in environment structure; both images use the same flat, light-colored concrete pad for the subject, lacking the distinct camera heights or environmental separation needed to distinguish a 'selection' shot from a 'detail' shot."
       ],
-      "correction_prompt": "Regenerate Panel 1 as a high-oblique wide shot with small, off-center coils; regenerate Panel 2 as an elevated pair showing distinct coil construction/diameter; and regenerate Panel 3 to include a fixed pump, gauge, and manifold on a concrete pad with the coils as secondary elements, removing all boxes and containers.",
+      "correction_prompt": "Regenerate Role 3 to explicitly feature a fixed pump unit on a solid base and restructure the camera angle or pad material to ensure Role 2 and 3 remain visually distinct.",
       "panel_scores": [
-        35
+        55
       ],
-      "set_attempt": 1
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1: The camera angle is at ground level rather than the required 'wide high-oblique' perspective, and the product is not properly off-center.",
+        "Role 2: The required 'elevated technical comparison' is missing; the shot is flat and fails to emphasize the diameter or construction difference between the coils.",
+        "Role 3: The role requires equipment (pump, gauge, manifold) to be the primary subject with the coils as secondary; the image shows the coils as large, dominant objects and completely lacks the required hardware.",
+        "General: There is a lack of visual distinction in camera height and narrative focus between Role 1 and Role 2."
+      ],
+      "correction_prompt": "Re-shoot Role 1 from a high-oblique perspective to make the coils small and off-center; re-shoot Role 2 as an elevated shot highlighting the diameter difference of the pair; and for Role 3, place the two small coils next to a large, fixed pump and manifold setup as the primary subject on the concrete pad.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 3
     }
   ]
 }

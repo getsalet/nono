@@ -1,0 +1,52 @@
+{
+  "source_id": "11000028001405-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 30,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The required bottom-right watermark text is gibberish ('AFP | 09134922013' instead of 'AFP | 09134922014').",
+        "Editorial preference violation: The main drip-tape carton roll is centered horizontally rather than placed in the lower-third, off-center on the left or right."
+      ],
+      "correction_prompt": "Adjust the bottom-right watermark to the exact required string 'AFP | 09134922014'. Move the main drip-tape roll to the lower-left off-center position to satisfy the editorial hero role requirements.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 23,
+      "reasons": [
+        "Presence of a human worker/farmer in the field",
+        "Visible human body parts including face, hands, and legs"
+      ],
+      "correction_prompt": "Remove the human worker and all body parts. Reposition the AFP drip tape roll to be strictly in the lower-left third of the frame, smaller relative to the canvas, and ensuring no other individuals are visible in the background or foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 20,
+      "reasons": [
+        "Contains exactly one approved AFP white-and-blue drip-tape carton roll",
+        "Zero people or human body parts visible",
+        "Product placement is off-center in the lower third, consistent with the editorial hero role",
+        "Product dimensions are well within the acceptable physical plausibility range",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner",
+        "Background context (crop rows, distant tractor, urban horizon) aligns with the irrigation brief without introducing rejected elements like bottles or multiple rolls"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
