@@ -1,32 +1,39 @@
 {
   "source_id": "10700026002777-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 violates the 'exactly one approved carton stays small' instruction; the product is oversized and dominates the foreground instead of the farm context.",
+        "Role 2 does not feature a 'technical arrangement' with visible emitter-spacing or field-selection evidence; instead, it depicts a generic installation scene with a distant unattended tractor, failing to provide the requested selection information.",
+        "Role 3 violates 'equipment-only' and 'no farm activity' by including a person sitting in the background and a tractor moving, which are prohibited."
+      ],
+      "correction_prompt": "Shrink the carton in image 1 to be off-center and small, replace the generic field in image 2 with a technical diagrammatic setup showing tape emitter spacing, and remove all persons and moving vehicles from the concrete pad in image 3.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 1
+    },
     {
       "pass": false,
       "score": 35,
       "duplicate_roles": [
-        1,
         2,
-        4,
-        3,
-        5
+        3
       ],
       "reasons": [
-        "Role 3 fails its specific technical brief: it shows a tractor-mounted attachment rather than the required unattended fixed filter, gauge, regulator, and manifold setup.",
-        "Roles 1, 2, and 4 are visually duplicated in their primary technique: all three use a low-angle shot of a large product carton sitting on tilled earth, which fails to provide the distinct 'high-oblique view' for Role 1 and repeats the same camera/subject framing across different roles.",
-        "The product carton is oversized in roles 1, 2, and 4, dominating the composition instead of being 'small and secondary' as required by the editorial brief.",
-        "Role 2 fails because the 'elevated technical arrangement' with emitter spacing is missing, relying instead on a generic field background.",
-        "Role 3 fails because it shows a tractor and large machinery rather than the required 'unattended fixed filter, gauge, regulator, and manifold' assembly.",
-        "Roles 3, 4, and 5 are visually duplicative, all utilizing the exact same camera angle, crop-beds composition, and oversized product placement.",
-        "Role 5 fails by introducing a standalone drip-line segment on the right, which acts as an 'unrelated commercial container' or material duplication."
+        "Role 1 (Panel 1): Fails to meet the EDITORIAL HERO requirement. The instruction mandates that the carton be 'small, fully visible and off-center on the lower third.' In Panel 1, the carton is placed directly in the center-foreground and is oversized relative to the scene, failing the 'off-center' and 'small' constraints.",
+        "Role 2 (Panel 2): The environment (dirt ground, distant tractor) and the primary lighting angle match Role 3 exactly. The only difference is the addition of the unrolled tape, which does not constitute a distinct 'SELECTION EVIDENCE' environment change (such as specific emitter-spacing evidence or a new structural context).",
+        "Role 3 (Panel 3): While the concrete pad is appropriate, the specific arrangement of the tractor and farm building in the background is visually identical to the arrangement in Role 2, resulting in a 'Repeated Layout' rejection."
       ],
-      "correction_prompt": "Regenerate Role 1 using a high-oblique aerial view where the farm landscape dominates and the product is small in the lower third; redesign Role 3 to show a stationary headworks assembly (filters, gauges, manifold) without a tractor; ensure roles 1, 2, and 4 feature distinct camera heights to break the repetitive low-angle framing. Recreate role 3 as a static hardware close-up of a filter/gauge manifold; distinctively reframe role 4 as an asymmetric wide shot of unattended drip lines; and strictly replace role 5 with a macro-level view of a single emitter flush-point.",
+      "correction_prompt": "Re-crop Role 1 to move the carton off-center to the lower-left or lower-right; Re-shoot Role 2 using the concrete pad background (like Role 3) to isolate the tape unrolling, ensuring the background context matches the technical sequence.",
       "panel_scores": [
-        35,
         35
       ],
-      "set_attempt": 1
+      "set_attempt": 2
     }
   ]
 }

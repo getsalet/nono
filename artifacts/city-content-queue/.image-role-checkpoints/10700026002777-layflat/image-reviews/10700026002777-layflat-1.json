@@ -1,0 +1,57 @@
+{
+  "source_id": "10700026002777-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: The image contains a visible human (a driver) inside the tractor in the background.",
+        "The requirement explicitly states 'Hard reject any person... even distant'.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the human driver from the tractor in the background; ensure the tractor is unattended. Enlarge the product group from 0% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 49,
+      "product_height_percent": 31,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Image successfully depicts the approved pair: one packaged coil (white wrap) and one bare black woven coil.",
+        "The bottom-right watermark 'AFP | 09134922013' is present exactly as required.",
+        "No people or human body parts are visible in the frame.",
+        "A distant unattended tractor is visible in the background, which is allowed as relevant farm infrastructure and not a third commercial product.",
+        "The coils are fully visible, separate, and physically plausible on the field.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 49% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 49% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 30,
+      "product_height_percent": 32,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Approved pair present: packaged AFP coil and bare black woven coil, separate and fully visible",
+        "No people, human body parts, faces, or silhouettes detected",
+        "Watermark AFP | 09134922013 correctly present in bottom-right",
+        "Wide high-oblique water-transfer context with tilled field rows and distant infrastructure (unattended tractor, buildings) acceptable per brief",
+        "Product pair width ~30% is within the acceptable 8–42% range; no third commercial package, coil, bottle, canister, or merged/floating objects",
+        "Distances and scale are physically plausible; no severely distorted dimensions"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
