@@ -1,47 +1,41 @@
 {
   "source_id": "1240004002704-layflat",
-  "family": "layflat",
   "kind": 3,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 30,
-      "product_width_percent": 38,
-      "product_height_percent": 35,
-      "product_x_center_percent": 47,
+      "score": 58,
+      "product_width_percent": 42,
+      "product_height_percent": 52,
+      "product_x_center_percent": 50,
       "reasons": [
-        "Missing mandatory 'HEADWORKS DETAIL' elements: no fixed pump, gauge, or manifold visible",
-        "No equipment-only elevated infrastructure context as required for role 3",
-        "Scene contains only the two coils on a pad without the required fixed equipment components"
+        "Three commercial products visible instead of the approved two-coil pair: a strapped packaged coil on the left, a central packaged pump/manifold unit, and a bare black coil on the right — constitutes a third commercial package violation.",
+        "Product bounding box at ~42% width exceeds the preferred 12–20% combined width range for the layflat pair.",
+        "Center object is a packaged pump/manifold assembly, not a packaged AFP coil; the required approved pair (one packaged AFP coil + one bare black woven coil) is not correctly presented.",
+        "machine-enforced bounding-box check failed: Reduce product height from 52% to at most 45% of frame height."
       ],
-      "correction_prompt": "Regenerate as an elevated detail photograph on an empty concrete pad featuring one fixed pump, gauge, and manifold as the primary subject; place the packaged AFP coil and bare black woven coil small, separate, and secondary in the background; ensure zero people, no bottles, and keep the bottom-right watermark 'AFP | 09134922013'.",
+      "correction_prompt": "Remove the bare coil on the right. Retain only the packaged AFP coil and the bare black woven coil as the approved pair. Keep both coils small and secondary in the frame. Place a fixed pump, gauge, and manifold assembly on the concrete pad in the background as the primary headworks detail. Ensure the two-coil pair occupies approximately 12–20% combined width. Reduce product height from 52% to at most 45% of frame height.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 35,
-      "product_width_percent": 64,
-      "product_height_percent": 32,
-      "product_x_center_percent": 52,
-      "reasons": [
-        "Mandatory role mismatch: The brief requires a 'HEADWORKS DETAIL' showing a fixed pump, gauge, and manifold with the coils remaining small and secondary. This image shows only the coils without the required equipment.",
-        "Product width limit exceeded: The two-coil pair spans approximately 64% of the frame width, which exceeds the preferred 12-20% target and approaches the hard reject threshold for width (65%).",
-        "Missing watermark: The required bottom-right watermark 'AFP | 09134922013' is absent from the image."
-      ],
-      "correction_prompt": "Crop the image to make the coils smaller relative to the frame width and add a fixed pump and gauge in the background to match the headworks role. Include the 'AFP | 09134922013' watermark in the bottom right.",
-      "attempt": 2
-    },
-    {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 38,
-      "product_height_percent": 18,
-      "product_x_center_percent": 32,
-      "reasons": [],
+      "score": 82,
+      "product_width_percent": 14,
+      "product_height_percent": 11,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Approved two-coil pair present: one packaged AFP coil (blue/white wrap) and one bare black woven coil, both fully visible, separate, and physically plausible.",
+        "Combined coil width approximately 14% of frame, within preferred 12-20% range.",
+        "HEADWORKS DETAIL role satisfied: fixed pump, gauge, and manifold on empty concrete pad as primary subject; coils are secondary.",
+        "Zero people, zero body parts; distant unattended farm building and tractor silos are infrastructure-only and allowed.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and legible.",
+        "Lower-third, off-center placement of coils is editorial preference, not a reject criterion.",
+        "No third commercial package, bottle, jar, canister, or invented packaging visible."
+      ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 2
     }
   ]
 }

@@ -1,62 +1,54 @@
 {
   "source_id": "1220003002813-layflat",
-  "family": "layflat",
   "kind": 3,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 45,
-      "product_height_percent": 45,
-      "product_x_center_percent": 30,
+      "score": 12,
+      "product_width_percent": 48,
+      "product_height_percent": 28,
+      "product_x_center_percent": 44,
       "reasons": [
-        "A person (farmer/worker) is clearly visible in the background near the tractor, which is a hard reject.",
-        "The presence of a human figure violates the requirement for zero people and zero body parts."
+        "HARD REJECT: Visible person standing in the background near a tractor",
+        "The left object is a metallic pump/manifold component, not a packaged AFP coil as required",
+        "Combined product width (~48%) exceeds the preferred 12-20% range"
       ],
-      "correction_prompt": "Remove the person walking in the background and the visible portion of the person/tractor interaction, keeping only the two coils and the pump fixture on the concrete pad.",
+      "correction_prompt": "Remove all people from the scene. Replace the metallic pump component on the left with a packaged AFP coil. Ensure both the packaged AFP coil and bare black woven coil are the only two commercial products visible, combined within 12-20% width, placed lower-third or off-center on an empty concrete pad with a fixed pump, gauge, and manifold as infrastructure. Keep the AFP | 09134922013 watermark.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 25,
-      "product_width_percent": 55,
-      "product_height_percent": 25,
-      "product_x_center_percent": 48,
+      "score": 45,
+      "product_width_percent": 35,
+      "product_height_percent": 12,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Mandatory role 'HEADWORKS DETAIL' requires an elevated equipment-only photograph featuring a fixed pump, gauge, and manifold on a concrete pad. The current image is a flat ground-level shot missing the required infrastructure (pump/gauge/manifold)."
+        "Hard reject: person visible operating tractor in background violates zero-people/human body parts rule",
+        "Context mismatch: article specifies Hormozgan province, Bandar Lengeh, Iran location but image depicts North American/European flatland agricultural setting inconsistent with coastal desert terrain of Hormozgan"
       ],
-      "correction_prompt": "Regenerate as an elevated record detail shot: a fixed pump, gauge, and manifold on an empty concrete pad. Include the two coils (packaged AFP and bare black) positioned small and secondary in the background. No people, no farm activity.",
+      "correction_prompt": "Regenerate image with absolutely zero people or human silhouettes anywhere in frame including distant background; remove tractor operator; adjust landscape background to match Hormozgan coastal desert region with installed pump manifold gauge on concrete pad; keep approved two-coil pair small separate secondary in composition",
       "attempt": 2
     },
     {
-      "pass": false,
-      "score": 60,
-      "product_width_percent": 37,
-      "product_height_percent": 28,
-      "product_x_center_percent": 47,
-      "reasons": [
-        "Mandatory role 'HEADWORKS DETAIL' explicitly requires an equipment-only elevated record photograph featuring a fixed pump, gauge, and manifold on an empty concrete pad. This image features a wide-angled view of the two coils without the required infrastructure elements, failing the specific visual brief.",
-        "The image includes a distant coil in the background, which counts as a 'third commercial package or third coil', a strict hard reject trigger under the general rules."
-      ],
-      "correction_prompt": "Regenerate as an elevated record photograph focused on a fixed pump, gauge, and manifold on an empty concrete pad. The two coils must be secondary and smaller, with no farm activity or third coil visible.",
-      "attempt": 3
-    },
-    {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 50,
-      "product_height_percent": 20,
-      "product_x_center_percent": 55,
+      "score": 88,
+      "product_width_percent": 42,
+      "product_height_percent": 28,
+      "product_x_center_percent": 43,
       "reasons": [
-        "Image contains zero people or human body parts.",
-        "Product pair consists of one packaged coil and one bare black woven coil.",
-        "Fixed pump, gauge, and manifold are present as required infrastructure.",
-        "Product width is estimated at 50%, which falls within the acceptable noisy range (8-65%)."
+        "Equipment-only elevated record photograph of two-coil pair (fixed black woven hose) and packaged gauge/meter on empty concrete pad with desert background",
+        "No person, farmer, worker, face, hand, arm, leg, body part or human silhouette present",
+        "Product pair width approximately 42% of frame - within acceptable range",
+        "All objects separate, fully visible and physically plausible",
+        "Distant unattended desert landscape with tire tracks serves as appropriate infrastructure context",
+        "Mandatory bottom-right watermark 'AFP | 09134922013' present and correctly placed",
+        "Packaged gauge/meter with AFP branding qualifies as relevant equipment, not extra commercial product",
+        "No impossible intersection, floating or merged product detected"
       ],
       "correction_prompt": "",
-      "attempt": 4
+      "attempt": 3
     }
   ]
 }
