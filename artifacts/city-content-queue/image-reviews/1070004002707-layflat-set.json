@@ -1,27 +1,58 @@
 {
   "source_id": "1070004002707-layflat",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 30,
+      "score": 45,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1 fails the 'EDITORIAL HERO' brief: it is a ground-level low-angle shot, not a 'wide high-oblique' view; the coils are placed center-left rather than small and off-center.",
-        "Role 2 fails the 'SELECTION EVIDENCE' brief: it is another ground-level low-angle close-up that is almost identical in composition and framing to Role 1, resulting in a duplicate layout.",
-        "Neither Role 1 nor Role 2 shows a 'diameter or construction difference through the pair' as required for a technical comparison.",
-        "Role 3 fails the 'HEADWORKS DETAIL' brief: the brief specifies 'equipment-only' of a fixed pump and manifold, but the image shows a mobile pump unit on wheels.",
-        "Role 3 contains a visible person (driver) operating the equipment, which is strictly prohibited by the rules.",
-        "The coils in Role 3 appear disproportionate (oversized) relative to the equipment in the background."
+        "Panel 1 fails the 'EDITORIAL HERO' requirement by framing the product from a low angle close to the ground rather than a wide, high-oblique perspective showing the water-transfer context.",
+        "Panel 2 is an exact duplicate of Panel 1 in terms of camera angle, horizon line, and product layout, violating the requirement for distinct visual roles.",
+        "Panel 2 does not function as 'SELECTION EVIDENCE'; it fails to show an elevated technical comparison or diameter/construction difference between the coils.",
+        "Panel 3 fails the 'HEADWORKS DETAIL' requirement; while the concrete pad is present, the required equipment (fixed pump, gauge, and manifold) is completely missing, and the product is prominently featured rather than small and secondary."
       ],
-      "correction_prompt": "Regenerate Role 1 as a wide high-oblique shot with small off-center coils; regenerate Role 2 as a close-up technical comparison showing diameter differences; regenerate Role 3 as a fixed pump on an empty concrete pad with no wheels and no people, with much smaller coils.",
+      "correction_prompt": "Panel 1: Shift to a wide high-oblique angle showing the water transfer environment with small off-center coils. Panel 2: Create an elevated close-up comparison of the two coils showing construction or diameter differences. Panel 3: Retake on a concrete pad featuring a fixed pump, gauge, and manifold with the coils rendered as small, secondary objects.",
       "panel_scores": [
-        30
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "The layout and framing of the two-coil product pair in roles 2 and 3 are nearly identical, violating the requirement for distinct camera angles/environment structures across roles.",
+        "Role 1 fails the 'wide high-oblique' requirement, instead using a low-angle shot that makes the coiled products appear oversized rather than 'small and separate' as requested.",
+        "Role 1 includes a blue commercial container (box/battery) and a wheeled manifold unit, which violates the 'no extra commercial package' and 'equipment-only' constraints.",
+        "Role 2 fails to demonstrate a diameter or construction difference between the two coils, instead showing two similar black coiled mats."
+      ],
+      "correction_prompt": "Regenerate with a high-oblique perspective for Role 1 removing the blue box; for Roles 2 and 3, vary the camera angles and background environments significantly, and ensure Role 2 clearly contrasts the diameter or construction of the two coils.",
+      "panel_scores": [
+        38
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Panel 1) fails the 'Editorial Hero' brief: it includes a pump, gauge, and controller (headworks equipment) alongside the coils, whereas the brief specifies these items must remain strictly for Role 3 and the hero should focus on a wide high-oblique water-transfer context. The presence of the blue control box and equipment makes it look like a duplicate of the hardware narrative.",
+        "Role 3 (Panel 3) fails the 'Headworks Detail' brief: it shows only the two coils on a concrete pad but completely lacks the required 'one fixed pump, gauge and manifold' specified in the role description. It is effectively a duplicate of the 'two-coil pair' layout found in Role 2 but on a different surface, failing to provide the requested technical equipment record."
+      ],
+      "correction_prompt": "Panel 1: Remove the pump and controller to focus strictly on a wide water-transfer environment; Panel 3: Add a fixed pump, pressure gauge, and manifold to the concrete pad alongside the secondary coils.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 3
     }
   ]
 }

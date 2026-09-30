@@ -1,0 +1,87 @@
+{
+  "source_id": "1070004001301-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 45,
+      "product_height_percent": 35,
+      "product_x_center_percent": 75,
+      "reasons": [
+        "Hard reject: The image contains a visible person (a worker) standing in the field, which violates the 'zero people' requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with exactly zero people or human body parts. Focus on the agricultural landscape with the water transfer context and the required product coils in the foreground. Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 55,
+      "product_height_percent": 28,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Visible human figure present in the mid-ground background.",
+        "The two coils lack distinct packaging (e.g., shrink wrap), appearing identical as bare coils instead of the required 'one packaged, one bare' pair.",
+        "An unidentified object (resembling a terracotta pot) is placed inside the center of both coils, violating the 'impossible intersection' or 'object passing through' rules.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Remove the human figure from the background. Wrap the left coil in clear protective shrink wrap to distinguish it from the bare coil. Remove the terracotta pot objects located inside the coil loops. Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 43,
+      "product_height_percent": 23,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Exact approved pair visible: one plastic-packaged AFP coil and one bare black woven coil, side-by-side and physically plausible.",
+        "Both coils remain fully visible, separate, and without distortion or merge; no third commercial package, bottle, jar, canister, bucket, or fake label is present.",
+        "Zero people and zero human body parts (no face, hand, arm, leg, silhouette) are detected in frame or background.",
+        "Bottom-right watermark 'AFP | 09134922013' is present exactly as required and is not treated as a defect.",
+        "Editorial wide high-oblique farm/water-transfer context is respected; coils are off-center and small relative to the scene. A very slight total-width excess above 42% is acceptable under this role's noisy-reviewer tolerance.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 43% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 43% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 45,
+      "product_height_percent": 40,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: Image contains multiple people (human silhouettes visible in the mid-ground and background).",
+        "Hard reject: Product pair width exceeds the 42 percent limit (estimated at ~45 percent).",
+        "The presence of two standing human figures violates the zero-people policy.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with zero people, remove human silhouettes, and reduce the width of the product pair to less than 40 percent of the frame width. Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 50,
+      "product_height_percent": 33,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image clearly displays the approved layflat pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Zero people or human body parts are visible in the frame.",
+        "The exact bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "The layout aligns with the editorial hero brief by keeping the coils off-center in the foreground with a wide water-transfer agricultural context.",
+        "The distant unattended tractor is recognized as farm infrastructure, not a hard reject commercial product.",
+        "The reviewer estimated combined width (50%) exceeds the standard noisy 42% upper limit, but both objects remain fully visible, separate, physically plausible, and small relative to the wide scene, satisfying the editorial context requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 50% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

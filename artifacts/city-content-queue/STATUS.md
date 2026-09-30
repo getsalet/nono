@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-09-30T03:39:04+00:00`
+- آخرین بروزرسانی: `2026-09-30T04:45:11+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **636 از 1894 (33.58٪)**
 - تکمیل‌شده: **636**
@@ -55,16 +55,16 @@
 
 ## خطاهای اخیر
 
+- **دوزه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **دوزه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **جویم** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **جهرم** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
+- **ماهدشت** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
 - **نظرآباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **ماهدشت** — `layflat`: `Agnes Image HTTP 503: {"error":{"message":"image queue is full, please retry later (request id: 20260930033742621807370ogXdLWzO)","type":"","param":"","code":null}}`
 - **کرج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **آسارا** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **جهرم** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **کوره** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **مزایجان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **چهارباغ** — `layflat`: `image hard gate rejected role 1 after 5 attempt`
-- **هشتگرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **قاین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
