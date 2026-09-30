@@ -1,0 +1,75 @@
+{
+  "source_id": "10900044002854-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 29,
+      "product_height_percent": 33,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A human (worker/farmer) is clearly visible in the background on the right side of the image, which strictly violates the 'zero people' requirement."
+      ],
+      "correction_prompt": "Remove the person standing on the tractor in the background to ensure zero humans are present in the scene.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 31,
+      "product_height_percent": 34,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Product width violates hard reject threshold: estimated at 31% of image width (limit is 30%)",
+        "Product is placed directly in the center of the lower third; role requires 'off-center' placement",
+        "The roll dimensions are too large relative to the frame, failing the 'small' requirement of the EDITORIAL HERO role",
+        "Product height is at the maximum allowable limit (34% vs 35% cap), making it look disproportionate to the background",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Scale down the drip-tape roll to approximately 20% width. Move the roll to the lower-left or lower-right quadrant (off-center). Ensure the background farm context dominates the frame. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 15,
+      "product_height_percent": 15,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The AFP carton roll is positioned centrally in the frame (x-center ~48%) rather than the required off-center placement on the lower third.",
+        "The product is small and low-contrast relative to the background, failing to meet the 'EDITORIAL HERO' role where the context should dominate and the roll be distinct."
+      ],
+      "correction_prompt": "Move the AFP drip-tape carton roll to the bottom-right corner (approx. x: 80%, y: 85%) to ensure off-center placement. Increase the roll's size slightly to improve visibility while maintaining the wide farm context.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 78,
+      "reasons": [
+        "Visible human body parts (arms and torso of the operator) inside the distant tractor violate the hard reject rule for people/body parts, even in the distance."
+      ],
+      "correction_prompt": "Regenerate the scene to strictly eliminate all human figures and body parts; ensure the distant tractor is unattended or completely obscured by foliage or distance haze to comply with the zero-people policy.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject due to visible person (worker) standing next to the tractor in the background.",
+        "The 'AFP' logo on the carton appears blurred and gibberish-like (unreadable text), which is a hard reject for commercial packaging."
+      ],
+      "correction_prompt": "Regenerate with zero people in the scene (remove the worker near the tractor). Ensure the 'AFP' and other text on the carton are sharp, legible, and correctly spelled.",
+      "attempt": 5
+    }
+  ]
+}

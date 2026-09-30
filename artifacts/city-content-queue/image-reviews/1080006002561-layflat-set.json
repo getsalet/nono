@@ -4,34 +4,21 @@
   "history": [
     {
       "pass": false,
-      "score": 42,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Panel 1) shows the coils in the foreground of a crop field, violating the requirement to be 'wide high-oblique' with products 'small and off-center.'",
-        "Role 2 (Panel 2) features a cardboard box, which is a third commercial package explicitly forbidden by the brief.",
-        "Role 3 (Panel 3) fails the equipment-only requirement by including two distinct pump units instead of one fixed pump and a manifold, and the coils are oversized."
-      ],
-      "correction_prompt": "Re-render Role 1 with a wide high-oblique field perspective; replace the box in Role 2 with a naked coil to show a construction difference; replace the double pumps in Role 3 with a single fixed pump and manifold, reducing the coil size.",
-      "panel_scores": [
-        42
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
       "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Image 1 fails the 'EDITORIAL HERO' requirement of 'wide high-oblique' as it is captured from ground level.",
-        "Image 2 contains a person in the background on the tractor, which is strictly prohibited by the brief.",
-        "Image 3 fails to provide the required 'pump, gauge and manifold' for the 'HEADWORKS DETAIL' role; it shows the product on a concrete pad without the specified equipment.",
-        "Images 1 and 2 share a very similar foreground layout and product scale, lacking the distinct camera angles requested for the editorial set."
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Recreate Image 1 as a high-oblique wide shot; remove the person from Image 2; and for Image 3, add a fixed pump, gauge, and manifold to the concrete pad to fulfill the 'HEADWORKS DETAIL' requirement.",
+      "reasons": [
+        "Roles 1 and 2 are nearly identical: same static low-angle composition featuring the same two coiled product pairs sitting on a dirt field, making them a repeated layout.",
+        "Role 1 fails the 'EDITORIAL HERO' requirements: the coils are not small/off-center and lack a wide high-oblique water-transfer context.",
+        "The coils in Roles 1 and 2 are oversized and the primary focal point, violating the requirement for secondary product scale in technical or record shots."
+      ],
+      "correction_prompt": "Regenerate Roles 1 and 2: Role 1 must be a wide high-oblique landscape with the two small coils placed off-center; Role 2 must be an elevated technical shot using the coils for scale without repeating the low-angle field layout.",
       "panel_scores": [
         35
       ],
-      "set_attempt": 2
+      "set_attempt": 1
     },
     {
       "pass": false,
@@ -41,14 +28,31 @@
         2
       ],
       "reasons": [
-        "Roles 1 and 2 share nearly identical composition: a close, low-angle view of two coils on a concrete slab with a pump unit on the right and similar farm-field backgrounds, violating the distinct camera angle/height requirement.",
-        "Role 1 fails the EDITORIAL HERO brief by showing a close product shot rather than a wide high-oblique context; the coils and packaged coil are the main subjects rather than small and off-center within a wide landscape.",
-        "Role 2 fails the SELECTION EVIDENCE brief by including a third large piece of hardware (the wheeled pump), violating the requirement that only the two-coil pair be shown without extra hardware.",
-        "Role 3 is technically accurate in composition (elevated view on concrete) but the equipment appears more complex than the simple 'pump, gauge, and manifold' specified in the brief."
+        "Role 1 fails the 'EDITORIAL HERO' requirement: it is shot at a low ground-level angle rather than the specified 'wide high-oblique' perspective, and the product coils are positioned centrally and prominently rather than small, separate, and off-center.",
+        "Role 2 violates the 'no person' constraint: there is a visible person standing in the background near the tractor.",
+        "The visual distinction between Role 1 and Role 2 is minimal; both are low-angle product photography with the two-coil pair placed in the foreground of a dirt field."
       ],
-      "correction_prompt": "Regenerate Roles 1 and 2 to ensure Role 1 is a wide high-oblique landscape shot and Role 2 is a clean, detailed close-up of only the two-coil pair, eliminating the repeated low-angle concrete slab compositions.",
+      "correction_prompt": "Replace Role 1 with a high-oblique aerial establishing shot showing the water-transfer environment with the two coils positioned small and off-center; re-shoot Role 2 without the person in the background.",
       "panel_scores": [
         35
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 and Role 2 are nearly identical in camera height, angle, and framing (low-level field perspective with the two-coil pair in the foreground), failing to provide distinct visual narratives as required.",
+        "Role 1's 'high-oblique' requirement is not visually met; the camera angle is too low and similar to Role 2.",
+        "Role 2 fails the 'SELECTION EVIDENCE' requirement; it does not provide an 'elevated technical comparison' and lacks specific visual cues to highlight diameter or construction differences between the two coils."
+      ],
+      "correction_prompt": "Redesign Panel 1 with a significantly higher, wide-angle perspective to establish a clear editorial context. Redesign Panel 2 as an elevated, close-up technical shot that clearly demonstrates the difference in diameter or weave construction between the two coils without adding extra objects.",
+      "panel_scores": [
+        55
       ],
       "set_attempt": 3
     }

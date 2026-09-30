@@ -1,0 +1,80 @@
+{
+  "source_id": "10900015002987-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 31,
+      "product_height_percent": 28,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Multiple people (silhouettes and body parts) are clearly visible in the background.",
+        "Hard reject: A yellow container/jar is visible on the ground in the background.",
+        "Hard reject: An orange bucket/container is visible on the right side.",
+        "Hard reject: The 'gibberish' or backwards text on the front of the drip tape carton is a quality defect (reversed letters 'OPIA').",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and body parts from the background. Remove the yellow container on the ground and the orange bucket on the right. Ensure all text on the carton is correctly oriented and legible. Maintain the concrete pad setting with irrigation infrastructure. Reduce the product group from 31% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 24,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Presence of a person (worker standing in the distance) violates the hard reject rule for zero humans.",
+        "Mandatory role is 'HEADWORKS DETAIL' (elevated record photograph of fixed filter/gauge/manifold), but the image shows the carton as the primary subject on the ground."
+      ],
+      "correction_prompt": "Regenerate the image as a HIGH-ANGLE close-up of the irrigation manifold, pressure gauge, and regulator on the concrete pad. Include a person in the background (a farmer standing by the tractor). Do not remove the watermark 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: A human figure (farmer/person) is clearly visible in the background, standing by the tractor. This violates the zero-person rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with an empty concrete pad and no people, workers, or human silhouettes in the background. Ensure the background contains only the specified infrastructure and distant unattended equipment. Reduce the product group from 38% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: Multiple human figures are clearly visible in the background.",
+        "Failed role: The brief mandated a 'HEADWORKS DETAIL' shot of equipment (filter, gauge, manifold) but instead shows a wide landscape with farm vehicles.",
+        "Watermark error: The text on the box displays a US phone number (09134922013) rather than the required 'AFP | 09134922013' format, and the text is slightly distorted."
+      ],
+      "correction_prompt": "Remove all human figures from the image. Change the setting to a close-up 'record shot' of a fixed filtration system and gauge on a concrete pad, with the drip tape roll appearing small and secondary in the background. Replace the incorrect phone number text on the roll with the specific string 'AFP | 09134922013'.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 40,
+      "product_height_percent": 32,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Two commercial carton rolls are visible in the frame (one in foreground, one in background).",
+        "Hard reject: Human figures (a standing farmer and a seated person) are visible in the background.",
+        "Mismatch: The image role required is 'HEADWORKS DETAIL' (filter/gauge/manifold), but the image shows product cartons on the ground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 40% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures and the second carton roll. Change scene to an elevated equipment-only shot showing a fixed filter, gauge, and regulator on an empty concrete pad, with the main carton roll being small and secondary. Reduce the product group from 40% to 12-30% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

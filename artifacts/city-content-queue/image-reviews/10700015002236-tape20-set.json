@@ -4,43 +4,52 @@
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 3 requires an 'equipment-only' photograph on an empty concrete pad, but the current image features prominent farm activity (a tractor and farm building) in the background.",
-        "Role 2 requires a simple background; the current image shows a full tractor and farm building, which, while borderline, is not 'simple' and competes with the technical arrangement.",
-        "Product sizing is excessive in Roles 1 and 2; the specified 'small and secondary' carton constraint is violated."
+      "score": 55,
+      "duplicate_roles": [
+        1
       ],
-      "correction_prompt": "Replace the background in Role 3 with an empty concrete pad to satisfy the 'equipment-only' constraint, and move the product to the lower third in Role 1.",
+      "reasons": [
+        "Panel 2 (Role 1) features two active tractors in the field, which violates the specific instruction that a 'distant unattended tractor' is allowed context but is not farm activity; these appear in operation or recent use within the field, which risks being classified as farm activity.",
+        "Panel 2 (Role 1) places the product carton in the bottom-center of the frame, failing the requirement to keep it 'off-center'.",
+        "Panel 3 (Role 3) contains livestock (horses) and farm animals in the background, which are not relevant to the specific irrigation article brief (drip tape selection)."
+      ],
+      "correction_prompt": "In Panel 2, move the product off-center and remove the active tractors to ensure only unattended context remains; in Panel 3, crop out the horses and farm animals to maintain an equipment-only narrative.",
       "panel_scores": [
-        45
+        55
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Panel 1) places the product roll in the center of the frame rather than the required off-center lower third position.",
-        "Role 2 (Panel 2) lacks the required technical arrangement showing visible emitter-spacing or field-selection evidence.",
-        "Role 3 (Panel 3) does not depict an equipment-only record of the specified technical components (fixed filter, gauge, regulator, and manifold) on a concrete pad."
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Reframe Role 1 with the product off-center on the lower third, include emitter-spacing evidence in Role 2, and replace the equipment in Role 3 with the specific hardware set: a fixed filter, gauge, regulator, and manifold.",
+      "reasons": [
+        "Role 1 violates the 'EDITORIAL HERO' requirement: the product carton is too large and is not fully visible on the lower third, and it lacks a 'high-oblique' angle, instead using a ground-level perspective. This makes it visually indistinguishable from Role 2.",
+        "Role 2 fails to provide 'SELECTION EVIDENCE' (no visible emitter spacing or field-selection technical details) and shares the same ground-level framing and farm-building background as Role 1, resulting in a duplicate layout.",
+        "Role 3 includes an 'approved carton' that is not small or secondary; it is oversized and equal in prominence to the 'headworks' equipment (filter, gauge, manifold), violating the specific equipment-focus instruction."
+      ],
+      "correction_prompt": "Regenerate Role 1 from a much higher vantage point with a significantly smaller, fully visible product in the lower third. For Role 2, change to an elevated technical perspective showing drip tape with visible emitters and selection criteria (no farm buildings). For Role 3, strictly reduce the product carton size to make the filter and manifold the sole focus on the empty concrete pad.",
       "panel_scores": [
-        45
+        35
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
       "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 contains multiple people (active installation scene), which is strictly prohibited in the brief.",
-        "Role 3 background is not a 'farm context' or 'ordinary field edge' as required; it is a large open concrete pad that lacks the necessary environmental relevance to the irrigation article."
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "Regenerate Role 2 without any people and Role 3 with a simple farm building or field edge in the background instead of an isolated concrete pad.",
+      "reasons": [
+        "Role 2 (Image 2) shows multiple cartons (a stacked set), violating the 'exactly one approved carton' requirement and the 'oversized product' ban.",
+        "Role 3 (Image 3) uses a soft-focus farm background with horses, which contradicts the 'equipment-only... on an empty concrete pad' and 'no farm activity' requirements; the background is too active and generic.",
+        "Roles 2 and 3 show similar visual structures (product on a concrete pad with hardware in front) and share a generic blurred farm background, resulting in a layout collision and lack of distinct camera angles."
+      ],
+      "correction_prompt": "For Role 2, use exactly one AFP carton on the pad with a clear field-edge background. For Role 3, place the single carton and manifold on a strictly empty, clean concrete pad with no animals or farm structures visible.",
       "panel_scores": [
         45
       ],

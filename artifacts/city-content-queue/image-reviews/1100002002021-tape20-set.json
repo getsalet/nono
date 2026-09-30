@@ -1,21 +1,38 @@
 {
   "source_id": "1100002002021-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 fails the 'Editorial Hero' constraint: the AFP irrigation tape roll is placed center-foreground and is significantly oversized, dominating the frame rather than acting as a small element in the lower third.",
-        "Role 2 fails to provide 'Selection Evidence': it is a generic field shot with a tractor; it lacks the required 'elevated technical arrangement' or visible 'emitter-spacing' close-up evidence to justify the selection of the 20cm tape.",
-        "Role 3 fails the 'Headworks Story' composition: the AFP roll is placed large in the foreground, acting as a primary subject rather than remaining small and secondary to the unattended fixed filter, gauge, and manifold as required."
+      "score": 55,
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "Shrink the AFP roll to 1/5th of its current size in all images; move it to the far lower-left or lower-right corner in Roles 1 and 3; in Role 2, replace the wide tractor shot with a high-angle close-up of emitter spacing on the soil to demonstrate technical selection evidence.",
+      "reasons": [
+        "Image 3 does not match Role 3: It shows a large, active tractor in the background, which the brief explicitly forbids ('no farm activity').",
+        "Image 3 lacks the required 'equipment-only' narrative: The role requires showing a fixed filter, gauge, regulator, and manifold on the concrete pad, which are entirely missing."
+      ],
+      "correction_prompt": "Regenerate Image 3: Capture an elevated detail shot of the empty concrete pad showing a filter, gauge, regulator, and manifold; keep the approved carton small in the corner; remove the tractor and ensure no farm activity is visible.",
       "panel_scores": [
-        45
+        55
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 68,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Image 1) violates the 'lower third' and 'off-center' composition constraints; the product is centered and occupies the middle-foreground.",
+        "Role 3 (Image 3) fails the 'empty concrete pad' requirement due to the presence of farm vehicles and a building in the background, which constitutes 'farm activity' or 'farm context' that violates the 'equipment-only' narrative.",
+        "Role 3 lacks a fixed filter or regulator; it shows only the roll and a pressure gauge, which is an incomplete technical narrative for the 'HEADWORKS DETAIL' role.",
+        "Role 2 has text artifacts (gibberish words) on the product carton, reducing editorial professionalism."
+      ],
+      "correction_prompt": "Regenerate all images to strictly follow: 1) Place the roll in the lower-left/right third of a high-oblique wide shot; 2) Ensure the technical arrangement in role 3 sits on a completely empty concrete pad with only the filter, regulator, and gauge; 3) Remove the background farm vehicle/building from role 3 to satisfy the 'no farm activity' constraint.",
+      "panel_scores": [
+        68
+      ],
+      "set_attempt": 2
     }
   ]
 }

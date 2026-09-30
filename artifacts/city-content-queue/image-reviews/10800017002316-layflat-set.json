@@ -7,14 +7,15 @@
       "score": 25,
       "duplicate_roles": [
         1,
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Role 2 (Image 2) fails the 'no extra coil' constraint by displaying three distinct coil objects (one wrapped package and two bare coils) instead of the required two-coil pair.",
-        "Role 3 (Image 3) completely omits the mandatory headworks equipment (pump, gauge, and manifold), showing only the coils on a concrete pad.",
-        "Role 2 (Image 2) is visually identical to Role 1 (Image 1) regarding the product layout and framing angle, failing the requirement for distinct camera heights and technical narratives."
+        "Role 2 (Selection Evidence) contains multiple forbidden elements including a third commercial package (box on the left) and a connector/bottle, violating the 'no third commercial package' and 'no bottle/container' rules.",
+        "Role 3 (Headworks Detail) depicts an oversized packaged coil sitting next to the gauge, which violates the requirement for the coil to be 'small, separate and secondary' and fails the 'equipment-only' criteria.",
+        "There is a severe lack of distinct camera heights and angles; Roles 1 and 2 are nearly identical wide ground-level shots with different backgrounds, and Role 3 is a slightly shifted version of the same layout."
       ],
-      "correction_prompt": "Re-shoot Image 2 to display exactly two coil packages (one wrapped, one bare) with no third object to serve as a technical comparison; re-shoot Image 3 to include a fixed pump, gauge, and manifold on the concrete pad with the coils positioned small and off-center in the background.",
+      "correction_prompt": "Role 2: Remove all third-party boxes and connectors, showing only the two coils of different sizes on the soil. Role 3: Shrink the coils to a secondary level behind the main pump/gauge/manifold assembly. Ensure Role 2 uses a higher camera angle than Role 1.",
       "panel_scores": [
         25
       ],
@@ -22,39 +23,32 @@
     },
     {
       "pass": false,
-      "score": 25,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
+      "score": 20,
+      "duplicate_roles": [],
       "reasons": [
-        "Roles 1 and 2 fail the camera height requirement: both are framed at a low, near-ground 'record' angle rather than the required 'elevated' or 'high-oblique' perspectives.",
-        "Roles 1 and 2 suffer from 'farm activity' (active crop rows) in the background, which violates the 'empty concrete pad' and 'equipment-only' requirements for role 3 and the water-transfer context for role 1.",
-        "Role 1 is not a distinct 'hero' image; it is a cluttered scene containing a tractor-like device that contradicts the 'equipment-only' focus on the pump/gauge/manifold.",
-        "None of the roles are distinguished by their technical narrative or camera geometry, resulting in a set of near-duplicates that are generic equipment shots rather than the requested editorial sequence."
+        "Role 1 fails: The coils are centered in the frame instead of being off-center and small.",
+        "Role 2 fails: Contains three coils (two large black coils plus one packaged coil), whereas the brief strictly requires only the 'approved two-coil pair' with no extra coils.",
+        "Role 3 fails: The background is a generic red-barn farm with a large tractor, instead of the required 'empty concrete pad' with an 'elevated record photograph of one fixed pump, gauge and manifold'."
       ],
-      "correction_prompt": "Generate three distinct images: 1) A wide, high-oblique view of a water-transfer landscape with the two coils placed small and off-center. 2) An elevated close-up of the two coils on a neutral surface to show diameter differences, with no background distractions. 3) An elevated 'hero' style photo of a fixed pump, gauge, and manifold on a clean concrete pad, with the two coils kept small and secondary in the frame.",
+      "correction_prompt": "Re-shoot role 1 with the coils positioned off-center and small; remove the extra coil in role 2 to show only the two-coil pair; replace the barn background in role 3 with an empty concrete pad and include the elevated fixed pump, gauge, and manifold.",
       "panel_scores": [
-        25
+        20
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 35,
+      "score": 45,
       "duplicate_roles": [
-        1,
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Both Role 1 and Role 2 feature a large mechanical pump/gauge assembly on a concrete surface, failing to provide the distinct environments required (wide water-transfer context vs. technical comparison).",
-        "The technical comparison evidence for the diameter/construction difference in Role 2 is obscured by the prominent pump hardware rather than the coil pair itself.",
-        "Role 1 lacks the wide high-oblique water-transfer context and instead presents a ground-level equipment shot."
+        "Role 2 and Role 3 share identical visual layouts: both feature the exact same two-coil product pair on a concrete pad with a wide agricultural field background, failing to provide the distinct camera angles and environments required. Role 2 uses a generic red barn which does not show 'diameter or construction difference', and Role 3 shows an empty pad that completely lacks the 'pump, gauge and manifold' mandated for the Headworks Detail role."
       ],
-      "correction_prompt": "Separate the roles: for Role 1, provide a high-oblique view of the irrigation fields with the coils small and off-center; for Role 2, feature only the two coils on a surface to clearly show the construction difference, removing the large pump unit present in both images.",
+      "correction_prompt": "For Role 3, replace the empty background with a clear, technical close-up of a fixed pump, gauge, and manifold unit on the concrete pad, keeping the two-coil product pair small in the foreground; for Role 2, adjust the camera to an elevated close-up that explicitly contrasts the physical diameter or weave construction of the two coils without a generic barn background.",
       "panel_scores": [
-        35
+        45
       ],
       "set_attempt": 3
     }
