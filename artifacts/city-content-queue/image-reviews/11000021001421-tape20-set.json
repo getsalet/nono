@@ -1,7 +1,22 @@
 {
   "source_id": "11000021001421-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 violates the 'no farm activity' constraint by featuring a large, active tractor and farm equipment rig in the background instead of an empty concrete pad.",
+        "Role 2 lacks the required 'visible emitter-spacing or field-selection evidence' in the technical arrangement.",
+        "The product carton in Role 1 is positioned near the center bottom rather than the required off-center lower-third position."
+      ],
+      "correction_prompt": "Regenerate Role 3 to show equipment on an empty concrete pad with no tractor; add visible irrigation lines and emitters to Role 2; reposition the carton in Role 1 to be off-center.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
     {
       "pass": false,
       "score": 35,
@@ -10,35 +25,32 @@
         2
       ],
       "reasons": [
-        "Role 1 is not the required 'editorial hero' high-oblique view; instead, it is a medium ground-level shot where the 'approved carton' is oversized and dominates the foreground.",
-        "Role 2 lacks the specific 'selection evidence' (visible emitter-spacing or field-selection proof); it merely shows the product in a field without distinct technical narrative or arrangement.",
-        "Both Role 1 and Role 2 utilize similar ground-level camera heights and framing where the product sits on the soil, failing to provide the distinct visual progression required between editorial, evidence, and hardware roles.",
-        "The watermark is correctly identified but does not offset the fundamental layout violations and lack of perspective variation."
+        "Panel 1 includes a cardboard box/container in the background, which is strictly prohibited by the rejection rules.",
+        "Panel 1 features visible farm activity (a person standing by equipment), which violates the requirement for no people.",
+        "Panel 1 fails the EDITORIAL HERO role requirement; it is a low-angle equipment shot rather than a high-oblique wide view where the farm context dominates.",
+        "Panel 2 places the product carton in the foreground, making it the primary subject rather than 'secondary' or 'small' as required for the SELECTION EVIDENCE role.",
+        "Both Panel 1 and 2 depict similar low-angle technical setups with the product on a concrete pad, resulting in a lack of distinct camera height/angle for these specific roles."
       ],
-      "correction_prompt": "Role 1: High-angle wide shot of the farm where the carton is small (lower-third) and secondary. Role 2: Close-up technical shot emphasizing visible emitter spacing on the pipe or field selection context.",
-      "panel_scores": [
-        35
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 1: The AFP carton is not 'small and off-center in the lower third' as required; it is large, centered, and acts as the primary foreground focal point rather than the irrigation context.",
-        "Role 2: The AFP carton is excessively large and prominent, violating the 'small' and 'secondary' constraints for selection evidence.",
-        "Role 3: The required 'unattended fixed filter' is not visible; instead, a large, unapproved mobile wheeled tank sprayer is shown, which creates a hardware duplication conflict with Role 5. The AFP carton is also oversized.",
-        "All three roles feature an identical product size and presentation, leading to repetitive visual narratives."
-      ],
-      "correction_prompt": "Reduce the AFP carton to a small secondary element in all roles; in Role 1, show a wide high-oblique view of the farm; in Role 2, add visible emitter-spacing details; in Role 3, replace the mobile sprayer with a static unattended filter and manifold assembly.",
+      "correction_prompt": "Regenerate all three panels: Panel 1 must be a high-oblique wide shot of the farm with the product small and off-center, no people or cardboard boxes. Panel 2 must feature the product as a secondary element with clear emitter-spacing evidence. Panel 3 must be an equipment-only shot on a concrete pad with no farm activity or background distractions.",
       "panel_scores": [
         35
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [],
+      "reasons": [
+        "Image 2 contains a person, which is strictly prohibited in the brief.",
+        "Image 3 violates the requirement for a 'farm activity' absence; it shows active irrigation spraying equipment and a person working in the background.",
+        "Image 3 is cluttered, whereas the brief specifies an 'empty concrete pad' for the Headworks Detail."
+      ],
+      "correction_prompt": "Regenerate Image 2 without any people. For Image 3, remove all tractors, active spray equipment, and people to ensure the pad is empty and isolated.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 3
     }
   ]
 }

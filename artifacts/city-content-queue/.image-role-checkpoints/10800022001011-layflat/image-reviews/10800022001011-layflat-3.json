@@ -1,0 +1,51 @@
+{
+  "source_id": "10800022001011-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 63,
+      "product_height_percent": 72,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Required two-coil pair visible: one packaged AFP coil and one bare black woven coil, both separate and recognizable.",
+        "machine-enforced bounding-box check failed: Reduce product height from 72% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 72% to at most 45% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 42,
+      "product_height_percent": 30,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The image is missing the mandatory HEADWORKS DETAIL elements: there is no visible fixed pump, gauge, or manifold on the concrete pad.",
+        "Two coils are placed side-by-side rather than forming a unified 'layflat pair' layout.",
+        "The image focuses primarily on the two coils instead of treating them as secondary to the missing equipment detail."
+      ],
+      "correction_prompt": "Add a fixed pump, gauge, and manifold on the concrete pad in the background or foreground to fulfill the HEADWORKS DETAIL role. Reposition the two coils (one packaged, one bare) to be smaller and secondary, ensuring they are placed appropriately relative to the new equipment detail. Keep the 'AFP | 09134922013' watermark in the bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 60,
+      "product_height_percent": 45,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Approved layflat pair visible: packaged AFP coil (left) and bare black woven coil (right).",
+        "Watermark 'AFP | 09134922013' present in bottom-right.",
+        "Zero people, hands, or human body parts in frame.",
+        "Pump, gauge, and manifold infrastructure present as required by Headworks Detail role without being treated as extra commercial products."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

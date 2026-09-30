@@ -1,0 +1,56 @@
+{
+  "source_id": "11000016001597-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 94,
+      "product_width_percent": 33,
+      "product_height_percent": 33,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is visible in the bottom-right corner",
+        "No people or human body parts are visible in the image",
+        "Primary subject is a white-and-blue wide low cylindrical drip-tape carton roll",
+        "Roll dimensions and proportions remain physically plausible",
+        "Gauge, manifold, and connectors are present on a fixed irrigation setup",
+        "Concrete pad, distant tractor, farm building, and irrigation hardware provide a contextually relevant background",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 34,
+      "product_height_percent": 29,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "A visible human/worker is present in the background, which is a hard reject condition.",
+        "The mandatory role requires an 'elevated record photograph', but the product is shown on the ground.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove the human in the background. Elevate the drip tape roll onto a filter/regulator manifold assembly mounted on a concrete pad to fulfill the HEADWORKS DETAIL role. Ensure the roll remains secondary in size (under 23% width). Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 20,
+      "product_height_percent": 13,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Matches the specific 'HEADWORKS DETAIL' role with equipment (gauge/regulator) and a small secondary carton roll.",
+        "Zero people or human body parts.",
+        "Product dimensions are well within the 20-23% width preference and <35% height limit.",
+        "Includes the required 'AFP | 09134922013' watermark in the bottom-right."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
