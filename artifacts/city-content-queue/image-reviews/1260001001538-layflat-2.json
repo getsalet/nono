@@ -1,18 +1,38 @@
 {
   "source_id": "1260001001538-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "The image contains a brown bottle/container to the right of the hoses, which violates the hard reject rule against bottles, jars, and canisters.",
+        "The background includes a tractor and farm equipment, but the primary failure is the presence of the bottle in the foreground product arrangement."
+      ],
+      "correction_prompt": "Remove the brown bottle/container from the right side of the foreground. Keep only the two coils (one packaged AFP, one bare black woven) and the agricultural field background.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 36.5,
+      "product_height_percent": 18.2,
+      "product_x_center_percent": 44.8,
+      "reasons": [
+        "Approved two-coil layflat pair present: one packaged AFP coil and one bare black woven coil, clearly showing diameter/construction difference for selection evidence",
+        "No people, body parts, or human silhouettes detected",
+        "Distant unattended tractor is allowed as infrastructure, not a third commercial product",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Both coils fully visible, separate, and physically plausible on soil surface",
+        "Combined width ~36.5% of frame, within acceptable 8-42% range"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

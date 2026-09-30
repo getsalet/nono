@@ -1,18 +1,37 @@
 {
   "source_id": "1220005001575-layflat",
-  "family": "layflat",
   "kind": 2,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: clearly visible person (man in blue shirt) present in the left portion of the image. Human being is a mandatory hard reject per QA rules.",
+        "Image is a multi-panel collage, not a single unified product role image.",
+        "Two separate coil images appear in different panels rather than a single approved layflat pair side by side.",
+        "Presence of a green pump/motor assembly adds an extra commercial product element beyond the required pair.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Generate a single composite image showing exactly two coil products side by side on a clean surface: one packaged AFP coil and one bare black woven/layflat coil. Zero people anywhere in frame. The AFP | 09134922013 watermark must appear in the bottom-right corner. Ensure both coils are fully visible, separate, and clearly showing diameter/construction difference. Enlarge the product group from 0% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 78,
+      "product_width_percent": 37,
+      "product_height_percent": 27,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Image shows approved layflat pair: left is a packaged AFP coil with silver/blue wrapping, right is a bare black woven coil. Both are fully visible, separate, and physically plausible. Zero people or body parts present. Distant farm buildings and tractor-less field are acceptable infrastructure. Watermark AFP | 09134922013 is present in bottom-right. Combined width ~37% falls within the 8-42% acceptable range for this role. The pair demonstrates construction/diameter difference suitable for SELECTION EVIDENCE role.",
+        ""
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
