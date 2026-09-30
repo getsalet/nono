@@ -1,72 +1,50 @@
 {
   "source_id": "1260005001539-layflat",
-  "family": "layflat",
   "kind": 1,
   "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 55,
-      "product_width_percent": 46,
-      "product_height_percent": 38,
-      "product_x_center_percent": 45,
+      "score": 15,
+      "product_width_percent": 30,
+      "product_height_percent": 10,
+      "product_x_center_percent": 60,
       "reasons": [
-        "Product bounding box width (46%) exceeds the strict 42% hard reject threshold for a pair of coils.",
-        "Visible human body part (fingers) located inside the hollow center of the black coil",
-        "The coiled product appears slightly too large relative to the wide editorial hero context requested.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 8-42% of frame width."
+        "Person present in frame — hard reject per guidelines. One visible bare coil only; no packaged AFP coil visible. Coils are prominent foreground objects, not small/off-center as required for EDITORIAL HERO role.",
+        "correction_prompt"
       ],
-      "correction_prompt": "Shrink the coiled products to be approximately 30% of the frame width to ensure they read as small off-center objects. Strictly remove any human hands or fingers visible inside the coil. Ensure the black woven texture is realistic, not a hollow pipe. Reduce the product group from 46% to 8-42% of frame width.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 60,
-      "product_width_percent": 55,
-      "product_height_percent": 28,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 9,
       "product_x_center_percent": 45,
       "reasons": [
-        "Combined product width is too wide for Role 1 (55% vs 42% max).",
-        "The packaged coil appears distorted and does not resemble standard product packaging.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+        "Hard reject: visible person standing in the field holding hose/cardboard, violates zero-people rule."
       ],
-      "correction_prompt": "Reduce the size of the two coils to be 15% of the image width. Redraw the packaged coil to look like a standard rolled hose in commercial packaging, not a geometric abstract shape. Reduce the product group from 55% to 8-42% of frame width.",
+      "correction_prompt": "Remove the person entirely; keep only the packaged AFP coil and bare black woven coil in the field, off-center, with the required watermark.",
       "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 88,
-      "product_width_percent": 55,
-      "product_height_percent": 20,
-      "product_x_center_percent": 45,
-      "reasons": [
-        "The image clearly shows the two required items: a packaged AFP coil and a bare black woven coil.",
-        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
-        "The placement in the foreground with the cityscape and farmland background matches the 'editorial hero' role.",
-        "There are zero visible people or human body parts.",
-        "The distant tractor and farm buildings are treated as relevant infrastructure/context, not hard rejects.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
-      ],
-      "correction_prompt": "Reduce the product group from 55% to 8-42% of frame width.",
-      "attempt": 3
     },
     {
       "pass": true,
       "score": 92,
-      "product_width_percent": 32,
-      "product_height_percent": 38,
-      "product_x_center_percent": 38,
+      "product_width_percent": 16,
+      "product_height_percent": 9,
+      "product_x_center_percent": 37,
       "reasons": [
-        "Required bottom-right watermark 'AFP | 09134922013' is present",
-        "Both required objects (packaged AFP coil and bare black woven coil) are visible, separate, and distinct",
-        "Product pair dimensions fall within the 8-42% accept range (approx 32%)",
-        "Zero people or human body parts present",
-        "Context matches the wide high-oblique water-transfer role with crop and unattended tractor",
-        "Off-center/lower-third placement meets the editorial requirement"
+        "Two distinct coils (one packaged silver AFP, one bare black woven) are present, separate, fully visible, and physically plausible on tilled soil.",
+        "Combined product width approximately 16%, within the acceptable 8-42% range.",
+        "Lower-third, off-center placement aligns with editorial preference.",
+        "Zero people, human body parts, or silhouettes detected.",
+        "No third commercial package, coil, bottle, jar, or invented product present.",
+        "Distant farm buildings and crop rows are infrastructure/natural context, not violations.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner."
       ],
       "correction_prompt": "",
-      "attempt": 4
+      "attempt": 3
     }
   ]
 }
