@@ -1,0 +1,54 @@
+{
+  "source_id": "1050003001262-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 42,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory HEADWORKS DETAIL: The brief requires an 'equipment-only elevated record photograph of one fixed pump, gauge and manifold.' This image is a standard ground-level eye shot, not an elevated record shot, and lacks the specified pump, gauge, and manifold.",
+        "Primary subject violation: The two coils are presented as the primary hero elements in the foreground, whereas the brief explicitly requires them to remain 'small, separate and secondary' to the infrastructure."
+      ],
+      "correction_prompt": "Regenerate as a high-angle elevated record shot of a concrete pad featuring a fixed pump, gauge, and manifold as the main subjects. The packaged AFP coil and bare black woven coil must be placed in the background, small and secondary. Maintain the required 'AFP | 09134922013' watermark in the bottom-right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 85,
+      "product_height_percent": 80,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing required primary infrastructure: The HEADWORKS DETAIL role requires a 'fixed pump, gauge, and manifold' on a concrete pad, which are not present in the image.",
+        "Extra commercial product: The image contains three coil objects (one wrapped, two black woven). The brief strictly requires 'zero third commercial package' and specifically asks for 'one packaged AFP coil and one bare black woven coil'.",
+        "Watermark location: The required watermark 'AFP | 09134922013' is in the bottom-left, but the instructions specify it must be in the bottom-right.",
+        "Dimensioning: The product group occupies too much of the frame (approx. 85% width) relative to the requested secondary status (12-20% combined width).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 8-65% of frame width.; Reduce product height from 80% to at most 45% of frame height."
+      ],
+      "correction_prompt": "Regenerate an elevated detail photo of a fixed irrigation pump, gauge, and manifold on a concrete pad. Include only a small, wrapped coil and a small, bare black coil in the background. Ensure the watermark is in the bottom-right. Reduce the product group from 85% to 8-65% of frame width. Reduce product height from 80% to at most 45% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 32,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Image contains the approved pair: one packaged AFP coil and one bare black woven coil.",
+        "Both objects are separate, fully visible, and physically plausible.",
+        "No people, human body parts, or unapproved commercial items are present.",
+        "Watermark 'AFP | 09134922013' is correctly placed in the bottom-right corner.",
+        "Product bounding box is estimated at 32% width and 22% height, which falls within the noisy reviewer estimate range (8-65% width) for this role, and the objects remain recognizable."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

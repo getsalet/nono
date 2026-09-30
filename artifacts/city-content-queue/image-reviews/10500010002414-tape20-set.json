@@ -1,21 +1,17 @@
 {
   "source_id": "10500010002414-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
       "score": 45,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "duplicate_roles": [],
       "reasons": [
-        "Role 3 (Panel 3) fails the 'exactly one approved carton' constraint as it contains two coiled products (one white, one dark green/reel).",
-        "Role 2 and Role 3 use nearly identical low-angle crop-row environments that feel repetitive.",
-        "Role 1 includes a person in the background (tractor driver), which is prohibited.",
-        "Role 3 lacks a 'fixed' filter/gauge story; instead shows a mobile reel/wagon setup."
+        "Role 3 violation: The 'Headworks Detail' shot is required to be an equipment-only photograph of a filter, gauge, regulator, and manifold on an empty concrete pad with no farm activity. The provided image instead shows a field background with large farm tractors (active machinery) and the product placed on the ground rather than a clean equipment assembly.",
+        "Role 2 weak fit: While it shows selection evidence (emitters), the camera angle is low/eye-level rather than the required elevated technical arrangement.",
+        "Role 1 acceptable but minor positioning flaw: The 'Hero' carton is centered rather than strictly off-center."
       ],
-      "correction_prompt": "Redesign Panel 3 to show a fixed filtration station with a clean gauge and manifold containing only one product, and ensure the camera angle is distinct from Panel 2. Remove the person/tractor driver from the background of Panel 1.",
+      "correction_prompt": "Replace Role 3 with an equipment-only flat-lay photograph of a headworks unit (filter, pressure regulator, and manifold) on a clean concrete pad, strictly excluding any farm tractors or field background; and adjust Role 2 to an elevated, high-angle technical shot.",
       "panel_scores": [
         45
       ],
@@ -23,19 +19,22 @@
     },
     {
       "pass": false,
-      "score": 60,
+      "score": 35,
       "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Role 2 lacks 'visible emitter-spacing' evidence; the field shows crop stubble rather than irrigation emitters, failing the specific technical requirement.",
-        "Role 3 shows a 'mobile' pressure-compensating regulator assembly (supported by a tire) rather than an 'unattended fixed' manifold as required in the editorial brief.",
-        "In Role 2, the product carton is placed on the extreme left edge, violating the 'off-center on the lower third' compositional instruction (which applies to Role 1's composition style, though the edge placement is generally unstable)."
+        "Panel 2 fails role-specific requirements: Role 2 (Selection Evidence) specifies 'elevated technical arrangement', but the image shows a low-angle view dominated by a crouching person.",
+        "Panel 2 violates the 'no person' constraint: The presence of a man touching the product is an explicit rejection criterion.",
+        "Panel 3 fails role-specific requirements: Role 3 (Headworks Detail) demands 'equipment-only... filter, gauge, regulator and manifold', but this image displays only the product with no headworks components.",
+        "Role conflict/duplication: Panel 3 depicts a static product on a concrete pad with a background, which does not satisfy the distinct technical narrative of either the 'field-selection evidence' (Role 2) or 'headworks detail' (Role 3) briefs.",
+        "Panel 3 is oversized: The product appears too prominent in the frame, conflicting with the instruction that it remain 'small and secondary'.",
+        "Product Text Corruption: The text on the AFP logo in Panels 2 and 3 is garbled or illegible ('DRIF' instead of 'DRIP', and undefined symbols/words), indicating AI generation errors affecting professional quality."
       ],
-      "correction_prompt": "Regenerate Role 2 with clearly visible drip tape emitters in the soil to provide selection evidence, and Role 3 with a wall-mounted or anchored fixed irrigation manifold assembly to distinguish it from mobile hardware.",
+      "correction_prompt": "Replace Panel 2 with an elevated high-angle technical shot of the field showing emitter spacing evidence, strictly excluding any people. Replace Panel 3 with a close-up, equipment-only shot of a filter, gauge, regulator, and manifold on a concrete pad, featuring a small secondary AFP product and no background farm activity.",
       "panel_scores": [
-        60
+        35
       ],
       "set_attempt": 2
     }

@@ -4,54 +4,56 @@
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 45,
       "duplicate_roles": [
         1,
-        2,
-        3
+        2
       ],
       "reasons": [
-        "Role 3 (Headworks Detail) fails to meet the visual brief: the requirement specifies a 'record photograph of one fixed pump, gauge and manifold', but the image displays a large, complex piece of machinery mounted on wheels (a portable power unit) rather than a fixed pump installation.",
-        "The environment for Role 3 is inconsistent: the brief calls for the machinery to be on an 'empty concrete pad', but the image shows a dirt or gravel field context.",
-        "Role 1 and Role 2 are visually similar low-angle shots of the two coils placed on tilled soil with a distant tractor, failing to provide the 'visibly distinct in camera height/angle' separation required between the 'Editorial Hero' and 'Selection Evidence' panels."
+        "Role 1 fails the 'high-oblique' requirement; it is a low ground-level shot where the product dominates the foreground instead of being small and off-center.",
+        "Role 2 is rejected due to the inclusion of a third commercial package (the open cardboard box) and a person standing in the background, both of which violate the 'no person' and 'no extra package' constraints.",
+        "Role 2 does not provide the required 'elevated technical comparison' as it is shot from a low angle similar to Role 1.",
+        "Role 3 fails the 'equipment-only' and 'fixed pump' requirements; it depicts portable gauges and packaging on an airport tarmac rather than a concrete pad with a fixed pump system."
       ],
-      "correction_prompt": "Replace Role 3 with a record photo of a fixed pump and manifold assembly on an empty concrete pad; replace Role 1 with a distinct high-oblique water-transfer context shot where the coils are small and off-center.",
+      "correction_prompt": "Regenerate Role 1 as a high-oblique wide shot of a water-transfer field with the coils kept small and off-center; regenerate Role 2 as an elevated close-up of just the two coils showing diameter differences without any cardboard box, people, or extra packaging; regenerate Role 3 to show a fixed pump and manifold on a concrete pad with the coils as a small secondary element.",
       "panel_scores": [
-        35
+        45
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "The panel role order is mismatched: the set provided is not in the requested sequence [1, 2, 3].",
-        "Role 1 (First image): Fails the 'wide high-oblique' requirement. It is a low, ground-level close-up shot of the product in a field. While a 'hero' image, the camera angle is incorrect relative to the brief.",
-        "Role 2 (Second image): Contains prohibited subject matter. The prompt strictly specifies 'no third... container'. The image displays the two coils accompanied by a large grey molded 'container' or pump housing, which violates the 'selection evidence' constraints.",
-        "Role 3 (Third image): Correctly identifies the pump and coil on a pad, but since the roles are provided in a 1-2-3 sequence order, the placement of the pump image (Role 3) and the container image (Role 2) creates a confusion in the editorial flow expected by the [1, 2, 3] role list."
+      "score": 20,
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "Resubmit the panels in the correct 1-2-3 order. Panel 1 must be a wide high-oblique aerial view of the landscape with the two coils as small, separate foreground elements. Panel 2 must strictly show ONLY the two coils on a surface to demonstrate technical difference, with no pump, container, or manfacturing part present. Panel 3 is the pump on the concrete pad with the coils secondary.",
+      "reasons": [
+        "Role 1 (Image 2) depicts the pump on a standard concrete slab, which violates the 'elevated' camera requirement and makes the layout nearly identical to Role 3.",
+        "Role 3 (Image 3) contains a cardboard box and gauge assembly, explicitly violating the 'no bottle/container' rule.",
+        "Role 3 (Image 3) sets the pump on an airport tarmac, which is not a 'relevant background' to the agricultural/irrigation article brief.",
+        "Roles 1 and 3 have duplicated layouts and lack the required distinction in camera height/angle."
+      ],
+      "correction_prompt": "Regenerate Role 1 with a high-oblique camera angle on a raised/standard farm concrete slab, and regenerate Role 3 to strictly show the equipment without any packaging or containers in a clearly irrigated farm context.",
       "panel_scores": [
-        35
+        20
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 75,
+      "score": 45,
       "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Panel 2 contains a visible vertical pump/hardware object on the right side, which is a strict rejection criterion for this role.",
-        "Panels 2 and 3 both feature elevated technical equipment on pads, leading to the rejection rule of 'role-3/role-5 hardware duplication'.",
-        "Panel 1 is not a high-oblique wide shot but a low-angle crop, failing the EDITORIAL HERO requirements."
+        "Role 3 is supposed to be an 'equipment-only' image showing a pump, gauge, and manifold, but the image contains only the two coils; it lacks the specified pump and gauge equipment, rendering it functionally a duplicate of the product focus in Role 2.",
+        "Role 2 is required to show a 'diameter or construction difference through the pair itself' as a technical comparison, but the image places the two coils at the same small scale on the ground without demonstrating the specific structural or diameter variance required for a SELECTION EVIDENCE role.",
+        "The distinct camera heights and environments required to separate the EDITORIAL HERO (Role 1) from the other two are not sufficiently realized; Role 1 includes the pump equipment which should belong to a different context, while Roles 2 and 3 share nearly identical composition (coils on a concrete pad)."
       ],
-      "correction_prompt": "Panel 2 must strictly exclude any pump hardware or vertical equipment to focus solely on the two-coil comparison. Panel 3 must clearly differentiate from Panel 2 by showing a fixed pump, gauge, and manifold on a concrete pad with the coils clearly secondary and separate. Panel 1 requires a much wider high-oblique angle showing water-transfer context.",
+      "correction_prompt": "Regenerate Role 3 to be a close-up of only the fixed pump, gauge, and manifold on an empty concrete pad (excluding the coils). Regenerate Role 2 to show an elevated, direct side-by-side comparison of the two coils that clearly highlights their diameter or construction differences.",
       "panel_scores": [
-        75
+        45
       ],
       "set_attempt": 3
     }

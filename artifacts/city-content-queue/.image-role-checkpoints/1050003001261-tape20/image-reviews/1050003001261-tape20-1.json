@@ -1,0 +1,72 @@
+{
+  "source_id": "1050003001261-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 26,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Missing the exact required bottom-right watermark 'AFP | 09134922013' in the correct location (currently displays 'AFP | 09134922013' with a different phone number).",
+        "Product x_center_percent is 45, which is centered rather than off-center/lower-third placement as required for the EDITORIAL HERO role."
+      ],
+      "correction_prompt": "Replace the bottom-right watermark with exactly 'AFP | 09134922013'. Shift the single AFP drip-tape carton roll to the bottom-right off-center position (x approx 60-75%).",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 21,
+      "product_height_percent": 22,
+      "product_x_center_percent": 61,
+      "reasons": [
+        "The roll geometry is distorted and physically implausible; the top lid is warped out of shape and the label wrapping is visually broken.",
+        "The bounding box includes the mandatory watermark, which is embedded as part of the roll's visual representation in the source image; a physical product carton should not display the site-wide footer tag on its own packaging."
+      ],
+      "correction_prompt": "Regenerate the carton roll with a clean, physically accurate cylindrical geometry where the top lid is perfectly circular and flat, and remove the watermark text from the physical product packaging while keeping it strictly in the image background.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Presence of a human (a man crouching in the field) and another person in the background.",
+        "The required bottom-right watermark 'AFP | 09134922013' is missing."
+      ],
+      "correction_prompt": "Regenerate the image to remove all people and workers from the field. Add the text watermark 'AFP | 09134922013' at the bottom right. Ensure the white and blue drip tape roll remains in the foreground.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 27,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Hard reject: visible human figures/farmers standing on the left side of the field and a person seated on the tractor on the right side, which violates the zero-person rule."
+      ],
+      "correction_prompt": "Remove all visible humans, farmers, and any person on the tractor; leave the tractor unattended and keep exactly one AFP drip-tape carton roll in the lower-left area, with the bottom-right watermark 'AFP | 09134922013' preserved.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 33,
+      "product_x_center_percent": 23,
+      "reasons": [
+        "Object is present and meets the 12-30% width and <35% height plausibility limits."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "source_id": "1050002002196-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 21,
+      "product_height_percent": 23,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible human body parts present (arm, hand, torso, head)."
+      ],
+      "correction_prompt": "Regenerate the image with zero visible people or human body parts. Show the field, the irrigation pump on the right, and the single small AFP drip-tape carton roll centered in the lower-left third, keeping the required bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 18,
+      "product_height_percent": 15,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: The image contains two visible people (one standing and one crouching).",
+        "Hard reject: The human hands, arms, faces, and bodies are clearly visible.",
+        "Hard reject: The crouching person is holding a second roll of tape, violating the 'exactly one' and 'zero body parts' rules."
+      ],
+      "correction_prompt": "Regenerate the image with zero people or human body parts. Remove the crouching man and the second roll of tape in his hand. Keep the AFP drip-tape roll in the foreground and the farm context with the standing man's position empty.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image displays exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The roll's dimensions fall within the accepted range (width approx. 22%, height approx. 25%).",
+        "The product is placed off-center on the lower third of the frame, as per the editorial preference.",
+        "There are zero people or human body parts visible in the image.",
+        "The background context (farm fields, distant tractors, and horizon) matches the article brief without violating hard rejects.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "No forbidden items such as second rolls, bottles, or other commercial packages are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

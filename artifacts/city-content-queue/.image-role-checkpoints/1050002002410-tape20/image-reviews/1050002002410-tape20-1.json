@@ -1,0 +1,76 @@
+{
+  "source_id": "1050002002410-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 70,
+      "product_width_percent": 25,
+      "product_height_percent": 20,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The exact required bottom-right watermark 'AFP | 09134922013' is missing."
+      ],
+      "correction_prompt": "Add the exact bottom-right watermark text 'AFP | 09134922013' to the image.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 24,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject due to visible human operator sitting in the tractor on the right side of the field.",
+        "Presence of a person violates the requirement for zero people and zero human body parts."
+      ],
+      "correction_prompt": "Regenerate the image to remove the human operator from the tractor, leaving the red tractor unattended in the background while keeping the AFP drip-tape roll in the foreground.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 5,
+      "product_width_percent": 17,
+      "product_height_percent": 31,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The tractor visible in the background contains a distinct human driver inside the cabin, which triggers a hard reject for any visible person."
+      ],
+      "correction_prompt": "Regenerate the image with a driverless tractor in the background to ensure zero people are visible.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 24,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible human driver inside the tractor cabin constitutes a hard reject for human presence.",
+        "The image depicts a tractor actively working in the field, whereas the instructions explicitly allow only 'distant unattended' farm equipment, not active machinery with a driver."
+      ],
+      "correction_prompt": "Regenerate the image to show a wide high-oblique farm landscape with a small AFP white and blue drip-tape carton roll in the lower third. Replace the active tractor with static unattended farm equipment or remove machinery to ensure zero visible humans or drivers.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 17,
+      "product_height_percent": 22,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product matches the specified brand and type (AFP drip tape roll)",
+        "Product size (width 17%, height 22%) is within the required 12-30% width range and under 35% height limit",
+        "Placement is in the lower-third section of the frame",
+        "Background is dominated by farm and irrigation context (crop field) as required for the editorial hero role",
+        "Distant tractor and building are contextual and do not violate the 'zero people' constraint",
+        "Required watermark is present and legible"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

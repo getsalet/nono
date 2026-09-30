@@ -1,0 +1,69 @@
+{
+  "source_id": "1050009001260-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 12,
+      "product_height_percent": 15,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The mandatory wide high-oblique farm context dominates the frame. The required drip-tape roll is cut off at the bottom edge, violating the 'fully visible' requirement. Additionally, the roll appears too small (under 12% width) and the bottom-third placement is obstructed by the crop field horizon instead of being a lower-third foreground element."
+      ],
+      "correction_prompt": "Regenerate to feature a wide high-oblique view of a vast farm. Place a white and blue AFP drip-tape carton roll in the immediate foreground on a light-colored surface. The roll must be fully visible (not cut off) and occupy approximately 20% of the frame width. Maintain the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 28,
+      "product_height_percent": 30,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "Person present in background (left field)",
+        "Person present in background (center field)",
+        "Person present in background (right field)",
+        "Product roll dimensions exceed 30 percent height limit",
+        "Roll is not a standard commercial carton, appears cut open or partially unrolled",
+        "Multiple people present, violates zero-person rule"
+      ],
+      "correction_prompt": "Remove all human figures from the background field; replace the cut/opened roll with a sealed, cylindrical white-and-blue drip-tape carton roll; ensure the carton is fully intact, lower height to below 25 percent, and keep it in the lower-left area.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 31,
+      "product_height_percent": 36,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Product exceeds maximum width limit (31% > 30% threshold).",
+        "Product exceeds maximum height limit (36% > 35% threshold).",
+        "Roll appears larger than physically plausible for the required 20-23cm width in the high-oblique editorial context.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 36% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Shrink the drip-tape roll to strictly under 30% frame width and 35% frame height, keeping it small and off-center in the lower-left quadrant. Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 36% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 16,
+      "product_height_percent": 12,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Image contains exactly one approved AFP drip-tape roll on the lower left.",
+        "No people, human body parts, or silhouettes are visible.",
+        "No hard-reject items (bottles, second rolls, fake headlines) are present.",
+        "The roll dimensions are within the accepted 12-30% width and height range.",
+        "Bottom-right watermark 'AFP | 09134922013' is present and correct."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

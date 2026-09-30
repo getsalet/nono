@@ -1,21 +1,56 @@
 {
   "source_id": "1050003002761-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 fails the EDITORIAL HERO brief: the product roll is centrally placed and dominates the foreground, violating the requirement to keep the carton small and off-center on the lower third.",
-        "Panel 2 lacks the required 'selection evidence' (emitter-spacing or field-selection) next to the carton, and the unrolled tape ring makes the product element overly complex relative to the simple technical arrangement requested.",
-        "Panel 3 violates the HEADWORKS DETAIL brief by including farm activity (tractors) and missing the mandatory equipment-only details (fixed filter, gauge, regulator, and manifold)."
+      "score": 58,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Re-create Panel 1 with the carton small and off-center on a wide high-oblique landscape; add visible emitter spacing next to the carton in Panel 2; replace the background in Panel 3 with an isolated concrete pad and clearly render the required filter, gauge, regulator, and manifold while removing all vehicles.",
+      "reasons": [
+        "Product scale in role 1 (EDITORIAL HERO) is incorrect: the product is depicted as an oversized, close-up object in the foreground rather than remaining small and off-center in the lower third as required by the visual brief.",
+        "Roles 1 and 2 feature nearly identical product placement and framing (foreground carton on the left/center with a coiled product on the ground), resulting in a repeated layout that fails to distinguish the EDITORIAL HERO from the SELECTION EVIDENCE camera angles.",
+        "Role 1 contains an unattended tractor, which, while allowed context, does not sufficiently separate the environment structure from role 2's background, contributing to visual redundancy."
+      ],
+      "correction_prompt": "Re-shoot role 1 to ensure the irrigation context dominates by significantly reducing the product scale so it appears small and off-center in the lower third, and adjust the framing or crop of role 2 to differentiate the layout from role 1.",
       "panel_scores": [
-        45
+        58
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panel 2 contains a visible person, which is an absolute rejection reason per the brief.",
+        "Panel 2 depicts active farm work (installing the line with a tractor), conflicting with the brief's 'no farm activity' constraint and the 'evidence/record' nature of a Selection Detail shot.",
+        "Panel 1 features a 'generic farm' aesthetic with a massive city skyline in the distance that does not align with the specific rural location (Kerman/Kaveh) specified in the editorial brief."
+      ],
+      "correction_prompt": "Regenerate the set to remove the person and the distant city skyline; replace the active tractor scene in role 2 with a high-elevation static detail of the tape's emitter spacing to ensure it remains distinct from role 1's wide perspective.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 (Selection Evidence) places the product in the lower-left corner, violating the 'off-center on the lower third' structural expectation relative to Role 1 and failing to provide the required technical narrative of 'emitter-spacing or field-selection evidence'. The field is empty with no visible installation or spacing context.",
+        "Role 3 (Headworks Detail) contains unattended farm vehicles (tractors) in the immediate background; the brief strictly requires an 'empty concrete pad' for the equipment-only record, and heavy machinery violates this isolation requirement."
+      ],
+      "correction_prompt": "Regenerate Role 2 to show the product on a soil bed with clear drip tape lines or emitter spacing visible; regenerate Role 3 as an isolated, empty concrete pad with the filter and manifold, removing all background vehicles and farm buildings.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
     }
   ]
 }

@@ -4,16 +4,15 @@
   "history": [
     {
       "pass": false,
-      "score": 65,
+      "score": 45,
       "duplicate_roles": [],
       "reasons": [
-        "Panel 3 contains a violation of the 'no container' rule: a cardboard box with 'AFP' branding is placed on top of the irrigation manifold assembly.",
-        "Panel 2 layout fails the spatial hierarchy test: the product carton is large, centered, and prominent in the foreground, acting as the primary subject rather than a secondary element.",
-        "Panel 3 composition conflicts with the 'product secondary' requirement for the technical detail role; the product takes up equal visual weight to the headworks assembly."
+        "Panel 3 violates the 'HEADWORKS DETAIL' requirement by showing only a product roll on a concrete pad instead of the specified equipment arrangement (fixed filter, gauge, regulator, and manifold).",
+        "Panel 1 lacks the required 'exact one approved carton' in the lower third; it shows a bulk roll directly on the ground, which does not fit the editorial hero description provided in the brief."
       ],
-      "correction_prompt": "Regenerate images by removing the cardboard box in Panel 3 and reducing the product's visual weight in Panels 2 and 3 to make them background/secondary elements.",
+      "correction_prompt": "Redesign Panel 3 to be an equipment-only technical record showing a filter, gauge, regulator, and manifold on a concrete pad with the product roll secondary, and ensure Panel 1 places the product in a visible carton.",
       "panel_scores": [
-        65
+        45
       ],
       "set_attempt": 1
     },
@@ -21,39 +20,19 @@
       "pass": false,
       "score": 45,
       "duplicate_roles": [
-        1,
         2,
         3
       ],
       "reasons": [
-        "Panel 1 fails the 'exactly one approved carton' constraint: it depicts the irrigation strip itself (the product) running across the entire field. While the physical carton is small and off-center, the ubiquitous black tubing constitutes a second, dominant product presence that violates the single-item layout requirement.",
-        "Panel 2 fails the 'small carton' constraint: the product packaging is scaled significantly larger than Panel 1, serving as a foreground focal point rather than a secondary element. It also lacks visible technical evidence (no clear emitter spacing or field-selection indicators) required for a SELECTION EVIDENCE role.",
-        "Panel 3 fails the 'empty concrete pad' constraint: the headworks are positioned on a busy paved surface containing two large tractors in the background, which constitutes 'farm activity' explicitly forbidden in the brief."
+        "Role 2 requires visible emitter-spacing or field-selection evidence; the current image shows a generic headworks arrangement on a farm building background without the required selection data or clear emitter context.",
+        "Role 3 requires equipment on an empty concrete pad with 'no farm activity.' The image shows a large red tractor in the background, which constitutes farm activity, violating the strict negative constraint.",
+        "Roles 2 and 3 share the same camera height and angle (eye-level/elevated), resulting in a lack of visual distinction required for the editorial set."
       ],
-      "correction_prompt": "Generate a strict sequence of three images: (1) A high-oblique view of a vast field with a single drip line where only one small packaging carton is visible; (2) A ground-level technical shot of a single small packaging carton next to a detailed close-up of an emitter spacing grid, with a simple background; (3) A sharp, isolated product shot of a filter, gauge, regulator, and manifold on an empty concrete pad, with no tractors or people, ensuring the single packaging carton remains small and secondary.",
+      "correction_prompt": "For Role 2, overlay a technical annotation showing '20cm spacing' or 'Field Selection Map' to satisfy the evidence requirement. For Role 3, remove the red tractor and farm machinery from the background to ensure the scene is a static equipment-only record with no active farm activity.",
       "panel_scores": [
         45
       ],
       "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 55,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 2 (Panel 2) contains a human subject, which violates the strict 'no person' constraint.",
-        "Role 3 (Panel 3) shows multiple product instances (a large cart and a small one) rather than the required 'exactly one approved carton' which must be small and secondary; the large product placement makes it a hero object, failing the specific role requirement.",
-        "Role 1 (Panel 1) places the product roughly in the center rather than 'off-center on the lower third' as specified in the editorial brief."
-      ],
-      "correction_prompt": "Regenerate panel 2 to remove the person; regenerate panel 3 to feature only one small carton secondary to the headworks; adjust panel 1 to place the single carton off-center in the lower third.",
-      "panel_scores": [
-        55
-      ],
-      "set_attempt": 3
     }
   ]
 }
