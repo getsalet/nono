@@ -108,6 +108,10 @@ jobs:
       # Keep production capacity on fresh cities. Quarantined repairs are
       # handled separately after fresh throughput is healthy.
       REPAIR_FAILED_LIMIT: "4"
+      # One bounded full retry wave for the terminal failures. Each row is
+      # marked before processing, so a second failure cannot loop forever.
+      FAILED_RETRY_WAVE_POLICY: "city-failed-retry-wave-v18-20260930"
+      FAILED_RETRY_WAVE_LIMIT: "24"
       WORDPRESS_DB_NAME: navaraby_wp569
       CURRENT_IMAGE_POLICY: retry-after-v17-role3-throughput-safe-metrics
 
@@ -288,11 +292,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          pending="$(python - <<'PY'
+          read -r pending retry_wave_remaining <<<"$(python - <<'PY'
           import json
+          import os
           from pathlib import Path
-          path=Path('artifacts/city-content-queue/status.json')
-          print(int(json.loads(path.read_text(encoding='utf-8')).get('pending',0)) if path.exists() else 0)
+          root=Path('artifacts/city-content-queue')
+          status_path=root/'status.json';queue_path=root/'queue.json'
+          status=json.loads(status_path.read_text(encoding='utf-8')) if status_path.exists() else {}
+          state=json.loads(queue_path.read_text(encoding='utf-8')) if queue_path.exists() else {'items':[]}
+          policy=os.environ.get('FAILED_RETRY_WAVE_POLICY','')
+          remaining=sum(1 for item in state.get('items',[]) if item.get('status')=='failed' and item.get('failed_retry_wave_policy')!=policy)
+          print(int(status.get('pending',0)),remaining)
           PY
           )"
           rebuild_remaining="$(python - <<'PY'
@@ -308,10 +318,10 @@ jobs:
           elif [ "$pending" -gt 0 ] && [ "$rebuild_remaining" -gt 0 ]; then
             echo "Fresh city production advanced; dispatching one bounded image-repair slice before the next content batch."
             gh workflow run rebuild-reference-images.yml --ref main
-          elif [ "$pending" -gt 0 ]; then
+          elif [ "$pending" -gt 0 ] || [ "$retry_wave_remaining" -gt 0 ]; then
             cooldown=10
             if [ "${{ steps.queue.outputs.exit_code }}" != "0" ]; then cooldown=60; fi
-            echo "Queue has $pending pending items; cooldown=${cooldown}s before the next controlled batch."
+            echo "Queue has $pending pending items and $retry_wave_remaining terminal failures not yet covered by the bounded retry wave; cooldown=${cooldown}s before the next controlled batch."
             sleep "$cooldown"
             gh workflow run city-content-queue.yml --ref main
           else
