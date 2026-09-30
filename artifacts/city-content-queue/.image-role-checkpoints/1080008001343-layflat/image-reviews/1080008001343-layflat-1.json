@@ -1,0 +1,83 @@
+{
+  "source_id": "1080008001343-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 38,
+      "product_height_percent": 22,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Visible human (farmer) present in the image.",
+        "Hard reject: Visible human body parts (head, torso, arms, legs) present."
+      ],
+      "correction_prompt": "Regenerate image with zero humans; remove the man squatting behind the coils; keep only the two products in the field context.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 82,
+      "product_width_percent": 54,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Approved layflat pair (packaged coil and bare black coil) present and clearly visible.",
+        "Zero people or human body parts.",
+        "Required AFP watermark is present in the bottom-right corner.",
+        "Editorial high-oblique water-transfer context with relevant distant farm equipment.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 54% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 54% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 55,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: The image contains a visible person (farmer/worker) in the background, which is strictly prohibited for this role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the person in the background; keep only the packaged coil and the black woven coil on the soil, and ensure the 'AFP | 09134922013' watermark is present in the bottom right. Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 45,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image accurately depicts the required layflat family role: a packaged AFP coil and a bare black woven coil.",
+        "Both objects are fully visible, separate, physically plausible, and correctly placed on the soil.",
+        "The image contains zero people or human body parts.",
+        "The distant tractor is treated as farm infrastructure, not an extra commercial product.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom right corner.",
+        "Although the combined width of the products slightly exceeds the preferred percentage, it falls within the acceptable noisy range, and both objects remain clearly recognizable and distinct.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 45% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 45% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 60,
+      "product_height_percent": 30,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject due to visible human figure (driver) on the distant red tractor in the background",
+        "Product placement and scale fail to meet the mandatory 'EDITORIAL HERO' visual brief",
+        "machine-enforced bounding-box check failed: Reduce the product group from 60% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Regenerate without the red tractor in the background; completely remove all human figures. Shrink and reposition the two hose coils to the bottom-left area so they occupy only 12-15% of the frame width to achieve the required high-oblique wide editorial hero perspective. Reduce the product group from 60% to 8-42% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "source_id": "10800021002338-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 50,
+      "product_height_percent": 30,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image successfully displays the required pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "The products are separate, fully visible, and physically plausible without any floating or merging issues.",
+        "The distant tractor in the background is treated as infrastructure and is not a hard reject.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "No humans or prohibited bottles/cans are visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 50% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 50% to 8-42% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 55,
+      "product_height_percent": 28,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Shows both the packaged AFP coil and the bare black woven coil, separate, visible, and physically plausible.",
+        "Zero people, faces, hands, or body parts.",
+        "No third commercial product, bottle, jar, canister, or bucket.",
+        "Watermark 'AFP | 09134922013' present in bottom-right.",
+        "Distant unattended tractor is acceptable infrastructure, not a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 55% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 55% to 8-42% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 32,
+      "product_x_center_percent": 51,
+      "reasons": [
+        "The combined bounding box width of the two coils (58%) exceeds the hard limit of 42% for this role.",
+        "The approved product pair appears centered horizontally rather than off-center as requested for the editorial hero composition.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Scale the two coils down significantly so their combined bounding box width is less than 30% of the frame. Move the coils to the right third of the image to create an off-center editorial composition. Maintain the water-transfer field background context. Reduce the product group from 58% to 8-42% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 64,
+      "product_height_percent": 28,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Approved pair of packaged AFP coil and bare black woven coil is present, separate, and fully visible",
+        "Zero people or human body parts detected",
+        "No third commercial package, bottle, or floating product detected",
+        "Watermark 'AFP | 09134922013' is correctly positioned and legible",
+        "machine-enforced bounding-box check failed: Reduce the product group from 64% to 8-42% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 64% to 8-42% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 40,
+      "product_height_percent": 28,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Both mandatory objects are clearly visible and physically distinct.",
+        "Product pair is off-center and located in the bottom third, matching editorial preferences.",
+        "Zero people or human body parts are visible.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right.",
+        "Product width estimate of 40% is within the noisy reviewer acceptance range (8 to 42%).",
+        "Background contains distant city/horizon, which is a valid editorial context."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

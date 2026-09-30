@@ -1,0 +1,71 @@
+{
+  "source_id": "11000017002189-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 34,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Contains a visible person standing in the background, violating the 'zero people' hard reject rule.",
+        "Fails to meet the 'HEADWORKS DETAIL' role; the image shows a wide environmental shot rather than an elevated record of the fixed filter, gauge, and manifold.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an elevated close-up of the filter, gauge, and manifold. Remove all human figures. Keep the drip-tape roll small and secondary. Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 34,
+      "product_height_percent": 40,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visual content aligns well with the 'Headworks Detail' role, focusing on a fixed setup on an empty concrete pad with irrigation hardware in the background.",
+        "Zero people or human body parts are present, meeting the strict negative constraints.",
+        "Required watermark 'AFP | 09134922013' is clearly visible in the bottom right.",
+        "Product dimensions (width ~34%, height ~40%) are slightly above the preferred optimal range but remain within acceptable plausibility for this specific image role.",
+        "The 'AFP' logo on the roll matches the specified brand requirement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width.; Reduce product height from 40% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce the product group from 34% to 12-30% of frame width. Reduce product height from 40% to at most 35% of frame height.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 33,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Presence of multiple people (human figures) in the background",
+        "Mandatory image role (HEADWORKS DETAIL with filter/gauge/manifold) is missing",
+        "Visible text on the product carton appears to be gibberish/unreadable",
+        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Replace the generic empty pad with a concrete setup containing a filter, gauge, and manifold. Ensure the drip-tape roll is smaller relative to the frame (approx 20% width) and its label text is clearly legible. Reduce the product group from 33% to 12-30% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 17,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "The primary product (drip-tape carton) is a wide, low cylindrical roll matching the 20-23% width and <35% height requirements.",
+        "The image successfully depicts the mandatory 'HEADWORKS DETAIL' role: one fixed filter/regulator unit with a gauge on an empty concrete pad.",
+        "The background contains a distant, unattended tractor and trucks, which are explicitly allowed as contextually relevant farm equipment without human operators.",
+        "The required watermark 'AFP | 09134922013' is clearly visible in the bottom right corner.",
+        "No prohibited items such as people, bottles, or jars are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
