@@ -1,49 +1,54 @@
 {
   "source_id": "1150002001492-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Image 3 (Role 3) violates the 'exactly one approved carton remains small and secondary' constraint; the carton is placed prominently on the center-left, competing for focus with the hardware.",
-        "Image 1 (Role 1) does not meet the 'wide high-oblique view' or 'exactly one approved carton stays small, fully visible and off-center on the lower third' requirements; the carton is disproportionately large, foregrounded, and centered.",
-        "Image 2 (Role 2) lacks the required 'emitter-spacing or field-selection evidence'; it depicts a generic field environment with a large, centered product."
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Re-shoot all three panels: Image 1 must be a high-wide view with a small product in the lower third; Image 2 must clearly show drip tape spacing/evidence; Image 3 must feature the fixed hardware (filter/regulator) with the product strictly secondary and small.",
+      "reasons": [
+        "Role 1: The product carton is too large relative to the environment, violating the 'exactly one approved carton stays small' instruction for an editorial hero shot.",
+        "Role 2: The image fails to provide 'technical arrangement' or 'visible emitter-spacing' evidence; it is a generic product-in-field shot that duplicates the narrative of Role 1.",
+        "Role 2 & Role 1: Layouts are similar (product in foreground, field in background), resulting in weak visual distinction between the roles."
+      ],
+      "correction_prompt": "Regenerate images 1 and 2; shrink the carton in image 1 to the lower third, and replace image 2 with a close-up technical view showing drip lines and emitters to provide field selection evidence.",
       "panel_scores": [
-        35
+        30
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 failure: The product carton is centered and significantly oversized, violating the 'off-center on the lower third' and 'small' requirements.",
-        "Role 2 failure: The carton is oversized and centered, and the shot lacks the required visible emitter-spacing or technical arrangement evidence, looking like a generic field shot instead.",
-        "Role 3 failure: The hardware shown is a single riser with a sensor, not a fixed manifold with a filter and regulator assembly as required.",
-        "Product consistency: The product appears as a roll of drip tape in Roles 1 and 2, but a generic cylindrical container/carton in Role 3, breaking product identity continuity."
+      "score": 45,
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "In all three images, replace the product with a consistent small white roll of 20cm drip tape. For Role 1, move the roll off-center to the bottom right and keep it small. For Role 2, place the roll in an elevated technical setting with clear emitter spacing visible. For Role 3, replace the single sensor with a fixed filtration and regulation manifold assembly while keeping the roll small and secondary.",
+      "reasons": [
+        "Role 3 does not depict the required 'headworks detail' (fixed filter, gauge, regulator, and manifold) and instead shows an empty concrete pad with a large product roll, failing the technical narrative requirement.",
+        "The product roll in Role 3 is too large and central, not 'small and secondary' as requested for that specific panel."
+      ],
+      "correction_prompt": "Regenerate Role 3 to show an elevated, equipment-only record photo of a fixed filter, gauge, regulator, and manifold on an empty concrete pad, ensuring the product roll is small and placed secondarily in the composition.",
       "panel_scores": [
-        35
+        45
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 45,
+      "score": 20,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 places the product in the foreground bottom-center rather than off-center on the lower third as required.",
-        "Role 3 depicts the hardware attached to a tractor, contradicting the requirement for an unattended fixed filter station."
+        "Role 1 fails the EDITORIAL HERO brief: the farm and irrigation context do not dominate, and the required single 'approved carton' is missing; instead, a large white roll is shown centered in the foreground on the crop bed, with an active, attended tractor in the field.",
+        "Role 2 fails the SELECTION EVIDENCE brief: instead of a single approved carton, a large white roll is shown, and the technical arrangement is not clearly elevated or focused on a specific field-selection/emitter-spacing record (it reads as a generic low-angle shot of soil with plastic tubing).",
+        "Role 3 fails the HEADWORKS DETAIL brief: the product roll is not 'small and secondary' as required; it is shown at roughly the same scale as the fixed filter/gauge/regulator/manifold, and the background includes a red barn and a red tractor that do not match the required 'empty concrete pad' and 'no farm activity' context.",
+        "All three images substitute the required 'carton' with a large white roll, which is not the approved product form specified for this editorial set."
       ],
-      "correction_prompt": "Move the product in Role 1 to the off-center lower third; replace the tractor-mounted hardware in Role 3 with a static filter, gauge, and manifold assembly.",
+      "correction_prompt": "Regenerate all three panels to feature exactly one small, fully visible, off-center approved carton (not a roll) in each image: Role 1 as a wide high-oblique editorial hero with farm/irrigation context dominating and an unattended tractor in the distance; Role 2 as an elevated technical arrangement with the carton plus visible emitter spacing or a field-selection marker against a simple field edge or building; Role 3 as an equipment-only elevated record of one fixed filter, gauge, regulator, and manifold on an empty concrete pad with the carton small/secondary and no farm activity in the background.",
       "panel_scores": [
-        45
+        20
       ],
       "set_attempt": 3
     }

@@ -5,20 +5,48 @@
     {
       "pass": false,
       "score": 45,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "duplicate_roles": [],
       "reasons": [
-        "Role 2 (Image 2) fails the 'elevated technical' requirement; it utilizes a low-ground perspective nearly identical to Role 1 (Image 1), lacking the elevated vantage point needed to clearly show diameter differences between the coils.",
-        "Role 3 (Image 3) completely fails the 'HEADWORKS DETAIL' requirement; it displays only the coils on a concrete pad without the mandatory 'fixed pump, gauge and manifold', and includes background tractors that introduce 'farm activity' (which is forbidden for this role, unlike distant passive context).",
-        "Role 3 is layout-redundant with Role 2 (two coils side-by-side), failing to provide a visually distinct technical narrative."
+        "Role 3 explicitly requires 'equipment-only' photograph of one fixed pump, gauge, and manifold on an empty concrete pad. Instead, the image contains no such equipment (pump/gauge/manifold), featuring only coils on a concrete pad and background farm machinery.",
+        "Role 1 requires the coils to remain 'small' in a 'wide high-oblique' context, but the foreground product is dominant and occupies nearly 40% of the frame height, failing the 'oversized product' constraint."
       ],
-      "correction_prompt": "Elevate the camera angle for Role 2 to a high-technical perspective; for Role 3, remove the tractors and replace the background with the required equipment (pump, gauge, and manifold) on the concrete pad.",
+      "correction_prompt": "Replace Role 3 with an elevated, equipment-only photograph of a fixed irrigation pump, pressure gauge, and manifold installed on an empty concrete pad; ensure the product coils appear small and secondary in the background. Reduce the foreground scale of the coils in Role 1 to maintain a wide-context perspective.",
       "panel_scores": [
         45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 3 depicts farm activity, violating the 'no farm activity' constraint for role 3 (distant unattended tractor/building is not active farming).",
+        "Panel 1 lacks the 'empty concrete pad' required for role 3, instead showing the coils as co-equal foreground elements to the pump rather than small/secondary elements.",
+        "Panel 1 is not a wide high-oblique water-transfer context as required for role 1; it is a ground-level medium shot."
+      ],
+      "correction_prompt": "Replace panel 1 with a wide high-oblique landscape shot of a water transfer site; replace panel 3 with a clean, equipment-only shot on an empty concrete pad with no visible farm activity (remove tractor/farming in the distance); in panel 3, make the coils small, separate, and secondary to the fixed pump.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Panel 3 is a near duplicate of Panel 2 in layout, product placement, and framing, violating the requirement for distinct camera angles and environments.",
+        "Panel 3 is missing the required equipment narrative (pump, gauge, manifold) specified for the HEADWORKS DETAIL role, instead showing only coiled hoses on a concrete pad.",
+        "Panel 3 fails to maintain the required 'small and secondary' status of the approved two-coil pair relative to the primary focus on headworks."
+      ],
+      "correction_prompt": "Regenerate Panel 3 to feature a fixed pump, pressure gauge, and manifold as the primary subject on an empty concrete pad; relegate the two hose coils to the background as small, secondary elements to ensure a distinct technical record view compared to Panel 2.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 3
     }
   ]
 }

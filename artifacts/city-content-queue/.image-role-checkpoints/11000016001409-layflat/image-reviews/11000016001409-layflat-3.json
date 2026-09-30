@@ -1,0 +1,40 @@
+{
+  "source_id": "11000016001409-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 68,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product bounding box width (~68% of frame) exceeds the 65% maximum hard-reject threshold.",
+        "Image fails to fulfill the mandatory 'HEADWORKS DETAIL' role (which requires an elevated record photograph of equipment: fixed pump, gauge, and manifold), instead showing the coils as the primary subject.",
+        "Coils are placed on the ground, violating the 'elevated' specification of the mandatory role.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Regenerate as an elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad. The two coils (one packaged AFP, one black woven) must be in the background, separate, and secondary, with a combined width less than 65% of the frame. Ensure the AFP watermark is preserved in the bottom right. Reduce the product group from 68% to 8-65% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 60,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image clearly displays the required pair of two coils: one is a packaged AFP coil and the other is a bare black woven coil.",
+        "The coils are placed on a concrete surface, with no visible people, human body parts, or other commercial products in the frame.",
+        "The overall composition is balanced, with the coils occupying a suitable portion of the frame without being too dominant or too small.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "The image is clear and well-lit, with no visible distortions or issues that would affect the visibility of the products."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

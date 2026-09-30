@@ -1,25 +1,60 @@
 {
   "source_id": "1150004001494-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 30,
+      "score": 40,
       "duplicate_roles": [
         1,
+        2
+      ],
+      "reasons": [
+        "Role 2 (SELECTION EVIDENCE) fails the 'no person' and 'ordinary field edge' constraints; it explicitly includes multiple people standing in the field background and farm workers.",
+        "Role 3 (HEADWORKS DETAIL) is a complete reject; it only shows the product on a concrete surface, but fails to include any required technical hardware (fixed filter, gauge, regulator, or manifold) for the 'HEADWORKS' record photograph.",
+        "Role 1 and Role 2 are functionally near-duplicates in layout structure, both featuring a low-angle product placement with the carton centered in the lower third of the frame."
+      ],
+      "correction_prompt": "Recreate image 2 without any people or farm workers in the background, showing only a plain field edge and the product with visible emitter spacing. Recreate image 3 on an empty concrete pad with one clearly visible filter, pressure gauge, regulator, and manifold; do not show any moving vehicles or people.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Role 1 (EDIT-1 HERO): Fails the primary requirement that 'the farm and irrigation context dominate'; the foreground focuses attention on the product and hardware, with the background context appearing too small and distant.",
+        "Role 3 (EDIT-3 DETAIL): Major violation of the 'equipment-only' constraint; the image shows a large, isolated cartroll, which contradicts the requirement for a 'fixed filter, gauge, regulator and manifold' on an empty concrete pad with no farm activity.",
+        "Role 3: Contains an active farm vehicle (tractor and trailer) in the background, which violates the 'no farm activity' specification for the hardware-detail shot.",
+        "Role 3: The 'approved carton' is not small or secondary; it is the primary subject of the image, failing the layout requirements for the detail shot."
+      ],
+      "correction_prompt": "For Role 1, raise the camera to a high-oblique position to emphasize the scale of the farm and context over the product; for Role 3, remove the cartroll and focus strictly on the technical manifold equipment set on an empty concrete pad with no background farm activity.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Product is too large and centered, failing to maintain a small, off-center presence.",
-        "All three panels rely on identical foreground crop-row structures, creating a 'repeated layout' or generic farm duplication.",
-        "Camera angles are not sufficiently distinct, failing to differentiate between the required high-oblique hero, elevated evidence, and side-view headworks perspectives."
+        "Role 3 (Panel 3) fails to separate from Role 2 (Panel 2) in hardware presentation; both feature the same filter/gauge/regulator assembly in an elevated, static product-shot composition, which constitutes prohibited role-3/role-5 hardware duplication.",
+        "Role 1 (Panel 1) does not match the 'EDITORIAL HERO' description; the product and gauge are not 'small' or 'off-center' on the lower third but are prominently displayed in the foreground.",
+        "Role 1 (Panel 1) fails the 'no farm activity' check as it depicts a tractor in the field, whereas the brief explicitly restricts context to 'distant unattended' or 'farm buildings'."
       ],
-      "correction_prompt": "Shrink the product carton and reposition it to the lower-left for all panels; vary the backgrounds drastically (e.g., overhead map view, close-up gauge cluster, and distant farm landscape) to ensure no repeated crop-row patterns dominate the layout.",
+      "correction_prompt": "Regenerate Role 3 as an isolated equipment-only record shot on an empty concrete pad with no background, ensuring the hardware is visually distinct from the field-edge selection context in Role 2; additionally, regenerate Role 1 as a wide high-oblique landscape view where the farm context dominates and the product cartons are small, secondary elements.",
       "panel_scores": [
-        30
+        35
       ],
-      "set_attempt": 1
+      "set_attempt": 3
     }
   ]
 }

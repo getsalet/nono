@@ -4,19 +4,19 @@
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 45,
       "duplicate_roles": [
+        1,
         2
       ],
       "reasons": [
-        "Role 2 contains a person, which is explicitly prohibited in the visual brief.",
-        "Role 2 lacks the required elevated technical comparison; it shows a ground-level scene with a farmer rather than a close-up construction/diameter detail.",
-        "Role 3 is a ground-level product shot on a concrete pad, whereas the role 3 brief specifies an 'elevated record photograph' of equipment (pump, gauge, manifold).",
-        "Role 3 fails to include the required 'fixed pump, gauge and manifold' equipment, showing only the coils instead."
+        "Roles 1 and 2 display near-identical framing, camera height, and the exact same positioning of the product pair (packaged coil left, bare coil right), violating the requirement for distinct camera angles.",
+        "Role 1 (Hero) fails to present the required 'wide high-oblique' shot; the crops and product are too prominent, and the product is not small/off-center as specified.",
+        "Role 2 (Selection Evidence) fails to provide a technical comparison; it does not show a difference in diameter or construction but simply repeats the same layout found in Role 1."
       ],
-      "correction_prompt": "Regenerate role 2 as a clean, elevated technical macro-shot comparing the diameter/construction of the two coils without a person; regenerate role 3 as an elevated record shot of a fixed pump, gauge, and manifold on an empty concrete pad with the two coils small and secondary in the frame.",
+      "correction_prompt": "Re-shoot Role 1 as a high-oblique wide shot with the product pair small and off-center, and Role 2 as a close-up technical comparison highlighting specific differences in diameter or construction between the coils.",
       "panel_scores": [
-        35
+        45
       ],
       "set_attempt": 1
     },
@@ -28,11 +28,12 @@
         3
       ],
       "reasons": [
-        "Panel 3 (Role 3) fails to depict the required 'HEADWORKS DETAIL' equipment; it shows the product pair on a concrete pad with a distant tractor instead of the required fixed pump and manifold. This is a layout/subject duplication of Panel 1.",
-        "Panel 2 (Role 2) violates the negative constraints by including 'extra' unapproved commercial items (red fittings/connectors) on the concrete pad alongside the required two coils.",
-        "The visual narratives are not sufficiently distinct between Panels 1 and 3, both showing the product pair on ground with background farm context."
+        "Panel 3 displays a bottle/contiguous container (the object with the gauge on top) in the foreground, which violates the strict 'no container' requirement for equipment-only shots.",
+        "Panel 3 contains a person in the background (operating the tiller), violating the 'no person' rule.",
+        "Panel 3 is not an 'elevated' record photograph; it uses a low-angle static camera height that duplicates the framing perspective of Panel 2.",
+        "The 'fixed pump' requirement for Panel 3 is not clearly represented by the bottle object."
       ],
-      "correction_prompt": "For Panel 3, remove the distant tractor and replace the product pair with a close-up of the required equipment: one fixed pump, gauge, and manifold on a bare concrete pad, keeping only a tiny secondary coil in the background. For Panel 2, remove the red fittings and extra objects from the concrete pad, leaving only the two-coil pair to show diameter/construction difference.",
+      "correction_prompt": "Panel 3 must be an elevated (drone/high angle) record photograph on a concrete pad. Remove the bottle and person; depict a clear fixed pump manifold assembly with a gauge, showing the two approved coils small and secondary.",
       "panel_scores": [
         45
       ],
@@ -40,20 +41,22 @@
     },
     {
       "pass": false,
-      "score": 25,
+      "score": 20,
       "duplicate_roles": [
         1,
-        2
+        2,
+        3
       ],
       "reasons": [
-        "The required 'AFP | 09134922013' watermark is missing in the first image.",
-        "Role 1 (Editorial Hero) uses a low foreground shot instead of the required wide high-oblique view.",
-        "Role 2 (Selection Evidence) uses the same low foreground camera angle as Role 1, failing to provide the required distinct technical narrative and 'elevated' perspective.",
-        "The layout in Role 1 and Role 2 is nearly identical, violating the instruction to reject repeated layouts."
+        "Image 1 is a ground-level close-up in a farm field, failing to provide the required 'high-oblique' perspective.",
+        "Images 1 and 2 both contain a third commercial object (an open box or container), violating the brief that only the two-coil pair should be present.",
+        "Image 2 is a flat-lay shot containing gauges, which conflicts with the strict 'equipment-only' headworks detail requirements for role 3.",
+        "Image 3 contains both the third commercial object (open box) and the two-coil pair simultaneously, failing to distinguish between the selection evidence and headworks roles.",
+        "All three images share a similar shallow depth of field and low-angle composition, lacking the required variation in camera height and structure."
       ],
-      "correction_prompt": "Re-shoot images 1 and 2 from a high oblique aerial angle to establish distinct viewpoints; add the missing bottom-right watermark to image 1; ensure image 2 clearly emphasizes the comparison between the two coil types rather than repeating the layout of image 1.",
+      "correction_prompt": "Image 1 must be a high-oblique aerial wide shot; Image 2 must show the two coils plus gauges on a concrete pad with no box; Image 3 must show the same equipment layout with the coils secondary and no box present.",
       "panel_scores": [
-        25
+        20
       ],
       "set_attempt": 3
     }

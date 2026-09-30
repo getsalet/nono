@@ -1,0 +1,83 @@
+{
+  "source_id": "11500011002972-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 85,
+      "product_width_percent": 32,
+      "product_height_percent": 31,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Product width estimated at 32% exceeds the preferred range but remains within the review limit of 30-35% with a physically plausible height.",
+        "No people or human body parts are present.",
+        "No forbidden containers (bottles, jars) are present.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Reduce the product group from 32% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 34,
+      "product_height_percent": 29,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human figure (person) visible in the background, standing next to the small tractor on the left side.",
+        "Role Mismatch: The image shows the product placed on a concrete pad, but the mandatory role is 'HEADWORKS DETAIL' which requires fixed infrastructure (filter, gauge, regulator, manifold).",
+        "Product Dimensions: The width of the carton roll (~34%) exceeds the 30% hard rejection threshold.",
+        "Missing Elements: Required headworks equipment (filter, gauge, regulator, manifold) is completely absent from the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 34% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Reframe or add the 'HEADWORKS DETAIL' infrastructure (filter, gauge, manifold) on the concrete pad. Regenerate the scene to feature these fixed equipment components as the primary subject, with the drip-tape roll appearing small and secondary (width < 25%). Reduce the product group from 34% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 32,
+      "product_height_percent": 38,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Hard reject: Two people are clearly visible in the background (left-center).",
+        "Hard reject: Product height exceeds the 35% maximum (estimated ~38%).",
+        "Hard reject: Product width exceeds the 30% maximum (estimated ~32%).",
+        "Violation: Brief specifies exactly one approved carton, but a second container is visible (the white/red tank on the background tractor).",
+        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Remove all people and the white tank in the background. Make the single AFP carton roll smaller (width < 30% and height < 35%) and ensure no other commercial packaging is visible. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 22,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "Hard reject: Visible human figure (worker/farmer) in the background violates the zero-people constraint."
+      ],
+      "correction_prompt": "Regenerate the image to completely remove the worker in the background and the large tractor to maintain a static, equipment-focused scene; retain the small AFP drip-tape roll on the concrete pad.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 22,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The image shows visible human figures (farmers) in the background, violating the 'zero people' hard reject rule.",
+        "The article visual brief mandates an 'equipment-only' record photograph showing fixed filter, gauge, regulator, and manifold, which are entirely absent from this image.",
+        "The required role 'HEADWORKS DETAIL' (equipment-only) is not met."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Replace the background machinery with a static, elevated close-up of a fixed irrigation manifold, filter, and gauge on a concrete pad, keeping the single AFP carton roll small and secondary.",
+      "attempt": 5
+    }
+  ]
+}
