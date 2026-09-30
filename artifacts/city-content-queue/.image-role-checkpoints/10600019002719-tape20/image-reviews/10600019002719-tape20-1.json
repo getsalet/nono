@@ -1,0 +1,63 @@
+{
+  "source_id": "10600019002719-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "The commercial carton has text 'ONP' instead of the required 'AFP' logo, failing the brand match requirement.",
+        "The carton width and height are at the very top of the allowed limits (28% width, 35% height), making the object appear excessively large for the 'small, editorial hero' brief."
+      ],
+      "correction_prompt": "Regenerate with the 'AFP' logo clearly visible on the carton instead of 'ONP'. Reduce the size of the carton roll to approximately 20% width to allow more breathing room in the composition.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 19,
+      "product_height_percent": 17,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "A full human figure (person) is clearly visible in the field behind the product, which is a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image without any people, hands, or body parts; keep the farm context and irrigation equipment while ensuring the single AFP drip-tape roll remains off-center in the lower third.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 26.8,
+      "product_height_percent": 22.9,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Hard reject: A standing human figure is clearly visible on the right side of the image, violating the requirement for zero people or body parts.",
+        "The standing figure acts as a hard reject regardless of its distance from the camera or its interaction with the product."
+      ],
+      "correction_prompt": "Remove the person standing in the field entirely. Ensure the farm landscape contains zero human figures, silhouettes, or body parts while keeping the AFP roll and farm context.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The product matches the visual brief: one AFP white-and-blue wide cylindrical drip-tape carton roll.",
+        "The placement is correctly off-center on the lower third.",
+        "The background context includes a farm field and a distant unattended tractor, which are permitted.",
+        "The required watermark \"AFP | 09134922013\" is present in the bottom right.",
+        "No people, human body parts, or disallowed containers are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

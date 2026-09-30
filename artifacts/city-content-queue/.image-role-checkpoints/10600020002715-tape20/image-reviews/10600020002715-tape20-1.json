@@ -1,0 +1,80 @@
+{
+  "source_id": "10600020002715-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 30,
+      "product_height_percent": 43,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The product is a wide, cylindrical white and blue carton roll of drip tape as required.",
+        "Zero people or human body parts are visible, which satisfies a hard reject constraint.",
+        "The background matches the article brief with a dominant farm and irrigation context (distant mountains, prepared soil).",
+        "The required watermark 'AFP | 09134922013' is correctly placed in the bottom-right corner.",
+        "The product height exceeds the 35% limit but is physically plausible for the requested object type, and placement is not an explicit hard reject.",
+        "machine-enforced bounding-box check failed: Reduce product height from 43% to at most 35% of frame height."
+      ],
+      "correction_prompt": "Reduce product height from 43% to at most 35% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible human figures (farmers) are present in the background near the tractor.",
+        "The watermark contains gibberish/non-AFP contact information ('Bnq...')."
+      ],
+      "correction_prompt": "Remove all human figures and tractors from the background; ensure the field is completely empty of people. Replace the watermark text with a clean, professional contact number format.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 22,
+      "product_height_percent": 20,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Visible human (person wearing blue shirt) standing next to the tractor in the midground.",
+        "The mandatory editorial requirement of zero people/human body parts is violated."
+      ],
+      "correction_prompt": "Regenerate the image to strictly remove all humans, people, and body parts. Ensure the scene contains only the white and blue AFP drip tape roll on the soil and the farm landscape with the tractor (unattended) in the background.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "A person (driver) is visible inside the distant tractor, which is a hard reject for any human body part or silhouette.",
+        "The product roll is centered on the horizontal axis, but the mandatory role requires it to be off-center."
+      ],
+      "correction_prompt": "Regenerate the image to remove the person from the tractor entirely (make it unattended). Move the drip-tape roll slightly to the left or right to ensure it is off-center, maintaining its small scale on the lower third.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 19,
+      "product_height_percent": 23,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image is a low-angle 'worm's-eye' shot, which contradicts the mandatory 'EDITORIAL HERO: wide high-oblique view' role.",
+        "The farm and irrigation context does not dominate the visual hierarchy; the product is placed too centrally and prominently rather than being small and off-center in the lower third.",
+        "The placement of the carton is centered rather than off-center, which is discouraged for this specific editorial role.",
+        "While the tractor is unattended, the overall composition fails to meet the specific camera angle and dominance requirements of the hero image brief."
+      ],
+      "correction_prompt": "Regenerate as a wide high-oblique view where the farm and irrigation context dominate the frame; place the single white-and-blue AFP drip-tape roll small and fully visible in the off-center lower third; keep the 'AFP | 09134922013' watermark in the bottom-right corner; ensure zero human presence.",
+      "attempt": 5
+    }
+  ]
+}

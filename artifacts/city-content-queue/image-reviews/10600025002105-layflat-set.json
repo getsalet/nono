@@ -1,43 +1,62 @@
 {
   "source_id": "10600025002105-layflat",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
   "history": [
     {
       "pass": false,
-      "score": 30,
+      "score": 35,
       "duplicate_roles": [
-        1,
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Role 1 violates the layout constraint by placing the product pair centered in the foreground rather than keeping them small and off-center as required for the wide water-transfer context.",
-        "Role 2 provides weak selection evidence with a horizontal shot that fails to show the diameter difference or technical construction clearly; it also fails to elevate the camera height for a technical comparison.",
-        "Roles 1 and 2 are visually similar (duplication) because both feature the coil pair as the primary subject on open ground, lacking the distinct environment structure of a water channel for Role 1 and a technical elevation for Role 2."
+        "Role 2 fails the 'no extra coil' constraint: The 'packed' coil on the left clearly contains an extra dark coiled component (a third coil) underneath the packaging, which violates the requirement to only show the approved two-coil pair.",
+        "Role 3 fails the 'no third commercial package' constraint: Instead of the approved packaged coil, the set includes a generic unbranded black cardboard box (extra package) alongside the single bare coil.",
+        "Role 3 fails the 'one fixed pump' requirement: The image displays two pump units (one bare, one wrapped in packaging), which is a duplication of hardware."
       ],
-      "correction_prompt": "Replace Role 1 with a high-angle wide shot of a water channel where the coils are small and off-center; replace Role 2 with an elevated 'God's eye' view of the pair to clearly demonstrate the diameter/construction difference between the two types.",
+      "correction_prompt": "In Role 2, remove the extra dark coil from under the left package to show only the two required items. In Role 3, replace the extra cardboard box and second pump unit with a single approved packaged coil to strictly show the 'two-coil pair' as secondary context on the concrete pad.",
       "panel_scores": [
-        30
+        35
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 40,
+      "score": 25,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1 and Role 2 feature nearly identical visual composition and camera angles (low oblique view with water channel), failing to provide visibly distinct environments or narrative angles as required.",
-        "Role 1 includes background farm machinery (tractors), which conflicts with the 'generic farms' rejection criteria and clutters the editorial hero shot.",
-        "Role 2 is described as 'SELECTION EVIDENCE' requiring an elevated technical comparison, but it visually resembles a standard landscape shot rather than a close-up technical detail.",
-        "Role 3 omits the required 'manifold' component, showing only a pump and gauge on a pad."
+        "Role 1 and Role 2 are not distinct, failing the 'visibly distinct in camera height/angle' requirement. Both are shot at a low, ground-level perspective where the product coils are placed in the immediate foreground, and neither provides a high-oblique view of the water-transfer context required for an editorial hero shot.",
+        "Role 1 fails the 'oversized product' constraint; the packaged and bare coils are dominating the foreground rather than being small and off-center.",
+        "Role 1 and Role 2 are visually too similar (duplicate layouts), both showing the same 'product on dirt field' composition.",
+        "Role 3 lacks the required 'one fixed pump, gauge and manifold' equipment; it only shows a small pipe stub in the coil.",
+        "Role 3 fails the 'elevated' perspective requirement; it is a ground-level shot, not an elevated record photograph."
       ],
-      "correction_prompt": "Redesign Role 1 as a wide, high-oblique view of a water transfer channel without tractors or busy backgrounds; redesign Role 2 as an elevated technical close-up of the two coils to clearly distinguish diameter or construction differences; update Role 3 to include a manifold next to the pump and gauge on the empty concrete pad.",
+      "correction_prompt": "Role 1: Re-shoot as a high-oblique aerial shot showing the long irrigation channel with product coils small in the mid-ground. Role 2: Re-shoot from a high overhead angle on a table to show construction difference. Role 3: Re-shoot from an elevated angle on a concrete pad showing a pump, gauge, and manifold.",
       "panel_scores": [
-        40
+        25
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Repetition of a prohibited role variant: Role 2 (Image 2) is rejected for role-3/role-5 hardware duplication. It includes a pump and gauge in the foreground, which contradicts the requirement for 'elevated technical comparison' with the 'approved two-coil pair' only, excluding extra technical equipment.",
+        "Oversized product: In Role 2 (Image 2), the featured coils are excessively large relative to the frame and the 'off-center' positioning required for editorial balance. They serve as the primary focus rather than 'selection evidence' context.",
+        "Repetition of a prohibited role variant: Role 3 (Image 3) is rejected for hardware duplication. It displays a bare coil, but the requirement for 'one fixed pump, gauge and manifold' is missing from the equipment record."
+      ],
+      "correction_prompt": "Remove the pump and gauge equipment from Role 2 to focus solely on the two-coil pair; add a fixed pump and manifold assembly to the concrete pad in Role 3; and re-scale the product in Role 1 to be small, off-center, and secondary to the wide water-transfer context.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
     }
   ]
 }

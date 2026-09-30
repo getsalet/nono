@@ -1,0 +1,78 @@
+{
+  "source_id": "1060007002334-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "fast_mode": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 65,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains a visible red tractor in the background",
+        "The image contains a visible human figure (driver) in the background, which is a hard reject due to the requirement for zero people/human body parts"
+      ],
+      "correction_prompt": "Regenerate the image to remove the tractor and the human figure in the background. Ensure the background only contains farm infrastructure like buildings or fields without any active machinery or personnel.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The mandatory role 'HEADWORKS DETAIL: equipment-only elevated record photograph of one fixed pump, gauge and manifold' is not present. Instead of a fixed pump, gauge, and manifold, the image features loose product packaging and coils without the specified infrastructure.",
+        "Extra commercial packaging is present. There is a cardboard box with 'AFP' printed on it, which counts as an 'invented package' or third commercial element, violating the rule against third packages.",
+        "The visual brief requires the 'two-coil pair' to be 'small, separate and secondary', but the coils and packages dominate the foreground.",
+        "The specific 'headworks' equipment (pump, gauge, manifold) is completely missing, making this an incorrect image for the required role."
+      ],
+      "correction_prompt": "Regenerate an elevated, equipment-only record photo of a fixed pump, pressure gauge, and manifold unit on an empty concrete pad. Include the approved layflat pair (one packaged AFP coil and one bare black woven coil) as a small, separate, and secondary element in the background. Ensure no cardboard boxes, loose packaging, or people are visible. Maintain the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 45,
+      "product_height_percent": 40,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "The image fails to meet the mandatory HEADWORKS DETAIL role which requires an equipment-only elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad; none of these elements are visible.",
+        "The image shows a cardboard box and a second blue-wrapped coil, which constitutes a 'third commercial package' or product (in addition to the black woven coil), violating the hard reject criteria."
+      ],
+      "correction_prompt": "Recreate as a high-angle record photograph of a fixed concrete pump, pressure gauge, and manifold on an empty concrete pad. Place a small, secondary packaged AFP coil and a small bare black woven coil nearby on the pad. No people, no cardboard boxes, no blue-wrapped coils, and no farm activity. Keep the AFP | 09134922013 watermark in the bottom right corner.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 56,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The mandatory HEADWORKS DETAIL role is not present; the brief requires an equipment-only elevated photograph of a fixed pump, gauge, and manifold on an empty concrete pad, but the image shows a ground-level shot with no such equipment.",
+        "The product pair (packaged coil and black woven coil) is centered and takes up approximately 56% of the frame's width, exceeding the 20% preferred width and approaching the 65% hard reject limit.",
+        "A cardboard box containing a small connector is visible in the foreground; this is not relevant to the requested role and constitutes an unintended product item that does not belong in the layout."
+      ],
+      "correction_prompt": "Reframe the shot as an elevated close-up focusing on a fixed pump, gauge, and manifold on an empty concrete pad. Place the two small coils in the far background or as secondary elements to satisfy the 12-20% width preference, and remove all cardboard boxes and small connectors from the foreground.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: Third commercial product (the central white and black pump or filter unit) is present and is not approved infrastructure.",
+        "Hard reject: An unapproved third commercial package or third coil (the large black flat coil in the background) is visible.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+      ],
+      "correction_prompt": "Remove the central pump/filtration unit and the large black flat coil in the background. Retain only the two foreground flexible coils and the bottom-right watermark 'AFP | 09134922013'. Enlarge the product group from 0% to 8-65% of frame width.",
+      "attempt": 5
+    }
+  ]
+}
