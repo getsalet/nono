@@ -39,6 +39,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          if [ -f artifacts/city-content-queue/QUEUE_PAUSED ]; then
+            echo "allow_production=false" >> "$GITHUB_OUTPUT"
+            echo "Normal city generation is temporarily paused by QUEUE_PAUSED."
+            exit 0
+          fi
           remaining="$(python - <<'PY2'
           import json
           from pathlib import Path
