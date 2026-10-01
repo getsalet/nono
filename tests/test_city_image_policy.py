@@ -49,11 +49,13 @@ class CityImagePolicyTests(unittest.TestCase):
         refs = image_prompt_policy.reference_images(
             1, {"source_id": "city-layflat", "title": "لوله نخی"}
         )
-        self.assertEqual(len(refs), 1)
-        self.assertTrue(all(ref.startswith("data:image/webp;base64,") for ref in refs))
+        self.assertEqual(len(refs), 2)
+        self.assertEqual(refs[0].split(",", 1)[0], "data:image/webp;base64")
+        self.assertEqual(refs[1].split(",", 1)[0], "data:image/jpeg;base64")
         for ref in refs:
             image = Image.open(io.BytesIO(base64.b64decode(ref.split(",", 1)[1])))
-            self.assertEqual(image.size, (1200, 675))
+            self.assertGreaterEqual(image.width, 256)
+            self.assertGreaterEqual(image.height, 170)
 
     def test_visual_brief_and_roles_are_grounded_and_distinct(self):
         item = {
@@ -99,8 +101,8 @@ class CityImagePolicyTests(unittest.TestCase):
         ok, issues = image_quality_gate._metric_check(
             "layflat",
             {
-                "product_width_percent": 33,
-                "product_height_percent": 35,
+                "product_width_percent": 14,
+                "product_height_percent": 24,
                 "product_x_center_percent": 50,
             }, 3,
         )
@@ -109,23 +111,13 @@ class CityImagePolicyTests(unittest.TestCase):
         ok, issues = image_quality_gate._metric_check(
             "layflat",
             {
-                "product_width_percent": 60,
-                "product_height_percent": 44,
-                "product_x_center_percent": 50,
-            }, 3,
-        )
-        self.assertTrue(ok)
-        self.assertEqual(issues, [])
-        ok, issues = image_quality_gate._metric_check(
-            "layflat",
-            {
-                "product_width_percent": 66,
-                "product_height_percent": 35,
+                "product_width_percent": 18,
+                "product_height_percent": 24,
                 "product_x_center_percent": 50,
             }, 3,
         )
         self.assertFalse(ok)
-        self.assertTrue(any("8-65%" in issue for issue in issues))
+        self.assertTrue(any("12-15%" in issue for issue in issues))
         queue_source = (ROOT / "automation" / "city_content_queue_cloudflare.py").read_text(encoding="utf-8")
         self.assertIn("layflat[:q.BATCH-len(selected)]", queue_source)
         ok, issues = image_quality_gate._metric_check(
@@ -138,7 +130,7 @@ class CityImagePolicyTests(unittest.TestCase):
         )
         self.assertFalse(ok)
         self.assertTrue(any("Enlarge" in issue for issue in issues))
-        self.assertTrue(any("at most 35%" in issue for issue in issues))
+        self.assertTrue(any("at most 28%" in issue for issue in issues))
 
     def test_headworks_prompt_is_an_unoccupied_equipment_still_life(self):
         item = {"source_id": "city-tape20", "topic": "tape20", "city": "گوهران"}

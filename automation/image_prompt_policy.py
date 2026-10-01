@@ -145,19 +145,13 @@ def visual_brief(item,max_chars=700):
 def reference_images(kind,item=None):
     family=product_family(item)
     if family=='layflat':
-        # One combined reference teaches object count and relative scale.
-        # Two separate full-frame references made the model enlarge each coil
-        # independently and caused the pair to occupy 35–60% of the result.
-        canvas=Image.new('RGB',(1200,675),(238,238,235))
-        x=72
-        for filename in ('afp-layflat.webp.b64','afp-layflat-bare.jpg.b64'):
-            raw=base64.b64decode((ASSET_DIR/filename).read_text(encoding='ascii').strip())
-            product=Image.open(io.BytesIO(raw)).convert('RGB')
-            product.thumbnail((72,54),Image.Resampling.LANCZOS)
-            canvas.paste(product,(x,675-product.height-55))
-            x+=product.width+18
-        buf=io.BytesIO();canvas.save(buf,'WEBP',quality=90,method=6)
-        return ['data:image/webp;base64,'+base64.b64encode(buf.getvalue()).decode('ascii')]
+        # Keep both approved identity references separate and high-resolution.
+        # A tiny combined thumbnail loses the packaging, weave, center opening
+        # and relative geometry that the generator must preserve.
+        return [
+          'data:image/webp;base64,'+(ASSET_DIR/'afp-layflat.webp.b64').read_text(encoding='ascii').strip(),
+          'data:image/jpeg;base64,'+(ASSET_DIR/'afp-layflat-bare.jpg.b64').read_text(encoding='ascii').strip(),
+        ]
     # Condition scale as well as identity. A raw close-up reference repeatedly
     # made the generator fill 35-50% of the frame. This 22%-wide padded
     # reference matches the production contract while preserving exact product
@@ -203,7 +197,7 @@ def image_prompt(item,kind):
     if family=='layflat':
         shape=('exactly two separate related layflat-hose objects placed naturally beside each other: first, the packaged low wide black woven hose coil with the same folded printed cardboard pieces, crossing straps, center opening and package proportions; second, the unboxed black woven layflat hose coil exactly like its reference, as a low flat horizontal coil made of many tight concentric layers with a short hollow brown cardboard center, visible diagonal woven fabric texture, realistic compressed thickness and one short loose hose end')
         exact=('Keep the packaged object marks "AFP" and "layflat" readable. The bare black coil has no carton, logo or writing. The two references are separate objects in the same final scene, never alternatives and never fused. Both coils rest flat, horizontal and parallel to the soil. Never turn the bare coil into smooth round tubing, a tall cable spool, an upright wheel, a solid tire or a plastic pipe coil.')
-        scale=('Use the same approved article-image scale: the complete two-object group occupies approximately 12 to 20 percent of frame width, stays low on the soil, remains fully visible and is off-center on the lower third.')
+        scale=('Use the restored strict article-image scale: the complete two-object group occupies approximately 12 to 15 percent of frame width, stays low on the soil, remains fully visible and is off-center on the lower third.')
         people_rule=('NO PEOPLE OR VEHICLES in any image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette, distant human figure, tractor, harvester, vehicle or machine cabin. Show the article-specific field, crop, irrigation system and fixed unattended equipment without any human-associated machinery.')
     else:
         shape='a wide cylindrical 1000-meter drip-tape roll in the same white-and-blue carton sleeve, with the same diameter-to-height ratio, central top hole, straight carton walls and blue lower band'
