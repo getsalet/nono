@@ -96,8 +96,10 @@ class CityImagePolicyTests(unittest.TestCase):
                 "product_x_center_percent": 50,
             }, 1,
         )
-        self.assertTrue(ok)
-        self.assertEqual(issues, [])
+        self.assertFalse(ok)
+        self.assertTrue(any("Enlarge" in issue for issue in issues))
+        self.assertTrue(any("20-23%" in issue for issue in issues))
+        self.assertTrue(any("at most 28%" in issue for issue in issues))
         ok, issues = image_quality_gate._metric_check(
             "layflat",
             {
