@@ -6,30 +6,48 @@
   "history": [
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 22,
+      "score": 45,
+      "product_width_percent": 12,
       "product_height_percent": 8,
-      "product_x_center_percent": 42,
+      "product_x_center_percent": 30,
       "reasons": [
-        "Hard reject: person present (man kneeling)",
-        "Hard reject: human body parts visible (face, hands)"
+        "Multiple hard rejections: image contains a second commercial roll/carton (partially unrolled roll visible in lower right) in addition to the standing carton roll on the left. The brief requires exactly one approved carton. Presence of a shovel resting in the second roll and the unspooled tape running between both products further violate the single-roll requirement.",
+        "correction_prompt",
+        "Generate an image with exactly one AFP white-and-blue drip-tape carton roll placed in an elevated technical/display arrangement on a field edge or near a farm building. No second roll, no unspooled tape, no tools resting on products. Include the exact watermark 'AFP | 09134922013' in the bottom right corner. Keep background simple with ordinary field edge or farm building context. No people or body parts."
       ],
-      "correction_prompt": "Remove all people and human body parts; show only the AFP drip tape roll in the field without any humans present",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 92,
-      "product_width_percent": 19,
-      "product_height_percent": 16,
-      "product_x_center_percent": 35,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 18,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Single AFP branded white-and-blue cylindrical drip-tape carton roll displayed on agricultural soil with visible emitter spacing on uncoiled section providing selection evidence",
-        "No people, body parts, or disallowed containers present; distant farm building and field context match article brief",
-        "Roll dimensions approximately 19% width and 16% height within acceptable ranges; watermark correctly positioned in bottom-right"
+        "Hard reject: second commercial package present — an additional AFP white-and-blue drip-tape roll sits on the ground in the lower-right foreground, outside the approved carton",
+        "Hard reject: second roll detected — the image contains two separate rolls instead of exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll",
+        "Additional non-approved object: a shovel (garden tool) placed in the composition, not part of the approved technical arrangement"
+      ],
+      "correction_prompt": "Generate an image showing exactly ONE AFP white-and-blue wide low cylindrical drip-tape carton roll (no second roll, no loose roll on ground) with the AFP | 09134922013 watermark required in bottom-right. Keep background simple: ordinary field edge or farm building acceptable in distance.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 26,
+      "product_height_percent": 14,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Single AFP white-and-blue wide low cylindrical drip-tape carton roll present and correctly branded.",
+        "No people, body parts, or human silhouettes detected anywhere in the frame.",
+        "Product width and height within acceptable percentage ranges; roll remains physically plausible.",
+        "Lower-third placement with off-center positioning aligns with editorial preference.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and legible.",
+        "Background shows ordinary field edge with distant unattended farm equipment and a farm building, contextually appropriate.",
+        "Visible emitter tape extending from roll provides selection evidence per role requirements."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }

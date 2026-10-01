@@ -1,0 +1,52 @@
+{
+  "source_id": "1080006001338-tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Image contains a person (farmer) crouching in the field, which is a hard reject per requirements: zero people and zero human body parts allowed",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the image. Show only the agricultural field context with exactly one AFP white-and-blue drip-tape carton roll placed small and off-center on the lower third, with no humans visible anywhere in the frame Enlarge the product group from 0% to 12-30% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 32,
+      "product_width_percent": 14,
+      "product_height_percent": 8,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: background features a modern city skyline with tall buildings, which contradicts the rural farmland context required for an article about drip tape irrigation in Sirjan (a rural/agricultural area in Kerman Province). The scene should show farm rows, irrigation infrastructure, and agricultural setting—not an urban horizon.",
+        "Violation of editorial hero role: the carton is centered on the lower third rather than off-center. The brief requires the roll to be small, fully visible, and off-center on the lower third with the farm and irrigation context dominating the frame.",
+        "The distant farm buildings and unattended tractor context are present but overwhelmed by the unrealistic urban backdrop, undermining the credibility of the agricultural editorial image."
+      ],
+      "correction_prompt": "Remove the city skyline from the background. Replace with a rural farm setting showing crop rows, soil, and optionally distant unattended farm buildings or fixed irrigation hardware. Place the AFP white-and-blue drip-tape carton roll small, fully visible, and off-center on the lower third of the frame. Maintain the 'AFP | 09134922013' watermark in the bottom-right corner. Ensure zero people or human body parts are present.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 15,
+      "product_height_percent": 8,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Single AFP white-and-blue drip-tape carton roll present, visually consistent with specifications.",
+        "Roll occupies ~15% width and ~8% height, satisfying the 12-30% width and up to 35% height tolerance.",
+        "Positioned on the lower third and slightly off-center as permitted.",
+        "Zero people or human body parts present.",
+        "Mandatory 'AFP | 09134922013' watermark correctly visible in bottom right.",
+        "Background shows relevant agricultural field context matching the article brief for سیرجان, کرمان."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

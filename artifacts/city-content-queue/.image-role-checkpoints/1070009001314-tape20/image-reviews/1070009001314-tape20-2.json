@@ -6,76 +6,61 @@
   "history": [
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 28,
-      "product_height_percent": 18,
-      "product_x_center_percent": 25,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 10,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Hard reject: person present (man kneeling, hands, face visible)",
-        "Multiple rolls/cartons (one large carton + one unrolled roll being handled)",
-        "Violation of zero-human requirement"
+        "Image contains a person (farmer/worker) kneeling in the field — hard reject per QA rules. Hands and body parts are visible interacting with the product. Multiple hard-reject criteria violated: person, face, hands, arms, legs, and human silhouette all present."
       ],
-      "correction_prompt": "Remove all people from the scene. Keep only the single AFP white-and-blue drip-tape carton roll with visible emitter spacing detail. Maintain background context but exclude any human figures or body parts.",
+      "correction_prompt": "Regenerate image showing ONLY an elevated technical display of exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll, with zero people, zero hands, zero body parts. Place on a simple agricultural or studio surface; keep background clean (field edge or farm building acceptable). Include the mandatory bottom-right watermark 'AFP | 09134922013'.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 38,
-      "product_width_percent": 22,
-      "product_height_percent": 14,
-      "product_x_center_percent": 32,
+      "score": 45,
+      "product_width_percent": 17,
+      "product_height_percent": 18,
+      "product_x_center_percent": 30,
       "reasons": [
-        "Hard reject: image contains two commercial packages — the AFP drip-tape roll and a separate cardboard carton box — violating the 'exactly one' roll/carton requirement.",
-        "Hard reject: second commercial package (the carton) is present alongside the roll."
+        "Second commercial package present: an additional unrolled/open roll of drip tape with visible emitter holes sits beside the carton roll, constituting a second roll/package in the frame.",
+        "Hard reject criterion violated: 'second commercial package, second roll' is explicitly listed as a hard reject."
       ],
-      "correction_prompt": "Regenerate showing only one AFP white-and-blue wide low cylindrical drip-tape roll, with no additional carton or box present in the frame.",
+      "correction_prompt": "Regenerate with exactly one AFP white-and-blue carton roll only; remove the secondary unrolled open roll with emitter holes. Keep the single packaged carton as the sole product in frame.",
       "attempt": 2
     },
     {
       "pass": false,
-      "score": 65,
-      "product_width_percent": 22,
-      "product_height_percent": 28,
-      "product_x_center_percent": 33,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Product width ~22% and height ~28% are within acceptable ranges; no people or extra commercial packages present; watermark present.",
-        "Fails SELECTION EVIDENCE role: the product rests directly on soil rather than an elevated technical arrangement, and there is no visible emitter-spacing or field-selection evidence (e.g., label detail showing dripper spacing, gauge, or comparison chart).",
-        "Foreground X-shaped objects are ambiguous and may distract from the technical evidence expected for this role."
+        "Hard reject: second commercial package/roll present (coiled tape section next to the carton).",
+        "Hard reject: gibberish writing on the carton ('D1g buIgotelne D1ps').",
+        "Image shows two distinct product presentations rather than exactly one approved carton."
       ],
-      "correction_prompt": "Place the single AFP drip-tape roll on an elevated platform or table in a field-edge setting. Include clearly visible emitter-spacing evidence such as a label showing dripper interval (e.g., 30 cm) or a close-up detail panel. Remove ambiguous foreground X-shaped objects. Keep background simple with ordinary field/farm building context.",
+      "correction_prompt": "Generate an image with only one AFP drip-tape carton roll on the ground. Remove any other rolls, coils, or loose tape sections. Ensure the label text is legible and not gibberish. Background can include a field edge or distant barn.",
       "attempt": 3
     },
     {
-      "pass": false,
-      "score": 45,
-      "product_width_percent": 22,
-      "product_height_percent": 16,
-      "product_x_center_percent": 38,
-      "reasons": [
-        "Hard reject: second commercial package present (AFP cardboard box beside the drip-tape roll)",
-        "Hard reject: gibberish writing on the box label violates text legibility rule",
-        "Image role SELECTION EVIDENCE requires exactly one approved carton, not two products"
-      ],
-      "correction_prompt": "Remove the AFP cardboard box; keep only the single white-and-blue drip-tape roll on a simple wooden surface with field background",
-      "attempt": 4
-    },
-    {
       "pass": true,
-      "score": 88,
-      "product_width_percent": 28,
-      "product_height_percent": 18,
-      "product_x_center_percent": 32,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 16,
+      "product_x_center_percent": 35,
       "reasons": [
-        "Exactly one AFP white-and-blue cylindrical drip-tape carton roll present with visible emitter spacing on the unrolled sample beside it.",
-        "No people, human body parts, or silhouettes detected.",
-        "Roll width is ~28% (within 12–30% acceptable range) and height ~18% (well under 35% limit).",
-        "Lower-third / off-center placement observed.",
-        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
-        "Background matches agricultural context: plowed field, distant farm building, and ordinary soil texture — all allowed per brief.",
-        "Text on the roll label is gibberish, but it remains legible as packaging labeling and does not constitute a fake headline or caption; therefore it is accepted rather than rejected."
+        "Single approved white-and-blue wide low cylindrical drip-tape carton roll present, approximately 20-23% of frame width",
+        "Zero people or human body parts visible",
+        "Background matches article brief - ordinary field edge with farm buildings (barn, silos, hay bales)",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner",
+        "No rejected items: no bottles, jars, canisters, fake headlines, or distorted geometry",
+        "Elevated technical presentation with product clearly displayed on soil",
+        "Farm infrastructure (distant barn, silos) contextually appropriate for irrigation article",
+        "Product placement is left-of-center, not centered, consistent with editorial preference"
       ],
       "correction_prompt": "",
-      "attempt": 5
+      "attempt": 4
     }
   ]
 }
