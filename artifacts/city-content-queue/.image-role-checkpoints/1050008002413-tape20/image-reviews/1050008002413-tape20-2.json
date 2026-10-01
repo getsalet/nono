@@ -1,0 +1,55 @@
+{
+  "source_id": "1050008002413-tape20",
+  "kind": 2,
+  "policy": "strict-reference-conditioned-v21",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 19,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Two people visible — hard reject",
+        "Two commercial carton rolls present — hard reject; only exactly one approved AFP carton allowed",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 20-23% of frame width."
+      ],
+      "correction_prompt": "Generate an image with zero people and exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll, placed lower-third or off-center, with simple field or farm-building background and the bottom-right watermark AFP | 09134922013. Reduce the product group from 28% to 20-23% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 28,
+      "product_height_percent": 18,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Hard reject: person present - man crouching and handling the drip tape roll",
+        "Human body parts visible (face, hands, arms, legs) violate zero-person requirement",
+        "Image contains farmer/worker interacting with product, disqualifying for editorial use",
+        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 20-23% of frame width."
+      ],
+      "correction_prompt": "Remove all people from image. Show only the AFP white-and-blue drip tape carton roll in field setting with no human presence Reduce the product group from 28% to 20-23% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 18,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Single AFP white-and-blue cylindrical drip-tape carton roll shown in field setting",
+        "Zero people, body parts, or human silhouettes present",
+        "No second commercial package or rejected objects detected",
+        "AFP watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Field edge with distant ordinary farm building (red barn) provides contextual background",
+        "Roll dimensions within acceptable envelope (width 21%, height 18% < 28% limit)",
+        "Open AFP box adjacent to roll serves as selection evidence in field context"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "source_id": "10500013002409-tape20",
+  "kind": 1,
+  "policy": "strict-reference-conditioned-v21",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "HARD REJECT: Visible person (farmer/worker) crouching in the field, violating the zero-person rule.",
+        "Hard reject: Human body parts (face, hands, arms, legs) are clearly visible.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 18% to 20-23% of frame width."
+      ],
+      "correction_prompt": "Remove the person from the foreground; show only the agricultural context with the single AFP drip-tape roll. Enlarge the product group from 18% to 20-23% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 10.5,
+      "product_height_percent": 4.2,
+      "product_x_center_percent": 50.0,
+      "reasons": [
+        "Hard reject: multiple people visible in the field (workers/persons in blue clothing) — violates zero-person requirement",
+        "Product roll is centered rather than off-center on lower third per EDITORIAL HERO role",
+        "Product width (~10.5%) is below the required 20-23% envelope",
+        "Background shows urban skyline rather than rural farm setting described in article brief",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 10.5% to 20-23% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the scene. Reposition the AFP carton to the lower third off-center. Increase product roll width to 20-23% of frame. Replace urban skyline background with rural Gahvareh farm/irrigation context. Enlarge the product group from 10.5% to 20-23% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 12,
+      "product_height_percent": 8,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Multiple people visible: farmers/workers in the field (at least 5-6 individuals bending and working among crop rows). Hard reject for containing humans.",
+        "The AFP branded object in foreground appears to be a bucket/canister rather than a wide cylindrical drip-tape carton roll.",
+        "People violate the zero human body parts requirement.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 12% to 20-23% of frame width."
+      ],
+      "correction_prompt": "Regenerate image with zero people, zero workers in field. Show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll on lower third, off-center. Include distant unattended farm equipment and irrigation infrastructure if needed. Enlarge the product group from 12% to 20-23% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 9,
+      "product_height_percent": 13,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Multiple people visible in the mid-ground (at least 4-5 individuals standing in the field) and additional people operating tractors on both left and right sides. Zero people requirement is violated.",
+        "Product dimensions are within acceptable range (width ~9%, height ~13%).",
+        "AFP watermark is present and correct in bottom-right corner.",
+        "Product placement is centered at bottom rather than off-center lower-third as preferred.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 9% to 20-23% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the image. Ensure zero humans or human body parts are visible anywhere in the frame, including distant figures and tractor operators. Enlarge the product group from 9% to 20-23% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 20.5,
+      "product_height_percent": 13.2,
+      "product_x_center_percent": 38.1,
+      "reasons": [
+        "One AFP white-and-blue wide low cylindrical drip-tape carton roll present in lower third, slightly off-center, width ~20.5%, height ~13.2% (within 20-23% width and ≤28% height limits). Zero people or body parts visible. Required watermark 'AFP | 09134922013' present in bottom-right. Background shows farm context with distant unattended tractors and irrigation infrastructure as allowed. No extra commercial packages, layflat hose, pipes through roll, or distortions detected.",
+        ""
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "source_id": "10500014002034-tape20",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "recent-strict-visual-audit-rebuild-v2-20261001",
   "history": [
     {
       "pass": false,
@@ -53,6 +53,58 @@
       "correction_prompt": "Generate a 5th 'MAINTENANCE DETAIL' image featuring a close-up of an installed drip tape emitter or flush point with a small, unattended carton visible in the background. Additionally, replace Image 4 with a strictly asymmetric composition placing the carton off-center at a field edge.",
       "set_attempt": 3,
       "accepted_individual_qa_fallback": true
+    },
+    {
+      "pass": false,
+      "score": 38,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role-1: oversized AFP carton dominates foreground instead of being small and off-center on lower third.",
+        "Role-2: oversized AFP carton is a central foreground element rather than small and secondary; selection-evidence emphasis is weak.",
+        "Role-3: oversized AFP carton is prominently centered on the concrete pad instead of being small and secondary; tractor positioned close to the pad reads as active farm activity, violating the no-farm-activity requirement for headworks detail.",
+        "All three panels use near-identical composition formula (large carton on ground with distant barn/field), failing the visibly distinct camera-height/angle and technical-narrative requirement."
+      ],
+      "correction_prompt": "Redesign all three panels: in every image make the AFP carton small, fully visible, and off-center; give each panel a clearly different camera height and angle — Panel 1 wide high-oblique farm view with the carton tiny on the lower third, Panel 2 a higher elevated still with the carton small alongside an unrolled strip showing 20 cm emitter spacing on bare soil with a simple barn-edge backdrop, Panel 3 an elevated downward view of a clean concrete headworks pad with filter/gauge/regulator/manifold only and the carton small in a corner, no tractor or operator near the pad.",
+      "panel_scores": [
+        38
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 28,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 1 fails the hero role: the AFP roll is oversized in the foreground, a strange vintage wheeled machine intrudes in the field, and the layout is cluttered with loose tubing rather than a clean wide context shot.",
+        "Panel 2 is rejected for a generic American farm background (red barn/hay bales) irrelevant to the Iranian brief, and the product packaging is too large and central for a 'selection evidence' shot.",
+        "Panel 3 fails the headworks role because the background contains active farm equipment and a person, violating the 'no farm activity' and 'distant unattended' constraints.",
+        "The product packaging is oversized and dominant in Panels 1 and 2, distracting from the editorial and technical narratives."
+      ],
+      "correction_prompt": "Regenerate: Panel 1 as a true wide oblique with the product carton tiny and off-center in the lower third, removing the vintage machine and loose tubing; Panel 2 as a clean elevated technical shot of the product on soil with a simple, non-generic field edge background and the emitter strip unrolled flat to show spacing; Panel 3 as an isolated equipment shot on an empty concrete pad with zero background activity, people, or tractors.",
+      "panel_scores": [
+        28
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 3 contains an oversized AFP carton that dominates the foreground, violating the 'small and secondary' requirement; the carton should be small and clearly subordinate to the headworks equipment.",
+        "Panel 3 includes a large tractor with attached implement in the mid-background, constituting active farm equipment rather than permitted distant unattended context — reframe to exclude all machinery.",
+        "Panel 3 lacks a visible fixed filter; the equipment cluster shows a gauge and manifold but no filter unit, failing the 'one fixed filter, gauge, regulator and manifold' requirement.",
+        "Panel 3 camera height is too low/eye-level for a headworks elevated record photograph; the shot should look down more steeply onto the empty concrete pad."
+      ],
+      "correction_prompt": "Redo Panel 3: keep the AFP carton small and clearly secondary (lower-third, unobtrusive), compose from a steep elevated angle looking down on an empty concrete pad with a fixed filter, pressure gauge, regulator, and manifold arranged as a single headworks cluster; remove all tractors, implements, and any farm activity from the frame entirely.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 3
     }
   ]
 }

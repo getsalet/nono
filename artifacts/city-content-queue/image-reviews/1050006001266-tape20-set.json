@@ -1,6 +1,6 @@
 {
   "source_id": "1050006001266-tape20",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "recent-strict-visual-audit-rebuild-v2-20261001",
   "history": [
     {
       "pass": false,
@@ -47,6 +47,38 @@
       "correction_prompt": "Regenerate the set to ensure Role 5 is a close-up macro shot of the tape's emitter on the soil; adjust Role 3 to make the product roll significantly smaller and backgrounded; and ensure the crops in Role 4 are specific to Kermanshah pomegranates.",
       "set_attempt": 3,
       "accepted_individual_qa_fallback": true
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Three panels show visually distinct roles: wide hero field view (role 1), selection evidence with emitter ring on tilled field (role 2), and headworks equipment on concrete pad (role 3). However, the bottom-right watermark reads 'AFP | 09134922013' in all images, whereas the required exact watermark per brief is 'AFP | 0913492201'. This exact-text mismatch fails the mandatory watermark check.",
+        "Role 3's background contains a red tractor and green combine harvester parked in a field — while these may appear as distant unattended equipment and are not 'farm activity,' they introduce active machinery context into a panel specified to show 'equipment-only elevated record... on an empty concrete pad,' weakening the technical-headworks narrative cleanliness.",
+        "The AFP carton in panel 2 appears slightly large relative to the frame compared to panel 1, creating minor inconsistency in approved-carton scaling."
+      ],
+      "correction_prompt": "Replace all three watermarks with the exact text 'AFP | 0913492201' (note: 10-digit ID, not 11). For role 3, remove the background tractor and combine — replace with a plain open sky or neutral horizon on the concrete pad to maintain the equipment-only headworks technical narrative.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Panel 3 fails the HEADWORKS DETAIL role: shows only the AFP product carton on a plain surface with no filter, gauge, regulator, or manifold equipment present. Required all fixed headworks components on an empty concrete pad.",
+        "Panel 3 has an unauthorized secondary watermark overlay ('AFP | 019 613472201') in addition to the required bottom-right watermark.",
+        "Panel 1 carton is oversized and too centrally placed; should be small and off-center on the lower third."
+      ],
+      "correction_prompt": "Panel 3: Replace with an elevated equipment-only shot showing one fixed filter, pressure gauge, flow regulator, and manifold assembled on an empty concrete pad with the AFP carton small and secondary. Panel 1: Reduce carton scale and position off-center on lower third. Panel 2 is acceptable.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
     }
   ]
 }
