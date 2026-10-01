@@ -1,0 +1,84 @@
+{
+  "source_id": "10600028002314-tape20",
+  "kind": 2,
+  "policy": "strict-reference-conditioned-v21",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: Two people (man and woman) visible in foreground - faces, arms, hands, legs all clearly present",
+        "Presence of humans violates the zero-person requirement completely"
+      ],
+      "correction_prompt": "Regenerate image with exactly one AFP white-and-blue drip-tape carton roll ONLY. Remove all people completely. Show only the product on plain ground with simple agricultural background. Include AFP watermark in bottom-right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 22,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Product width (~30%) exceeds the hard-reject threshold of 23% of frame width.",
+        "Gibberish text visible below the AFP logo on the carton — the script is unreadable and does not resemble coherent labeling, violating the gibberish-writing hard-reject rule.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 20-23% of frame width."
+      ],
+      "correction_prompt": "Resize the drip-tape carton so its width occupies no more than 23% of the frame. Ensure all text on the carton is legible and coherent (Persian/English product labeling only). Keep the AFP white-and-blue color scheme and the required bottom-right watermark. Maintain a single roll, zero people, and a simple agricultural background. Reduce the product group from 30% to 20-23% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 24,
+      "product_height_percent": 14,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Product width exceeds 23% hard-reject threshold at approximately 24%. Gibberish/illegible text present on carton face, constituting a hard reject.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 24% to 20-23% of frame width."
+      ],
+      "correction_prompt": "Render the AFP drip-tape roll narrower so it occupies 20-23% of the frame width. Replace all gibberish text on the carton with legible, meaningful text. Maintain exactly one AFP white-and-blue roll with correct watermark. Reduce the product group from 24% to 20-23% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 19,
+      "product_height_percent": 21,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll shown",
+        "Width 19% within acceptable 20-23% envelope; height 21% within 28% maximum",
+        "Zero people or human body parts present",
+        "Required AFP | 09134922013 watermark present in bottom-right",
+        "Elevated technical arrangement suitable for SELECTION EVIDENCE role",
+        "Ordinary farm building and soil texture allowed per brief",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 19% to 20-23% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 19% to 20-23% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 21,
+      "product_height_percent": 16,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll present, within 20-23% width and under 28% height",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Zero people or human body parts in frame",
+        "Elevated technical arrangement with visible emitter spacing (tape unrolled showing AFP branding and dripper pattern)",
+        "Single carton visible; no second commercial package or prohibited container types",
+        "Distant unattended farm building and ordinary field context appropriate for article brief",
+        "No impossible geometry or severely distorted dimensions detected"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
