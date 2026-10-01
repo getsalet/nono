@@ -24,10 +24,10 @@ import city_content_queue_cloudflare as backend
 import image_prompt_policy
 import image_quality_gate
 
-POLICY = "recent-strict-visual-audit-rebuild-v1-20260930"
+POLICY = "recent-strict-visual-audit-rebuild-v2-20261001"
 MODE = "article-parity-three-image-reference-conditioned-rerender"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
-MARKER = OUT / "recent-image-rebuild-v1.json"
+MARKER = OUT / "recent-image-rebuild-v2.json"
 AUDIT_MARKER = OUT / "recent-image-audit-v1.json"
 CHECKPOINT_ROOT = OUT / ".image-role-checkpoints"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")

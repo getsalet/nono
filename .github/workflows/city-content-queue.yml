@@ -47,8 +47,8 @@ jobs:
           remaining="$(python - <<'PY2'
           import json
           from pathlib import Path
-          path=Path('artifacts/city-content-queue/image-rebuild-article-parity-v14-three-image.json')
-          print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 0)
+          path=Path('artifacts/city-content-queue/recent-image-rebuild-v2.json')
+          print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 1)
           PY2
           )"
           if [ "$remaining" -gt 0 ]; then
@@ -313,8 +313,8 @@ jobs:
           rebuild_remaining="$(python - <<'PY'
           import json
           from pathlib import Path
-          path=Path('artifacts/city-content-queue/image-rebuild-article-parity-v14-three-image.json')
-          print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 0)
+          path=Path('artifacts/city-content-queue/recent-image-rebuild-v2.json')
+          print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 1)
           PY
           )"
           rebuild_active="$(gh run list --workflow rebuild-reference-images.yml --limit 20 --json status --jq '[.[] | select(.status == "queued" or .status == "in_progress" or .status == "waiting" or .status == "pending" or .status == "requested")] | length')"
