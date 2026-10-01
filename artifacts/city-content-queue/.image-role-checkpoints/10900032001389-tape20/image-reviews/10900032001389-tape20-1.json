@@ -1,0 +1,53 @@
+{
+  "source_id": "10900032001389-tape20",
+  "kind": 1,
+  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 21,
+      "product_height_percent": 9,
+      "product_x_center_percent": 32,
+      "reasons": [
+        "Hard reject: image contains three visible people (two standing, one sitting) in the field rows, violating the zero-people requirement.",
+        "People detected in the mid-ground among crop rows.",
+        "Article brief requires zero human presence for this role."
+      ],
+      "correction_prompt": "Regenerate image with exactly one AFP white-and-blue drip-tape carton roll on the lower third, off-center, in a farm setting with crop rows and irrigation infrastructure, containing zero people or human body parts anywhere in the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 8,
+      "product_height_percent": 5,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Image meets all criteria: single AFP white/blue roll on lower third, zero people, correct watermark, farm context dominates.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 8% to 12-30% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 8% to 12-30% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 14,
+      "product_height_percent": 7,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll present.",
+        "Roll dimensions within acceptable range (width ~14%, height ~7%).",
+        "Lower-third, off-center placement matches editorial hero requirements.",
+        "Farm irrigation context dominates: crop rows, soil, distant tractor, farm buildings all allowed.",
+        "No people or human body parts visible.",
+        "Required AFP watermark present in bottom-right corner.",
+        "Background matches article brief for طرقبه irrigation drip-tape content."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
