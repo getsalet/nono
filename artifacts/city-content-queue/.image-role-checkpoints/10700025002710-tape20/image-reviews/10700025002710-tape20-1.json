@@ -5,20 +5,83 @@
   "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 17,
-      "product_height_percent": 23,
-      "product_x_center_percent": 38,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 15,
+      "product_height_percent": 8,
+      "product_x_center_percent": 72,
       "reasons": [
-        "The image meets all editorial and product criteria.",
-        "The AFP carton roll is clearly visible, cylindrical, and correctly placed in the lower-left area.",
-        "There are zero people or human body parts present.",
-        "The background shows a relevant agricultural context with crops and farm infrastructure.",
-        "The mandatory 'AFP | 09134922013' watermark is present and correct."
+        "Two AFP drip-tape carton rolls are visible — one on the ground and one on a white surface/table. This violates the hard-reject rule for a second roll/commercial package. The image must contain exactly one roll."
+      ],
+      "correction_prompt": "Remove the second AFP roll (the smaller one on the ground). Keep only the single AFP white-and-blue carton roll placed small and off-center on the lower third. Maintain the farm field context, irrigation infrastructure, and the required bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 18,
+      "product_height_percent": 12,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: Two people (human figures) are clearly visible standing among the crop rows in the midground. The brief requires zero people and zero human body parts.",
+        "Hard reject: Background shows an urban city skyline, which does not match the rural agricultural irrigation context appropriate for a drip-tape article about Kohjan, Fars province farm irrigation."
+      ],
+      "correction_prompt": "Remove all people from the image. Replace the urban skyline background with a rural farmland/irrigation context appropriate for Kohjan, Fars province. Keep the AFP white-and-blue drip-tape carton roll on the lower third, off-center, fully visible, and small relative to the frame. Preserve the required watermark AFP | 09134922013.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 18,
+      "product_height_percent": 8,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Hard reject: Visible person walking in the field (right side)."
+      ],
+      "correction_prompt": "Regenerate image with zero people visible in the frame.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 32,
+      "product_width_percent": 22,
+      "product_height_percent": 9,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Hard reject: multiple people present — one man prominently standing on the right and two additional figures working in the field on the left. Zero people is a strict requirement.",
+        "Wrong location context: distant modern city skyline is inconsistent with روستای کوهنجان in سروستان, فارس province (rural area).",
+        "Editorial hero composition compromised by foreground human subject rather than farm/irrigation context dominating."
+      ],
+      "correction_prompt": "Remove all people from the scene. Replace city skyline with rural farmland appropriate for kohnehajan, servistan, fars. Keep the AFP drip-tape carton on lower third off-center. Emphasize farm rows and irrigation infrastructure as dominant elements in a wide high-oblique view.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "visual reviewer returned invalid JSON",
+        "machine-enforced bounding-box check failed: Return numeric product_width_percent, product_height_percent and product_x_center_percent."
+      ],
+      "correction_prompt": "Regenerate and submit a clean image for strict review. Return numeric product_width_percent, product_height_percent and product_x_center_percent.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 93,
+      "product_width_percent": 15.6,
+      "product_height_percent": 10.0,
+      "product_x_center_percent": 37.5,
+      "reasons": [
+        "Exactly one AFP white-and-blue cylindrical drip-tape carton roll present.",
+        "Product width ~15.6% (within 12–30% acceptable range); height ~10% (within ≤35%).",
+        "Roll is off-center and placed on lower third of frame — consistent with EDITORIAL HERO preference.",
+        "Farm/irrigation context dominates: neat crop rows, distant buildings, and irrigation infrastructure visible.",
+        "Zero people or human body parts detected.",
+        "Required watermark 'AFP | 09134922013' is clearly visible in bottom-right corner.",
+        "No prohibited items present (no second roll, no bottle/jar/canister/bucket, no layflat hose, no pipe through roll, no fake caption)."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 6
     }
   ]
 }
