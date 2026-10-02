@@ -1,20 +1,19 @@
 {
   "source_id": "10800011001340-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
       "score": 42,
       "duplicate_roles": [
+        1,
         2
       ],
       "reasons": [
-        "Role 1 (EDITORIAL HERO) fails the 'high-oblique' requirement; the camera angle is too low and eye-level.",
-        "Role 1 features an oversized product; the packaged coil and bare coil are the dominant subjects rather than 'small and off-center'.",
-        "Role 2 (SELECTION EVIDENCE) violates the brief's 'no farm activity' constraint by depicting active tractor and irrigation equipment in the background.",
-        "Role 2 fails to show a diameter or construction difference between the coils, as they appear to be the same physical object."
+        "Role 1 and Role 2 are near-duplicate camera/environment structures: both images are low-angle product shots on tilled soil with identical coil placement, lighting direction, and framing; the only difference is background depth of field. Role 2 fails to deliver the required steep near-overhead technical still life with visible selection evidence (connector or diameter cue). Role 3's concrete-pad equipment still life is present but the fixed pump/gauge/regulator/manifold are only implied in the out-of-focus background tractor rather than shown as a dominated foreground detail.",
+        "correction_prompt: "
       ],
-      "correction_prompt": "Generate Role 1 with a high-oblique drone view of the city skyline and water transfer context where the two coils are small and off-center. Generate Role 2 with a high-angle static technical comparison on a neutral background, showing a clear diameter difference between the two coils, removing the tractors and active farm elements.",
+      "correction_prompt": "",
       "panel_scores": [
         42
       ],
@@ -22,34 +21,35 @@
     },
     {
       "pass": false,
-      "score": 40,
-      "duplicate_roles": [
-        3
-      ],
+      "score": 68,
+      "duplicate_roles": [],
       "reasons": [
-        "The 'packaged coil' object in images 1 and 3 is not a hose coil but a completely different product (an 'AFP' branded device or pump unit), violating the requirement for the product identity to be a coil.",
-        "Role 3 (Image 3) fails the 'no farm activity' restriction by prominently featuring a piece of equipment (the pump/device) that does not match the 'empty concrete pad' description."
+        "Role 1: wide elevated field view with both coils on soil in lower third and farm backdrop – correct.",
+        "Role 2: steeper overhead angle on textured soil showing two-coil pair with diameter/connector evidence; distinct from Role 1.",
+        "Role 3: coils on clean concrete pad present, but missing mandatory fixed pump, gauge, regulator, and manifold; background shows a tractor instead of headworks equipment, weakening this role."
       ],
-      "correction_prompt": "Regenerate Role 3: Show a clear, elevated, eye-level shot of a single fixed pump, gauge, and manifold on an empty concrete pad; the approved two-coil pair (packaged and bare) must remain small, separate, and secondary in the frame, with absolutely no 'AFP' device present.",
+      "correction_prompt": "Role 3 should show the integrated AFP two-coil pair at the far edge of a clean concrete pad in the foreground, with a complete fixed headworks assembly (filter housing, pressure gauge, pressure regulator, and manifold) clearly visible and in focus behind or beside the coils; replace the tractor in the background with proper headworks components.",
       "panel_scores": [
-        40
+        68
       ],
       "set_attempt": 2
     },
     {
-      "pass": true,
-      "score": 92,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 successfully establishes a wide, high-oblique water-transfer context with the city skyline in the background and the products kept small and off-center.",
-        "Role 2 provides a distinct elevated technical comparison against a neutral white studio background, clearly separating it from the narrative context of roles 1 and 3.",
-        "Role 3 is a distinct equipment-only record shot featuring a pump, gauge, and manifold on a concrete pad, with the product pair remaining small and secondary.",
-        "The three roles are visibly distinct in camera angle, environment structure, and technical narrative without any prohibited layout duplication.",
-        "The required watermark is present in the bottom-right corner of all three images."
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "None",
+      "reasons": [
+        "Image 1 and Image 2 are near-duplicates: both use a low-angle ground-level camera, the same two-coil product placement on soil, and nearly identical framing—the only difference is background blur. This violates the requirement for Role 2 to be a distinct steep near-overhead technical still life.",
+        "Image 2 fails to achieve the required steep near-overhead angle for SELECTION EVIDENCE; it remains a side-view ground shot indistinguishable in camera height from Role 1.",
+        "Image 3 for HEADWORKS DETAIL is placed on a concrete surface (correct) but the background equipment is a tractor/winch unit, not a fixed pump, gauge, regulator, and manifold assembly. The mandatory headworks equipment narrative is absent.",
+        "Roles 1 and 2 share the same camera height, surface, and environmental structure, making them indistinguishable as separate editorial roles."
+      ],
+      "correction_prompt": "Regenerate Image 2 as a steep near-overhead shot looking down at the two-coil pair on textured soil with only a single connector or diameter reference visible; eliminate the duplicate low-angle side composition from Image 1.",
       "panel_scores": [
-        92
+        42
       ],
       "set_attempt": 3
     }

@@ -1,40 +1,54 @@
 {
   "source_id": "10800011002599-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
-      "score": 30,
+      "score": 48,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 2 is a duplicate of Role 1, failing to provide the required 'elevated technical comparison' or a distinct camera angle/environment.",
-        "The 'oversized product' constraint is violated as the coils in both Role 1 and Role 2 are dominant foreground elements rather than small/off-center details.",
-        "The background of Role 1 features an urban city skyline, which is irrelevant to the agricultural/city-transfer context of the article brief (Hajduk/Ravar/Kerman)."
+        "Image 1 and Image 2 are near-duplicates: both are low-angle shots of the same two-coil pair on tilled soil with identical camera height, framing, lighting, and background structure. Role 2 requires a steep near-overhead technical still life on textured soil showing selection evidence (connector/diameter cue), which is absent. Role 1's wide elevated field context is present, but Role 2's mandated overhead angle and technical narrative are missing."
       ],
-      "correction_prompt": "Redesign Role 2 as a high-angle technical shot on a clean concrete pad showing two different coil diameters side-by-side; replace the city background in Role 1 with an agricultural landscape; reduce the size of the coils to make the environment the primary focus.",
+      "correction_prompt": "Replace image 2 with a steep near-overhead (70–80 degree) shot of the integrated two-coil pair resting on bare textured soil, cropped tightly so no wide horizon or background landscape dominates, with a visible connector fitting or coil diameter comparison cue and no other commercial products present.",
       "panel_scores": [
-        30
+        48
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 95,
+      "pass": false,
+      "score": 52,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 clearly functions as the editorial hero with a high-oblique wide shot and off-center product placement.",
-        "Role 2 provides distinct elevated selection evidence on a surface, differentiating itself through the camera angle and framing compared to Role 1.",
-        "Role 3 successfully isolates the equipment narrative (pump and manifold) on a concrete pad, keeping the coils secondary as requested.",
-        "The product identity is consistent across all three panels without violating layout distinctness requirements."
+        "Image 3 contains an extra commercial product — a large pump/generator unit occupying the mid-ground — which violates the requirement that the concrete-pad still life be dominated by a complete fixed filter, gauge, regulator and manifold without additional commercial equipment.",
+        "Role 2's camera height is only marginally steeper than Role 1 rather than the required steep near-overhead angle, weakening role distinction."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Regenerate Image 3 as an elevated still life on a clean concrete pad featuring ONLY the integrated two-coil pair at the far edge with a complete fixed filter assembly, pressure gauge, regulator, and manifold clearly visible in the foreground/mid-ground; remove any pump or generator unit and any extra commercial products from the scene.",
       "panel_scores": [
-        95
+        52
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 (SELECTION EVIDENCE) fails: camera is ground-level oblique, not a steep near-overhead angle; no visible connector or diameter reference cue is shown — only the two coils on soil.",
+        "Role 3 (HEADWORKS DETAIL) fails: camera height is low/ground-level, not elevated; the background machine is a green tractor rather than a fixed pump-gauge-regulator-manifold assembly; the two-coil pair occupies the near foreground rather than the far edge.",
+        "Roles 2 and 3 are near-duplicates: both frame the identical packaged-coil + bare-coil pair at nearly the same camera angle and composition, merely shifting the surface from soil to concrete without creating a distinct technical narrative."
+      ],
+      "correction_prompt": "Re-shoot Role 2 from a steep ~60-75° overhead angle directly above the two-coil pair on loose textured soil, including a single small connector or caliper as a diameter cue with no other objects. Re-shoot Role 3 on a clean concrete pad from an elevated viewpoint so the complete fixed pump, pressure gauge, regulator and manifold assemble dominate the mid-frame, with the identical two-coil pair placed at the far foreground edge.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 3
     }
   ]
 }

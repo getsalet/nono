@@ -1,37 +1,60 @@
 {
   "source_id": "10800013002604-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
-      "score": 72,
+      "score": 92,
       "duplicate_roles": [
-        2
+        1,
+        2,
+        3
       ],
       "reasons": [
-        "Role 2 fails the required 'elevated technical comparison' and 'diameter difference' narrative; the coils are shown at the same eye level and appear identical in size, lacking the necessary visual distinction for a selection guide.",
-        "Role 2 presents the exact two-coil pair in the foreground of a generic field, which is a repetitive layout of the product pair already shown in Role 1 (Hero) and Role 3 (Headworks), failing to provide a distinct technical narrative."
+        "All three roles clearly distinct: Image 1 shows wide elevated field view with tilled soil and distant farm equipment; Image 2 shows steep near-overhead soil-based technical layout with textured rocky soil and visible two-coil pair; Image 3 shows concrete-pad equipment still life with pressure gauge and tractor in background. Waterproof AFP packaging with Arabic text and required watermark 'AFP | 09134922013' present in all images. No living subjects, no extra commercial products, physically plausible agricultural integration. Role 3 gauge/pressure meter provides required headworks detail evidence.",
+        "AFP | 09134922013"
       ],
-      "correction_prompt": "Replace Role 2 with an elevated, high-angle close-up of the two coils placed side-by-side on a neutral surface, explicitly showing the diameter scale difference or layered construction to demonstrate technical selection criteria without using the field environment.",
+      "correction_prompt": "",
       "panel_scores": [
-        72
+        92
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 95,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 clearly establishes the wide high-oblique water-transfer context; the two coils are separate, small relative to the scene, and off-center.",
-        "Role 2 provides a distinct elevated technical comparison with only the approved two-coil pair, showing diameter and construction differences without extra commercial objects, bottles, people, or hardware.",
-        "Role 3 presents an equipment-only headworks scene on an empty concrete pad with one fixed pump, gauge, and manifold; the two-coil pair remains small, separate, and secondary, with no farm activity."
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "No replacement needed",
+      "reasons": [
+        "Role 2 is a near-duplicate of Role 1 in camera height and angle (both are low-side shots on soil), failing the mandatory requirement for a steep near-overhead technical view.",
+        "Role 3 fails the specified composition: the integrated coil pair is placed in the immediate foreground rather than the far edge, and the background tractor equipment does not constitute the required fixed headworks still life on the pad."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a strict top-down overhead shot looking directly down at the two coils on textured soil. Regenerate Role 3 with the coil pair positioned at the far edge of the concrete pad, featuring a close-up fixed pump, gauge, and manifold assembly in the foreground.",
       "panel_scores": [
-        95
+        42
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 (Image 1) and Role 2 (Image 2) are near-duplicate shots: same two-coil arrangement on soil, nearly identical camera height and framing angle — not sufficiently distinct.",
+        "Role 2 lacks a steep near-overhead perspective; it reads as an eye-level ground shot rather than a technical overhead still life with clear selection evidence.",
+        "Role 2 includes extraneous background implements (orange-handled tool, additional metal rolls) violating the 'only the integrated two-coil pair and one connector/diameter cue' constraint.",
+        "Role 3 (Image 3) places the two-coil pair in the foreground rather than at the far edge of the concrete pad; the tractor/gauge assembly is secondary background rather than the dominant fixed equipment still life."
+      ],
+      "correction_prompt": "Regenerate: Image 1 as a wide elevated hero field shot with distant water-transfer context; Image 2 as a steep near-overhead soil layout with ONLY the two AFP coils plus one small connector/diameter reference, no other objects; Image 3 as a concrete-pad equipment still life where a fixed pump/gauge/regulator/manifold assembly dominates the frame and the two-coil pair sits at the far edge.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 3
     }
   ]
 }

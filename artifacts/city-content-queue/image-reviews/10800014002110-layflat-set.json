@@ -1,56 +1,60 @@
 {
   "source_id": "10800014002110-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 58,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1 fails the specific HERO requirement: the product coils are not 'small and off-center' and the wide high-oblique water-transfer context is missing.",
-        "Roles 1 and 2 are nearly identical in layout, camera angle (ground-level), and narrative (product sitting on the ground), constituting a repeated layout."
+        "Images 1 and 2 are near-duplicates: same elevated product placement on soil with identical framing, differing only by slight angle and the addition of drip lines in image 2. Both fulfill similar editorial hero functions rather than distinct role requirements.",
+        "Image 2 lacks the required 'steep near-overhead' perspective—still maintains an angled field-level view rather than true overhead technical documentation.",
+        "Image 3 contains a visible tractor (living subject/vehicle), violating the no-living-subjects rejection criterion.",
+        "Image 3 fails to clearly show the mandatory headworks equipment: fixed pump, pressure gauge, and manifold assembly as specified in the role definition. Only a metallic sphere is partially visible."
       ],
-      "correction_prompt": "Replace roles 1 and 2: Role 1 must be a wide, high-oblique aerial shot of the field where the coils are barely visible in the distance; Role 2 must be an elevated, technical close-up comparing the two coils side-by-side on a solid surface to show diameter differences.",
+      "correction_prompt": "Redo: Image 1 as wide elevated hero (ok). Image 2 as true 70°+ near-overhead vertical shot looking straight down at soil with two-coil pair and one visible diameter measurement cue (tape mark or ruler). Image 3 as elevated concrete-pad still life showing complete fixed pump assembly, pressure gauge, and valve manifold with the two-coil pair positioned at far edge—remove tractor, ensure headworks components are clearly identifiable.",
       "panel_scores": [
-        45
+        58
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 15,
+      "score": 42,
       "duplicate_roles": [
         2,
         3
       ],
       "reasons": [
-        "Role 2 (Image 2) features a third, unapproved coil with a cardboard band, which explicitly violates the negative constraint 'no third commercial package... or extra coil'.",
-        "Role 3 (Image 3) completely fails the requirement to be a 'record photograph of one fixed pump, gauge and manifold'. These technical pieces of equipment are missing; instead, it shows two coils on a concrete pad.",
-        "Role 2 and Role 3 are visually duplicated as they both show the two-coil product pair in a static ground-level arrangement rather than the specified technical comparison and equipment detail.",
-        "Role 1 (Image 1) is acceptable as the hero shot, but the set fails due to the critical errors in the subsequent roles."
+        "Role 2 uses an oblique side angle rather than the required steep near-overhead technical perspective; tiny green seedlings are visible near the coils, violating the no-living-subjects restriction; connectors are incidental background props rather than a clear single selection cue.",
+        "Role 3 lacks the mandatory complete fixed filter/gauge/regulator/manifold headworks assembly entirely—a blue tractor and a metallic sphere are visible instead, making this not a headworks equipment still life; the required concrete-pad technical narrative is absent."
       ],
-      "correction_prompt": "For role 2, remove the extra cardboard coil to show only the approved two-coil pair with a technical construction/diameter comparison; for role 3, replace the two coils with a fixed pump unit, gauge, and manifold on the concrete pad, keeping the two-coil pair small and in the background.",
+      "correction_prompt": "Replace image 2 with a true steep near-overhead shot on bare textured soil showing only the two-coil pair plus one clear connector or diameter calibration marker; replace image 3 with an elevated concrete-pad still life where the integrated two-coil pair sits at the far edge and the foreground is dominated by a complete fixed pump, filter housing, pressure gauge, regulator, and manifold assembly.",
       "panel_scores": [
-        15
+        42
       ],
       "set_attempt": 2
     },
     {
-      "pass": true,
-      "score": 95,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 establishes the editorial hero context with a high-oblique farm environment, keeping the required two-coil product pair small, separate, and off-center.",
-        "Role 2 provides distinct selection evidence on an elevated concrete pad, showing the approved two-coil pair without prohibited extras like bottles, people, or a third commercial package.",
-        "Role 3 correctly presents an equipment-only record photograph featuring a fixed pump, gauge, and manifold on an empty concrete pad, fulfilling the headworks detail requirement while keeping the product pair secondary.",
-        "The layouts are visibly distinct in camera height, environment structure, and technical narrative across the three images, with no rejection triggers such as generic farms or hardware duplication found."
+      "pass": false,
+      "score": 32,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "This set is fully compliant and no replacement instruction is needed.",
+      "reasons": [
+        "Duplicate/very similar product placement across all three images — the same two AFP coils appear in nearly identical orientation and packaging state in every frame, violating the requirement for clearly distinct camera/environment structure.",
+        "Role 1 fails EDITORIAL HERO spec: camera is low/close rather than 'wide elevated'; only ~5–6 rows of tilled soil are visible, not a broad water-transfer field view with horizon.",
+        "Role 2 is not a steep near-overhead still life; the camera angle is oblique and too similar to Role 1 to qualify as a distinct technical top-down layout.",
+        "Role 3 fails HEADWORKS DETAIL spec: surface is painted/dirty wood rather than a clean concrete pad; background is a yellow tractor on dirt, not a fixed pump, gauge, and manifold assembly; no concrete-pad equipment narrative is present."
+      ],
+      "correction_prompt": "Generate three distinctly composed images: (1) a high-elevation drone-style wide shot of a flooded/irrigated field with the two AFP coils small but identifiable in the lower third on bare soil; (2) a near-vertical overhead shot looking straight down at the two coils on dark textured soil with one connector piece visible as a selection cue, no horizon; (3) the two coils placed at the far edge of a clean light-gray concrete pad with a fixed filtration pump, pressure gauge, and manifold assembly filling the mid/foreground, no tractor or tractor-like machinery.",
       "panel_scores": [
-        95
+        32
       ],
       "set_attempt": 3
     }
