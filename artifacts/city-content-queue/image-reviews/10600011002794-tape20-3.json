@@ -1,39 +1,83 @@
 {
   "source_id": "10600011002794-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 0,
-      "product_width_percent": 35,
-      "product_height_percent": 35,
-      "product_x_center_percent": 45,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 62,
       "reasons": [
-        "A man is clearly visible crouching next to the roll",
-        "Visible human body parts including face, arms, and legs",
-        "The article brief explicitly requires 'zero people and zero human body parts'"
+        "Hard reject: second commercial package present - cardboard AFP box visible to the right of the roll. Also, role mismatch: image shows field edge with wheeled filtration unit rather than elevated equipment still life on clean concrete pad with fixed filter, pressure gauge, regulator and manifold as specified for HEADWORKS DETAIL role."
       ],
-      "correction_prompt": "Remove the man completely; retain only the AFP roll on the ground with no human presence",
+      "correction_prompt": "Remove the AFP cardboard box from the image. Reposition the AFP drip tape roll on an elevated clean concrete pad alongside fixed irrigation infrastructure (filter housing, pressure gauge, regulator, manifold) with no wheeled cart or second commercial packaging visible. Maintain single AFP white-and-blue roll only.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 30,
-      "product_height_percent": 45,
-      "product_x_center_percent": 30,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 35,
+      "product_x_center_percent": 72,
       "reasons": [
-        "Product dimensions (30% width) fall within the preferred 20-28% ideal range and accepted 10-48% range.",
-        "Product height (45%) is well within the 58% limit.",
-        "Zero people or body parts are visible.",
-        "Watermark is present in the bottom right as required.",
-        "Background includes unattended tractor and irrigation hardware as permitted."
+        "Hard reject: a brown glass bottle with an AFP label is clearly visible on the headworks manifold — bottles are explicitly prohibited.",
+        "Bottle placement on the equipment violates the 'Never pass any visible human or bottle/container' rule."
+      ],
+      "correction_prompt": "Remove the brown glass bottle from the headworks manifold assembly; retain the pressure gauge, filter housing, regulator, coiled hose, and AFP carton roll only. Ensure zero bottle or container is visible.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 26,
+      "product_height_percent": 29,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package present: an additional open AFP-branded cardboard box sits behind and to the right of the roll, violating the 'one integrated AFP carton' and 'no second commercial package' rule."
+      ],
+      "correction_prompt": "Remove the second AFP-branded cardboard box behind the roll; keep only one AFP carton roll at the far edge of the headworks concrete pad.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Hard reject: Image contains two distinct AFP-branded commercial objects — one large cylindrical drip tape roll AND one smaller AFP carton/box to the right. Requirement specifies 'exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll' and explicitly lists 'second commercial package' as a hard reject.",
+        "The larger cylindrical object is the drip tape roll itself (unwrapped), while the smaller box appears to be packaging — together they constitute two commercial packages, violating the 'exactly one' requirement.",
+        "Dimensions of the primary roll are within acceptable range (28% width, 42% height). No people visible. Watermark 'AFP | 09134922013' is present. Background context is appropriate for headworks detail scene."
+      ],
+      "correction_prompt": "Generate image showing exactly ONE AFP drip-tape carton roll only — no separate unwrapped roll AND no separate packaging box. Show a single cylindrical AFP-branded drip tape carton/roll at the far edge of the concrete pad alongside the headworks equipment. Remove the second AFP-branded box/carton visible on the right side.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 26,
+      "product_height_percent": 38,
+      "product_x_center_percent": 74,
+      "reasons": [
+        "AFP white-and-blue cylindrical drip-tape carton roll present with correct branding and color scheme",
+        "Roll width (26%) within approved 18-38% envelope",
+        "Roll height (38%) within 70% maximum limit",
+        "Lower-third off-center placement consistent with editorial preference",
+        "Zero people, faces, hands, or human body parts in frame",
+        "HEADWORKS DETAIL role correctly executed: elevated equipment still life on concrete pad with filter, pressure gauge, regulator, manifold components",
+        "One integrated AFP carton at far edge of composition",
+        "Natural contact shadow beneath roll confirms physical integration, no cutout/sticker appearance",
+        "Background matches agricultural/irrigation context with farm setting",
+        "Mandatory watermark 'AFP | 09134922013' present in bottom-right corner",
+        "No prohibited items: bottles, jars, buckets, fertilizers, pesticides, second commercial packages, or layflat hoses through roll",
+        "Perspective and geometry are physically plausible",
+        "Distant unattended farm infrastructure and crop rows are contextually appropriate"
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 5
     }
   ]
 }

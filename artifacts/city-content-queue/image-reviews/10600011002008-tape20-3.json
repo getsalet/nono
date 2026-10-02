@@ -1,37 +1,33 @@
 {
   "source_id": "10600011002008-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 18,
-      "product_height_percent": 22,
-      "product_x_center_percent": 38,
+      "score": 58,
+      "product_width_percent": 36,
+      "product_height_percent": 28,
+      "product_x_center_percent": 68,
       "reasons": [
-        "Hard reject: Human hand visible in the bottom-right panel.",
-        "Hard reject: Multiple additional rolls of drip tape are visible in the bottom panels.",
-        "Hard reject: A blue fertilizer/pesticide container (or similar jar) is visible in the top-right panel.",
-        "Role Mismatch: The brief calls for 'HEADWORKS STORY' (filter, gauge, manifold) with the carton as secondary, but this image is a collage focusing primarily on the tape roll."
+        "Multiple AFP products present: secondary cardboard box with AFP branding visible in background violates 'exactly one AFP roll' requirement",
+        "Roll width at 36% approaches upper limit of 38% envelope",
+        "Gibberish/distorted text on roll label ('Irrigaton' misspelling, unreadable secondary text)",
+        "Product placement overly dominant in foreground reduces headworks visibility"
       ],
-      "correction_prompt": "Generate a single medium shot of unattended fixed irrigation infrastructure (filter, gauge, manifold). Include exactly one small AFP white-and-blue tape carton roll. No human hands. No fertilizer containers. Watermark: AFP | 09134922013.",
+      "correction_prompt": "Remove background AFP box, reduce roll to 30% width, center slightly left, fix label text to readable English, add visible pressure gauge and filter assembly to left of roll",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 78,
-      "product_width_percent": 31,
-      "product_height_percent": 44,
-      "product_x_center_percent": 35,
+      "score": 92,
+      "product_width_percent": 27.5,
+      "product_height_percent": 21.8,
+      "product_x_center_percent": 72.6,
       "reasons": [
-        "Correctly shows exactly one wide low cylindrical drip-tape carton roll with AFP branding and required white-and-blue color scheme.",
-        "Zero people, zero human body parts, and no rejected objects (bottles, jars, cans, buckets, fertilizer, or second commercial packages).",
-        "Infrastructure (fixed filter, gauge, regulator, manifold, and unattended distant tractors/irrigation lines) are contextually relevant and allowed per the brief.",
-        "Watermark 'AFP | 09134922013' is present and correctly placed bottom-right; it is required and not a reject factor.",
-        "No fake headlines, gibberish writing, or impossible geometry; product dimensions are physically plausible and within acceptable vision estimate ranges."
+        "Mandatory watermark 'AFP | 09134922013' present in bottom-right corner. Exactly one AFP white-and-blue cylindrical drip-tape roll present, with dimensions within acceptable envelope (width ~27.5%, height ~21.8%). Zero people and zero body parts. Cardboard AFP carton box at far edge matches HEADWORKS DETAIL role blueprint. Elevated manifold/filter/gauge assembly correctly placed on concrete pad. Contact shadow and perspective consistent with scene lighting. Distant unattended farm building and field rows are permissible context.",
+        ""
       ],
       "correction_prompt": "",
       "attempt": 2

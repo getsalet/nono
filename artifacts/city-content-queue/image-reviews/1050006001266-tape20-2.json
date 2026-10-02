@@ -1,34 +1,38 @@
 {
   "source_id": "1050006001266-tape20",
-  "family": "tape20",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 10,
-      "product_width_percent": 24,
-      "product_height_percent": 22,
-      "product_x_center_percent": 48,
+      "score": 42,
+      "product_width_percent": 18,
+      "product_height_percent": 35,
+      "product_x_center_percent": 68,
       "reasons": [
-        "Hard reject: Human body parts present in the image (two individuals visible in the background operating the tractor)."
+        "The product carton is centrally framed and appears too large relative to the frame for a low-angle editorial shot, pushing against the width heuristic.",
+        "The unrolled tape shows repeated emitter points as graphic patterns rather than physical nozzles, suggesting a visual artifact instead of a realistic drip-tape roll.",
+        "The roll sits slightly above the soil surface with minimal contact shadow, giving a pasted or composite appearance rather than natural integration."
       ],
-      "correction_prompt": "Regenerate the image to completely remove all visible people or human silhouettes from the field background; keep the unattended tractor and the product carton exactly as shown.",
+      "correction_prompt": "Reframe the AFP drip-tape roll smaller and off-center on dark soil with a straight unrolled segment showing realistic physical emitter nozzles and integrated contact shadows.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 88,
-      "product_width_percent": 28,
-      "product_height_percent": 40,
-      "product_x_center_percent": 32,
+      "score": 92,
+      "product_width_percent": 26,
+      "product_height_percent": 32,
+      "product_x_center_percent": 67,
       "reasons": [
-        "Exactly one white-and-blue wide low cylindrical drip-tape carton roll is present.",
-        "Object size is within the preferred 20-28% width range (approx 28%).",
-        "Zero people or human body parts detected in the image.",
-        "Mandatory bottom-right watermark 'AFP | 09134922013' is present and legible.",
-        "Image meets the SELECTION EVIDENCE role by showing the product placed in a relevant field context with irrigation lines and background farm infrastructure (tractor/building) which is explicitly allowed."
+        "AFP white-and-blue cylindrical drip-tape carton roll is clearly present with readable branding.",
+        "Roll width (~26%) is within the 18-38% approved envelope; height (~32%) is within the 70% limit.",
+        "Straight drip-tape segment with repeated emitter points extends diagonally across dark soil — matches SELECTION EVIDENCE role.",
+        "Contact shadow under the roll confirms physical integration on the soil surface; no cutout/sticker appearance.",
+        "Required watermark 'AFP | 09134922013' is present in bottom-right corner.",
+        "Zero people, zero body parts, no banned containers (bottle/jar/canister/bucket/fertilizer/pesticide).",
+        "Single roll only; no second commercial package or layflat hose passing through the roll.",
+        "Steep near-overhead technical still life composition on dark soil is contextually appropriate."
       ],
       "correction_prompt": "",
       "attempt": 2
