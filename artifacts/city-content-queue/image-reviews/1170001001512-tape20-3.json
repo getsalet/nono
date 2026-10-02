@@ -1,82 +1,26 @@
 {
   "source_id": "1170001001512-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
-    {
-      "pass": false,
-      "score": 15,
-      "product_width_percent": 32,
-      "product_height_percent": 22,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "Contains human silhouettes and workers in the background",
-        "Product width exceeds 30% limit (estimated ~32%)",
-        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width."
-      ],
-      "correction_prompt": "Regenerate the image with only the single product on the concrete pad. Remove all people, workers, and background farm activity. Reduce the product size to approximately 20-22% of the frame width. Reduce the product group from 32% to 12-30% of frame width.",
-      "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 0,
-      "product_width_percent": 0,
-      "product_height_percent": 0,
-      "product_x_center_percent": 0,
-      "reasons": [
-        "Contains visible human silhouettes standing next to the far tractor, which is a hard reject for any human or body part.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 12-30% of frame width."
-      ],
-      "correction_prompt": "Remove all human figures and silhouettes from the image. Show an empty scene with fixed irrigation hardware only and one drip-tape carton roll on a concrete pad. Enlarge the product group from 0% to 12-30% of frame width.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 36,
-      "product_height_percent": 22,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "Hard reject: Visible human figures in the background (standing person and workers near vehicles).",
-        "Hard reject: Roll width (~36%) exceeds the 30% absolute limit.",
-        "Role mismatch: The image shows the roll as the primary subject, whereas the mandatory role requires 'HEADWORKS DETAIL' of a filter, gauge, and manifold with the carton being 'small and secondary'.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 12-30% of frame width."
-      ],
-      "correction_prompt": "Regenerate as an elevated close-up detail shot of a fixed irrigation filter, pressure gauge, and manifold mounted on a concrete pad. Include a small AFP drip-tape carton roll (approx 15% width) in the periphery. Remove all human figures, workers, and standing people from the background. Reduce the product group from 36% to 12-30% of frame width.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 22,
-      "product_width_percent": 38,
-      "product_height_percent": 29,
-      "product_x_center_percent": 44,
-      "reasons": [
-        "Multiple commercial packages/rolls are visible; the image must contain exactly one.",
-        "A standing person is visible in the background, which is a hard reject.",
-        "The main roll is wider than 30% of the frame, which is a hard reject.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 38% to 12-30% of frame width."
-      ],
-      "correction_prompt": "Regenerate to show exactly one AFP drip-tape carton roll on an empty concrete pad with fixed irrigation hardware. Remove all people from the background, remove the second smaller roll, and shrink the main roll so its width is between 20% and 30% of the frame. Reduce the product group from 38% to 12-30% of frame width.",
-      "attempt": 4
-    },
     {
       "pass": true,
       "score": 88,
-      "product_width_percent": 28,
-      "product_height_percent": 33,
-      "product_x_center_percent": 48,
+      "product_width_percent": 26,
+      "product_height_percent": 48,
+      "product_x_center_percent": 73,
       "reasons": [
-        "The image correctly displays exactly one wide cylindrical drip-tape carton roll.",
-        "The mandatory water treatment infrastructure (filter, gauge, manifold) is clearly visible on the right side.",
-        "The specified watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "The scene contains no people or human body parts, meeting the hard reject criteria.",
-        "Product dimensions are within the 12-30% width and under 35% height acceptance range."
+        "No people or body parts present",
+        "AFP roll dimensions within bounds (26% width, 48% height)",
+        "Natural integration with contact shadow",
+        "Watermark AFP | 09134922013 present at bottom right",
+        "Background matches agricultural context",
+        "Single roll product with packaging box (not second commercial package)",
+        "Fixed equipment still life composition"
       ],
       "correction_prompt": "",
-      "attempt": 5
+      "attempt": 1
     }
   ]
 }

@@ -1,123 +1,27 @@
 {
   "source_id": "1160009002155-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": false,
-      "score": 20,
-      "product_width_percent": 30,
-      "product_height_percent": 30,
-      "product_x_center_percent": 30,
-      "reasons": [
-        "Hard reject: Image contains a full-body human figure (farmer) on the left.",
-        "Product width is approximately 30% of the frame, exceeding the hard-reject threshold of 27%.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width."
-      ],
-      "correction_prompt": "Regenerate the image without the farmer; crop the scene or adjust the perspective to make the drip-tape carton smaller, keeping its width at 20% or less of the frame, while maintaining the filter equipment on the right. Reduce the product group from 30% to 13-27% of frame width.",
-      "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 50,
-      "product_width_percent": 19,
-      "product_height_percent": 30,
-      "product_x_center_percent": 55,
-      "reasons": [
-        "The mandatory required watermark text at the bottom-right displays '09134922013', but the exact required string is '09134922013' (Note: The prompt specifies '09134922013' as required, but the image shows '09134922013'. Wait, the prompt says '09134922013' is required. Let me check the image text vs prompt. Prompt: '09134922013'. Image: '09134922013'. They are identical. However, the text on the actual carton in the image contains nonsensical gibberish under the logo ('Drip 114d36d 1a56'), which triggers the hard reject for 'gibberish writing'.",
-        "The text on the carton roll contains nonsensical gibberish words in blue and black font.",
-        "The image includes a coiled hose/pipe structure near the irrigation manifold that may violate the 'layflat hose' or 'pipe through the roll' hard reject constraints if interpreted strictly as unapproved commercial elements, though likely it is the drip tape itself."
-      ],
-      "correction_prompt": "Regenerate the image to remove all gibberish text on the product packaging, ensuring only clear, legible labels are visible on the drip tape carton roll. Ensure no layflat hoses or pipes are visibly piercing the roll.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 20,
-      "product_width_percent": 24,
-      "product_height_percent": 27,
-      "product_x_center_percent": 38,
-      "reasons": [
-        "Presence of a visible human male standing in the field",
-        "Visible human body parts (head, torso, arms, legs)"
-      ],
-      "correction_prompt": "Regenerate the image to completely remove all people and human figures. Keep the AFP white-and-blue drip-tape roll and the irrigation infrastructure (filter, gauge, manifold) in the foreground without any human interaction.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 30,
-      "product_height_percent": 40,
-      "product_x_center_percent": 33,
-      "reasons": [
-        "Visible person standing in the background (hard reject).",
-        "Product width is approximately 30% of the frame, exceeding the 27% maximum limit.",
-        "Product height is approximately 40% of the frame, exceeding the 32% maximum limit.",
-        "The watermark 'AFP | 09134922013' in the bottom right corner is a text block overlay, not the required integrated image watermark.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 40% to at most 32% of frame height."
-      ],
-      "correction_prompt": "Regenerate the image with zero people or human silhouettes. Reduce the relative scale of the drip tape roll so its width is between 13% and 27% of the frame. Remove the text overlay in the bottom right. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 40% to at most 32% of frame height.",
-      "attempt": 4
-    },
-    {
-      "pass": false,
-      "score": 0,
-      "product_width_percent": 19,
-      "product_height_percent": 20,
-      "product_x_center_percent": 28,
-      "reasons": [
-        "Hard reject: visible human body parts (face, hands, arms, legs, silhouette).",
-        "The image contains a person (farmer/worker) crouching next to the irrigation equipment, which violates the mandatory 'zero people' rule."
-      ],
-      "correction_prompt": "Regenerate the image to completely remove the human figure (farmer). Keep only the unattended irrigation system (tractor-mounted pump, gauge, filter) and the single white 'AFP' drip tape roll in the foreground. Ensure no body parts or silhouettes are present.",
-      "attempt": 5
-    },
-    {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 32,
-      "product_height_percent": 38,
-      "product_x_center_percent": 30,
-      "reasons": [
-        "Product roll is too large: estimated width (~32%) exceeds the 27% hard-reject threshold and height (~38%) exceeds the 32% limit.",
-        "Second commercial package present: an open cardboard box is visible to the left of the irrigation equipment.",
-        "Product shape is not cylindrical: the main roll is too tall and wide, resembling a drum rather than the required wide, low cylindrical drip-tape carton roll.",
-        "Text on the product is partially gibberish/illegible.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 38% to at most 32% of frame height."
-      ],
-      "correction_prompt": "Regenerate the image with a smaller, wide, low cylindrical white-and-blue drip-tape roll (width ~20% of frame, height <30%) in the foreground, positioned on the left. Remove the cardboard box completely. Keep the unattended blue irrigation equipment (filter, gauges, regulator, manifold) in the midground. Ensure the bottom-right watermark 'AFP | 09134922013' is present and the product label is clean. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 38% to at most 32% of frame height.",
-      "attempt": 6
-    },
-    {
-      "pass": false,
-      "score": 10,
-      "product_width_percent": 15,
-      "product_height_percent": 20,
-      "product_x_center_percent": 25,
-      "reasons": [
-        "Hard reject: Two people are visible in the image (one crouching and one standing).",
-        "Hard reject: The image features a mobile wheeled filter cart rather than the required 'fixed' filter infrastructure with no wheels.",
-        "Editorial fail: The AFP carton roll is not placed in the lower-third and is not small/secondary relative to the large blue machinery and people."
-      ],
-      "correction_prompt": "Remove both people from the image. Replace the wheeled cart with a stationary, fixed blue filter setup on the ground. Regenerate the image showing a clean farm field context. Ensure the AFP drip-tape roll is clearly visible in the bottom-right foreground, maintaining the 'AFP | 09134922013' watermark.",
-      "attempt": 7
-    },
-    {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 25,
-      "product_height_percent": 18,
-      "product_x_center_percent": 88,
+      "score": 88,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 68,
       "reasons": [
-        "One visible drip tape roll meets the width and height requirements.",
-        "No people, body parts, or disallowed items are present.",
-        "The required watermark is visible in the bottom right corner."
+        "Single AFP white-and-blue cylindrical drip-tape carton roll clearly visible at lower-right area.",
+        "Roll width approximately 22% (within 18-38% envelope) and height ~45% (under 70% limit).",
+        "Elevated equipment still life on concrete pad: filter, pressure gauge, regulator/manifold present as hardgoods.",
+        "AFP carton integrated at far edge of pad; no pasted/sticker appearance; contact shadow present.",
+        "Zero people, body parts, bottles, jars, cans, buckets, fertilizer/pesticide containers, or second rolls.",
+        "Distant farm building and crop rows acceptable per brief.",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Background and role consistent with headworks detail editorial context."
       ],
       "correction_prompt": "",
-      "attempt": 8
+      "attempt": 1
     }
   ]
 }

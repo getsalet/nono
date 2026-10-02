@@ -1,38 +1,35 @@
 {
   "source_id": "1150001002877-tape20",
-  "family": "tape20",
   "kind": 2,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 62,
-      "product_width_percent": 24,
-      "product_height_percent": 38,
-      "product_x_center_percent": 31,
+      "score": 42,
+      "product_width_percent": 14,
+      "product_height_percent": 22,
+      "product_x_center_percent": 64,
       "reasons": [
-        "The product height (estimated ~38%) exceeds the 32% maximum limit.",
-        "Visible gibberish/placeholder text on the carton label (e.g. 'DRIIP', 'IRRIg&ION TAIP').",
-        "Second commercial/industrial package (the blue spool) is present in the foreground.",
-        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 32% of frame height."
+        "Hard reject: second commercial package present — an AFP-branded carton/box sits beside the roll, violating the rule against a second commercial package.",
+        "Hard reject: the unrolled tape segment is a ruler/measuring tape with printed markings and numbers, not a drip-tape segment showing repeated emitter points as required by the role blueprint.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 14% to 18-38% of frame width."
       ],
-      "correction_prompt": "Reduce the drip-tape roll's height to under 32% of the frame. Clean the carton text to clear English (no gibberish). Remove the blue spool to ensure the roll is the only product. Maintain the farm background and required AFP watermark. Reduce product height from 38% to at most 32% of frame height.",
+      "correction_prompt": "Remove the secondary AFP carton/box entirely. Replace the ruler/measuring tape with a straight segment of actual white drip tape showing clearly visible repeated emitter points along its length. Keep only the single AFP white-and-blue cylindrical roll on dark soil. Enlarge the product group from 14% to 18-38% of frame width.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 27,
-      "product_height_percent": 27,
-      "product_x_center_percent": 32,
+      "score": 88,
+      "product_width_percent": 21,
+      "product_height_percent": 37,
+      "product_x_center_percent": 62,
       "reasons": [
-        "Shows exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
-        "Roll width is approximately 27% of frame width, within the 13-27% acceptance band.",
-        "Roll height is approximately 27% of frame height, below the 32% limit.",
-        "Zero people, human silhouettes, or body parts are visible.",
-        "Background features field, irrigation lines, and a distant unattended tractor/farm building, which are allowed contextual elements.",
-        "Required bottom-right watermark 'AFP | 09134922013' is present."
+        "Single AFP white-and-blue cylindrical drip-tape carton roll present, integrated into dark soil surface with physically plausible contact shadow",
+        "Steep near-overhead technical still life composition with one straight drip-tape segment showing repeated emitter points, matching SELECTION EVIDENCE role",
+        "No people, body parts, or human silhouettes present; zero commercial containers or second packages",
+        "Roll dimensions within envelope (width ~21%, height ~37%); no white halo, cutout/sticker appearance, or impossible geometry",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner"
       ],
       "correction_prompt": "",
       "attempt": 2
