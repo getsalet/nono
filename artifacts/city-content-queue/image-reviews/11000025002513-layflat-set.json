@@ -1,22 +1,55 @@
 {
   "source_id": "11000025002513-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "duplicate_roles": [],
-      "reasons": [
-        "All three panels successfully fulfill their distinct editorial roles with visibly different camera heights, angles, and environmental structures.",
-        "Role 1 provides the wide high-oblique hero shot with the correct water-transfer context and appropriately scaled, off-center product placement.",
-        "Role 2 isolates the two-coil pair on a clear stand for the technical comparison narrative, without extraneous commercial packaging or people.",
-        "Role 3 presents the requested equipment-only elevated record of the pump, gauge, and manifold on a concrete pad, keeping the product secondary and avoiding farm activity."
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "No corrections needed.",
+      "reasons": [
+        "Role 2 lacks the required steep near-overhead camera angle and visible selection evidence (connector or diameter cue); it is too similar in composition and angle to Role 1, making Roles 1 and 2 near-duplicates of the same low-angle two-coil-on-soil shot.",
+        "Role 3 is missing mandatory equipment: no fixed pump, gauge, regulator, or manifold appear on the concrete pad; instead a tractor and hay bales dominate the background, failing the headworks detail narrative entirely."
+      ],
+      "correction_prompt": "Replace Image 2 with a steep near-overhead shot of the two AFP coils on textured soil, tightly framed with one visible connector or diameter comparison cue and no background field context. Replace Image 3 with an elevated concrete-pad still life showing the integrated two-coil pair at the far edge with a complete fixed pump, pressure gauge, regulator, and manifold clearly dominating the foreground.",
       "panel_scores": [
-        95
+        42
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Images 1 and 2 are near-duplicates: both are low-angle near-ground shots of the identical two-coil pair on tilled soil with matching framing, subject placement, and lighting. Role 1 requires a wide elevated field view (not a close-up soil product shot), and Role 2 requires a steep near-overhead camera angle (Image 2 is a side-level angle).",
+        "Image 3 does not fulfill the HEADWORKS DETAIL role requirement — it shows coils on a concrete pad with a tractor in the background but is missing the mandated fixed pump, gauge, regulator, and manifold equipment.",
+        "Camera height and perspective are not clearly distinct between Roles 1 and 2."
+      ],
+      "correction_prompt": "Redo Image 1 as a wide elevated aerial or high-angle field view showing both coils in the lower third of the frame with expansive soil/water-transfer context and no close-up equipment; redo Image 2 as a steep near-overhead (90-degree) technical still life on bare textured soil showing only the two-coil pair and one visible connector or diameter cue; keep Image 3 but replace the tractor background with a fixed pump, pressure gauge, regulator, and manifold assembly on the concrete pad with coils at the far edge.",
+      "panel_scores": [
+        58
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 (HEADWORKS DETAIL) missing mandatory equipment evidence: no fixed pump, gauge or manifold visible. Image shows tractor and hay bales instead of required concrete-pad technical still life with headworks components.",
+        "Image 3 contains extra commercial product (green tractor) not specified in role requirements."
+      ],
+      "correction_prompt": "Replace Image 3 with elevated concrete-pad equipment still life showing complete fixed filter, gauge, regulator and manifold with AFP two-coil pair at far edge; remove tractor and hay bales.",
+      "panel_scores": [
+        65
+      ],
+      "set_attempt": 3
     }
   ]
 }

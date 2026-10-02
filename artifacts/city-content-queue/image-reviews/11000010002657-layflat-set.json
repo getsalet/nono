@@ -1,23 +1,57 @@
 {
   "source_id": "11000010002657-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Editorial Hero) correctly displays a wide, high-oblique view of a vast field with the product pair kept small and off-center in the foreground.",
-        "Role 2 (Selection Evidence) provides a focused technical comparison of the two coil types using a similar field environment, consistent with the selection context.",
-        "Role 3 (Headworks Detail) successfully shifts to a concrete pad environment featuring the required equipment (pump, gauges, manifold), with the product pair kept secondary.",
-        "Distinct camera angles and environmental structures (field vs. concrete pad) prevent layout duplication.",
-        "All product watermarks are present in the bottom-right corner without obstructing the subject matter."
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "No correction required.",
+      "reasons": [
+        "Role 2 uses nearly identical camera height and framing as Role 1 — both are ground-level angled shots of the two-coil pair with distant farm buildings, differing only in surface texture (tilled soil vs. pebbles). Neither achieves the steep near-overhead technical still-life perspective required for Selection Evidence.",
+        "Role 2 lacks the mandatory selection evidence cues (connector, diameter gauge, or comparison reference) demanded by the role specification."
+      ],
+      "correction_prompt": "Recreate Role 2 as a steep near-overhead shot (camera nearly perpendicular to ground) showing only the two-coil pair on textured soil with a visible connector fitting or diameter measurement cue in frame; eliminate background buildings and any other products.",
       "panel_scores": [
-        95
+        52
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Image 2 is a near-duplicate of Image 1: same low-elevated framing, same two-coil arrangement on the same soil plane, identical lighting and subject positioning. Role 2 requires a steep near-overhead technical still life showing selection evidence (connector/diameter cue), not another ground-level pair shot. Images 1 and 2 share identical camera height, environment, and composition, making them structurally redundant.",
+        "Image 1 qualifies as EDITORIAL HERO (wide elevated field, coils on soil plane). Image 3 qualifies as HEADWORKS DETAIL (concrete pad, pump/gauge visible, coils at edge). The missing role is Role 2: a distinctly different steep near-overhead shot on textured soil with only the two-coil pair and a selection cue (connector type or diameter marker) visible."
+      ],
+      "correction_prompt": "Replace image 2 with a steep near-overhead technical still life shot from above onto textured soil, showing only the integrated AFP two-coil pair and one clear selection cue (e.g., a visible connector fitting or diameter label), with no wide field background and no duplicate camera height from image 1.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Image 1) correctly delivers a wide elevated field view with both coils sharing the soil plane in the lower third; clear editorial hero.",
+        "Role 2 (Image 2) shows the two-coil pair on textured dark soil with crop residue and young plants; however the camera angle is low-ground rather than steep near-overhead, slightly softening the selection-evidence mandate but still functional.",
+        "Role 3 (Image 3) is clearly distinct: elevated equipment still life on a clean concrete pad with a complete blue pump assembly (gauge, filter, tank, manifold piping); the two coils sit at the near edge — matches the headworks detail brief.",
+        "Product identity is consistent across all three: AFP branded packaged coil and bare woven coil with correct watermark.",
+        "No duplicate camera/environment structure; each role occupies a distinct spatial register (wide field / ground-level soil layout / concrete-pad equipment)."
+      ],
+      "correction_prompt": "Image 2: re-render from a steep near-overhead (~60-75 degree) camera angle looking down onto the two-coil pair on textured bare soil; remove foreground sprouts; keep only the integrated two-coil pair in frame with one visible connector or diameter cross-section cue, no pump or other equipment.",
+      "panel_scores": [
+        88
+      ],
+      "set_attempt": 3
     }
   ]
 }
