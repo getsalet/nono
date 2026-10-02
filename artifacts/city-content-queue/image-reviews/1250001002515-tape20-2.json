@@ -1,18 +1,52 @@
 {
   "source_id": "1250001002515-tape20",
-  "family": "tape20",
   "kind": 2,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 92,
+      "product_width_percent": 14,
+      "product_height_percent": 17,
+      "product_x_center_percent": 38,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Image shows exactly one AFP white-and-blue cylindrical drip-tape carton roll on dark soil with unrolled segment displaying emitter points. Roll is proportionally sized within acceptable envelope (~14% width, ~17% height). Proper contact shadow, natural perspective, no cutout/halo appearance. Zero people or body parts. Watermark 'AFP | 09134922013' present in bottom-right. Steep near-overhead technical still life matches SELECTION EVIDENCE role blueprint. Distant fence and furrowed field provide contextual setting without extra commercial products.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 14% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 14% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 28,
+      "product_height_percent": 41,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: image contains two AFP drip-tape carton rolls (one standing upright in background, one lying horizontally in foreground). Criteria explicitly requires exactly one roll and lists 'second roll' as a hard reject condition. Only the foreground roll meets the size envelope; the background roll adds a second commercial package violation."
+      ],
+      "correction_prompt": "Regenerate with exactly one AFP white-and-blue cylindrical drip-tape carton roll only; remove the second standing roll in the background. Keep the single roll with an integrated drip-tape segment showing emitter points on dark soil.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 71,
+      "reasons": [
+        "Single AFP white-and-blue cylindrical drip-tape carton roll present with integrated unrolled segment showing repeated emitter points.",
+        "Width ~22% (within 18-38% envelope) and height ~30% (within ≤70% limit).",
+        "Off-center placement (~71% x-center), consistent with editorial preference, not a reject criterion.",
+        "Contact shadow and perspective on dark soil are physically plausible; no white halo or cutout appearance.",
+        "Zero people and zero human body parts.",
+        "No prohibited objects (bottle, jar, canister, bucket, fertilizer/pesticide container, second roll, layflat hose, pipe through roll, fake caption).",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Role: SELECTION EVIDENCE — near-overhead technical still life on dark soil with one integrated AFP carton and one straight drip-tape segment showing emitter points."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

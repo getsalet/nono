@@ -1,27 +1,55 @@
 {
   "source_id": "1230009002632-tape20",
-  "family": "tape20",
   "kind": 2,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 92,
-      "product_width_percent": 23,
-      "product_height_percent": 30,
-      "product_x_center_percent": 48,
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 14,
+      "product_height_percent": 7,
+      "product_x_center_percent": 68,
       "reasons": [
-        "Zero people or human body parts visible",
-        "Correctly features a single AFP white-and-blue cylindrical drip-tape roll",
-        "Roll dimensions and width are physically plausible",
-        "Required bottom-right AFP watermark is present",
-        "Emitter strip next to the roll provides the mandatory selection/technical evidence",
-        "Background context matches article brief",
-        "No forbidden containers or second commercial packages visible"
+        "Image meets all criteria: depicts exactly one AFP white-and-blue cylindrical drip-tape carton roll on dark soil, matching the 'SELECTION EVIDENCE' role with a steep near-overhead perspective and visible emitter points. The roll is correctly placed in the lower-right third. Required watermark 'AFP | 09134922013' is present in the bottom-right corner. No hard rejects apply: zero people, no extra commercial packages, proper contact shadows, and physically plausible geometry. Background infrastructure (pumps/filters) is acceptable.",
+        "",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 14% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 14% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 19,
+      "product_height_percent": 38,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "Hard reject: Image contains a second commercial package (carton box) in addition to the drip-tape roll, violating the requirement for exactly one AFP carton roll",
+        "Hard reject: Presence of both a carton AND a roll constitutes two commercial products, breaching the single-product mandate"
+      ],
+      "correction_prompt": "Generate image with only one AFP white-and-blue cylindrical drip-tape roll (no separate carton box). Keep the roll as the sole commercial product on dark soil with one drip-tape segment showing emitter points. Maintain the required watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 26,
+      "product_height_percent": 34,
+      "product_x_center_percent": 71,
+      "reasons": [
+        "Mandatory AFP watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Single AFP white-and-blue cylindrical drip-tape carton roll displayed on dark soil",
+        "Roll width approximately 26% (within 18-38% envelope) and height approximately 34% (within 70% maximum)",
+        "Straight drip-tape segment with visible emitter points extends from roll, demonstrating product functionality",
+        "No people, human body parts, or silhouettes present",
+        "No banned items (bottles, jars, cans, buckets, fertilizer/pesticide containers, second rolls, or commercial packaging)",
+        "Product shows natural contact shadow and physical integration with ground surface",
+        "Background consistent with agricultural context (dark soil with small green sprouts)",
+        "One integrated AFP carton with one straight drip-tape segment showing repeated emitter points fulfills SELECTION EVIDENCE role"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

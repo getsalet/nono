@@ -1,50 +1,25 @@
 {
   "source_id": "1250001002515-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
-    {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 33,
-      "product_height_percent": 31,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "Hard reject: A human (farmer) is clearly visible standing in the background, violating the zero people/human body parts rule.",
-        "Hard reject: The specified watermark text 'AFP | 09134922013' is missing from the image.",
-        "Hard reject: The image shows a generic drip tape roll rather than the mandated HEADWORKS DETAIL of a fixed filter, gauge, regulator, and manifold on a concrete pad.",
-        "Dimension failure: The product width is approximately 33% of the frame, exceeding the 30% maximum limit for a hard reject.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 33% to 12-30% of frame width."
-      ],
-      "correction_prompt": "Regenerate image with: no people, no humans, no body parts; bottom-right watermark exactly 'AFP | 09134922013'; subject is a fixed irrigation manifold/filter/gauge assembly on a concrete pad with one small 20cm AFP drip tape carton in the background (width <30%); no bottles, containers, or hoses. Reduce the product group from 33% to 12-30% of frame width.",
-      "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 0,
-      "product_width_percent": 30,
-      "product_height_percent": 32,
-      "product_x_center_percent": 47,
-      "reasons": [
-        "Presence of multiple people and human silhouettes in the background (far left, mid-left, and right side).",
-        "Background scene does not match the mandatory 'HEADWORKS DETAIL' role description of a fixed filter and manifold on a pad; instead, it shows a general farm landscape with a tractor and workers.",
-        "The presence of a tractor and farmers in the background contradicts the 'no farm activity' requirement for the mandatory role.",
-        "Multiple commercial products in the background (tractor, various containers) violate the 'exactly one AFP carton' requirement."
-      ],
-      "correction_prompt": "Remove all people, farmers, and tractors from the background. Replace the background with a concrete pad featuring a fixed irrigation filter and manifold system in an empty, equipment-only setting. Ensure the single AFP tape roll remains clearly visible and secondary to the infrastructure.",
-      "attempt": 2
-    },
     {
       "pass": true,
       "score": 82,
       "product_width_percent": 24,
-      "product_height_percent": 21,
-      "product_x_center_percent": 43,
-      "reasons": [],
+      "product_height_percent": 22,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Single AFP white-and-blue cylindrical drip-tape roll present, within width (24%) and height (22%) envelopes.",
+        "Headworks detail role fulfilled: pressure gauge, regulator, manifold, coiled hose on concrete pad with distant field context.",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Zero people, body parts, or human silhouettes detected.",
+        "No hard-reject violations: no second roll, layflat hose through roll, bottle/jar/canister/bucket, fertilizer or pesticide container, fake caption, impossible geometry, or halo/cutout appearance.",
+        "Cardboard AFP-branded box in background appears to be product packaging, not an extra commercial product."
+      ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 1
     }
   ]
 }
