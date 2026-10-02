@@ -1,62 +1,34 @@
 {
   "source_id": "1060005001276-tape20",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
       "score": 45,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "duplicate_roles": [],
       "reasons": [
-        "Insufficient quantity: The prompt requests a review of five images, but only four are provided.",
-        "Role 1 (Editorial Hero) failure: The AFP carton is the dominant foreground subject. The brief requires the farm to dominate and the carton to remain small on the lower third; here the product is the visual anchor.",
-        "Role 2 (Selection Evidence) failure: The background tractor and barn are identical to Role 1, violating the requirement for distinct environments.",
-        "Role 2 (Selection Evidence) failure: The blue manifold/filtration unit is a piece of hardware, not 'emitter-spacing or field-selection evidence.'",
-        "Role 4 (Installation Proof) failure: The image contains a centered vanishing point where the drip tape leads into the distance, which is explicitly prohibited.",
-        "Role 4 (Installation Proof) failure: The composition includes a tractor in the background, violating the instruction to reject 'furrow-field plus tractor compositions'."
+        "Role 1 (Image 1) fails the 'elevated' requirement as the camera angle is ground-level, looking down the rows rather than from a high vantage point.",
+        "Role 3 (Image 3) fails placement requirements: the AFP carton is in the foreground right, not at the far edge, and extra branded cardboard boxes are present in the background."
       ],
-      "correction_prompt": "Generate the missing 5th image for Role 5 (Maintenance Detail) showing a close-up of an emitter. Re-shoot Role 1 to show a wide high-oblique view of the farm with the carton small in the foreground. Re-shoot Role 2 to display an in-field tape roll layout showing emitter spacing (no hardware manifold) and remove the tractor background to distinguish it from Role 1. Re-shoot Role 4 to use an asymmetric angle without a centered vanishing point and remove the tractor.",
+      "correction_prompt": "Reshoot Role 1 from a high elevation (drone or lift) looking down on the field rows to establish the elevated hero perspective; Reshoot Role 3 with the AFP carton placed at the far background edge and remove the extra branded cardboard boxes.",
+      "panel_scores": [
+        45
+      ],
       "set_attempt": 1
     },
     {
-      "pass": false,
-      "score": 45,
-      "duplicate_roles": [
-        2,
-        3,
-        4
-      ],
+      "pass": true,
+      "score": 95,
+      "duplicate_roles": [],
       "reasons": [
-        "The prompt specifies 5 required editorial roles (Hero, Selection, Headworks, Installation, Maintenance), but only 4 images are provided, so the set is incomplete and the required 'MAINTENANCE DETAIL' (Role 5) is missing.",
-        "Role 1 (EDITORIAL HERO) fails the specific composition constraints: the product (a roll and a loose tape) is not a 'carton' as specified, and the tape is positioned centrally in the lower third rather than 'off-center', dominating the foreground rather than staying 'small'.",
-        "Role 2 (SELECTION EVIDENCE) fails: the background features a tractor, which is explicitly prohibited in the rejection criteria ('Reject... furrow-field plus tractor compositions'). Additionally, the 'technical arrangement' is cluttered with a large blue filter unit that dominates the shot, making the product 'secondary' when it should be the main subject.",
-        "Role 3 (HEADWORKS STORY) fails: The shot is dominated by the roll in the foreground. It is not a 'medium side view' of the hardware (filter/gauge/manifold) as required; the hardware is merely a prop in the background. Furthermore, 'hardware duplication' is a rejection trigger, and this image duplicates the hardware from image 2.",
-        "Role 4 (INSTALLATION PROOF) fails: The image is not asymmetric and uses a centered product placement. The 'installed drip tape' is barely visible as a blurry white line in the background rather than clearly showing 'crop beds' and the tape in use.",
-        "General Rejection Criteria: The brief explicitly lists 'generic farms' as a reason to reject. The backgrounds in images 1, 2, and 3 show generic wheat/plowed fields with distant barns/tractors, which are 'generic' and fail to convey the specific 'Bander-Mahshahr' coastal agriculture context mentioned in the article brief."
+        "All three roles are clearly distinct in camera height, surface, and technical narrative. Role 1 is a wide elevated field view with long crop rows and an AFP roll in the lower-left third. Role 2 is a steep near-overhead technical still life on dark soil with one AFP carton and a straight drip-tape segment showing repeated emitter points. Role 3 is an elevated equipment still life on a clean concrete pad with a complete fixed filter, pressure gauge, regulator, manifold, and one AFP carton at the right edge. No near-duplicates, no missing mandatory evidence, no living subjects, no extra commercial products, and no physically implausible integration.",
+        "Role 1: editorial hero — wide elevated field, long crop geometry, AFP carton lower-left third, farm visible, watermark present. Role 2: selection evidence — steep near-overhead soil layout, AFP carton + unrolled drip-tape with visible emitter dots, watermark present. Role 3: headworks detail — elevated concrete-pad equipment still life, complete filter/gauge/regulator/manifold assembly, AFP carton at far edge, watermark present."
       ],
-      "correction_prompt": "Regenerate the full set of 5 images with a specific coastal/irrigated field context for Bandar Mahshahr (avoid generic desert wheat fields and tractors); ensure Role 1 uses a small off-center carton; Role 2 features a clean, static technical layout without vehicles; Role 3 strictly frames the headworks hardware; Role 4 is a wide asymmetric crop-bed shot; and Role 5 is a close-up of an emitter.",
+      "correction_prompt": "No corrections needed — all three roles meet their specifications.",
+      "panel_scores": [
+        95
+      ],
       "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 22,
-      "duplicate_roles": [
-        3,
-        4,
-        5
-      ],
-      "reasons": [
-        "Role count mismatch: Only four images are provided for five required editorial roles.",
-        "Role 5 missing: There is no close-up maintenance detail image of an emitter, connector, or flush point.",
-        "Role 4 violation (Image 3): The brief explicitly forbids a centered vanishing point for the 'Installation Proof' role, but Image 3 uses a perfect symmetrical centered perspective leading to the tractor in the background.",
-        "Role 3 violation (Image 4): The brief requires a 'medium side view of unattended fixed filter' for this role, but Image 4 shows a close-up of the roll and tape with a tractor in the background, lacking the required hardware focus.",
-        "Generic elements: Image 4 acts as a visual duplicate of the generic field/tractor composition found in Image 3, failing to provide distinct narrative value."
-      ],
-      "correction_prompt": "Regenerate Role 5 as a macro close-up of the drip-tape emitter and flush point. Replace Image 4 (Role 3) with a side-view of unattended fixed filtration hardware, and redo Image 3 (Role 4) with an asymmetric, off-center composition of the installed crop beds.",
-      "set_attempt": 3,
-      "accepted_individual_qa_fallback": true
     }
   ]
 }
