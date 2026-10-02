@@ -1,0 +1,149 @@
+{
+  "source_id": "10600017001061-tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v22",
+  "approved": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "visual reviewer unavailable: TimeoutError"
+      ],
+      "correction_prompt": "Regenerate and retry strict visual review.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 33,
+      "product_height_percent": 42,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: A person (farmer/work silhouette) is visible in the upper-left background, standing near the open cardboard box. Zero people and zero human body parts are mandatory requirements.",
+        "Hard reject: An open cardboard shipping box is present in the background, constituting a second commercial package.",
+        "The AFP drip-tape roll itself meets the approved width (approx. 33%) and height (approx. 42%) envelope and is visually plausible.",
+        "The watermark 'AFP | 09134922013' is correctly placed in the bottom-right corner."
+      ],
+      "correction_prompt": "Regenerate with exactly one AFP white-and-blue drip-tape carton roll as the sole commercial object; remove all people, human silhouettes, and any second commercial package (cardboard box, bottle, etc.) from the frame.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 22,
+      "product_width_percent": 31,
+      "product_height_percent": 48,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Multiple people visible working in the background field (hard reject: zero people allowed)",
+        "Background shows active farm activity with tractors and workers, violating HEADWORKS DETAIL role requirement",
+        "Image depicts an active agricultural scene rather than an equipment-only elevated record photograph on an empty concrete pad",
+        "Cardboard box beside the roll does not match the required setup of filter, gauge, regulator and manifold"
+      ],
+      "correction_prompt": "Generate a HEADWORKS DETAIL image: one fixed irrigation filter, pressure gauge, regulator and manifold assembly on an empty concrete pad with no people, no tractors, no farm activity. Place exactly one small AFP drip-tape carton as secondary element. Include bottom-right watermark AFP | 09134922013.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 28,
+      "product_width_percent": 29,
+      "product_height_percent": 50,
+      "product_x_center_percent": 37,
+      "reasons": [
+        "Wrong image role: brief mandates HEADWORKS DETAIL with the carton roll as small and secondary, but this image makes the roll the dominant primary subject",
+        "Carton roll exceeds maximum height envelope — approximately 50% of frame height exceeds the approved limit",
+        "Second commercial package present: AFP-branded cardboard box placed beside the roll violates the one-roll rule",
+        "Red truck in background is commercial vehicle and distracts from the required infrastructure-only HEADWORKS DETAIL composition",
+        "Composition centers the roll rather than placing it lower-third or off-center as editorial preference"
+      ],
+      "correction_prompt": "Regenerate as HEADWORKS DETAIL: fixed filter/gauge/regulator/manifold on empty concrete pad with the AFP drip tape carton roll appearing small and secondary; remove the second AFP cardboard box and the red truck; keep the roll within 18-38% width and under 70% height; place roll lower-third and off-center; retain the AFP watermark in bottom-right",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 22,
+      "product_height_percent": 32,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Second commercial package present: a cardboard AFP-branded box visible in the mid-background, constituting a second roll/package which is a hard reject",
+        "Distant tractor is acceptable per guidelines",
+        "Watermark AFP | 09134922013 correctly present",
+        "No people or human body parts detected",
+        "Roll width and height within acceptable envelope"
+      ],
+      "correction_prompt": "Remove the brown cardboard AFP box from the background; keep only the single white-and-blue AFP drip-tape carton roll as the sole commercial package. Retain the filter/gauge/regulator equipment on the concrete pad.",
+      "attempt": 5
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 48,
+      "product_x_center_percent": 31,
+      "reasons": [
+        "Hard reject: human person visible in background (right side, bending over working in field)",
+        "Hard reject: possible human silhouette or figure in left background (yellow bent shape)",
+        "Background contains active farm labor which violates zero-person requirement",
+        "Product (AFP carton) is correctly identified, sized within envelope, and placed appropriately"
+      ],
+      "correction_prompt": "Remove all humans and human silhouettes from background; keep only distant unattended tractor and farm infrastructure; ensure absolutely zero people or body parts visible anywhere in frame",
+      "attempt": 6
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 42,
+      "product_height_percent": 58,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Role mismatch: article requires HEADWORKS DETAIL (equipment-only elevated record of filter/gauge/regulator/manifold on concrete pad) with roll small/secondary; image shows roll as primary subject in field setting.",
+        "Hard reject: second commercial package – brown cardboard box labeled 'AFP' present next to roll.",
+        "Product width exceeds 38% envelope (~42%).",
+        "Perspective and lighting are plausible, no human elements, watermark correct.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 42% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Generate a HEADWORKS DETAIL shot: empty concrete pad with fixed irrigation equipment (filter, gauge, regulator, manifold) as main subject; place one AFP white-and-blue drip-tape carton roll small and secondary, lower-third/off-center; remove all other commercial packaging; keep distant tractor acceptable; preserve bottom-right AFP watermark. Reduce the product group from 42% to 18-38% of frame width.",
+      "attempt": 7
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Hard reject: second AFP carton roll present (two rolls visible, rule requires exactly one)",
+        "Hard reject: main roll is too dominant in frame; HEADWORKS DETAIL role requires exactly one approved carton remaining small and secondary with equipment as primary focus",
+        "Two commercial packages violate the single-product constraint"
+      ],
+      "correction_prompt": "Regenerate with exactly one AFP white-and-blue drip-tape carton roll as a small secondary element beside elevated filter/gauge/regulator/manifold equipment on an empty concrete pad. Remove the second roll entirely. Keep the product narrow and off-center so the irrigation hardware dominates the composition. Retain the bottom-right watermark AFP | 09134922013.",
+      "attempt": 8
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "reasons": [
+        "visual reviewer unavailable: TimeoutError"
+      ],
+      "correction_prompt": "Regenerate and retry strict visual review.",
+      "attempt": 9
+    },
+    {
+      "pass": false,
+      "score": 28,
+      "product_width_percent": 32,
+      "product_height_percent": 41,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "HARD REJECT: Person visible in background operating a tractor in the field.",
+        "HARD REJECT: Second commercial package present — open cardboard box with packaging material visible next to the roll.",
+        "Role mismatch: HEADWORKS DETAIL requires equipment-only elevated record photo with the carton small and secondary; here the carton dominates the frame.",
+        "Background context mismatch: image shows Western-style farm with hay bales and barn, not Khuzestan/Iran agricultural setting (تراز، لالی، خوزستان).",
+        "Watermark present and correct: AFP | 09134922013."
+      ],
+      "correction_prompt": "Generate an elevated headworks-detail photograph of one fixed filter, gauge, regulator and manifold on an empty concrete pad in an Iranian agricultural setting (Khuzestan). Place the single AFP white-and-blue drip-tape carton small and secondary in frame. Zero people, zero additional commercial packages, no hay bales or barns.",
+      "attempt": 10
+    }
+  ]
+}
