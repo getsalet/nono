@@ -1,47 +1,48 @@
 {
   "source_id": "10700012002951-tape20",
-  "family": "tape20",
   "kind": 1,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 20,
-      "product_width_percent": 13,
-      "product_height_percent": 31,
-      "product_x_center_percent": 48,
+      "score": 45,
+      "product_width_percent": 34,
+      "product_height_percent": 27,
+      "product_x_center_percent": 35,
       "reasons": [
-        "Hard reject: A human figure (farmer/worker) is visible in the middle of the field, which is a standalone hard reject for this role."
+        "The text on the AFP roll contains gibberish ('Drp Irrigation Tpe' instead of 'Drip Irrigation Tape'), which is a hard reject. Additionally, the roll's geometry is extremely squat and wide, appearing more like a disk than a typical cylindrical tape roll, though dimensions technically fall within the envelope."
       ],
-      "correction_prompt": "Regenerate image removing the human figure completely to leave an unattended farm landscape with only the one product roll.",
+      "correction_prompt": "Regenerate with correct, legible text on the roll ('AFP Drip Irrigation Tape') and ensure the roll has a more realistic cylindrical proportion for drip tape packaging.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 30,
-      "product_width_percent": 19,
-      "product_height_percent": 21,
-      "product_x_center_percent": 44,
+      "score": 92,
+      "product_width_percent": 16,
+      "product_height_percent": 38,
+      "product_x_center_percent": 30,
       "reasons": [
-        "Hard reject due to the presence of a person standing in the crop rows on the right side of the image."
+        "AFP white-and-blue cylindrical drip-tape carton roll present and physically integrated into the soil with correct contact shadow",
+        "Width at ~16% and height at ~38% are within acceptable envelope (18-38% width, up to 70% height)",
+        "Lower-third, off-center (left) placement matches editorial preference for EDITORIAL HERO role",
+        "Wide elevated field view with long crop geometry and farm building in background",
+        "No people, body parts, or silhouettes present",
+        "No extra commercial packages, bottles, cans, or layflat hose passing through the roll",
+        "Mandatory 'AFP | 09134922013' watermark present in bottom-right corner",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 16% to 18-38% of frame width."
       ],
-      "correction_prompt": "Remove the person/farmer standing in the crop rows; keep the farm context and irrigation infrastructure with the carton roll.",
+      "correction_prompt": "Enlarge the product group from 16% to 18-38% of frame width.",
       "attempt": 2
     },
     {
       "pass": true,
-      "score": 100,
-      "product_width_percent": 18,
+      "score": 88,
+      "product_width_percent": 21,
       "product_height_percent": 22,
-      "product_x_center_percent": 48,
+      "product_x_center_percent": 28,
       "reasons": [
-        "The image displays exactly one AFP white-and-blue cylindrical drip-tape carton roll as required.",
-        "The product dimensions (approx 18% width, 22% height) fall well within the acceptable 12-30% width and up to 35% height parameters.",
-        "The roll is positioned in the lower third of the frame, fully visible and off-center, adhering to the editorial hero role.",
-        "No people, human body parts, or unauthorized objects (like bottles, cans, or second rolls) are present in the scene.",
-        "The background effectively showcases farm and irrigation context (crop rows) with the farm dominating the view while the product remains appropriately small.",
-        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted."
+        "Correct AFP white-and-blue cylindrical drip-tape carton roll present; zero people or body parts; proper editorial hero composition with wide elevated field view and long crop geometry; roll integrated on lower-left third with physical contact shadow; required AFP watermark present; dimensions within acceptable envelope (width ~21%, height ~22%)."
       ],
       "correction_prompt": "",
       "attempt": 3

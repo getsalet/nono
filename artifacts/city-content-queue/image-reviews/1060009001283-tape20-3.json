@@ -1,84 +1,29 @@
 {
   "source_id": "1060009001283-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": false,
-      "score": 40,
-      "product_width_percent": 28,
-      "product_height_percent": 30,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "Text on the carton roll is gibberish ('AFP Drip Hytksuuo Tape'), which is a hard reject.",
-        "The image fails the 'HEADWORKS DETAIL' role which mandates an elevated record photo of fixed filters, gauges, and regulators; the current image shows a single roll on a concrete pad.",
-        "The background features a tractor and farm equipment, which contradicts the 'empty concrete pad' and 'no farm activity' brief requirement."
-      ],
-      "correction_prompt": "Regenerate an elevated record photograph of one fixed filter, gauge, regulator, and manifold on an empty concrete pad. Include exactly one small AFP white-and-blue drip-tape carton roll with clear, legible labeling in the background. No farm equipment or activity.",
-      "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 15,
-      "product_width_percent": 25,
-      "product_height_percent": 28,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "Hard reject: Multiple human figures are visible in the background, including a standing worker on the left and another on the right near the tractor.",
-        "Hard reject: The mandatory role is 'HEADWORKS DETAIL' showing an 'equipment-only' filter/gauge/manifold on an empty pad. This image is a wide landscape shot that fails to focus on the required infrastructure equipment.",
-        "Hard reject: Contains multiple 'second commercial packages' (a large box) and 'second rolls' (small filters/regulators on the ground) in addition to the main product.",
-        "Hard reject: The background shows active farm machinery (tractor), which violates the 'no farm activity' and 'empty concrete pad' requirements."
-      ],
-      "correction_prompt": "Regenerate as a close-up 'HEADWORKS DETAIL' shot of a fixed filter, gauge, and manifold on an empty concrete pad. Include exactly one small AFP drip-tape carton roll as a secondary object. Remove all people, workers, and active farm machinery (tractors) from the scene. Ensure the background is static infrastructure only.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 32,
-      "product_height_percent": 42,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "Contains two separate rolls: a large primary roll and a small secondary roll on the right, violating the 'exactly one' and 'zero second roll' rules.",
-        "The main roll's width (~32%) and height (~42%) significantly exceed the hard reject limits of 30% and 35%.",
-        "Image fails the mandatory 'HEADWORKS DETAIL' role which requires a view of a fixed filter, gauge, regulator, and manifold; the image shows only product rolls on a pad.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 12-30% of frame width.; Reduce product height from 42% to at most 35% of frame height."
-      ],
-      "correction_prompt": "Regenerate image showing a single fixed irrigation manifold and filter system (no drip tape rolls) on a concrete pad. If a roll is included, it must be very small (<20% width) and secondary. Remove the extra roll on the right. Ensure primary object dimensions are strictly under 30% width and 35% height. Reduce the product group from 32% to 12-30% of frame width. Reduce product height from 42% to at most 35% of frame height.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 30,
-      "product_width_percent": 20,
-      "product_height_percent": 20,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "Zero people rule violated: Three human figures are visible in the background of the image.",
-        "Role violation: The image does not show the required equipment (filter, gauge, regulator, and manifold); it only shows a single roll of tape on a concrete pad.",
-        "Distractor objects: A tractor is visible in the background."
-      ],
-      "correction_prompt": "Remove all human figures and the tractor from the scene. Repopulate the concrete pad with a fixed irrigation filter system, gauge, regulator, and manifold to satisfy the 'HEADWORKS DETAIL' role. Maintain the AFP tape roll as a secondary, smaller element. Keep the watermark.",
-      "attempt": 4
-    },
-    {
       "pass": true,
-      "score": 82,
+      "score": 72,
       "product_width_percent": 22,
-      "product_height_percent": 28,
-      "product_x_center_percent": 42,
+      "product_height_percent": 32,
+      "product_x_center_percent": 68,
       "reasons": [
-        "Shows exactly one AFP white-and-blue wide cylindrical drip-tape carton roll with the required bottom-right watermark.",
-        "Roll dimensions are within the acceptable estimation ranges (width ~22%, height ~28%).",
-        "Zero people or human body parts visible.",
-        "Background contains a distant unattended tractor and ordinary farm building, which are allowed when contextually relevant.",
-        "Fixed irrigation hardware (filters, gauges, manifold) is present but secondary, consistent with the 'equipment-only' role.",
-        "No hard reject triggers such as bottles, jars, cans, or multiple rolls."
+        "AFP white-and-blue cylindrical drip-tape carton roll present and physically plausible",
+        "Zero people or human body parts in frame",
+        "Required 'AFP | 09134922013' watermark present in bottom-right",
+        "Roll width 22% (within 18-38% envelope), height 32% (within 70% max)",
+        "Off-center placement, consistent with editorial preference",
+        "Pressure gauges and wheeled manifold cart constitute fixed irrigation infrastructure",
+        "Cardboard AFP-branded box is product packaging, not a separate commercial product",
+        "Distant crop rows and farm structures are contextually appropriate",
+        "Clean concrete pad supports the headworks-detail role",
+        "No white halo, cutout appearance, or impossible geometry detected"
       ],
       "correction_prompt": "",
-      "attempt": 5
+      "attempt": 1
     }
   ]
 }
