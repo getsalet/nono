@@ -1,48 +1,34 @@
 {
   "source_id": "10800013002240-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 68,
-      "product_height_percent": 35,
-      "product_x_center_percent": 48,
+      "score": 42,
+      "product_width_percent": 48,
+      "product_height_percent": 28,
+      "product_x_center_percent": 38,
       "reasons": [
-        "The image is missing the mandatory 'HEADWORKS DETAIL' content: it shows two coils on a concrete pad, but lacks the required equipment (fixed pump, gauge, manifold) on an elevated concrete pad.",
-        "The product pair exceeds the 65 percent hard reject threshold (estimated width is ~68 percent).",
-        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+        "Role mismatch: the image shows coils placed on ground-level concrete in an open field with a tractor in the background, not 'elevated equipment still life on a clean concrete pad with fixed pump, gauge and manifold.' No fixed pump, gauge, or manifold is visible anywhere in the scene.",
+        "The required HEADWORKS DETAIL role blueprint—elevated setup with integrated fixed pump/gauge/manifold infrastructure—is entirely absent."
       ],
-      "correction_prompt": "Regenerate to show a record photograph of one fixed pump, gauge, and manifold on an empty concrete pad. Make the two approved coils small, separate, and secondary. Ensure the total product width is under 65 percent of the frame. Reduce the product group from 68% to 8-65% of frame width.",
+      "correction_prompt": "Re-render as HEADWORKS DETAIL: place the two-coil pair on an elevated clean concrete platform or pad in the foreground, with a fixed pump, pressure gauge, and manifold assembly visibly integrated nearby as permanent infrastructure. Remove the tractor from the background. Keep both coils fully visible, separate, and physically grounded with contact shadows. Maintain the AFP | 09134922013 watermark in the bottom right.",
       "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 10,
-      "product_width_percent": 0,
-      "product_height_percent": 0,
-      "product_x_center_percent": 0,
-      "reasons": [
-        "Hard reject: A visible person (farmer/worker) is present in the background on the right side.",
-        "Hard reject: The background contains farm activity (person walking) which violates the mandatory 'no farm activity' rule for the headline equipment detail role.",
-        "The image fails the 'zero people' strict constraint.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
-      ],
-      "correction_prompt": "Regenerate: An empty concrete pad with no people, no walking figures, and no active farm machinery. Feature the two coils (one packaged, one bare) and the required fixed pump/gauge/manifold infrastructure. Enlarge the product group from 0% to 8-65% of frame width.",
-      "attempt": 2
     },
     {
       "pass": true,
       "score": 95,
-      "product_width_percent": 35,
-      "product_height_percent": 25,
-      "product_x_center_percent": 55,
-      "reasons": [],
+      "product_width_percent": 55,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil. Zero people. Width fits 25-82% envelope. Role 'HEADWORKS DETAIL' correctly depicted with pump/gauge/manifold infrastructure allowed. Watermark 'AFP | 09134922013' present and correct.",
+        ""
+      ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 2
     }
   ]
 }

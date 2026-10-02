@@ -1,21 +1,36 @@
 {
   "source_id": "1080001001328-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 38,
-      "product_height_percent": 15,
-      "product_x_center_percent": 50,
+      "pass": false,
+      "score": 28,
+      "product_width_percent": 62,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Approved two-coil pair present and secondary; gauge/manifold infrastructure included per the role; no visible people or human body parts; watermark correctly present in the bottom right."
+        "Wrong role: image shows a field/agricultural setting with a tractor and plowed earth, not the required HEADWORKS DETAIL with fixed pump, gauge, and manifold on a clean concrete pad.",
+        "Missing mandatory watermark 'AFP | 09134922013' — no watermark is visible anywhere on the image.",
+        "Tractor present in mid-ground implies a driver/operator, violating the zero-people requirement.",
+        "Background is open farmland with distant farm buildings, not the specified elevated equipment still life with installed plumbing infrastructure."
+      ],
+      "correction_prompt": "Regenerate as HEADWORKS DETAIL: two-coil pair (one packaged AFP coil, one bare black woven coil) on a clean concrete pad foreground with an integrated fixed pump, pressure gauge, and manifold assembly visible; no people, no tractor, no open field background; include bottom-right watermark AFP | 09134922013.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 48.5,
+      "product_height_percent": 22.1,
+      "product_x_center_percent": 31.2,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil. Combined width is within the 25-82% envelope. Role is correctly executed as HEADWORKS DETAIL with elevated equipment on a concrete pad and fixed pump/gauge infrastructure. The required watermark is present and legible in the bottom right. Zero human elements detected. Perspective and shadows are physically plausible.",
+        ""
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

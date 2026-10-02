@@ -1,25 +1,38 @@
 {
   "source_id": "10900043001054-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 75,
-      "product_width_percent": 60,
-      "product_height_percent": 28,
-      "product_x_center_percent": 50,
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 58,
+      "product_height_percent": 32,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Contains required AFP watermark 'AFP | 09134922013' at bottom-right",
-        "No visible people or body parts",
-        "Contains one packaged AFP coil and one bare black woven coil",
-        "Both objects are fully visible, separate, and physically plausible",
-        "Product pair width (~60%) is at the upper limit but acceptable under the noise tolerance (8-65%) for noisy estimates"
+        "Person visible in background sitting on equipment — hard reject; no fixed pump/gauge/manifold present for HEADWORKS DETAIL role; scene is open field with tractor and crops, not elevated equipment still life on clean concrete pad"
+      ],
+      "correction_prompt": "Generate HEADWORKS DETAIL: two-coil pair (one packaged AFP, one bare black woven) at far edge of clean concrete pad with fixed pump, gauge, and manifold in foreground/midground; zero people; no person, tractor, crops, or farm building in scene; AFP watermark bottom-right.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 46,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil (left) and one bare black woven coil (right), both fully visible and separate.",
+        "Combined width approximately 46% of frame, within the 25–82% envelope.",
+        "Zero people, zero human body parts, zero silhouettes detected.",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "No pasted/cutout appearance, no white halo, contact shadows plausible.",
+        "No third commercial package, bottle, jar, or canister; background equipment is infrastructure only.",
+        "Role: HEADWORKS DETAIL — elevated concrete pad with wheeled pump/gauge/manifold assembly in background; two-coil pair at near edge. Physically integrated and coherent."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
