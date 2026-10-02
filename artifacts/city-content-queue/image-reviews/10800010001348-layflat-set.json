@@ -1,22 +1,39 @@
 {
   "source_id": "10800010001348-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Editorial Hero): Successfully establishes the water-transfer context with a high-oblique wide shot; the packaged coil and bare coil are distinct, off-center, and appropriately sized relative to the environment.",
-        "Role 2 (Selection Evidence): Acts as a technical comparison using a low-angle perspective; the diameter and texture difference between the two coil types is clearly visible, fulfilling the 'selection' role without adding forbidden elements.",
-        "Role 3 (Headworks Detail): Provides a completely distinct visual environment using a concrete pad and fixed pump; the coils are present as secondary elements without any farm activity, adhering to the hardware-only instruction.",
-        "All three panels are visibly distinct in camera height, environment structure (soil vs. concrete), and technical narrative, avoiding layout duplication."
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "No correction required; the set successfully meets the editorial visual brief.",
+      "reasons": [
+        "Images 1 and 2 are near-duplicate field-level compositions showing the same two-coil arrangement from nearly identical camera heights and angles on similar soil planes, failing the requirement for distinct camera height/surface/technical narrative.",
+        "Image 2 does not achieve a steep near-overhead perspective and lacks visible selection evidence such as a connector or diameter cue.",
+        "Image 3 is missing mandatory role evidence: there is no fixed pump, gauge, regulator, or manifold on the concrete pad—only a distant tractor in soft focus.",
+        "Camera height and environment are not sufficiently distinct between roles 1 and 2 to satisfy the clear-differentiation criterion."
+      ],
+      "correction_prompt": "Recompose Image 2 as a steep near-overhead technical still life shot from directly above on bare textured soil with tight framing showing only the integrated two-coil pair and one visible connector or diameter comparison cue, eliminating any wide-field context; reframe Image 3 to prominently feature a complete fixed filtration system with visible pump, pressure gauge, regulator, and manifold assembly on the clean concrete pad with the two-coil pair at the far foreground edge.",
       "panel_scores": [
-        95
+        42
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [],
+      "reasons": [
+        "Image 3 is missing mandatory headworks evidence: no fixed pump, pressure gauge, or regulator manifold is visible on the concrete pad; a blue barrel and blurry tractor replace the required complete fixed filtration/regulation assembly.",
+        "Image 1 contains a visible living subject (person standing near tank on right), which is a rejection condition."
+      ],
+      "correction_prompt": "Regenerate image 3 as an elevated concrete-pad equipment still life featuring a complete fixed sand/filter media canister, clearly visible pressure gauge, pressure regulator, and PVC manifold block arranged as a headworks station, with the two-coil AFP pair placed only at the far edge; regenerate image 1 without any visible person in frame.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 2
     }
   ]
 }

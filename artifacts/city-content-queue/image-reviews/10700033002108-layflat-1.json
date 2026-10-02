@@ -1,39 +1,36 @@
 {
   "source_id": "10700033002108-layflat",
-  "family": "layflat",
   "kind": 1,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 62,
-      "product_width_percent": 62,
-      "product_height_percent": 32,
-      "product_x_center_percent": 50,
+      "score": 35,
+      "product_width_percent": 67,
+      "product_height_percent": 55,
+      "product_x_center_percent": 51.5,
       "reasons": [
-        "The total visual width of the two coils spans 62% of the frame, significantly exceeding the preferred 12-20% range and the 42% hard reject limit.",
-        "An unattended green tractor is visible in the left background; per instructions, a distant unattended tractor is allowed as relevant infrastructure but contributes to the clutter and scale mismatch.",
-        "The placement is centered rather than off-center, which is not a hard reject but contributes to a generic composition that fails the high-oblique 'EDITORIAL HERO' style preference.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-42% of frame width."
+        "Hard reject: image contains a third coil (upright black coil with valve assembly) in addition to the required packaged AFP coil and bare black woven coil. The prompt strictly requires only a pair and forbids a third coil or commercial package.",
+        "extra_valve_assembly_present"
       ],
-      "correction_prompt": "Regenerate the image with the two coils significantly smaller, occupying no more than 20% of the frame width. Position them off-center in the lower-left area. Maintain the wide high-oblique agricultural context with distant crop rows and infrastructure. Ensure no human figures are visible. Reduce the product group from 62% to 8-42% of frame width.",
+      "correction_prompt": "Remove the upright black coil and orange valve/gauge assembly on the right side; keep only the packaged AFP coil on the left and the flat bare black woven coil next to it in the lower third of the field view.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 28,
+      "score": 82,
+      "product_width_percent": 65,
       "product_height_percent": 22,
-      "product_x_center_percent": 32,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil.",
-        "Zero people, human body parts, or human silhouettes detected.",
-        "Products are separate, fully visible, physically plausible, and occupy ~28% of the frame width (within the 8–42% acceptance range for this role).",
-        "The required bottom-right watermark 'AFP | 09134922013' is present and clearly legible.",
-        "The high-oblique field context aligns with the requested EDITORIAL HERO role.",
-        "Lower-left placement is treated as an editorial preference, not a hard reject.",
-        "No third commercial package, bottle, jar, canister, bucket, or invented product is visible."
+        "Editorial hero role correctly shown: wide elevated water-transfer field view with two coils on soil plane in lower third.",
+        "One packaged AFP coil and one bare black woven coil present and recognizable.",
+        "Combined product width ~65% of frame, within 25-82% envelope.",
+        "Zero people or body parts present.",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Valve/gauge assembly to the right is relevant irrigation infrastructure, not a third commercial product.",
+        "Physical shadows and perspective are consistent; objects rest naturally on soil."
       ],
       "correction_prompt": "",
       "attempt": 2
