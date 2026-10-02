@@ -1,22 +1,54 @@
 {
   "source_id": "10700012002555-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 successfully delivers the editorial hero shot with a wide high-oblique perspective of the water-transfer context. The product coils are kept small, separate, and off-center as requested.",
-        "Panel 2 effectively shows the selection evidence with a low-angle technical comparison of the two coil types, highlighting the structural difference. The distant tractor in the background is correctly interpreted as allowed context, not active farm work.",
-        "Panel 3 meets the headworks detail role by showing equipment on a concrete pad. It maintains the product identity as a secondary element without human interference.",
-        "All panels maintain distinct camera angles and environments, aligning with the required visual narrative without prohibited elements like generic farm activity or oversized products."
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "In Panel 1, slightly reduce the visual prominence of the coiled products to better emphasize the wide field context, and ensure the high-oblique angle is steeper to match the editorial hero specification.",
+      "reasons": [
+        "Role 2 depicts a low-angle ground shot rather than a steep near-overhead view and lacks the required connector or diameter cue; it shares the same low camera height and soil environment as Role 1, creating a near-duplicate structure.",
+        "Role 3 positions the integrated coil pair in the foreground instead of at the far edge as specified, with the pump assembly appearing in the background."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a steep top-down technical shot on soil showing the coils and a connector detail; reposition the coil pair to the far edge of the concrete pad in Role 3, keeping the pump assembly closer to the camera or ensuring the narrative places the coils at the back.",
       "panel_scores": [
-        85
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 fails the 'steep near-overhead' requirement; the camera angle is too low and side-facing, resembling a standard close-up rather than a technical top-down view.",
+        "Role 3 fails the composition requirement for 'Headworks Detail'; the product coils are placed in the immediate foreground instead of the far edge, while the pump and equipment are relegated to the blurry background."
+      ],
+      "correction_prompt": "Role 2: Recapture as a true 90-degree overhead shot on the soil showing only the coils and a connector cue. Role 3: Reposition the camera to focus on the pump, gauge, and manifold in the foreground on the concrete, placing the two coils at the far back edge of the frame.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 and Role 2 images are near-duplicates: identical camera height, identical product placement, identical lighting, and both are ground-level angled views rather than one being a steep near-overhead technical still life. Role 2 also fails to show the required 'one connector or diameter cue' selection evidence on textured soil.",
+        "Role 3 correctly shows the concrete-pad equipment still life with fixed pump, gauge and manifold."
+      ],
+      "correction_prompt": "Replace Role 2 with a steep near-overhead (bird's-eye) shot looking straight down at the integrated two-coil pair on bare textured soil, cropped tightly to exclude background field context, with one visible connector fitting or diameter measurement marker as selection evidence.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 3
     }
   ]
 }

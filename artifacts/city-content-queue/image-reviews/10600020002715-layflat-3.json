@@ -1,31 +1,37 @@
 {
   "source_id": "10600020002715-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 60,
-      "product_width_percent": 68,
-      "product_height_percent": 32,
-      "product_x_center_percent": 50,
+      "score": 25,
+      "product_width_percent": 78,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Product pair exceeds 65 percent hard reject threshold for total combined width",
-        "Mandatory role not met: no fixed pump, gauge, or manifold equipment-only detail present",
-        "machine-enforced bounding-box check failed: Reduce the product group from 68% to 8-65% of frame width."
+        "Hard reject: person visible (legs and torso of operator near tractor)",
+        "Role mismatch: equipment is tractor-mounted rather than fixed headworks infrastructure"
       ],
-      "correction_prompt": "Remove large bare coil and replace with small secondary pair (width under 20 percent); add dominant detail of fixed pump, gauge, and manifold on empty concrete pad; keep AFP watermark. Reduce the product group from 68% to 8-65% of frame width.",
+      "correction_prompt": "Remove all people and human body parts; replace tractor with fixed pump, gauge, and manifold on clean concrete pad",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 48,
-      "product_height_percent": 22,
+      "score": 88,
+      "product_width_percent": 64,
+      "product_height_percent": 38,
       "product_x_center_percent": 48,
-      "reasons": [],
+      "reasons": [
+        "Two-coil pair (one packaged AFP coil, one bare black woven coil) positioned at far edge of concrete pad",
+        "Elevated equipment still life with fixed pump, gauge and manifold in background",
+        "Zero people or human body parts visible",
+        "Proper contact shadows and physically plausible perspective",
+        "Watermark 'AFP | 09134922013' present in bottom-right",
+        "Combined width approximately 64% of frame (within 25-82% requirement)",
+        "Background farm equipment is infrastructure, not third commercial product"
+      ],
       "correction_prompt": "",
       "attempt": 2
     }
