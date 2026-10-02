@@ -1,40 +1,60 @@
 {
   "source_id": "10500010002414-layflat",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
-      "score": 20,
+      "score": 52,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1 fails to meet the 'wide high-oblique' requirement; it is a ground-level shot with the product occupying the foreground center rather than being small and off-center in a wide context.",
-        "Role 1 and Role 2 are duplicates as they use the identical 'product on dirt, blurry tractors in background' layout and camera angle.",
-        "Role 2 lacks the 'elevated technical comparison' perspective and fails to clearly demonstrate diameter/construction differences.",
-        "Role 3 fails to display a fixed pump; it only shows a pipe fitting/valve assembly instead of the required equipment pair on a concrete pad."
+        "Roles 1 and 2 are near-duplicates: both images use the same low-angle ground-level perspective on soil showing the identical two-coil pair with nearly identical framing and composition.",
+        "Role 2 fails the steep near-overhead camera requirement — the shot is level/close, not overhead.",
+        "Role 2 lacks the mandatory 'one connector or diameter cue' selection evidence; no fitting or scale indicator is visible.",
+        "Role 3 correctly shows an elevated equipment still life on a concrete pad with pump, gauge, manifold, and coils at the far edge."
       ],
-      "correction_prompt": "Regenerate Role 1 as a wide high-oblique shot with the product small and off-center; Regenerate Role 2 as an elevated overhead comparison; Regenerate Role 3 to explicitly include a fixed pump unit alongside the gauge and manifold on the concrete pad.",
+      "correction_prompt": "Redo Role 2 as a steep near-overhead shot from above looking down at the two AFP coils on textured soil, ensuring a visible connector fitting or calibrated diameter ruler appears in frame as selection evidence, with no other objects present.",
       "panel_scores": [
-        20
+        52
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 88,
-      "duplicate_roles": [],
-      "reasons": [
-        "The panels provide distinctly different camera heights and narrative focus: Role 1 uses a wide context shot to establish the 'water-transfer' environment, Role 2 offers a close-range technical comparison of the product pair, and Role 3 presents a detailed hardware record shot on a neutral pad.",
-        "Product placement follows the brief: the two-coil pair (packaged and bare) remains visually distinct, separate, and secondary in scale relative to the environment in Roles 1 and 2, and appropriately balanced as a supporting element in Role 3.",
-        "Backgrounds are relevant to the agricultural and technical themes without introducing prohibited elements like people, extra commercial packages, or farm activity (e.g., no crops in the foreground of the hardware shot)."
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "",
+      "reasons": [
+        "Image 1 and Image 2 share near-identical camera height, field-of-view structure, and subject placement on soil — both are low-angle ground-level compositions of the two coils with crop rows receding in the background. Role 2 requires a steep near-overhead technical still life with distinctly different framing and a connector/diameter cue, which is not present. The two images are functionally duplicates rather than clearly distinct roles.",
+        "Role 2 angle is insufficiently overhead; camera remains at field-level perspective similar to Role 1, failing to achieve the steep near-overhead technical layout required.",
+        "Role 3 shows the two coils on a concrete pad with a pump assembly in the background, but the coil pair dominates the foreground rather than sitting at the far edge as specified."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a true near-overhead (90-degree) top-down view of the two coils on textured soil with only the coils and one small connector or diameter reference visible, no crop rows or horizon; keep camera height and composition distinctly different from Role 1's wide elevated field perspective.",
       "panel_scores": [
-        88
+        52
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Image 1 and Image 2 are near-duplicates: both are low-angle shots on tilled soil featuring the identical packaged and bare AFP coils in the same arrangement with nearly identical lighting and framing.",
+        "Role 2 requires a steep near-overhead technical still life with selection evidence (connector or diameter cue); Image 2 is at ground level and visually redundant with Image 1 rather than providing a distinct overhead technical narrative."
+      ],
+      "correction_prompt": "Replace Image 2 with a steep near-overhead shot looking down at the two AFP coils on textured soil, cropped tightly so only the coil pair and one selection cue (e.g. a connector fitting or exposed tape cross-section showing diameter) are visible, with no wide field background.",
+      "panel_scores": [
+        58
+      ],
+      "set_attempt": 3
     }
   ]
 }

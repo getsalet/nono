@@ -1,53 +1,39 @@
 {
   "source_id": "10500014002034-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 25,
-      "product_width_percent": 34,
-      "product_height_percent": 32,
-      "product_x_center_percent": 44,
+      "score": 55,
+      "product_width_percent": 65,
+      "product_height_percent": 38,
+      "product_x_center_percent": 40,
       "reasons": [
-        "Missing required fixed pump, gauge, and manifold in the HEADWORKS DETAIL role; only coils are present.",
-        "Left object is severely distorted/unrecognized as an AFP hose coil (appears as a wrapped sphere/bag, not a flexible hose coil)."
+        "Missing mandatory role infrastructure: no fixed pump, gauge, or manifold visible; scene shows an open field with a distant tractor rather than an elevated concrete-pad headworks setup",
+        "Setting does not match HEADWORKS DETAIL role (clean concrete pad with integrated fixed equipment)",
+        "Two-coil pair itself is correctly rendered (packaged AFP + bare woven), width within 25-82%, no people, watermark present"
       ],
-      "correction_prompt": "Insert a small fixed pump, gauge, and manifold on the concrete pad as the primary focus. Regenerate the left product as a standard wrapped AFP hose coil and the right as a black woven hose coil, ensuring the product pair remains small, separate, and secondary.",
+      "correction_prompt": "Re-render as HEADWORKS DETAIL: two-coil pair (one packaged AFP, one bare black woven) on a clean elevated concrete pad with a fixed pump, pressure gauge, and manifold visible nearby; no field rows or tractor; keep product width between 25-82% of frame; include bottom-right watermark AFP | 09134922013",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 72,
-      "product_height_percent": 55,
-      "product_x_center_percent": 55,
-      "reasons": [
-        "The image displays three commercial products (two packaged coils and one bare coil), which violates the 'zero third commercial package' hard reject rule.",
-        "The mandatory role 'HEADWORKS DETAIL' requires the photograph to feature a fixed pump, gauge, and manifold; none of these are present.",
-        "An additional third coil was included instead of the required infrastructure equipment.",
-        "Zero people rule was satisfied, but product compliance failed due to the extra object.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 72% to 8-65% of frame width.; Reduce product height from 55% to at most 45% of frame height."
-      ],
-      "correction_prompt": "Regenerate the image to show exactly one packaged AFP coil and one bare black woven coil as the only commercial products. Add a fixed pump, gauge, and manifold on an empty concrete pad to satisfy the mandatory role. Remove the third packaged coil. Ensure the two coils remain small, separate, and secondary to the infrastructure. Reduce the product group from 72% to 8-65% of frame width. Reduce product height from 55% to at most 45% of frame height.",
-      "attempt": 2
-    },
-    {
       "pass": true,
-      "score": 95,
-      "product_width_percent": 51,
-      "product_height_percent": 40,
-      "product_x_center_percent": 46,
+      "score": 92,
+      "product_width_percent": 44.2,
+      "product_height_percent": 24.1,
+      "product_x_center_percent": 47.3,
       "reasons": [
-        "The image clearly displays the required 'HEADWORKS DETAIL' featuring a fixed pump unit, gauges, and manifold on an elevated concrete pad.",
-        "The approved layflat pair (one packaged coil and one bare black coil) is present, fully visible, separate, and physically plausible, acting as secondary elements to the main equipment.",
-        "The exact required watermark 'AFP | 09134922013' is visible in the bottom-right corner.",
-        "The scene is free of any human presence, third commercial products, or packaging inconsistencies."
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil, both fully visible and separate.",
+        "Combined product width is approximately 44 percent of frame, well within the 25-82 percent envelope.",
+        "Zero people, human body parts, or silhouettes detected.",
+        "Required bottom-right watermark AFP | 09134922013 is present.",
+        "Distant unattended tractor and farm building are permitted infrastructure; no third commercial package.",
+        "Physical integration on concrete pad with contact shadows appears plausible for HEADWORKS DETAIL role."
       ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 2
     }
   ]
 }
