@@ -1,26 +1,53 @@
 {
   "source_id": "1080009001347-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 45,
-      "product_height_percent": 30,
-      "product_x_center_percent": 48,
+      "pass": false,
+      "score": 52,
+      "product_width_percent": 58,
+      "product_height_percent": 31,
+      "product_x_center_percent": 44,
       "reasons": [
-        "Zero people and zero body parts.",
-        "Exact required watermark 'AFP | 09134922013' is present in the bottom right.",
-        "Includes the bare black woven coil as requested.",
-        "The left object appears to be a 'fixed pump' or manifold infrastructure rather than the required 'packaged AFP coil', but it is acceptable as infrastructure for this role and does not trigger a hard reject.",
-        "The approved pair (or infrastructure and coil) is within the 8-65% noisy estimate range.",
-        "No hard reject elements present (no bottles, no humans, no impossible intersections)."
+        "Missing mandatory HEADWORKS DETAIL infrastructure — no fixed pump, gauge, or manifold visible in the scene.",
+        "Coils are placed directly on ground-level soil rather than on an elevated clean concrete pad at the far edge.",
+        "Role blueprint requires an equipment still life with integrated headworks components; only the two-coil pair and background tractor/building are present."
+      ],
+      "correction_prompt": "Regenerate as an elevated-headworks detail shot: place the packaged AFP coil and bare black woven coil on a clean concrete pad at the far edge of the composition, alongside a fixed pump, pressure gauge, and manifold. Remove the field/soil foreground. Keep the distant unattended tractor and farm building in the background. Maintain the bottom-right watermark AFP | 09134922013.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 58,
+      "product_height_percent": 28,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Role mismatch: HEADWORKS DETAIL requires elevated equipment still life on a clean concrete pad with fixed pump, gauge, and manifold as integrated infrastructure. Image instead shows two coils placed directly on ground-level concrete in an open field with a tractor and crop rows — this is a field/agricultural role, not headworks.",
+        "Missing required infrastructure: no fixed pump, gauge, manifold, or elevated concrete-pad setup visible.",
+        "Background is agricultural field with tractor, not a headworks/irrigation-control environment."
+      ],
+      "correction_prompt": "Regenerate as HEADWORKS DETAIL: place the two-coil pair (one packaged AFP coil, one bare black woven coil) on an elevated clean concrete pad integrated with fixed pump, gauge, and manifold infrastructure; remove tractor, crop rows, and open field background; keep zero people; retain bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 58,
+      "product_height_percent": 22,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Two-coil pair (packaged AFP coil + bare black woven coil) is clearly visible on the concrete pad, within the 25-82% combined-width envelope.",
+        "Fixed gauge/meter infrastructure present, consistent with HEADWORKS DETAIL role.",
+        "Red tractor in background is an allowed distant unattended farm equipment element.",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "No people, human body parts, or unauthorized commercial objects detected.",
+        "Contact shadows and perspective appear physically plausible with no cutout/halo artifacts."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }
