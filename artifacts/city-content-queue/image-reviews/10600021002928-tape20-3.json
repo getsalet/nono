@@ -1,68 +1,39 @@
 {
   "source_id": "10600021002928-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 29.0,
-      "product_height_percent": 33.0,
-      "product_x_center_percent": 45.0,
+      "score": 52,
+      "product_width_percent": 28,
+      "product_height_percent": 33,
+      "product_x_center_percent": 71,
       "reasons": [
-        "Presence of human silhouettes in the background violates the 'zero people' requirement",
-        "Presence of a second commercial package (smaller roll) to the left of the main product",
-        "The text on the side of the main carton appears gibberish/distorted"
+        "Second commercial package (brown AFP-branded cardboard box) visible in the mid-right background, violating the 'no second commercial package' hard reject rule",
+        "Headworks equipment is on a wheeled cart rather than an elevated clean concrete-pad installation with fixed filter/gauge/regulator/manifold as specified by the HEADWORKS DETAIL role blueprint"
       ],
-      "correction_prompt": "Regenerate with exactly one large 20cm AFP drip-tape roll on a concrete pad, including one manifold and gauges. Remove all people from the background and the smaller roll on the left. Ensure carton text is legible and correct.",
+      "correction_prompt": "Remove the second brown AFP cardboard box from the background. Replace the wheeled cart headworks unit with a fixed elevated assembly on a clean concrete pad featuring integrated filter, pressure gauge, regulator, and manifold. Keep exactly one AFP white-and-blue cylindrical drip-tape carton roll.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 31,
-      "product_height_percent": 41,
-      "product_x_center_percent": 48,
-      "reasons": [
-        "Contains a visible human figure (distant silhouette on the left side of the tractors), which triggers a hard reject for any human body part or silhouette.",
-        "Product bounding box height exceeds the 35% physical plausibility threshold, making the roll appear disproportionately large relative to the surrounding concrete pad and filter hardware.",
-        "Product width exceeds the 30% threshold.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width.; Reduce product height from 41% to at most 35% of frame height."
-      ],
-      "correction_prompt": "Regenerate an empty farm scene. Remove all human figures and silhouettes. Shrink the drip-tape roll to be physically plausible (approx. 20-23% width) and set it next to a smaller filter unit and a gauge on a concrete pad. Keep the carton secondary. Maintain the required bottom-right watermark. Reduce the product group from 31% to 12-30% of frame width. Reduce product height from 41% to at most 35% of frame height.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 55,
-      "product_width_percent": 25,
-      "product_height_percent": 28,
-      "product_x_center_percent": 32,
-      "reasons": [
-        "Missing required 'exactly one' filter, regulator, and manifold; image shows only a filter roll and a pressure gauge.",
-        "Roll width is approximately 25%, slightly outside the 20-23% preferred range.",
-        "Carton label displays incorrect text ('DRYP DESIGNS') instead of the specified article name (Zawut / Drip-tape 20)."
-      ],
-      "correction_prompt": "Add a fixed regulator and manifold to the concrete pad, adjust the filter roll width to 20%, and correct the carton text to 'Zawut Drip-tape 20'. Keep the bottom-right watermark 'AFP | 09134922013' exactly as is.",
-      "attempt": 3
-    },
-    {
       "pass": true,
-      "score": 90,
-      "product_width_percent": 28,
-      "product_height_percent": 32,
-      "product_x_center_percent": 32,
+      "score": 88,
+      "product_width_percent": 22,
+      "product_height_percent": 22,
+      "product_x_center_percent": 62,
       "reasons": [
-        "Exhibits exactly one AFP drip-tape roll as requested.",
-        "Roll width and height fall within permissible estimation tolerances (28% wide, 32% high).",
-        "Zero people or human body parts present.",
-        "Background correctly features the mandatory equipment-only setup (gauges, manifold) on a concrete pad with an unattended farm context, matching the 'HEADWORKS DETAIL' visual brief.",
-        "Required watermark 'AFP | 09134922013' is present."
+        "Single AFP white-and-blue cylindrical drip-tape roll present and physically integrated on concrete pad.",
+        "Width ~22% and height ~22%, both within approved envelopes (width 18–38%, height ≤70%).",
+        "No people, body parts, or human silhouettes visible.",
+        "Background matches headworks detail role: elevated concrete pad with pressure gauge, regulator manifold, hoses, and filter assembly.",
+        "Cardboard AFP shipping box behind roll is packaging context, not a second commercial product.",
+        "Mandatory watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Contact shadow and perspective are consistent; no white halo or cutout appearance."
       ],
       "correction_prompt": "",
-      "attempt": 4
+      "attempt": 2
     }
   ]
 }
