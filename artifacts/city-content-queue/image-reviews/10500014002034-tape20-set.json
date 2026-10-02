@@ -1,147 +1,20 @@
 {
   "source_id": "10500014002034-tape20",
-  "policy": "approved-single-pass-integrated-rebuild-v3-20261002",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": false,
-      "score": 42,
-      "duplicate_roles": [
-        2,
-        4
-      ],
-      "reasons": [
-        "Count mismatch: 4 images provided, 5 required. 'MAINTENANCE DETAIL' role (5) is missing.",
-        "Image 2 and Image 4 are compositionally near-duplicates (close-up, center-framed product with tractor background), failing the 'visibly distinct' and 'no centered vanishing point' criteria.",
-        "Image 1 fails 'EDITORIAL HERO' by featuring a centered large product instead of a 'small, off-center' carton in a wide view.",
-        "Image 3 fails 'HEADWORKS STORY' by missing the mandatory 'filter, gauge, regulator and manifold' setup."
-      ],
-      "correction_prompt": "Generate a 5th image (CLOSE-UP) showing a flush-point or installed emitter without a tractor. Replace Image 4 with an asymmetric wide-angle view of crop beds (no tractor) to remove the duplication.",
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 38,
-      "duplicate_roles": [
-        1,
-        4
-      ],
-      "reasons": [
-        "Role 4 (Image 4) is a centered, near-symmetric close-up of the carton with a generic furrow field and tractor background, violating the asymmetric, no-centered-vanishing-point requirement.",
-        "Role 4 fails to show the required 'installed drip tape' narrative, focusing entirely on the product itself.",
-        "The combination of roles 1 and 4 features repeated furrow-field + tractor compositions, which is explicitly listed as a rejection criterion.",
-        "Role 4 is essentially a zoomed-in variation of Role 1, moving the product into the foreground without changing the technical narrative."
-      ],
-      "correction_prompt": "Regenerate Role 4 (Image 4) with an asymmetric, unattended, medium-shot of installed drip tape running along a crop bed with the small carton placed distinctly off-center at the field edge; remove the centered composition and the distracting tractor/furrow symmetry.",
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 12,
-      "duplicate_roles": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "reasons": [
-        "Only 4 images provided; Image 5 for 'MAINTENANCE DETAIL' is completely missing, resulting in zero coverage for Role 5 (close view of emitter/connector).",
-        "Image 1 (Role 1) fails to meet the 'wide high-oblique' requirement, presenting a standard low-angle view instead.",
-        "Image 2 (Role 2) duplicates the hardware setup of Image 3 (Role 3); it includes a full manifold/filter assembly rather than focusing on 'emitter-spacing or field-selection evidence' to distinguish it as a selection evidence shot.",
-        "Image 4 (Role 4) places the product in the dead center of the frame, violating the 'asymmetric' and 'no centered vanishing point' requirements."
-      ],
-      "correction_prompt": "Generate a 5th 'MAINTENANCE DETAIL' image featuring a close-up of an installed drip tape emitter or flush point with a small, unattended carton visible in the background. Additionally, replace Image 4 with a strictly asymmetric composition placing the carton off-center at a field edge.",
-      "set_attempt": 3,
-      "accepted_individual_qa_fallback": true
-    },
-    {
-      "pass": false,
-      "score": 38,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
-      "reasons": [
-        "Role-1: oversized AFP carton dominates foreground instead of being small and off-center on lower third.",
-        "Role-2: oversized AFP carton is a central foreground element rather than small and secondary; selection-evidence emphasis is weak.",
-        "Role-3: oversized AFP carton is prominently centered on the concrete pad instead of being small and secondary; tractor positioned close to the pad reads as active farm activity, violating the no-farm-activity requirement for headworks detail.",
-        "All three panels use near-identical composition formula (large carton on ground with distant barn/field), failing the visibly distinct camera-height/angle and technical-narrative requirement."
-      ],
-      "correction_prompt": "Redesign all three panels: in every image make the AFP carton small, fully visible, and off-center; give each panel a clearly different camera height and angle — Panel 1 wide high-oblique farm view with the carton tiny on the lower third, Panel 2 a higher elevated still with the carton small alongside an unrolled strip showing 20 cm emitter spacing on bare soil with a simple barn-edge backdrop, Panel 3 an elevated downward view of a clean concrete headworks pad with filter/gauge/regulator/manifold only and the carton small in a corner, no tractor or operator near the pad.",
-      "panel_scores": [
-        38
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 28,
+      "pass": true,
+      "score": 95,
       "duplicate_roles": [],
       "reasons": [
-        "Panel 1 fails the hero role: the AFP roll is oversized in the foreground, a strange vintage wheeled machine intrudes in the field, and the layout is cluttered with loose tubing rather than a clean wide context shot.",
-        "Panel 2 is rejected for a generic American farm background (red barn/hay bales) irrelevant to the Iranian brief, and the product packaging is too large and central for a 'selection evidence' shot.",
-        "Panel 3 fails the headworks role because the background contains active farm equipment and a person, violating the 'no farm activity' and 'distant unattended' constraints.",
-        "The product packaging is oversized and dominant in Panels 1 and 2, distracting from the editorial and technical narratives."
+        "Role 1: Wide elevated field view with long crop rows and AFP carton on lower-left third — correct.",
+        "Role 2: Steep near-overhead soil-based technical still life with AFP carton and emitter-stripe drip tape showing repeated points — correct.",
+        "Role 3: Elevated concrete-pad equipment still life with complete filter-gauge-regulator-manifold assembly and AFP carton at far edge — correct.",
+        "All three roles are visually and narratively distinct; no duplicates, missing evidence, extra commercial products, or integration issues detected."
       ],
-      "correction_prompt": "Regenerate: Panel 1 as a true wide oblique with the product carton tiny and off-center in the lower third, removing the vintage machine and loose tubing; Panel 2 as a clean elevated technical shot of the product on soil with a simple, non-generic field edge background and the emitter strip unrolled flat to show spacing; Panel 3 as an isolated equipment shot on an empty concrete pad with zero background activity, people, or tractors.",
+      "correction_prompt": "",
       "panel_scores": [
-        28
-      ],
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 52,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 3 contains an oversized AFP carton that dominates the foreground, violating the 'small and secondary' requirement; the carton should be small and clearly subordinate to the headworks equipment.",
-        "Panel 3 includes a large tractor with attached implement in the mid-background, constituting active farm equipment rather than permitted distant unattended context — reframe to exclude all machinery.",
-        "Panel 3 lacks a visible fixed filter; the equipment cluster shows a gauge and manifold but no filter unit, failing the 'one fixed filter, gauge, regulator and manifold' requirement.",
-        "Panel 3 camera height is too low/eye-level for a headworks elevated record photograph; the shot should look down more steeply onto the empty concrete pad."
-      ],
-      "correction_prompt": "Redo Panel 3: keep the AFP carton small and clearly secondary (lower-third, unobtrusive), compose from a steep elevated angle looking down on an empty concrete pad with a fixed filter, pressure gauge, regulator, and manifold arranged as a single headworks cluster; remove all tractors, implements, and any farm activity from the frame entirely.",
-      "panel_scores": [
-        52
-      ],
-      "set_attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 38,
-      "duplicate_roles": [
-        1,
-        2
-      ],
-      "reasons": [
-        "Panel 1 (EDITORIAL HERO): The AFP carton is oversized and centrally dominant rather than 'small, fully visible and off-center on the lower third.'",
-        "Panel 2 (SELECTION EVIDENCE): Layout is nearly identical to Panel 1 — same low-angle ground-level framing, similar lighting, same oversized carton placement, and very similar barn + field composition. This constitutes repeated layout between roles 1 and 2.",
-        "Panel 3 (HEADWORKS DETAIL): While the equipment narrative is correct (filter, gauge, regulator, manifold on concrete), a green tractor is visible in the background, violating the 'no farm activity' requirement for role 3.",
-        "Panels 1 and 2 share essentially the same camera height (ground level), environment (crop rows + red barn), and compositional structure — they are interchangeable shots differing only in background vehicle placement."
-      ],
-      "correction_prompt": "Redesign Panel 1 as a true high-oblique wide establishing shot of the farm/irrigation landscape with the AFP carton rendered small and off-center on the lower third; redesign Panel 2 as an elevated technical view showing the AFP carton alongside clear emitter-spacing detail (20 cm drip intervals visible on laid-out tape) with a simple field-edge or farm-building background; remove the tractor from Panel 3's background to satisfy the no-farm-activity requirement for the headworks detail shot.",
-      "panel_scores": [
-        38
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 42,
-      "duplicate_roles": [
-        1,
-        2
-      ],
-      "reasons": [
-        "Panel 1 and Panel 2 are visually near-duplicate layouts: both use the same low ground-level framing with the AFP carton prominently centered on crop rows, differing only by background props (barn vs. tractor+barn).",
-        "Carton is oversized and dominant in all three panels, violating the 'exactly one approved carton stays small' requirement.",
-        "Panel 1 lacks a high-oblique editorial hero perspective; the cart is eye-level/ground-level.",
-        "Panel 2 fails to show emitter-spacing or field-selection evidence — it reads as another generic product-on-field shot rather than selection documentation.",
-        "Panel 3 has tractor and hay bales in background suggesting farm activity, though unattended; the concrete pad and headworks equipment are present but the carton again dominates."
-      ],
-      "correction_prompt": "Redesign Panel 1 as a true wide high-oblique drone or elevated shot of irrigated rows with the AFP carton small and off-center on the lower third. Redesign Panel 2 as an elevated close-up showing emitter spacing detail or a selection comparison chart next to a small carton, with a simple field-edge background. Keep the carton minimal in all three frames.",
-      "panel_scores": [
-        42
+        95
       ],
       "set_attempt": 1
     }

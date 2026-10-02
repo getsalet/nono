@@ -1,25 +1,50 @@
 {
   "source_id": "10500011002233-tape20",
-  "family": "tape20",
   "kind": 2,
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 26,
-      "product_height_percent": 42,
-      "product_x_center_percent": 35,
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 20,
+      "product_height_percent": 35,
+      "product_x_center_percent": 62,
       "reasons": [
-        "The image successfully displays a single AFP white-and-blue wide low cylindrical drip-tape carton roll.",
-        "The product size is within the preferred 20-28% width and accepted 10-48% range.",
-        "No people or human body parts are visible.",
-        "The background provides clear selection evidence with a visible emitter spacing stake and an ordinary farm field/building context.",
-        "The mandatory bottom-right watermark is present."
+        "Mandatory watermark 'AFP | 09134922013' is absent from the image. The visible text on the carton reads 'AFP Drip Irrigation Tape', which does not match the required fixed watermark string.",
+        "Product dimensions are within acceptable range (width ~20%, height ~35%).",
+        "No people or human body parts present.",
+        "One AFP carton roll and one drip-tape segment with emitter points are visible on dark soil."
+      ],
+      "correction_prompt": "Add the exact bottom-right watermark 'AFP | 09134922013' in white text on a semi-transparent dark bar. Retain the existing AFP carton roll and drip-tape segment on dark soil with emitter points visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 23,
+      "product_height_percent": 38,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Watermark mismatch: image shows 'AFP | 09134922013' but required watermark is 'AFP | 09134922013'. Digits are incorrect.",
+        "Product appears physically integrated with correct placement and proportions.",
+        "No people, body parts, or prohibited objects detected.",
+        "Background matches agricultural context with soil and young plants."
+      ],
+      "correction_prompt": "Correct watermark to exact string 'AFP | 09134922013' in bottom-right corner. Keep all other elements identical.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 23,
+      "product_height_percent": 38,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "White-and-blue AFP drip-tape carton roll correctly placed on dark soil with contact shadow, zero people, proper width/height envelope, visible emitter points on unrolled segment, and required AFP watermark in bottom-right corner."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }
