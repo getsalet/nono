@@ -1,23 +1,59 @@
 {
   "source_id": "10700015002235-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 92,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 correctly executes the EDITORIAL HERO role with a high-oblique wide shot, placing the product small and off-center to provide water-transfer context.",
-        "Panel 2 successfully fulfills the SELECTION EVIDENCE role by showing the two-coil pair to demonstrate diameter/construction differences against a technical manifold.",
-        "Panel 3 appropriately executes the HEADWORKS DETAIL role with an equipment-only elevated record shot on a concrete pad, showing the pumps and no farm activity.",
-        "The watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner of all images.",
-        "There are no prohibited elements such as people, bottles, or repeated layouts."
+      "pass": false,
+      "score": 62,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "None",
+      "reasons": [
+        "Role 2 (SELECTION EVIDENCE) is missing mandatory selection evidence: no connector or diameter cue is visible on the soil layout",
+        "Role 3 (HEADWORKS DETAIL) has the two-coil pair in the foreground instead of at the far edge as required",
+        "Role 1 and Role 2 share near-identical camera height and product composition; only background depth differs, making them structurally duplicate",
+        "Missing approved product identity clarity in Role 2 due to low angle obscuring the AFP label"
+      ],
+      "correction_prompt": "Re-shoot Role 2 from a steeper overhead angle (70°+) with a visible connector fitting or diameter scale cue placed beside the two-coil pair on the textured soil; reposition Role 3's two-coil pair to the far edge of the concrete pad with the fixed pump, gauge and manifold dominating the center frame",
       "panel_scores": [
-        92
+        62
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Image 1 and Image 2 are near-duplicates: both use nearly identical camera height, angle, and framing of the same two coils on soil with minimal compositional difference — failing the requirement that roles 1 and 2 have clearly distinct camera/environment structure. Role 2 should be a steep near-overhead technical still life with visible diameter/connection cue, not another ground-level side view.",
+        "Image 3 has the concrete-pad setting but lacks a clearly dominant fixed pump, gauge, and manifold as the primary subject; the green barrel and distant tractor are vague stand-ins and the coils remain centrally dominant rather than sitting at the far edge."
+      ],
+      "correction_prompt": "Image 2: regenerate as a steep near-overhead (90°) shot on textured soil showing only the integrated packaged coil and bare coil side by side with one visible connector or diameter cross-section cue; Image 3: regenerate as an elevated equipment still life dominated by a fixed pump, pressure gauge, and manifold on a clean concrete pad with the two-coil pair placed small at the far edge.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 72,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Images 1 and 2 share near-identical camera height, subject placement, and framing of the two-coil pair on soil with matching shadows and composition — only the background depth of field differs, making them functionally duplicate roles rather than a wide editorial hero versus a steep near-overhead technical still life.",
+        "Image 2 should present a distinctly higher, steeper overhead angle focused tightly on the two-coil pair with one connector or diameter cue on textured soil, eliminating the wide field perspective that overlaps with Role 1."
+      ],
+      "correction_prompt": "Redo Role 2 as a steep near-overhead shot looking down at the two-coil pair on loose textured soil with a single connector or diameter comparison cue visible; remove the wide-field horizon context so it is visually and compositionally distinct from Role 1.",
+      "panel_scores": [
+        72
+      ],
+      "set_attempt": 3
     }
   ]
 }

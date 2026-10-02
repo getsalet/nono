@@ -1,35 +1,39 @@
 {
   "source_id": "1050003002761-layflat",
-  "family": "layflat",
   "kind": 2,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 20,
-      "product_width_percent": 78,
-      "product_height_percent": 40,
-      "product_x_center_percent": 54,
+      "score": 38,
+      "product_width_percent": 44,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
       "reasons": [
-        "Product pair occupies approximately 78% of the frame width, significantly exceeding the strict hard reject threshold of 20%.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 78% to 9-20% of frame width.; Reduce product height from 40% to at most 32% of frame height."
+        "Hard reject: extra commercial products present — bottle (likely adhesive), blue cylinder, tape roll, and additional accessories on wooden board violate the role requirement of showing only the two-coil pair and one connector or diameter cue",
+        "Bottle is an explicitly listed hard-reject item",
+        "Scene presents a collection of multiple products rather than the mandatory minimal two-coil + connector composition"
       ],
-      "correction_prompt": "Regenerate the image with the product pair (one packaged coil and one bare coil) scaled down to occupy only 12 to 15% of the frame width, maintaining the approved layflat placement. Reduce the product group from 78% to 9-20% of frame width. Reduce product height from 40% to at most 32% of frame height.",
+      "correction_prompt": "Remove all extra items (bottle, blue cylinder, tape roll, tools, wooden board). Show only the packaged AFP coil and bare black woven coil on textured soil with one connector or diameter cue, no additional commercial products.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 92,
-      "product_width_percent": 16,
-      "product_height_percent": 22,
-      "product_x_center_percent": 50,
+      "score": 87,
+      "product_width_percent": 59,
+      "product_height_percent": 35,
+      "product_x_center_percent": 47.5,
       "reasons": [
-        "Image correctly displays the required pair of products: one packaged AFP coil and one bare black woven coil.",
-        "Zero people or human body parts are visible.",
-        "The product pair occupies approximately 16% of the frame width, which falls within the preferred 12-15% range and the hard reject threshold.",
-        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Background context (farm field, crop rows, building) is appropriate for the agricultural hose article and does not violate negative constraints."
+        "Correct subject: packaged AFP coil and bare black woven coil pair on textured soil",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and legible",
+        "No people, human body parts, or silhouettes visible",
+        "Combined product width is approximately 59% of frame (within 25-82% acceptable range)",
+        "Steep near-overhead technical perspective appropriate for the role",
+        "Realistic contact shadows and physically plausible presentation",
+        "Distant farm buildings and equipment treated as permissible infrastructure, not commercial products",
+        "Both coils are fully visible, separate, and recognizable",
+        "Packaging shows authentic branding with Arabic text consistent with AFP product"
       ],
       "correction_prompt": "",
       "attempt": 2
