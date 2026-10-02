@@ -71,12 +71,12 @@ class CityImagePolicyTests(unittest.TestCase):
         self.assertIn("فیلتراسیون", brief)
         prompts = [image_prompt_policy.image_prompt(item, kind) for kind in range(1, 6)]
         self.assertEqual(len(set(prompts)), 5)
-        self.assertTrue(all("Article visual brief extracted from the post" in prompt for prompt in prompts))
-        self.assertTrue(all("People must not appear" in prompt for prompt in prompts))
+        self.assertTrue(all("single-pass physical render" in prompt for prompt in prompts))
+        self.assertTrue(all("vacant controlled agricultural still life" in prompt for prompt in prompts))
         self.assertIn("HEADWORKS DETAIL", prompts[2])
         self.assertIn("MAINTENANCE DETAIL", prompts[4])
-        self.assertTrue(all("NO PEOPLE" in prompt for prompt in prompts))
-        self.assertTrue(all("tractor, harvester, vehicle or machine cabin" in prompt for prompt in prompts))
+        self.assertTrue(all("Visible content is limited" in prompt for prompt in prompts))
+        self.assertTrue(all("free of activity and unrelated movable objects" in prompt for prompt in prompts))
 
     def test_metric_feedback_is_directional_without_noisy_center_rejection(self):
         ok, issues = image_quality_gate._metric_check(
@@ -138,10 +138,10 @@ class CityImagePolicyTests(unittest.TestCase):
     def test_headworks_prompt_is_an_unoccupied_equipment_still_life(self):
         item = {"source_id": "city-tape20", "topic": "tape20", "city": "گوهران"}
         prompt = image_prompt_policy.image_prompt(item, 3)
-        self.assertIn("equipment-only still life", prompt)
-        self.assertIn("no farm activity or living subject", prompt)
-        self.assertIn("neutral empty equipment pad", prompt)
-        self.assertNotIn("suitable for گوهران", prompt)
+        self.assertIn("equipment-record view", prompt)
+        self.assertIn("clean concrete pad", prompt)
+        self.assertIn("permanently fixed filtration", prompt)
+        self.assertIn("suitable for گوهران", prompt)
 
     def test_rejected_five_image_set_keeps_published_files_untouched(self):
         with tempfile.TemporaryDirectory() as tmp, patch.dict(
@@ -257,7 +257,7 @@ class CityImagePolicyTests(unittest.TestCase):
         workflow = (
             ROOT / ".github" / "workflows" / "rebuild-reference-images.yml"
         ).read_text(encoding="utf-8")
-        self.assertIn('CHECKPOINT_ROOT = OUT / ".image-role-checkpoints-v3"', rebuild)
+        self.assertIn('CHECKPOINT_ROOT = OUT / ".image-role-checkpoints-v4"', rebuild)
         self.assertIn("CHECKPOINT_ROOT / source_id", rebuild)
         self.assertIn("city_rebuild_checkpoint_reused", rebuild)
         self.assertIn("def prune_checkpoint_cache(active_source_ids: set[str])", rebuild)
@@ -272,17 +272,17 @@ class CityImagePolicyTests(unittest.TestCase):
     def test_layflat_selection_role_has_no_conflicting_scene_objects(self):
         item = {"source_id": "city-layflat", "topic": "layflat", "city": "پلدشت"}
         prompt = image_prompt_policy.image_prompt(item, 2)
-        self.assertIn("elevated technical view", prompt)
-        self.assertIn("no horizon, building, crop rows, person", prompt)
-        self.assertIn("occupying approximately 45 to 78 percent of frame width", prompt)
+        self.assertIn("Steep 65-degree near-overhead technical view", prompt)
+        self.assertIn("crop out the horizon and architecture", prompt)
+        self.assertIn("occupies 45 to 78 percent of frame width", prompt)
 
     def test_tape_maintenance_role_is_isolated_from_people_and_vehicles(self):
         item = {"source_id": "city-tape20", "topic": "tape20", "city": "لاجان"}
         prompt = image_prompt_policy.image_prompt(item, 5)
-        self.assertIn("elevated close documentary view", prompt)
-        self.assertIn("Crop all horizon, sky, buildings, people, animals", prompt)
-        self.assertIn("exactly one carton visible at roughly 20 to 32 percent of frame width", prompt)
-        self.assertIn("connector/emitter/flush-point", prompt)
+        self.assertIn("Close elevated documentary view", prompt)
+        self.assertIn("maintenance detail stays sharp", prompt)
+        self.assertIn("occupies 20 to 32 percent of frame width", prompt)
+        self.assertIn("installed maintenance detail", prompt)
 
 
 if __name__ == "__main__":

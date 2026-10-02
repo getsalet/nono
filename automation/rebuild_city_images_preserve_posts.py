@@ -24,12 +24,12 @@ import city_content_queue_cloudflare as backend
 import image_prompt_policy
 import image_quality_gate
 
-POLICY = "approved-single-pass-integrated-rebuild-v3-20261002"
+POLICY = "approved-single-pass-integrated-rebuild-v4-20261002"
 MODE = "article-parity-three-image-single-pass-integrated-rerender"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
-MARKER = OUT / "recent-image-rebuild-v3.json"
+MARKER = OUT / "recent-image-rebuild-v4.json"
 AUDIT_MARKER = OUT / "recent-image-audit-v1.json"
-CHECKPOINT_ROOT = OUT / ".image-role-checkpoints-v3"
+CHECKPOINT_ROOT = OUT / ".image-role-checkpoints-v4"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")
 API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
     "AGNES_API_BASE", "https://apihub.agnes-ai.com/v1"
@@ -218,10 +218,8 @@ def generate_set(item: dict) -> dict[int, dict]:
     results, feedback, history = {}, {}, []
     if set_review_path.exists():
         try:
-            history = list(
-                json.loads(set_review_path.read_text(encoding="utf-8")).get("history")
-                or []
-            )[-20:]
+            loaded_set_review = json.loads(set_review_path.read_text(encoding="utf-8"))
+            history = list(loaded_set_review.get("history") or [])[-20:] if loaded_set_review.get("policy") == POLICY else []
         except (OSError, json.JSONDecodeError):
             history = []
     for kind in range(1, 4):
@@ -230,7 +228,7 @@ def generate_set(item: dict) -> dict[int, dict]:
         review_path = staging_reviews / f"{source_id}-{kind}.json"
         try:
             review = json.loads(review_path.read_text(encoding="utf-8"))
-            review_history = review.get("history") or []
+            review_history = (review.get("history") or []) if review.get("policy") == image_quality_gate.REVIEW_POLICY else []
         except (OSError, json.JSONDecodeError):
             review_history = []
         if (

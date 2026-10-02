@@ -4,7 +4,7 @@ import base64,json,os,re,urllib.error,urllib.request,shutil,time
 from concurrent.futures import as_completed
 from pathlib import Path
 import image_prompt_policy
-REVIEW_POLICY='approved-single-pass-integrated-v22'
+REVIEW_POLICY='approved-single-pass-integrated-v23-positive-scenes'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
@@ -62,7 +62,7 @@ def _vision_review(base,path,item,kind):
   reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 38 percent of the frame, taller than 70 percent, a pasted/cutout/sticker appearance, white halo, mismatched perspective, missing contact shadow, bottle, jar, canister, bucket, fertilizer or pesticide container, second commercial package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry or severely distorted dimensions. A distant unattended tractor, ordinary farm building and fixed irrigation hardware are allowed when contextually relevant.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
-Article visual brief: {brief}. Mandatory role: {image_prompt_policy.role_directive(family,kind)}.
+Mandatory role: {image_prompt_policy.role_directive(family,kind)}. Judge the role blueprint and physical integration; do not infer or demand unverifiable regional architecture, crops or climate from the city name.
 The exact bottom-right watermark "AFP | 09134922013" is REQUIRED and must never be rejected or requested for removal. Fixed pumps, filters, gauges, manifolds, relevant connectors and distant unattended farm equipment are infrastructure, not extra commercial products. Never pass any visible human or bottle/container. Estimate the product bounding box from image pixels. Report product_width_percent, product_height_percent and product_x_center_percent as numeric percentages of the full image. If pass is true, correction_prompt must be empty. Do not reject only for centered placement, ordinary soil texture, a horizon, farm building, distant crop rows or unattended equipment. Return only JSON: {{"pass":true|false,"score":0-100,"product_width_percent":0,"product_height_percent":0,"product_x_center_percent":0,"reasons":["..."],"correction_prompt":"short regeneration instruction"}}. Pass at score {MIN_IMAGE_SCORE} or higher.'''
  payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':[{'type':'text','text':prompt},{'type':'image_url','image_url':{'url':'data:image/webp;base64,'+encoded}}]}],'temperature':0,'response_format':{'type':'json_object'}}
  req=urllib.request.Request(base.AGNES_BASE+'/chat/completions',data=json.dumps(payload).encode(),headers={'Authorization':f"Bearer {base.next_agnes_key() if hasattr(base,'next_agnes_key') else base.AGNES_KEY}",'Content-Type':'application/json'})
@@ -164,9 +164,10 @@ def _review_image_panel(base,paths,item,role_numbers):
  brief=image_prompt_policy.visual_brief(item)
  family=image_prompt_policy.product_family(item)
  roles='; '.join(f'{kind}: {image_prompt_policy.role_directive(family,kind)}' for kind in role_numbers)
- prompt=f'''Review this panel from a {len(paths)}-image city-article editorial set.
-Panel role numbers: {role_numbers}. Article visual brief: {brief}. Required roles: {roles}.
-The same AFP product is expected in every image, so product identity itself is not duplication. Pass only when the shown roles are visibly distinct in camera height/angle, environment structure and technical narrative, and every background is relevant to the article brief. Reject repeated layouts, generic farms, role-3/role-5 hardware duplication, any person, any bottle/container, oversized product, or images that only move the product. A distant unattended tractor or farm building is allowed context and is not farm activity; never reject it by itself. The exact bottom-right watermark "AFP | 09134922013" is required and must never be treated as duplication, obstruction, added caption or a rejection reason. Return duplicate_roles using the original role numbers from {role_numbers}. Return only JSON: {{"pass":true|false,"score":0-100,"duplicate_roles":{role_numbers},"reasons":["..."],"correction_prompt":"one concise replacement instruction"}}.'''
+ prompt=f'''Review this {len(paths)}-image panel using only the original role numbers {role_numbers}.
+Required roles: {roles}.
+The user approved a prominent but physically integrated AFP product, so product prominence, center placement, ordinary Iranian farm context, lack of city-specific architecture, and the required watermark are not rejection reasons when individual image QA already passed. Do not request five images; this production contract contains exactly three roles when role_numbers is [1,2,3].
+Role 1 must be a wide elevated field view. Role 2 must be a steep near-overhead soil-based technical layout with visible selection evidence. Role 3 must be a concrete-pad equipment still life dominated by a complete fixed filter, gauge, regulator and manifold. Pass when camera height, surface and technical narrative make the roles clearly distinct. Reject only near-duplicate camera/environment structure, missing mandatory role evidence, visible living subjects, extra commercial products, physically implausible integration, or missing approved product identity. Return duplicate_roles using only values from {role_numbers}. Return only JSON: {{"pass":true|false,"score":0-100,"duplicate_roles":{role_numbers},"reasons":["..."],"correction_prompt":"one concise replacement instruction"}}.'''
  content=[{'type':'text','text':prompt}]
  content.extend({'type':'image_url','image_url':{'url':'data:image/webp;base64,'+blob}} for blob in encoded)
  payload={'model':base.AGNES_MODEL,'messages':[{'role':'user','content':content}],'temperature':0,'response_format':{'type':'json_object'}}

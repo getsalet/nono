@@ -47,7 +47,7 @@ jobs:
           remaining="$(python - <<'PY2'
           import json
           from pathlib import Path
-          path=Path('artifacts/city-content-queue/recent-image-rebuild-v2.json')
+          path=Path('artifacts/city-content-queue/recent-image-rebuild-v4.json')
           print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 1)
           PY2
           )"
@@ -118,7 +118,7 @@ jobs:
       FAILED_RETRY_WAVE_POLICY: "city-failed-retry-wave-v18-20260930"
       FAILED_RETRY_WAVE_LIMIT: "24"
       WORDPRESS_DB_NAME: navaraby_wp569
-      CURRENT_IMAGE_POLICY: strict-reference-conditioned-v21
+      CURRENT_IMAGE_POLICY: approved-single-pass-integrated-v23-positive-scenes
 
     steps:
       - name: Checkout repository
@@ -313,7 +313,7 @@ jobs:
           rebuild_remaining="$(python - <<'PY'
           import json
           from pathlib import Path
-          path=Path('artifacts/city-content-queue/recent-image-rebuild-v2.json')
+          path=Path('artifacts/city-content-queue/recent-image-rebuild-v4.json')
           print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 1)
           PY
           )"
