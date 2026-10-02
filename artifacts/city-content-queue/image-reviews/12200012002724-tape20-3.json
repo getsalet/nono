@@ -1,39 +1,51 @@
 {
   "source_id": "12200012002724-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 30,
-      "product_height_percent": 41,
-      "product_x_center_percent": 48,
+      "score": 52,
+      "product_width_percent": 28,
+      "product_height_percent": 22,
+      "product_x_center_percent": 62,
       "reasons": [
-        "The roll of drip tape appears wider than 30% of the frame and taller than 35% of the frame",
-        "The cardboard box with gauges attached to it looks like a commercial package or a container, which conflicts with the requirement to reject containers and secondary commercial products",
-        "machine-enforced bounding-box check failed: Reduce product height from 41% to at most 35% of frame height."
+        "Second commercial package present: cardboard box visible in the background right (partially out of frame), violating the 'zero second commercial products' hard reject rule",
+        "Multiple AFP-branded boxes create clutter and confusion about product integration"
       ],
-      "correction_prompt": "Regenerate the image to make the white-and-blue AFP drip-tape roll smaller (width < 30%, height < 35%). Remove the cardboard box entirely; replace it with loose, disconnected equipment parts (gauges, manifold, regulator) placed directly on the concrete pad. Reduce product height from 41% to at most 35% of frame height.",
+      "correction_prompt": "Remove the background AFP box entirely. Keep only one AFP drip irrigation tape roll and the irrigation equipment assembly on the concrete pad. Reposition the scene so the single roll is the sole commercial product, with no packaging or secondary boxes visible. Maintain the required watermark.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 82,
-      "product_width_percent": 24,
-      "product_height_percent": 25,
-      "product_x_center_percent": 36,
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 21,
+      "product_height_percent": 19,
+      "product_x_center_percent": 66,
       "reasons": [
-        "No people or human body parts are visible in the image.",
-        "The AFP drip-tape carton roll is clearly visible and remains secondary to the irrigation equipment.",
-        "The equipment (filter, gauge, manifold) is present as required by the HEADWORKS DETAIL role.",
-        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "The background (empty concrete pad, farm building, crop rows) is contextually relevant and allowed."
+        "Hard reject: second commercial package present — a cardboard AFP-branded box sits to the right of the carton roll, violating the no-second-commercial-package rule.",
+        "Hard reject: gibberish/incorrect text on the roll label — 'Dril Lagation Tpe' is not valid product labeling."
+      ],
+      "correction_prompt": "Remove the cardboard box from the frame. Ensure the AFP carton roll label displays correct, legible product text (e.g., 'Drip Irrigation Tape'). Keep the headworks equipment and concrete pad setting.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 23,
+      "product_height_percent": 38,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Shows exactly one AFP white-and-blue cylindrical drip-tape carton roll; width 23% and height 38% are within the allowed envelope.",
+        "Zero people or human body parts are present anywhere in the frame.",
+        "HEADWORKS DETAIL role is satisfied: elevated equipment still life on a clean concrete pad with a fixed filter, pressure gauge, regulator/manifold assembly, and coiled hose as functional irrigation infrastructure.",
+        "One integrated AFP carton is placed at the far edge of the pad, physically grounded with appropriate contact shadow and consistent perspective.",
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom right corner.",
+        "Background includes ordinary tilled field soil and distant crop rows, which are permitted contextual elements."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }

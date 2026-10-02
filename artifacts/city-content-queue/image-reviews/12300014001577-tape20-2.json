@@ -1,25 +1,53 @@
 {
   "source_id": "12300014001577-tape20",
-  "family": "tape20",
   "kind": 2,
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 23,
-      "product_height_percent": 30,
-      "product_x_center_percent": 45,
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 32.0,
+      "product_height_percent": 35.0,
+      "product_x_center_percent": 40.0,
       "reasons": [
-        "Exact match for single AFP white-and-blue wide low cylindrical drip-tape carton roll",
-        "Product dimensions are within acceptable width (12-30%) and height (up to 35%) limits",
-        "Background matches article brief with simple field edge and distant unattended farm building/tractor",
-        "Watermark 'AFP | 09134922013' is correctly positioned in the bottom-right corner",
-        "Zero people or human body parts visible, meeting hard reject criteria"
+        "Hard reject: The drip-tape roll and carton show a pasted/sticker appearance with mismatched perspective. The graphics do not follow the cylindrical/rectangular curves naturally, and the tape segment lacks a physically plausible unwinding path or integration with the roll core.",
+        "Hard reject: Missing or incorrect contact shadows suggest the product is floating or digitally superimposed rather than sitting firmly on the dark soil surface."
+      ],
+      "correction_prompt": "Generate a realistic still-life of a single AFP drip-tape roll and its carton on dark soil. Ensure the branding wraps correctly around the cylindrical roll with proper perspective and show the tape emerging naturally from the roll core with a convincing contact shadow.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 16,
+      "product_height_percent": 38,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Product width (16%) is below the minimum 18% threshold",
+        "Camera angle is oblique/side view rather than steep near-overhead technical still life as required by role blueprint",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 16% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate with steeper near-overhead camera angle showing the AFP roll from above at greater height; ensure roll width occupies at least 18% of frame width while maintaining physical plausibility and dark soil context. Enlarge the product group from 16% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 20,
+      "product_height_percent": 45,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Mandatory role fulfilled: steep near-overhead technical still life on dark soil with one integrated AFP carton roll and one straight drip-tape segment clearly showing repeated emitter points.",
+        "Zero people or human body parts detected throughout the image.",
+        "Single AFP white-and-blue wide low cylindrical carton roll present; no extra commercial packages, bottles, jars, canisters, buckets, or fertilizer/pesticide containers.",
+        "Watermark 'AFP | 09134922013' visible in bottom-right corner as required.",
+        "Product dimensions are within acceptable envelope: approximately 20% width (range 18-38%) and 45% height (under 70%).",
+        "Physical integration appears plausible with proper contact shadows and perspective; no cutout/sticker/pasted appearance or white halo.",
+        "Background context matches article brief with dark soil and distant crop rows/infrastructure, no distant farmer or worker."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

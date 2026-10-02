@@ -1,56 +1,41 @@
 {
   "source_id": "12300018001592-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 25,
-      "product_width_percent": 41,
+      "score": 45,
+      "product_width_percent": 28,
       "product_height_percent": 38,
-      "product_x_center_percent": 50,
+      "product_x_center_percent": 72,
       "reasons": [
-        "Hard reject: Visible human silhouette (farmer/worker) is present in the background field.",
-        "Hard reject: The product (drip-tape carton roll) is wider than 30 percent of the frame and taller than 35 percent, violating physical dimension limits.",
-        "Mandatory role violation: The required 'HEADWORKS DETAIL' scene (fixed filter/gauge/manifold on a concrete pad with a small secondary carton) is missing; instead, the main subject is a full-size roll on the ground.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 41% to 12-30% of frame width.; Reduce product height from 38% to at most 35% of frame height."
+        "Second commercial package present - AFP cardboard box/carton visible to the left of the roll violates 'exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll' requirement",
+        "Image shows two distinct AFP branded products (box and roll) rather than one integrated carton",
+        "Equipment appears to be wheeled cart rather than fixed infrastructure on clean concrete pad as specified for HEADWORKS DETAIL role"
       ],
-      "correction_prompt": "Regenerate as an elevated 'headworks detail' shot showing one fixed filter, gauge, and manifold on an empty concrete pad. The white-and-blue AFP drip-tape roll must be a small secondary prop (width < 20%, height < 25%) placed on a nearby surface. Remove all human figures from the background. Ensure the 'AFP | 09134922013' watermark is in the bottom right. Reduce the product group from 41% to 12-30% of frame width. Reduce product height from 38% to at most 35% of frame height.",
+      "correction_prompt": "Remove the AFP box/carton from the image. Keep only the single AFP white-and-blue cylindrical drip-tape roll. Place it at far edge of clean concrete pad with fixed irrigation equipment (filter, pressure gauge, regulator, manifold). Ensure no second commercial package is visible. Maintain exact bottom-right watermark AFP | 09134922013.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 20,
-      "product_width_percent": 28,
-      "product_height_percent": 22,
-      "product_x_center_percent": 45,
-      "reasons": [
-        "Person visible in the distant background (hard reject)",
-        "Missing mandatory role: equipment-only elevated record photograph of fixed filter/gauge/regulator/manifold",
-        "Secondary commercial products visible in the background (tanks)",
-        "Product is too wide at 28% (exceeds preferred 23%)"
-      ],
-      "correction_prompt": "Remove all people and secondary commercial tanks from the background. Add an elevated fixed filter, gauge, regulator, and manifold on a concrete pad. Reduce the roll width to 20-23% of the frame width.",
-      "attempt": 2
-    },
-    {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 21,
-      "product_height_percent": 27,
-      "product_x_center_percent": 28,
+      "score": 92,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 68,
       "reasons": [
-        "The image correctly features the exact required 'AFP | 09134922013' watermark in the bottom-right corner.",
-        "No human, body part, or person is visible, satisfying the hard reject criteria.",
-        "The product is a white-and-blue drip-tape carton roll with the AFP branding, matching the visual brief.",
-        "The mandatory role of 'HEADWORKS DETAIL' is met with a filter, gauge, and manifold on an empty concrete pad; the roll is secondary and appropriately sized.",
-        "A distant tractor and farm building are present but unattended, which are explicitly permitted as context.",
-        "Dimensions and placement fall well within the acceptable reviewer-estimation noise parameters."
+        "Single AFP white-and-blue cylindrical drip-tape roll present and clearly identifiable.",
+        "Roll width approximately 28% of frame, height approximately 38% — within the 18-38% width and ≤70% height envelope.",
+        "Zero people or human body parts visible anywhere in the frame.",
+        "Hard rejects checked and absent: no cutout/pasted appearance, no white halo, no mismatched perspective, contact shadow present, no bottle/jar/canister/bucket/fertilizer/pesticide, no second roll or layflat hose, no fake headlines or gibberish.",
+        "Role 3 (HEADWORKS DETAIL) blueprint satisfied: elevated clean concrete pad with fixed filter assembly, pressure gauges, regulator, and manifold clearly depicted; AFP carton positioned at far edge as required.",
+        "Distant unattended farm building and crop rows provide contextual background without violating constraints.",
+        "Mandatory watermark 'AFP | 09134922013' present in bottom-right corner and correctly rendered.",
+        "Physical plausibility maintained; lighting and shadows are coherent."
       ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 2
     }
   ]
 }
