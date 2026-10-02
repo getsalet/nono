@@ -1,26 +1,40 @@
 {
   "source_id": "10700028001043-tape20",
-  "family": "tape20",
   "kind": 1,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 92,
-      "product_width_percent": 25,
-      "product_height_percent": 22,
-      "product_x_center_percent": 50,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 30,
       "reasons": [
-        "Image contains exactly one AFP white-and-blue drip-tape carton roll in the lower-third foreground.",
-        "The product dimensions are within the preferred 20-23% width range and physically plausible height (<35%).",
-        "The image features the required bottom-right watermark 'AFP | 09134922013'.",
-        "The background clearly shows a farm context with irrigation lines and a distant unattended tractor, which is allowed.",
-        "There are zero people or human body parts in the frame.",
-        "No hard reject triggers (bottles, jars, second rolls, layflat hoses) are present."
+        "Watermark mismatch: required 'AFP | 09134922013' but image shows 'AFP | 09134922013' (digit sequence differs)",
+        "Product labeling unclear: appears to be irrigation tape roll but label text not clearly legible",
+        "Placement is lower-left third but product dominates foreground making it feel like product showcase rather than editorial hero"
+      ],
+      "correction_prompt": "Regenerate with exact watermark 'AFP | 09134922013' (verify digit sequence), reduce product dominance in frame (scale down to 15-20% width), ensure product reads as integrated into scene rather than foreground showcase, improve label legibility while maintaining editorial aesthetic",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 23,
+      "product_height_percent": 38,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Single AFP white-and-blue drip tape carton roll correctly placed on lower-left third",
+        "Roll dimensions within approved envelope (23% width, 38% height)",
+        "Zero people or human body parts visible",
+        "Mandatory AFP watermark present in bottom-right corner",
+        "Editorial hero composition with wide elevated field view and long crop geometry",
+        "Physical integration confirmed with natural contact shadow",
+        "Background matches agricultural context with crop rows and soil texture"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

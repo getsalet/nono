@@ -1,26 +1,48 @@
 {
   "source_id": "10700027001319-tape20",
-  "family": "tape20",
   "kind": 2,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 27,
-      "product_height_percent": 29,
-      "product_x_center_percent": 35,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 62,
       "reasons": [
-        "Exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is visible in the foreground.",
-        "Zero people or human body parts are present in the image.",
-        "Emitters are visible on the drip tape unrolled to the side, providing required selection evidence for the 'SELECTION EVIDENCE' role.",
-        "Background contains farm buildings and distant unattended tractors, which are allowed as context.",
-        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Product dimensions are within the acceptable 13-27% width limit and physical plausibility constraints."
+        "HARD REJECT: Second roll present. The prompt mandates exactly one AFP carton roll, but the image displays two rolls (one upright, one on its side).",
+        "FAILS MANDATORY ROLE: The image shows a low-angle field perspective rather than the required 'steep near-overhead technical still life'.",
+        "HARD REJECT: While a single segment is unrolled, the presence of the second carton invalidates the strict single-object requirement for this editorial role."
+      ],
+      "correction_prompt": "Regenerate a steep near-overhead technical still life on dark soil featuring EXACTLY one AFP white-and-blue drip-tape roll. Remove the second roll lying on its side. Ensure the single roll is upright and the unrolled tape segment clearly shows emitter points.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 95,
+      "product_width_percent": 17,
+      "product_height_percent": 38,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Image matches SELECTION EVIDENCE role with steep near-overhead view on dark soil, integrated AFP carton and emitter tape segment. Roll dimensions within envelope, zero humans, correct watermark present, and contact shadow integrates naturally.",
+        "",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 17% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 17% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 25,
+      "product_height_percent": 33,
+      "product_x_center_percent": 34.5,
+      "reasons": [
+        "Single AFP white-and-blue drip-tape roll correctly placed on dark soil with integrated carton and visible emitter-segment layout. Watermark ‘AFP | 09134922013’ present in bottom-right. No humans, extra packages, or prohibited objects detected. Roll dimensions fall within 18–38% width and ≤70% height envelope. Natural perspective, contact shadow, and physical plausibility confirmed."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

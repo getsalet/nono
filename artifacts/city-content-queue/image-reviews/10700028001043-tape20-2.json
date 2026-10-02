@@ -1,18 +1,42 @@
 {
   "source_id": "10700028001043-tape20",
-  "family": "tape20",
   "kind": 2,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 62,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: image contains two AFP carton rolls instead of exactly one; second roll is explicitly listed as a hard reject.",
+        "Hard reject: image does not match the SELECTION EVIDENCE role blueprint — angle is mid-level eye/oblique, not steep near-overhead technical still life.",
+        "No drip-tape segment with repeated emitter points is clearly shown extending from the roll in a technical display manner.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner. ✓"
+      ],
+      "correction_prompt": "Generate a single AFP white-and-blue drip-tape carton roll on dark soil, shot from a steep near-overhead angle, with one straight segment of drip tape laid out showing repeated emitter points. Remove the second roll entirely. Ensure physical integration with contact shadows and no cutout appearance.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 38,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Image matches role blueprint: steep near-overhead technical still life on dark soil with one AFP carton roll and one straight drip-tape segment showing repeated emitter points.",
+        "Single AFP white-and-blue wide low cylindrical drip-tape carton roll present with correct branding and color scheme.",
+        "Product dimensions are within approved envelope: width ~22% (18-38%), height ~38% (<70%).",
+        "Roll placement is off-center (right side) with physically plausible contact shadow and integration with soil surface; no cutout/sticker appearance or white halo detected.",
+        "Zero people, human body parts, or silhouettes present.",
+        "Background contains only dark agricultural soil with minimal young plant growth, consistent with article context.",
+        "Required watermark 'AFP | 09134922013' is present in bottom-right corner.",
+        "No prohibited objects detected (no bottles, containers, second rolls, pipes through roll, fake text, etc.)."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
