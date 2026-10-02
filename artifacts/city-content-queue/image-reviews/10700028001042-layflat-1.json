@@ -1,39 +1,36 @@
 {
   "source_id": "10700028001042-layflat",
-  "family": "layflat",
   "kind": 1,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 88,
+      "score": 62,
       "product_width_percent": 58,
-      "product_height_percent": 35,
-      "product_x_center_percent": 45,
+      "product_height_percent": 22,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Visible human figures (operators/drivers) in distant farm equipment violate the zero people constraint",
-        "Product pair width (~58%) exceeds the 42% maximum hard-reject threshold",
-        "Required bottom-right watermark 'AFP | 09134922013' is correctly present",
-        "No bottles, jars, or third commercial packages detected",
-        "machine-enforced bounding-box check failed: Reduce the product group from 58% to 8-42% of frame width."
+        "Image contains extra commercial items beyond approved pair: visible pump assembly and separate valve/fitting component placed alongside coils, violating 'third commercial package' hard reject rule.",
+        "While main packaged and bare coils are recognizable and properly integrated on soil plane, surrounding additional hardware creates clutter inconsistent with strict product-focused editorial hero composition."
       ],
-      "correction_prompt": "Remove all human figures and operators from the scene. Scale the two hose coils down so their combined width is under 40% of the frame. Maintain the wide high-oblique water-transfer context and off-center placement. Reduce the product group from 58% to 8-42% of frame width.",
+      "correction_prompt": "Remove all pump assemblies, valves, fittings, and non-coil hardware from scene. Keep only packaged AFP coil and bare black woven coil on soil plane in lower third with clear spacing between them.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 90,
-      "product_width_percent": 36,
-      "product_height_percent": 25,
-      "product_x_center_percent": 43,
+      "score": 92,
+      "product_width_percent": 45,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Image contains exactly the required pair: one packaged AFP coil and one bare black woven coil.",
-        "Both objects are separate, physically plausible, and fully visible.",
-        "Product pair width falls within the acceptable 8-42% threshold (approx 36% estimated).",
-        "No human figures, faces, hands, or body parts are present.",
-        "Watermark 'AFP | 09134922013' is clearly visible in the bottom-right as required.",
-        "Placement is lower-third and off-center, which are accepted editorial preferences."
+        "Both packaged AFP coil and bare black woven coil are clearly visible, sitting on the same soil plane in the lower third of the frame.",
+        "Combined product width is approximately 45% of the frame, well within the 25-82% allowable envelope.",
+        "No people, human body parts, or silhouettes are present anywhere in the image.",
+        "Contact shadows and perspective are physically plausible; objects are not floating, merged, or pasted.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Background shows a wide field view with crop rows and distant farm infrastructure, consistent with the editorial hero role.",
+        "No extra commercial packages, bottles, jars, or third coils are present."
       ],
       "correction_prompt": "",
       "attempt": 2

@@ -1,37 +1,39 @@
 {
   "source_id": "1070003002297-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "product_width_percent": 62,
-      "product_height_percent": 55,
-      "product_x_center_percent": 48,
+      "score": 55,
+      "product_width_percent": 68,
+      "product_height_percent": 22,
+      "product_x_center_percent": 50,
       "reasons": [
-        "The mandatory role requires a 'HEADWORKS DETAIL' (fixed pump, gauge, and manifold on an empty concrete pad), but the image displays only the two product coils on the concrete pad without any pump, gauge, or manifold infrastructure.",
-        "The required 'HEADWORKS DETAIL' role is completely missing from the composition as the subject of the shot.",
-        "machine-enforced bounding-box check failed: Reduce product height from 55% to at most 45% of frame height."
+        "Role mismatch: request specifies HEADWORKS DETAIL (elevated concrete pad with fixed pump, gauge, and manifold) but image shows field setting with coils on ground and prominent tractor in background.",
+        "No fixed pump, gauge, or manifold visible in the scene.",
+        "Coils are foreground-centered rather than at the far edge of an elevated platform.",
+        "Distant unattended tractor is acceptable per rules but contributes to wrong contextual setting."
       ],
-      "correction_prompt": "Regenerate to include a headworks setup: place a fixed pump, a pressure gauge, and a manifold on the empty concrete pad in the background. Keep the two separate coils (one AFP packaged, one bare black woven) in the foreground, but ensure they are smaller relative to the pump and infrastructure to align with the 'equipment-only' elevated record detail. Reduce product height from 55% to at most 45% of frame height.",
+      "correction_prompt": "Regenerate as HEADWORKS DETAIL: two-coil pair (one packaged AFP, one bare black woven) on a clean elevated concrete pad with a fixed pump, gauge, and manifold assembly integrated into the scene. Place coils at the far edge. Keep tractor out of frame or minimize. Ensure zero people.",
       "attempt": 1
     },
     {
       "pass": true,
-      "score": 90,
-      "product_width_percent": 32,
-      "product_height_percent": 22,
-      "product_x_center_percent": 34,
+      "score": 82,
+      "product_width_percent": 60,
+      "product_height_percent": 50,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Mandatory 'HEADWORKS DETAIL' role satisfied: elevated record photograph of a fixed pump, gauge, and manifold on an empty concrete pad.",
         "Approved layflat pair present: one packaged AFP coil (left) and one bare black woven coil (right).",
-        "No humans or human body parts visible in the frame.",
-        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required.",
-        "Background includes a distant tractor and farm building, which are explicitly allowed infrastructure/context elements.",
-        "Product dimensions are physically plausible and the pair remains separate and recognizable."
+        "Combined product width ~60% — within the 25–82% acceptable envelope.",
+        "Both coils are fully visible, separate, physically plausible, with correct contact shadows on the concrete pad.",
+        "Zero people, zero human body parts.",
+        "Background equipment (green pump/gauge unit on wheels) is relevant infrastructure, not a third commercial product.",
+        "Distant unattended tractor/farm building is allowed and correctly treated as infrastructure.",
+        "Required watermark 'AFP | 09134922013' is present in bottom-right corner.",
+        "Role blueprint (headworks detail: elevated concrete pad, fixed pump/gauge/manifold, two-coil pair at edge) is satisfied."
       ],
       "correction_prompt": "",
       "attempt": 2

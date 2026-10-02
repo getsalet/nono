@@ -1,18 +1,41 @@
 {
   "source_id": "10700029001308-layflat",
-  "family": "layflat",
   "kind": 2,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 48,
+      "product_height_percent": 40,
+      "product_x_center_percent": 43,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: gray bucket/container present in upper-right background; forbidden object (bucket, canister, jar) is explicitly listed as a hard reject.",
+        "Two-coil pair (packaged AFP + bare black woven) is present and physically plausible with contact shadows on soil.",
+        "Watermark AFP | 09134922013 is present in bottom-right corner."
+      ],
+      "correction_prompt": "Remove the gray bucket from the upper-right background; keep only the two-coil pair on textured soil with zero containers, bottles, jars, or canisters anywhere in the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 43,
+      "product_height_percent": 34,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Near-overhead technical still life on textured soil showing packaged AFP coil and bare black woven coil pair.",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Combined width approximately 43% of frame, within 25-82% envelope.",
+        "No people, body parts, or silhouettes visible.",
+        "Distant farm buildings and plowed field are infrastructure, not commercial products.",
+        "Contact shadows and perspective appear physically plausible.",
+        "Two objects remain separate, recognizable, and fully visible.",
+        "Connector between coils provides diameter cue per role requirements."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

@@ -1,42 +1,53 @@
 {
   "source_id": "10700028001042-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 62,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "Role 2 fails the 'SELECTION EVIDENCE' brief because it is a low-angle product shot resting on soil, rather than an 'elevated technical comparison' that shows diameter or construction differences via the pair. It lacks the technical narrative required.",
-        "Role 3 fails the 'HEADWORKS DETAIL' brief because it shows only the two coils on a white concrete surface with no fixed pump, gauge, or manifold visible. The environment is a generic studio-like void, not the required 'empty concrete pad' headworks setup.",
-        "Roles 2 and 3 are visually nearly identical in composition (the two-coil pair) and violate the 'visibly distinct' rule by failing to differentiate the environments or technical narratives of 'selection' vs 'headworks'."
+        "Role 1 correctly shows a wide elevated field view with both coils on soil. Role 2 uses a ground-level perspective down furrows rather than a steep near-overhead technical still life, and includes background farm machinery beyond the required two-coil-plus-one-cue narrative. Roles 1 and 2 share nearly identical camera height, framing, lighting, and composition of the same two coils on similar tilled soil, making them near-duplicates. Role 3 shows coils on concrete with pump equipment but the unit is a wheeled portable pump rather than a complete fixed filter-gauge-regulator-manifold headworks assembly."
       ],
-      "correction_prompt": "Re-generate Role 2 as a high-angle, technical close-up of the two coils in a farm field, clearly highlighting a diameter difference without background clutter. Re-generate Role 3 to show a fixed pump, gauge, and manifold on an empty concrete pad with the two coils positioned small and off-center in the background.",
+      "correction_prompt": "Regenerate Role 2 as a steep near-overhead camera angle looking down on textured soil with only the two AFP coils and one visible connector or diameter comparison cue; eliminate background trucks, buildings, and drip-line foreground elements to ensure clear separation from Role 1.",
       "panel_scores": [
-        35
+        62
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 100,
-      "duplicate_roles": [],
-      "reasons": [
-        "All three panels display distinct camera angles (high-oblique, eye-level, and macro-elevated) and environments (crop fields, pump pad, and flat concrete), satisfying the narrative differentiation requirement.",
-        "Panel 1 correctly positions the packaged and bare coils small, separate, and off-center within a wide water-transfer context with sunflowers, fulfilling the HERO role.",
-        "Panel 2 displays the two-coil pair clearly in the foreground for selection comparison and features a pump/gauge manifold setup in the background, fulfilling the EVIDENCE role.",
-        "Panel 3 isolates the coils and pump equipment on an empty concrete pad without any farm activity or third parties, fulfilling the DETAIL role.",
-        "No prohibited elements such as people, bottles, containers, or extra coils are present in any of the images.",
-        "The required bottom-right watermark is correctly applied to all panels and not flagged as an obstruction or rejection cause."
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "No changes required; the set perfectly aligns with the editorial visual brief.",
+      "reasons": [
+        "Images 1 and 2 share near-identical low-angle ground-level camera positioning, framing, and subject placement — both show the two coils at the same eye-level perspective looking down tilled rows. Role 2 requires a steep near-overhead technical still life, which neither image provides. Additionally, Role 3 should have the integrated two-coil pair at the far edge of a clean concrete pad dominated by fixed pump/gauge/manifold equipment, but here the coils occupy the foreground rather than the far edge.",
+        "Replace Image 2 with a steep near-overhead shot (90° or close) looking down at the two AFP coils on textured soil, cropped tightly to show only the coil pair and one diameter/connector cue with no background field perspective; replace Image 3 so the coils sit at the far edge of a clean concrete pad with the complete fixed pump, gauge, regulator, and manifold dominating the frame."
+      ],
+      "correction_prompt": "",
       "panel_scores": [
-        100
+        52
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "duplicate_roles": [],
+      "reasons": [
+        "Image 1 fulfills Role 1 (EDITORIAL HERO) with a wide elevated field perspective and both coils on soil in the lower third. Image 2 fulfills Role 2 (SELECTION EVIDENCE) as a steep near-overhead technical layout on textured soil showing only the two-coil pair. Image 3 fulfills Role 3 (HEADWORKS DETAIL) with the coils on a concrete pad and pump/gauge equipment visible behind them. All three roles are clearly distinct by camera height, surface, and narrative focus. The approved AFP product is present and identifiable in every panel. The watermark is intact across all three images.",
+        "Minor note: the pump in image 3 is a wheeled portable unit rather than a fixed installed assembly, and a large earthen building appears in the background, but neither violates the stated pass criteria."
+      ],
+      "correction_prompt": "Retake image 3 from a higher elevation so the two-coil pair sits firmly at the far edge of a clean concrete pad, with the fixed filter-gauge-regulator manifold assembly clearly legible and dominant in the mid-frame, removing any wheeled portability cues.",
+      "panel_scores": [
+        92
+      ],
+      "set_attempt": 3
     }
   ]
 }

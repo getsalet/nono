@@ -1,26 +1,64 @@
 {
   "source_id": "10700028001042-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 48,
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 62,
+      "product_height_percent": 28,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Hard reject: multiple colorful plastic bins/buckets (green, red, blue) visible in the background.",
+        "Role mismatch: Image lacks required 'fixed pump, gauge and manifold' for HEADWORKS DETAIL role; shows construction vehicles instead."
+      ],
+      "correction_prompt": "Remove all background bins, buckets, and construction vehicles. Replace with a clean concrete pad setup featuring a fixed pump, pressure gauge, and manifold assembly in the background, keeping the two-coil pair at the edge.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 65,
       "product_height_percent": 28,
       "product_x_center_percent": 45,
       "reasons": [
-        "The image displays the correct layflat pair: one packaged coil (left, with strap) and one bare black woven coil (right).",
-        "A fixed pump, gauge, and manifold are visible on the concrete pad, consistent with the 'HEADWORKS DETAIL' role (equipment-only, no farm activity).",
-        "The product bounding box estimates a width of 48%, which is within the acceptable range of 8-65% provided the objects are fully visible and separate, as they are here.",
-        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "There are no humans, faces, or human body parts visible in the frame.",
-        "Coils are physically plausible and separate, with no intersection or merging with the pump unit."
+        "Missing mandatory HEADWORKS DETAIL role infrastructure: no fixed pump, gauge, or manifold visible. The background shows an unattended tractor in an agricultural field rather than the required elevated equipment still life on a clean concrete pad with integrated headworks components. The scene context does not match the approved role blueprint despite the dual-coil product presentation being physically plausible."
+      ],
+      "correction_prompt": "Place the two-coil pair on a clean concrete pad with an elevated infrastructure setup featuring a fixed pump, gauge, and manifold in the background; remove the agricultural tractor and field setting",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 66,
+      "product_height_percent": 43,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Role mismatch: the image shows a field-side setting with a distant tractor but lacks the required HEADWORKS DETAIL infrastructure — no fixed pump, gauge, manifold, or installed hose segment is visible on the concrete pad. The scene is an outdoor agricultural shot rather than an elevated equipment still life with integrated headworks components.",
+        "Watermark and products are correctly present: AFP | 09134922013 in bottom-right, one packaged AFP coil and one bare black woven coil side by side, within the 82% width envelope, zero people, no hard-reject artifacts."
+      ],
+      "correction_prompt": "Regenerate as HEADWORKS DETAIL: place the two-coil pair (one packaged AFP, one bare black woven) on a clean raised concrete platform in the foreground. Add a fixed irrigation pump, pressure gauge, and manifold assembly near the coils as integrated infrastructure. Keep background minimal; remove the prominent tractor and field setting. Retain bottom-right watermark 'AFP | 09134922013'. Zero people.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 42,
+      "product_height_percent": 15,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Image shows the approved layflat pair: one packaged AFP coil (left) and one bare black woven coil (right) on a concrete pad.",
+        "Fixed pump with gauges and manifold visible in the background as required headworks detail.",
+        "Two coils are separate, fully visible, physically plausible, with correct contact shadows.",
+        "Combined width is approximately 42% of frame, within the 25-82% envelope.",
+        "Zero people or human body parts present.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Distant farm buildings and unattended equipment are acceptable infrastructure elements."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 4
     }
   ]
 }
