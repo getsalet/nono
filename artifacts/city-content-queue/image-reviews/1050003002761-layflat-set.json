@@ -1,23 +1,55 @@
 {
   "source_id": "1050003002761-layflat",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 95,
+      "pass": false,
+      "score": 72,
       "duplicate_roles": [],
       "reasons": [
-        "The three panels are visually distinct in camera angle and narrative: Panel 1 establishes a wide water-transfer context with a cityscape, Panel 2 focuses on a linear crop row for technical comparison, and Panel 3 highlights pump infrastructure.",
-        "Panel 1 correctly features the product pair small and off-center within a wide editorial shot.",
-        "Panel 2 uses the two-coil pair to demonstrate differences in construction or diameter without including extraneous commercial items or people.",
-        "Panel 3 depicts the required fixed unattended pump and manifold, with the product pair acting as secondary background elements.",
-        "All environments remain relevant to the article brief regarding agricultural water transfer."
+        "Role 3 fails: the equipment foreground shows a spray nozzle/pump assembly with a tractor and hay bales in background on concrete, but no fixed filter, pressure gauge, regulator, or manifold—no headworks detail per spec. Roles 1 and 2 are structurally distinct (field wide shot vs. soil-level with tubing cue), so no duplicate_roles issue."
       ],
-      "correction_prompt": "None",
+      "correction_prompt": "Replace Image 3 with an elevated concrete-pad equipment still life showing a complete fixed intake headworks (sand/disc filter, pressure gauge, pressure regulator, and valve manifold) as the primary subject with the integrated AFP two-coil pair at the far edge of the frame.",
       "panel_scores": [
-        95
+        72
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 (Editorial Hero) and Role 2 (Selection Evidence) are near-duplicates: both show the same two-coil pair on loose dirt/soil at nearly identical low-angle perspectives with similar framing and background architecture.",
+        "Role 1 does not meet the wide elevated water-transfer field view requirement; the shot is ground-level close-up rather than elevated with expansive field context.",
+        "Role 3 (Headworks Detail) shows equipment on a clean concrete surface with a pump/gauge assembly, but the coils are in the foreground rather than at the far edge as specified.",
+        "Missing visual evidence for roles 1 and 2: no clear connector or diameter cue in role 2, and no elevated camera angle distinguishing role 1 from role 2."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a true wide elevated shot (drone/high-platform) of the field with the two coils sharing a broad soil plane in the lower third; regenerate Role 2 as a steep near-overhead technical layout on bare textured soil showing ONLY the coil pair plus a visible connector/diameter reference with no background equipment.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Images 1 and 2 are near-duplicates: both use an elevated-to-mid-angle perspective on soil with the same two-coil composition, differing only in zoom. Role 2 requires a steep near-overhead technical still life with a clear selection cue (connector or diameter indicator), which Image 2 does not provide — it remains an angled field shot rather than a distinct overhead technical layout.",
+        "Image 3 places the coil pair prominently in the foreground rather than at the far edge of the pad as Role 3 mandates, and the background equipment resembles a portable pressure washer rather than a fixed filter-gauge-regulator-manifold headworks assembly."
+      ],
+      "correction_prompt": "Replace Image 2 with a steep near-overhead shot looking directly down at the two AFP coils on dark textured soil, framing only the coil pair and one visible connector or diameter callout as selection evidence, eliminating the distant horizon and elevated perspective shared with Image 1. Replace Image 3 so the integrated two-coil pair rests at the far edge of a clean concrete pad with a fixed filtration headworks assembly (sand/media filter, pressure gauge, pressure regulator, and manifold with gauges) dominating the mid-ground.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 3
     }
   ]
 }

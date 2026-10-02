@@ -1,6 +1,6 @@
 {
   "source_id": "10600010001004-layflat",
-  "policy": "strict-restoration-posts-567-632-20260929",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
@@ -10,32 +10,49 @@
         2
       ],
       "reasons": [
-        "Panel 2 contains a third commercial element (cardboard box) and an extra cylindrical object, violating the SELECTION EVIDENCE rule of no additional commercial packaging or extra items",
-        "Panels 1 and 2 share identical low-angle farm-field context with the same two-coil foreground arrangement, making them visually duplicated roles rather than distinct camera heights/angles",
-        "Panel 1 should have the coils small/separate/off-center in a wide context, but they dominate the foreground as the primary subject instead",
-        "Panel 3 lacks the required pump/gauge/manifold equipment on the concrete pad (HEADWORKS DETAIL calls for equipment-only shot)",
-        "All three panels use the same two-coil pairing at similar sizes without meaningful technical narrative differentiation between roles"
+        "Role 1 and Role 2 are nearly identical in camera height, framing, subject placement, and lighting — both are low-angle field shots showing the same two-coil arrangement on tilled soil. Role 2 requires a steep near-overhead technical still life, but image 2 does not differ sufficiently from image 1 in elevation or angle.",
+        "Role 3 correctly shows a concrete-pad equipment still life with the pump/gauge assembly, satisfying the Headworks Detail requirement.",
+        "Images 1 and 2 need to be structurally distinct: Role 2 should be shot from a significantly steeper near-overhead angle, with tighter framing focused on the coil cross-section, connector, or diameter cue rather than the wide field vista."
       ],
-      "correction_prompt": "Panel 1: pull back to a wide high-oblique water-transfer field shot with both coils tiny and off-center in the distance; Panel 2: remove the cardboard box and cylindrical object, keep only the two coils in an elevated technical side-by-side showing diameter/construction difference against a clean neutral background; Panel 3: add a fixed pump with gauge and manifold on the concrete pad, place the two coils small and secondary at the frame edge, no farm activity.",
+      "correction_prompt": "Regenerate image 2 as a steep near-overhead shot (camera nearly perpendicular to ground) tightly framing the integrated two-coil pair on textured soil, emphasizing a visible connector or diameter callout in the foreground with minimal background field context.",
       "panel_scores": [
         58
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 88,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 (EDITORIAL HERO): wide high-oblique aerial view of planted field rows with coils and gauge positioned small/off-center on concrete pad — distinct from other roles.",
-        "Panel 2 (SELECTION EVIDENCE): elevated technical comparison with two coil pairs placed side-by-side, showing diameter/construction difference through the pair itself, no third package/bottle/person — valid role separation from Panel 1.",
-        "Panel 3 (HEADWORKS DETAIL): equipment-only flat-lay of packaged vs. bare coil on concrete pad, no pump/gauge/manifold present but product-focused narrative distinct; however, absent the required pump+gauge+manifold on empty concrete pad per brief, slight deviation."
+      "pass": false,
+      "score": 62,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Panel 3: Replace with a pump+gauge+manifold elevated record photograph on empty concrete pad with the approved two-coil pair remaining small and secondary in background — no farm activity, no person.",
+      "reasons": [
+        "Image 1 and Image 2 are near-duplicates: both are low-angle ground-level close-ups of the same two AFP coils on soil with identical composition, framing, and camera height. The only difference is slight background variation (cropped rows vs. flat soil). They fail to provide the required distinct narrative separation—Role 1 calls for a wide elevated field view with perspective depth, while Role 2 calls for a steep near-overhead technical layout. Image 1 lacks sufficient elevation/wide perspective, and Image 2 lacks the required overhead angle and selection evidence (connector/diameter cue).",
+        "Image 3 correctly fulfills Role 3 with an elevated concrete-pad still life showing the two coils plus a fixed pump, gauge, and filter manifold."
+      ],
+      "correction_prompt": "Remake Role 1 as a genuinely wide elevated (drone or high-platform) field view with the two coils small in the lower third and full crop rows receding into depth. Remake Role 2 as a steep near-overhead shot directly above the two-coil pair on textured soil, tightly framed, showing a visible connector or diameter reference cue, with no background scenery.",
       "panel_scores": [
-        88
+        62
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Image 1 and Image 2 are near-duplicate camera/environment compositions — both are elevated field views showing the same two-coil pair on a soil plane with nearly identical framing, subject placement, and perspective. Role 2 (SELECTION EVIDENCE) requires a steep near-overhead technical still life with clearly different camera height and isolation of the two-coil pair on textured soil without the wide field context seen in Image 1.",
+        "Image 3 partially fulfills Role 3 but is missing the fixed manifold and pressure regulator required by the HEADWORKS DETAIL specification; it shows a portable pump with gauge but not a complete fixed filter-gauge-regulator-manifold assembly."
+      ],
+      "correction_prompt": "Generate a new Role 2 image as a steep near-overhead technical still life shot of the integrated two-coil pair on textured bare soil only, with minimal background, no crops or field rows visible, and include one connector or diameter comparison cue as the sole additional element.",
+      "panel_scores": [
+        58
+      ],
+      "set_attempt": 3
     }
   ]
 }
