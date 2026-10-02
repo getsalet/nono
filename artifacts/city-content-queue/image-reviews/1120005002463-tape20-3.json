@@ -1,124 +1,41 @@
 {
   "source_id": "1120005002463-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "product_width_percent": 23,
-      "product_height_percent": 25,
-      "product_x_center_percent": 30,
-      "reasons": [
-        "Person/farmer is visible standing next to the tractor in the background, which is a hard reject.",
-        "The primary commercial package (drip tape carton roll) is in the foreground and appears large/primary rather than small and secondary as required by the 'HEADWORKS STORY' role.",
-        "The mandatory role specifies the exact bottom-right watermark 'AFP | 09134922013' is required, and while the visible watermark matches, the primary rejection is due to the human presence."
-      ],
-      "correction_prompt": "Remove the farmer/person standing near the tractor. Shrink the drip tape carton roll in the foreground to make it small and secondary. Place the unattended fixed filter, gauge, regulator, and manifold as the medium side view focal point. Maintain the bottom-right watermark 'AFP | 09134922013'.",
-      "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 30,
-      "product_width_percent": 28,
-      "product_height_percent": 30,
-      "product_x_center_percent": 28,
-      "reasons": [
-        "Visible human figures (workers) in the background violate the zero-people hard reject rule",
-        "Gibberish/illegible text on the carton labels violates the quality standards",
-        "machine-enforced bounding-box check failed: Reduce the product group from 28% to 13-27% of frame width."
-      ],
-      "correction_prompt": "Regenerate image removing all background human workers and figures; ensure carton text is legible and correctly spelled Reduce the product group from 28% to 13-27% of frame width.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 10,
-      "product_width_percent": 32,
-      "product_height_percent": 35,
-      "product_x_center_percent": 35,
-      "reasons": [
-        "Hard reject: Image contains two people (a crouching man and a standing man).",
-        "Hard reject: Image contains a second commercial package (the open 'DRIP IRRIGATION' cardboard box).",
-        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 35% to at most 32% of frame height."
-      ],
-      "correction_prompt": "Remove all people and workers from the scene. Remove the open cardboard box. Ensure the image shows only the single white-and-blue AFP drip-tape roll and the irrigation equipment on the soil. Keep the mandatory bottom-right watermark intact. Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 35% to at most 32% of frame height.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 10,
-      "product_width_percent": 36,
-      "product_height_percent": 33,
-      "product_x_center_percent": 22,
-      "reasons": [
-        "Product (roll) width is significantly larger than the allowed 27% maximum of frame width.",
-        "Hard reject: Image contains buckets and a second commercial cardboard box, violating the zero extra containers/packages rule.",
-        "Hard reject: Pipe/tape is visible passing through or extending from the assembly, violating geometry constraints.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 36% to 13-27% of frame width.; Reduce product height from 33% to at most 32% of frame height."
-      ],
-      "correction_prompt": "Regenerate image strictly following HEADWORKS role: small secondary AFP carton roll (max 20% width) in background. Focus medium shot on unattended filter, gauge, and manifold setup. Remove all buckets, water containers, and secondary cardboard boxes. Ensure no tape passes through the roll. Keep the AFP | 09134922013 watermark. Reduce the product group from 36% to 13-27% of frame width. Reduce product height from 33% to at most 32% of frame height.",
-      "attempt": 4
-    },
-    {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 27,
-      "product_height_percent": 34,
-      "product_x_center_percent": 34,
-      "reasons": [
-        "Hard reject: A male person (farmer/worker) is clearly visible crouching in the right portion of the frame.",
-        "Hard reject: The presence of a human violates the 'zero people' rule and the mandatory brief requirement for 'unattended' infrastructure.",
-        "machine-enforced bounding-box check failed: Reduce product height from 34% to at most 32% of frame height."
-      ],
-      "correction_prompt": "Remove all human figures from the image. The scene must contain only the unattended fixed filter, gauge, and regulator hardware in the foreground and midground. The one white-and-blue AFP drip-tape roll must remain present but small and secondary. Keep the bottom-right watermark 'AFP | 09134922013'. Reduce product height from 34% to at most 32% of frame height.",
-      "attempt": 5
-    },
-    {
-      "pass": false,
-      "score": 15,
+      "score": 45,
       "product_width_percent": 22,
-      "product_height_percent": 28,
-      "product_x_center_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 65,
       "reasons": [
-        "Presence of a full human figure (face, body parts) violates the zero-human hard reject rule",
-        "Multiple cardboard boxes present violate the 'zero second commercial package' rule",
-        "Image role mismatch: the primary focus is on the person and irrigation equipment rather than a small secondary carton roll with the mandatory filter/infrastructure focus"
+        "Hard reject: second AFP commercial package detected — AFP-branded cardboard box present alongside the AFP drip-tape roll. The brief requires exactly one AFP carton at the far edge; the cylindrical roll itself is also AFP-branded, creating two visible AFP commercial items.",
+        "Background cardboard box with AFP logo constitutes a second commercial package, violating the single-product constraint."
       ],
-      "correction_prompt": "Remove the person completely. Remove all cardboard boxes. Reframe to show a medium side view of unattended fixed filter, gauge, regulator and manifold. Keep the white-and-blue AFP drip-tape carton roll in the foreground as a small, secondary element (approx 20% width). Ensure no human silhouettes or body parts are visible.",
-      "attempt": 6
-    },
-    {
-      "pass": false,
-      "score": 15,
-      "product_width_percent": 20,
-      "product_height_percent": 23,
-      "product_x_center_percent": 30,
-      "reasons": [
-        "Hard reject: Human figure present in the center of the image (person crouching)",
-        "Hard reject: A second commercial package (small box/carton) is visible on the ground near the person",
-        "Role mismatch: The mandatory 'HEADWORKS STORY' role requires a medium side view of unattended fixed infrastructure (filter, gauge, manifold) with the product as a secondary element, which this image does not fulfill"
-      ],
-      "correction_prompt": "Regenerate the image as a medium shot of a unattended drip-irrigation manifold system (including filter, gauge, and regulator) situated on agricultural soil. A distant red tractor is acceptable in the background. The AFP 20cm drip-tape carton roll must be visible on the left side, small and secondary to the machinery, with an estimated width of 15-20% of the frame. Ensure there are absolutely no people, workers, or body parts in the frame. Place the 'AFP | 09134922013' watermark in the bottom-right corner.",
-      "attempt": 7
+      "correction_prompt": "Remove the AFP-branded cardboard box from the background. Keep only the single AFP white-and-blue cylindrical drip-tape roll on the concrete pad alongside the headworks equipment. Ensure no other commercial packaging is visible.",
+      "attempt": 1
     },
     {
       "pass": true,
       "score": 85,
-      "product_width_percent": 17,
+      "product_width_percent": 23,
       "product_height_percent": 28,
-      "product_x_center_percent": 22,
+      "product_x_center_percent": 65,
       "reasons": [
-        "Image correctly features a single AFP white-and-blue cylindrical drip-tape carton roll in the lower-left foreground.",
-        "The bounding box dimensions for the product (17% width, 28% height) fall well within the preferred 20-23% width range and the 32% height limit, with x-center at 22%.",
-        "The image includes a distant unattended red tractor and a fixed filter manifold, which are permitted as contextual farm infrastructure and background elements.",
-        "No people, human silhouettes, or extra commercial containers are present.",
-        "The mandatory bottom-right watermark 'AFP | 09134922013' is clearly visible and correctly placed."
+        "Single AFP white-and-blue wide low cylindrical drip-tape carton roll correctly placed on concrete pad",
+        "Roll width ~23% (within 18–38% envelope) and height ~28% (below 70% limit)",
+        "Headworks detail role fulfilled: pressure gauge, regulator fittings, pump assembly, and piping present as fixed infrastructure on concrete pad",
+        "One AFP carton at far edge (background brown box); main roll is the primary product",
+        "AFP watermark 'AFP | 09134922013' present in bottom-right corner as required",
+        "Zero people, human body parts, or silhouettes detected",
+        "Roll is physically integrated with natural contact shadows and perspective consistent with scene",
+        "No bottle, jar, canister, bucket, fertilizer/pesticide container, layflat hose, pipe through roll, or gibberish text detected",
+        "Background includes distant farm building and crop rows; ordinary soil texture — none of these are hard rejects per guidelines"
       ],
       "correction_prompt": "",
-      "attempt": 8
+      "attempt": 2
     }
   ]
 }
