@@ -1,39 +1,57 @@
 {
   "source_id": "1080007002030-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 10,
-      "product_width_percent": 0,
-      "product_height_percent": 0,
-      "product_x_center_percent": 0,
+      "score": 52,
+      "product_width_percent": 58,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
       "reasons": [
-        "The image contains a visible human body part (a red arm/hand) on the tractor in the background, which triggers a hard reject.",
-        "The mandatory equipment-only record elements (fixed pump, gauge, and manifold) are completely missing.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 8-65% of frame width."
+        "Image shows two coils on a plain surface in a field setting with distant tractors, not the required HEADWORKS DETAIL role (elevated equipment still life on clean concrete pad with fixed pump, gauge and manifold). Missing required infrastructure elements (pump, gauge, manifold) that define the role blueprint.",
+        "Product pair width (approx. 58%) is within acceptable 25-82% envelope. Watermark present. No people or third commercial products. Composition is lower-third/off-center which is editorially acceptable."
       ],
-      "correction_prompt": "Regenerate the image by completely removing all human body parts and figures. Add a fixed pump, gauge, and manifold on the empty concrete pad. Keep the two approved coils (packaged AFP coil and bare black woven coil) small and secondary. Ensure no other commercial packages or containers are present. Enlarge the product group from 0% to 8-65% of frame width.",
+      "correction_prompt": "Recompose as HEADWORKS DETAIL: place the two-coil pair at the far edge of an elevated concrete equipment pad with a fixed pump, gauge, and manifold assembly visible nearby. Keep distant tractors permissible but ensure the immediate foreground is clean concrete pad infrastructure, not open field soil.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 92,
-      "product_width_percent": 60,
-      "product_height_percent": 45,
-      "product_x_center_percent": 40,
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 58,
+      "product_height_percent": 42,
+      "product_x_center_percent": 47,
       "reasons": [
-        "Image contains exactly two products: one packaged coil (left) and one bare black woven coil (right).",
-        "No human figures or body parts are visible.",
-        "Infrastructure (fixed pump, gauge, manifold) is present and permitted under the 'HEADWORKS DETAIL' role, treated as equipment rather than a third commercial product.",
-        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "Layout places products in the lower-third, which is permitted."
+        "Role mismatch: Requested HEADWORKS DETAIL showing fixed pump, gauge, and manifold on clean concrete pad, but image depicts agricultural field with tractor and crop rows",
+        "Missing required infrastructure: No pump, gauge, or manifold visible in the scene",
+        "Background shows unattended tractor and agricultural setting rather than headworks/equipment still life context",
+        "Scene composition does not match 'elevated equipment still life' role blueprint"
+      ],
+      "correction_prompt": "Remove tractor and field background. Replace with clean concrete pad setting featuring fixed pump, gauge, and manifold infrastructure. Position two-coil pair at far edge of pad. Maintain AFP | 09134922013 watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 48,
+      "product_height_percent": 28,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "Two-coil pair clearly visible: one packaged AFP coil (left) and one bare black woven coil (right)",
+        "Packaged coil shows branded wrapping with AFP labeling",
+        "Bare coil displays woven texture pattern",
+        "Blue pump/hose reel with gauges in background - relevant infrastructure",
+        "Clean concrete pad surface with natural shadows",
+        "Farm field background adds context without distraction",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner",
+        "No people or human body parts visible",
+        "Good lighting and composition",
+        "Products are fully visible and physically plausible"
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }

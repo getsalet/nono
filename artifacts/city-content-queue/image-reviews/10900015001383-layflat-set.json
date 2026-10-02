@@ -1,40 +1,55 @@
 {
   "source_id": "10900015001383-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
-      "score": 40,
+      "score": 38,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Roles 1 and 2 are nearly identical in composition, camera angle, and framing; the only difference is a blurry background tractor in Role 2, which does not create distinct visual separation required for an editorial series.",
-        "Role 1 fails to meet the 'EDITORIAL HERO' brief by not establishing a wide water-transfer context or high-oblique perspective; it remains a static close-up of the coils.",
-        "The layout of the two-coil pair in Role 1 and Role 2 is a direct repetition that should be rejected under the 'repeated layouts' rule."
+        "Roles 1 and 2 are near-duplicate ground-level product shots on soil with identical composition and framing; Role 1 lacks the required wide elevated field-of-view perspective, and Role 2 lacks the required steep near-overhead angle plus one connector or diameter cue. Additionally, Role 2 shows residential buildings in the background (conflicting with ordinary farm context without city-specific architecture), and Role 3 features a tractor cab partially in frame rather than a complete fixed pump/gauge/regulator/manifold setup with coils at the far edge."
       ],
-      "correction_prompt": "Generate Role 1 as a wide, high-oblique aerial or high-angle shot of a water channel with the two small coils in the distance; regenerate Role 2 as a close-up technical macro shot specifically highlighting the diameter or weave construction difference between the two coils, removing the background tractor to focus on the product evidence.",
+      "correction_prompt": "Recompose: Image 1 as a true elevated wide field view looking down the irrigation run with coils small in the lower third; Image 2 as a steep near-overhead shot on textured soil showing only the two coils plus a diameter gauge or connector; Image 3 as a clean concrete-pad equipment still life with a complete fixed pump, pressure gauge, regulator, and manifold fully in frame, coils placed at the far edge, no tractor cab dominating the scene.",
       "panel_scores": [
-        40
+        38
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 100,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 (Role 1) correctly provides an editorial wide shot with a high-oblique perspective of the water-transfer context, keeping the required two-coil pair small, separate, and off-center.",
-        "Panel 2 (Role 2) effectively serves as selection evidence by using a macro/technical angle that clearly displays the diameter and construction differences between the two coils without prohibited extra packages or people.",
-        "Panel 3 (Role 3) is a distinct equipment-focused detail shot on a concrete pad, featuring the fixed pump and gauge with the coil pair acting as secondary elements, matching the headworks detail requirement.",
-        "All panels maintain the AFP product identity consistently without any layout duplication or generic background errors."
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "",
+      "reasons": [
+        "Role 1 and Role 2 are near-duplicate camera/environment structures — identical wide elevated field composition with coils on soil plane, same angle and framing. Role 3 missing mandatory equipment: no fixed pump, gauge, or manifold visible (shows tractor instead of required headworks components)."
+      ],
+      "correction_prompt": "Redraft Role 2 as steep near-overhead technical layout from above showing soil texture, two-coil pair side-by-side with visible connector and diameter measurement cue. Redraft Role 3 to show elevated concrete pad with integrated fixed pump assembly, pressure gauge, and manifold piping with coils at far edge.",
       "panel_scores": [
-        100
+        35
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 2 uses the same ground-level side-angle composition as Role 1 rather than a steep near-overhead camera position; only the frame is slightly tighter, not the camera height or narrative.",
+        "Role 2 fails to present clear selection evidence from an overhead vantage — the metallic fitting is off to the side and the two-coil pair is not laid out as a technical comparison layout."
+      ],
+      "correction_prompt": "ReShoot Role 2 at a steep nearly-overhead angle directly above the textured soil surface, with only the integrated packaged coil and bare woven coil arranged side-by-side and one connector or diameter indicator clearly visible in frame; eliminate any tractor, pump, or ground-level horizon elements.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 3
     }
   ]
 }

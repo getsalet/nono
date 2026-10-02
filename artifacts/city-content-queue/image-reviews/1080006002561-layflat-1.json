@@ -1,34 +1,36 @@
 {
   "source_id": "1080006002561-layflat",
-  "family": "layflat",
   "kind": 1,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 98,
-      "product_width_percent": 62,
-      "product_height_percent": 35,
-      "product_x_center_percent": 48,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 8-42% of frame width."
+        "Hard reject: extra commercial objects present — white/silver bottle or canister, black valve/regulator with hose attachments, and orange pipe section constitute unauthorized additional products beyond the required pair of packaged AFP coil and bare woven coil.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 25-82% of frame width."
       ],
-      "correction_prompt": "Reduce the product group from 62% to 8-42% of frame width.",
+      "correction_prompt": "Remove all additional items (bottle, valve, orange pipe, extra hoses) so only the packaged AFP coil and bare black woven coil remain on the soil plane in the lower third. Enlarge the product group from 0% to 25-82% of frame width.",
       "attempt": 1
     },
     {
       "pass": true,
       "score": 92,
-      "product_width_percent": 40,
-      "product_height_percent": 34,
-      "product_x_center_percent": 55,
+      "product_width_percent": 53,
+      "product_height_percent": 22,
+      "product_x_center_percent": 40,
       "reasons": [
-        "The image successfully displays the required pair of one packaged AFP coil and one bare black woven coil.",
-        "Both objects are physically plausible, separate, and fully visible in the field.",
-        "Zero people or human body parts are present.",
-        "The required 'AFP | 09134922013' watermark is present in the bottom right corner.",
-        "Scene context (farm field and distant city) is appropriate for the editorial brief."
+        "Approved layflat pair present: one packaged AFP coil (left) and one bare black woven coil (right), both fully visible and physically plausible.",
+        "Combined product width ~53% of frame, within the 25–82% envelope.",
+        "Zero people, body parts, or human silhouettes.",
+        "Distant unattended farm building and tractor are permitted infrastructure, not third commercial products.",
+        "No white halo, no cutout/pasted appearance, consistent perspective and contact shadows.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "Lower-third placement on shared soil plane; editorial hero role satisfied."
       ],
       "correction_prompt": "",
       "attempt": 2

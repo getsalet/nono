@@ -1,24 +1,41 @@
 {
   "source_id": "10900034001596-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "duplicate_roles": [],
-      "reasons": [
-        "All three panels are visibly distinct in camera angle, environment, and technical narrative.",
-        "Role 1 functions as a wide HERO shot, effectively establishing the agricultural context of water transfer.",
-        "Role 2 serves as SELECTION EVIDENCE by positioning the two-coil pair at eye level to emphasize construction and diameter.",
-        "Role 3 is a proper HEADWORKS DETAIL shot, utilizing an empty concrete pad and focusing on equipment (pump, gauge, manifold) to support the technical narrative.",
-        "The required watermark is present and positioned in the bottom-right corner of each image as required.",
-        "No prohibited elements (people, bottles, oversized product, or active farm work) are present in the composition."
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Regenerate panel 2 to include a close-up of an unrolled coil end and gauge, ensuring the two-coil pair (diameter/construction difference) is more explicitly highlighted at eye-level as selection evidence.",
+      "reasons": [
+        "Role 2 (Image 2) is a near-duplicate of Role 1 (Image 1) in environment (textured soil) and subject placement, lacking the required distinct camera height.",
+        "Role 2 fails specific QA: it is not a 'steep near-overhead' view and lacks the mandatory 'connector or diameter cue'."
+      ],
+      "correction_prompt": "Replace image 2 with a steep near-overhead shot of the two coils on soil, ensuring a connector or diameter cue is visible to distinguish it from the wide hero shot.",
       "panel_scores": [
-        85
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1: Wide elevated field perspective with both coils on soil in lower third — clear hero composition.",
+        "Role 2: Steep near-overhead angle on textured soil, two-coil pair with no extraneous products — valid selection evidence.",
+        "Role 3: Concrete-pad equipment still life with fixed pump, pressure gauge, and manifold; coils at far edge — distinct from Roles 1 and 2.",
+        "No near-duplicate camera/environment structure across panels.",
+        "Approved AFP drip tape product prominently and correctly featured throughout.",
+        "No living subjects, no extra commercial products, no physically implausible integration."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        95
+      ],
+      "set_attempt": 2
     }
   ]
 }
