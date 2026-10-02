@@ -1,6 +1,6 @@
 {
   "source_id": "10500013002409-tape20",
-  "policy": "strict-no-human-scale-watermark-v12-family-role-consistent-atomic-city-set-reviewed",
+  "policy": "approved-single-pass-integrated-rebuild-v3-20261002",
   "history": [
     {
       "pass": false,
@@ -52,6 +52,62 @@
       "correction_prompt": "Regenerate a five-image set ensuring Role 1 is a high-angle wide shot of the farm and Role 4 avoids the central vanishing point; additionally, include a close-up of an installed drip-tape emitter and connector to fulfill the missing Role 5 requirement.",
       "set_attempt": 3,
       "accepted_individual_qa_fallback": true
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panels 1 and 2 are near-duplicates: both show an oversized AFP carton at ground level in a cornfield with a red barn, differing only slightly in framing. This violates the requirement for visibly distinct camera height/angle and environment structure across roles.",
+        "Panel 2 fails the SELECTION EVIDENCE role — it shows no elevated technical arrangement, no emitter-spacing evidence, no visible selection criteria, and presents only a generic farm field shot of the product.",
+        "Panel 1's carton is oversized and dominates the foreground rather than being small and secondary on the lower third.",
+        "Panel 3 is the only properly distinct panel, showing headworks equipment on concrete with the carton secondary."
+      ],
+      "correction_prompt": "Regenerate Panel 1 as a wide high-oblique editorial hero shot of a farm landscape with irrigation context, keeping the AFP carton small and off-center on the lower third. Regenerate Panel 2 as an elevated technical arrangement showing the AFP carton alongside visible emitter-spacing markers or field-selection documentation (e.g., layout diagrams, spacing guides, or labeled drip lines), with a simple background.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [],
+      "reasons": [
+        "Panel 2 lacks any carton, violating the requirement for exactly one approved carton in every image.",
+        "Panel 2 shows only the roll without selection/evidence context (emitter-spacing or field-selection evidence).",
+        "The AFP roll is oversized and dominant in Panels 1 and 2, contradicting the small/secondary carton rule.",
+        "Panel 3 shows a filter and gauge but is missing a regulator and manifold as specified for the headworks detail role.",
+        "Product in all panels remains prominently oversized rather than staying small and secondary to the editorial/technical narrative."
+      ],
+      "correction_prompt": "Panel 1: keep the wide hero farm view but reduce the carton to small/off-center on the lower third, and scale down the roll so the field context dominates. Panel 2: add a small AFP carton beside the roll with visible emitter-spacing or field-selection layout evidence, keep background simple with a distant barn acceptable. Panel 3: show one fixed filter, gauge, regulator, and manifold on an empty concrete pad; scale the AFP roll and carton to small and secondary position; ensure no farm activity.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Panel 1 (EDITORIAL HERO) lacks any carton whatsoever, violating the requirement for exactly one small approved carton on the lower third.",
+        "Panel 2 (SELECTION EVIDENCE) is a low-angle ground shot nearly identical in composition to Panel 1 — both place the AFP roll large and foreground-centred on bare soil with a red barn in the background, creating repeated layout and setting.",
+        "Panel 2 contains no visible emitter-spacing or field-selection evidence, failing its technical narrative role.",
+        "Panel 3 (HEADWORKS DETAIL) places the AFP roll prominently and large on the left instead of keeping it small and secondary; the equipment also appears to be two pressure gauges on a single regulator rather than one fixed filter plus gauge plus regulator plus manifold.",
+        "Camera height and angle across all three panels are insufficiently distinct — Panels 1 and 2 are essentially the same ground-level perspective, and Panel 3 lacks the clear elevated record-photograph treatment."
+      ],
+      "correction_prompt": "Panel 1: Wide high-oblique aerial or elevated farm shot with crop rows and irrigation context; place exactly one small approved AFP carton visibly but secondary on the lower third, off-center. Panel 2: Elevated slightly-downward angle showing an installed drip-tape layout in-field with clearly visible 20 cm emitter spacing markings or a field-selection reference card/chart beside one small AFP carton; simple farm-edge background. Panel 3: Clear elevated product-photograph on bare concrete pad — one small secondary AFP carton to the side, with a complete headworks assembly (filter housing, pressure gauge, regulator, manifold) as the dominant subject and no person or tractor in frame.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 3
     }
   ]
 }
