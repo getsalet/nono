@@ -1,48 +1,39 @@
 {
   "source_id": "10800014002110-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 30,
-      "product_width_percent": 30,
-      "product_height_percent": 42,
-      "product_x_center_percent": 40,
+      "score": 45,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "Hard reject: Contains a human person (man kneeling on the right side).",
-        "Hard reject: Visible human body parts (face, arms, legs, hands).",
-        "Hard reject: Product roll exceeds the maximum width limit (estimated 30% vs max 27%).",
-        "Hard reject: Product roll exceeds the maximum height limit (estimated 42% vs max 32%).",
-        "Does not meet the mandatory role 'HEADWORKS STORY' which requires the approved carton to remain small and secondary to the irrigation infrastructure.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 30% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
+        "Hard reject: second commercial package (cardboard box) present.",
+        "Hard reject: roll width likely exceeds 38% envelope.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
       ],
-      "correction_prompt": "Regenerate the image with an unattended fixed irrigation filter, gauge, and manifold as the main subject. Include one small, secondary AFP drip-tape carton roll (20-23% width, <32% height). Strictly no people or human body parts visible. Reduce the product group from 30% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
+      "correction_prompt": "Generate an image of exactly one AFP white-and-blue drip-tape carton roll on a clean concrete pad with headworks equipment. Remove all other commercial packaging, boxes, or containers. Ensure the roll width is within the 18-38% range and height is under 70%. Include the bottom-right watermark AFP | 09134922013. Enlarge the product group from 0% to 18-38% of frame width.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 25,
-      "product_width_percent": 26,
-      "product_height_percent": 30,
-      "product_x_center_percent": 35,
-      "reasons": [
-        "Hard reject: Image contains a prominent person (farmer/worker) crouching next to the product, violating the zero people/human body parts constraint."
-      ],
-      "correction_prompt": "Regenerate the image removing the person entirely; keep the AFP drip-tape roll as the primary product element, displaying it clearly on the irrigation manifold or filter setup in a farm field, with no human figures.",
-      "attempt": 2
-    },
-    {
       "pass": true,
-      "score": 92,
-      "product_width_percent": 16,
-      "product_height_percent": 13,
-      "product_x_center_percent": 38,
-      "reasons": [],
+      "score": 82,
+      "product_width_percent": 24,
+      "product_height_percent": 23,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "Correct role: elevated concrete pad with fixed filter/regulator assembly, pressure gauge, and coiled tape — headworks detail still life.",
+        "One AFP white-and-blue cylindrical drip-tape roll; size within 18–38% width and ≤70% height.",
+        "Zero people or body parts; watermark AFP | 09134922013 present in bottom-right.",
+        "No white halo, no cutout appearance; contact shadow under roll is present and physically plausible.",
+        "Background includes distant crop rows and farm building, consistent with agricultural context.",
+        "Minor note: AFP cardboard box behind roll could be read as a second commercial package, slightly lowering confidence."
+      ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 2
     }
   ]
 }

@@ -1,58 +1,63 @@
 {
   "source_id": "10800018002771-tape20",
-  "family": "tape20",
   "kind": 2,
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
-  "fast_mode": false,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 15,
-      "product_width_percent": 26,
-      "product_height_percent": 27,
-      "product_x_center_percent": 50,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 18,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Presence of a person (farmer in blue shirt) standing in the background.",
-        "Image contains a human figure, which is a hard reject condition."
+        "Hard reject: human legs/feet visible in the upper background area, violating the zero-person rule.",
+        "Product sizing within acceptable range (width ~22%, height ~18%).",
+        "AFP watermark present and correct.",
+        "Drip tape with emitter points and infrastructure elements present and appropriate."
       ],
-      "correction_prompt": "Regenerate the image without any people, workers, or human silhouettes. Ensure the background contains only the tractor, farm building, and field, strictly removing the human element.",
+      "correction_prompt": "Remove all human figures and body parts from the image. Regenerate with zero people visible anywhere in the frame, including background areas.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 0,
-      "review_unavailable": true,
+      "score": 88,
+      "product_width_percent": 17,
+      "product_height_percent": 32,
+      "product_x_center_percent": 65,
       "reasons": [
-        "visual reviewer unavailable after 4 retries: HTTPError"
+        "Single AFP white-and-blue cylindrical drip-tape carton roll present on dark soil",
+        "Drip-tape segment with repeated emitter points extends diagonally from roll",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Roll width ~17% within acceptable envelope; height ~32% well below 70% max",
+        "Steep near-overhead technical still life composition on dark soil",
+        "Zero people, body parts, or forbidden objects detected",
+        "Natural contact shadow and physically plausible perspective",
+        "No white halo, cutout appearance, or mismatched elements",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 17% to 18-38% of frame width."
       ],
-      "correction_prompt": "Retry visual review of the preserved candidate without regenerating it.",
+      "correction_prompt": "Enlarge the product group from 17% to 18-38% of frame width.",
       "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 90,
-      "product_width_percent": 32,
-      "product_height_percent": 42,
-      "product_x_center_percent": 35,
-      "reasons": [
-        "Zero people or human body parts detected",
-        "Product is a white-and-blue wide low cylindrical drip-tape carton roll",
-        "Watermark 'AFP | 09134922013' is present in the bottom-right corner as required",
-        "Background matches the article brief with an ordinary farm building, crop rows, and an unattended tractor",
-        "machine-enforced bounding-box check failed: Reduce the product group from 32% to 13-27% of frame width.; Reduce product height from 42% to at most 32% of frame height."
-      ],
-      "correction_prompt": "Reduce the product group from 32% to 13-27% of frame width. Reduce product height from 42% to at most 32% of frame height.",
-      "attempt": 1
     },
     {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 23,
-      "product_height_percent": 22,
-      "product_x_center_percent": 35,
-      "reasons": [],
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 42,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Exactly one AFP white-and-blue cylindrical drip-tape roll present on dark soil",
+        "Straight drip-tape segment extends from roll showing repeated emitter points",
+        "No people, body parts, or human silhouettes anywhere in frame",
+        "Roll dimensions within acceptable envelope (width ~24%, height ~42%)",
+        "Physical integration with soil contact shadow present, no white halo or cutout appearance",
+        "Required watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Steep near-overhead technical still life composition on agricultural soil with young sprouts",
+        "Background matches agronomic context appropriate for drip irrigation product",
+        "No prohibited objects (bottles, jars, cans, fertilizer/pesticide containers, second rolls, layflat hose)"
+      ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }
