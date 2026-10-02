@@ -1,41 +1,53 @@
 {
   "source_id": "1080006002561-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 42,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "Role 1 fails: It depicts a low-ground-level close-up crop field rather than the required 'wide high-oblique' water-transfer context.",
-        "Role 2 fails: It displays an active 'farm activity' with tractors working in the background, whereas Role 2 and Role 3 are strictly required to be equipment/pump-only shots without farm activity.",
-        "Role 3 fails: The environment features distant farm animals (cows) and a wind turbine, which contradicts the requirement for 'equipment-only' on an empty pad and violates the 'no farm activity' rule."
+        "Images 1 and 2 are near-duplicates: both show the same two-coil pair from nearly identical camera angles on soil with identical framing; Role 2 requires a steep near-overhead technical still life with selection evidence, not a second field-level product shot. Image 3 is also non-compliant: the required Role 3 evidence (fixed pump, gauge, regulator, and manifold on a clean concrete pad) is absent; only a tractor and hay bales appear in the background instead."
       ],
-      "correction_prompt": "Redo Role 1 as a wide high-oblique shot of a water-transfer landscape with the product small and off-center; Redo Role 2 and Role 3 as isolated shots of the pump, gauge, and manifold on an empty concrete pad with no tractors, animals, or wind turbines.",
+      "correction_prompt": "Replace Image 2 with a steep near-overhead shot (camera directly above or nearly so) on textured soil showing only the two-coil pair plus one visible connector or diameter reference cue, clearly differentiated from Image 1's wide field perspective. Replace Image 3 with an elevated equipment still life on a clean concrete pad dominated by a complete fixed filter, gauge, regulator, and manifold assembly, with the integrated two-coil pair positioned at the far edge of the pad.",
       "panel_scores": [
-        35
+        42
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 85,
+      "pass": false,
+      "score": 42,
       "duplicate_roles": [],
       "reasons": [
-        "All three roles are present and maintain the required visual distinction: Role 1 (Panel 2) provides a wide view of the water channel context; Role 2 (Panel 1) offers a ground-level field environment; Role 3 (Panel 3) shifts to the concrete headworks environment.",
-        "The camera angles and environments are successfully varied to prevent duplication.",
-        "The required watermark 'AFP | 09134922013' is present and correctly placed in the bottom-right of all panels.",
-        "Although the hardware in Panel 3 is somewhat ambiguous regarding the 'pump' requirement, the 'concrete pad' and 'equipment only' (no farm activity) constraints are strictly respected.",
-        "The background in Panel 1 contains a city skyline which may deviate slightly from a purely agricultural setting, but it supports the general city-article context."
+        "Role 3 missing mandatory evidence: no fixed pump, pressure gauge, or manifold visible; image shows tractor and hay bales instead of headworks equipment on concrete pad."
       ],
-      "correction_prompt": "Refine the hardware in Role 3 to explicitly feature a recognizable pump unit and pressure gauge to satisfy the 'technical narrative' of the headworks detail.",
+      "correction_prompt": "Replace Image 3 with an elevated concrete-pad still life showing a complete fixed filtration/headworks setup (pump, pressure gauge, regulator valve, and manifold) with the integrated AFP two-coil pair placed at the far edge of the pad, no tractor or hay bales in frame.",
       "panel_scores": [
-        85
+        42
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Images 1 and 2 share nearly identical composition — same product placement, framing, and angle — differing only by camera height. Both present the two coils on soil from an essentially ground-level perspective, failing the requirement that roles 1 (wide elevated field) and 2 (steep near-overhead technical layout) be clearly distinct in camera height and environmental structure.",
+        "Role 2 lacks the steep near-overhead overhead perspective required for selection evidence; the camera remains at field level looking along the rows rather than above.",
+        "Role 3 shows a tractor as background equipment rather than the required fixed pump, pressure gauge, regulator, and manifold on a clean concrete pad."
+      ],
+      "correction_prompt": "Re-shot as three distinct roles: Role 1 — wide elevated drone or crane shot of the field with both coils placed on bare soil in the lower third; Role 2 — true top-down near-overhead shot on textured soil showing only the two-coil pair with a single diameter/connector cue, no rows or perspective lines; Role 3 — elevated still life on a clean concrete pad with the coils at the far edge and a complete fixed headworks assembly (filter tank, pressure gauge, regulator, manifold) clearly visible in the foreground/midground.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 3
     }
   ]
 }

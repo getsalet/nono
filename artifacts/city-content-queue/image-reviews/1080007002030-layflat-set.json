@@ -1,23 +1,52 @@
 {
   "source_id": "1080007002030-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 94,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 establishes a distinct editorial context with a high-oblique wide shot of a vast tilled field, keeping the product pair small and off-center as required.",
-        "Role 2 provides the necessary technical separation through a close-up shot that allows for comparison of the two distinct coil types.",
-        "Role 3 successfully isolates the equipment and product on a concrete pad, shifting the environment to satisfy the 'headworks detail' requirement without farm activity.",
-        "Camera angles, environmental structure, and narrative roles are visibly distinct across all three panels.",
-        "No persons, extra containers, or unapproved product sizes were observed."
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Maintain the distinct environmental separation for Role 3; continue ensuring the product remains secondary in scale relative to the technical equipment.",
+      "reasons": [
+        "Role 1 (Image 1) correctly delivers a wide elevated field hero view with both coils on the soil plane — passes. Role 2 (Image 2) uses a near-ground/eye-level camera angle rather than the required steep near-overhead perspective, and shows only the two-coil pair with no visible connector or diameter cue — fails role mandate. Role 3 (Image 3) replaces the required clean-concrete-headworks-equipment narrative with agricultural tractors on dirt; there is no fixed pump, gauge, regulator, or manifold visible, and the coils sit in the foreground rather than at the far edge — fails role mandate.",
+        "Correction prompt\":\"Re-shoot Image 2 as a steep near-overhead top-down view of the two AFP coils on dark textured soil with one visible connector and a small diameter gauge card beside them. Re-shoot Image 3 as an elevated still life on a clean concrete pad with a fixed pump, pressure gauge, regulator and manifold assembled and in focus in the mid-ground, with the integrated two-coil pair resting at the far edge of the pad.\"}",
+        "correction_prompt"
+      ],
+      "correction_prompt": "",
       "panel_scores": [
-        94
+        42
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 (HEADWORKS DETAIL) fails: image shows AFP coils on concrete with tractors in background but omits the mandatory fixed pump, gauge, regulator, and manifold equipment that must dominate the frame. Missing essential headworks technical narrative.",
+        "Image 1 and Image 2 are structurally distinct (wide field vs. steep near-overhead soil), so no duplicate camera/environment structure exists between those two."
+      ],
+      "correction_prompt": "Replace image 3 with an elevated concrete-pad equipment still life: fixed centrifugal filter unit, pressure gauge, flow regulator, and manifold piping clearly visible and dominant in frame, with the integrated two-coil pair placed at the far edge of the concrete pad, no tractors or vehicles in the composition.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 fails: the background shows a tractor rather than fixed pump, gauge, regulator and manifold headworks equipment required by the role definition. The concrete pad is present but the dominant background element is incorrect.",
+        "Role 2 acceptable as steep near-overhead soil still life with selection evidence (cylindrical connector/cue present), but Role 3 environmental mismatch is disqualuting."
+      ],
+      "correction_prompt": "Replace Image 3 background with a fixed headworks station — concrete pad with permanently mounted filtration unit, pressure gauge, and flow regulator/manifold assembly behind the AFP coil pair, no tractor or mobile machinery visible.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 3
     }
   ]
 }
