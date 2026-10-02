@@ -57,7 +57,7 @@ jobs:
       REBUILD_POST_LIMIT: "12"
       REBUILD_COMPLETED_SINCE: "2026-09-27T17:48:15+00:00"
       RECENT_IMAGE_AUDIT_SINCE: "2026-09-27T17:48:15+00:00"
-      RECENT_IMAGE_AUDIT_LIMIT: "24"
+      RECENT_IMAGE_AUDIT_LIMIT: "48"
       RECENT_IMAGE_AUDIT_WORKERS: "4"
     steps:
       - uses: actions/checkout@v7
@@ -103,12 +103,16 @@ jobs:
           remaining="$(python - <<'PY'
           import json
           from pathlib import Path
-          path=Path('artifacts/city-content-queue/recent-image-rebuild-v2.json')
-          print(int(json.loads(path.read_text(encoding='utf-8')).get('remaining_candidates',0)) if path.exists() else 0)
+          audit_path=Path('artifacts/city-content-queue/recent-image-audit-v1.json')
+          rebuild_path=Path('artifacts/city-content-queue/recent-image-rebuild-v3.json')
+          audit=json.loads(audit_path.read_text(encoding='utf-8')) if audit_path.exists() else {}
+          rebuild=json.loads(rebuild_path.read_text(encoding='utf-8')) if rebuild_path.exists() else {}
+          print(int(audit.get('remaining_candidates',0))+int(rebuild.get('remaining_candidates',0)))
           PY
           )"
           if [ "$remaining" -eq 0 ]; then
-            echo "Strict restoration is complete; rebuilding final delivery packages."
+            echo "Approved integrated restoration is complete; resuming production after final packaging."
+            rm -f artifacts/city-content-queue/QUEUE_PAUSED
             python automation/package_city_content_batches.py
           else
             echo "Strict restoration has $remaining posts remaining; deferring expensive ZIP repackaging until completion."
@@ -122,7 +126,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A artifacts/city-content-queue
           git add -f artifacts/city-content-queue/packages/batch-*.zip 2>/dev/null || true
-          git add -f artifacts/city-content-queue/recent-image-audit-v1.json artifacts/city-content-queue/recent-image-rebuild-v2.json reference-image-rebuild.log
+          git add -f artifacts/city-content-queue/recent-image-audit-v1.json artifacts/city-content-queue/recent-image-rebuild-v3.json reference-image-rebuild.log
           if git diff --cached --quiet; then exit 0; fi
           state_dir="$(mktemp -d)"
           git diff --cached --name-only -z --diff-filter=ACMRT > "$state_dir/files"
@@ -134,8 +138,8 @@ jobs:
           if [ -s "$state_dir/deleted" ]; then xargs -0 -r rm -f -- < "$state_dir/deleted"; fi
           git add -A artifacts/city-content-queue
           git add -f artifacts/city-content-queue/packages/batch-*.zip 2>/dev/null || true
-          git add -f artifacts/city-content-queue/recent-image-audit-v1.json artifacts/city-content-queue/recent-image-rebuild-v2.json reference-image-rebuild.log
-          git commit -m "Rebuild city images with approved topic-first AFP policy"
+          git add -f artifacts/city-content-queue/recent-image-audit-v1.json artifacts/city-content-queue/recent-image-rebuild-v3.json reference-image-rebuild.log
+          git commit -m "Rebuild city images with approved single-pass integrated policy"
           git push origin main
       - name: Fail after preserving rebuild diagnostics
         if: steps.pause.outputs.paused != 'true' && steps.rebuild.outputs.exit_code != '0'
@@ -152,7 +156,7 @@ jobs:
           import json
           from pathlib import Path
           audit_path=Path('artifacts/city-content-queue/recent-image-audit-v1.json')
-          rebuild_path=Path('artifacts/city-content-queue/recent-image-rebuild-v2.json')
+          rebuild_path=Path('artifacts/city-content-queue/recent-image-rebuild-v3.json')
           audit=json.loads(audit_path.read_text(encoding='utf-8')) if audit_path.exists() else {}
           rebuild=json.loads(rebuild_path.read_text(encoding='utf-8')) if rebuild_path.exists() else {}
           print(int(audit.get('remaining_candidates',0))+int(rebuild.get('remaining_candidates',0)), int(rebuild.get('consecutive_no_progress_runs',0)))

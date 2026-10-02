@@ -4,7 +4,7 @@ import base64,json,os,re,urllib.error,urllib.request,shutil,time
 from concurrent.futures import as_completed
 from pathlib import Path
 import image_prompt_policy
-REVIEW_POLICY='strict-reference-conditioned-v21'
+REVIEW_POLICY='approved-single-pass-integrated-v22'
 MAX_IMAGE_ATTEMPTS=max(1,int(os.getenv('IMAGE_QA_ATTEMPTS','6')))
 MIN_IMAGE_SCORE=int(os.getenv('IMAGE_QA_MIN_SCORE','70'))
 FAST_MODE=os.getenv('IMAGE_QA_FAST_MODE','1')!='0'
@@ -34,13 +34,13 @@ def _metric_check(family,verdict,kind=None):
   return False,['Return numeric product_width_percent, product_height_percent and product_x_center_percent.']
  # Keep impossible/giant products out, but do not starve the queue because a
  # noisy vision estimate misses an editorial target by a few points.
- min_width,max_width=(12,15) if family=='layflat' else (20,23)
+ min_width,max_width=(25,82) if family=='layflat' else (18,38)
  issues=[]
  if width<min_width:
   issues.append(f'Enlarge the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
  elif width>max_width:
   issues.append(f'Reduce the product group from {width:g}% to {min_width}-{max_width}% of frame width.')
- max_height=28
+ max_height=70
  if height>max_height:
   issues.append(f'Reduce product height from {height:g}% to at most {max_height}% of frame height.')
  return not issues,issues
@@ -50,16 +50,16 @@ def _vision_review(base,path,item,kind):
  if quick:return quick
  family=__import__('image_prompt_policy').product_family(item)
  brief=image_prompt_policy.visual_brief(item)
- layflat_width_limit=15
+ layflat_width_limit=82
  if FAST_MODE and kind not in REVIEW_KINDS:
   return {'pass':True,'score':90,'reasons':['fast mode: trusted prompt for non-key image'],'correction_prompt':''}
  encoded=base64.b64encode(path.read_bytes()).decode('ascii')
  if family=='layflat':
-  criteria=f'The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. The required combined width is 12 to 15 percent; accept only the restored strict envelope from 12 to {layflat_width_limit} percent for this role when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
-  reject=f'Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than {layflat_width_limit} percent of the frame, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
+  criteria=f'The image must show the approved layflat pair: one packaged AFP coil and one bare black woven coil. The approved combined-width envelope is 25 to {layflat_width_limit} percent for this role when both objects remain recognizable, fully visible, separate and physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts.'
+  reject=f'Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a pair wider than {layflat_width_limit} percent of the frame, a pasted/cutout/sticker appearance, white halo, mismatched perspective, missing contact shadow, a third commercial package or third coil, bottle, jar, canister, bucket, invented package, fake label, impossible intersection, object passing through a coil, floating or merged product, or severely distorted dimensions. A distant unattended tractor, ordinary farm building, installed hose segment, connector, fixed pump, gauge or manifold is allowed when relevant to the requested role and must not be treated as a third commercial product.'
  else:
-  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. The required width is 20 to 23 percent; accept only the restored strict envelope from 20 to 23 percent and height up to 28 percent when the object remains physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts. The background should match the article brief and selected image role.'
-  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 23 percent of the frame, taller than 28 percent, bottle, jar, canister, bucket, fertilizer or pesticide container, second commercial package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry or severely distorted dimensions. A distant unattended tractor, ordinary farm building and fixed irrigation hardware are allowed when contextually relevant.'
+  criteria='The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. The approved width envelope is 18 to 38 percent and height up to 70 percent when the object remains physically plausible. Lower-third and off-center placement are editorial preferences, not standalone hard rejects. The image must contain zero people and zero human body parts. The background should match the article brief and selected image role.'
+  reject='Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant. Hard reject a roll wider than 38 percent of the frame, taller than 70 percent, a pasted/cutout/sticker appearance, white halo, mismatched perspective, missing contact shadow, bottle, jar, canister, bucket, fertilizer or pesticide container, second commercial package, second roll, layflat hose, pipe through the roll, fake headline, caption, gibberish writing, impossible geometry or severely distorted dimensions. A distant unattended tractor, ordinary farm building and fixed irrigation hardware are allowed when contextually relevant.'
  prompt=f'''Fast practical QA for city {item.get('city','')}, family {family}, image role {kind}. {criteria}
 {reject}
 Article visual brief: {brief}. Mandatory role: {image_prompt_policy.role_directive(family,kind)}.

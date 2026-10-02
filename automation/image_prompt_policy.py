@@ -144,24 +144,25 @@ def visual_brief(item,max_chars=700):
 
 def reference_images(kind,item=None):
     family=product_family(item)
+    def guide(rows):
+        canvas=Image.new('RGBA',(1200,675),(238,238,235,255));x=96;base_y=610
+        for filename,mime,width in rows:
+            raw=base64.b64decode((ASSET_DIR/filename).read_text(encoding='ascii').strip())
+            product=Image.open(io.BytesIO(raw)).convert('RGBA')
+            product.thumbnail((width,600),Image.Resampling.LANCZOS)
+            canvas.alpha_composite(product,(x,base_y-product.height));x+=product.width+8
+        buf=io.BytesIO();canvas.convert('RGB').save(buf,'WEBP',quality=92,method=6)
+        return 'data:image/webp;base64,'+base64.b64encode(buf.getvalue()).decode('ascii')
     if family=='layflat':
-        # Keep both approved identity references separate and high-resolution.
-        # A tiny combined thumbnail loses the packaging, weave, center opening
-        # and relative geometry that the generator must preserve.
         return [
           'data:image/webp;base64,'+(ASSET_DIR/'afp-layflat.webp.b64').read_text(encoding='ascii').strip(),
           'data:image/jpeg;base64,'+(ASSET_DIR/'afp-layflat-bare.jpg.b64').read_text(encoding='ascii').strip(),
+          guide([('afp-layflat.webp.b64','image/webp',360),('afp-layflat-bare.jpg.b64','image/jpeg',300)]),
         ]
-    # Condition scale as well as identity. A raw close-up reference repeatedly
-    # made the generator fill 35-50% of the frame. This 22%-wide padded
-    # reference matches the production contract while preserving exact product
-    # geometry and branding.
-    raw=base64.b64decode((ASSET_DIR/'afp-tape.webp.b64').read_text(encoding='ascii').strip())
-    product=Image.open(io.BytesIO(raw)).convert('RGB').resize((280,170),Image.Resampling.LANCZOS)
-    canvas=Image.new('RGB',(1200,675),(238,238,235))
-    canvas.paste(product,(84,675-product.height-55))
-    buf=io.BytesIO();canvas.save(buf,'WEBP',quality=90,method=6)
-    return ['data:image/webp;base64,'+base64.b64encode(buf.getvalue()).decode('ascii')]
+    return [
+      'data:image/webp;base64,'+(ASSET_DIR/'afp-tape.webp.b64').read_text(encoding='ascii').strip(),
+      guide([('afp-tape.webp.b64','image/webp',300)]),
+    ]
 
 
 def image_prompt(item,kind):
@@ -177,16 +178,16 @@ def image_prompt(item,kind):
         # Role 2 is an isolated technical comparison. Generic camera/background
         # variation previously contradicted the near-overhead brief and caused
         # tractors, horizons, extra connectors and oversized foreground coils.
-        diversity=(f'Camera: elevated technical view. Background: only empty textured soil, cropped tightly with no horizon, building, crop rows, person, animal, vehicle, tractor, machine, box, bottle, tool, connector or third object. Composition: the exact two-coil pair remains separate and fully visible, occupying approximately 12 to 15 percent of frame width. Use visual variation token {variation["token"]} only as a seed and never render it.')
+        diversity=(f'Camera: elevated technical view. Background: only empty textured soil, cropped tightly with no horizon, building, crop rows, person, animal, vehicle, tractor, machine, box, bottle, tool, connector or third object. Composition: the exact two-coil pair remains separate and fully visible, occupying approximately 45 to 78 percent of frame width. Use visual variation token {variation["token"]} only as a seed and never render it.')
     elif family=='tape20' and int(kind)==2:
         # Keep tape selection evidence on a controlled, horizon-free patch of
         # soil. Generic environment variation repeatedly introduced barns,
         # tractors, centered product poses and fake specification cards.
-        diversity=(f'Camera: elevated 60-degree downward near-overhead view from at least five metres away. Background: only broad empty textured soil and one short installed drip-tape segment with physically visible emitter spacing; crop every horizon, building, barn, person, animal, tractor, vehicle, machine, box, bottle, ruler, tool and specification card out of frame. Composition: exactly one approved carton, fully visible and off-center on the lower third, occupying 20 to 23 percent of frame width; the short installed tape segment is evidence, not a second roll or package. Do not generate any extra readable text. Use visual variation token {variation["token"]} only as a seed and never render it.')
+        diversity=(f'Camera: elevated 60-degree downward near-overhead view from at least five metres away. Background: only broad empty textured soil and one short installed drip-tape segment with physically visible emitter spacing; crop every horizon, building, barn, person, animal, tractor, vehicle, machine, box, bottle, ruler, tool and specification card out of frame. Composition: exactly one approved carton, fully visible and off-center on the lower third, occupying 20 to 32 percent of frame width; the short installed tape segment is evidence, not a second roll or package. Do not generate any extra readable text. Use visual variation token {variation["token"]} only as a seed and never render it.')
     elif int(kind)==5:
         # Maintenance must be a controlled detail shot. A generic farm
         # background repeatedly introduced people, tractors and extra products.
-        product_note=('Keep exactly one carton visible at roughly 20 to 23 percent of frame width.' if family=='tape20' else 'Keep exactly the approved two-coil pair visible at roughly 12 to 15 percent of frame width.')
+        product_note=('Keep exactly one carton visible at roughly 20 to 32 percent of frame width.' if family=='tape20' else 'Keep exactly the approved two-coil pair visible at roughly 45 to 78 percent of frame width.')
         diversity=(f'Camera: elevated close documentary view aimed 55 degrees downward at one isolated patch of soil, with the installed maintenance detail sharp in the foreground. Crop all horizon, sky, buildings, people, animals, hands, body parts, tractors, vehicles, cabins, machines, tools, boxes, bottles, jars and extra commercial packages completely out of frame. Show only soil, the one installed connector/emitter/flush-point/fold detail and the approved product evidence. This is an unattended inspection photograph, never an installation activity or farm-work scene. Composition: the maintenance detail is the technical focus while the approved product evidence remains physically plausible. {product_note} Use visual variation token {variation["token"]} only as a seed and never render it.')
     elif int(kind)==3:
         diversity=(f'Camera: elevated 55-degree downward equipment-record view, cropped tightly around one permanently fixed filter, gauge and manifold assembly on a clean empty concrete pad. This must look like an unoccupied industrial still life, not a farm-work scene. Render no living subject and no activity: no horizon, sky, building, crop, person, farmer, worker, face, silhouette, hand, body part, tractor, vehicle, cabin, mobile machine, stool, tool, box, bottle or extra commercial product. Composition: fixed headworks dominate; approved product evidence is fully visible near the far edge and stays secondary. Use visual variation token {variation["token"]} only as a seed and never render it.')
@@ -197,13 +198,13 @@ def image_prompt(item,kind):
     if family=='layflat':
         shape=('exactly two separate related layflat-hose objects placed naturally beside each other: first, the packaged low wide black woven hose coil with the same folded printed cardboard pieces, crossing straps, center opening and package proportions; second, the unboxed black woven layflat hose coil exactly like its reference, as a low flat horizontal coil made of many tight concentric layers with a short hollow brown cardboard center, visible diagonal woven fabric texture, realistic compressed thickness and one short loose hose end')
         exact=('Keep the packaged object marks "AFP" and "layflat" readable. The bare black coil has no carton, logo or writing. The two references are separate objects in the same final scene, never alternatives and never fused. Both coils rest flat, horizontal and parallel to the soil. Never turn the bare coil into smooth round tubing, a tall cable spool, an upright wheel, a solid tire or a plastic pipe coil.')
-        scale=('Use the restored strict article-image scale: the complete two-object group occupies approximately 12 to 15 percent of frame width, stays low on the soil, remains fully visible and is off-center on the lower third.')
-        people_rule=('NO PEOPLE OR VEHICLES in any image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette, distant human figure, tractor, harvester, vehicle or machine cabin. Show the article-specific field, crop, irrigation system and fixed unattended equipment without any human-associated machinery.')
+        scale=('Use the restored strict article-image scale: the complete two-object group occupies approximately 45 to 78 percent of frame width, stays low on the soil, remains fully visible and is off-center on the lower third.')
+        people_rule=('NO PEOPLE in any image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette, distant human figure, tractor, harvester, vehicle or machine cabin. Show the article-specific field, crop, irrigation system and fixed unattended equipment without any human-associated machinery.')
     else:
         shape='a wide cylindrical 1000-meter drip-tape roll in the same white-and-blue carton sleeve, with the same diameter-to-height ratio, central top hole, straight carton walls and blue lower band'
         exact='Keep the exact readable marks "AFP" and "Drip Irrigation Tape"; never change it into layflat hose.'
-        scale=('Use the same balanced article-image scale: the product occupies approximately 20 to 23 percent of frame width, stays low in real-world scale, remains fully visible and is off-center on the lower third.')
-        people_rule=('NO PEOPLE OR VEHICLES in any drip-tape image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette, distant human figure, tractor, harvester, vehicle or machine cabin. Show the article-specific field, crop, irrigation system and fixed unattended equipment without any human-associated machinery.')
+        scale=('Use the same balanced article-image scale: the product occupies approximately 20 to 32 percent of frame width, stays low in real-world scale, remains fully visible and is off-center on the lower third.')
+        people_rule=('NO PEOPLE in any drip-tape image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette, distant human figure, tractor, harvester, vehicle or machine cabin. Show the article-specific field, crop, irrigation system and fixed unattended equipment without any human-associated machinery.')
     opening=('Create one unoccupied photorealistic 16:9 technical equipment record photograph. This is an equipment-only still life with no farm activity or living subject. '
              if int(kind)==3 else
              'Create one photorealistic 16:9 agricultural editorial photograph. ')
@@ -212,7 +213,7 @@ def image_prompt(item,kind):
     local_context=('Use a neutral empty equipment pad; do not depict local activity, workers, vehicles, buildings, crops or a horizon. '
                    if int(kind)==3 else
                    f'Use a plausible Iranian agricultural environment suitable for {city}, {province}, without inventing landmarks, crops, climate facts or local infrastructure. ')
-    return (opening+'The attached image is an identity and geometry reference, not a flat layer to paste. '
+    return (opening+'Generate the complete photograph as one coherent single-pass render. Never paste, mask, cut out, overlay or preserve source pixels. The product and farm must share one camera, lens, depth of field, grain, perspective, sunlight, soil occlusion, contact shadow, cast shadow, reflected soil light and color temperature. The attached images are identity and scale references only, never flat layers to paste. '
       +f'Article visual brief extracted from the post: {grounded_brief}. Every background and technical detail must visibly express this brief rather than a generic farm. Mandatory role blueprint: {role}. Scene role: {scene}. {role_safety}{correction_instruction}{local_context}The background and equipment must follow this article scene and remain the main subject. The required approved product evidence stays visible in every role; the role changes the technical narrative and camera, never the product identity or object count. {people_rule} Reconstruct the product as a true three-dimensional object: {shape}. '
       'Show it from a slightly different but physically plausible three-quarter angle, about 10 to 20 degrees from the reference. Preserve silhouette, packaging construction, proportions, material, printed-panel layout and brand colors. '
       +exact+' '+scale+' Enforce believable real-world scale. A drip-tape carton roll is roughly 40 to 55 cm across and 20 to 30 cm high; each layflat coil is roughly 45 to 65 cm across and 15 to 25 cm high. People must not appear. Every roll must remain clearly below implied knee height and must never look waist-high or table-sized. '

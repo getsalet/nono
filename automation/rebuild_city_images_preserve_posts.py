@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Queue restart trigger after repository transfer to getsalet/nono.
-"""Rebuild completed city images using exact, non-generated AFP product assets."""
+"""Rebuild completed city images with the human-approved single-pass integrated render policy."""
 from __future__ import annotations
 
 import base64
@@ -24,12 +24,12 @@ import city_content_queue_cloudflare as backend
 import image_prompt_policy
 import image_quality_gate
 
-POLICY = "recent-strict-visual-audit-rebuild-v2-20261001"
-MODE = "article-parity-three-image-reference-conditioned-rerender"
+POLICY = "approved-single-pass-integrated-rebuild-v3-20261002"
+MODE = "article-parity-three-image-single-pass-integrated-rerender"
 OUT = Path(__file__).resolve().parents[1] / "artifacts" / "city-content-queue"
-MARKER = OUT / "recent-image-rebuild-v2.json"
+MARKER = OUT / "recent-image-rebuild-v3.json"
 AUDIT_MARKER = OUT / "recent-image-audit-v1.json"
-CHECKPOINT_ROOT = OUT / ".image-role-checkpoints"
+CHECKPOINT_ROOT = OUT / ".image-role-checkpoints-v3"
 MODEL = os.getenv("AGNES_IMAGE_MODEL", "agnes-image-2.5-flash")
 API = os.getenv("IMAGE_ENDPOINT") or os.getenv(
     "AGNES_API_BASE", "https://apihub.agnes-ai.com/v1"

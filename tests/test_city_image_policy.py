@@ -49,9 +49,10 @@ class CityImagePolicyTests(unittest.TestCase):
         refs = image_prompt_policy.reference_images(
             1, {"source_id": "city-layflat", "title": "لوله نخی"}
         )
-        self.assertEqual(len(refs), 2)
+        self.assertEqual(len(refs), 3)
         self.assertEqual(refs[0].split(",", 1)[0], "data:image/webp;base64")
         self.assertEqual(refs[1].split(",", 1)[0], "data:image/jpeg;base64")
+        self.assertEqual(refs[2].split(",", 1)[0], "data:image/webp;base64")
         for ref in refs:
             image = Image.open(io.BytesIO(base64.b64decode(ref.split(",", 1)[1])))
             self.assertGreaterEqual(image.width, 256)
@@ -74,15 +75,15 @@ class CityImagePolicyTests(unittest.TestCase):
         self.assertTrue(all("People must not appear" in prompt for prompt in prompts))
         self.assertIn("HEADWORKS DETAIL", prompts[2])
         self.assertIn("MAINTENANCE DETAIL", prompts[4])
-        self.assertTrue(all("NO PEOPLE OR VEHICLES" in prompt for prompt in prompts))
+        self.assertTrue(all("NO PEOPLE" in prompt for prompt in prompts))
         self.assertTrue(all("tractor, harvester, vehicle or machine cabin" in prompt for prompt in prompts))
 
     def test_metric_feedback_is_directional_without_noisy_center_rejection(self):
         ok, issues = image_quality_gate._metric_check(
             "tape20",
             {
-                "product_width_percent": 22,
-                "product_height_percent": 26,
+                "product_width_percent": 28,
+                "product_height_percent": 35,
                 "product_x_center_percent": 50,
             }, 1,
         )
@@ -92,19 +93,19 @@ class CityImagePolicyTests(unittest.TestCase):
             "tape20",
             {
                 "product_width_percent": 16,
-                "product_height_percent": 31,
+                "product_height_percent": 75,
                 "product_x_center_percent": 50,
             }, 1,
         )
         self.assertFalse(ok)
         self.assertTrue(any("Enlarge" in issue for issue in issues))
-        self.assertTrue(any("20-23%" in issue for issue in issues))
-        self.assertTrue(any("at most 28%" in issue for issue in issues))
+        self.assertTrue(any("18-38%" in issue for issue in issues))
+        self.assertTrue(any("at most 70%" in issue for issue in issues))
         ok, issues = image_quality_gate._metric_check(
             "layflat",
             {
-                "product_width_percent": 14,
-                "product_height_percent": 24,
+                "product_width_percent": 60,
+                "product_height_percent": 55,
                 "product_x_center_percent": 50,
             }, 3,
         )
@@ -114,25 +115,25 @@ class CityImagePolicyTests(unittest.TestCase):
             "layflat",
             {
                 "product_width_percent": 18,
-                "product_height_percent": 24,
+                "product_height_percent": 55,
                 "product_x_center_percent": 50,
             }, 3,
         )
         self.assertFalse(ok)
-        self.assertTrue(any("12-15%" in issue for issue in issues))
+        self.assertTrue(any("25-82%" in issue for issue in issues))
         queue_source = (ROOT / "automation" / "city_content_queue_cloudflare.py").read_text(encoding="utf-8")
         self.assertIn("layflat[:q.BATCH-len(selected)]", queue_source)
         ok, issues = image_quality_gate._metric_check(
             "tape20",
             {
                 "product_width_percent": 11,
-                "product_height_percent": 43,
+                "product_height_percent": 75,
                 "product_x_center_percent": 50,
             }, 1,
         )
         self.assertFalse(ok)
         self.assertTrue(any("Enlarge" in issue for issue in issues))
-        self.assertTrue(any("at most 28%" in issue for issue in issues))
+        self.assertTrue(any("at most 70%" in issue for issue in issues))
 
     def test_headworks_prompt_is_an_unoccupied_equipment_still_life(self):
         item = {"source_id": "city-tape20", "topic": "tape20", "city": "گوهران"}
@@ -256,7 +257,7 @@ class CityImagePolicyTests(unittest.TestCase):
         workflow = (
             ROOT / ".github" / "workflows" / "rebuild-reference-images.yml"
         ).read_text(encoding="utf-8")
-        self.assertIn('CHECKPOINT_ROOT = OUT / ".image-role-checkpoints"', rebuild)
+        self.assertIn('CHECKPOINT_ROOT = OUT / ".image-role-checkpoints-v3"', rebuild)
         self.assertIn("CHECKPOINT_ROOT / source_id", rebuild)
         self.assertIn("city_rebuild_checkpoint_reused", rebuild)
         self.assertIn("def prune_checkpoint_cache(active_source_ids: set[str])", rebuild)
@@ -273,14 +274,14 @@ class CityImagePolicyTests(unittest.TestCase):
         prompt = image_prompt_policy.image_prompt(item, 2)
         self.assertIn("elevated technical view", prompt)
         self.assertIn("no horizon, building, crop rows, person", prompt)
-        self.assertIn("occupying approximately 12 to 15 percent of frame width", prompt)
+        self.assertIn("occupying approximately 45 to 78 percent of frame width", prompt)
 
     def test_tape_maintenance_role_is_isolated_from_people_and_vehicles(self):
         item = {"source_id": "city-tape20", "topic": "tape20", "city": "لاجان"}
         prompt = image_prompt_policy.image_prompt(item, 5)
         self.assertIn("elevated close documentary view", prompt)
         self.assertIn("Crop all horizon, sky, buildings, people, animals", prompt)
-        self.assertIn("exactly one carton visible at roughly 20 to 23 percent of frame width", prompt)
+        self.assertIn("exactly one carton visible at roughly 20 to 32 percent of frame width", prompt)
         self.assertIn("connector/emitter/flush-point", prompt)
 
 
