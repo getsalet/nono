@@ -1,18 +1,56 @@
 {
   "source_id": "10900032001389-tape20",
-  "family": "tape20",
   "kind": 2,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 17,
+      "product_height_percent": 24,
+      "product_x_center_percent": 68,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "AFP white-and-blue cylindrical drip-tape carton roll present and physically plausible on dark soil.",
+        "Clear integrated AFP carton with one straight drip-tape segment showing repeated emitter points — matches selection evidence for role 2.",
+        "Roll width ~17% (within near-envelope) and height ~24% (well below 70% ceiling).",
+        "Lower-third, slightly off-center placement; no human presence or body parts.",
+        "Mandatory watermark 'AFP | 09134922013' visible in bottom-right corner.",
+        "Natural contact shadow under roll and tape; perspective consistent with field setting.",
+        "Distant horizon, ordinary soil texture, and rural background are acceptable per brief.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 17% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 17% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 21,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Image angle is low/oblique ground-level perspective, NOT the mandatory steep near-overhead technical still life required by role 2.",
+        "Gibberish/illegible text on roll side labels (e.g. 'Dr p Irrgatn Tpe') instead of clear readable product text.",
+        "Missing steep top-down or near-overhead camera angle needed for selection-evidence role."
+      ],
+      "correction_prompt": "Re-render as a steep near-overhead technical still life on dark soil: camera positioned high above looking down at the AFP white-and-blue cylindrical drip-tape roll, with one straight drip-tape segment extending from the roll showing repeated emitter points. Ensure all text on labels is clearly legible and correct. Keep roll width between 18-38% and height under 70% of frame. Maintain the required AFP watermark in bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 19.5,
+      "product_height_percent": 28.4,
+      "product_x_center_percent": 68.2,
+      "reasons": [
+        "Passes all hard rejects: zero people, correct roll dimensions, proper placement.",
+        "Mandatory AFP white-and-blue roll and emitter drip-tape segment are present.",
+        "Watermark is correctly placed and readable.",
+        "Composition matches the steep near-overhead technical still life role."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 3
     }
   ]
 }

@@ -1,67 +1,38 @@
 {
   "source_id": "1090007002202-tape20",
-  "family": "tape20",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 85,
-      "product_width_percent": 31,
-      "product_height_percent": 35,
-      "product_x_center_percent": 48,
+      "score": 45,
+      "product_width_percent": 26.4,
+      "product_height_percent": 21.8,
+      "product_x_center_percent": 73.4,
       "reasons": [
-        "Product is an AFP white-and-blue wide low cylindrical drip-tape carton roll, matching the mandatory visual target.",
-        "The bounding box width (31%) slightly exceeds the 30% hard-reject threshold, causing a 10-point deduction from a potential 95+ score, though it remains physically plausible and clearly identifiable.",
-        "No people or human body parts are visible.",
-        "No prohibited items (bottles, jars, containers, second rolls, layflat hoses) are present.",
-        "The bottom-right watermark 'AFP | 09134922013' is clearly visible and correctly formatted.",
-        "The background (concrete pad and farm building) is contextually appropriate for irrigation equipment.",
-        "machine-enforced bounding-box check failed: Reduce the product group from 31% to 12-30% of frame width."
+        "Hard reject: Second commercial package visible (AFP cardboard box in the background).",
+        "Hard reject: Image contains more than one AFP branded product."
       ],
-      "correction_prompt": "Reduce the product group from 31% to 12-30% of frame width.",
+      "correction_prompt": "Remove the second AFP cardboard box from the background, leaving only the single drip-tape roll as the sole commercial product.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 15,
-      "product_width_percent": 25,
-      "product_height_percent": 20,
-      "product_x_center_percent": 50,
-      "reasons": [
-        "The image contains two clear human figures in the background (one in a blue shirt, one in a green shirt), which is a strict hard reject.",
-        "The article role 'HEADWORKS DETAIL' specifically requires the focus to be on fixed filters, gauges, and regulators on a concrete pad, which is absent here in favor of the tractor and people."
-      ],
-      "correction_prompt": "Remove all humans and the red tractor from the background. Focus the scene on a concrete pad displaying fixed irrigation infrastructure such as filters, gauges, and a manifold, with the AFP drip-tape roll placed as a secondary element.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 85,
-      "product_width_percent": 23,
-      "product_height_percent": 38,
-      "product_x_center_percent": 50,
-      "reasons": [
-        "Watermark matches exactly",
-        "No people or human body parts present",
-        "Tractor is distant and unattended (allowed)",
-        "Roll dimensions are physically plausible",
-        "Editorial placement and composition align with the brief",
-        "machine-enforced bounding-box check failed: Reduce product height from 38% to at most 35% of frame height."
-      ],
-      "correction_prompt": "Reduce product height from 38% to at most 35% of frame height.",
-      "attempt": 3
-    },
-    {
       "pass": true,
-      "score": 78,
-      "product_width_percent": 30,
-      "product_height_percent": 27,
-      "product_x_center_percent": 48,
-      "reasons": [],
+      "score": 82,
+      "product_width_percent": 22,
+      "product_height_percent": 19,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "White-and-blue AFP drip-tape roll present, physically integrated on concrete pad with contact shadow",
+        "Roll width ~22% and height ~19% of frame — within acceptable envelope",
+        "Zero people or human body parts; background consistent with agricultural context",
+        "Mandatory AFP watermark present in bottom-right corner",
+        "Blue wheeled filtration/regulator unit with gauges and hoses serves as plausible headworks equipment",
+        "Brown AFP cardboard box present but appears as shipping/stock packaging rather than a second commercial product package; overall scene remains editorially coherent"
+      ],
       "correction_prompt": "",
-      "attempt": 4
+      "attempt": 2
     }
   ]
 }
