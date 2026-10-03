@@ -1,0 +1,80 @@
+{
+  "source_id": "1100003001411-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 23,
+      "product_height_percent": 42,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "The image contains a second commercial package (the cardboard AFP box in the background), which is a hard reject. The brief requires exactly one AFP carton roll."
+      ],
+      "correction_prompt": "Remove the cardboard box from the background to ensure the scene contains only the single drip-tape roll. Retain the concrete pad, irrigation hardware, and field background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 30,
+      "product_height_percent": 50,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: Second commercial package (open cardboard box) is visible on the right side",
+        "Hard reject: The product label text is gibberish ('Itrrigation' typo instead of 'Irrigation')",
+        "Watermark ID text mismatch ('09134922013' instead of the required '09134922013' - actually identical, but strictly the required format usually implies a specific code generation which might be an issue, however the box and text errors are the primary causes)",
+        "The product is not integrated into the elevated headworks as requested by the mandatory role (it is placed on the concrete pad, not part of the infrastructure still life)"
+      ],
+      "correction_prompt": "Remove the cardboard box on the right. Correct the typo on the drip tape label to 'Irrigation'. Ensure the roll is a white-and-blue wide cylindrical carton. Keep the infrastructure on the left.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 24,
+      "product_height_percent": 41,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The presence of an open commercial cardboard box next to the product violates the hard reject rule for a 'second commercial package.'",
+        "The label text on the white roll contains gibberish/writing errors ('Irriqabiros Tase') rather than clear text, which is a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image to remove the cardboard box entirely, leaving only the white drip tape roll on the concrete pad. Ensure the label text on the roll is correct and legible. Maintain the infrastructure (gauges, pipes) and the watermark.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 45,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Hard reject: Second commercial package detected. The image contains a large brown cardboard carton box in the background alongside the required product roll.",
+        "Missing required elements: The image role 'HEADWORKS DETAIL' requires a clean concrete pad with a fixed filter, pressure gauge, regulator, and manifold, which are absent.",
+        "Watermark formatting: The required exact watermark 'AFP | 09134922013' is not present in the correct format (currently shown in a black box at the bottom right, and lacks the leading 'AFP |')."
+      ],
+      "correction_prompt": "Remove the large background cardboard box. Add a concrete pad with a fixed irrigation filter, pressure gauge, regulator, and manifold assembly in the background. Ensure the product roll is integrated at the far edge. Replace the current box text with the exact watermark 'AFP | 09134922013'.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image successfully displays the mandatory 'AFP | 09134922013' watermark in the bottom right.",
+        "The subject is a single white-and-blue AFP drip-tape carton roll positioned at the far edge of the pad.",
+        "The scene matches the 'HEADWORKS DETAIL' blueprint, featuring an elevated equipment still life with fixed filters, gauges, and a regulator on a concrete pad.",
+        "The roll's width (approx 30%) and height (approx 45%) fall comfortably within the approved 18-38% and 70% envelopes.",
+        "No people, body parts, or disallowed items (like extra commercial packaging or layflat hoses) are visible.",
+        "The product has a physical contact shadow and realistic perspective, with no 'pasted' or cutout appearance."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "source_id": "11000026002512-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 18,
+      "product_height_percent": 33,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: Presence of a second commercial package (the carton to the right) which is explicitly prohibited by the brief.",
+        "Watermark violation: The image contains an incorrect watermark (AFP | 09134922013 instead of the required 09134922013)."
+      ],
+      "correction_prompt": "Regenerate the image to remove the cardboard carton on the right. Ensure the watermark in the bottom-right corner reads exactly 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 18,
+      "product_height_percent": 25,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "The image contains two AFP commercial cartons (one flat box on the left and one roll on the right), violating the 'zero second commercial package' hard reject rule.",
+        "The required headworks configuration (fixed filter, regulator, manifold) is missing; instead, there is a manual pressure washer and a coiled tube.",
+        "Two rolls of blue tubing are present, which likely triggers the 'second roll' or 'layflat hose' hard reject rules.",
+        "The product roll has a blue base trim, which deviates from the specified 'white-and-blue' carton aesthetic (typically white with blue text/graphics)."
+      ],
+      "correction_prompt": "Regenerate image: Remove the brown box on the left. Replace the manual pressure washer and blue tubes with a fixed irrigation setup (filter, regulator, manifold) on the concrete pad. Show exactly one AFP white and blue drip tape roll (cylindrical) at the far right edge. No hoses. Maintain bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Image contains two AFP branded packages (one carton roll and one box), violating the 'zero second commercial package' rule",
+        "Hard reject due to presence of an extra commercial item (the cardboard box on the right)"
+      ],
+      "correction_prompt": "Regenerate image showing only a single AFP white-and-blue wide low cylindrical drip-tape carton roll on a concrete pad with filter, gauge, and manifold. Remove the second cardboard box entirely.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (large open cardboard box with AFP branding) is visible on the right, which is a hard reject.",
+        "The image contains a large hose reel with coiled black tubing on the left, which interferes with the requirement for a clean still life and potentially counts as 'layflat hose' or extraneous commercial package context."
+      ],
+      "correction_prompt": "Regenerate the image with only the single white-and-blue AFP drip tape roll on the concrete pad. Completely remove the open cardboard box on the right and the large black hose reel on the left. Keep the pressure gauges and manifold integrated near the roll. Ensure the 'AFP | 09134922013' watermark remains in the bottom right.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "The image contains a second commercial package (brown carton box) which is a hard reject per the 'exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll' and 'second commercial package' rules."
+      ],
+      "correction_prompt": "Remove the brown carton box in the background; keep only the white cylindrical roll.",
+      "attempt": 5
+    }
+  ]
+}
