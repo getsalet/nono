@@ -1,21 +1,39 @@
 {
   "source_id": "1220005001035-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 30,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 3 fails the 'HEADWORKS DETAIL' specification; the image shows only the product pair on a concrete surface and is completely missing the required equipment (fixed pump, gauge, and manifold).",
-        "Role 1 fails the 'EDITORIAL HERO' specification; the coils are oversized and centered in the frame, whereas the brief requires them to be small, separate, and off-center.",
-        "Role 2 fails the 'SELECTION EVIDENCE' specification; the coils are placed on an earthen floor in a field rather than an 'elevated technical' environment suitable for comparison."
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "For Role 1, move the product pair to be small and off-center in a high-oblique field shot; for Role 2, place the pair on an elevated table for technical comparison; for Role 3, add a pump, gauge, and manifold to the concrete pad with the product pair kept small and secondary.",
+      "reasons": [
+        "The panel contains three nearly duplicate images of the product packaging rather than the required distinct technical roles. Role 1 must be a wide elevated field view with coils sharing a soil plane; instead, it is a ground-level shot of packaging with an unrelated building. Role 2 must be a steep near-overhead soil layout showing selection evidence (connector/diameter cue); instead, it is a near-duplicate of Role 1's packaging layout. Role 3 must be a concrete-pad equipment still life with a fixed pump, gauge, and manifold; instead, the image shows the product packaging on a pad with a tractor in the background, completely missing the mandated Headworks equipment."
+      ],
+      "correction_prompt": "Regenerate a 3-image panel with distinct compositions: (1) Wide elevated field view of the coils on soil; (2) Steep near-overhead soil layout showing the coils and a connector/diameter cue; (3) Elevated concrete-pad still life featuring a fixed pump, gauge, and manifold with the coils at the edge.",
       "panel_scores": [
-        30
+        55
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 successfully provides a wide elevated field view with the required product pair in the lower third.",
+        "Role 2 features a steep near-overhead technical still life on soil with visible selection evidence.",
+        "Role 3 shows an elevated concrete-pad equipment still life with the integrated product pair at the edge.",
+        "All roles maintain distinct camera heights and environmental narratives."
+      ],
+      "correction_prompt": "No correction required.",
+      "panel_scores": [
+        88
+      ],
+      "set_attempt": 2
     }
   ]
 }

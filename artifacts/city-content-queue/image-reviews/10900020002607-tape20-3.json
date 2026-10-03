@@ -1,0 +1,65 @@
+{
+  "source_id": "10900020002607-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 48,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Second commercial package (brown cardboard carton) is present and clearly branded 'AFP', violating the 'zero second commercial package' hard reject rule",
+        "Product is a flat spool rather than the mandated 'wide low cylindrical' geometry"
+      ],
+      "correction_prompt": "Remove the brown cardboard carton on the right. Modify the main AFP product to be a wide, low-profile cylindrical roll rather than a flat spool. Ensure only one commercial package remains.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Second commercial package (open cardboard box) is visible in the background, which is a hard reject.",
+        "Required bottom-right watermark 'AFP | 09134922013' is missing."
+      ],
+      "correction_prompt": "Remove the open cardboard box in the background to ensure only one commercial package is present. Add the specific text watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 29,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "The image contains multiple AFP commercial packages (one white cylindrical roll and a separate brown cardboard box), violating the 'zero second commercial package' hard reject rule.",
+        "The background includes dark containers/jars near the cardboard box, which are prohibited items (bottles, jars, canisters, buckets).",
+        "The text on the white cylindrical product roll is visibly gibberish/damaged ('Drip irifgattr Tjpe') instead of readable text.",
+        "The image shows two AFP items (the roll and the box), whereas exactly one AFP drip-tape carton is required."
+      ],
+      "correction_prompt": "Regenerate with exactly one AFP white-and-blue cylindrical drip-tape roll. Remove the brown cardboard box and any dark jars/containers from the background. Ensure the white roll is positioned at the far edge of the concrete pad. Fix the text on the white roll so it is perfectly legible. Keep the AFP watermark and the irrigation equipment (filter, gauges, manifold) intact.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 23,
+      "product_height_percent": 38,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Correct placement of equipment on a clean concrete pad",
+        "Fixed infrastructure including filter, gauges, and manifold present as required for the role",
+        "Product bounding box estimated correctly within acceptable dimensions",
+        "Required watermark present and correctly positioned"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

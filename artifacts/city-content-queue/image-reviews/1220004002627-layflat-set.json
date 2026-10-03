@@ -1,6 +1,6 @@
 {
   "source_id": "1220004002627-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
@@ -10,12 +10,11 @@
         2
       ],
       "reasons": [
-        "Role 1 lacks the required 'wide high-oblique' camera angle and 'water-transfer' environment; instead, it shows a low-angle shot on dirt soil.",
-        "Role 2 fails the 'elevated technical comparison' and 'no extra commercial objects' requirements by including a cardboard box and a loose drip-irrigation pipe.",
-        "The first two images are nearly duplicates with identical low-angle perspectives on the product pair, whereas the set requires visibly distinct camera heights.",
-        "Role 3 does not meet the 'equipment-only' requirement for a fixed pump and manifold, displaying only coils and loose drip parts on a concrete pad."
+        "Role 1 fails to meet the required 'wide elevated water-transfer field view' (the shot is a low-level eye-level close-up rather than a high elevation angle), which makes the camera structure nearly identical to Role 2.",
+        "Role 2 fails to meet the required 'steep near-overhead technical still life' (the shot is a low oblique angle instead of a high-top-down perspective), duplicating the framing of Role 1.",
+        "Role 3 is missing mandatory equipment components: the fixed filter, regulator, gauge, and manifold required for the 'HEADWORKS DETAIL' role are not present in the frame."
       ],
-      "correction_prompt": "Regenerate roles 1 and 2: Role 1 must be a high-oblique shot of a water-transfer setup with the small product pair off-center; Role 2 must be an elevated shot comparing the two coils' diameters without any cardboard boxes or loose pipes.",
+      "correction_prompt": "Recreate the 3-image panel with Role 1 as a high-elevation wide field view, Role 2 as a top-down steep overhead soil shot, and Role 3 on a concrete pad that explicitly includes a visible fixed filter, regulator, gauge, and manifold.",
       "panel_scores": [
         35
       ],
@@ -23,35 +22,33 @@
     },
     {
       "pass": false,
-      "score": 52,
+      "score": 40,
       "duplicate_roles": [
+        1,
         2
       ],
       "reasons": [
-        "Role 3 misses the mandatory headworks equipment: no fixed pump, gauge, or manifold is visible on the concrete pad, leaving it as a generic product shot instead of an equipment record.",
-        "Role 2 is marked duplicated because it shows only a single bare coil of pipe with no visible construction comparison to the packaged coil, failing the 'comparison through the pair' requirement."
+        "Role 2 (Image 2) is not a 'steep near-overhead' shot; it is a low-angle shot that is structurally a near-duplicate of Role 1 (Image 1).",
+        "Role 3 (Image 3) is missing mandatory evidence: the shot features only the two coils on a concrete surface, but lacks the required fixed pump, gauge, and manifold for the 'HEADWORKS DETAIL' role."
       ],
-      "correction_prompt": "Regenerate role 3 as an elevated equipment-only shot of a fixed pump, gauge, and manifold on an empty concrete pad with the approved two-coil pair kept small and secondary, and update role 2 to clearly show the two-coil pair side-by-side for technical diameter comparison.",
+      "correction_prompt": "Redo Image 2 as a steep near-overhead technical close-up, and redo Image 3 to clearly feature a fixed pump, gauge, and manifold on the concrete pad alongside the coils.",
       "panel_scores": [
-        52
+        40
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 40,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 3 image fails to meet the 'HEADWORKS DETAIL' requirements: it depicts a floating pump and coils on a concrete surface without the required fixed headworks assembly (pump, gauge, and manifold) or 'empty concrete pad' environment context.",
-        "Role 2 image fails to meet the 'SELECTION EVIDENCE' requirements: the technical comparison lacks clear visual differentiation (diameter/construction) between the two approved coils and instead shows a tractor-mounted pump that is not a 'fixed headworks' assembly.",
-        "Roles 2 and 3 are structurally and narratively duplicate: both feature the same low-angle concrete pad setting, similar equipment configurations, and redundant product evidence, failing to create the distinct camera heights and technical narratives required for the panel set."
+        "Role 1 (Editorial Hero) is incorrectly depicted as a still life on soil rather than the mandated 'wide elevated field view' in an environment context.",
+        "Role 2 (Selection Evidence) is a near-duplicate of the Role 1 composition, failing to provide the required 'steep near-overhead technical layout' or distinct selection evidence.",
+        "Role 3 (Headworks Detail) is incomplete, showing only the coils on a concrete pad and missing the mandatory 'complete fixed filter, gauge, regulator and manifold' equipment set."
       ],
-      "correction_prompt": "Replace Role 2 with an elevated close-up showing the two approved coils with clear diameter contrast; replace Role 3 with a wide shot of a fixed headworks assembly (pump, gauge, manifold) on an empty concrete pad, keeping the two-coil product evidence small and secondary in the background.",
+      "correction_prompt": "Redesign Image 1 as a wide elevated field shot; change Image 2 to a top-down close-up of a connector; add a filter, pump, and manifold to the concrete pad in Image 3.",
       "panel_scores": [
-        35
+        40
       ],
       "set_attempt": 3
     }
