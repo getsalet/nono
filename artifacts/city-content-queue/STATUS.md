@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-03T05:10:55+00:00`
+- آخرین بروزرسانی: `2026-10-03T05:22:04+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **787 از 1894 (41.55٪)**
-- تکمیل‌شده: **787**
+- پیشرفت: **793 از 1894 (41.87٪)**
+- تکمیل‌شده: **793**
 - در حال پردازش: **0**
-- در انتظار: **115**
-- آماده انتخاب در اجرای بعدی: **115**
+- در انتظار: **95**
+- آماده انتخاب در اجرای بعدی: **95**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **992**
+- ناموفق: **1006**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,12 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **بومهن** — تهران — `layflat` — 1494 کلمه — `2026-10-03T05:17:32+00:00`
+- **گرماب** — خراسان رضوی — `tape20` — 2282 کلمه — `2026-10-03T05:17:25+00:00`
+- **فرهادگرد** — خراسان رضوی — `tape20` — 1233 کلمه — `2026-10-03T05:16:39+00:00`
+- **صفادشت** — تهران — `layflat` — 1514 کلمه — `2026-10-03T05:15:56+00:00`
+- **وحیدیه** — تهران — `layflat` — 1256 کلمه — `2026-10-03T05:15:41+00:00`
+- **لواسان** — تهران — `layflat` — 1309 کلمه — `2026-10-03T05:15:27+00:00`
 - **کرگان** — هرمزگان — `layflat` — 1409 کلمه — `2026-10-03T05:10:53+00:00`
 - **پرند** — تهران — `layflat` — 1149 کلمه — `2026-10-03T05:08:10+00:00`
 - **باقرشهر** — تهران — `layflat` — 1305 کلمه — `2026-10-03T05:06:16+00:00`
@@ -46,25 +52,19 @@
 - **فارغان** — هرمزگان — `layflat` — 1214 کلمه — `2026-10-03T04:54:27+00:00`
 - **سرخس** — خراسان رضوی — `tape20` — 1545 کلمه — `2026-10-03T04:53:37+00:00`
 - **زهوکی** — هرمزگان — `layflat` — 1264 کلمه — `2026-10-03T04:53:13+00:00`
-- **سندرک** — هرمزگان — `layflat` — 1172 کلمه — `2026-10-03T04:52:48+00:00`
-- **مزدآوند** — خراسان رضوی — `tape20` — 1145 کلمه — `2026-10-03T04:52:37+00:00`
-- **طبل** — هرمزگان — `layflat` — 1424 کلمه — `2026-10-03T04:52:34+00:00`
-- **گروک** — هرمزگان — `layflat` — 1519 کلمه — `2026-10-03T04:52:13+00:00`
-- **ایوانکی** — سمنان — `layflat` — 1117 کلمه — `2026-10-03T04:45:58+00:00`
-- **روداب** — خراسان رضوی — `layflat` — 1372 کلمه — `2026-10-03T04:39:14+00:00`
 
 ## خطاهای اخیر
 
-- **گلستان** — `layflat`: `Editorial review failed: internal link count must equal minimum`
-- **هشتبندی** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **ششتمد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **شاندیز** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **دماوند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کیلان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **چهاردانگه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **تجریش** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **رباطکریم** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **صالحیه** — `layflat`: `HTTP Error 429: Too Many Requests`
+- **صباشهر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **گرماب** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **ورامین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **شهریار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **پردیس** — `layflat`: `Editorial review failed: internal link count must equal minimum`
+- **پاکدشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **اندیشه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **فیروزکوه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **خسرواباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **طرقبه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

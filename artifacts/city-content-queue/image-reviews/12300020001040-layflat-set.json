@@ -1,16 +1,20 @@
 {
   "source_id": "12300020001040-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
       "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Image 1): The product pair is oversized and centered, contradicting the 'small, off-center' instruction; additionally, the background shows a cityscape rather than the required 'water-transfer context'.",
-        "Role 3 (Image 3): Critical failure of role-specific requirements. The fixed pump, gauge, and manifold mandated for the 'Headworks Detail' role are completely absent. This image is a generic product-only shot on a concrete pad, which renders it indistinguishable from a generic close-up (Role 2) rather than the specific equipment-focused role requested."
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Re-shoot Role 3 to include the fixed pump, gauge, and manifold on the concrete pad; adjust Role 1 to place the coils small and off-center within a relevant water-transfer environment.",
+      "reasons": [
+        "Role 1 fails: The camera is at ground level, not a 'wide elevated field view'; the field occupies the background, not a high-angle view of the lower third soil plane.",
+        "Role 1 & 2 Duplicate: Both roles feature the identical product placement (packaged coil left, bare coil right) on soil, with near-identical low camera angles and framing. There is no distinct 'steep near-overhead' perspective in Role 2.",
+        "Role 3 Fails: Missing mandatory 'fixed pump, gauge and manifold' equipment; the image only shows the coils on a concrete pad with an unrelated tractor in the background."
+      ],
+      "correction_prompt": "Role 1: Elevated high-angle view of the field with coils in the lower foreground. Role 2: Steep top-down overhead shot focusing on the soil texture and coil pair. Role 3: Close-up still life on concrete pad dominated by a filter, gauge and regulator unit.",
       "panel_scores": [
         35
       ],
@@ -18,34 +22,37 @@
     },
     {
       "pass": false,
-      "score": 45,
+      "score": 55,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "Role 2 is not visually distinct from Role 3: both feature nearly identical camera height/angle and environment structure (concrete pad with coil pair and gauge/hardware).",
-        "The 'elevated technical comparison' requirement for Role 2 is met but visually collapses into the headworks detail of Role 3, reducing the editorial narrative variety.",
-        "Role 3's required equipment-only composition includes the fixed pump, gauge, and manifold, but the added coil pair and duplicated framing with Role 2 weakens the set's distinct technical story.",
-        "Camera height and angle are too similar between Role 2 and Role 3, creating a repeated layout feel despite slightly different hardware arrangement."
+        "Roles 1 and 2 are near-duplicates: both feature the identical foreground composition of the coil pair on textured soil with an identical low camera angle.",
+        "Role 1 (Editorial Hero) lacks the 'elevated' camera height required by the contract; it is presented as a ground-level flat view.",
+        "Role 3 (Headworks Detail) is missing the mandatory equipment narrative (fixed filter, gauge, regulator, manifold); the coil pair is in the foreground rather than the far edge, and the background tractor distracts from the equipment focus."
       ],
-      "correction_prompt": "For Role 2, shift to a close, low-angle macro comparison between the two coils (one packaged, one bare) on a neutral, non-concrete surface to emphasize diameter/construction; keep Role 3 as the wide, elevated equipment-only shot on the concrete pad with the small coil pair secondary.",
+      "correction_prompt": "Regenerate Role 1 with a significantly elevated (drone/high tripod) camera angle showing a wide field vista; Regenerate Role 3 to feature a concrete equipment pad with a visible pressure gauge, regulator, and manifold, placing the coil pair only at the periphery.",
       "panel_scores": [
-        45
+        55
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 fails the requirement to show diameter or construction difference between the coils; they are identical in the image, which prevents it from serving as a SELECTION EVIDENCE panel.",
-        "Role 3 does not contain any headworks equipment (pump, gauge, manifold) on a concrete pad as required; it only shows the coils on a flat concrete surface, failing to satisfy the equipment-only narrative requirement."
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Regenerate role 2 with two visibly different coils to highlight a comparison, and regenerate role 3 to include the required pump, gauge, and manifold on a concrete pad with the coils secondary.",
+      "reasons": [
+        "Role 1 (Image 1) fails to meet the 'wide elevated' description, presenting instead as a standard eye-level product shot that structurally resembles a close-up.",
+        "Role 1 and Role 2 share nearly identical camera height, product positioning, and environmental narrative, resulting in a near-duplicate structure.",
+        "Role 3 (Image 3) lacks the mandatory 'Headworks Detail' evidence; it shows a generic farm setting with a tractor in the background instead of the required 'clean concrete pad' with a fixed pump, gauge, and manifold."
+      ],
+      "correction_prompt": "Regenerate image 1 as a high-angle, wide view of the field; regenerate image 3 to feature a concrete pad setup with a pump and gauge visible, moving the coils to the background.",
       "panel_scores": [
-        45
+        40
       ],
       "set_attempt": 3
     }

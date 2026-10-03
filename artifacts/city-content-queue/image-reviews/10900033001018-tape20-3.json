@@ -1,0 +1,53 @@
+{
+  "source_id": "10900033001018-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "Text on the product label reads 'Irrigalcon' instead of 'Irrigation', which is gibberish/mismatched text",
+        "A second commercial package (the AFP cardboard box) is visible in the background, which is a hard reject"
+      ],
+      "correction_prompt": "Remove the cardboard box in the background and fix the label text to read 'Drip Irrigation Tape' instead of gibberish",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 59,
+      "reasons": [
+        "The image contains multiple commercial packages (two additional AFP cartons in the background), which violates the hard rejection rule against showing a second commercial package.",
+        "There is a wheeled pump/pressure cart on the left side of the frame. The mandatory role blueprint specifies fixed infrastructure (filter, pressure gauge, regulator, manifold) and explicitly lists a wheeled pump as a hard reject (a 'bottle, jar, canister, bucket... or second roll' context, or simply an incompatible piece of equipment not listed as allowed infrastructure)."
+      ],
+      "correction_prompt": "Regenerate the image to show only the single central drip-tape roll on the concrete pad. Remove the two background cartons and the wheeled pump cart on the left. Ensure the scene contains only fixed infrastructure (filter, gauge, manifold) if any hardware is present.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image successfully depicts a white-and-blue wide cylindrical drip-tape carton roll with the required 'AFP' branding and logo.",
+        "Zero people or human body parts are present in the frame.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The background features the mandated fixed infrastructure (filter, pressure gauge, manifold) on a clean concrete pad, consistent with the 'HEADWORKS DETAIL' role.",
+        "The product width (~24%) and height (~38%) are well within the approved 18-38% and up-to-70% envelopes.",
+        "No hard reject elements such as bottles, jars, second commercial packages, or layflat hoses are visible.",
+        "Perspective and lighting appear physically plausible with correct contact shadows."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
