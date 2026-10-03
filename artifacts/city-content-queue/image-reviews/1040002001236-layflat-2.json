@@ -1,18 +1,33 @@
 {
   "source_id": "1040002001236-layflat",
-  "family": "layflat",
   "kind": 2,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 60,
+      "product_height_percent": 42,
+      "product_x_center_percent": 43,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: Mismatched perspective. The image is a low-angle landscape shot with extensive field background, failing the mandatory 'steep near-overhead technical still life' role.",
+        "Hard reject: Excessive background. The role requires showing 'only the integrated two-coil pair', but the image includes distant crops, horizon, and irrigation lines outside the immediate product area."
+      ],
+      "correction_prompt": "Regenerate as a steep near-overhead technical still life on textured soil. Crop tightly to isolate the two-coil pair (packaged AFP and bare black woven) with minimal background distraction. Ensure the combined width is 25-82% and keep the required watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 56,
+      "product_height_percent": 28,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image correctly features one packaged AFP coil and one bare black woven coil sitting on textured soil. The required watermark 'AFP | 09134922013' is present and clearly visible in the bottom right corner. The combined product width is approximately 56%, which fits comfortably within the 25% to 82% envelope. No people, body parts, or additional commercial products are present. The perspective and lighting appear natural and physically plausible."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

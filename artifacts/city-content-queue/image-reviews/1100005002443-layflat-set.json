@@ -1,23 +1,57 @@
 {
   "source_id": "1100005002443-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "duplicate_roles": [],
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
       "reasons": [
-        "Role 1 acts as an editorial hero by establishing a wide agricultural context with a high-oblique perspective; the coils are placed small and off-center in the foreground, fitting the water-transfer context.",
-        "Role 2 provides selection evidence by offering an elevated close-up of the two-coil pair, clearly differentiating the packaged and bare coils against a field environment with distant tractors allowed as context.",
-        "Role 3 serves as a headworks detail by isolating a pump, gauge, and manifold on an empty concrete pad, maintaining the coils as secondary supporting elements without any farm activity.",
-        "All three images show visibly distinct camera angles and environments (city-farm horizon, open field equipment, concrete industrial pad), satisfying the requirement for differentiated technical narratives.",
-        "The required AFP watermark is present in all images and correctly positioned in the bottom-right corner without obstructing the product."
+        "Role 1 (image 1) and Role 2 (image 2) both show the AFP two-coil pair on bare tilled soil at similar camera heights with nearly identical surface structure—both are low-angle agricultural still lifes. Role 3 (image 3) correctly shifts to the concrete-pad equipment setting but introduces an unexpected blue tractor in the background (not a required headworks element like pump/gauge/manifold) and shows the coils on concrete rather than at the far edge of a pad. No explicit living subjects visible, but the tractor and background buildings create an environment different from the required clean concrete pad.",
+        "correction_prompt\":\"Replace image 2 with a steep near-overhead shot of only the AFP two-coil pair on textured soil with visible diameter cue or connector detail; replace image 3 foreground to show coils at the far edge of a clean concrete pad with fixed filter, gauge, regulator, and manifold equipment clearly visible.\"}The production contract requires exactly three distinct roles [1, 2, 3]. Images 1 and 2 are near-duplicates (same product on soil, similar camera height). The ",
+        "True",
+        " approval refers to the AFP drip tape product—its identity and watermark (AFP | 09134922013) are preserved across all three. However, the duplicate role structure fails the QA. Score 45 reflects partial compliance: product identity present, but camera heights and environments lack clear structural distinction between roles 1-2. To pass: re-shoot role 2 as steep overhead soil close-up; reposition role 3 foreground coils to far pad edge with required pump/gauge/manifold equipment visible. Return only JSON. {\"pass\":false,\"score\":45,\"duplicate_roles\":[1,2],\"reasons\":[\"Roles 1 and 2 show identical AFP two-coil pair on bare tilled soil at similar low camera heights with nearly duplicate agricultural setting structure. Role 3 (concrete pad) differs in surface but positions product centrally rather than at far edge, and shows tractor/barns instead of required headworks equipment (pump/gauge/manifold).\"],\"correction_prompt\":\"Reshoot role 2 as steep near-overhead technical view of only the AFP coils on textured soil with visible diameter cue. Reshoot role 3 foreground to place coils at far edge of clean concrete pad with fixed filter, gauge, regulator, and manifold clearly visible in frame.\"}The production contract requires exactly three distinct roles [1, 2, 3]. Images 1 and 2 are near-duplicates (same product on soil, similar camera height). The ",
+        " approval refers to the AFP drip tape product—its identity and watermark (AFP | 09134922013) are preserved across all three. However, the duplicate role structure fails the QA. Score 45 reflects partial compliance: product identity present, but camera heights and environments lack clear structural distinction between roles 1-2. To pass: re-shoot role 2 as steep overhead soil close-up; reposition role 3 foreground coils to far pad edge with required pump/gauge/manifold equipment visible. Return only JSON. {",
+        "pass·false",
+        "score·45",
+        "duplicate_roles·[1·2"
       ],
       "correction_prompt": "",
       "panel_scores": [
-        95
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 is missing mandatory equipment: the image shows a tractor and farm buildings instead of the required fixed pump, gauge, regulator, and manifold on a concrete pad. The camera height is also lower than the specified elevated perspective."
+      ],
+      "correction_prompt": "Generate Role 3 as an elevated close-up still life on a clean concrete pad, featuring the integrated two-coil pair at the far edge, dominated by a complete fixed filtration, gauge, and manifold assembly in the mid-ground, removing the tractor and buildings.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 72,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (EDITORIAL HERO): Wide elevated field view with AFP product on soil plane, tractor and farm context in background - passes",
+        "Role 2 (SELECTION EVIDENCE): Steep near-overhead soil-based technical still life with two-coil AFP pair, visible planting rows with green shoots, irrigation tubing, and wooden-handled tool on textured soil - passes",
+        "Role 3 (HEADWORKS DETAIL): Elevated equipment still life on concrete pad with pump/motor system present, BUT the integrated two-coil pair is positioned in the foreground closest to camera rather than 'at the far edge' as required by role specification - structural miss"
+      ],
+      "correction_prompt": "Reposition the AFP two-coil pair to the far edge of the concrete pad so they sit between the pump equipment and the field boundary, not in the immediate foreground. Rotate camera slightly so the equipment apparatus (with visible gauge and manifold detail) occupies the near-mid ground while the coils rest at the distant concrete boundary.",
+      "panel_scores": [
+        72
+      ],
+      "set_attempt": 3
     }
   ]
 }
