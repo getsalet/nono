@@ -1,54 +1,54 @@
 {
   "source_id": "1290005002441-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 12,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "score": 55,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Image 1) fails the 'EDITORIAL HERO' requirement: it lacks the 'wide high-oblique' context; the camera is low (eye-level relative to the product) and the product is centered/dominant rather than small and off-center.",
-        "Role 2 (Image 2) fails the 'SELECTION EVIDENCE' requirement: the prompt explicitly forbids 'any person', but a driver is clearly visible operating the tractor in the background. Additionally, the layout and camera height are nearly identical to Role 1, creating duplication.",
-        "Role 3 (Image 3) fails the 'HEADWORKS DETAIL' requirement: the specific mandatory elements—a fixed pump, gauge, and manifold—are completely missing; instead, a random cardboard box is included."
+        "Role 1 (EDITORIAL HERO): The camera is not elevated. It is a low-angle, ground-level shot looking across the soil plane, failing to provide the required wide elevated view of the field.",
+        "Role 2 (SELECTION EVIDENCE): The camera is not a steep near-overhead technical still life. It is a low-angle side shot, failing to meet the required top-down perspective.",
+        "Role 3 (HEADWORKS DETAIL): The scene lacks the required concrete equipment setup. There is no fixed pump, gauge, or manifold present; the background features a vehicle with a hose, which does not meet the specific 'equipment still life' requirements."
       ],
-      "correction_prompt": "Regenerate panel 1 as a high-oblique wide shot with the small off-center coils; regenerate panel 2 as a person-free elevated close-up of the two coils; regenerate panel 3 to strictly feature a pump, gauge, and manifold setup.",
+      "correction_prompt": "Regenerate Role 1 as a wide elevated field view showing the field scale; regenerate Role 2 as a steep near-overhead technical shot on soil; and regenerate Role 3 on a clean concrete pad featuring a fixed pump, gauge, and manifold.",
       "panel_scores": [
-        12
+        55
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 15,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Image 1) fails the 'wide high-oblique' requirement as it is shot from a low ground-level angle.",
-        "Role 1 (Image 1) fails to keep the product 'small, separate, and off-center,' featuring a prominent foreground and a large green irrigation pump instead of just the two-coil pair.",
-        "Role 2 (Image 2) fails the 'elevated technical comparison' requirement, presenting a flat product shot of a box and hose rather than a high-angle comparison of two coils.",
-        "Role 3 (Image 3) fails the 'equipment-only' requirement by showing a static product shot on concrete with no pump, gauge, or manifold.",
-        "All three images contain garbled, illegible text on the product packaging, lacking professional print details."
+      "score": 25,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "",
+      "reasons": [
+        "Role 2 is missing; the second image is a near-duplicate of Role 1 rather than the required steep near-overhead technical still life.",
+        "The second image lacks the required 'selection evidence' (visible connector or diameter cue) and instead shows the same composition as the first image with only minor camera angle changes."
+      ],
+      "correction_prompt": "Replace the second image with a steep near-overhead technical layout on textured soil, clearly showing a connector or diameter cue for the two-coil pair.",
       "panel_scores": [
-        15
+        25
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 2 (Role 2) is explicitly forbidden as it contains a person and a tractor, violating the 'no person' and 'no farm activity' constraints (only unattended equipment is allowed).",
-        "Panel 1 (Role 1) fails the layout requirement; the two coils are positioned centrally and are too large, whereas the brief requires them to be small, separate, and off-center.",
-        "Panel 3 (Role 3) fails the equipment requirement; it shows a pressure fitting but is missing the 'fixed pump' and 'manifold' specifically requested for the headworks detail."
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Regenerate the images to strictly exclude people and tractors; for Panel 1, move the coils to the periphery at a smaller scale; for Panel 2, isolate the coils against a technical background; for Panel 3, add a fixed pump and manifold to the equipment setup.",
+      "reasons": [
+        "Role 1 fails to provide a wide elevated water-transfer field view; it shows a standard product-on-soil shot",
+        "Role 2 is not a steep near-overhead technical layout showing selection evidence; it is nearly a duplicate of the Role 1 composition",
+        "Role 3 lacks the required 'complete fixed filter, gauge, regulator and manifold' equipment narrative; it is dominated by a tractor"
+      ],
+      "correction_prompt": "Re-frame Role 1 to a wide elevated field view, change Role 2 to a steep near-overhead soil layout, and replace the tractor in Role 3 with a detailed still life of a fixed pump, gauge, and manifold on a concrete pad.",
       "panel_scores": [
-        45
+        35
       ],
       "set_attempt": 3
     }

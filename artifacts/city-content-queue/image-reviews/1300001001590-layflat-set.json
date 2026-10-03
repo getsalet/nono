@@ -1,6 +1,6 @@
 {
   "source_id": "1300001001590-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
@@ -10,13 +10,10 @@
         2
       ],
       "reasons": [
-        "Role 1 requires a 'wide high-oblique water-transfer context' with the products 'small, separate and off-center,' but the image is a low-angle ground-level shot where the products are large and foregrounded.",
-        "Role 1 and Role 2 are near-duplicates: both are ground-level photos of the same product pair in a similar agricultural field environment, failing to provide distinct technical narratives or camera angles.",
-        "Role 2 (SELECTION EVIDENCE) is a low-angle general shot that does not provide the required 'elevated technical comparison' or detail on construction differences.",
-        "Role 3 fails its primary requirement of 'equipment-only... pump, gauge and manifold'; instead, it shows packaging boxes and 'APP' branded plastic, which contradicts the technical equipment brief.",
-        "Roles 1, 2, and 3 all feature the bottom-right watermark 'AFP | 09134922013' which is correctly identified as a required element rather than a defect."
+        "Image 1 and Image 2 are near-duplicates in structure and framing, with only minor lighting/crop differences, so they cannot serve distinct roles (Wide Field vs. Steep Near-Overhead Soil Layout).",
+        "Role 3 is incomplete: the equipment still life on a clean concrete pad lacks the required fixed filter/regulator/manifold set; it only shows a gauge and a generic pump assembly, missing a complete filtration component."
       ],
-      "correction_prompt": "Re-shoot role 1 as a high-angle wide shot showing irrigation water transfer with products small and off-center; re-shoot role 2 as an elevated close-up comparing coil construction details; replace role 3 content with a technical shot of a pump and manifold on a concrete pad, removing all packaging and boxes.",
+      "correction_prompt": "Regenerate image 2 as a steep near-overhead technical still life on textured soil, focusing only on the two-coil pair plus one diameter cue and removing far-field depth; add a complete fixed filter/regulator/manifold unit on the concrete pad for image 3.",
       "panel_scores": [
         55
       ],
@@ -24,36 +21,33 @@
     },
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 fails to be 'elevated' (Shot 2 is a low ground-level angle)",
-        "Role 3 fails 'equipment-only' (Box and missing pump/gauge/manifold)",
-        "Role 3 fails 'empty concrete pad' (Box present)",
-        "Role 1 fails 'water-transfer context' (Empty field)",
-        "Role 2 fails 'no third commercial package' (Three coils present)"
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Rework image 1 as a high-oblique water-transfer scene keeping coils small and off-center; image 2 as an elevated two-coil pair showing diameter difference on a concrete pad without a box; image 3 as an elevated close-up of a pump, gauge and manifold on an empty pad with the two coils as small secondary elements.",
+      "reasons": [
+        "Role 2 fails to satisfy 'steep near-overhead' requirement: current shot is a low-angle still life, not a technical top-down layout.",
+        "Role 1 and Role 2 share nearly identical camera structure (low-level soil surface, similar framing and elevation), creating near-duplicate visual roles.",
+        "Role 1 does not contain the mandatory concrete-pad equipment narrative (gauge, regulator, manifold) which should belong to Role 3, not Role 1."
+      ],
+      "correction_prompt": "Redo Role 2 as a steep near-overhead shot showing only the two coils on textured soil with one connector or diameter cue, and revise Role 1 to a wide elevated water-transfer field view with soil plane in the lower third.",
       "panel_scores": [
-        35
+        55
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 25,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 55,
+      "duplicate_roles": [],
       "reasons": [
-        "Panel 2 (Role 2) and Panel 3 (Role 3) utilize the exact same low-angle, close-up camera height and layout to display the product coil, failing to provide the 'elevated technical comparison' and 'high-oblique' perspectives required to make the roles visibly distinct.",
-        "Panel 3 (Role 3) depicts a static product on concrete rather than the required 'equipment-only elevated record photograph' of a fixed pump, gauge, and manifold; it lacks the necessary technical narrative and headworks hardware.",
-        "Panel 2 (Role 2) fails to display 'construction difference through the pair itself' and introduces an out-of-scope commercial device (the green valve), violating the 'no third commercial package' constraint."
+        "Role 1 fails the 'wide elevated' requirement; the camera angle is ground-level, placing the subject in the foreground at soil level rather than in the lower third of a wide elevated field view.",
+        "Role 3 violates the mandatory equipment narrative; while it features a concrete pad and a gauge, it is missing the required fixed pump, filter, and manifold, and the background is dominated by an unplanned tractor (an extra commercial product)."
       ],
-      "correction_prompt": "For Panel 2, raise the camera angle to an elevated perspective to clearly contrast the diameter and construction of the two coils without extra hardware; for Panel 3, introduce the required fixed pump, gauge, and manifold on the concrete pad with the two-coil pair positioned as small, secondary background elements.",
+      "correction_prompt": "Re-shoot Role 1 with a high wide-angle drone perspective so the field remains the dominant feature. For Role 3, remove the tractor and replace it with a fixed pump, filter, and manifold setup on the concrete pad to complete the 'Headworks' technical narrative.",
       "panel_scores": [
-        25
+        55
       ],
       "set_attempt": 3
     }

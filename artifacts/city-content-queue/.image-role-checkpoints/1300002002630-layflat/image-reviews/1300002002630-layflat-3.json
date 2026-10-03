@@ -1,0 +1,77 @@
+{
+  "source_id": "1300002002630-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 80,
+      "product_height_percent": 50,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Human body parts (hand/arm) visible in the upper right foreground",
+        "Hard reject: Person (farmer/worker) visible in the mid-ground, standing by the tractor",
+        "Inconsistent infrastructure: Fixed pump, gauge and manifold not visible on the concrete pad as required by the role blueprint"
+      ],
+      "correction_prompt": "Regenerate the image to remove all visible people and body parts. Add a fixed pump, gauge, and manifold assembly on the concrete pad to complete the 'HEADWORKS DETAIL' infrastructure.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 72,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a person (worker's legs and body) in the background, which is a hard reject requirement.",
+        "Visible human body parts violate the 'zero people and zero human body parts' constraint."
+      ],
+      "correction_prompt": "Regenerate the image to strictly exclude all people and human body parts. Keep the AFP packaged coil and the bare black woven coil on the concrete pad with the fixed pump/gauge/manifold infrastructure in the background, ensuring no worker is visible anywhere in the frame.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 60,
+      "product_height_percent": 48,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Watermark text format error: Displays '09134922013' instead of the required '09134922013' (wait, actually checking the instruction again: instruction says `09134922013` but image shows `09134922013`? No, the instruction says `09134922013`. Let me re-read carefully. Instruction: `AFP | 09134922013`. Image: `AFP | 09134922013`. They match.)",
+        "Role violation: The image shows the coils on open dirt/sand ground, not the required 'clean concrete pad'.",
+        "Product integration issue: The packaged AFP coil exhibits severe visual distortion and 'pasted' elements where the label intersects the tape bundle, lacking realistic geometry and consistent shadows."
+      ],
+      "correction_prompt": "Redo the scene on a clean concrete pad as per role requirements. Ensure the packaged AFP coil has realistic packaging geometry and label integration without distortion or cutout artifacts. Maintain the fixed pump and gauge infrastructure in the background.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 68,
+      "product_width_percent": 54,
+      "product_height_percent": 32,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Role mismatch: The required role is 'HEADWORKS DETAIL' featuring an elevated still life on a clean concrete pad with fixed pump, gauge, and manifold; the image instead shows a distant tractor in a rural field setting.",
+        "The integrated two-coil pair does not meet the role blueprint for physical integration and headworks composition.",
+        "Setting contradicts the specific 'HEADWORKS DETAIL' blueprint requested for this role."
+      ],
+      "correction_prompt": "Replace the background with a clean concrete headworks pad and remove the distant tractor. Position an integrated assembly of a fixed pump, gauge, and manifold as the primary infrastructure detail. Keep the two-coil pair (one packaged AFP, one bare black) in the foreground or attached to the infrastructure.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 70,
+      "product_height_percent": 52,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: Two people are visible in the background.",
+        "Hard reject: Person on the left is crouching (body part visible)."
+      ],
+      "correction_prompt": "Remove the two people in the background field; ensure the background contains only the tractor, farm building, and crop rows.",
+      "attempt": 5
+    }
+  ]
+}
