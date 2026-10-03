@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-03T06:33:16+00:00`
+- آخرین بروزرسانی: `2026-10-03T07:08:10+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **844 از 1894 (44.56٪)**
-- تکمیل‌شده: **844**
+- پیشرفت: **845 از 1894 (44.61٪)**
+- تکمیل‌شده: **845**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1050**
+- ناموفق: **1049**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,7 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **مهاباد** — اصفهان — `tape20` — 1485 کلمه — `2026-10-03T06:56:42+00:00`
 - **اسفدن** — خراسان جنوبی — `layflat` — 1224 کلمه — `2026-10-03T06:27:16+00:00`
 - **قاین** — خراسان جنوبی — `layflat` — 1084 کلمه — `2026-10-03T06:24:39+00:00`
 - **چهارباغ** — البرز — `layflat` — 1128 کلمه — `2026-10-03T06:23:44+00:00`
@@ -51,10 +52,12 @@
 - **سرایان** — خراسان جنوبی — `layflat` — 1706 کلمه — `2026-10-03T06:05:20+00:00`
 - **آبیز** — خراسان جنوبی — `layflat` — 1582 کلمه — `2026-10-03T06:04:47+00:00`
 - **گلمکان** — خراسان رضوی — `tape20` — 1726 کلمه — `2026-10-03T06:04:06+00:00`
-- **درح** — خراسان جنوبی — `layflat` — 1383 کلمه — `2026-10-03T06:03:41+00:00`
 
 ## خطاهای اخیر
 
+- **زواره** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بهارستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **مهاباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **نهبندان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **شوسف** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **فردیس** — `layflat`: `Editorial review failed: blocked utility link`
@@ -62,9 +65,6 @@
 - **تنکمان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کوهسار** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
 - **روشناوند** — `layflat`: `Editorial review failed: blocked utility link`
-- **هشتگرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کاخک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کرج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

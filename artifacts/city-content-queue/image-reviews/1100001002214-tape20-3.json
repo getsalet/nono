@@ -1,0 +1,81 @@
+{
+  "source_id": "1100001002214-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image contains a second commercial package (a cardboard carton box) in the background.",
+        "The carton box violates the requirement for a single integrated AFP carton at the far edge, as it appears as a distinct, standalone secondary item.",
+        "Multiple commercial packaging units are present, which is a hard reject condition."
+      ],
+      "correction_prompt": "Remove the cardboard box in the background and replace it with a single, integrated AFP carton positioned at the far edge of the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 35,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Hard reject: Presence of a second commercial package (the open cardboard box labeled 'AFP' to the right of the main roll).",
+        "Hard reject: Presence of a layflat hose (the coiled black tubing next to the filter unit).",
+        "The coiled tubing obstructs the visual isolation of the product roll."
+      ],
+      "correction_prompt": "Remove the open cardboard box and the coiled black tubing from the scene. Isolate the white and blue AFP drip tape roll on the right side of the concrete pad next to the fixed filtration equipment. Ensure no loose pipes or extra packaging are visible.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 40,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (open cardboard box) is visible on the right, which is a hard reject",
+        "Text on the product roll appears gibberish/illegible ('Drip Irirgation Tape'), indicating a quality issue",
+        "Role blueprint expects the carton to be 'integrated' or at the 'far edge', but here it is separated from the main still-life setup by distance"
+      ],
+      "correction_prompt": "Remove the open cardboard box on the right. Fix text on the roll to clearly read 'Drip Irrigation Tape'. Ensure only one product roll is present.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 17,
+      "product_height_percent": 33,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image contains a second commercial package (the open cardboard box in the background), which is a hard reject under the instructions.",
+        "The image shows a layflat hose (coiled black tubing) and a pipe through the roll area (the silver corrugated pipe attached to the pump unit), which are explicitly listed as hard rejects.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 17% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the open cardboard box in the background to ensure only one commercial package is visible. Remove the coiled black layflat hose and the silver corrugated pipe from the pump assembly, replacing the pump visuals with a cleaner filter manifold and pressure gauge without the prohibited tubing. Enlarge the product group from 17% to 18-38% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 21,
+      "product_height_percent": 32,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image clearly displays one AFP white-and-blue cylindrical drip tape roll on a clean concrete pad, meeting the 'HEADWORKS DETAIL' role requirements.",
+        "Fixed irrigation infrastructure including a regulator and pressure gauge is present and contextually integrated without acting as competing commercial products.",
+        "Zero people or human body parts are visible in the frame.",
+        "The required 'AFP | 09134922013' watermark is present in the bottom-right corner.",
+        "The product size and placement are well within the approved 18-38% width and up to 70% height envelope."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
