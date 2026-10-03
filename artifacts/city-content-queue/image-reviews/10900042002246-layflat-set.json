@@ -1,22 +1,57 @@
 {
   "source_id": "10900042002246-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 38,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 shows active farm machinery (tractors working the field), which violates the rule against generic farm activity (a distant unattended tractor is permitted, but active work is not).",
-        "Role 3 violates the 'equipment-only' requirement by including prominent farm animals (cattle) and vehicles in the background, failing the 'no farm activity' condition.",
-        "Role 1 lacks the required 'high-oblique' camera angle, instead using a standard ground-level perspective.",
-        "All three panels fail the narrative consistency of 'visibly distinct technical narratives' because they are all generic outdoor shots rather than the required elevated technical comparisons or specific headworks detail."
+      "score": 50,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "Regenerate image 2 using a static field with no active machinery; regenerate image 3 on an empty concrete pad with only a pump, gauge, and manifold (remove all animals); and switch image 1 to a high-oblique angle.",
+      "reasons": [
+        "Role 1 (Image 1) lacks the required 'wide elevated field view' camera angle; it uses a ground-level perspective instead of the specified high vantage point.",
+        "Role 2 (Image 2) is not a 'steep near-overhead technical still life'; it is a low-angle shot on soil that duplicates the composition of Role 1.",
+        "Role 3 (Image 3) fails the 'clean concrete pad' requirement due to a prominent tractor in the background; it is also missing the 'fixed pump, gauge and manifold' equipment cluster required for the HEADWORKS DETAIL narrative."
+      ],
+      "correction_prompt": "Regenerate all three: 1. Wide elevated landscape with coils in the foreground; 2. Steep top-down close-up of coils on soil; 3. Concrete pad with the coil pair and a visible pump/filter/gauge assembly.",
       "panel_scores": [
-        38
+        50
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 fails mandatory structural evidence: the 'steep near-overhead technical layout' is not visible (camera is low-angle), and the mandatory 'one connector or diameter cue' is missing from the composition.",
+        "Role 3 lacks mandatory equipment: the required 'fixed filter, regulator and manifold' are not present in the still life; only a pressure gauge and pump unit are visible on the tractor, leaving the technical narrative incomplete."
+      ],
+      "correction_prompt": "Regenerate Role 2 with a high-angle top-down view on textured soil including a visible connector fitting; regenerate Role 3 to explicitly feature a fixed filtration unit and a full manifold assembly on the concrete pad alongside the two coil packages.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 (Image 1) and Role 2 (Image 2) share an identical camera angle (low, ground-level) and nearly identical composition (products centered), failing to distinguish the required 'elevated view' of Role 1 from the 'near-overhead' view of Role 2.",
+        "Role 3 (Image 3) fails the mandatory layout: the required 'integrated two-coil pair' is positioned in the foreground, not at the 'far edge' of the concrete pad.",
+        "Role 3 (Image 3) lacks the mandatory 'gauge and manifold' and instead features a portable cart system, which is not the 'fixed pump' assembly required for the headworks detail."
+      ],
+      "correction_prompt": "Regenerate the triptych: widen and elevate Role 1; steepen the overhead angle of Role 2; and for Role 3, move the coil pair to the far edge of the concrete pad and replace the cart with a fixed pump, gauge, and manifold.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
     }
   ]
 }

@@ -1,0 +1,41 @@
+{
+  "source_id": "12100013001561-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 85,
+      "product_height_percent": 40,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: multiple human legs and feet are visible in the background.",
+        "Hard reject: a white bucket (commercial container) is visible in the background.",
+        "Hard reject: the pair of coils plus the unapproved sprinkler device exceed the 82% width limit.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Remove all human body parts and the white bucket. Remove the unapproved sprinkler device on the right to ensure the two coils (packaged and bare) are the only products, keeping the combined width under 82%. Reduce the product group from 85% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 68,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Zero people or human body parts detected.",
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil.",
+        "Both objects are separate, fully visible, and physically plausible with correct perspective and contact shadows.",
+        "No third commercial products, bottles, or jars present.",
+        "Watermark 'AFP | 09134922013' is present in the bottom right.",
+        "Width is within the 25-82% envelope."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

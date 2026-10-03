@@ -1,0 +1,54 @@
+{
+  "source_id": "10900042002246-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package: An AFP cardboard box is visible in the background, violating the 'zero second commercial package' hard reject criteria.",
+        "Role mismatch: The primary image role required is 'HEADWORKS DETAIL' (elevated equipment still life), but the image displays a ground-level scene with the tape roll placed on a concrete pad alongside a pump.",
+        "Missing product integration: The mandatory 'one integrated AFP carton at the far edge' is not present as specified in the blueprint."
+      ],
+      "correction_prompt": "Regenerate as an elevated still life on a concrete pad focusing on fixed irrigation headworks (filter, gauge, regulator, manifold). Replace the background cardboard box with a single integrated AFP carton at the far edge. Ensure the white-and-blue drip tape roll is the primary foreground element with no other commercial packaging visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package: The image contains two large brown AFP cartons in the background, which explicitly violates the 'second commercial package' hard reject rule.",
+        "Ambiguous Roll Count: The 'wide low cylindrical drip-tape carton roll' requirement is undermined by the presence of the two cartons, creating visual clutter that detracts from the 'clean' headworks detail role blueprint.",
+        "Visual Distraction: The background cartons compete for attention with the primary roll, making it less ideal for a detailed still-life focus on the central equipment."
+      ],
+      "correction_prompt": "Regenerate the image to strictly exclude all brown AFP cartons from the background, ensuring only the single white and blue cylindrical roll and the fixed headworks equipment (filter, gauge, manifold) are visible on the concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 98,
+      "product_width_percent": 26,
+      "product_height_percent": 38,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Exactly one AFP white-and-blue cylindrical drip-tape carton roll is present.",
+        "Hard reject check passed: zero people, body parts, or human silhouettes are visible.",
+        "Product dimensions are within the approved width (18-38%) and height (<70%) envelopes.",
+        "Physical integration is strong with realistic contact shadows and a clean concrete pad background.",
+        "The required watermark 'AFP | 09134922013' is present and correctly positioned in the bottom-right corner.",
+        "Infrastructure (filter, gauges, regulator, manifold) matches the mandatory HEADWORKS DETAIL role blueprint."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

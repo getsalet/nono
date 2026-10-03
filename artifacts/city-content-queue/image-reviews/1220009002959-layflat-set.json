@@ -1,59 +1,57 @@
 {
   "source_id": "1220009002959-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "score": 20,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails the EDITORIAL HERO requirement: the camera angle is low/eye-level, not wide high-oblique; the background shows a city skyline, which is irrelevant to the agricultural water-transfer brief for Hengweyeh/Beshtek/Hormozgan.",
-        "Role 2 fails the SELECTION EVIDENCE requirement: the camera angle is low/eye-level, not elevated, and the products are the same size, failing to visually demonstrate the diameter or construction difference through the pair.",
-        "Role 3 fails the HEADWORKS DETAIL requirement: the fixed equipment (pump, gauge, manifold) is completely missing; the approved two-coil pair is oversized and placed centrally rather than being small and secondary."
+        "Role 1: Image 1 fails to depict a 'wide elevated water-transfer field view' as it is a close-up ground-level shot of coils on dry soil, lacking the required wide context.",
+        "Role 2: Image 2 fails the 'steep near-overhead' requirement as it is a standard ground-level side view, not a technical top-down still life.",
+        "Role 3: Image 3 fails the 'Headworks Detail' requirement as it shows a generic concrete pad with a tractor in the background instead of a fixed pump, gauge, and manifold setup.",
+        "The images appear to be near-duplicates of a single scene (the coils) shot from slightly different angles rather than distinct role-specific setups."
       ],
-      "correction_prompt": "Recompose the set: Role 1 needs a high-oblique wide-angle aerial view of a farm field; Role 2 requires an elevated technical perspective showing the coil size difference; Role 3 must feature fixed pump/gauge equipment on a concrete pad with the coils scaled down and secondary.",
+      "correction_prompt": "Generate three distinct images: 1) A wide elevated field view showing the integrated coils in a water-transfer context; 2) A steep near-overhead technical still life on textured soil; 3) A close-up of a concrete pad featuring a fixed pump, gauge, and manifold with the coils at the edge.",
       "panel_scores": [
-        45
+        20
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 40,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 3 fails the critical 'HEADWORKS DETAIL' requirement: the image shows the two coils on a concrete pad but completely lacks the required fixed pump, gauge, and manifold equipment.",
-        "Role 1 fails to provide a 'wide high-oblique' context and does not make the coils appear small and secondary relative to the environment.",
-        "Role 2 includes extraneous equipment (a portable gauge) and features an oversized product presentation that conflicts with the 'elevated technical comparison' and 'no extra objects' constraints."
-      ],
-      "correction_prompt": "Redo Role 3 to show a fixed pump and manifold on a concrete pad with the two coils only as small secondary context; Redo Role 1 to be a wider high-angle shot with small, off-center coils; Redo Role 2 to be an elevated shot showing only the two coils side-by-side without any extra gauges or hardware.",
-      "panel_scores": [
-        40
-      ],
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 45,
+      "score": 35,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Image 1 fails the 'EDITORIAL HERO' role as it is a low-angle close-up of equipment, missing the required wide high-oblique water-transfer context with small, off-center coils.",
-        "Image 2 contains a commercial cardboard box/container, which is explicitly forbidden for the 'SELECTION EVIDENCE' role.",
-        "Image 2 introduces a large, ambiguous central tank object that does not align with the requirement for the specific 'two-coil pair' comparison."
+        "Role 1 requires a wide elevated aerial view showing the field's water-transfer scale; the image is instead a ground-level perspective shot.",
+        "Role 2 requires a steep near-overhead angle for selection evidence; the image is a low-angle close-up.",
+        "Role 3 is completely missing; there is no image featuring a concrete pad, fixed pump, gauge, or manifold equipment.",
+        "Roles 1 and 2 depict nearly identical compositions of the coil pair on soil, creating a structural duplicate."
       ],
-      "correction_prompt": "Generate a wide, high-oblique aerial hero image with a water-transfer context where the two specific coils remain small and off-center, and replace the central object and packaging in the comparison shot with a clean, diameter-contrasted pair of coils without any boxes or containers.",
+      "correction_prompt": "Replace Image 1 with a wide elevated field view, Image 2 with a steep near-overhead soil layout, and Image 3 with a concrete-pad equipment still life showing a pump and gauge.",
       "panel_scores": [
-        45
+        35
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 2 lacks mandatory 'steep near-overhead' camera angle and 'selection evidence' (only shows the coil pair on soil).",
+        "Role 3 fails to provide the required 'fixed pump, gauge, and manifold'; instead, it features a tractor as the primary background subject, which constitutes a near-duplicate composition to Role 2 using the same 'coil pair' motif without the required equipment narrative.",
+        "Role 1 displays a pump assembly that does not meet the 'complete fixed filter, gauge, regulator and manifold' specification."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a steep near-overhead still life on textured soil containing only the coil pair and a single connector cue; regenerate Role 3 on a clean concrete pad dominated by a fixed pump, gauge, and manifold with the coil pair placed only at the far edge.",
+      "panel_scores": [
+        25
       ],
       "set_attempt": 3
     }
