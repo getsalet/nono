@@ -1,19 +1,56 @@
 {
   "source_id": "1110006001047-layflat",
-  "policy": "strict-restoration-posts-567-632-20260929",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 88,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1: wide high-oblique hero with distant unattended tractor, two coils small/off-center on tilled field. Panel 2: elevated two-coil comparison showing diameter/construction difference (silver vs black woven), straw field background. Panel 3: equipment-only headworks detail — pump + gauge + manifold on empty concrete pad, coils secondary in foreground. Roles visibly distinct in camera height/angle, environment structure, and technical narrative. Required watermark present. No person, no bottle, no oversized product, no role duplication."
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "",
+      "reasons": [
+        "Role 1 passes as a wide elevated field view with the two coils on soil in the lower third.",
+        "Role 2 fails as a steep near-overhead technical still life—it is a closer ground-level variant of the same composition as Role 1 with no distinct camera height change, no connector or diameter cue visible, and no technical isolation from the background.",
+        "Role 3 partially fails: the coils sit on a concrete pad, but the background machinery reads as a general tractor/planter rather than a clearly identifiable fixed pump, gauge, regulator, and manifold assembly."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a true near-overhead (80-90 degree) shot looking straight down at the two coils on dark textured soil, isolated from any field background, with one brass connector or a ruler/diameter indicator placed beside the pair. Regenerate Role 3 so the foreground concrete pad clearly features a complete fixed headworks assembly—visible sand/mesh filter, pressure gauge, pressure regulator valve, and manifold block—with the two coils at the far edge of the pad.",
       "panel_scores": [
-        88
+        55
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 lacks a visible connector or diameter cue as mandated.",
+        "Role 3 incorrectly places the coil pair in the foreground instead of the far edge, and the background equipment resembles a mobile sprayer rather than fixed headworks (pump/gauge/manifold)."
+      ],
+      "correction_prompt": "Regenerate Role 2 including a visible connector or measurement cue; regenerate Role 3 with fixed pump/gauge/manifold dominating the foreground and the coil pair positioned at the far edge.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 52,
+      "duplicate_roles": [
+        1,
+        3
+      ],
+      "reasons": [
+        "Role 1 lacks an elevated camera perspective—it is a low/ground-level product arrangement on plastic mulch rather than a wide elevated field view, and it contains excess commercial products (filter housings, brass connectors) beyond the approved two-coil pair.",
+        "Role 3 shows only a partial piece of blue agricultural machinery with one visible gauge; it does not depict the mandatory complete fixed filter, gauge, regulator, and manifold headworks assembly on a clean concrete pad.",
+        "Roles 1 and 3 share an identical product composition (packaged coil + bare coil on ground/concrete) with similar framing angles, making them near-duplicates in visual structure."
+      ],
+      "correction_prompt": "Redraw Role 1 as a true elevated/wide-angle view of a water-transfer field with rows and irrigation lines visible, placing only the two-coil pair in the lower third on bare soil. Redraw Role 3 on a clean concrete pad showing a complete fixed headworks assembly (filter housing, pressure gauge, flow regulator, and manifold pipe) with the two-coil pair positioned at the far edge, not the foreground.",
+      "panel_scores": [
+        52
+      ],
+      "set_attempt": 3
     }
   ]
 }
