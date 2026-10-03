@@ -1,7 +1,23 @@
 {
   "source_id": "1290002002276-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Role 3 is missing mandatory evidence: The role requires a complete equipment still life dominated by a fixed filter, gauge, regulator, and manifold, which are not present in the image. The image also includes a tractor, which is not part of the required equipment set.",
+        "Role 2 fails to provide clear selection evidence: The prompt asks for a technical still life showing a connector or diameter cue, but the image shows a coiled hose without a visible connector or specific technical cue to guide selection."
+      ],
+      "correction_prompt": "For Role 2, add a close-up of a connector or a marked diameter on the hose to show selection evidence. For Role 3, remove the tractor and replace it with the required equipment: a fixed filter unit, a pressure gauge, a regulator, and a manifold, all arranged on the concrete pad.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 1
+    },
     {
       "pass": false,
       "score": 45,
@@ -10,45 +26,32 @@
         2
       ],
       "reasons": [
-        "Role 1 fails the 'EDITORIAL HERO' requirement: the prompt mandates a wide high-oblique view of a water-transfer context, but the image displays a flat field with a distant tractor (farm activity) and a generic farm environment.",
-        "Role 2 fails the 'SELECTION EVIDENCE' requirement: it explicitly includes a 'third commercial package' (the large cardboard box) which is forbidden, and presents two identical coils rather than showing a diameter or construction difference.",
-        "Role 1 and Role 2 are visually duplicative in their use of a dirt-field background and low camera angle, failing to provide the required distinct narrative structures."
+        "Role 1: Missing 'wide elevated' camera angle; the view is a low, close-up shot rather than a wide field perspective.",
+        "Role 2: Missing 'steep near-overhead' camera angle; the image uses a low, side-angled shot consistent with Role 1.",
+        "Role 3: Missing mandatory technical elements 'fixed pump, gauge, and manifold'; the coil pair is not at the far edge, and the tractor is a prominent extra commercial object.",
+        "Role 1/2 Structure: Role 1 and Role 2 are near-duplicates using the same side-angled camera setup and soil surface."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Regenerate Role 1 as a wide, elevated field shot and Role 2 as a steep, near-overhead soil close-up; update Role 3 to feature a concrete pad with the coil pair on the far edge and include a fixed pump, gauge, and manifold.",
       "panel_scores": [
         45
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 65,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 3 does not match the required 'HEADWORKS DETAIL' role description, which specifically demands a fixed pump, gauge, and manifold on an empty concrete pad. The image shows only the two coiled products on a pad without the specified equipment infrastructure.",
-        "Role 1 and Role 2 are visually similar, with Role 2 appearing to be a slight re-composition of the same setup in Role 1 rather than the distinct 'elevated technical comparison' specified in the brief, causing a lack of distinct visual narrative for Role 2."
-      ],
-      "correction_prompt": "Re-shoot Role 3 to explicitly include the fixed pump, pressure gauge, and manifold on the concrete pad; re-shoot Role 2 with a higher camera angle to clearly distinguish it from the Role 1 hero shot and emphasize the diameter or construction difference.",
-      "panel_scores": [
-        65
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 35,
+      "score": 25,
       "duplicate_roles": [
+        1,
         2,
         3
       ],
       "reasons": [
-        "Role 2 fails the brief: it depicts a full pump and manifold assembly (headworks) alongside the coils, duplicating the technical narrative of Role 3. The requirement for Role 2 was strictly to show the approved two-coil pair to evidence diameter/construction difference without a third commercial package or extra hardware.",
-        "Role 3 fails the 'approved product evidence' constraint: it displays only a single large bare black coil and the packaged item, omitting the required two-coil pair (which establishes the comparison). This makes the roles indistinguishable and fails the 'small, separate and secondary' evidence requirement for Role 3.",
-        "Role 2 and Role 3 are functionally duplicates in camera angle (high oblique/elevated), environment (concrete pad), and subject (equipment + product), resulting in a failure of visual distinctness."
+        "Images 1 and 2 are near-duplicates in camera height and composition, both showing the same product pair on soil, failing to provide the distinct technical narrative required for Role 2.",
+        "Image 3 does not fulfill the required 'HEADWORKS DETAIL' for Role 3, which must be a still-life dominated by a complete fixed pump, gauge, and manifold, instead showing a tractor background that distracts from the required equipment narrative."
       ],
-      "correction_prompt": "Redesign Role 2 to strictly feature the two approved coils side-by-side on the pad to demonstrate construction difference, removing the pump hardware. Redesign Role 3 to focus on the fixed pump/gauge/manifold with the two-coil pair placed small and secondary in the background, ensuring they are visibly distinct from Role 2.",
+      "correction_prompt": "Regenerate Image 2 as a steep near-overhead technical still life on textured soil showing the product pair and a connector cue without any background; regenerate Image 3 as an equipment still life on a concrete pad featuring a pump, gauge, and manifold with the product pair at the far edge.",
       "panel_scores": [
-        35
+        25
       ],
       "set_attempt": 3
     }

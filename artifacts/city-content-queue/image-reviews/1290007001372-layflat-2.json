@@ -1,0 +1,55 @@
+{
+  "source_id": "1290007001372-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 86,
+      "product_height_percent": 55,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Combined product width exceeds the 82% limit",
+        "Visible human body parts (legs and feet) in the background, which is a hard reject",
+        "Visible commercial container (green bucket) in the background, which is a hard reject",
+        "machine-enforced bounding-box check failed: Reduce the product group from 86% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Remove all visible people and commercial containers from the background. Ensure the combined product bounding box does not exceed 82% of the image width. Reduce the product group from 86% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 75,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: A human face and head are clearly visible in the upper center background (the worker in blue), violating the 'zero people' rule.",
+        "Hard reject: A blue bottle or container is visible in the background next to the human figure.",
+        "Hard reject: Multiple red and blue containers or buckets are visible in the background on the right, failing the 'zero bottles/containers' requirement."
+      ],
+      "correction_prompt": "Remove the human figure and all background containers/bottles completely; ensure the background consists only of the farm field and equipment with no people or extra commercial items.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 78,
+      "product_height_percent": 45,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The image displays the correct layflat pair: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "Zero people or body parts are present.",
+        "The combined width of the products falls within the approved 25-82% range.",
+        "The objects are physically plausible on the textured soil with correct contact shadows.",
+        "The mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Scene is a technical still life on soil as requested for the role."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

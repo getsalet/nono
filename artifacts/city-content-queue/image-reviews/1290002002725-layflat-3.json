@@ -1,0 +1,66 @@
+{
+  "source_id": "1290002002725-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 75,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The approved combined-width envelope is 25 to 82 percent, and this image's pair is slightly wider than that maximum threshold.",
+        "The role blueprint required a 'clean concrete pad' but the image depicts a rough outdoor soil/field environment."
+      ],
+      "correction_prompt": "Redraw the image with the pair of coils placed on a clean, flat concrete surface rather than soil. Scale down the width of the coil pair slightly so the combined bounding box does not exceed 80% of the frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 49,
+      "product_height_percent": 30,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The integrated two-coil pair is not positioned at the far edge of the concrete pad; the role blueprint requires it to sit at the far edge, but it is placed centrally in the immediate foreground.",
+        "The physical integration of the packaged and bare coils is implausible; they are depicted as two separate, distinct objects rather than an integrated pair.",
+        "The layout does not prioritize the specified equipment (fixed pump, gauge, manifold) as the main focus; instead, a large tractor dominates the background, distracting from the required still-life composition."
+      ],
+      "correction_prompt": "Move the integrated pair of coils (one packaged AFP, one bare black woven) to the far edge of the concrete pad to prioritize the fixed pump, gauge, and manifold in the foreground. Ensure the coils are physically plausible and not merged or separate. Keep the product bounding box between 25 and 82 percent.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 75,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The blue equipment in the background is a mobile machine (sprayer/tractor) on wheels, not a 'fixed pump' as specified in the role blueprint for 'elevated equipment still life on a clean concrete pad'.",
+        "The role description expects a static infrastructure setup (fixed pump, gauge, manifold), but the image shows a distinct, mobile vehicle which functions as an unintended third prominent object rather than just background infrastructure."
+      ],
+      "correction_prompt": "Replace the mobile wheeled vehicle in the background with a static, fixed pump unit mounted on the concrete or ground, including a visible gauge and manifold, maintaining the 'headworks detail' aesthetic without a full tractor or machine.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 75,
+      "product_height_percent": 48,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Elevated headworks detail and infrastructure (pumps, gauges) clearly depicted.",
+        "Coil width is within the 25-82% combined-width envelope for this role.",
+        "The two coils are separate, recognizable, and physically plausible.",
+        "Exact required watermark is present in the bottom-right corner.",
+        "Zero people, body parts, or human silhouettes detected.",
+        "Editorial lower-third/product placement is within allowed preferences."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,59 +1,53 @@
 {
   "source_id": "1290008002726-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 30,
+      "score": 55,
       "duplicate_roles": [],
       "reasons": [
-        "Role 3 violation: The image displays an open concrete pad with the two coil products but completely lacks the required equipment (fixed pump, gauge, and manifold).",
-        "Role 1 violation: The products are placed in the foreground and are too prominent; the brief requires them to be small, separate, and off-center within a wide water-transfer context, which is missing here.",
-        "Role 2 violation: The pair of coils does not clearly demonstrate a diameter or construction difference; both appear to be the same product type without clear technical distinction."
+        "Role 1 requires a wide elevated water-transfer field view but shows a low-level, close-up composition of the coils on the soil",
+        "Role 2 requires visible selection evidence such as a connector or diameter cue, which is absent in the image",
+        "Role 3 requires the integrated two-coil pair to be at the far edge of the concrete pad, but they are positioned at the front-left"
       ],
-      "correction_prompt": "Replace Role 3 with a photograph of a fixed pump, gauge, and manifold on a concrete pad with the two coils placed small in the background; adjust Role 1 to a wide landscape view with smaller products; adjust Role 2 to show two distinct coils with visibly different diameters.",
+      "correction_prompt": "Reconstruct the sequence with Role 1 as a wide elevated shot of the water field, Role 2 as a steep overhead close-up with a visible connector, and Role 3 with the coils positioned in the background.",
       "panel_scores": [
-        30
+        55
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 65,
+      "score": 25,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "Role 1 violates the 'off-center' constraint by placing the two coils centered in the foreground and dominating the composition as the primary subject.",
-        "Role 2 is rejected because the approved product pair is not used to 'show diameter or construction difference'; the coils are visually similar and identical, failing the technical comparison requirement.",
-        "Role 2 violates the 'no third commercial package' rule by including a green tractor and red farm equipment in the background, which are extra commercial objects and 'farm activity'.",
-        "Role 3 is rejected for hardware duplication with Role 2; both images feature the exact same fixed pump and gauge manifold assembly on a concrete pad.",
-        "Role 3 uses a 'low' camera angle looking slightly up at the equipment, whereas the role specification requires an 'elevated' record photograph."
+        "Role 2 fails the 'steep near-overhead' camera requirement; it is shot from a low, eye-level angle identical to Role 1.",
+        "Roles 1 and 2 utilize the same low-angle camera and similar soil environments, creating a 'near-duplicate camera/environment structure' that violates the rule that roles must be clearly distinct.",
+        "Role 2 lacks 'selection evidence' cues such as visible connectors or diameter indicators, featuring only the two coil products on the soil."
       ],
-      "correction_prompt": "Role 1: Shift the product pair to the bottom-left corner and keep them small relative to the wide field context. Role 2: Display the two coils with visibly different diameters or thicknesses to demonstrate construction difference, and remove the tractor and farm equipment from the background. Role 3: Change the camera angle to high-ob/elevated, distinct from Role 2, while maintaining the product pair as a small secondary element beside the headworks.",
+      "correction_prompt": "Regenerate Role 2 as a steep near-overhead technical still life shot looking down on the textured soil, including a visible connector or diameter cue, to ensure clear camera and narrative distinction from the wide low-angle view of Role 1.",
       "panel_scores": [
-        65
+        25
       ],
       "set_attempt": 2
     },
     {
-      "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
+      "pass": true,
+      "score": 100,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1: While it shows a field context, it lacks the 'elevated high-oblique' angle specified for the HERO role, instead using a standard ground-level shot.",
-        "Role 2: Violates the 'no person' constraint and fails the 'elevated technical comparison' requirement; the shot includes a walking figure and is not a focused technical record.",
-        "Role 3: Fails the 'equipment-only' requirement; it displays only coils on a concrete pad without the mandated fixed pump, gauge, or manifold headworks.",
-        "General: The visual narrative is weak, with Roles 1 and 2 featuring very similar compositions of the product placed in a dirt field."
+        "Role 1 is correctly executed as a wide, elevated field view with the soil plane in the lower third and appropriate horizon context.",
+        "Role 2 presents the required steep near-overhead perspective on textured soil, clearly distinguishing itself from Role 1 by focusing on the selection evidence layout.",
+        "Role 3 shifts to the elevated equipment still life on a clean concrete pad, including the necessary fixed pump, gauge, and manifold, with the product pair at the far edge.",
+        "Images are physically plausible, free of living subjects or extra commercial products, and maintain the approved product identity and watermark across all panels."
       ],
-      "correction_prompt": "Re-shoot Role 1 from a high-oblique angle; remove the person from Role 2 to focus purely on the technical pair; and add the fixed pump, gauge, and manifold headworks to Role 3.",
+      "correction_prompt": "No replacement needed.",
       "panel_scores": [
-        35
+        100
       ],
       "set_attempt": 3
     }

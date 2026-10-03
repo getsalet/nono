@@ -1,0 +1,59 @@
+{
+  "source_id": "12900010002242-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 85,
+      "product_height_percent": 42,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The combined width of the two coils occupies more than 82% of the frame, violating the approved envelope constraint.",
+        "The right coil and the right side of the left coil are cropped by the image border, making the products not fully visible.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Widen the camera angle or zoom out to fit both coils fully within the frame with the total width between 25% and 82%. Ensure no part of the coils is cut off by the edges. Keep the bottom-right watermark exactly as is. Reduce the product group from 85% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 60,
+      "product_height_percent": 25,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Missing the required watermark 'AFP | 09134922013' in the bottom-right corner; the number displayed is '09134922013' which is different.",
+        "The 'Headworks Detail' role blueprint requires an integrated two-coil pair on a concrete pad with a fixed pump, gauge, and manifold; the image shows the coils on a concrete pad but lacks the specific fixed pump/gauge/manifold infrastructure mentioned in the mandatory role description."
+      ],
+      "correction_prompt": "Add the exact watermark 'AFP | 09134922013' in the bottom-right corner. Regenerate the scene to include a fixed pump, gauge, and manifold on the concrete pad to match the 'Headworks Detail' role, keeping the two coils separate.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 80,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: visible human (worker standing on the right side of the image).",
+        "Hard reject: presence of a person violates the zero-people constraint."
+      ],
+      "correction_prompt": "Regenerate the image with zero people, removing the worker on the right while maintaining the two-coil product layout and background equipment.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 100,
+      "product_width_percent": 76,
+      "product_height_percent": 38,
+      "product_x_center_percent": 47,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

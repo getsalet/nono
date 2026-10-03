@@ -1,57 +1,58 @@
 {
   "source_id": "1290006002346-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 3 (Panel 3) fails completely: the required headworks (pump, gauge, manifold) are missing, violating the 'equipment-only' directive. The image is merely another static product shot on a concrete pad.",
-        "Role 2 (Panel 2) is a layout duplicate of Role 1 (Panel 1): both are static shots of the two coils on the ground with a similar camera angle, failing to provide the distinct 'elevated technical comparison' required for Role 2.",
-        "No visual distinction in camera height or narrative flow between Panels 1 and 2."
+      "score": 65,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Generate Role 2 as a high-angle technical comparison showing the coils' internal structure; replace Role 3 with an equipment-only photograph of a pump, gauge, and manifold on a concrete pad, keeping the two coils small in the foreground.",
+      "reasons": [
+        "Role 2 (Image 2) is structurally and compositionally nearly identical to Role 1 (Image 1), featuring the same low-angle camera height, surface texture, and subject placement (coils in foreground, field in background) rather than the required steep, near-overhead perspective.",
+        "Role 3 (Image 3) is missing mandatory technical evidence: it lacks the specific fixed pump, gauge, regulator, and manifold on a concrete pad required for the 'Headworks Detail' narrative; instead, it displays a generic still life with tractors in the background."
+      ],
+      "correction_prompt": "Reconstruct Image 2 as a steep, near-overhead 'top-down' shot centered on the two coils on the soil (removing the background field context to prioritize technical layout) and update Image 3 to a close-up concrete pad featuring a fixed irrigation pump, pressure gauge, and manifold with the coils placed only at the far edge.",
       "panel_scores": [
-        35
+        65
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
+      "score": 65,
       "duplicate_roles": [
         1,
         2,
         3
       ],
       "reasons": [
-        "Role 1 fails the EDITORIAL HERO requirement: the product is oversized, placed centrally in the foreground, and the camera angle is low rather than wide high-oblique.",
-        "Role 2 fails the SELECTION EVIDENCE requirement: the image displays a floating headworks unit with wheels on an empty concrete pad rather than an elevated technical comparison of the two coils to demonstrate diameter or construction differences.",
-        "Role 3 contains explicit rejection elements: the presence of cardboard boxes, crates, and plastic packaging violates the 'equipment-only' and 'no container' constraints, and the equipment is not fixed or properly arranged on the concrete pad."
+        "Role 1 is an eye-level shot from the foreground soil rather than the required wide elevated water-transfer field view, and it includes city-specific architecture (houses) in the background.",
+        "Role 2 lacks a steep near-overhead perspective and appears to duplicate the camera angle and framing of Role 1, missing the required technical still-life selection evidence on textured soil.",
+        "Role 3 places the two-coil pair on the foreground of a concrete pad, whereas it is required to sit at the far edge; the equipment still life is also missing a fixed filter, and the large tractors in the background detract from the 'clean pad' narrative."
       ],
-      "correction_prompt": "Role 1: Shift to a high-oblique wide shot with the product small and off-center; Role 2: Show only the two coils elevated to reveal construction differences without extra equipment; Role 3: Display a fixed pump and manifold on a concrete pad with the coils as small secondary details, strictly removing all boxes, crates, and packaging.",
+      "correction_prompt": "Reshoot Role 1 from a high elevated angle in an open field; re-frame Role 2 as a near-vertical overhead shot on textured soil; move the two-coil pair to the far edge of the concrete pad in Role 3 and remove the background tractors.",
       "panel_scores": [
-        45
+        65
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 20,
+      "score": 45,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1 is not a high-oblique wide editorial hero; it is a ground-level shot with a crop field context that does not meet the specified camera height/angle requirement.",
-        "Roles 1 and 2 use nearly identical layouts (products placed on a small concrete pad in an agricultural field) and visual narrative, resulting in duplication.",
-        "Role 2 fails the 'Selection Evidence' requirement by including a third commercial object (a standalone faucet/valve), whereas the brief specifies only the two-coil pair should be shown.",
-        "Role 2 and Role 1 are not distinct enough in environment structure or technical narrative."
+        "Role 1 and Role 2 are near-duplicate images; both utilize a low-angle, side-profile camera height on a soil plane, failing to distinguish the required 'elevated' view of Role 1 from the 'steep near-overhead' view of Role 2.",
+        "Role 2 lacks the required steep near-overhead angle, making the 'selection evidence' of the coil and connector ambiguous from this distance.",
+        "Role 3 features a red barn-style structure in the background, which conflicts with the instruction to avoid city-specific or non-farm architecture in an ordinary Iranian context."
       ],
-      "correction_prompt": "Regenerate Panel 1 as a wide, high-oblique aerial shot of a water-transfer context where the coils are small and off-center; for Panel 2, remove the faucet/valve and use a clear side-by-side or elevated technical comparison of the two distinct coils on a neutral background to differentiate the construction/diameter.",
+      "correction_prompt": "Re-render Role 1 as a wide elevated drone view and Role 2 as a steep near-overhead macro shot; remove the red barn from Role 3.",
       "panel_scores": [
-        20
+        45
       ],
       "set_attempt": 3
     }

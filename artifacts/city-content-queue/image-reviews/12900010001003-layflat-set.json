@@ -1,52 +1,59 @@
 {
   "source_id": "12900010001003-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Hero) fails: The camera angle is low/ground-level rather than the required 'wide high-oblique' shot, failing to establish the water-transfer context effectively.",
-        "Role 3 (Headworks Detail) fails: The image shows only coils on a concrete pad; the required equipment (one fixed pump, gauge, and manifold) is completely absent.",
-        "Roles 1 and 2 show a 'layout move' violation: The composition is nearly identical (product left, coil right), with only a change of location (crop rows vs. fallow dirt) and background, violating the requirement for distinct camera height and environment structure."
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Redesign the triptych: Role 1 must be a wide high-oblique shot of the field; Role 2 should be a macro shot focusing on the construction/diameter difference of the two coils; Role 3 must feature a concrete pad with a fixed pump, gauge, and manifold with the coils placed small and secondary.",
+      "reasons": [
+        "Role 1 requires a wide elevated field view, but the image presents a low-level perspective on the soil that matches the structure of Role 2, failing to establish the 'elevated' camera height distinct from the near-overhead role.",
+        "Roles 1 and 2 exhibit near-duplicate camera/environment structure, both presenting a horizontal layout of the two-coil pair on textured soil rather than a clear distinction between a wide hero shot and a steep technical still life.",
+        "Role 3 is missing mandatory technical narrative elements; the required fixed pump, gauge, regulator, and manifold are absent, replaced by a non-specified agricultural machine and coiled hose."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a high-angle wide view of the field with the coils in the lower third, and update Role 3 to clearly depict a concrete pad setup containing a specific fixed pump, gauge, and manifold system.",
       "panel_scores": [
-        35
+        40
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 40,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 fails the EDITORIAL HERO requirement: it presents the coils at ground level rather than a wide high-oblique view, and the city context in the background contradicts the specific agricultural setting (Khosf/Khorasan) requested.",
-        "Panel 2 fails the SELECTION EVIDENCE requirement: the composition includes a full headworks setup (pump, manifold, gauges), whereas the role strictly requires the two coils to be the primary focus showing diameter/construction differences.",
-        "Panel 2 and Panel 3 exhibit role-hardware duplication: both feature nearly identical elevated pump/gauge assemblies on a concrete pad, differing only by the inclusion of a vertical stick in Panel 2.",
-        "Panel 3, while meeting some of the 'equipment-only' criteria for role 3, is redundant because the technical headworks detail is already established in Panel 2."
+      "score": 20,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Re-shoot role 1 as a wide high-oblique agricultural field shot with the product pair as small, off-center foreground elements; re-shoot role 2 as a tight elevated macro comparison of the two coils showing construction differences without any pump hardware; and provide a genuinely distinct role 3 that avoids duplicating the hardware focus of role 2.",
+      "reasons": [
+        "Image 1 (Role 1) fails to provide a 'wide elevated' view and includes unauthorized extra commercial products (a hand pump and a brass valve fitting) that are not part of the required integrated coil pair.",
+        "Image 2 (Role 2) lacks the required 'steep near-overhead' camera angle, instead using a mid-level side perspective that makes it a structural duplicate of Image 1.",
+        "Image 2 (Role 2) is missing the mandatory 'connector or diameter cue' selection evidence.",
+        "Image 3 (Role 3) fails to include a complete fixed pump, gauge, and manifold on the concrete pad, instead showing a large, blurry background machine."
+      ],
+      "correction_prompt": "Regenerate: Image 1 must be a wide elevated view showing only the two-coil pair on soil; Image 2 must be a steep near-overhead shot adding a diameter cue; Image 3 must feature a concrete pad with a complete foreground equipment kit including a fixed pump, gauge, and manifold.",
       "panel_scores": [
-        40
+        20
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 45,
+      "score": 70,
       "duplicate_roles": [
+        1,
         2
       ],
       "reasons": [
-        "Role 3 completely lacks the required 'pump, gauge, and manifold' equipment, showing only coils on a pad instead of the 'HEADWORKS DETAIL' narrative required for the third panel.",
-        "Role 2 does not visually demonstrate the 'diameter or construction difference' through the coil pair itself; the two coils are nearly identical in size and appearance, failing the 'SELECTION EVIDENCE' technical requirement.",
-        "Role 1 includes a visible tractor in the background, which risks failing the 'generic farms' or 'oversized product' constraints, though the layout is otherwise a suitable editorial hero."
+        "Role 1 is not a wide elevated field view and the coil does not share the soil plane with the equipment",
+        "Role 2 is a low-angle view and does not include the required connector or diameter cue",
+        "Roles 1 and 2 present nearly identical camera structures and subject grouping"
       ],
-      "correction_prompt": "Replace Role 3 with an elevated record photograph of a fixed pump, gauge, and manifold on a concrete pad with the two-coil pair as small secondary evidence. For Role 2, increase the visual size difference between the two coils to clearly demonstrate diameter or construction variance without adding extra objects.",
+      "correction_prompt": "Replace the first two images with a wide elevated field view showing the coil on soil, and a steep near-overhead soil-based layout with a visible connector cue",
       "panel_scores": [
-        45
+        70
       ],
       "set_attempt": 3
     }

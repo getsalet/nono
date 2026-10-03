@@ -1,25 +1,56 @@
 {
   "source_id": "1290002002051-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 25,
+      "score": 45,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1 and Role 2 exhibit significant layout and camera angle duplication; both show the two-coil pair from a low, close-up perspective with a field background, lacking the required 'high-oblique wide' hero shot for Role 1.",
-        "The product is oversized and central in Role 1, failing the 'small and off-center' requirement for the editorial hero shot.",
-        "Role 2 functions more as a second close-up than the required 'elevated technical comparison' for selection evidence.",
-        "Role 3 is the only panel that sufficiently adheres to the 'headworks' and 'empty concrete pad' requirements, despite the product evidence being present."
+        "Role 1 (Panel 1) is not a 'wide elevated' view; the camera is positioned low to the ground, failing to capture the required wide field perspective with the coil in the lower third.",
+        "Roles 1 and 2 are near-duplicates in structure: both feature the same two coils on a soil surface with a very similar camera height and composition, failing to distinguish 'Editorial Hero' from 'Selection Evidence' (which requires a steep near-overhead view).",
+        "Role 3 (Panel 3) is missing the specific required 'fixed pump' within the integrated equipment setup, showing a tractor instead."
       ],
-      "correction_prompt": "Regenerate Role 1 as a high-oblique wide shot where the two coils are small and off-center within a large field context; regenerate Role 2 as a strictly elevated close-up focusing on the physical difference between the coils without the wide field background.",
+      "correction_prompt": "Regenerate Role 1 as a wide, elevated shot of the field with the coils small in the bottom third; change Role 2 to a steep 90-degree overhead soil shot; and add a fixed pump to the concrete pad setup in Role 3.",
       "panel_scores": [
-        25
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails to include the fixed pump and manifold; the image depicts a filter and gauges which are not part of the mandatory water-transfer composition described.",
+        "Role 3 contains visible living subjects (humans) operating the machinery in the background, which is a mandatory rejection criterion.",
+        "Role 2 fails to show the specific 'steep near-overhead' technical layout; the camera angle is too low to function as the intended selection evidence close-up."
+      ],
+      "correction_prompt": "Remove all humans from Role 3; add a visible pump and manifold to Role 1; adjust Role 2 to a steep near-overhead shot of just the two coils and a connector.",
+      "panel_scores": [
+        65
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 2 (Selection Evidence) requires a steep near-overhead camera angle to clearly show the technical layout on the soil, but the provided image is shot from a low angle similar to Role 1, failing to provide the required technical overhead perspective.",
+        "The visual structure and framing of Roles 1 and 2 are nearly identical (low-angle hero shot of the same product pair), resulting in a lack of distinct narrative differentiation between the wide view and the selection evidence."
+      ],
+      "correction_prompt": "Re-shoot Role 2 as a steep near-overhead top-down still life of the integrated two-coil pair on textured soil with a visible connector or diameter cue, ensuring a distinct vertical perspective unlike the wide low-angle view in Role 1.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
     }
   ]
 }
