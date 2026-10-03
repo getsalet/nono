@@ -1,21 +1,67 @@
 {
   "source_id": "11000018002279-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "product_width_percent": 21,
-      "product_height_percent": 24,
-      "product_x_center_percent": 50,
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 35.2,
+      "product_height_percent": 24.5,
+      "product_x_center_percent": 45.0,
       "reasons": [
-        "Contains one packaged AFP coil and one bare black woven coil. Both objects are separate, fully visible, and physically plausible. No people, human body parts, or hard-reject contaminants (bottles, extra commercial packages) are visible. The watermark 'AFP | 09134922013' is clearly present in the bottom-right corner. Infrastructure elements (gauges/pump) are allowed per the visual brief for HEADWORKS DETAIL roles."
+        "The image fails the mandatory role requirement. It depicts coils on the ground with a tractor in the background, rather than the required 'HEADWORKS DETAIL' scene with elevated equipment on a clean concrete pad, fixed pump, gauge, and manifold.",
+        "The scene lacks the specified infrastructure and setting entirely."
+      ],
+      "correction_prompt": "Generate an image of a HEADWORKS DETAIL scene on a clean concrete pad. Include a fixed pump, gauge, and manifold. Place the two-coil pair (one packaged AFP coil and one bare black woven coil) at the far edge of this setup. No people, tractors, or other construction vehicles. Ensure the watermark 'AFP | 09134922013' is in the bottom right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 71,
+      "product_height_percent": 31,
+      "product_x_center_percent": 39,
+      "reasons": [
+        "Missing mandatory role elements: no fixed pump, gauge, manifold, or connectors visible on the concrete pad. The scene is a generic farm product shot rather than a headworks detail elevation.",
+        "Distant unattended tractor and farm buildings are present and acceptable, but the core headworks infrastructure is absent, failing the role blueprint."
+      ],
+      "correction_prompt": "Regenerate as HEADWORKS DETAIL: place the packaged AFP coil and bare black woven coil pair on a clean concrete pad in the foreground edge, with a fixed pump, pressure gauge, and manifold assembly clearly visible on or beside the pad. Remove or reposition the large tractor so it does not dominate the scene. Keep the watermark AFP | 09134922013 in the bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 22,
+      "product_width_percent": 55,
+      "product_height_percent": 26,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: visible person (man in green coveralls) standing next to blue tractor in mid-ground — violates zero-people rule",
+        "Role mismatch: scene is a field setting with tractor and farmer, not HEADWORKS DETAIL (elevated equipment still life on clean concrete pad with fixed pump, gauge, manifold)"
+      ],
+      "correction_prompt": "Remove all people and tractor. Show only the two-coil pair (one packaged AFP coil, one bare black woven coil) on a clean concrete pad with a fixed pump, gauge, and manifold as headworks detail. Keep bottom-right watermark AFP | 09134922013.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 63,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Approved layflat pair: one packaged AFP coil and one bare black woven coil are both clearly visible.",
+        "Combined width within 25-82% envelope (approximately 63%).",
+        "Zero people, body parts, or human silhouettes present.",
+        "Fixed pump/gauge/manifold infrastructure visible as background elements (allowed).",
+        "Contact shadows and physical integration appear plausible.",
+        "Bottom-right watermark 'AFP | 09134922013' is present and legible.",
+        "No third commercial packages, bottles, jars, or invented elements detected.",
+        "Perspective and dimensions appear consistent and not distorted.",
+        "Elevated equipment still life on concrete pad matches HEADWORKS DETAIL role blueprint."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 4
     }
   ]
 }
