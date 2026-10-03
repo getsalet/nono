@@ -1,0 +1,64 @@
+{
+  "source_id": "12300010002489-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 82,
+      "product_height_percent": 38,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The image contains a human (a person sitting on the tractor), which is a hard reject.",
+        "The width of the combined product pair is at the maximum limit of 82%, bordering on too wide."
+      ],
+      "correction_prompt": "Regenerate the image to remove all people, including the person on the tractor. Ensure the combined width of the two coils does not exceed 82% of the frame. Maintain the 'headworks detail' blueprint with a clean concrete pad, fixed pump, gauge, and manifold in the background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 75,
+      "product_width_percent": 88,
+      "product_height_percent": 35,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The combined width of the two-coil pair exceeds the 82% threshold for this role.",
+        "The pair is centered, whereas the role blueprint specifies a far-edge placement.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 88% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Reduce the combined width of the two-coil pair to between 25 and 82 percent of the frame and reposition them to the far edge of the concrete pad to better align with the specified role. Reduce the product group from 88% to 25-82% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 62,
+      "product_height_percent": 38,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "The role blueprint specifies an 'elevated equipment still life' which is not satisfied; the image is a ground-level or low-height close-up of the coils on a surface.",
+        "A third product, a large black hose coil, is clearly visible in the background to the right, which violates the 'zero third commercial package or third coil' hard reject rule.",
+        "The physical relationship between the two main products and the background equipment is not well-integrated, making the 'elevated still life' context feel missing."
+      ],
+      "correction_prompt": "Regenerate the image as an elevated headworks detail still life on a clean concrete pad. Incorporate fixed pump, gauge, and manifold infrastructure. Ensure the packaged AFP coil and the bare black woven coil are the only two commercial products visible. Completely remove the large black hose coil currently visible in the background right.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 72,
+      "product_height_percent": 36,
+      "product_x_center_percent": 43,
+      "reasons": [
+        "Both the packaged coil and the bare black woven coil are clearly visible and distinct.",
+        "The product pair is placed at the far edge of the concrete pad, consistent with the headworks detail role.",
+        "Infrastructure elements (pump, gauge) are visible in the background as required."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

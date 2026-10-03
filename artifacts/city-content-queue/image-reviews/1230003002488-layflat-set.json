@@ -1,22 +1,62 @@
 {
   "source_id": "1230003002488-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 12,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (EDITORIAL HERO) is not a wide high-oblique shot of a water-transfer context; it shows a generic farm field with a tractor, not the Khareizak/Ri/Tehran urban-water network described in the brief.",
-        "Role 2 (SELECTION EVIDENCE) does not provide technical comparison; it is just a duplicate close-up shot on dirt without diameter or construction details compared to Role 1.",
-        "Role 3 (HEADWORKS DETAIL) completely misses the required equipment (pump, gauge, manifold on concrete pad); it only shows the product coils on concrete, failing the 'equipment-only' requirement.",
-        "The environment structure is inconsistent: Roles 1 and 2 are in dirt, Role 3 is on concrete, but none align with the specific narrative roles defined."
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Replace the field shots with: 1) a high-angle wide shot of the Khareizak canal system with the two coils small in the foreground; 2) a macro technical shot on a workbench highlighting the construction difference between the two coils; 3) a shot of a fixed pump and gauge setup on a concrete pad with the two coils placed secondary in the corner.",
+      "reasons": [
+        "Role 2 (Image 2) fails the requirement for a 'steep near-overhead' camera angle; it is a low, flat-lying perspective similar to Image 1.",
+        "Role 3 (Image 3) is missing the mandatory 'fixed filter, gauge, regulator and manifold' equipment, featuring only the two coils on a concrete surface.",
+        "Roles 1 and 2 share a near-duplicate camera height and soil-based environment structure, lacking the distinct technical narrative required."
+      ],
+      "correction_prompt": "Re-shoot Role 2 from a steep near-overhead (top-down) angle on textured soil, and re-shoot Role 3 on a concrete pad explicitly featuring a complete fixed filter system, gauge, and regulator alongside the coils.",
       "panel_scores": [
-        12
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 (Image 1) fails to show a 'wide elevated water-transfer field view' and instead presents a low-angle static shot with a pump; it does not match the required hero perspective.",
+        "Role 2 (Image 2) lacks the 'steep near-overhead' angle required for a technical still life; it is a low-angle field shot similar to Role 1, failing to provide the distinct selection evidence perspective.",
+        "Role 3 (Image 3) fails to show a 'complete fixed filter, gauge, regulator and manifold'; it only displays coils on a slab with a tractor in the background, missing the mandatory equipment still life elements.",
+        "Images 1 and 2 are near-duplicates in camera angle and environment structure (low-angle field view of coils), violating the distinctness requirement."
+      ],
+      "correction_prompt": "Regenerate: 1) Wide elevated hero view of the field with coils in the lower third; 2) Steep near-overhead technical layout of coils on soil with a diameter cue; 3) Elevated concrete pad still life showing the fixed pump, gauge, and manifold assembly with the coil pair at the far edge.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Missing mandatory evidence for Role 1 (no wide elevated hero view or water-transfer context)",
+        "Missing mandatory evidence for Role 2 (camera is too low and lacks the steep near-overhead angle required for selection evidence)",
+        "Role 3 is present and matches the concrete-pad equipment still-life spec"
+      ],
+      "correction_prompt": "Replace Image 1 with a wide elevated hero view showing the coils in a water-transfer field context, and replace Image 2 with a steep near-overhead technical shot on textured soil.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 3
     }
   ]
 }

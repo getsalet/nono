@@ -1,0 +1,63 @@
+{
+  "source_id": "1220005002003-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 78,
+      "product_height_percent": 35,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Missing required infrastructure for the 'Headworks Detail' role: The image shows an open field and a distant tractor, but lacks the 'elevated equipment still life on a clean concrete pad with fixed pump, gauge and manifold' specified in the blueprint."
+      ],
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 68,
+      "product_width_percent": 55,
+      "product_height_percent": 45,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "Role blueprint mismatch: Missing mandatory fixed pump, gauge, and manifold required for the HEADWORKS DETAIL role.",
+        "The visible hose/connector attached to the background tractor fails the 'zero humans/extra items' rule as it disrupts the scene without the required infrastructure integration."
+      ],
+      "correction_prompt": "Regenerate image with the two hoses placed on a clean concrete pad that features a fixed pump, pressure gauge, and manifold unit behind or to the side. Remove the background tractor and the orange hose to focus on the headworks infrastructure.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 75,
+      "product_height_percent": 50,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Third commercial package (Red/white coiled hose reel) is visible in the background, which is a hard reject for role 3",
+        "Missing required fixed infrastructure elements (pump, gauge, and manifold) for the 'HEADWORKS DETAIL' role blueprint",
+        "The distant unattended equipment is a complex hose reel (commercial product) rather than allowed generic farm machinery, violating the role rule"
+      ],
+      "correction_prompt": "Remove the red/white hose reel and all unattended machinery. Create a close-up Headworks Detail scene on a clean concrete pad featuring the required package pair and essential infrastructure (fixed pump, gauge, manifold) for role 3. Ensure the bottom-right watermark 'AFP | 09134922013' is visible.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 42,
+      "product_height_percent": 45,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "The image accurately displays the required layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "The combined width of the two products falls comfortably within the 25–82% approved envelope for role 3.",
+        "Both objects are fully visible, separate, and physically plausible with clear contact shadows.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner as requested.",
+        "The scene includes the mandated infrastructure (pump, gauge, manifold) and distant farm equipment without violating 'hard reject' criteria."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,20 +1,20 @@
 {
   "source_id": "1230004001582-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
       "score": 35,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "Role 3 (HEADWORKS DETAIL) completely fails the requirement: the image shows only the two coils on a concrete pad, but does not contain the 'one fixed pump, gauge and manifold' required for the headworks narrative.",
-        "Role 2 (SELECTION EVIDENCE) overlaps heavily with Role 3: both feature the same two-coil pair on a ground surface (dirt vs. concrete), lacking the distinct 'elevated technical comparison' and specific background contexts requested for each role.",
-        "All images feature the product prominently in the foreground; while the watermark is ignored per instructions, the repeated layout of the product pair against a blurred background with distant tractors violates the need for visibly distinct environments (e.g., a city/field context for Role 1 vs. a specialized equipment context for Role 3)."
+        "Role 2 is a near-duplicate of Role 1, failing the required distinction; both are low-angle horizontal shots on soil, whereas Role 2 demands a 'steep near-overhead' perspective.",
+        "Roles 1 and 2 do not form a distinct camera/environment structure as required.",
+        "Role 3 lacks the specific equipment details mandated (gauge, regulator, and manifold); it shows only coils and a background tractor."
       ],
-      "correction_prompt": "Replace Role 3 with a clear headworks setup including a pump and manifold on a concrete pad, with the coils positioned small and in the background; ensure Role 2 is a close-up technical comparison of the two coils.",
+      "correction_prompt": "Regenerate Role 2 as a steep near-overhead top-down view of the product pair on soil with a connector cue to differentiate it from Role 1, and refine Role 3 to explicitly include a pressure gauge and manifold next to the pump station.",
       "panel_scores": [
         35
       ],
@@ -22,38 +22,33 @@
     },
     {
       "pass": false,
-      "score": 35,
+      "score": 45,
       "duplicate_roles": [
         1,
-        2,
-        3
+        2
       ],
       "reasons": [
-        "Role 2 fails: The technical comparison of the two coils is shown, but the headworks equipment (pump, gauge, manifold) is completely missing from the concrete pad. The prompt specifically requires 'equipment-only' headworks in Role 3, and Role 2 requires an 'elevated technical comparison'. The missing hardware in Role 2 (which looks like a misinterpretation of the layout) and the lack of context in Role 3 are errors.",
-        "Role 3 fails: This image is a generic product shot on a plain concrete floor without the required headworks equipment (fixed pump, gauge, manifold) on an empty concrete pad. It does not meet the 'HEADWORKS DETAIL' requirement.",
-        "Global fail: The panel set lacks the required variation in 'environment structure'. Roles 2 and 3 are structurally weak, and Role 2 specifically does not provide the 'selection evidence' comparison in a technical context (it's just product on a slab with hardware in the background, not the required comparison focus)."
+        "Role 2 fails to provide the mandatory 'steep near-overhead' technical still life; the image is a horizontal eye-level shot, making its composition and camera structure nearly a duplicate of Role 1.",
+        "Role 3 is completely missing the 'complete fixed filter, gauge, regulator and manifold' equipment, failing the strict technical evidence requirements."
       ],
-      "correction_prompt": "Regenerate Role 2 to show an elevated close-up technical comparison of the two coils on the concrete pad with the pump/manifold hardware clearly visible behind them. Regenerate Role 3 to be a record photograph of the pump, gauge, and manifold on the empty concrete pad with the two coils placed small and secondary in the foreground or side, strictly removing the generic floor look and focusing on the equipment.",
+      "correction_prompt": "Regenerate Role 2 as a steep near-overhead top-down shot showing the coil and a single connector, and regenerate Role 3 as a concrete-pad still life clearly dominated by a complete fixed pump, gauge, and manifold assembly.",
       "panel_scores": [
-        35
+        45
       ],
       "set_attempt": 2
     },
     {
-      "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "pass": true,
+      "score": 85,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 2 violates the 'SELECTION EVIDENCE' requirements by showing exactly three commercial objects (a wrapped package and two bare coils); the prompt strictly mandates 'no third commercial package' and requires a two-coil pair.",
-        "Role 3 violates the 'HEADWORKS DETAIL' requirements by including a third commercial object (a vertical 'APP' branded package) alongside the two-coil pair, which is explicitly prohibited.",
-        "The two-coil product pairing in Role 3 is duplicated in Role 2, creating a lack of distinct camera height, environment, or technical narrative between the last two panels."
+        "Role 1 is a distinct wide, elevated field view showing the agricultural environment and the two coils placed in the lower third as requested.",
+        "Role 2 presents the required near-overhead technical still life on textured soil, focusing on the selection evidence of the two-coil pair and connectors.",
+        "Role 3 correctly executes the concrete-pad equipment still life, featuring the fixed pump, gauge, and manifold with the coil pair visible at the edge."
       ],
-      "correction_prompt": "For Role 2, remove the wrapped package to show only a two-coil pair (e.g., a larger and smaller coil) on an elevated technical background. For Role 3, remove the vertical APP package to show only the small two-coil pair as secondary evidence beside a clearly defined, static headworks assembly (pump and manifold) on an empty concrete pad, ensuring no farm activity or extra commercial objects are present.",
+      "correction_prompt": "",
       "panel_scores": [
-        35
+        85
       ],
       "set_attempt": 3
     }

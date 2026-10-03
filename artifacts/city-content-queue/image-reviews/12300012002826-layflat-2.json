@@ -1,0 +1,54 @@
+{
+  "source_id": "12300012002826-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 85,
+      "product_height_percent": 75,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Product combined width exceeds the 82% hard reject threshold.",
+        "Camera angle is not steep near-overhead; it is a low-angle shot that misrepresents the physical layout of the pair.",
+        "Coil is standing vertically, not lying flat on the soil.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 25-82% of frame width.; Reduce product height from 75% to at most 70% of frame height."
+      ],
+      "correction_prompt": "Steep near-overhead technical still life on textured soil showing only the integrated two-coil pair and one connector or diameter cue. Steep near-overhead angle, textured soil, zero people, one packaged AFP coil and one bare black woven coil integrated side-by-side, total width under 82%. Reduce the product group from 85% to 25-82% of frame width. Reduce product height from 75% to at most 70% of frame height.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 88,
+      "product_height_percent": 48,
+      "product_x_center_percent": 54,
+      "reasons": [
+        "Combined width of the two-coil pair exceeds the 82% hard-reject threshold.",
+        "The bare black coil is visually merged or touching the packaged coil, violating the 'physically separate' requirement.",
+        "The pair is placed in the lower-center, which contradicts the strict 'lower-third' and 'off-center' placement preference for this specific role blueprint.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 88% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Regenerate with the two coils physically separated and placed distinctly in the lower-third left and right off-center. Shrink the combined width of the pair to less than 70% of the frame. Ensure no touching between the two objects and maintain the near-overhead steep camera angle. Reduce the product group from 88% to 25-82% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 84,
+      "product_width_percent": 65,
+      "product_height_percent": 45,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "The image contains the mandatory 'AFP | 09134922013' watermark in the bottom right.",
+        "The scene includes only the two required coils: one packaged and one bare.",
+        "There are zero people or body parts visible in the image.",
+        "The product bounding box falls within the approved width range for role 2."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

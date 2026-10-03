@@ -1,24 +1,53 @@
 {
   "source_id": "1230004002117-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 60,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 45,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 3: Violates 'equipment-only' and 'empty concrete pad' constraints by including a visible tractor and horses in the background, which constitutes farm activity that is explicitly forbidden for this panel.",
-        "Role 2: Fails the 'no extra commercial object' rule by including a wooden irrigation dripper/flow control next to the coils, which is not part of the approved two-coil product evidence.",
-        "Role 1: The camera height is too low (ground level) rather than the requested 'high-oblique' wide shot; the product is placed in the extreme foreground rather than 'off-center' or small."
+        "Role 2 fails as 'steep near-overhead technical still life'; it is nearly a duplicate of Role 1's low-angle field shot, with similar product layout, soil texture, and background depth of field.",
+        "Role 3 misses the required 'complete fixed filter, gauge, regulator and manifold' system; the pump/gauge in the background is visually dominated by a large tractor and the coils appear on a generic light-colored surface, not the specified concrete pad with the integrated pair at the far edge."
       ],
-      "correction_prompt": "Role 1: Reposition to a high-oblique wide angle with the coils off-center; Role 2: Remove the wooden dripper to show only the two approved coils; Role 3: Clean the background to be an empty concrete pad without the tractor or horses.",
+      "correction_prompt": "Replace Role 2 with a steep near-overhead top-down shot of the two coils on the textured soil (removing the background farm/cameras from Role 1) and replace Role 3 with an elevated still life on a clean concrete pad showing a fixed pump, gauge, manifold and filter assembly (without the large tractor), with the two-coil pair positioned at the far edge.",
       "panel_scores": [
-        60
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 2 fails to provide 'selection evidence' such as a connector or diameter cue, showing only the two coils without the required technical details.",
+        "Role 3 fails to display the mandatory 'gauge and regulator' required for the Headworks Detail, showing only a tractor and the two coils on a pad."
+      ],
+      "correction_prompt": "Incorporate a technical connector into Role 2 for evidence, and add a gauge and regulator assembly to the concrete pad in Role 3.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Role 2 fails to distinguish from Role 1 in terms of camera angle (ground-level vs. near-overhead) and missing required 'selection evidence' cues (connectors or diameter indicators) on the textured soil layout.",
+        "Role 3 fails to provide a 'complete fixed filter, gauge, regulator and manifold' still life dominated by the required equipment; instead, it displays a generic farm vehicle in the background with the coil pair simply sitting on a concrete surface, lacking the specific technical equipment narrative required."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a steep near-overhead shot of the two coils on textured soil with a visible connector or diameter cue. Regenerate Role 3 to focus on a concrete pad still life featuring a fixed pump, gauge, regulator, and manifold with the two coils positioned at the far edge.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 3
     }
   ]
 }

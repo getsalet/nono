@@ -1,43 +1,55 @@
 {
   "source_id": "12300012002826-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 10,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Image 2 duplicates the layout of Image 1: both are low-angle field shots featuring the same product pair placed on the ground, relying on similar 'hero product' framing despite different background details.",
-        "Image 3 completely fails the requirement for Role 3 (Headworks Detail): it displays an empty concrete surface without the necessary fixed pump, gauge, or manifold, showing only the product pair as the primary subject.",
-        "The camera angles are repetitive across the set, with Roles 1 and 2 both using low, ground-level perspectives rather than the distinct heights required."
+        "Role 1 and Role 2 are near-duplicates in camera structure: both feature the same integrated two-coil pair (packed + bare) on a soil surface, and both fail to meet the specific environmental cues required. Role 1 is shot at a low, ground-level perspective rather than the required 'elevated' hero view. Role 2 is a medium-angle shot with a visible horizon/buildings, rather than the required 'steep near-overhead' technical still life.",
+        "Role 3 fails to meet the 'dominated by a complete fixed filter, gauge, regulator and manifold' requirement; the blue pump unit is partially visible and the integrated pair is on the near foreground rather than the 'far edge' of the concrete pad."
       ],
-      "correction_prompt": "Regenerate Image 3 as a high-oblique shot of a concrete pad featuring a fixed irrigation headworks system (pump, gauge, and manifold), ensuring the two product coils remain small and secondary in the corner. Additionally, adjust the camera angle in Image 2 to provide a distinct perspective from the low-angle view in Image 1.",
+      "correction_prompt": "Role 1: Reframe the wide shot with a higher, more elevated camera angle over the field. Role 2: Reframe as a steep, near-overhead flat-lay of just the coils on the soil, eliminating the horizon. Role 3: Shift the camera so the coils sit at the far edge of the concrete pad and the pump/filter equipment dominates the foreground.",
       "panel_scores": [
-        35
+        10
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 25,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "score": 58,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails to establish the 'wide high-oblique water-transfer context'; instead, it presents a close-up, equipment-centric view that resembles the Headworks Detail role.",
-        "Role 2 fails to act as 'Selection Evidence' because it focuses on equipment (pump and gauge) rather than the technical comparison of the two coils themselves.",
-        "Roles 1 and 2 are nearly identical in composition and narrative focus (fixed pump/gauge on a concrete pad), resulting in significant layout and narrative duplication.",
-        "Role 3 acts as a close-up product shot on a concrete pad, which overlaps with the product-focused nature of Roles 1 and 2 rather than maintaining a distinct technical narrative."
+        "Role 2 fails the mandatory 'steep near-overhead' camera height requirement, presenting instead as a horizontal low-angle perspective similar to Role 1.",
+        "Role 3 lacks the 'complete fixed filter, gauge, regulator and manifold' described in the required narrative, displaying only an incomplete blue pump unit on the right."
       ],
-      "correction_prompt": "Redesign Role 1 as a wide, high-oblique aerial shot of the water-transfer network with coils in the far background; restructure Role 2 to focus strictly on a side-by-side technical comparison of the two coils, removing the pump and gauge.",
+      "correction_prompt": "Regenerate Role 2 as a steep near-overhead shot looking down at textured soil and regenerate Role 3 to feature a clearly visible fixed filter, gauge, and regulator on a concrete pad.",
       "panel_scores": [
-        25
+        58
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 100,
+      "duplicate_roles": [],
+      "reasons": [
+        "All three images clearly fulfill their assigned role distinctions.",
+        "Image 1 meets Role 1 requirements by providing a wide, elevated field view with the integrated coil pair situated on a shared soil plane in the lower third.",
+        "Image 2 meets Role 2 requirements by presenting a steep, near-overhead technical layout on textured soil, featuring visible selection evidence with the two-coil pair and a visible diameter cue.",
+        "Image 3 meets Role 3 requirements by depicting a clean concrete pad equipment still life that includes the complete fixed filter, gauges, and manifold with the two-coil pair correctly placed at the far edge.",
+        "No near-duplicate camera structures, living subjects, or extra commercial products are present.",
+        "Product integration is physically plausible, and the mandatory watermark is consistently visible."
+      ],
+      "correction_prompt": "none",
+      "panel_scores": [
+        100
+      ],
+      "set_attempt": 3
     }
   ]
 }
