@@ -1,0 +1,53 @@
+{
+  "source_id": "12700012002498-layflat",
+  "family": "layflat",
+  "kind": 1,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 48,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Presence of an additional commercial third coil (stacked on the far right) violates the hard reject rule",
+        "The image contains a visible bucket and metal canister on the right side, violating the 'zero bottles/canisters/buckets' hard reject rule",
+        "The required watermark text 'AFP | 09134922013' is missing"
+      ],
+      "correction_prompt": "Remove the additional stacked coil, bucket, and canister from the right side. Keep only the packaged AFP coil and one bare black woven coil on the soil. Ensure the exact text 'AFP | 09134922013' is visible in the bottom-right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 54,
+      "product_height_percent": 42,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "Human silhouettes (3 figures) visible in the background, violating the zero-person hard reject rule.",
+        "Watermark 'AFP | 09134922013' contains an error: 4 digits instead of 3 digits (09134922013 vs 0913492013)."
+      ],
+      "correction_prompt": "Regenerate the image ensuring the background is completely free of any human figures or silhouettes; keep the foreground products identical. Correct the watermark string in the bottom right to exactly 'AFP | 0913492013'.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 65,
+      "product_height_percent": 45,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Contains required approved layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "Zero people, human body parts, or human silhouettes present.",
+        "Products share a single soil plane in the lower third of the frame.",
+        "Physical placement is plausible with appropriate contact shadows.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom right.",
+        "Background farm building and fence posts are treated as permissible infrastructure/environment, not rejected commercial products."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

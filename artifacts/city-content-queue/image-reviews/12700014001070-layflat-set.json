@@ -1,50 +1,55 @@
 {
   "source_id": "12700014001070-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 requires a wide high-oblique hero shot with the product small and off-center, but the image shows the two coils placed prominently in the foreground, failing the 'small and secondary' constraint.",
-        "Role 2 is intended to be an elevated technical comparison of the 'approved two-coil pair', but the image displays the approved pair plus an extra cardboard-wrapped coil, violating the 'no extra coil' rule.",
-        "Role 3 explicitly requires an equipment-only headworks photograph (pump, gauge, and manifold) on an empty concrete pad. The image only shows the coils on the pad with no visible equipment hardware, failing the core requirement for this panel."
+      "score": 55,
+      "duplicate_roles": [
+        2
       ],
-      "correction_prompt": "Regenerate Role 1 with a wide high-oblique view keeping the product small and off-center; regenerate Role 2 removing the third cardboard-wrapped coil to show only the approved pair; and regenerate Role 3 to include a visible fixed pump, gauge, and manifold on the concrete pad with the product pair remaining secondary.",
+      "reasons": [
+        "Role 2 fails to provide the required 'steep near-overhead technical still life' camera angle; instead, it uses a low-angle shot similar to Role 1.",
+        "Role 3 lacks the mandated 'elevated equipment still life' perspective on a concrete pad with a fixed pump, gauge, and manifold; the current image uses a first-person POV from the tractor.",
+        "The required 'complete fixed filter, gauge, regulator and manifold' equipment assembly is missing from Role 3, leaving the technical narrative incomplete."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a high-angle, near-overhead shot focused on soil texture and coil placement, and Role 3 as a low, elevated still-life shot on a concrete pad showing a complete pump, gauge, and manifold assembly.",
       "panel_scores": [
-        45
+        55
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 40,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Editorial Hero) is missing; the set consists of a Headworks detail (Image 1) and two product-only shots (Images 2 and 3).",
-        "Image 1 features a large pressure pump and wheels, which violates the Role 3 requirement for 'equipment-only' and 'no extra commercial objects' (no wheels/pump).",
-        "Images 2 and 3 show the coils in the foreground as the primary subject, violating the instruction that they must remain small, secondary, and off-center in the context shot, and failing to act as background evidence.",
-        "No image depicts the 'wide high-oblique water-transfer context' required for the hero panel."
+      "score": 65,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Regenerate the entire 3-panel sequence: 1) Wide high-oblique hero shot showing the water-transfer context with coils small and off-center; 2) Elevated close-up of the two coils on a surface to show diameter/construction differences; 3) Strictly equipment-only headworks on an empty pad with coils placed small and secondary in the background.",
+      "reasons": [
+        "Role 1 requires a wide elevated water-transfer field view with the product in the lower third; Image 1 is a low-level close-up still life, not an elevated wide shot.",
+        "Image 1 and Image 2 are near-duplicates in terms of subject framing (low-angle close-up of the coil pair on soil), failing to provide distinct camera narratives.",
+        "Role 3 requires a concrete-pad equipment still life; Image 3 fails by including a large tractor and farm vehicles, which are rejected as 'extra commercial products' or non-compliant equipment, breaking the 'clean pad' requirement."
+      ],
+      "correction_prompt": "Role 1: Change to a high-angle wide shot of a long irrigation field showing the two coils small in the foreground. Role 2: Increase the camera steepness to a near-vertical overhead to clearly differentiate from Role 1. Role 3: Remove the tractor and background farm rows, showing only the isolated equipment components on the concrete surface.",
       "panel_scores": [
-        40
+        65
       ],
       "set_attempt": 2
     },
     {
-      "pass": false,
-      "score": 45,
+      "pass": true,
+      "score": 95,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Image 1): The composition fails the 'off-center' requirement. The packaged coil and bare coil are prominently grouped in the bottom-left corner foreground, acting as the primary visual anchor rather than being secondary context. The shot is a low-angle field perspective rather than a high-oblique 'hero' shot.",
-        "Role 2 (Image 2): The layout deviates from the brief's negative constraints. It includes a gauge and an extra coil in the foreground, violating 'no extra coil'. While it is in a different location than Role 1, it is not a distinct 'elevated technical comparison' of the pair alone, but rather a static foreground vignette.",
-        "Role 3 (Image 3): Violates 'equipment-only' constraint by including two cows in the background, which constitutes farm activity and distracts from the hardware focus. The 'secondary' coils are placed in the center background, failing the spatial requirement of being 'beside the fixed headworks'."
+        "Image 1 clearly executes the EDITORIAL HERO role with a wide, elevated field view where the packaged and bare coils share a single soil plane in the lower third, with an ordinary Iranian farm context and no city-specific architecture.",
+        "Image 2 correctly depicts the SELECTION EVIDENCE role as a steep near-overhead technical still life on textured soil, showing only the integrated two-coil pair and a visible diameter cue without extra commercial products or living subjects.",
+        "Image 3 satisfies the HEADWORKS DETAIL role by presenting an elevated equipment still life on a clean concrete pad featuring a fixed pump, gauge, and manifold, with the two-coil pair placed at the far edge as required.",
+        "All three roles are physically integrated, distinct in camera height and surface, and pass individual image QA with the approved AFP product identity and required watermark present."
       ],
-      "correction_prompt": "Regenerate Role 1 as a high-oblique aerial view where the two coils are small, off-center details in a larger farm context; Regenerate Role 2 as a high-angle shot of the two coils only on a white pad with no gauges or extra coils; Regenerate Role 3 as a concrete pad scene with a pump and gauge, keeping the coils small and adjacent, with a background free of animals or activity.",
+      "correction_prompt": "None required",
       "panel_scores": [
-        45
+        95
       ],
       "set_attempt": 3
     }

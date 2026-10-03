@@ -1,17 +1,19 @@
 {
   "source_id": "1270002001156-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
       "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 fails to depict a high-oblique water-transfer context; it shows a flat ground-level view of a field with urban skyline, lacking the required wide, elevated perspective.",
-        "Role 2 includes an external tool (probe/rod) inside the open coil, violating the requirement to show only the two approved products for technical comparison.",
-        "Role 3 completely misses the 'HEADWORKS DETAIL' requirement; it shows the coils on a concrete slab but lacks the mandatory fixed pump, gauge, and manifold equipment."
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Regenerate Role 1 as a wide high-oblique shot from water infrastructure looking toward a city; regenerate Role 2 to show only the two coils side-by-side with no inserted tools; and regenerate Role 3 to include a fixed pump and gauge assembly on the concrete pad with the two coils kept small in the secondary background.",
+      "reasons": [
+        "Role 1 and Role 2 are near-duplicate: both use a low-angle, horizontal camera perspective on a soil plane that frames the coals in the lower foreground, failing the required distinct camera structures (elevated view for Role 1 vs. steep near-overhead for Role 2).",
+        "Role 3 lacks the mandatory technical equipment evidence (gauge, manifold, fixed filter); the tractor and background elements are not part of the approved specification."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide, high-angle field view and Role 2 as a steep top-down technical still life on textured soil; replace the background of Role 3 with a clean concrete pad dominated by a fixed filter, gauge, and manifold.",
       "panel_scores": [
         35
       ],
@@ -21,15 +23,14 @@
       "pass": false,
       "score": 40,
       "duplicate_roles": [
-        1,
         2
       ],
       "reasons": [
-        "The provided images do not align with the specified editorial roles, resulting in a failure of the required narrative flow.",
-        "Role 2 (Selection Evidence) is missing, and the first image appears to contain a person, which is strictly forbidden, and displays equipment that duplicates the hardware found in the subsequent image.",
-        "Role 3 (Headworks Detail) is incorrectly filled by an image showing only coils on a pad, completely missing the required fixed pump and manifold equipment."
+        "Role 2 failure: The camera angle is at a low grazing level rather than the required 'steep near-overhead' perspective.",
+        "Role 2 missing evidence: Required 'selection evidence' such as a specific connector or clear diameter cue is not distinctly visible in the composition.",
+        "Role 1 environment inconsistency: The 'wide elevated' field view includes an out-of-place industrial part (valve) on the soil, which disrupts the narrative of a water-transfer field."
       ],
-      "correction_prompt": "Provide the correct three-image sequence: Image 1 must be a wide high-oblique hero shot with no people; Image 2 must be an elevated technical comparison of two coils; and Image 3 must feature a fixed pump and manifold on a concrete pad with the coils as secondary background.",
+      "correction_prompt": "Re-shoot Role 2 from a steep 45-60 degree overhead angle on the soil, ensuring the two coils are clearly aligned with a visible connector coupling or a physical object (like a ruler) to provide explicit selection/diameter evidence.",
       "panel_scores": [
         40
       ],
@@ -37,18 +38,16 @@
     },
     {
       "pass": false,
-      "score": 15,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
+      "score": 45,
+      "duplicate_roles": [],
       "reasons": [
-        "Severe role mismatch: The images provided do not match the required editorial narrative. Image 1 shows the product but lacks the required high-oblique water-transfer context. Image 2 includes a person and commercial boxes, violating the specific instructions for Role 2 (Selection Evidence) which prohibit people. Image 3 shows the product but completely lacks the required equipment (pump, gauge, manifold) for Role 3 (Headworks Detail)."
+        "Role 1 (Image 1) fails the mandatory 'wide elevated' framing; the low horizon and inclusion of a standalone connector violate the 'share one soil plane' and 'no connectors' requirements.",
+        "Role 3 (Image 3) fails the mandatory 'clean concrete pad' surface (displays a tractor/soil) and lacks the required 'gauge' and 'manifold' narrative elements.",
+        "The camera angles and subject layouts for Roles 1 and 2 are nearly identical, causing the 'field view' and 'technical still life' distinctions to fail."
       ],
-      "correction_prompt": "Regenerate the set: Image 1 must be a high-oblique context shot with no headworks; Image 2 must show a technical comparison with no people; Image 3 must feature a pump, gauge, and manifold on a concrete pad with the coils as small secondary elements.",
+      "correction_prompt": "Adjust Role 1 to a strictly high-angle wide shot excluding standalone connectors; adjust Role 2 to a steep near-overhead view on bare soil; ensure Role 3 is on a clean concrete pad with a clearly visible pressure gauge and manifold.",
       "panel_scores": [
-        15
+        45
       ],
       "set_attempt": 3
     }
