@@ -1,0 +1,78 @@
+{
+  "source_id": "11000023002203-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 26,
+      "product_height_percent": 45,
+      "product_x_center_percent": 25,
+      "reasons": [
+        "The required watermark is missing. It appears in the upper-right position with an incorrect ID '09134922013' instead of the mandatory '09134922013'.",
+        "The 'Editorial Hero' role blueprint was not followed; the product is prominent in the foreground on a concrete surface rather than integrated into a wide elevated field view on the soil."
+      ],
+      "correction_prompt": "Regenerate with the required watermark 'AFP | 09134922013' in the exact bottom-right corner. Reframe to show a wide elevated field view where the drip-tape roll is placed on the crop rows or soil in the lower-left third to match the editorial hero blueprint.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 52,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Product label text is gibberish ('Drip Irregation Teje')",
+        "Editorial role blueprint fails to show the required 'wide elevated field view'",
+        "Image geometry is too close/low-impact relative to the article brief"
+      ],
+      "correction_prompt": "Increase image altitude to a wide elevated field view; correct roll text to 'Drip Irrigation Tape' and ensure text clarity.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 24,
+      "product_height_percent": 43,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Hard reject: Human figure (farmer/worker) is clearly visible in the background near the building, violating the zero-person constraint.",
+        "Hard reject: A coiled layflat hose is present on the ground to the right of the carton roll, violating the prohibition on 'layflat hose'."
+      ],
+      "correction_prompt": "Remove the human figure in the background and delete the coiled black hose on the right. Retain the wide elevated field view and the integrated AFP carton roll on the lower-left.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 27,
+      "product_height_percent": 42,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "The text on the roll is misspelled and incoherent ('Irrigaitn Teje' instead of 'Drip Irrigation Tape')",
+        "Product placement is slightly high on the frame rather than grounded low in the lower-third"
+      ],
+      "correction_prompt": "Regenerate the image with the word 'Tape' spelled correctly and legible on the roll, ensuring the carton rests lower in the bottom-left frame",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 23.5,
+      "product_height_percent": 45.0,
+      "product_x_center_percent": 28.5,
+      "reasons": [
+        "Watermark 'AFP | 09134922013' is correctly present in the bottom-right corner.",
+        "Zero people or human body parts detected.",
+        "Product dimensions (width 23.5% / height 45%) fit within the approved 18-38% width and 70% height envelopes.",
+        "Product is physically integrated with a realistic contact shadow on the soil.",
+        "Role matches the EDITORIAL HERO blueprint with the carton placed in the lower-left third and a clearly visible long crop field view."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

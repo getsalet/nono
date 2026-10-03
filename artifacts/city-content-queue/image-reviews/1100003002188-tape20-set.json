@@ -1,21 +1,53 @@
 {
   "source_id": "1100003002188-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 60,
+      "score": 55,
+      "duplicate_roles": [
+        1
+      ],
+      "reasons": [
+        "Role 1 (Image 1) fails the 'wide elevated field view' requirement as it is a low ground-level shot, not an elevated wide angle.",
+        "Role 1 (Image 1) is physically implausible as it depicts a large irrigation tape spool sitting loose on the soil surface rather than being integrated into the crop geometry.",
+        "Role 3 (Image 3) contains an extra commercial product (an open cardboard box) which violates the single-product integration rule."
+      ],
+      "correction_prompt": "Regenerate panel: Role 1 must be a high-angle elevated view showing the farm context with an integrated tape; Role 3 must feature only the equipment and spool on a concrete pad, removing all extra cardboard boxes.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 72,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails the 'EDITORIAL HERO' brief: the product carton is placed centrally in the foreground and is excessively large relative to the landscape, violating the requirement that it stay 'small' and 'off-center'.",
-        "Role 2 fails the 'SELECTION EVIDENCE' brief: the image lacks the required 'visible emitter-spacing' technical detail; it shows a generic field edge with a distant tractor rather than the close-up technical arrangement needed to support the 'selection' narrative.",
-        "The background structures of Role 1 and Role 2 are nearly identical (wide landscape horizon, low sun), creating visual monotony despite the change in crop."
+        "Role 1 missing: The AFP product is placed in the immediate foreground rather than the required 'lower-left third' composition, dominating the lower center of the frame."
       ],
-      "correction_prompt": "Reshoot Role 1 with the product placed small and strictly in the lower-third off-center against a high-oblique field view; Reshoot Role 2 to feature a close-up of the tape showing distinct emitter spacing or field layout evidence.",
+      "correction_prompt": "Re-compose Role 1 so the AFP carton sits strictly in the lower-left third of the frame within a wide, elevated field view, allowing the long crop geometry and farm to remain the dominant visual focus.",
+      "panel_scores": [
+        72
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Role 3 is missing the required 'manifold' component, showing only filters, gauges, and regulators instead of the full specified equipment assembly.",
+        "Role 3 violates the physical integration constraint by including a secondary boxed commercial product (a cardboard box) alongside the roll, whereas the user approved only one integrated AFP product unit.",
+        "Role 3 includes background architecture (farm houses), which deviates from the strict 'ordinary Iranian farm context' and 'no city-specific architecture' requirement for the production contract."
+      ],
+      "correction_prompt": "Regenerate image 3 to feature a concrete pad setup dominated by a complete fixed filter, gauge, regulator, and manifold; integrate only the single AFP roll product without extra packaging boxes or background buildings.",
       "panel_scores": [
         60
       ],
-      "set_attempt": 1
+      "set_attempt": 3
     }
   ]
 }

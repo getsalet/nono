@@ -1,37 +1,53 @@
 {
   "source_id": "1100004001031-tape20",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 55,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 violates 'exactly one approved carton stays small, fully visible and off-center on the lower third': the carton is oversized (fills the foreground), positioned near the bottom center, and is not clearly 'small' or 'off-center' in a controlled editorial sense; it competes with the farm context.",
-        "Role 1 background: the distant city skyline and wide plowed field do not clearly support the specific article brief for ‘narrow 20cm drip tape selection/choice’ and read as a generic farm hero rather than an irrigation-specific context; it lacks any visible irrigation/emitter cues expected for the brief.",
-        "Role 2: while it shows field edge/equipment context, the composition places a person near the farm building on the right; the prompt forbids any person. Even if distant, this triggers a rejection under the 'any person' rule.",
-        "Role 3: meets the equipment-only concrete-pad intent with a manifold/gauge/regulator plus a smaller, secondary carton, but the background tractor is very large and close, making it look like active farm machinery rather than a neutral 'empty concrete pad' record shot; this blurs the 'no farm activity' requirement."
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Reissue: Role 1 – use a wide high-oblique shot with a clearly small, fully visible carton placed off-center in the lower third while keeping irrigation context; Role 2 – remove all people and keep one approved carton with clear emitter-spacing/field-selection evidence; Role 3 – keep the empty concrete pad equipment-only shot with the single approved carton small/secondary and reduce the background tractor to a distant, unattended silhouette or remove it entirely.",
+      "reasons": [
+        "Role 1 fails to include the 'long crop geometry' specified in the editorial hero description; instead of tall standing crops, the field shows very low-seeding rows.",
+        "Role 2 lacks the required 'steep near-overhead' technical perspective; the camera angle is too shallow and wide, resembling a standard ground-level still life rather than the requested top-down technical view.",
+        "Roles 1 and 2 share a nearly identical environment and surface structure (dark soil rows with scattered green shoots), making the two layouts difficult to distinguish without the specific technical perspective of Role 2."
+      ],
+      "correction_prompt": "Re-render Role 1 with a wide elevated view of tall, established crop geometry; and re-render Role 2 with a steep near-overhead perspective to clearly distinguish the technical layout.",
       "panel_scores": [
-        55
+        45
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 38,
+      "score": 78,
       "duplicate_roles": [],
       "reasons": [
-        "The provided visual content (an unopened tape roll) fundamentally contradicts the 'HEADWORKS DETAIL' requirement (Role 3), which mandates a fixed filter, gauge, regulator, and manifold setup on a concrete pad. Role 3 fails to provide the required technical equipment.",
-        "Role 2 (SELECTION EVIDENCE) lacks the required 'visible emitter-spacing' or 'field-selection evidence.' Instead, it only shows a generic farm layout with unconnected tape, failing to demonstrate the technical selection criteria mentioned in the brief.",
-        "Role 1 fails the 'exactly one approved carton' constraint. The brief requires a small, fully visible carton on the lower third, but the image shows only a generic roll of tape (not a 'carton') placed on a concrete slab, which does not match the specific product identification requirements."
+        "Role 3 includes extra commercial products: the required role description specifies 'one integrated AFP carton at the far edge,' but the image displays both a coiled AFP tape and a cardboard box, introducing extra commercial products not authorized in the specific equipment still life description."
       ],
-      "correction_prompt": "Generate a new image for Role 3 showing a close-up of irrigation headworks (filter, gauge, regulator, and manifold) on an empty concrete pad with the product roll small in the background; for Role 2, show an installation layout that clearly highlights emitter spacing.",
+      "correction_prompt": "Regenerate Role 3 on a clean concrete pad showing the fixed filter, pressure gauge, regulator, and manifold, with a single AFP cardboard carton placed at the far edge and strictly removing the coiled drip tape roll.",
       "panel_scores": [
-        38
+        78
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "duplicate_roles": [],
+      "reasons": [
+        "All three roles are clearly distinct in camera height, surface, and technical narrative: Role 1 is a wide elevated field view with long crop geometry; Role 2 is a steep near-overhead soil-based technical layout; and Role 3 is an elevated equipment still life on a concrete pad.",
+        "Each image contains an integrated AFP carton without introducing extra commercial products.",
+        "No visible living subjects are present in any of the images.",
+        "The required watermarks are consistently present and legible."
+      ],
+      "correction_prompt": "None required",
+      "panel_scores": [
+        92
+      ],
+      "set_attempt": 3
     }
   ]
 }

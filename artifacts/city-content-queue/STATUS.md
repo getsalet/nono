@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-03T14:49:43+00:00`
+- آخرین بروزرسانی: `2026-10-03T19:58:14+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **855 از 1894 (45.14٪)**
-- تکمیل‌شده: **855**
+- پیشرفت: **857 از 1894 (45.25٪)**
+- تکمیل‌شده: **857**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1039**
+- ناموفق: **1037**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **جندق** — اصفهان — `tape20` — 1112 کلمه — `2026-10-03T19:53:35+00:00`
+- **ویست** — اصفهان — `tape20` — 1097 کلمه — `2026-10-03T19:50:03+00:00`
 - **درچه** — اصفهان — `tape20` — 1303 کلمه — `2026-10-03T14:48:31+00:00`
 - **عسگران** — اصفهان — `layflat` — 1512 کلمه — `2026-10-03T10:49:06+00:00`
 - **افوس** — اصفهان — `layflat` — 1340 کلمه — `2026-10-03T10:44:29+00:00`
@@ -50,11 +52,11 @@
 - **زواره** — اصفهان — `tape20` — 1162 کلمه — `2026-10-03T06:23:15+00:00`
 - **روشناوند** — خراسان رضوی — `tape20` — 1308 کلمه — `2026-10-03T06:23:13+00:00`
 - **مهستان** — البرز — `layflat` — 1347 کلمه — `2026-10-03T06:22:53+00:00`
-- **آسارا** — البرز — `layflat` — 1320 کلمه — `2026-10-03T06:22:31+00:00`
-- **گلسار** — البرز — `layflat` — 1362 کلمه — `2026-10-03T06:22:21+00:00`
 
 ## خطاهای اخیر
 
+- **ویست** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **کوشک** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **نصرآباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **درچه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **نصرآباد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
@@ -63,8 +65,6 @@
 - **کمشچه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **قهجاورستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **زیار** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **قهجاورستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **زیار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
