@@ -1,22 +1,55 @@
 {
   "source_id": "1120009002205-layflat",
-  "policy": "strict-restoration-posts-567-632-20260929",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "duplicate_roles": [],
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
       "reasons": [
-        "Panel 1 (EDITORIAL HERO): Wide high-oblique view of irrigation water channel with both approved coils (packaged and bare black woven) small, separate and off-center in foreground — matches brief.",
-        "Panel 2 (SELECTION EVIDENCE): Elevated ground-level shot showing one coil in open cardboard packaging beside bare unwrapped coil, visually demonstrating construction/packaging difference; no extra commercial package, bottle, person or third coil.",
-        "Panel 3 (HEADWORKS DETAIL): Equipment-focused shot on concrete with pump/manifold assembly as primary subject; the approved two-coil pair remains small, separate and secondary in frame. Watermark present and correct.",
-        "All three panels show visibly distinct camera heights/angles: high oblique (P1), low elevated ground (P2), eye-level equipment record (P3). Backgrounds are relevant to article brief (irrigation context, farmland, concrete pad). No person, bottle, or oversized product violations detected."
+        "Images 1 and 2 are near-duplicates sharing identical low-angle composition, same two-coil pairing, same soil plane, same framing geometry, and both lack the steep near-overhead camera height and single-selection-cue constraint required for Role 2. Image 3 is structurally distinct (concrete pad + wheeled equipment) but the pump/manifold is a portable tractor-mounted unit rather than a fixed headworks assembly, and camera height is not elevated enough to satisfy Role 3.",
+        "correction_prompt\":\"Replace image 2 with a steep near-overhead shot looking down onto textured soil showing only the integrated AFP two-coil pair plus one connector or diameter comparison cue, removing any background field elements; ensure camera angle differs sharply from image 1. Replace image 1 only if needed after this change.\"}",
+        "correction_prompt"
       ],
       "correction_prompt": "",
       "panel_scores": [
-        85
+        42
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "duplicate_roles": [],
+      "reasons": [
+        "Image 2 (Role 2): Camera is not steep near-overhead; it is a ground-level angled shot with visible seedlings, making it functionally similar to Image 1 rather than a distinct technical overhead still life.",
+        "Image 3 (Role 3): Missing mandatory role evidence — the equipment in the background is a mobile blue field pump unit on wheels, not a complete fixed filter/gauge/regulator/manifold assembly on a clean concrete pad; the pump unit also contains living plant material in the background context."
+      ],
+      "correction_prompt": "Re-shoot Role 2 as a true steep near-overhead (90-degree) technical composition on dark textured soil showing only the two AFP coils and one connector/diameter cross-section cue with no plants or field context. Re-shoot Role 3 as an elevated still life on a clean poured concrete pad in the foreground with a complete fixed headworks assembly (sandbox filter, pressure gauge, regulation valve, and manifold with visible fittings) behind the two-coil pair at the far edge, no mobile field equipment.",
+      "panel_scores": [
+        58
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Images 1 and 2 are near-duplicates: same low-angle composition, same two-coil pair, identical packaging, nearly identical lighting and framing; Role 2 must be a steep near-overhead technical still life showing selection evidence, which Image 2 does not satisfy.",
+        "Role 3 properly fulfills the concrete-pad equipment still life requirement with visible pump/gauge/manifold and coils at the edge."
+      ],
+      "correction_prompt": "For Role 2, generate a steep near-overhead (bird's-eye) shot looking down on the two-coil pair on bare textured soil, with only a single connector or diameter comparison cue visible—remove any wide-field background; reposition camera directly above the coils so the soil texture fills the frame and no horizon line appears.",
+      "panel_scores": [
+        62
+      ],
+      "set_attempt": 3
     }
   ]
 }
