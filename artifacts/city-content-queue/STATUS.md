@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-03T08:43:01+00:00`
+- آخرین بروزرسانی: `2026-10-03T09:45:19+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **849 از 1894 (44.83٪)**
-- تکمیل‌شده: **849**
+- پیشرفت: **851 از 1894 (44.93٪)**
+- تکمیل‌شده: **851**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1045**
+- ناموفق: **1043**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -18,8 +18,7 @@
 
 ## بسته‌های آماده آپلود
 
-- بسته‌های 50تایی آماده: **16**
-- [batch-007-posts-0301-0350.zip](./packages/batch-007-posts-0301-0350.zip) — 50 پست — 17664378 بایت
+- بسته‌های 50تایی آماده: **17**
 - [batch-008-posts-0351-0400.zip](./packages/batch-008-posts-0351-0400.zip) — 50 پست — 18827412 بایت
 - [batch-009-posts-0401-0450.zip](./packages/batch-009-posts-0401-0450.zip) — 50 پست — 17601600 بایت
 - [batch-010-posts-0451-0500.zip](./packages/batch-010-posts-0451-0500.zip) — 50 پست — 13986604 بایت
@@ -29,9 +28,12 @@
 - [batch-014-posts-0651-0700.zip](./packages/batch-014-posts-0651-0700.zip) — 50 پست — 11329657 بایت
 - [batch-015-posts-0701-0750.zip](./packages/batch-015-posts-0701-0750.zip) — 50 پست — 11090318 بایت
 - [batch-016-posts-0751-0800.zip](./packages/batch-016-posts-0751-0800.zip) — 50 پست — 11287604 بایت
+- [batch-017-posts-0801-0850.zip](./packages/batch-017-posts-0801-0850.zip) — 50 پست — 11408618 بایت
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **افوس** — اصفهان — `tape20` — 1449 کلمه — `2026-10-03T09:42:30+00:00`
+- **کمشچه** — اصفهان — `tape20` — 1282 کلمه — `2026-10-03T09:42:16+00:00`
 - **خورزوق** — اصفهان — `layflat` — 1424 کلمه — `2026-10-03T08:42:58+00:00`
 - **دستگرد** — اصفهان — `layflat` — 2027 کلمه — `2026-10-03T08:42:31+00:00`
 - **خورزوق** — اصفهان — `tape20` — 1188 کلمه — `2026-10-03T08:41:34+00:00`
@@ -50,11 +52,11 @@
 - **نظرآباد** — البرز — `layflat` — 1269 کلمه — `2026-10-03T06:21:54+00:00`
 - **گلبهار** — خراسان رضوی — `tape20` — 1484 کلمه — `2026-10-03T06:12:33+00:00`
 - **فردوس** — خراسان جنوبی — `layflat` — 1382 کلمه — `2026-10-03T06:07:54+00:00`
-- **ارسک** — خراسان جنوبی — `layflat` — 1803 کلمه — `2026-10-03T06:07:41+00:00`
-- **بیدخت** — خراسان رضوی — `tape20` — 1882 کلمه — `2026-10-03T06:06:05+00:00`
 
 ## خطاهای اخیر
 
+- **شاپورآباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **کمشچه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **قهجاورستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **زیار** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **قهجاورستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **بهارستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **مهاباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **نهبندان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **شوسف** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **فردیس** — `layflat`: `Editorial review failed: blocked utility link`
 
 ## فایل‌های خروجی
 

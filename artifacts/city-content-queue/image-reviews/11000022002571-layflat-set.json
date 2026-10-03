@@ -1,24 +1,39 @@
 {
   "source_id": "11000022002571-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 20,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "score": 40,
+      "duplicate_roles": [],
       "reasons": [
-        "Roles 1 and 2 are visually indistinguishable: both feature low-angle, wide shot compositions on open farmland with the packaged and bare coils positioned identically in the foreground, violating the requirement for distinct camera angles and environments.",
-        "Role 1 fails the 'EDITORIAL HERO' requirement by being a ground-level shot rather than a high-oblique water-transfer context.",
-        "Role 2 fails the 'SELECTION EVIDENCE' requirement by not providing an elevated technical comparison; instead, it presents a generic field view."
+        "Role 2 fails the mandatory requirement for 'visible selection evidence' (e.g., a connector or diameter cue); the image only shows the two coils on textured soil, making it structurally near-duplicate to Role 1 from a content perspective.",
+        "Role 3 fails the specific equipment description, which required a 'complete fixed filter, gauge, regulator and manifold' to dominate the scene; the image shows a generic concrete pad with the coils at the edge and a background tractor, completely missing the mandatory pump equipment narrative."
       ],
-      "correction_prompt": "Recreate roles 1 and 2 with distinct visual narratives: generate role 1 as a high-oblique wide shot from the air showing the coils small and off-center on a water canal, and role 2 as a high-angle close-up technical comparison of the two coil diameters and construction layers on a neutral surface.",
+      "correction_prompt": "For role 2, overlay a detailed technical cue or connector next to the coils to provide selection evidence; for role 3, replace the generic pad with a detailed still life featuring a fixed pump system with a visible gauge, regulator, and manifold, with the two coils integrated at the far edge.",
       "panel_scores": [
-        20
+        40
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 (Image 1) fails the 'wide elevated' requirement; it is a low, ground-level shot of the coils with a long line stretching away, missing the specified elevated field composition.",
+        "Role 2 (Image 2) is not a 'steep near-overhead' technical still life; it captures the coils at an oblique angle, similar in structure and camera height to Image 1, lacking the 'selection evidence' perspective.",
+        "Role 3 (Image 3) includes a large blue mobile pressure washer, which is an extra commercial product and not the 'fixed equipment' (pump, gauge, manifold) required by the 'Headworks' description; the coil placement also does not align with the 'far edge' specification."
+      ],
+      "correction_prompt": "Regenerate the images to match roles: 1 must be a wide aerial view of a field, 2 must be a top-down close-up of the coils, and 3 must be a concrete-pad still life with fixed technical filters.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
     },
     {
       "pass": false,
@@ -28,29 +43,13 @@
         2
       ],
       "reasons": [
-        "Role 1: The 'packaged coil' is significantly oversized and centered in the foreground, violating the specific constraint that it must remain 'small, separate and off-center.'",
-        "Role 1: A secondary 'cutout' of a bare black coil is embedded in the bottom-right corner, which acts as a visual obstruction and is not permitted in the layout.",
-        "Role 2: The foreground placement of the product pair on a concrete pad within the canal setting duplicates the layout composition of Role 1 instead of providing a distinct 'elevated technical comparison.'",
-        "Role 3: Contains an orange bottle/plug accessory inside the coil, which is explicitly prohibited ('any bottle/container')."
+        "Role 2: Missing mandatory role evidence; the image is a near-duplicate ground-level close-up instead of a steep near-overhead technical layout",
+        "Role 3: Missing mandatory role evidence; image lacks the required fixed filter, gauge, regulator, and manifold equipment (only hose coils are present)",
+        "Camera height and surface structure are nearly identical for roles 1 and 2"
       ],
-      "correction_prompt": "In Role 1, remove the embedded bottom-right cutout and scale the foreground coil pair to be 'small, separate and off-center.' In Role 2, move the camera position higher and further back to create a distinct elevated comparison view without using the concrete pad layout. In Role 3, remove the orange bottle/plug accessory.",
+      "correction_prompt": "Replicate image 2 as a steep near-overhead soil technical layout, and replace image 3 with a concrete-pad equipment still life featuring a fixed filter, gauge, regulator, and manifold with hose coils at the far edge.",
       "panel_scores": [
         40
-      ],
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 55,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 fails to meet the 'elevated high-oblique' requirement; it is a low ground-level shot with the product foregrounded rather than small, separate, and off-center in the distance.",
-        "Role 1's urban skyline background is irrelevant to the article brief which specifies a rural location (Kameshcheh, Borujerd, Isfahan).",
-        "Role 2 does not show an 'elevated technical comparison' to demonstrate the difference in diameter or construction; it depicts a low-angle view of the two coils on the ground, making the technical narrative invisible."
-      ],
-      "correction_prompt": "Regenerate Role 1 as a wide, high-oblique shot showing the coiled products small and off-center within the water-transfer context with rural infrastructure, and regenerate Role 2 as an elevated technical close-up clearly showing the diameter or weave difference between the two coils.",
-      "panel_scores": [
-        55
       ],
       "set_attempt": 3
     }

@@ -1,0 +1,54 @@
+{
+  "source_id": "11000022002571-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 34,
+      "product_height_percent": 45,
+      "product_x_center_percent": 71,
+      "reasons": [
+        "A second commercial package (a large brown carton) with the brand name 'AFP' is visible in the background, which is a hard reject.",
+        "The required bottom-right watermark is missing.",
+        "The product bounding box width of 34 percent is on the high end of the accepted 38 percent envelope, but combined with the second commercial package it fails."
+      ],
+      "correction_prompt": "Remove the large brown carton in the background. Add the exact text 'AFP | 09134922013' as a watermark in the bottom-right corner. Ensure the main carton roll remains the only commercial product packaging shown, while maintaining the concrete pad and irrigation infrastructure.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 27,
+      "product_height_percent": 45,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "The image contains a second commercial package (the 'AFP' corrugated box) next to the product, which is a hard reject per instructions.",
+        "Required watermark text is incorrect: the image displays '09134922013' but the instructions mandate '09134922013'. Wait, the instruction is 'AFP | 09134922013', checking prompt... The prompt says '09134922013'. The prompt asks for 'AFP | 09134922013'. Let me re-read: 'The exact bottom-right watermark \"AFP | 09134922013\" is REQUIRED'. Okay, that matches. Why did I flag it? Ah, I see my previous reasoning thought it didn't match, but the string in the prompt is 09134922013. Let me check the prompt carefully: `\"AFP | 09134922013\"`. The prompt actually says `09134922013`. Okay, my previous thought was wrong. The watermark is correct.",
+        "The inclusion of the box is the primary hard reject."
+      ],
+      "correction_prompt": "Regenerate the image to remove the 'AFP' corrugated cardboard box on the right. Ensure the scene contains only the single white cylindrical drip tape roll and the irrigation equipment on the pad, while keeping the bottom-right watermark 'AFP | 09134922013' visible and the physical proportions consistent.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 27,
+      "product_height_percent": 42,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll which physically matches the mandatory role and width/height envelopes.",
+        "Zero human elements (persons, faces, hands, or silhouettes) are present.",
+        "The background features a clean concrete pad with the required headworks equipment still life, including a pressure gauge, filter, and manifold, which integrates naturally with the product.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly visible.",
+        "No hard rejects (no bottles, multiple rolls, or cutout artifacts) were detected.",
+        "The product maintains a realistic contact shadow and perspective, fitting the lower-right editorial preference."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
