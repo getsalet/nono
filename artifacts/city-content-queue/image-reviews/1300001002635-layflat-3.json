@@ -1,47 +1,39 @@
 {
   "source_id": "1300001002635-layflat",
-  "family": "layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 40,
-      "product_width_percent": 35,
-      "product_height_percent": 40,
-      "product_x_center_percent": 50,
+      "score": 45,
+      "product_width_percent": 62,
+      "product_height_percent": 28,
+      "product_x_center_percent": 44,
       "reasons": [
-        "The approved two-coil pair is not placed in the lower-right area as a secondary element.",
-        "The product pair is the primary subject and is centered, conflicting with the 'HEADWORKS DETAIL' role which requires the coils to be small and secondary while a fixed pump/manifold is elevated.",
-        "The 'empty concrete pad' constraint is violated by the large, prominent product pair in the foreground."
+        "Missing mandatory role elements: no fixed pump, gauge, or manifold is visible in the image. The HEADWORKS DETAIL role requires elevated equipment still life on a concrete pad WITH these components.",
+        "Wrong composition layout: the two-coil pair sits in the immediate foreground rather than at the far edge of an elevated platform as the role blueprint demands.",
+        "Role mismatch: image depicts a ground-level farmyard scene with a tractor and buildings rather than an elevated headworks detail configuration."
       ],
-      "correction_prompt": "Move the two coils (packaged and bare) to the bottom-right corner as small secondary objects. In the center-left, show an elevated fixed pump, gauge, and manifold on an empty concrete pad. Maintain the wide-angle perspective.",
+      "correction_prompt": "Regenerate as HEADWORKS DETAIL: show an elevated concrete pad/platform with a fixed pump, pressure gauge, and manifold plumbing assembly integrated into the scene; place the two-coil pair (one packaged AFP coil, one bare black woven coil) at the far edge of that platform. Include the exact bottom-right watermark AFP | 09134922013. Zero people. Distant farm equipment and buildings are acceptable in the background.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 20,
-      "product_width_percent": 45,
-      "product_height_percent": 40,
-      "product_x_center_percent": 62,
-      "reasons": [
-        "The image fails to include the mandatory 'packaged AFP coil' required for the layflat pair; instead, it displays two bare black coils.",
-        "A 'third coil' is present in the bottom-right of the image, which is a hard reject condition.",
-        "The composition deviates from the 'HEADWORKS DETAIL' brief which requires the pump to be the primary subject with the coil pair as small, secondary elements."
-      ],
-      "correction_prompt": "Replace the two bare coils with one packaged AFP coil and one bare black woven coil; remove the third coil in the bottom-right corner; ensure the two-coil pair is small, separate, and secondary to the fixed pump, gauge, and manifold.",
-      "attempt": 2
-    },
-    {
       "pass": true,
-      "score": 95,
-      "product_width_percent": 48,
-      "product_height_percent": 38,
-      "product_x_center_percent": 55,
-      "reasons": [],
+      "score": 92,
+      "product_width_percent": 41,
+      "product_height_percent": 35,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Two-coil pair (one packaged AFP coil, one bare black woven coil) clearly visible and separate on concrete pad",
+        "Headworks detail with elevated equipment still life — green pump with gauge and manifold at background edge",
+        "Combined width ~41% of frame, well within 25-82% envelope",
+        "Zero people or human body parts present",
+        "Mandatory watermark 'AFP | 09134922013' present in bottom-right corner",
+        "Physical integration credible: contact shadows, consistent perspective, no cutout/sticker appearance"
+      ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 2
     }
   ]
 }
