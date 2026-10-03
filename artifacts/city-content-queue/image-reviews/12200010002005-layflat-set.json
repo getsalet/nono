@@ -1,20 +1,39 @@
 {
   "source_id": "12200010002005-layflat",
-  "policy": "strict-restoration-posts-567-632-20260929",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
-      "pass": true,
-      "score": 85,
-      "duplicate_roles": [],
-      "reasons": [
-        "All three panels fulfill distinct editorial roles with visibly different camera heights/angles and environment structures. Panel 1 (Editorial Hero) provides a wide high-oblique water-transfer context with irrigation channels and a distant tractor (allowed context). Panel 2 (Selection Evidence) offers an elevated technical comparison showing diameter/construction difference through the two-coil pair on bare field soil. Panel 3 (Headworks Detail) presents an equipment-only elevated record on empty concrete pad. The same AFP product watermark appears in all images as required—not duplication. Backgrounds are relevant to the article brief. No persons, bottles, containers, or oversized products present.",
-        "Panel 3 missing fixed pump and gauge elements per headworks detail role specification. Two-coil pair should be smaller and secondary rather than central in frame."
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Redo Panel 3: Add a fixed pump and pressure gauge to the concrete pad scene. Keep the two-coil pair (packaged and bare black woven) small and off-center in background. Maintain equipment-only elevated record composition on empty concrete pad. Include the exact AFP watermark in bottom-right corner.",
+      "reasons": [
+        "Roles 1 and 2 are near-duplicates: both employ low-angle ground-level perspectives on soil, violating the required 'elevated' wide view for Role 1 and the 'steep near-overhead' technical still life for Role 2.",
+        "Role 3 fails narrative requirements: the image is dominated by the coils in the foreground rather than the equipment, and the coils are placed at the near edge instead of the far edge; the equipment (tractor-mounted filter/gauge) is background clutter, not the dominant fixed headworks subject."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a true elevated/aerial drone shot looking down on the field; Role 2 as a strict 90-degree overhead macro shot of the coils on soil with a clear connector/diameter cue; Role 3 as an elevated still life where the pump/gauge/manifold assembly dominates the frame on the concrete pad, with the coils tucked at the far background edge.",
       "panel_scores": [
-        85
+        35
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1: Wide elevated field view with both integrated packaged coil and bare woven coil sharing one soil plane in the foreground — matches EDITORIAL HERO.",
+        "Role 2: Steeper near-overhead angle on textured soil showing the two-coil pair with a wooden tool/diameter cue — matches SELECTION EVIDENCE with distinct camera height from Role 1.",
+        "Role 3: Elevated still life on a clean concrete pad with a fixed green filter/gauge/regulator/manifold assembly and tractor behind; the two-coil pair sits forward on the pad — matches HEADWORKS DETAIL with clearly distinct environment from Roles 1 and 2.",
+        "No duplicate camera/environment structure across the three roles. All mandatory role evidence is present. Approved AFP product identity is visible. No living subjects or extra commercial products. Physically plausible integration throughout."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        88
+      ],
+      "set_attempt": 2
     }
   ]
 }

@@ -1,51 +1,80 @@
 {
   "source_id": "12200010002005-layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "approved": true,
   "history": [
     {
       "pass": false,
       "score": 45,
-      "product_width_percent": 42,
-      "product_height_percent": 28,
-      "product_x_center_percent": 38,
+      "product_width_percent": 43,
+      "product_height_percent": 37,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Missing mandatory HEADWORKS DETAIL role: no fixed pump, gauge, or manifold present on the concrete pad",
-        "Scene shows tilled field with distant tractors and buildings instead of equipment-only elevated record",
-        "No farm activity shown, which violates the 'equipment-only' requirement for this specific role"
+        "Missing mandatory HEADWORKS DETAIL infrastructure: no fixed pump, gauge, manifold, or elevated equipment still life is visible. The two-coil pair sits in the foreground rather than at the far edge of a concrete pad. Background contains a tractor and crop field, which does not fulfill the role blueprint.",
+        "correction_prompt\":\"Remove tractor and field background. Reposition the two-coil pair at the far edge of an elevated clean concrete pad. Add a fixed pump, pressure gauge, and manifold as foreground/midground infrastructure to complete the HEADWORKS DETAIL role. Ensure coils remain recognizable, separate, and fully visible.\"}"
       ],
-      "correction_prompt": "Regenerate with fixed pump, gauge, and manifold as primary equipment on concrete pad; keep packaged AFP coil and bare black woven coil small and secondary in composition; remove tractors and farm activity from scene",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 38,
-      "product_height_percent": 22,
-      "product_x_center_percent": 38,
+      "score": 25,
+      "product_width_percent": 52,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Hard reject: Missing mandatory HEADWORKS DETAIL. The brief requires an elevated record photograph showing one fixed pump, gauge, and manifold on an empty concrete pad with the coils secondary. This image only contains the coils and lacks the required headworks equipment entirely."
+        "Hard reject: two people visible in the background — one standing near the green tractor and one near the distant yellow tractor. Per rules, any person, worker, or human silhouette is an automatic fail regardless of distance.",
+        "Additional issue: scene does not match the HEADWORKS DETAIL role blueprint — no fixed pump, gauge, manifold, or elevated equipment still life on a concrete pad is present; instead this is an open-field tractor setting."
       ],
-      "correction_prompt": "Regenerate image to show a fixed pump, gauge, and manifold setup on an empty concrete pad as the primary subject, with the two approved layflat coils placed small and secondary in the frame.",
+      "correction_prompt": "Remove all people from the image entirely. Regenerate as an elevated equipment still life (headworks detail) on a clean concrete pad featuring a fixed pump, gauge, manifold, and the two-coil pair at the far edge. Keep the required AFP | 09134922013 watermark.",
       "attempt": 2
     },
     {
-      "pass": true,
-      "score": 78,
-      "product_width_percent": 38,
-      "product_height_percent": 28,
-      "product_x_center_percent": 50,
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 55.2,
+      "product_height_percent": 21.5,
+      "product_x_center_percent": 48.3,
       "reasons": [
-        "Two layflat hose coils clearly visible: one packaged (blue/white cover) and one bare black woven coil on empty concrete pad",
-        "Zero people or human body parts present",
-        "Watermark 'AFP | 09134922013' present in bottom-right corner",
-        "Products are separate, fully visible, and physically plausible",
-        "Product width 38% within acceptable range (8-65%)",
-        "Lower-third composition with off-center placement"
+        "Tractor has severely distorted proportions — tiny wheels disproportionate to the body, appearing mechanically implausible.",
+        "Gauge size is oversized relative to the filter housing, breaking physical plausibility.",
+        "Hoses connecting to equipment appear unnaturally thick and inconsistent with real-world scale.",
+        "Perspective mismatch between tractor and foreground equipment creates a disjointed, unrealistic scene."
+      ],
+      "correction_prompt": "Correct tractor wheel-to-body proportion; reduce gauge size to realistic scale; make hoses proportionally thinner; ensure consistent perspective across all elements.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 46,
+      "product_height_percent": 32,
+      "product_x_center_percent": 34,
+      "reasons": [
+        "Role mismatch: brief requires HEADWORKS DETAIL — elevated clean concrete pad with fixed pump, gauge and manifold, two-coil pair at the far edge. Image instead shows coils prominently in foreground of open agricultural field with crops, tractor, and distant farm buildings. Infrastructure elements (pump, manifold) are absent or indistinct.",
+        "Coils occupy only ~46% width — within envelope — but composition prioritizes agricultural field scene over headworks still-life staging.",
+        "Watermark 'AFP | 09134922013' is correctly present. No people or body parts visible.",
+        "No cutout/halo artifacts; shadows appear physically plausible."
+      ],
+      "correction_prompt": "Recompose as elevated concrete-pad headworks detail: place the two-coil pair (one packaged AFP, one bare black woven) at the far edge of a clean concrete platform. Add a fixed pump, gauge, and manifold as integrated infrastructure elements in mid-ground. Remove visible crop rows and open-field context; keep distant unattended farm equipment if needed. Maintain zero people, zero extra commercial packages, and retain exact bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 52,
+      "product_height_percent": 38,
+      "product_x_center_percent": 38,
+      "reasons": [
+        "HEADWORKS DETAIL role correctly executed: elevated concrete pad, fixed green pump, pressure gauge, manifold/connector assembly, and the two-coil pair positioned at the far edge.",
+        "Approved layflat pair present: left is a packaged AFP coil with visible branding; right is a bare black woven coil. Both are recognizable, separate, and physically plausible with natural contact shadows.",
+        "Combined product envelope occupies approximately 52% of frame width, within the 25–82% acceptable range.",
+        "Zero people or human body parts visible. Distant unattended tractor and ordinary farm buildings are permitted infrastructure and are not treated as extra commercial products.",
+        "Required watermark 'AFP | 09134922013' present in the bottom-right corner.",
+        "No hard-reject conditions detected: no cutout/sticker appearance, no white halo, no missing contact shadow, no third commercial package, no impossible intersections or floating objects."
       ],
       "correction_prompt": "",
-      "attempt": 3
+      "attempt": 5
     }
   ]
 }
