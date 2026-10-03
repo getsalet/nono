@@ -1,18 +1,40 @@
 {
   "source_id": "11100022001444-layflat",
-  "family": "layflat",
   "kind": 2,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
-  "fast_mode": true,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 90,
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 72,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
       "reasons": [
-        "fast mode: trusted prompt for non-key image"
+        "Hard reject: visible human figures in background — legs and torso of at least one person kneeling/crouching, and another standing figure partially visible. This violates the zero-people requirement.",
+        "Hard reject: person/leg silhouettes present even at a distance."
+      ],
+      "correction_prompt": "Remove all human figures from the image, including the legs and crouching person in the background. Keep only the two-coil layflat pair on textured soil with the required watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 55,
+      "product_height_percent": 38,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Steep near-overhead technical still life on textured soil showing integrated two-coil pair (one packaged AFP coil, one bare black woven coil)",
+        "Combined width within 25-82% envelope",
+        "No people, body parts, or human silhouettes",
+        "No pasted/cutout appearance or white halos",
+        "Proper contact shadows and consistent perspective",
+        "Required AFP watermark present in bottom-right",
+        "No third commercial products or invented objects",
+        "Rolls appear physically plausible and separate"
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }

@@ -1,39 +1,66 @@
 {
   "source_id": "1160003001506-layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 42,
-      "product_width_percent": 38,
-      "product_height_percent": 20,
-      "product_x_center_percent": 42,
+      "score": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 38,
+      "product_x_center_percent": 44,
       "reasons": [
-        "Mandatory role is HEADWORKS DETAIL: equipment-only elevated record photograph of one fixed pump, gauge and manifold on an empty concrete pad with the two-coil pair small, separate and secondary. The image shows only the two coils on a concrete slab with a field and distant tractor/barn in the background — no pump, no gauge, no manifold is present at all.",
-        "No headworks infrastructure (fixed pump, gauge, manifold) appears in the image, which is the primary failing against the mandatory role specification.",
-        "The two-coil pair is prominently centered and occupies a large portion of the frame rather than being small and secondary as required."
+        "Hard reject: a person (worker/farmer figure) is visible standing near the tractor in the background, wearing brown clothing with legs and torso discernible. Rule explicitly states zero people and zero human body parts allowed, even distant silhouettes.",
+        "Hard reject: a tractor is present as unattended farm equipment in the background, which is generally allowed, but combined with the human figure violates the no-person rule.",
+        "Two-coil pair (packaged AFP coil + bare black woven coil) is present and identifiable. Watermark is correct."
       ],
-      "correction_prompt": "Regenerate as an elevated close-up equipment photograph: one fixed pump, one pressure gauge, and a manifold mounted on an empty concrete pad. Place the approved two-coil pair (one packaged AFP coil, one bare black woven coil) small and secondary in the foreground or edge of frame. Include the watermark AFP | 09134922013 in bottom-right. Zero people.",
+      "correction_prompt": "Remove the person/worker figure near the tractor in the background entirely. Regenerate with only infrastructure elements (pump, gauge, manifold, tractor) and no human presence anywhere in the frame.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 75,
-      "product_width_percent": 42,
-      "product_height_percent": 28,
-      "product_x_center_percent": 62,
+      "pass": false,
+      "score": 38,
+      "product_width_percent": 52,
+      "product_height_percent": 30,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Two-coil pair present: one packaged AFP coil and one bare black woven coil, both recognizable and fully visible",
-        "Fixed pump with gauge present on concrete pad; no manifold clearly visible but pump-and-gauge element satisfied",
-        "Zero people, zero body parts; no third commercial product; distant background is plain concrete",
-        "Watermark 'AFP | 09134922013' present in bottom-right corner",
-        "Combined product width approximately 42% of frame — within acceptable 8-65% noisy-reviewer range",
-        "Coils are prominent and not strictly secondary to the headworks equipment, slightly reducing headworks-detail hierarchy"
+        "Missing mandatory role elements: no fixed pump, gauge, or manifold is visible on the concrete pad. The HEADWORKS DETAIL role requires these as infrastructure components alongside the two-coil pair.",
+        "No elevated equipment still life composition is present — the image shows only two coils on flat ground with a prominent tractor in the background instead of the required integrated pump/gauge/manifold setup."
+      ],
+      "correction_prompt": "Regenerate as HEADWORKS DETAIL: show the AFP packaged coil and bare black woven coil pair positioned at the far edge of an elevated clean concrete pad, with a fixed pump, pressure gauge, and manifold visibly integrated into the scene as permanent infrastructure. Keep the coils at ~50% combined width, centered horizontally, zero people, and retain the bottom-right watermark AFP | 09134922013.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 58,
+      "product_height_percent": 28,
+      "product_x_center_percent": 47,
+      "reasons": [
+        "Hard reject: human figure present — legs and lower body of a person visible in background next to green tractor/equipment. Hard reject: missing required role infrastructure — no fixed pump, gauge, or manifold visible; scene does not depict HEADWORKS DETAIL elevated equipment still life. Watermark reads 'AFP | 09134922013' which does not match the required 'AFP | 09134922013'.",
+        "correction_prompt: "
+      ],
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 44,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil, both fully visible, separate, and physically plausible.",
+        "Combined product envelope is approximately 44% of frame width, within the 25-82% acceptable range.",
+        "HEADWORKS DETAIL role satisfied: elevated concrete pad with a fixed pump/gauge assembly visible in the background, two-coil pair at the near edge.",
+        "Zero people, zero human body parts present throughout the image.",
+        "Mandatory bottom-right watermark 'AFP | 09134922013' is present and legible.",
+        "Distant unattended tractor, farm buildings, and crop rows are relevant infrastructure, not third commercial products.",
+        "No white halos, cutout/sticker appearance, mismatched perspective, or missing contact shadows detected.",
+        "Product dimensions and placement appear natural and plausible."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 4
     }
   ]
 }
