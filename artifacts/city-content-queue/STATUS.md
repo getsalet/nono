@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-03T07:08:10+00:00`
+- آخرین بروزرسانی: `2026-10-03T07:47:33+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **845 از 1894 (44.61٪)**
 - تکمیل‌شده: **845**
@@ -55,16 +55,16 @@
 
 ## خطاهای اخیر
 
+- **قهجاورستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **زیار** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **قهجاورستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **زیار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **زواره** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بهارستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **مهاباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **نهبندان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **شوسف** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **فردیس** — `layflat`: `Editorial review failed: blocked utility link`
-- **اشتهارد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **تنکمان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کوهسار** — `layflat`: `image hard gate rejected role 3 after 5 attempt`
-- **روشناوند** — `layflat`: `Editorial review failed: blocked utility link`
 
 ## فایل‌های خروجی
 
