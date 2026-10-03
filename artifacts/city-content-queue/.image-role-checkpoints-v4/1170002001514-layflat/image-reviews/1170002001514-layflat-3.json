@@ -1,0 +1,64 @@
+{
+  "source_id": "1170002001514-layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "approved": true,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 52,
+      "product_height_percent": 28,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Hard reject: a person is visible in the image — legs wearing blue jeans standing near the yellow tractor in the background. The QA rules explicitly state 'Hard reject any person, farmer, worker, face, hand, arm, leg, body part or human silhouette, even distant.' The presence of a person at all, regardless of distance or framing, mandates rejection."
+      ],
+      "correction_prompt": "Remove the person from the image. Show only the two-coil pair (one packaged AFP coil and one bare black woven coil) on a clean concrete pad with fixed pump, gauge and manifold infrastructure. Ensure zero human figures or body parts appear anywhere in the frame.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 32,
+      "product_width_percent": 68,
+      "product_height_percent": 31,
+      "product_x_center_percent": 44,
+      "reasons": [
+        "Hard reject: multiple people visible in background (three workers in red shirts, one near tractor) — violates zero-people requirement."
+      ],
+      "correction_prompt": "Remove all people from the scene. Regenerate with only the two-coil layflat pair on a clean concrete pad, with fixed pump/gauge/manifold infrastructure; no humans anywhere in frame.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 54,
+      "product_height_percent": 36,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Missing mandatory role elements: the image lacks a fixed pump, gauge, and manifold required for the 'HEADWORKS DETAIL' role.",
+        "The two-coil pair is placed in the immediate foreground, not 'at the far edge' of the concrete pad as specified in the role blueprint.",
+        "The scene depicts a field with a prominent tractor in the background, rather than a headworks equipment setup."
+      ],
+      "correction_prompt": "Regenerate as a HEADWORKS DETAIL: Show a clean concrete pad with a fixed pump, pressure gauge, and manifold assembly clearly visible. Place the two-coil pair (one packaged AFP coil, one bare black woven coil) at the far edge of the pad. Keep the distant unattended tractor in the background but ensure the headworks equipment is the primary focus.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 45,
+      "product_height_percent": 27,
+      "product_x_center_percent": 40,
+      "reasons": [
+        "Role confirmed: HEADWORKS DETAIL — two-coil pair sits on clean concrete pad with fixed pump, pressure gauge, and manifold visible in background.",
+        "Approved layflat pair present: one packaged AFP coil (left) and one bare black woven coil (right), both recognizable, separate, and physically plausible.",
+        "Combined width ~45% of frame, within the 25–82% envelope.",
+        "Zero people and zero human body parts detected.",
+        "Mandatory bottom-right watermark 'AFP | 09134922013' present and legible.",
+        "Background unattended agricultural equipment classified as infrastructure, not a third commercial product.",
+        "Contact shadows, perspective, and lighting are consistent and plausible."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

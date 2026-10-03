@@ -1,38 +1,37 @@
 {
   "source_id": "1120007001459-layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 52,
-      "product_width_percent": 28,
-      "product_height_percent": 16,
-      "product_x_center_percent": 44,
+      "score": 28,
+      "product_width_percent": 57,
+      "product_height_percent": 18,
+      "product_x_center_percent": 42,
       "reasons": [
-        "Missing mandatory HEADWORKS DETAIL: no fixed pump, gauge, or manifold visible on the concrete pad — the scene contains only the two-coil product pair.",
-        "Background contains distant unattended tractor and bare field, which are allowed, but the required equipment-only infrastructure is absent.",
-        "Packaged AFP coil and bare black woven coil are both present, separate, fully visible, and physically plausible.",
-        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
-        "No people or human body parts detected."
+        "HARD REJECT: A person (driver) is clearly visible inside the tractor cab in the background, violating the zero-people/human body parts rule.",
+        "Role mismatch: Requested 'HEADWORKS DETAIL' (elevated equipment still life on clean concrete pad with fixed pump, gauge and manifold, two-coil pair at far edge). The image instead shows two coils on the ground in an open field with a tractor and farm building — no pump, gauge, manifold, or elevated setup is present."
       ],
-      "correction_prompt": "Regenerate image as elevated record photograph: add a fixed pump, pressure gauge, and manifold assembly installed on the empty concrete pad in the foreground/midground; keep the approved two-coil pair (packaged AFP coil + bare black woven coil) small, separate, and secondary in the frame; maintain zero people and the required watermark.",
+      "correction_prompt": "Regenerate as a HEADWORKS DETAIL: two-coil still life (one packaged AFP coil and one bare black woven coil) on a clean elevated concrete pad with a fixed pump, gauge and manifold integrated nearby. Zero people, zero visible humans anywhere including vehicle cabs. Place the approved pair near the far edge of the pad. Include the exact bottom-right watermark AFP | 09134922013. Keep combined coil width between 25-82% of frame.",
       "attempt": 1
     },
     {
       "pass": true,
       "score": 88,
-      "product_width_percent": 25,
-      "product_height_percent": 20,
-      "product_x_center_percent": 35,
+      "product_width_percent": 58,
+      "product_height_percent": 22,
+      "product_x_center_percent": 44,
       "reasons": [
-        "Two-coil pair present: one packaged AFP coil with white/blue wrapper and one bare black woven coil, both fully visible and separate.",
-        "Combined product width approximately 25% of frame, within acceptable 8-65% range.",
-        "Fixed pump with gauge and manifold present on empty concrete pad as required for HEADWORKS DETAIL role.",
-        "Distant unattended barn/building in background is infrastructure, not a third commercial product.",
-        "Required watermark 'AFP | 09134922013' present in bottom-right corner.",
-        "No people, body parts, or human silhouettes detected."
+        "Approved layflat pair present: one packaged AFP coil (left) and one bare black woven coil (right), both fully visible and separate.",
+        "Combined-width envelope ~58%, within the 25–82% hard limit.",
+        "Zero people, zero body parts, zero silhouettes detected anywhere in frame.",
+        "HEADWORKS DETAIL role satisfied: concrete pad with fixed pump, gauge, and filter-manifold assembly in background; two-coil pair at foreground edge.",
+        "Distant unattended tractor/mower and farm infrastructure present but correctly classified as allowed background elements, not third commercial products.",
+        "Watermark 'AFP | 09134922013' present in bottom-right corner.",
+        "Contact shadows and perspective are physically consistent; no cutout/sticker appearance, no white halo, no impossible intersections.",
+        "Only two coils visible — no extra commercial package or bottle/jar/canister/bucket."
       ],
       "correction_prompt": "",
       "attempt": 2

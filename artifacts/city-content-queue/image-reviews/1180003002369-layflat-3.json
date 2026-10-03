@@ -1,42 +1,52 @@
 {
   "source_id": "1180003002369-layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "product_width_percent": 58,
-      "product_height_percent": 38,
-      "product_x_center_percent": 50,
+      "score": 0,
       "reasons": [
-        "Does not match HEADWORKS DETAIL role: missing fixed pump, gauge, and manifold on empty concrete pad; coils are dominant instead of small/secondary",
-        "Shows active farm tractors in background, violating 'no farm activity' requirement",
-        "Two coils occupy 58% width - exceeds preferred 12-20% combined range",
-        "No equipment infrastructure visible; scene is product-focused agricultural setting"
+        "visual reviewer unavailable: TimeoutError"
       ],
-      "correction_prompt": "Regenerate as equipment-only elevated photograph on empty concrete pad showing one fixed pump, gauge, and manifold as primary subject; place small separate packaged AFP coil and bare black woven coil in foreground as secondary elements; remove all tractors and farm activity from background; maintain AFP watermark",
+      "correction_prompt": "Regenerate and retry strict visual review.",
       "attempt": 1
     },
     {
-      "pass": true,
-      "score": 88,
-      "product_width_percent": 18,
-      "product_height_percent": 12,
-      "product_x_center_percent": 58,
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 47,
+      "product_height_percent": 17,
+      "product_x_center_percent": 47,
       "reasons": [
-        "Image shows approved layflat pair: one packaged AFP coil and one bare black woven coil on concrete pad",
-        "Combined width approximately 18%, within acceptable 12-20% range",
-        "Fixed pump, gauge, and manifold present as required headworks detail",
-        "Required watermark 'AFP | 09134922013' present in bottom-right corner",
-        "No people, body parts, or third commercial products visible",
-        "Equipment-only elevated record photograph with empty concrete pad background",
-        "Coils are separate, recognizable, and physically plausible",
-        "Lower-third placement appropriate for editorial role"
+        "Missing mandatory HEADWORKS DETAIL role: no fixed pump, gauge, or manifold visible; scene shows open field with distant tractor and water tank instead of elevated equipment still life on a concrete pad.",
+        "No elevated concrete pad with integrated headworks infrastructure as specified.",
+        "Background contains agricultural field and unattended tractor rather than the required headworks composition.",
+        "One packaged AFP coil and one bare black woven coil are correctly presented with proper contact shadows and no artifacts.",
+        "No people, no white halos, no sticker/cutout appearance, no impossible intersections, watermark present."
+      ],
+      "correction_prompt": "Recompose as HEADWORKS DETAIL: place the two-coil pair (one packaged AFP coil, one bare black woven coil) on an elevated clean concrete pad in the foreground with a fixed pump, pressure gauge, and manifold assembled nearby as integrated infrastructure. Keep the coils at the far edge of the pad. Remove the open-field tractor and water tank background; use a neutral or minimal site backdrop. Maintain zero people, natural contact shadows, and the required bottom-right watermark AFP | 09134922013.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 72,
+      "product_width_percent": 53,
+      "product_height_percent": 38,
+      "product_x_center_percent": 42,
+      "reasons": [
+        "Two-coil pair present: one packaged AFP coil and one bare black woven coil, both recognizable and fully visible.",
+        "Combined-width envelope is approximately 53% of frame, within the 25–82% allowed range.",
+        "No people, human body parts, or silhouettes visible anywhere in the image.",
+        "Distant unattended tractor and farm buildings are present as allowed infrastructure, not treated as third commercial products.",
+        "Mandatory watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Shadows and perspective are physically plausible with consistent lighting.",
+        "No white halo, cutout/sticker appearance, floating objects, or impossible intersections detected.",
+        "Scene is an outdoor field setting rather than a detailed headworks installation with fixed pump, gauge, and manifold on a clean concrete pad — a minor role mismatch noted."
       ],
       "correction_prompt": "",
-      "attempt": 2
+      "attempt": 3
     }
   ]
 }
