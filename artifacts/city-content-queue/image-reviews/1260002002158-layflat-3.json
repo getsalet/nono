@@ -1,0 +1,55 @@
+{
+  "source_id": "1260002002158-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 100,
+      "product_height_percent": 43,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The combined-width of the two coils and their packaging exceeds the 82 percent maximum width hard-reject threshold.",
+        "The packaged coil on the left is not a cylindrical coil but has a severely distorted, faceted/diamond packaging shape that violates the 'severely distorted dimensions' criterion.",
+        "The two objects are touching/merged rather than remaining physically separate.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 100% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Adjust the framing to reduce the combined width of the two coils to approximately 65 percent of the frame. The left object must be a cylindrical coil wrapped in packaging, not a faceted/diamond-shaped box. Reduce the product group from 100% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 80,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Hard reject: Human presence detected",
+        "A person (operator) is clearly visible in the background, standing next to the blue machinery on the right side of the image."
+      ],
+      "correction_prompt": "Regenerate the image strictly without any people, humans, or human body parts in the frame. Keep the tractors and infrastructure, but ensure the background is completely empty of workers.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 78,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Both required products are clearly visible: one packaged coil (left) and one bare black woven coil (right).",
+        "The combined width of the two coils is approximately 78% of the image, which falls within the approved 25-82% envelope.",
+        "The role blueprint (elevated equipment still life with fixed pump and manifold) is correctly represented by the tractor-mounted pump unit in the background.",
+        "The exact required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "No people, farmers, workers, or body parts are visible in the frame.",
+        "The objects are physically plausible, separate, and have consistent perspective and contact shadows.",
+        "The packaged coil displays a recognizable 'AFP' label, consistent with the brand."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

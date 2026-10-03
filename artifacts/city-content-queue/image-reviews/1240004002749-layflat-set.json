@@ -1,24 +1,61 @@
 {
   "source_id": "1240004002749-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 20,
+      "score": 45,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Image 1 and Image 2 feature the exact same camera angle, framing, and layout (eye-level product shot against a field background), violating the requirement for visibly distinct camera heights/angles between roles 1 and 2.",
-        "Image 1 (Role 1: EDITORIAL HERO) fails to provide a 'wide high-oblique' view; instead, it is a static product shot, which is a repeated layout relative to Role 2.",
-        "Image 3 (Role 3: HEADWORKS DETAIL) fails to display the required fixed pump, gauge, and manifold equipment; it only shows the product coils on a concrete pad."
+        "Role 2 fails to meet the requirement for a 'steep near-overhead technical still life'; the camera angle is low and the 'selection evidence' (connector or diameter cue) is missing, making it near-duplicate in structure to Role 1.",
+        "Role 3 is missing mandatory equipment; the image shows only a concrete pad and the product coil but lacks the required fixed pump, gauge, and manifold."
       ],
-      "correction_prompt": "Replace images 1 and 2 with a high-oblique aerial wide shot for Role 1, and an elevated technical close-up for Role 2; replace image 3 with a record shot of the fixed pump, gauge, and manifold equipment on the concrete pad.",
+      "correction_prompt": "Set Role 2 to a steep near-overhead angle on textured soil to show the selection cue clearly; replace Role 3 with a still life on a concrete pad that includes a complete fixed pump, gauge, regulator, and manifold to fulfill the 'HEADWORKS DETAIL' narrative.",
       "panel_scores": [
-        20
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 (Image 1) fails the 'wide elevated' requirement; the camera is at low eye-level ground perspective, not a high-angle field view.",
+        "Role 2 (Image 2) fails the 'steep near-overhead' requirement; the camera angle remains low/eye-level, duplicating the perspective of Role 1 rather than the required high-angle selection layout.",
+        "Role 2 (Image 2) lacks the required 'selection evidence' (connector or diameter cue), showing only the two coils on the soil.",
+        "Role 3 (Image 3) fails to show the required 'fixed pump, gauge and manifold'; the coils are placed on a generic surface with a background tractor, missing the specified equipment still life narrative."
+      ],
+      "correction_prompt": "Regenerate the panel with strict camera separation: Image 1 must be a high-angle wide shot of the field; Image 2 must be a steep top-down technical view with a connector visible; Image 3 must be a still-life of the coils on a concrete pad alongside a fixed filter, pump, gauge and manifold assembly.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 is not a wide elevated field view; it is a ground-level close-up showing soil texture and foreground subjects.",
+        "Role 2 is not a steep near-overhead shot; it is a low-angle close-up that lacks the required overhead technical perspective.",
+        "Role 3 fails the concrete pad requirement; it depicts a dirt field scene with a tractor instead of a clean pad with a fixed pump, gauge, and manifold."
+      ],
+      "correction_prompt": "Regenerate role 1 as a wide, elevated aerial field shot, role 2 as a steep near-overhead technical soil close-up, and role 3 as a concrete-pad still life featuring a fixed pump, gauge, and manifold with the coil pair at the far edge.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
     }
   ]
 }

@@ -1,0 +1,52 @@
+{
+  "source_id": "1240008002576-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 82,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Presence of a human worker and a person operating the tractor in the background violates the hard reject constraint requiring zero people and zero human body parts."
+      ],
+      "correction_prompt": "Regenerate the image strictly without any human figures or workers. The background must be unattended. Retain the still-life pair of AFP coils on the concrete pad and the specified bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 85,
+      "product_height_percent": 50,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: Two persons (workers with hats and faces) are clearly visible in the background.",
+        "Hard reject: The pair of coils appears to exceed the 82 percent width limit, taking up nearly the entire lower frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Remove all people from the scene; tighten the crop or reduce the object size so the two coils together are less than 82 percent of the frame width; keep the concrete pad, fixed pump, gauge, and manifold infrastructure visible, and retain the 'AFP | 09134922013' watermark in the bottom-right corner. Reduce the product group from 85% to 25-82% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 79,
+      "product_height_percent": 45,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Correct product pair (one AFP packaged coil, one bare black woven coil) with separate, physically plausible positioning",
+        "Approved combined-width envelope of 25–82% is respected",
+        "Required watermark 'AFP | 09134922013' present in bottom-right",
+        "No people or human body parts visible",
+        "Headworks detail role supported by clean concrete pad and visible fixed pump, manifold, and unattended farm equipment",
+        "No pasted/cutout appearance, white halo, or third commercial product"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

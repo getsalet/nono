@@ -1,40 +1,7 @@
 {
   "source_id": "1240004002301-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
-    {
-      "pass": false,
-      "score": 20,
-      "duplicate_roles": [
-        1,
-        2
-      ],
-      "reasons": [
-        "Roles 1 and 2 are duplicated: both feature the same low-angle foreground shot of the product pair against a generic farm background with distant machinery, failing to create distinct visual narratives or camera angles.",
-        "Role 3 fails the specific content requirement: while the empty concrete pad is present, the required equipment (fixed pump, gauge, and manifold) is missing, resulting in a duplicate layout with roles 1 and 2 instead of a distinct 'Headworks Detail' shot.",
-        "Roles 1 and 2 show oversized product elements in the foreground, conflicting with the 'small, separate' requirements for the hero shot."
-      ],
-      "correction_prompt": "Regenerate Role 1 as a high-oblique wide shot with the product small and off-center; Regenerate Role 2 as a distinct technical close-up comparison; Regenerate Role 3 to include the fixed pump, gauge, and manifold on the concrete pad.",
-      "panel_scores": [
-        20
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 30,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 fails the EDITORIAL HERO role: it is a ground-level shot (not wide high-oblique) and features a pump/gauge manifold on a concrete pad. This equipment-only setup is the specific requirement for Panel 3, causing a role 1/3 duplication error in the setup and camera angle.",
-        "Panel 1 includes a visible farm background with crop rows, which conflicts with the 'empty concrete pad' and 'no farm activity' constraint for the headworks detail role it is mistakenly fulfilling.",
-        "Panel 3 fails the HEADWORKS DETAIL role: it is missing the required fixed pump, gauge, and manifold. It is a generic close-up of coils on a flat surface, completely lacking the 'elevated record photograph of equipment' narrative."
-      ],
-      "correction_prompt": "Reshoot Panel 1 as a wide, high-oblique shot of water-transfer context with the coils placed small and off-center in a field; reshoot Panel 3 to focus on a single fixed pump, gauge, and manifold on an empty concrete pad with the two coils secondary in the frame.",
-      "panel_scores": [
-        30
-      ],
-      "set_attempt": 2
-    },
     {
       "pass": false,
       "score": 45,
@@ -42,11 +9,50 @@
         2
       ],
       "reasons": [
-        "Role 2 contains a visible person (figure standing on the right side) and an extra commercial object (the pressure gauge/manifold assembly), both of which are explicitly forbidden for the SELECTION EVIDENCE role (no person or extra commercial objects)."
+        "Role 2 camera and composition are near-duplicates of Role 1, failing the distinct 'steep near-overhead technical still life' requirement for visible selection evidence.",
+        "Role 3 lacks the mandatory technical equipment (fixed pump, gauge, and manifold), containing only the coil pair on a concrete pad."
       ],
-      "correction_prompt": "Regenerate Role 2 by removing the standing person and the pressure gauge assembly to show only the two coils in an elevated, empty field context.",
+      "correction_prompt": "Replace Role 2 with a steep near-overhead technical still life of the coils on textured soil to show diameter cues and selection evidence, and replace Role 3 with an elevated concrete-pad still life adding a fixed pump, gauge, and manifold while keeping the two-coil pair at the far edge.",
       "panel_scores": [
         45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 fails mandatory 'HEADWORKS DETAIL' requirements: the required fixed pump, gauge, and manifold are completely missing from the concrete pad scene.",
+        "Role 2 is not a distinct 'SELECTION EVIDENCE' shot; it is a near-duplicate of Role 1, featuring the same composition of the two-coil pair on soil without the required 'steep near-overhead' technical perspective or diameter cues.",
+        "Visual redundancy exists across all three panels, failing to provide the distinct camera heights and surface variations (field vs. overhead soil vs. equipment) required for a 3-role production contract."
+      ],
+      "correction_prompt": "Replace the panel with: (1) a wide elevated field shot with the product pair in the foreground; (2) a steep near-overhead soil still life showing a close-up of the coil's thickness and connector; and (3) a concrete equipment still life on a pad featuring a complete headworks assembly with a fixed filter, pump, and pressure gauge.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Missing Role 1: The image is a close-up still life of products on the ground, not the required wide, elevated field view.",
+        "Missing Role 2: The image lacks the steep, near-overhead technical perspective on textured soil; it appears to be a flat horizontal view.",
+        "Missing Role 3: The concrete pad does not feature the required equipment narrative (fixed pump, gauge, and manifold) and the coils are in the foreground rather than the far edge."
+      ],
+      "correction_prompt": "Regenerate the panel with three distinct images: 1. A wide, elevated field view showing both coils on soil in the lower third. 2. A steep, near-overhead close-up of the coils on textured soil. 3. A concrete pad setup with a pump, gauge, and manifold in the background and the two coils at the far edge.",
+      "panel_scores": [
+        30
       ],
       "set_attempt": 3
     }

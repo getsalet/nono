@@ -1,22 +1,60 @@
 {
   "source_id": "12400010001196-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 55,
+      "score": 40,
       "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Missing mandatory role evidence: Neither image 1 nor image 2 features the 'connector' or 'diameter cue' specified as a required element for the 'Selection Evidence' role (Role 2).",
+        "Missing mandatory role evidence: Role 3 requires a complete 'headworks' assembly including a fixed pump, gauge, and manifold. While Image 3 is a concrete pad still life, the essential 'equipment' components are entirely absent.",
+        "Physical Implausibility: In Image 3, a heavy blue and red tractor is shown driving directly over the coiled irrigation tape on the ground. The coil remains perfectly intact with zero deformation, which is physically impossible."
+      ],
+      "correction_prompt": "Regenerate images to ensure: Role 1 features a wide elevated view with a connector or diameter cue; Role 2 is a steep near-overhead shot with a connector or diameter cue; Role 3 is a concrete pad still life featuring a visible pump, gauge, and manifold without the tractor driving over the coil.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 2 (Image 2) fails to meet the specific 'steep near-overhead technical still life' camera requirement; it uses a low horizon-level angle that is structurally identical to Role 1.",
+        "Role 2 lacks the mandatory 'selection evidence' such as a connector or specific diameter cue, instead introducing an unrequired terracotta pipe.",
+        "Role 3 (Image 3) is missing the required 'complete fixed filter, gauge, regulator and manifold' equipment narrative, instead featuring a tractor in the background which conflicts with the 'clean concrete pad' and 'ordinary Iranian farm context' (lack of city-specific or large machinery) constraints."
+      ],
+      "correction_prompt": "Re-shoot Role 2 as a steep top-down 85-90 degree view on textured soil focusing strictly on the two coils and a connector cue; Re-shoot Role 3 on a clean concrete pad showing a fixed pump, gauge, and manifold assembly with the coils at the far edge, removing background vehicles.",
+      "panel_scores": [
+        50
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        1,
         3
       ],
       "reasons": [
-        "Role 1 fails because it introduces a large 'farm activity' tractor which violates the equipment-only headworks requirement, and the product scale is oversized, violating the 'small and off-center' constraint for the hero panel.",
-        "Role 3 fails because it is a duplicate of the selection panel; it displays the product on a concrete pad without the required 'one fixed pump, gauge and manifold' equipment, making it visually indistinct from Role 2 and missing the technical narrative for the headworks detail."
+        "Role 1 fails: The image shows a static close-up 'product shot' composition with a foreground product and blurred equipment; it does not feature a 'wide elevated water-transfer field view' or the required 'integrated' layout.",
+        "Role 3 fails: Mandatory 'HEADWORKS' elements (fixed pump, gauge, and manifold) are completely missing, replaced by a tractor and loose coils.",
+        "Roles 1 and 3 are near-duplicates: Both use the same 'foreground product + background farm asset' camera structure, lacking the required narrative distinction."
       ],
-      "correction_prompt": "Replace Role 3 with an elevated record photograph of the fixed headworks (pump, gauge, manifold) on an empty concrete pad, ensuring the two-coil product pair remains small, secondary and off-center, and remove the oversized tractor from Role 1.",
+      "correction_prompt": "Regenerate Image 1 as a wide elevated landscape shot showing the soil plane; regenerate Image 3 as an equipment still life on a concrete pad featuring a fixed pump, gauge, and manifold.",
       "panel_scores": [
-        55
+        40
       ],
-      "set_attempt": 1
+      "set_attempt": 3
     }
   ]
 }
