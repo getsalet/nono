@@ -1,20 +1,55 @@
 {
   "source_id": "1230006002168-layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "approved": true,
   "history": [
     {
-      "pass": true,
-      "score": 73,
-      "product_width_percent": 42,
-      "product_height_percent": 17,
-      "product_x_center_percent": 51,
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 48,
+      "product_height_percent": 31,
+      "product_x_center_percent": 38,
       "reasons": [
-        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil, both recognizable, fully visible, separate and physically plausible. Combined width ~42%, within acceptable 8-65% range. Watermark 'AFP | 09134922013' correctly placed in bottom-right corner. Zero people or body parts. Distant farm building and plowed field are permissible background elements. Off-center composition is acceptable. Minor issue: the HEADWORKS DETAIL (fixed pump, gauge, manifold on elevated concrete pad) is not clearly present as specified in the role description; only the two coils appear on ground-level concrete. Overall image meets core product-pair and compositional criteria."
+        "Role mismatch: image shows open field with tractor-mounted irrigation dispenser in background, not HEADWORKS DETAIL (elevated concrete pad with fixed pump, gauge, and manifold).",
+        "Background tractor/dispenser unit with its own coil is prominent and close — exceeds acceptable 'distant unattended equipment' threshold and introduces an additional commercial/agricultural product.",
+        "Missing required fixed pump, gauge, and manifold infrastructure on a clean concrete pad.",
+        "Watermark AFP | 09134922013 present and correct.",
+        "No people or body parts detected.",
+        "Two-coil pair present (one packaged AFP, one bare black woven) within acceptable width envelope (~48%)."
       ],
-      "correction_prompt": "Elevate the scene to a headworks setting: show a fixed pump, gauge, and manifold on an empty raised concrete pad in the foreground/midground, with the approved two-coil pair placed small and secondary nearby. Keep zero people, retain the AFP | 09134922013 watermark, and preserve the dry soil/field background.",
+      "correction_prompt": "Regenerate as HEADWORKS DETAIL: place the approved two-coil pair (packaged AFP + bare black woven) at the far edge of a clean concrete pad or equipment platform. Include a fixed pump, pressure gauge, and manifold assembly as the primary foreground/midground subject on the pad. Remove the tractor and all field background. Ensure the two coils remain clearly visible, separate, and physically plausible with contact shadows. Keep the watermark AFP | 09134922013 in the bottom-right corner. Combined coil width should stay between 25-82% of frame.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 55,
+      "product_height_percent": 25,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: Person visible in the background tractor driver's seat.",
+        "Hard reject: Role mismatch. Image shows a farm field scene with a tractor, not a 'HEADWORKS DETAIL' with fixed pump, gauge, and manifold infrastructure."
+      ],
+      "correction_prompt": "Generate an image of a close-up still life showing a packaged AFP coil and a bare black woven coil on a clean concrete pad. In the background, include fixed irrigation infrastructure such as a stationary pump, pressure gauge, and manifold. Ensure no people, vehicles, or tractors are visible. The setting should look like a mechanical room or headworks area, not an open field.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 51.2,
+      "product_height_percent": 28.5,
+      "product_x_center_percent": 46.8,
+      "reasons": [
+        "Cleared all hard rejection criteria.",
+        "Showcases approved layflat pair with one packaged AFP coil and one bare black woven coil.",
+        "Includes fixed pump, gauge, and manifold for HEADWORKS DETAIL role.",
+        "Watermark is present in the correct location.",
+        "No people or human body parts are visible.",
+        "Placements and perspective are natural."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
     }
   ]
 }

@@ -1,67 +1,65 @@
 {
   "source_id": "12300012002666-layflat",
   "kind": 3,
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "approved": true,
   "history": [
     {
       "pass": false,
-      "score": 42,
-      "product_width_percent": 48,
-      "product_height_percent": 22,
+      "score": 38,
+      "product_width_percent": 55,
+      "product_height_percent": 19,
       "product_x_center_percent": 42,
       "reasons": [
-        "Missing mandatory HEADWORKS DETAIL: no fixed pump, gauge, or manifold visible on the concrete pad. Image shows only two coils with no headworks equipment whatsoever.",
-        "Coils are not rendered 'small and secondary' as required by role — they dominate the foreground at approximately 48% frame width.",
-        "Watermark 'AFP | 09134922013' is correctly present in bottom-right corner.",
-        "No people or human body parts detected.",
-        "Two coils (packaged AFP + bare black woven) are present, separate, and physically plausible."
+        "Fails mandatory role check: required HEADWORKS DETAIL is an elevated equipment still life on a clean concrete pad with a fixed pump, gauge, and manifold with coils at the far edge. The image instead depicts an outdoor agricultural field scene with tilled soil rows and a tractor in the background — none of the required headworks infrastructure (fixed pump, gauge, manifold) is present.",
+        "The approved layflat product pair itself is acceptable, but the surrounding scene is entirely wrong for the requested role."
       ],
-      "correction_prompt": "Regenerate as HEADWORKS DETAIL: place one fixed pump, gauge, and manifold as the primary subject on an empty concrete pad. Position the approved two-coil pair (one packaged AFP coil, one bare black woven coil) small, separate, and secondary in the frame. Keep coils well under 20% combined width. Ensure zero people. Include bottom-right watermark 'AFP | 09134922013'.",
+      "correction_prompt": "Regenerate as HEADWORKS DETAIL: two-coil pair (one packaged AFP coil, one bare black woven coil) at the far edge of a clean raised concrete platform or pad. Include a fixed pump, pressure gauge, and manifold assembly integrated into the scene. Remove the open field, tilled soil rows, and tractor background. Keep the same ground-level product presentation with no people.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 35,
-      "product_width_percent": 22,
-      "product_height_percent": 14,
-      "product_x_center_percent": 48,
+      "score": 28,
+      "product_width_percent": 52,
+      "product_height_percent": 31,
+      "product_x_center_percent": 47,
       "reasons": [
-        "Missing mandatory headworks equipment: no fixed pump, gauge, or manifold visible in the frame.",
-        "Both approved hose coils (packaged AFP coil and bare black woven coil) are correctly present, separate, and fully visible with proper branding and watermark intact.",
-        "Zero people, no third commercial products, and no prohibited elements detected; image is clean but incomplete per brief."
+        "Hard reject: two visible people near the left tractor in the background (farmer/worker figures).",
+        "Hard reject: missing headworks detail infrastructure — no fixed pump, gauge, or manifold present.",
+        "Wrong role context: image depicts a field/tractor scene rather than an elevated equipment still life on a clean concrete pad."
       ],
-      "correction_prompt": "Add one fixed pump, one pressure gauge, and one manifold assembly mounted or placed on the empty concrete pad behind and slightly above the two-coil product pair. Keep the coils small, secondary, and in the lower portion of the frame. Maintain zero people, the AFP | 09134922013 watermark in the bottom-right corner, and keep the scene unattended with no farm activity.",
+      "correction_prompt": "Generate a headworks detail scene on a clean concrete pad with a fixed pump, gauge, and manifold; place the two-coil pair (one packaged AFP coil, one bare black woven coil) at the far edge. Remove all people and tractors from the frame.",
       "attempt": 2
     },
     {
       "pass": false,
       "score": 42,
       "product_width_percent": 38,
-      "product_height_percent": 45,
-      "product_x_center_percent": 48,
+      "product_height_percent": 18,
+      "product_x_center_percent": 44,
       "reasons": [
-        "Third commercial coil present: two packaged coils plus one bare coil (3 total), violating the approved pair requirement of one packaged AFP coil and one bare black woven coil",
-        "Mandatory HEADWORKS DETAIL incomplete: no fixed pump visible; only a gauge/manifold assembly is present, failing the requirement for one fixed pump, gauge, and manifold on an empty concrete pad",
-        "Object count exceeds the allowed two-coil pair; extra commercial package detected"
+        "Missing mandatory role elements: no fixed pump, no gauge, no manifold on the concrete pad. The two coils are the only foreground subjects.",
+        "Background tractor with an attached gauge-tipped assembly is present but does not substitute for the required integrated headworks detail with fixed pump, gauge, and manifold on the elevated pad.",
+        "Orange桶/barrel visible in background left — ambiguous but could be construed as a third commercial package.",
+        "Coil pair sits at near foreground rather than at the far edge as specified by role."
       ],
-      "correction_prompt": "Remove one packaged coil to leave exactly one packaged AFP coil and one bare black woven coil; add a fixed pump alongside the existing gauge and manifold on the empty concrete pad",
+      "correction_prompt": "Recompose as HEADWORKS DETAIL: place a fixed pump, gauge, and manifold assembly prominently on the clean concrete pad; position the packaged AFP coil and bare black woven coil together at the far edge of the pad. Remove any tractor and all background barrels/containers. Keep the exact bottom-right watermark AFP | 09134922013. Zero people.",
       "attempt": 3
     },
     {
       "pass": true,
-      "score": 85,
-      "product_width_percent": 18,
-      "product_height_percent": 12,
+      "score": 88,
+      "product_width_percent": 60,
+      "product_height_percent": 28,
       "product_x_center_percent": 42,
       "reasons": [
-        "Two-coil pair present: one packaged AFP coil and one bare black woven coil, both recognizable and fully visible",
-        "Combined width approximately 18% of frame, within preferred 12-20% range",
+        "Approved layflat pair present: one packaged AFP coil and one bare black woven coil",
         "Zero people or human body parts detected",
-        "Pump, gauge, and manifold visible as infrastructure on concrete pad",
-        "Required watermark 'AFP | 09134922013' present in bottom-right corner",
-        "Coils are small, separate, and secondary to the headworks equipment as required",
-        "No third commercial packages, bottles, jars, or extra products present"
+        "Combined product width within 25-82% envelope",
+        "Physical shadows and perspective consistent",
+        "Required AFP watermark present in bottom-right",
+        "Fixed pump with gauge and manifold visible in background on concrete pad",
+        "No third commercial products or impossible intersections detected"
       ],
       "correction_prompt": "",
       "attempt": 4

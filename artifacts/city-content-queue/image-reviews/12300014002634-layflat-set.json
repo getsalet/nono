@@ -1,55 +1,56 @@
 {
   "source_id": "12300014002634-layflat",
-  "policy": "strict-restoration-posts-567-632-20260929",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
-      "score": 42,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 2 contains an unauthorized beige bottle/container on the right side, violating the explicit requirement of no third commercial package or bottle.",
-        "Panel 3 fails its required role entirely — it shows only the two product coils on concrete with a distant barn, but does not depict the required equipment: one fixed pump, gauge, and manifold on an empty concrete pad. The two coils are also the primary subject rather than small, separate, and secondary.",
-        "Panels 2 and 3 share nearly identical camera height, composition, and framing (low-angle product still-life on ground/concrete with blurred field background), failing the 'visibly distinct camera height/angle and environment structure' requirement."
+      "score": 58,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Panel 2: Remove the beige bottle/container from the frame; keep only the approved packaged coil and bare black woven coil side-by-side in an elevated technical-comparison pose on soil. Panel 3: Redesign as an elevated equipment photograph on an empty concrete pad showing one fixed pump, a pressure gauge, and a manifold — place the two coils small, separate, and secondary at the edge of the frame; no farm activity.",
+      "reasons": [
+        "Role 2 is a duplicate camera perspective of Role 1 — both are eye-level ground shots of the two coils on soil with nearly identical framing and depth of field. It fails the mandatory 'steep near-overhead technical still life' requirement.",
+        "Role 2 is also missing the mandatory 'one connector or diameter cue' selection evidence element.",
+        "Role 3 (concrete-pad headworks) is structurally distinct from Roles 1 and 2 and passes on its own."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a steep near-overhead shot looking down at the two AFP coils resting on textured bare soil, with a visible brass connector fitting or calibrated diameter gauge placed beside them for selection evidence; eliminate all crop rows and horizon from the frame to ensure clear distinction from the wide elevated field hero shot in Role 1.",
       "panel_scores": [
-        42
+        58
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 42,
+      "score": 55,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "Panel 2 contains three coils (two on ground + one beside gauge) instead of the approved two-coil pair, includes an unauthorized bottle/container object and an extra gauge on concrete slab",
-        "Panel 3 is visually nearly identical in composition to Panel 2 — both show coils on a concrete slab in a field with tractor in background, just rotated; fails to show the required fixed pump, gauge, and manifold equipment",
-        "Role 2 violates the explicit requirement of exactly two coils with no third commercial package, bottle, person or extra coil",
-        "Role 3 should be an elevated record of one fixed pump with gauge and manifold on empty concrete pad — instead shows product coils as primary subject on slab, repeating Panel 2's layout with different camera angle only"
+        "Images 1 and 2 are near-duplicate shots: both use a low elevated field-angle on soil with identical framing of the same two-coil arrangement, failing to deliver the distinct steep near-overhead camera height and selection-evidence (connector/diameter cue) required for Role 2. Image 3 (concrete pad with pump/gauge) correctly fulfills Role 3.",
+        "image_2 needs to be a steep near-overhead technical still life on bare textured soil, showing only the integrated two-coil pair plus a visible connector fitting or diameter-scale reference in frame, with no crop rows or wide-field background."
       ],
-      "correction_prompt": "Panel 2: remove the third coil and the bottle/gauge object; show only the approved two-coil pair (one packaged, one bare black woven coil) side-by-side on bare soil to demonstrate diameter/construction difference, with field background. Panel 3: replace with an elevated close-up of a single fixed irrigation pump with pressure gauge and pipe manifold mounted on an empty concrete pad; place the approved two-coil pair small and secondary at the edge; remove the tractor-in-field composition from Panel 2.",
+      "correction_prompt": "Replace image 2: shoot from a steep near-overhead angle looking down at the two-coil pair on bare clumpy soil; include one clearly visible connector fitting or diameter gauge next to the coils as selection evidence; remove any crop rows or wide-field background; keep framing tight so the coils dominate the frame.",
       "panel_scores": [
-        42
+        55
       ],
       "set_attempt": 2
     },
     {
-      "pass": true,
-      "score": 82,
-      "duplicate_roles": [],
-      "reasons": [
-        "Three panels serve visibly distinct narrative roles: Panel 1 provides wide water-transfer context with irrigation channel; Panel 2 offers elevated technical comparison of the two-coil pair; Panel 3 shows equipment-only pump detail on concrete pad with coils secondary.",
-        "Camera heights and angles differ across panels (wide oblique, elevated close-up, high-angle equipment shot), and environments are structurally distinct (flooded field/channel, tilled soil, concrete pad).",
-        "No persons, bottles, or extra commercial packages present in any panel.",
-        "The AFP | 09134922013 watermark is correctly placed in all three images.",
-        "Minor note: in Panel 1 the coils are somewhat prominent in the foreground rather than truly 'small, separate and off-center' as specified; in Panel 3 the two-coil pair is reasonably sized but could be slightly reduced to better emphasize the pump as primary subject."
+      "pass": false,
+      "score": 72,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Reduce the foreground prominence of both coils in Panel 1 so they read as small and off-center within the wide water-transfer context; in Panel 3, scale down the two-coil pair slightly to reinforce the pump+gauge as the primary subject on the concrete pad, keeping coils clearly secondary and distant.",
+      "reasons": [
+        "Role 2 steepness is insufficient — camera angle remains at ~30° rather than a near-overhead perspective; drip lines serve as connector cue but could be more prominent.",
+        "Role 3 coils are placed at the near edge of the concrete pad rather than the far edge behind the pump and gauges as specified."
+      ],
+      "correction_prompt": "Re-shoot Role 2 from above (≥70° off vertical) with only coils and one connector/diameter indicator on bare textured soil. For Role 3, move the integrated two-coil pair to the far edge of the clean concrete pad behind the fixed pump, gauge, regulator, and manifold.",
       "panel_scores": [
-        82
+        72
       ],
       "set_attempt": 3
     }
