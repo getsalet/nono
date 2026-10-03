@@ -1,21 +1,56 @@
 {
   "source_id": "1280008002942-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 65,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 product violation: The product coils are excessively large and center-stage, violating the 'remain small, separate and off-center' instruction for a wide high-oblique hero shot.",
-        "Role 2 layout duplication: The two coils are stacked (one on top of the other) rather than placed side-by-side to clearly show diameter or construction differences as required.",
-        "Role 3 equipment mismatch: The image shows an electric motor with a pressure gauge, which lacks the required 'manifold' component specified in the brief."
+      "score": 45,
+      "duplicate_roles": [
+        2
       ],
-      "correction_prompt": "Regenerate the set with the following changes: (1) In image 1, move the wide-angle camera position to show the product coils as small, off-center objects in a vast field. (2) In image 2, place the two coils side-by-side on the ground to create a clear visual comparison of their diameters. (3) In image 3, ensure the pump equipment specifically features a valve manifold in addition to the gauge.",
+      "reasons": [
+        "Image 1 (Role 1) captures the wide elevated field view with the product integrated into the soil, fulfilling the editorial hero requirement.",
+        "Image 3 (Role 3) effectively transitions to a concrete pad with a pressure system, providing the necessary equipment detail.",
+        "Image 2 fails to fulfill Role 2 (Selection Evidence) as it is not a steep near-overhead technical still life; instead, it is a low-angle close-up that is visually near-duplicate to Image 1 in structure and environment.",
+        "The roles are not clearly distinct in terms of camera height and surface; Role 2 lacks the required technical layout perspective."
+      ],
+      "correction_prompt": "Regenerate Image 2 as a steep, near-overhead technical still life on textured soil showing the integrated product pair from above to clearly distinguish it from the wide-angle Image 1.",
       "panel_scores": [
-        65
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails to show the 'wide elevated' field view; the camera angle is too low and the field composition is not clearly dominant in the background.",
+        "Role 2 fails to include the mandatory 'connector or diameter cue' required for technical selection evidence.",
+        "Role 3 fails to show the required 'fixed pump, gauge and manifold' setup; the visible equipment is a wheeled farm machine rather than a concrete-pad still life of filtration and control components."
+      ],
+      "correction_prompt": "Role 1: Reframe from a higher elevation to make the field background dominant; Role 2: Add a close-up of a coupling/connector and diameter reference; Role 3: Replace the farm machine with a concrete-pad setup showing a clearly visible fixed filter unit, pressure gauge, regulator and manifold.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1
+      ],
+      "reasons": [
+        "Role 1 is not a 'wide elevated water-transfer field view'; it is a low-angle still life on soil, failing to meet the camera height and framing requirements of the Editorial Hero role.",
+        "Role 2 contains a 'selection evidence' error: it includes an extra commercial product (a pump assembly) in the foreground, violating the constraint to show 'only the integrated two-coil pair and one connector or diameter cue'.",
+        "Role 3 fails the surface requirement: it is set on a paved concrete surface rather than the 'clean concrete pad' specified, and it features a vehicle in the background which conflicts with the 'ordinary Iranian farm context' and 'lack of city-specific architecture' approval notes."
+      ],
+      "correction_prompt": "Reframe Role 1 as a wide elevated aerial view of the field; remove the pump assembly from Role 2 leaving only the coiled product and connector on textured soil; replace the paved surface and vehicle in Role 3 with a clean concrete pad and remove the green machinery.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 3
     }
   ]
 }

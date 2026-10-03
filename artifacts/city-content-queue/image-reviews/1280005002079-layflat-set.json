@@ -1,58 +1,56 @@
 {
   "source_id": "1280005002079-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 is rejected because the environment displays a generic urban skyline and vast field instead of a specific water-transfer infrastructure context; furthermore, the product coils are oversized and centrally located, violating the 'small, off-center' requirement.",
-        "Role 2 is rejected because the camera angle is low and ground-level, failing to provide the 'elevated technical comparison' required to show diameter or construction differences.",
-        "Role 3 is rejected because the 'fixed pump, gauge, and manifold' equipment is completely absent from the headworks concrete pad, leaving only the product evidence.",
-        "The images lack the specific technical narrative and distinct camera variations required to separate the roles."
+      "score": 35,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Role 1: High-oblique shot of an irrigation line in a field with product coils placed small in the foreground; Role 2: Elevated close-up comparing the two coil types; Role 3: High-angle shot of a concrete headworks pad featuring a pump, gauge, and manifold, with coils placed small in the background.",
+      "reasons": [
+        "Role 2 fails to provide the required 'steep near-overhead' camera angle; it is a near-duplicate of Role 1 using the same low, horizontal field-of-view.",
+        "Role 3 fails to provide the mandatory 'fixed filter, gauge, regulator, and manifold' equipment on a clean concrete pad; instead, it features a blurred tractor which is not part of the required Headworks Detail narrative."
+      ],
+      "correction_prompt": "Regenerate Role 2 with a steep near-overhead technical layout on soil showing a diameter cue or connector; regenerate Role 3 on a clean concrete pad featuring a complete fixed filter assembly, pressure gauge, regulator, and manifold.",
       "panel_scores": [
-        45
+        35
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 35,
+      "score": 52,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "The required roles 1, 2, and 3 are not visibly distinct; images 2 and 3 share nearly identical framing, ground layout, and hardware placement, which triggers rejection for repeated layouts.",
-        "Image 3 includes extra commercial elements (small box, wooden spool, and an unattended coil/box) that violate the 'equipment-only' constraint for the headworks detail.",
-        "The layout does not satisfy the requirement for a wide high-oblique perspective with the coil pair remaining small and off-center in the first role.",
-        "Role 3 fails to isolate a single fixed pump and gauge on an empty pad without secondary product clutter."
+        "Role 2 (Image 2) fails the required 'steep near-overhead' camera angle and instead presents a low-angle perspective nearly identical to Role 1, resulting in a near-duplicate structure.",
+        "Role 3 (Image 3) fails the specific narrative requirement of a 'concrete-pad equipment still life dominated by a complete fixed filter, gauge, regulator and manifold', instead depicting a standard soil surface with a tractor.",
+        "Visible living subjects (tractor operator) in Image 3 violate the rejection criteria."
       ],
-      "correction_prompt": "Shoot three distinct angles: a wide high-oblique of the field with coils small in the foreground; an elevated shot of just the pump and two coils; and a tight shot of the pump, gauge, and one secondary coil on a bare concrete pad with no boxes or extra objects.",
+      "correction_prompt": "Re-render Role 2 as a steep near-overhead technical still life on textured soil emphasizing the coil pair and one connector; re-render Role 3 as a clean concrete pad on the left featuring a complete filter/gauge/regulator/manifold assembly (headworks) with the coil pair integrated at the far right edge and no background tractor or subjects.",
       "panel_scores": [
-        35
+        52
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 35,
+      "score": 65,
       "duplicate_roles": [
-        2,
         3
       ],
       "reasons": [
-        "Role 3 fails completely: the brief required an equipment-only record of a fixed pump, gauge, and manifold on a concrete pad. The submitted image shows only the two coils on a concrete surface with no pump or manifold whatsoever.",
-        "Role 2 fails: it shows a generic field with a lone gauge but lacks the required 'elevated technical comparison' structure; it fails to distinctly show diameter/construction differences or present the coils as the primary subject as specified.",
-        "Layout duplication: Roles 2 and 3 are nearly identical, featuring the exact same two-coil pair on flat ground, which constitutes the rejected 'repeated layout' / 'images that only move the product'.",
-        "The two-coil pair appears excessively large/oversized in Roles 2 and 3 relative to the 'small, separate, and off-center' constraint."
+        "Role 1 fails to meet the 'wide elevated' requirement; the camera is positioned at a low angle ground-level perspective rather than high above the field.",
+        "Role 3 is structurally a near-duplicate of Roles 1 and 2; it uses the exact same soil surface and framing composition, failing the mandate for a 'clean concrete pad'.",
+        "Role 3 lacks the mandatory technical narrative evidence: the fixed pump, gauge, and manifold are absent from the equipment still life."
       ],
-      "correction_prompt": "Replace Roles 2 and 3 with distinct layouts: For Role 2, shoot a high-angle close-up of the two coils placed side-by-side to clearly contrast their diameters, keeping them as the primary subject; for Role 3, frame a fixed industrial pump, manifold, and gauge on a concrete pad, with the two coils positioned small and secondary in the background.",
+      "correction_prompt": "Replace Role 3 with an elevated still life on a clean concrete pad featuring a complete fixed filter system with a gauge and regulator in the foreground, moving the coil pair to the far edge.",
       "panel_scores": [
-        35
+        65
       ],
       "set_attempt": 3
     }
