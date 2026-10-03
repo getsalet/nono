@@ -1,6 +1,6 @@
 {
   "source_id": "1200007002162-layflat",
-  "policy": "strict-restoration-posts-567-632-20260929",
+  "policy": "approved-single-pass-integrated-rebuild-v4-20261002",
   "history": [
     {
       "pass": false,
@@ -10,32 +10,49 @@
         2
       ],
       "reasons": [
-        "Panel 1 is a ground-level hero shot, not the required high-oblique/wide water-transfer perspective; the two coils dominate the foreground rather than appearing small and off-center.",
-        "Panel 2 uses the same low ground-level angle and composition as Panel 1, making it visually duplicative in camera height, framing, and environment structure; the wooden stake is extraneous to the selection-evidence narrative.",
-        "Panel 3 correctly fulfills the HEADWORKS DETAIL role with elevated equipment-only composition on concrete.",
-        "Panels 1 and 2 differ only by background crop type, not by distinct technical narrative or camera angle, violating the requirement for visibly distinct roles."
+        "Role 1 and Role 2 are near-duplicate shots: both are low-to-mid elevation field photographs on tilled soil with the same two-coil composition and nearly identical camera height/angle/lighting. Role 2 must be a steep near-overhead technical still life on textured soil showing only the coil pair and a connector or diameter cue, with no background field context."
       ],
-      "correction_prompt": "Panel 1: shoot from a high oblique angle (drone or elevated platform) showing a wide water-transfer scene with the two coils small and off-center; Panel 2: use an elevated comparison shot (different camera height from Panel 1) focusing on the diameter/construction difference between the two coils with no stake and no ground-level repetition.",
+      "correction_prompt": "Replace image 2 with a steep near-overhead shot looking almost straight down at the integrated two-coil pair resting directly on bare textured soil; frame tightly so the coils fill most of the panel, include one visible connector or a clearly shown diameter cross-section cue, and eliminate any field horizon or wide landscape context.",
       "panel_scores": [
         42
       ],
       "set_attempt": 1
     },
     {
-      "pass": true,
-      "score": 92,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 (HERO): Wide high-oblique perspective of irrigated agricultural fields with water channel; two-coil pair (packaged + bare black woven) appear small and off-center; distant farm buildings/tractor are allowed context.",
-        "Panel 2 (SELECTION EVIDENCE): Elevated ground-level comparison framing showing clearly different coil diameters/sizes side-by-side near water furrow; single vertical pipe element adds construction context; no third package, bottle, person, or extra coil; distant tractor is acceptable.",
-        "Panel 3 (HEADWORKS DETAIL): Equipment-only elevated close-up of fixed pump with pressure gauge and manifold assembly on bare concrete; two-coil pair remains small and secondary in foreground; no farm activity; visually distinct camera height/environment from panels 1-2.",
-        "Product identity consistent across all three panels; all backgrounds relevant to water-transfer/irrigation article brief; three visually distinct roles confirmed."
+      "pass": false,
+      "score": 32,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "",
+      "reasons": [
+        "Images 1 and 2 are near-duplicates: same low-angle coil-on-soil composition with identical framing, product placement, and lighting—neither fulfills Role 1 (wide elevated field view) or Role 2 (steep near-overhead technical still life).",
+        "Role 1 requires a wide elevated water-transfer field view with coils in the lower third; both Image 1 and Image 2 are close-up ground-level product shots, not elevated or wide.",
+        "Role 2 requires a steep near-overhead angle with only the two-coil pair and one connector/diameter cue; Images 1 and 2 are shot from a low oblique angle, not near-overhead.",
+        "Role 3 should be dominated by complete fixed filter, gauge, regulator and manifold on a concrete pad with coils at the far edge; Image 3 places coils prominently in the foreground, underserving the headworks equipment narrative."
+      ],
+      "correction_prompt": "Replace Image 1 with a wide elevated/aerial-style shot of a water-transfer field with both coils visible on the soil plane in the lower third; replace Image 2 with a steep near-overhead technical still life on textured soil showing only the two-coil pair and one connector or diameter cue; keep Image 3 but reframe so the concrete-pad pump/gauge/regulator/manifold assembly dominates the composition with coils placed at the far edge.",
       "panel_scores": [
-        92
+        32
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Images 1 and 2 are near-duplicates: both show the same two AFP coils on soil at nearly identical camera height and angle, differing only in framing distance. Role 2 requires a steep near-overhead technical still life on textured soil — Image 2 remains at eye-level or slightly elevated ground perspective, not the required bird's-eye/overhead angle. Role 3 correctly presents the elevated concrete-pad equipment still life with fixed pump, gauge, regulator, and manifold.",
+        "Missing mandatory role evidence for Role 2: no visible connector or diameter cue in a steep overhead layout; instead it duplicates the ground-level product presentation from Role 1."
+      ],
+      "correction_prompt": "Replace Image 2 with a steep near-overhead (bird's-eye) shot looking directly down onto the two-coil pair resting on textured bare soil; include one visible selection cue such as a connector fitting or a caliper measuring diameter; remove all background elements except soil texture; ensure the camera axis is perpendicular to the ground plane.",
+      "panel_scores": [
+        58
+      ],
+      "set_attempt": 3
     }
   ]
 }
