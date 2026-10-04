@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-03T19:58:14+00:00`
+- آخرین بروزرسانی: `2026-10-04T02:50:06+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **857 از 1894 (45.25٪)**
-- تکمیل‌شده: **857**
+- پیشرفت: **860 از 1894 (45.41٪)**
+- تکمیل‌شده: **860**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1037**
+- ناموفق: **1034**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,9 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **خور** — اصفهان — `tape20` — 1184 کلمه — `2026-10-04T02:50:03+00:00`
+- **فرخی** — اصفهان — `tape20` — 1456 کلمه — `2026-10-04T02:47:45+00:00`
+- **خور** — اصفهان — `layflat` — 1436 کلمه — `2026-10-04T02:47:42+00:00`
 - **جندق** — اصفهان — `tape20` — 1112 کلمه — `2026-10-03T19:53:35+00:00`
 - **ویست** — اصفهان — `tape20` — 1097 کلمه — `2026-10-03T19:50:03+00:00`
 - **درچه** — اصفهان — `tape20` — 1303 کلمه — `2026-10-03T14:48:31+00:00`
@@ -49,12 +52,10 @@
 - **قاین** — خراسان جنوبی — `layflat` — 1084 کلمه — `2026-10-03T06:24:39+00:00`
 - **چهارباغ** — البرز — `layflat` — 1128 کلمه — `2026-10-03T06:23:44+00:00`
 - **طالقان** — البرز — `layflat` — 1582 کلمه — `2026-10-03T06:23:19+00:00`
-- **زواره** — اصفهان — `tape20` — 1162 کلمه — `2026-10-03T06:23:15+00:00`
-- **روشناوند** — خراسان رضوی — `tape20` — 1308 کلمه — `2026-10-03T06:23:13+00:00`
-- **مهستان** — البرز — `layflat` — 1347 کلمه — `2026-10-03T06:22:53+00:00`
 
 ## خطاهای اخیر
 
+- **جندق** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **ویست** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کوشک** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **نصرآباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -64,7 +65,6 @@
 - **شاپورآباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کمشچه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **قهجاورستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **زیار** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

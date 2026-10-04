@@ -1,60 +1,54 @@
 {
   "source_id": "11000023001434-tape20",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 30,
+      "score": 65,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1 (Hero) fails placement: The AFP roll is centered in the lower third rather than being 'off-center'.",
-        "Role 2 (Evidence) fails context: The background shows a plowed, empty field with no 'emitter-spacing or field-selection evidence' (crops or irrigation lines).",
-        "Role 2 (Evidence) fails product sizing: The AFP roll is oversized and dominates the foreground, contradicting the 'small' requirement found in other roles.",
-        "Roles 1 and 2 overlap significantly by both featuring a large, central AFP roll set against a background with a distant tractor and farm building.",
-        "Role 3 (Detail) fails composition: The AFP roll is a secondary subject, but the 'manifold' and 'regulator' equipment mentioned in the brief are not clearly distinguishable or present."
+        "Role 2 deviates from the 'steep near-overhead' camera angle specification, appearing as a standard low-angle technical still life instead of an overhead view.",
+        "The required straight drip-tape segment showing repeated emitter points in Role 2 is not present; the unrolled hose is coiled in Role 3 rather than being a straight segment with emitters in Role 2.",
+        "The specific headworks components (fixed filter and manifold) requested for Role 3 are not clearly visible in the provided equipment still life."
       ],
-      "correction_prompt": "For Role 1, move the AFP roll to the far-right lower third. For Role 2, place the AFP roll small on a tilled edge next to visible crop rows showing emitter spacing. For Role 3, remove the background tractors and clearly display a filter, gauge, and manifold on the concrete pad.",
+      "correction_prompt": "Re-capture Role 2 from a steep near-overhead perspective showing a straight drip-tape segment with visible emitters, and ensure Role 3 explicitly displays a fixed filter and manifold.",
       "panel_scores": [
-        30
+        65
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 25,
+      "score": 65,
       "duplicate_roles": [
-        2,
         3
       ],
       "reasons": [
-        "Role 2 (SELECTION EVIDENCE) is incorrectly shown as a low-angle product hero in a field, failing to provide the required technical arrangement with visible emitter-spacing.",
-        "Role 3 (HEADWORKS DETAIL) fails to show a clean equipment-only setup on a concrete pad; instead, it depicts a cluttered, active farm scene with running machinery and multiple containers, violating the 'no farm activity' rule."
+        "Role 3 failed to include the mandatory 'fixed filter' as required by the prompt (Headworks Detail). Instead, the image displays two pressure gauges mounted on a cart with hose, omitting the specified filter unit entirely.",
+        "Role 1 and Role 2 passed: Role 1 is a correct wide elevated view with integrated product; Role 2 shows the correct steep near-overhead soil layout with drip tape and emitters."
       ],
-      "correction_prompt": "Regenerate panel 2 to show an elevated technical arrangement with emitter-spacing evidence, and regenerate panel 3 to show an isolated, static headworks system on an empty concrete pad with no moving machinery.",
+      "correction_prompt": "Regenerate Role 3: Depict an elevated still life on a clean concrete pad featuring a fixed filter, a single pressure gauge, a regulator, and a manifold; place one AFP carton at the far edge.",
       "panel_scores": [
-        25
+        65
       ],
       "set_attempt": 2
     },
     {
-      "pass": false,
-      "score": 20,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "pass": true,
+      "score": 95,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 2 contains a person, which is a strict rejection trigger.",
-        "Role 3 contains multiple product cartons (three are visible), violating the 'exactly one approved carton' rule.",
-        "Role 3 fails to clearly depict a 'fixed filter, gauge, regulator and manifold' as required for HEADWORKS DETAIL; it shows loose equipment and additional products instead of a technical arrangement.",
-        "Role 3 includes an active tractor and machinery, which conflicts with the 'no farm activity' instruction, although a distant unattended tractor is allowed, an active one or one attached to a trailer is not."
+        "Role 1 successfully displays a wide elevated field view with long crop geometry and an integrated carton placed on the lower-left third of the frame.",
+        "Role 2 presents a steep near-overhead technical still life on dark soil featuring one integrated carton and a straight drip-tape segment showing repeated emitters.",
+        "Role 3 shows an elevated equipment still life on a clean concrete pad with a complete fixed filter, pressure gauge, regulator, and manifold assembly.",
+        "All three images maintain clear camera height and surface distinctions, with no near-duplicate structures or missing mandatory role evidence."
       ],
-      "correction_prompt": "Remove the person in Role 2 and ensure exactly one visible AFP product. For Role 3, remove all extra product cartons and depict a clear, organized arrangement of a fixed filter, gauge, regulator, and manifold on a concrete pad without active farm machinery.",
+      "correction_prompt": "",
       "panel_scores": [
-        20
+        95
       ],
       "set_attempt": 3
     }
