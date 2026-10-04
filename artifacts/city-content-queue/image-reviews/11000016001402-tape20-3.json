@@ -1,0 +1,62 @@
+{
+  "source_id": "11000016001402-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package (carton) is visible in the frame, which violates the requirement for exactly one carton.",
+        "The role blueprint specifies 'integrated AFP carton', and the inclusion of a loose box alongside the roll breaks the visual integration and quantity constraint."
+      ],
+      "correction_prompt": "Remove the brown carton on the right side of the concrete pad. Keep only the white AFP drip-tape roll as the sole commercial product, maintaining the still-life composition with the filter rig and concrete pad background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 32,
+      "product_height_percent": 40,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Contains a second commercial package (the brown cardboard box in the background), which is a hard reject according to the 'second commercial package' rule."
+      ],
+      "correction_prompt": "Remove the brown cardboard box in the background. Retain the single white-and-blue AFP roll, the irrigation manifold and gauge, and the required bottom-right watermark. Ensure the background contains no other commercial packaging.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Text on the AFP carton in the foreground is gibberish/mis-spelled ('Drip Irrigation Tape' contains typos).",
+        "Gibberish/typo text on the rear brown box."
+      ],
+      "correction_prompt": "Regenerate the image. Fix the text on the foreground blue and white carton to clearly read 'AFP' and 'Drip Irrigation Tape'. Fix the text on the brown box in the background to be legible and free of typos.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Product dimensions are within the approved width envelope (18-38%) and height limit (<70%).",
+        "Contains required AFP branding and zero prohibited items (no people, jars, or second commercial rolls).",
+        "Placement and physical integration in the headworks detail scene meet the blueprint requirements.",
+        "Required bottom-right watermark is present."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

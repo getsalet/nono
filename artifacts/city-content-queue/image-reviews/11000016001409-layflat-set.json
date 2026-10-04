@@ -1,18 +1,18 @@
 {
   "source_id": "11000016001409-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 62,
       "duplicate_roles": [],
       "reasons": [
-        "Role 3 explicitly requires 'equipment-only' photograph of one fixed pump, gauge, and manifold on an empty concrete pad. Instead, the image contains no such equipment (pump/gauge/manifold), featuring only coils on a concrete pad and background farm machinery.",
-        "Role 1 requires the coils to remain 'small' in a 'wide high-oblique' context, but the foreground product is dominant and occupies nearly 40% of the frame height, failing the 'oversized product' constraint."
+        "Role 3 is missing: The third image displays the AFP drip tape products on a concrete pad in the foreground, with a tractor in the background. The required 'HEADWORKS DETAIL' (fixed pump, gauge, and manifold) is not present. The prompt specifies that the integrated coil pair should sit at the 'far edge' of a scene dominated by equipment, but here the products are the primary subject, not contextual elements on a concrete pad featuring headworks.",
+        "Role 2 is weak: While it is a near-overhead shot of soil, the 'steep' angle characteristic of the required technical still life is not fully achieved; it is a relatively low angle shot similar to the first image, just closer to the ground."
       ],
-      "correction_prompt": "Replace Role 3 with an elevated, equipment-only photograph of a fixed irrigation pump, pressure gauge, and manifold installed on an empty concrete pad; ensure the product coils appear small and secondary in the background. Reduce the foreground scale of the coils in Role 1 to maintain a wide-context perspective.",
+      "correction_prompt": "Replace the third image with a high-angle still life on a concrete pad showing a complete fixed pump, pressure gauge, and manifold in the background with the integrated coil pair at the far edge.",
       "panel_scores": [
-        45
+        62
       ],
       "set_attempt": 1
     },
@@ -21,11 +21,11 @@
       "score": 45,
       "duplicate_roles": [],
       "reasons": [
-        "Panel 3 depicts farm activity, violating the 'no farm activity' constraint for role 3 (distant unattended tractor/building is not active farming).",
-        "Panel 1 lacks the 'empty concrete pad' required for role 3, instead showing the coils as co-equal foreground elements to the pump rather than small/secondary elements.",
-        "Panel 1 is not a wide high-oblique water-transfer context as required for role 1; it is a ground-level medium shot."
+        "Role 1 fails to depict a 'wide elevated water-transfer field view' where the coils and soil share the lower third; instead, it is a medium ground-level shot with a prominent farm machinery horizon.",
+        "Role 2 fails to provide the required 'steep near-overhead technical still life'; the camera angle is too low and the composition does not focus on the textured soil as requested.",
+        "Role 3 fails to be a 'concrete-pad equipment still life' dominated by a fixed filter, gauge, regulator, and manifold; the image instead shows a large wheeled tractor with coils in the foreground, missing the required technical equipment narrative."
       ],
-      "correction_prompt": "Replace panel 1 with a wide high-oblique landscape shot of a water transfer site; replace panel 3 with a clean, equipment-only shot on an empty concrete pad with no visible farm activity (remove tractor/farming in the distance); in panel 3, make the coils small, separate, and secondary to the fixed pump.",
+      "correction_prompt": "Regenerate image 1 as a high-wide angle view focusing on the horizon line with coils in the lower third; regenerate image 2 as a steep bird's-eye view of the coils on soil; regenerate image 3 as a low-angle still life of a concrete pad with a fixed pump unit (filter/gauge/manifold) and coils at the far edge.",
       "panel_scores": [
         45
       ],
@@ -33,18 +33,19 @@
     },
     {
       "pass": false,
-      "score": 25,
+      "score": 45,
       "duplicate_roles": [
+        1,
         2
       ],
       "reasons": [
-        "Panel 3 is a near duplicate of Panel 2 in layout, product placement, and framing, violating the requirement for distinct camera angles and environments.",
-        "Panel 3 is missing the required equipment narrative (pump, gauge, manifold) specified for the HEADWORKS DETAIL role, instead showing only coiled hoses on a concrete pad.",
-        "Panel 3 fails to maintain the required 'small and secondary' status of the approved two-coil pair relative to the primary focus on headworks."
+        "Role 1 (Image 1) and Role 2 (Image 2) are near-duplicates; both utilize the exact same low-angle composition with identical subject placement (coils in lower third) on similar soil textures, failing to provide the distinct 'steep near-overhead' view required for Role 2.",
+        "Role 3 (Image 3) places the integrated coil pair in the immediate foreground rather than the 'far edge' as specified.",
+        "Role 3 (Image 3) fails to show the mandatory 'fixed pump' on the concrete pad; instead, it shows a large red tractor in the background, which counts as an extra commercial product that dilutes the focus on the headworks."
       ],
-      "correction_prompt": "Regenerate Panel 3 to feature a fixed pump, pressure gauge, and manifold as the primary subject on an empty concrete pad; relegate the two hose coils to the background as small, secondary elements to ensure a distinct technical record view compared to Panel 2.",
+      "correction_prompt": "Redesign Role 2 as a steep near-overhead top-down shot on textured soil to differentiate it from Role 1; redesign Role 3 to replace the background tractor with a stationary fixed pump and position the coil pair at the far edge of the concrete pad.",
       "panel_scores": [
-        25
+        45
       ],
       "set_attempt": 3
     }
