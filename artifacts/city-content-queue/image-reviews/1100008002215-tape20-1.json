@@ -1,0 +1,52 @@
+{
+  "source_id": "1100008002215-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 42,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "The image contains a second commercial package (the gray filtration/filtering machine with a gauge attached on the right), which is a hard reject under the 'second commercial package' rule.",
+        "The product label text is gibberish ('Drip Irrigation Tape' is partially distorted/illegible), which is a hard reject for 'gibberish writing'."
+      ],
+      "correction_prompt": "Regenerate the image with a single AFP drip-tape carton roll in the lower-left third, removing the gray filtration pump and gauge unit on the right to avoid extra commercial products, and ensure the label text on the carton is sharp, readable, and correctly spelled.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 26,
+      "product_height_percent": 42,
+      "product_x_center_percent": 27,
+      "reasons": [
+        "The image contains a coiled black hose on the ground next to the carton. The system instructions strictly hard reject 'layflat hose' to ensure the product is shown as a standalone commercial package.",
+        "Although the carton itself meets the width (26%) and height (42%) requirements, the inclusion of the excluded hose material triggers a rejection."
+      ],
+      "correction_prompt": "Regenerate the image to show only the single white-and-blue AFP drip-tape carton on the soil. Completely remove the coiled black hose and any other hardware from the foreground to maintain a clean, singular product display.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 26,
+      "product_height_percent": 34,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Product correctly identified as an AFP wide low cylindrical drip-tape carton roll.",
+        "Placement in the lower-left third aligns with the mandatory editorial hero role.",
+        "Zero people or human body parts visible.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Physical integration with the scene is plausible, including a natural contact shadow.",
+        "Field context matches the brief with clear visibility of crop rows and irrigation infrastructure."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
