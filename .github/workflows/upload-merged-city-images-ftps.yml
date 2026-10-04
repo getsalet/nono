@@ -32,7 +32,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Build merged archive from SQL-referenced images
+      - name: Build merged archive from all packages and loose images
         shell: bash
         run: |
           set -euo pipefail
@@ -42,18 +42,40 @@ jobs:
           import os, re
           root = Path('artifacts/city-content-queue')
           sql = (root / 'create-all-completed.sql').read_text(encoding='utf-8')
-          names = re.findall(r"'_wp_attached_file','2026/09/navar-city-generated/([^']+)'", sql)
-          if len(names) != 3347 or len(set(names)) != 3347:
-              raise SystemExit(f'Expected 3347 unique SQL image references, found {len(names)} refs / {len(set(names))} unique')
-          missing = [name for name in names if not (root / 'images' / name).is_file()]
+          refs = re.findall(r"'_wp_attached_file','2026/09/navar-city-generated/([^']+)'", sql)
+          if len(refs) != 3347 or len(set(refs)) != 3347:
+              raise SystemExit(f'Expected 3347 unique SQL image references, found {len(refs)} refs / {len(set(refs))} unique')
+
+          sources = {}
+          loose = root / 'images'
+          if loose.exists():
+              for path in loose.iterdir():
+                  if path.is_file():
+                      sources[path.name] = ('file', path, None)
+
+          for package in sorted((root / 'packages').glob('*.zip')):
+              with ZipFile(package) as batch:
+                  for member in batch.namelist():
+                      if member.endswith('/') or not member.lower().endswith('.webp'):
+                          continue
+                      name = Path(member).name
+                      sources.setdefault(name, ('zip', package, member))
+
+          missing = [name for name in refs if name not in sources]
           if missing:
-              raise SystemExit(f'Missing {len(missing)} referenced images; first: {missing[:5]}')
+              raise SystemExit(f'Missing {len(missing)} referenced images after scanning loose files and packages; first: {missing[:10]}')
+
           output = Path('/tmp') / os.environ['ARCHIVE_NAME']
           with ZipFile(output, 'w', compression=ZIP_STORED, allowZip64=True) as archive:
-              for name in names:
-                  image = root / 'images' / name
-                  archive.write(image, f'wp-content/uploads/2026/09/navar-city-generated/{name}')
-          print(f'Created {output} with {len(names)} images ({output.stat().st_size} bytes)')
+              for name in refs:
+                  kind, source, member = sources[name]
+                  target = f'wp-content/uploads/2026/09/navar-city-generated/{name}'
+                  if kind == 'file':
+                      archive.write(source, target)
+                  else:
+                      with ZipFile(source) as batch:
+                          archive.writestr(target, batch.read(member))
+          print(f'Created {output} with {len(refs)} images ({output.stat().st_size} bytes)')
           PY
       - name: Upload and verify archive via explicit FTPS
         shell: bash
