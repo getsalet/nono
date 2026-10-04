@@ -73,6 +73,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          exec > >(tee /tmp/upload.log) 2>&1
           test -n "$FTP_PASSWORD"
           python - <<'PY'
           from pathlib import Path
@@ -112,6 +113,8 @@ jobs:
           import json, os
           archive = Path('/tmp') / os.environ['ARCHIVE_NAME']
           success = os.environ.get('BUILD_OUTCOME') == 'success' and os.environ.get('UPLOAD_OUTCOME') == 'success'
+          upload_log = Path('/tmp/upload.log')
+          error_tail = None if success or not upload_log.exists() else upload_log.read_text(encoding='utf-8', errors='replace')[-4000:]
           marker = Path('artifacts/city-content-queue/merged-images-ftps-upload.json')
           marker.write_text(json.dumps({
               'archive': archive.name,
@@ -121,6 +124,7 @@ jobs:
               'verified': success,
               'build_outcome': os.environ.get('BUILD_OUTCOME'),
               'upload_outcome': os.environ.get('UPLOAD_OUTCOME'),
+              'error_tail': error_tail,
               'run_id': os.environ.get('RUN_ID'),
               'completed_at': datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00','Z')
           }, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
