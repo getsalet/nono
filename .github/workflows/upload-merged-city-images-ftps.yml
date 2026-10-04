@@ -33,6 +33,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Build merged archive from all packages and loose images
+        id: build
         shell: bash
         run: |
           set -euo pipefail
@@ -45,39 +46,30 @@ jobs:
           refs = re.findall(r"'_wp_attached_file','2026/09/navar-city-generated/([^']+)'", sql)
           if len(refs) != 3347 or len(set(refs)) != 3347:
               raise SystemExit(f'Expected 3347 unique SQL image references, found {len(refs)} refs / {len(set(refs))} unique')
-
           sources = {}
           loose = root / 'images'
           if loose.exists():
               for path in loose.iterdir():
-                  if path.is_file():
-                      sources[path.name] = ('file', path, None)
-
+                  if path.is_file(): sources[path.name] = ('file', path, None)
           for package in sorted((root / 'packages').glob('*.zip')):
               with ZipFile(package) as batch:
                   for member in batch.namelist():
-                      if member.endswith('/') or not member.lower().endswith('.webp'):
-                          continue
-                      name = Path(member).name
-                      sources.setdefault(name, ('zip', package, member))
-
+                      if member.endswith('/') or not member.lower().endswith('.webp'): continue
+                      sources.setdefault(Path(member).name, ('zip', package, member))
           missing = [name for name in refs if name not in sources]
-          if missing:
-              raise SystemExit(f'Missing {len(missing)} referenced images after scanning loose files and packages; first: {missing[:10]}')
-
+          if missing: raise SystemExit(f'Missing {len(missing)} referenced images; first: {missing[:10]}')
           output = Path('/tmp') / os.environ['ARCHIVE_NAME']
           with ZipFile(output, 'w', compression=ZIP_STORED, allowZip64=True) as archive:
               for name in refs:
                   kind, source, member = sources[name]
                   target = f'wp-content/uploads/2026/09/navar-city-generated/{name}'
-                  if kind == 'file':
-                      archive.write(source, target)
+                  if kind == 'file': archive.write(source, target)
                   else:
-                      with ZipFile(source) as batch:
-                          archive.writestr(target, batch.read(member))
+                      with ZipFile(source) as batch: archive.writestr(target, batch.read(member))
           print(f'Created {output} with {len(refs)} images ({output.stat().st_size} bytes)')
           PY
       - name: Upload and verify archive via explicit FTPS
+        id: upload
         shell: bash
         run: |
           set -euo pipefail
@@ -90,8 +82,7 @@ jobs:
           temporary = f'.{path.name}.uploading'
           ftp = connect()
           try:
-              with path.open('rb') as stream:
-                  ftp.storbinary(f'STOR {temporary}', stream, blocksize=1024 * 1024)
+              with path.open('rb') as stream: ftp.storbinary(f'STOR {temporary}', stream, blocksize=1024 * 1024)
               remote_size = ftp.size(temporary)
               if remote_size != path.stat().st_size:
                   try: ftp.delete(temporary)
@@ -100,14 +91,18 @@ jobs:
               except Exception: pass
               ftp.rename(temporary, path.name)
               final_size = ftp.size(path.name)
-              if final_size != path.stat().st_size:
-                  raise RuntimeError(f'Final size verification failed: local={path.stat().st_size}, remote={final_size}')
+              if final_size != path.stat().st_size: raise RuntimeError(f'Final size verification failed: local={path.stat().st_size}, remote={final_size}')
               print(f'Uploaded and verified: {path.name} ({final_size} bytes)')
           finally:
               try: ftp.quit()
               except Exception: ftp.close()
           PY
-      - name: Record verified upload
+      - name: Record workflow outcome
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          UPLOAD_OUTCOME: ${{ steps.upload.outcome }}
+          RUN_ID: ${{ github.run_id }}
         shell: bash
         run: |
           set -euo pipefail
@@ -116,19 +111,23 @@ jobs:
           from pathlib import Path
           import json, os
           archive = Path('/tmp') / os.environ['ARCHIVE_NAME']
+          success = os.environ.get('BUILD_OUTCOME') == 'success' and os.environ.get('UPLOAD_OUTCOME') == 'success'
           marker = Path('artifacts/city-content-queue/merged-images-ftps-upload.json')
           marker.write_text(json.dumps({
               'archive': archive.name,
               'post_count': 865,
               'image_count': 3347,
-              'size': archive.stat().st_size,
-              'verified': True,
-              'uploaded_at': datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00','Z')
+              'size': archive.stat().st_size if archive.exists() else None,
+              'verified': success,
+              'build_outcome': os.environ.get('BUILD_OUTCOME'),
+              'upload_outcome': os.environ.get('UPLOAD_OUTCOME'),
+              'run_id': os.environ.get('RUN_ID'),
+              'completed_at': datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00','Z')
           }, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -f artifacts/city-content-queue/merged-images-ftps-upload.json
-          git commit -m 'Record verified merged city image FTPS upload [skip ci]'
+          git commit -m 'Record merged city image FTPS workflow outcome [skip ci]'
           git pull --rebase origin main
           git push origin HEAD:main
