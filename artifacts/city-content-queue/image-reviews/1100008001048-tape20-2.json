@@ -1,0 +1,39 @@
+{
+  "source_id": "1100008001048-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 62,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Hard reject: The image contains a second commercial package (a standalone roll) in addition to the required single carton roll.",
+        "Hard reject: The product bounding box width estimate exceeds the 38% limit due to the wide layout of the carton, unrolled tape, and second roll.",
+        "Role violation: The blueprint specifically required 'one integrated AFP carton and one straight drip-tape segment'; the presence of a third item (the standalone roll) violates the 'one carton' instruction.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 62% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the second standalone roll on the right. Show only one AFP white-and-blue wide low cylindrical drip-tape carton with a single straight tape segment emerging from it to display the emitters. Ensure the bounding box of the single carton item is within 38% width. Maintain the steep near-overhead technical still life on dark soil. Reduce the product group from 62% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 18,
+      "product_height_percent": 32,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Correct product: Single AFP white-and-blue drip-tape roll on soil.",
+        "Dimensions: Roll size falls within the approved envelope.",
+        "Role match: Matches the 'SELECTION EVIDENCE' requirement showing the roll and straight tape segment on dark soil.",
+        "Compliance: Zero human parts; required watermark is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

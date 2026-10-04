@@ -1,0 +1,78 @@
+{
+  "source_id": "1100008002445-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Second commercial package detected: A cardboard box labeled 'AFP' is visible on the left side of the frame, violating the 'zero second commercial package' rule.",
+        "Object count mismatch: The image contains two distinct AFP items (the box and the roll), whereas the brief requires exactly one carton roll.",
+        "Watermark text mismatch: The visible watermark reads '09134922013', but the required string is '09134922013' (minor digit mismatch in final digit, plus formatting)."
+      ],
+      "correction_prompt": "Regenerate to remove the cardboard box on the left. Keep only the single white-and-blue cylindrical drip-tape roll in the foreground. Ensure the watermark exactly reads 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 45,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Second commercial package present: The 'AFP' cardboard box visible to the right of the roll is a second commercial package, which is a hard reject condition."
+      ],
+      "correction_prompt": "Remove the cardboard box with 'AFP' text from the right side of the image, leaving only the cylindrical drip-tape roll and the fixed irrigation hardware.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Presence of a second commercial package (the cardboard box in the right foreground).",
+        "Product 'AFP' is missing from the center of the image, violating the single unit requirement.",
+        "Extraneous objects (blue/white containers) visible on the left which are not allowed infrastructure or packaging.",
+        "The cardboard box is cropped and positioned awkwardly on the far right edge.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right and the blue/white containers on the left. Include exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll on the concrete pad. Ensure the concrete pad and background are clean. Enlarge the product group from 0% to 18-38% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 24,
+      "product_height_percent": 41,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "The image contains a second commercial package (a brown AFP carton) which is a hard reject.",
+        "A layflat hose is visible on the ground in the bottom left, which is explicitly prohibited.",
+        "A pipe/line connects directly into the roll, whereas the blueprint specifies the roll should be at the far edge, likely as a separate integrated item rather than the active connection point."
+      ],
+      "correction_prompt": "Remove the brown carton and the layflat hose on the ground. Ensure the white and blue drip tape roll is at the far edge of the concrete pad, separate from the manifold connection point.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package present (large brown/AFP carton on the right)",
+        "Contains a layflat hose/coiled black tubing, which is a hard reject"
+      ],
+      "correction_prompt": "Remove the coiled black layflat tubing and the second large carton on the right. Keep only the single white-and-blue cylindrical AFP drip tape roll integrated at the far edge of the concrete pad with the fixed filter, pressure gauges, and manifold.",
+      "attempt": 5
+    }
+  ]
+}

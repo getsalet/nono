@@ -1,0 +1,39 @@
+{
+  "source_id": "1100008002252-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 85,
+      "product_height_percent": 38,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Visible human worker in the background (hard reject for any human, body part, or silhouette)",
+        "machine-enforced bounding-box check failed: Reduce the product group from 85% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image without any human figures or body parts; maintain the two-coil product pair at the far edge on the concrete pad with the required 'AFP | 09134922013' watermark. Reduce the product group from 85% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 67,
+      "product_height_percent": 42,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The image contains exactly two approved coil objects: a packaged AFP coil and a bare black woven coil.",
+        "The combined width of the two objects is approximately 67% of the image, which fits within the 25-82% approved range.",
+        "No people or human body parts are visible in the image.",
+        "The watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The two coils sit at the edge of a concrete pad with a distant tractor, pump, and gauge, which are allowed infrastructure elements and not extra commercial products.",
+        "The objects are physically plausible with consistent shadows and perspective, with no pasted or sticker appearance."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
