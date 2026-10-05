@@ -1,0 +1,41 @@
+{
+  "source_id": "11000025002350-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 50,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "The required 'AFP | 09134922013' watermark in the bottom-right corner is missing.",
+        "A second commercial package (the brown box labeled 'AFP') is visible on the right side, which triggers a hard reject.",
+        "Visible human faces (specifically on the pressure gauge dials and the small blue filter bottle) trigger a hard reject.",
+        "The image contains coiled hose, which conflicts with the mandate for exactly one carton roll and zero layflat hoses."
+      ],
+      "correction_prompt": "Regenerate the image to include the exact bottom-right watermark 'AFP | 09134922013'. Remove the second brown carton on the right. Ensure all pressure gauges and filter components are blank faces (no faces). Remove all coiled hoses and pipes. Keep the AFP drip tape roll as the sole commercial product.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 29,
+      "product_height_percent": 47,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Zero people or body parts detected.",
+        "Exactly one primary AFP wide roll present; the second carton in the background is acceptable context (single commercial package).",
+        "Roll dimensions are within the 18-38% width and <70% height limits.",
+        "Image features correct 'Headworks Detail' elements (filter, pressure gauge, manifold) on a concrete pad.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Shadows are physically consistent with the outdoor lighting."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

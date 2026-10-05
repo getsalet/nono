@@ -1,24 +1,57 @@
 {
   "source_id": "11000025002350-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 60,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 requires an elevated equipment still life on a clean concrete pad dominated by a fixed pump, gauge, and manifold. The provided image shows a tractor in the background with no visible pump, gauge, or manifold, only the coiled hoses.",
+        "Role 3 requires the integrated two-coil pair to sit at the 'far edge' of the concrete pad, but they are placed in the immediate foreground."
+      ],
+      "correction_prompt": "Regenerate image 3 to show a clean concrete pad where the coil pair is at the far edge and the foreground is dominated by a fixed irrigation pump, pressure gauge, and manifold regulator.",
+      "panel_scores": [
+        60
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        3
+      ],
+      "reasons": [
+        "Role 3 must be dominated by a complete fixed filter, gauge, regulator, and manifold on a concrete pad, but the image only shows two coils in the foreground with the necessary equipment missing or obscured.",
+        "Role 1 is not a sufficiently elevated wide view that shows an integrated field-scale system, but rather a low-angle foreground still life similar in composition to Role 2.",
+        "Roles 1 and 3 share nearly identical foreground equipment layout and camera framing, making them near-duplicates rather than distinct roles."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a high vantage point wide field view showing both coil types integrated within the farm setup, and regenerate Role 3 as a concrete pad still life centered on a complete filtration assembly including pump, gauge, manifold, and regulator with the coil pair placed at the far edge.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 58,
       "duplicate_roles": [
         1,
         2,
         3
       ],
       "reasons": [
-        "Product placement is repeated: In all three panels, the two coils (packaged and bare) are placed in the immediate foreground on the ground in the same orientation (packaged left, bare right), failing to distinguish the roles.",
-        "Role 2 (Selection Evidence) violation: The bare coil in panel 2 contains a visible wooden peg/plug in the center, which counts as a non-approved object (extra detail)."
+        "The entire panel fails to satisfy the three distinct role specs: no wide elevated water-transfer field view (Role 1), no steep near-overhead soil-based still life with only the two-coil pair and a single connector/diameter cue (Role 2), and no concrete-pad equipment still life dominated by a complete fixed filter, gauge, regulator and manifold with the two-coil pair at the far edge (Role 3).",
+        "All three images present the same coiled product on soil/concrete with a low horizontal viewpoint; images 1 and 2 are near-duplicates in subject composition and framing, and image 3 introduces a wheeled portable unit with gauges/hoses rather than the required fixed pump/gauge/manifold layout.",
+        "Multiple images show extra commercial items beyond the approved two-coil pair and single connector cue (e.g., an additional fitting in image 1), which is disallowed under 'extra commercial products.'"
       ],
-      "correction_prompt": "Redesign panel 3 as a tight close-up of the pump and manifold on the concrete pad with the two coils small in the distance; remove the wooden plug from the coil in panel 2; vary the product placement angles in panels 1 and 2 to avoid duplication.",
+      "correction_prompt": "Redesign three clearly distinct shots: (1) a wide elevated aerial field view with the integrated two-coil pair in the lower third; (2) a steep near-overhead soil still life showing only the two-coil pair plus one connector/diameter cue; (3) a concrete-pad still life dominated by a complete fixed pump+gauge+manifold with the two-coil pair at the far edge.",
       "panel_scores": [
-        35
+        58
       ],
-      "set_attempt": 1
+      "set_attempt": 3
     }
   ]
 }
