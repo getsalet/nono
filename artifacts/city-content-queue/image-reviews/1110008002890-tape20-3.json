@@ -1,0 +1,82 @@
+{
+  "source_id": "1110008002890-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 10,
+      "product_height_percent": 5,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: 'second commercial package' (the cardboard box behind the roll).",
+        "Hard reject: 'bottle, jar, canister' (the metal tank/sprayer assembly on the left).",
+        "Role conflict: The 'HEADWORKS DETAIL' blueprint requires 'one integrated AFP carton', but the image shows the roll and a separate cardboard box.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 10% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the metal sprayer tank and the cardboard box. Retain only the drip tape roll (integrated carton) on the concrete pad alongside a fixed filter, pressure gauge, and manifold. Maintain bottom-right watermark. Enlarge the product group from 10% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible on the right, which is a hard reject.",
+        "Missing mandatory bottom-right watermark 'AFP | 09134922013'.",
+        "The blue object in the filter housing resembles a container or canister, which is a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image to include exactly one AFP drip-tape carton roll and remove the cardboard box on the right. Add the mandatory watermark 'AFP | 09134922013' in the bottom-right corner. Ensure the blue filter component appears as standard irrigation hardware rather than a container or canister.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 27,
+      "product_height_percent": 52,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image contains a second commercial package (the brown cardboard box labeled 'AFP'), which is a hard reject trigger. The product role specified is exactly one carton roll, not a box.",
+        "There is an extra coiled hose on the concrete pad which is not included in the role blueprint (fixed filter, gauge, regulator, manifold)."
+      ],
+      "correction_prompt": "Remove the brown cardboard box and the coiled hose from the concrete pad. Keep the white and blue AFP carton roll and the fixed manifold, gauge, and regulator setup.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 41,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image contains multiple commercial packages (two additional cartons labeled AFP), which is a hard reject as it constitutes a 'second commercial package'.",
+        "The scene includes a pump unit (gray and blue device on the left), which is a 'bottle, jar, canister, bucket, fertilizer or pesticide container' or similar prohibited extra commercial product.",
+        "The product is depicted as a wide white and blue drum/roll, not a low cylindrical carton roll."
+      ],
+      "correction_prompt": "Remove all background AFP cartons and the pump unit on the left. Retain only the pressure gauge, regulator, and manifold connected to the single AFP drip-tape carton roll (which must be low/wide cylindrical). Ensure the concrete pad is clean and the watermark is present in the bottom right.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Product is a single white-and-blue cylindrical drip-tape roll matching the required visual identity.",
+        "Fixed filtration equipment (filter, gauge, manifold) is correctly integrated on the concrete pad, fulfilling the 'HEADWORKS DETAIL' role.",
+        "No people or human body parts are visible.",
+        "No prohibited commercial containers (bottles, jars, or cans) are present.",
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Product dimensions are physically plausible and within the approved width/height envelope."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
