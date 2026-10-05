@@ -1,19 +1,52 @@
 {
   "source_id": "11000011002511-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 15,
+      "score": 50,
       "duplicate_roles": [],
       "reasons": [
-        "Panel 2 is a near-exact duplicate of Panel 1 (same camera angle, same product arrangement on the ground, similar background tractor context) and does not present the required 'elevated technical comparison'."
+        "Role 2 (Image 2) fails the mandatory 'steep near-overhead' camera angle requirement, presenting a low horizontal viewpoint instead.",
+        "Role 3 (Image 3) is missing mandatory technical evidence of a complete fixed filter, gauge, regulator, and manifold, showing only agricultural machinery and the coil pair on a concrete pad."
       ],
-      "correction_prompt": "Reframe Panel 2 with a distinct high-angle/technical perspective that emphasizes the construction difference between the two coils, and strictly replace the field background in Panel 3 with an empty concrete pad featuring a fixed pump, gauge, and manifold, removing the standing person.",
+      "correction_prompt": "Regenerate Role 2 as a steep near-overhead soil still life with one connector cue, and Role 3 as a concrete-pad technical still life on a clean pad featuring a complete fixed filter, gauge, regulator, and manifold at the far edge.",
       "panel_scores": [
-        15
+        50
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 85,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 must be a clean concrete-pad still life, but the generated image features a complex, prominent garden cart and multiple toy vehicles which act as unapproved commercial products and clutter, rather than a clean technical still life dominated by the fixed equipment."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        85
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Image 1 and Image 2 are near-duplicates, both showing a low-angle view of the coils on dry soil without the required wide elevated perspective for Role 1 or the steep near-overhead angle for Role 2.",
+        "Image 1 fails Role 1 because it lacks the 'wide elevated water-transfer field view' and 'ordinary Iranian farm context'; it presents only a generic crop field with no city-specific or broader landscape context.",
+        "Image 2 fails Role 2 because it is not a 'steep near-overhead technical still life'; instead, it is a low-angle shot similar to Image 1.",
+        "Image 3 violates Role 3 by placing a large green tractor in the foreground instead of the 'complete fixed filter, gauge, regulator and manifold' equipment still life required on a clean concrete pad."
+      ],
+      "correction_prompt": "Replace Image 1 with a wide elevated field view from a distance, replace Image 2 with a steep near-overhead close-up on textured soil, and replace Image 3 with a clean concrete pad showing only the fixed equipment and gauge, removing the tractor.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
     }
   ]
 }

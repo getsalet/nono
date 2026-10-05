@@ -1,24 +1,60 @@
 {
   "source_id": "11000025001403-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
       "score": 40,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1: Camera angle is too low and close (ground level) rather than the required wide high-oblique perspective.",
-        "Role 1: The two coils are centered and oversized in the foreground, violating the 'small, separate and off-center' instruction.",
-        "Role 1: The background lacks the 'water-transfer context' and mountains associated with the Isfahan brief, showing a generic field and city instead.",
-        "Role 2: A second, open cardboard box is visible behind the coiled hose, which violates the rule prohibiting a 'third commercial package'.",
-        "Role 3: The image is missing required equipment (pump, gauge, manifold) and instead shows an empty concrete pad with farm buildings.",
-        "Role 3: The two coils are positioned as the primary subject rather than being small, secondary, and offset from equipment."
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Role 1: Use a high wide-oblique angle with a distinct water-transfer line leading to Isfahan foothills, keeping the coils small in the corner. Role 2: Remove the extra cardboard box, keeping only the packaged coil and bare hose. Role 3: Replace the empty concrete pad with a focused shot of a pump, gauge, and manifold, relegating the coils to the background.",
+      "reasons": [
+        "Role 1 requires a wide elevated water-transfer field view, but this image is a low-ground close-up with no elevated camera height or wide view, making it nearly identical in structure to Role 2.",
+        "Role 2 is a low-angle soil close-up, not a steep near-overhead technical still life as mandated.",
+        "Role 3 is missing the required fixed pump, gauge, and manifold; instead it is a flat still-life of the two coils on concrete, failing to deliver the 'headworks' narrative and equipment details specified."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide, elevated view of a water-transfer field with the product pair in the lower third, Role 2 as a steep near-overhead soil layout with visible selection evidence, and Role 3 as a concrete-pad still life including a fixed pump, gauge, and manifold, ensuring clear camera-height and surface distinction.",
       "panel_scores": [
         40
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 (Editorial Hero) is missing the required wide elevated field view; instead, it is a low-angle ground-level shot similar to Role 2.",
+        "Role 2 includes an extra commercial product (a pressure regulator/wrench assembly) that was not part of the mandatory 'two-coil pair and one connector' selection evidence layout.",
+        "Role 3 features a concrete pad but lacks the specific required 'elevated still life' of the integrated pump, gauge, and manifold arrangement, instead showing an unrelated tractor."
+      ],
+      "correction_prompt": "Regenerate image 1 with a wide elevated angle to distinguish it from the low-angle soil views, and regenerate image 2 to remove the extra regulator/wrench, keeping only the two coils on the textured soil surface.",
+      "panel_scores": [
+        42
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 2 (SELECTION EVIDENCE) requires a steep near-overhead technical still life on soil with only the coil pair and a connector or diameter cue; the provided image shows a ground-level perspective with environmental clutter (pots, structures), lacking the required 'technical' isolation and steep camera angle.",
+        "Role 3 (HEADWORKS DETAIL) must feature a complete fixed filter, gauge, regulator, and manifold on a concrete pad; the provided image shows a tractor and open soil/field instead of the required equipment assembly.",
+        "Roles 1 and 2 are near-duplicates in terms of camera structure, both utilizing a low-to-mid ground-level angle with the pair in the foreground and environmental blur in the background, failing to make the roles clearly distinct as required."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a steep top-down overhead shot on bare soil showing only the coil pair and a diameter reference, and regenerate Role 3 to display a fixed pump, pressure gauge, regulator, and manifold assembly on a concrete surface with the coil pair at the edge.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
     }
   ]
 }

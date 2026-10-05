@@ -1,21 +1,50 @@
 {
   "source_id": "11000011002511-tape20",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 55,
+      "duplicate_roles": [
+        3
+      ],
+      "reasons": [
+        "Role 3 fails to display the required 'manifold' (visible as a multi-port distribution system) and 'regulator', instead showing unrelated mobile equipment (a portable filter on wheels) and a cardboard box that was not specified in the role requirements.",
+        "The integration of the AFP carton in Role 3 is structurally weak; it is depicted as a simple cardboard box behind the equipment rather than the integrated product context seen in Roles 1 and 2."
+      ],
+      "correction_prompt": "Regenerate Image 3 to display a stationary concrete-pad assembly featuring a fixed filter, pressure gauge, regulator, and a clearly visible manifold, with the AFP carton integrated at the far edge, removing all wheeled or portable equipment and unlisted cardboard boxes.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Hero) fails: The carton is placed in the lower-center/foreground, not 'off-center on the lower third' as requested, dominating the frame too much rather than staying small and secondary to the farm context.",
-        "Role 1 (Hero) fails: The camera angle is low/ground-level rather than the required 'wide high-oblique view'.",
-        "Role 3 (Headworks) fails: The image contains a visible tractor and active farm infrastructure in the background, violating the 'no farm activity' constraint. The brief explicitly permits distant tractors only for context (like in Role 2), but Role 3 requires an isolated technical environment (empty concrete pad) without farm activity."
+        "Role 1 (Image 1): Perspective is too low/eye-level. The requirement specifies a 'wide elevated field view,' but the image is taken at ground level, failing to establish the elevated geometry necessary to distinctively separate it from the near-overhead view in Role 2."
+      ],
+      "correction_prompt": "For Role 1, raise the camera angle significantly to create a high-elevation wide shot, clearly showing the long crop geometry converging toward the horizon while keeping the AFP roll in the lower-left foreground.",
+      "panel_scores": [
+        65
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 94,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1: Wide elevated field view with integrated AFP carton is present and correct.",
+        "Role 2: Steep near-overhead soil layout with the specified straight tape segment is clearly visible.",
+        "Role 3: Concrete pad still life with a complete fixed filter, gauge, and manifold system is clearly visible."
       ],
       "correction_prompt": "",
       "panel_scores": [
-        45
+        94
       ],
-      "set_attempt": 1
+      "set_attempt": 3
     }
   ]
 }

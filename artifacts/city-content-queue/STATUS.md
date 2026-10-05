@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-05T10:45:21+00:00`
+- آخرین بروزرسانی: `2026-10-05T11:47:22+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **893 از 1894 (47.15٪)**
-- تکمیل‌شده: **893**
+- پیشرفت: **895 از 1894 (47.25٪)**
+- تکمیل‌شده: **895**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1001**
+- ناموفق: **999**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **گلشهر** — اصفهان — `tape20` — 1271 کلمه — `2026-10-05T11:47:19+00:00`
+- **گوگد** — اصفهان — `tape20` — 1385 کلمه — `2026-10-05T11:44:55+00:00`
 - **سجزی** — اصفهان — `tape20` — 1326 کلمه — `2026-10-05T10:42:07+00:00`
 - **نیاسر** — اصفهان — `layflat` — 1139 کلمه — `2026-10-05T09:47:57+00:00`
 - **نیاسر** — اصفهان — `tape20` — 1460 کلمه — `2026-10-05T09:45:55+00:00`
@@ -50,11 +52,11 @@
 - **انارک** — اصفهان — `layflat` — 1278 کلمه — `2026-10-05T03:45:04+00:00`
 - **مجلسی** — اصفهان — `layflat` — 1250 کلمه — `2026-10-05T02:44:36+00:00`
 - **طالخونچه** — اصفهان — `layflat` — 1394 کلمه — `2026-10-05T02:43:23+00:00`
-- **باغشاد** — اصفهان — `layflat` — 2347 کلمه — `2026-10-05T00:53:16+00:00`
-- **ورنامخواست** — اصفهان — `layflat` — 1328 کلمه — `2026-10-05T00:51:46+00:00`
 
 ## خطاهای اخیر
 
+- **گلشهر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **کوهپایه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سجزی** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کوهپایه** — `tape20`: `Editorial review failed: internal link count must equal minimum`
 - **تودشک** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
@@ -63,8 +65,6 @@
 - **برزک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **برزک** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **اژیه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **هرند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **بادرود** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
