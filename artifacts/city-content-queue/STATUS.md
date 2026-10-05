@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-05T11:47:22+00:00`
+- آخرین بروزرسانی: `2026-10-05T12:56:13+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **895 از 1894 (47.25٪)**
 - تکمیل‌شده: **895**
@@ -55,16 +55,16 @@
 
 ## خطاهای اخیر
 
+- **گوگد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بریس** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بزمان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **بزمان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **گلشهر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کوهپایه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سجزی** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کوهپایه** — `tape20`: `Editorial review failed: internal link count must equal minimum`
 - **تودشک** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **قمصر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **قمصر** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **برزک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **برزک** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **اژیه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

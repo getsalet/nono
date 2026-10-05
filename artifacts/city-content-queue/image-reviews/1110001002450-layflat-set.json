@@ -1,55 +1,49 @@
 {
   "source_id": "1110001002450-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 40,
       "duplicate_roles": [],
       "reasons": [
-        "Panel 1: The background features a tractor actively operating in a crop field, which violates the rule prohibiting farm activity. The camera angle is a low shot rather than the required 'wide high-oblique'. The coils are prominent and centered, rather than small and off-center. ['Panel 2: The image is a low-angle shot that fails to provide the 'elevated technical comparison' required for the SELECTION EVIDENCE role. The coils are oversized and centered, not small and off-center as required for the editorial context. ",
-        "Panel 3: The image shows two coils lying on the ground, missing the specific 'equipment-only' requirement of showing a fixed pump, gauge, and manifold on an empty concrete pad. The background features two large, active tractors and farm structures, which contradicts the 'empty' and 'no farm activity' constraints. "
+        "Role 2 (Image 2) depicts a ground-level view that lacks the required 'steep near-overhead technical layout' and visible selection evidence (connector/diameter cue)."
       ],
-      "correction_prompt": "Panel 1: Regenerate a high-angle, wide shot of an empty field with the product coils small in the distance. Panel 2: Regenerate an elevated shot of the two coils on a clean, neutral surface to clearly show their structural differences without an active farm background. Panel 3: Regenerate a close-up of the coils on an empty concrete pad, including a visible pump and gauge unit, with no background farm machinery or activity.",
+      "correction_prompt": "Re-shoot Role 2 to use a steep near-overhead camera angle on textured soil, clearly displaying the two-coil pair and a visible connector or diameter cue to provide necessary selection evidence.",
       "panel_scores": [
-        35
+        40
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 40,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Panel 1) successfully depicts the EDITORIAL HERO with a high-oblique water channel context.",
-        "Role 2 (Panel 2) is required to be an 'elevated technical comparison' but presents a flat, eye-level tabletop product shot on a concrete slab, which is not an elevated camera angle.",
-        "Role 3 (Panel 3) is missing the specified 'one fixed pump and gauge and manifold', instead showing only the coils with a connector/fitting in the foreground.",
-        "Roles 2 and 3 are visually indistinguishable in layout (coils on concrete pad), environment, and technical narrative, creating layout duplication."
+        "Role 3 fails mandatory specification: the image displays a concrete pad with tractors but lacks the required technical equipment still life (fixed filter, gauge, regulator, and manifold) that must dominate the scene.",
+        "Role 3 fails physical plausibility/integration: the two coils are placed in the extreme foreground on the concrete surface, which contradicts the requirement that they 'sit at the far edge' or are physically integrated with the equipment."
       ],
-      "correction_prompt": "Regenerate Role 2 as a high-angle elevated shot comparing the two coils to show diameter or construction differences; regenerate Role 3 as an equipment-only record photo featuring a fixed pump, gauge, and manifold on the concrete pad with the coils as secondary elements.",
+      "correction_prompt": "In Role 3, place the two integrated coil pairs at the far edge of the concrete pad, and ensure the foreground is dominated by a complete technical pump station assembly (including a filter, gauge, regulator, and manifold) without the presence of oversized tractors.",
       "panel_scores": [
-        45
+        40
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 35,
+      "score": 45,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "Role 2 (image 2) contains an extra third coil (three total coils visible), violating the 'exactly two-coil pair' constraint for SELECTION EVIDENCE.",
-        "Role 3 (image 3) fails the HEADWORKS DETAIL specification as it lacks a fixed pump and manifold; it shows a gauge standing next to coils on concrete, which duplicates the generic hardware/product focus of Role 2.",
-        "Role 3's layout is too similar to Role 2's environment (flat concrete/slab) and fails to provide the distinct 'equipment-only' narrative required."
+        "Role 1 requires a wide elevated field view, but image 1 is a low angle shot that is almost identical to image 2 in composition.",
+        "Role 2 requires a steep near-overhead view, but image 2 is a low angle shot matching image 1, creating a duplicate environment.",
+        "Role 3 requires a concrete pad with a fixed equipment setup (pump, gauge, manifold); image 3 includes a large tractor and the background lacks the specific farm details required for the Iranian context."
       ],
-      "correction_prompt": "Regenerate Role 2 to display exactly two coils (one packaged, one bare) for comparison; Regenerate Role 3 to feature a fixed pump with gauges and manifold on an empty concrete pad, removing the third coil and ensuring the two-coil pair remains secondary/background.",
+      "correction_prompt": "Regenerate image 1 as a wide elevated field view and image 2 as a steep near-overhead soil-based technical layout; replace the tractor in image 3 with a clean concrete pad featuring a fixed pump and gauge system.",
       "panel_scores": [
-        35
+        45
       ],
       "set_attempt": 3
     }

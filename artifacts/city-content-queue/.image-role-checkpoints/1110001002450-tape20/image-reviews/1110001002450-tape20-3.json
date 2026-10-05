@@ -1,0 +1,77 @@
+{
+  "source_id": "1110001002450-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 33,
+      "product_height_percent": 45,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "The critical 'AFP | 09134922013' watermark is missing from the image.",
+        "The image is an outdoor field setting, not the mandated 'elevated equipment still life on a clean concrete pad'.",
+        "An additional second commercial package (the cardboard box on the right) is present, which is a hard reject condition."
+      ],
+      "correction_prompt": "Regenerate the image on a clean concrete pad (industrial/studio style). Include one AFP drip tape roll and a cardboard box on the far edge. Add the required text watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 16,
+      "product_height_percent": 18,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Hard reject: second commercial package (open cardboard box) is visible on the right side of the frame.",
+        "Missing required role element: no fixed manifold or regulator is visible on the concrete pad.",
+        "The product is not 'integrated at the far edge' as per the Headworks Detail blueprint; it is placed centrally in the foreground next to the pump.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 16% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate image. Remove the cardboard box on the right completely to show only the single roll. Add a fixed metal manifold and regulator valve to the concrete pad next to the pump. Move the white and blue roll to the far background edge of the pad to ensure it is the only commercial product. Maintain the 'AFP | 09134922013' watermark. Enlarge the product group from 16% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 34,
+      "product_height_percent": 42,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Presence of a second commercial package (carton) on the far right violates the 'exactly one AFP... carton' constraint."
+      ],
+      "correction_prompt": "Regenerate to strictly contain only one AFP drip-tape carton roll. Remove the second carton box on the right side while maintaining the equipment still-life on the concrete pad.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 55,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Hard reject: Presence of a second commercial package (the open cardboard carton behind the product violates the 'zero second commercial package' rule).",
+        "The text on the product roll reads 'Drip Irrigation Tape' rather than the required 'Drip-Tape' specified in the prompt details.",
+        "The product roll is slightly off-center to the right, which is acceptable, but the carton disrupts the clean 'far edge' requirement."
+      ],
+      "correction_prompt": "Remove the open cardboard box from the background completely. Ensure the text on the white roll reads 'Drip-Tape'. Keep the fixed equipment (gauges, filters) and the single roll.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: A second commercial package (an open cardboard box with 'AFP' branding) is visible in the background to the right of the product roll.",
+        "The presence of the open box violates the rule against multiple commercial packages."
+      ],
+      "correction_prompt": "Remove the open cardboard box on the right, leaving only the single drip tape roll integrated with the irrigation equipment setup.",
+      "attempt": 5
+    }
+  ]
+}
