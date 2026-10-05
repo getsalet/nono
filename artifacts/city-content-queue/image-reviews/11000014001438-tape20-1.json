@@ -1,0 +1,66 @@
+{
+  "source_id": "11000014001438-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 26,
+      "product_height_percent": 48,
+      "product_x_center_percent": 26,
+      "reasons": [
+        "Extra blue container (bottle) violates the hard reject rule against visible containers.",
+        "Role blueprint failed: The mandatory 'wide elevated field view' was not met, the image is a low-angle foreground shot.",
+        "Placement failed: The carton is not positioned on the lower-left third as required for the Editorial Hero role."
+      ],
+      "correction_prompt": "Regenerate as a wide elevated field view with long crop geometry. Place the single AFP drip-tape carton on the lower-left third of the frame. Remove all visible blue bottles or containers; include only fixed infrastructure like pumps and filters. Keep the farm background clearly visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 30,
+      "product_height_percent": 58,
+      "product_x_center_percent": 24,
+      "reasons": [
+        "Watermark does not match required string (09134922013) (shows 09134922013)",
+        "Roll lacks a clear and realistic contact shadow, resulting in a 'cutout' appearance."
+      ],
+      "correction_prompt": "Replace the bottom-right watermark with 'AFP | 09134922013'. Redefine the grounding of the roll by adding a strong, realistic contact shadow to eliminate the floating sticker effect.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 40,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Product bounding box exceeds maximum approved height (40% > 38%)",
+        "Product bounding box exceeds maximum approved width (24% > 38%)"
+      ],
+      "correction_prompt": "Scale down the AFP white-and-blue wide low cylindrical drip-tape carton roll to height <38% and width <38% of the frame. Keep the AFP | 09134922013 watermark in the bottom-right, maintain the wide elevated field view with long crop geometry, the integrated carton on the lower-left third, and the visible farm; keep zero people or body parts and no extra containers.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 22,
+      "product_height_percent": 40,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Product is a single wide low cylindrical drip-tape carton roll, matching the specified AFP white-and-blue packaging.",
+        "Dimensions are well within the approved envelope (18-38% width, up to 70% height).",
+        "Placement is integrated into the lower-left third, fulfilling the editorial hero role blueprint with a long crop geometry view.",
+        "Background consists of a field with irrigation lines, matching the context without forbidden objects or human presence.",
+        "Mandatory bottom-right watermark is present and correct.",
+        "Physical plausibility is maintained with correct perspective and contact shadows; no hard rejects found."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

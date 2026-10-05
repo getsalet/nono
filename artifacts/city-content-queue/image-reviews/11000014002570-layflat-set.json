@@ -1,7 +1,26 @@
 {
   "source_id": "11000014002570-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Roles 1 and 2 are near-duplicates: both use a low-angle, field-level camera height looking straight at the two coils, failing to provide the required visual hierarchy.",
+        "Role 1 is missing the mandatory 'wide elevated' perspective; instead of a high vantage point looking down at the field, the shot is ground-level.",
+        "Role 2 lacks the 'steep near-overhead technical still life' camera angle; it is a low horizontal shot similar to Role 1.",
+        "Role 3 successfully displays the concrete pad and equipment, but the panel fails as a whole due to the lack of distinction in the first two images."
+      ],
+      "correction_prompt": "Re-shoot image 1 from a wide, high-elevated drone vantage point overlooking the field. Re-shoot image 2 as a steep, near-overhead technical layout focusing on the coils on textured soil. Maintain the current composition for image 3.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 1
+    },
     {
       "pass": false,
       "score": 45,
@@ -10,32 +29,30 @@
         2
       ],
       "reasons": [
-        "Role 1 & Role 2: Both images are nearly identical in composition and context, featuring the same two-coil pair (packaged vs bare) in a low-angle, wide shot within a generic farm field. This violates the requirement for distinct camera angles and environments (e.g., Role 1 should be a high-oblique transfer context).",
-        "Role 3: The brief explicitly states 'equipment-only'. This image includes the packaged coil, a loose hose, and a connector tip, which are products rather than just equipment. The 'packaged coil' is also prominent and foregrounded, violating the requirement that the pair must remain 'small, separate and secondary'."
+        "Role 1 failed: The shot is a close-up on the ground, not a wide elevated field view as required.",
+        "Role 1 failed: The integrated coil and bare coil do not share the required soil plane in the lower third composition.",
+        "Role 2 failed: The camera angle is eye-level rather than the mandatory steep near-overhead technical layout.",
+        "Role 2 failed: Missing mandatory 'connector or diameter cue' details."
       ],
-      "correction_prompt": "Regenerate Role 1 as a distinct high-oblique aerial view of a water-transfer setup (field/canal) with the coils as small off-center details. Regenerate Role 3 to show a concrete pad with a fixed pump and gauge unit only, ensuring the packaged coil is strictly a small, backgrounded element.",
+      "correction_prompt": "Recreate Role 1 as a wide elevated view of a water-transfer field with both coils resting in the lower third; recreate Role 2 as a steep near-overhead technical layout on textured soil including visible connector or diameter cues.",
       "panel_scores": [
         45
       ],
-      "set_attempt": 1
+      "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 30,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 88,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 (EDITORIAL HERO) features a pump/gauge on the concrete pad, which is reserved for Role 3, and the product coils are significantly oversized compared to the 'small and separate' instruction.",
-        "Role 2 (SELECTION EVIDENCE) fails to show a diameter or construction difference between the coils and includes a third package (the blue container) in the foreground, violating the 'no third commercial package' constraint.",
-        "Role 3 (HEADWORKS DETAIL) is an equipment-only image; however, it introduces a large, boxed product standing upright in the background, which violates the requirement that the two-coil pair must remain small, separate, and secondary."
+        "Role 2 camera height is too low; it is an angled view rather than the required steep near-overhead technical still life.",
+        "Role 3's equipment is on soil/grass with crops in the background instead of on a clean concrete pad."
       ],
-      "correction_prompt": "Regenerate Role 1 as a wide, high-oblique shot of the water transfer channel with tiny, off-center coils and no equipment; for Role 2, ensure the two coils on the pad clearly differ in diameter/construction and remove the third package; for Role 3, place the two coils in the background as small secondary objects while keeping the focus on the fixed pump and manifold on the empty concrete pad.",
+      "correction_prompt": "Adjust Role 2 to a steep near-overhead top-down view on soil, and move the Role 3 subject to a clean concrete pad.",
       "panel_scores": [
-        30
+        88
       ],
-      "set_attempt": 2
+      "set_attempt": 3
     }
   ]
 }
