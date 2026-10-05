@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-05T07:53:46+00:00`
+- آخرین بروزرسانی: `2026-10-05T08:50:53+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **888 از 1894 (46.88٪)**
-- تکمیل‌شده: **888**
+- پیشرفت: **889 از 1894 (46.94٪)**
+- تکمیل‌شده: **889**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1006**
+- ناموفق: **1005**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,7 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **رزوه** — اصفهان — `tape20` — 1295 کلمه — `2026-10-05T08:45:23+00:00`
 - **ورزنه** — اصفهان — `tape20` — 1564 کلمه — `2026-10-05T07:53:43+00:00`
 - **هرند** — اصفهان — `tape20` — 1262 کلمه — `2026-10-05T07:47:35+00:00`
 - **نطنز** — اصفهان — `layflat` — 1503 کلمه — `2026-10-05T06:57:47+00:00`
@@ -51,10 +52,12 @@
 - **قهدریجان** — اصفهان — `layflat` — 1646 کلمه — `2026-10-04T23:36:47+00:00`
 - **مینادشت** — اصفهان — `tape20` — 1393 کلمه — `2026-10-04T23:36:24+00:00`
 - **ابریشم** — اصفهان — `layflat` — 1491 کلمه — `2026-10-04T22:38:10+00:00`
-- **طاد** — اصفهان — `tape20` — 1247 کلمه — `2026-10-04T22:37:21+00:00`
 
 ## خطاهای اخیر
 
+- **قمصر** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **برزک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **برزک** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **اژیه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **هرند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بادرود** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -62,9 +65,6 @@
 - **کهریزسنگ** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **جوزدان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **نایین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **بافران** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کرکوند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **طالخونچه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 
