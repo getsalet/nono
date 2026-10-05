@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-05T21:47:07+00:00`
+- آخرین بروزرسانی: `2026-10-05T22:39:50+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **905 از 1894 (47.78٪)**
 - تکمیل‌شده: **905**
@@ -55,16 +55,16 @@
 
 ## خطاهای اخیر
 
+- **پلان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **آرمرده** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **آرمرده** — `layflat`: `Editorial review failed: word count below minimum`
+- **بانه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **قرقری** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **محمدآباد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **محمدآباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بنت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **ادیمی** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **چانف** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **لادیز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **ادیمی** — `tape20`: `Editorial review failed: internal link count must equal minimum`
-- **هیدوچ** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **ساربوک** — `tape20`: `Editorial review failed: internal link count must equal minimum`
 
 ## فایل‌های خروجی
 

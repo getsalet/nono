@@ -1,0 +1,76 @@
+{
+  "source_id": "1120001002457-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 48,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Multiple commercial packages are visible (a second AFP cardboard box).",
+        "The text on the product roll is gibberish ('Drip Irrigalion Taje').",
+        "A visible black drip line/hose is wrapped through and around the equipment behind the roll, violating the 'no pipe through the roll' constraint."
+      ],
+      "correction_prompt": "Remove the second cardboard box and all wrapping black hose lines. Fix the roll text to clear 'AFP Drip Tape 20'. Retain the 'AFP | 09134922013' watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 48,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "Hard reject: Presence of a second commercial package (brown cardboard box labeled 'AFP')",
+        "Hard reject: The 'AFP' roll text appears to be painted or printed directly onto a plastic reel rather than on a paper carton, and the geometry lacks visible carton packaging features."
+      ],
+      "correction_prompt": "Remove the cardboard box. Replace the central irrigation reel with a white and blue cardboard carton box roll containing drip tape. Ensure the packaging clearly resembles a paper/corrugated fiberboard carton with printed branding, not a molded plastic spool.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 30,
+      "product_height_percent": 42,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Hard reject: A second commercial package (brown 'AFP' carton) is visible to the right, violating the constraint of exactly one integrated roll.",
+        "The 'AFP' text on the roll is rendered as a solid blue block graphic rather than readable typography, triggering the 'gibberish writing' rejection.",
+        "The silver cylinder integrated into the pump assembly closely resembles a spray canister or pesticide container, which is a hard reject item."
+      ],
+      "correction_prompt": "Remove the brown carton on the right; replace the silver canister component with a standard metal valve or pump housing; correct the typography on the roll to display legible 'AFP' text.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 28,
+      "product_height_percent": 32,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "A second commercial package (AFP carton) is present in the background"
+      ],
+      "correction_prompt": "Remove the second AFP cardboard box from the background; keep only the single white-and-blue drip-tape roll on the concrete pad",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 33,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "Multiple commercial containers present in the foreground equipment setup (white and blue cylinder, black bottle/filter housings) which are hard rejects under 'bottle, jar, canister...'.",
+        "A second, open cardboard commercial package is visible in the background, violating the 'second commercial package' hard reject rule.",
+        "The image displays a complex irrigation manifold setup with visible pump/bottle units rather than a 'fixed filter' still life; the presence of multiple unidentified cylindrical devices compromises the physical plausibility and clean integration required for the role."
+      ],
+      "correction_prompt": "Remove the open cardboard box from the background. Redesign the foreground equipment to consist solely of a single integrated inline filter and manifold structure (no white or blue canister bodies). Ensure the equipment looks like fixed irrigation hardware (brass/copper/steel components) rather than loose containers. Keep the single closed AFP roll in the foreground and the watermark.",
+      "attempt": 5
+    }
+  ]
+}
