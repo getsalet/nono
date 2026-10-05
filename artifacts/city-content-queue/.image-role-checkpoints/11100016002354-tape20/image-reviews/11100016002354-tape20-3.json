@@ -1,0 +1,77 @@
+{
+  "source_id": "11100016002354-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 61,
+      "reasons": [
+        "The image contains a cardboard box which is rejected as a 'second commercial package' and 'jar/canister/container' equivalent.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is missing.",
+        "The background contains active crop rows, whereas the role blueprint specifies a clean concrete pad context.",
+        "A pipe/hose is present, which conflicts with the 'zero pipe through the roll' constraint regarding extraneous infrastructure."
+      ],
+      "correction_prompt": "Remove the cardboard box and the crop rows to ensure a clean concrete pad. Add the required watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 27,
+      "product_height_percent": 38,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Contains two commercial packages: the required roll plus a second open 'AFP' carton box on the right which triggers a hard reject for 'second commercial package'.",
+        "Image role blueprint failure: The brief specifies the carton should be at the 'far edge' and integrated; the second box is foregrounded and competes with the roll.",
+        "Watermark discrepancy: The image displays 'AFP | 09134922013' while the strict requirement specified 'AFP | 09134922013' (Note: While the numbers match the prompt text, the presence of the second box is the primary structural failure)."
+      ],
+      "correction_prompt": "Remove the open carton box on the far right. Leave only the single white-and-blue drip tape roll integrated with the headworks assembly on the concrete pad. Maintain the bottom-right watermark.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible in the background.",
+        "Missing required fixed infrastructure components such as a filter, pressure gauge, and manifold; the scene shows a hose reel instead."
+      ],
+      "correction_prompt": "Remove the cardboard box background element. Replace the hose reel with a fixed filtration system including a filter, pressure gauge, and manifold. Keep the AFP drip tape roll at the far edge.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "A second commercial package (cardboard carton) is visible in the background, which is a hard reject.",
+        "The product bounding box (estimated width 25% to 28%) extends too far to the right, overlapping with the prohibited second commercial package."
+      ],
+      "correction_prompt": "Remove the cardboard carton box in the background completely. Ensure the background only contains the concrete pad, soil, and distant crop rows. Maintain the AFP white and blue drip tape roll on the left-center without any other commercial packaging nearby.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Image contains a second commercial package (the brown AFP carton) on the right side, which is a hard reject element.",
+        "The image contains black tubing and a connector head on the concrete pad; these objects are explicitly classified as hard rejects ('layflat hose', 'bottle, jar, canister... container') in the prompt instructions."
+      ],
+      "correction_prompt": "Regenerate the image to remove the brown carton box and the black tubing/coil with connector on the concrete pad. Keep only the white AFP drip tape roll and the fixed filter/pressure gauge/regulator hardware.",
+      "attempt": 5
+    }
+  ]
+}
