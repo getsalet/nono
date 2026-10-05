@@ -1,4 +1,5 @@
-name: Upload merged 865-post city images archive via FTPS
+# Retry requested for updated 888-post archive
+name: Upload merged 888-post city images archive via FTPS
 
 on:
   workflow_dispatch:
@@ -21,7 +22,7 @@ env:
   FTP_REMOTE_DIR: /
   FTP_TLS_VERIFY: 'false'
   FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-  ARCHIVE_NAME: nono-865-city-post-images.zip
+  ARCHIVE_NAME: nono-888-city-post-images.zip
 
 jobs:
   build-and-upload:
@@ -40,12 +41,15 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           from zipfile import ZipFile, ZIP_STORED
-          import os, re
+          import json, os, re
           root = Path('artifacts/city-content-queue')
           sql = (root / 'create-all-completed.sql').read_text(encoding='utf-8')
+          post_count = sql.count('START TRANSACTION;')
+          if post_count != 888:
+              raise SystemExit(f'Expected 888 post transactions, found {post_count}')
           refs = re.findall(r"'_wp_attached_file','2026/09/navar-city-generated/([^']+)'", sql)
-          if len(refs) != 3347 or len(set(refs)) != 3347:
-              raise SystemExit(f'Expected 3347 unique SQL image references, found {len(refs)} refs / {len(set(refs))} unique')
+          if len(refs) != len(set(refs)):
+              raise SystemExit(f'Expected unique SQL image references, found {len(refs)} refs / {len(set(refs))} unique')
           sources = {}
           loose = root / 'images'
           if loose.exists():
@@ -66,7 +70,9 @@ jobs:
                   if kind == 'file': archive.write(source, target)
                   else:
                       with ZipFile(source) as batch: archive.writestr(target, batch.read(member))
-          print(f'Created {output} with {len(refs)} images ({output.stat().st_size} bytes)')
+          meta = {'post_count': post_count, 'image_count': len(refs), 'size': output.stat().st_size}
+          Path('/tmp/archive-meta.json').write_text(json.dumps(meta), encoding='utf-8')
+          print(f'Created {output} with {post_count} posts and {len(refs)} images ({output.stat().st_size} bytes)')
           PY
       - name: Upload and verify archive via explicit FTPS
         id: upload
@@ -115,12 +121,14 @@ jobs:
           success = os.environ.get('BUILD_OUTCOME') == 'success' and os.environ.get('UPLOAD_OUTCOME') == 'success'
           upload_log = Path('/tmp/upload.log')
           error_tail = None if success or not upload_log.exists() else upload_log.read_text(encoding='utf-8', errors='replace')[-4000:]
+          meta_path = Path('/tmp/archive-meta.json')
+          meta = json.loads(meta_path.read_text(encoding='utf-8')) if meta_path.exists() else {}
           marker = Path('artifacts/city-content-queue/merged-images-ftps-upload.json')
           marker.write_text(json.dumps({
               'archive': archive.name,
-              'post_count': 865,
-              'image_count': 3347,
-              'size': archive.stat().st_size if archive.exists() else None,
+              'post_count': meta.get('post_count'),
+              'image_count': meta.get('image_count'),
+              'size': meta.get('size'),
               'verified': success,
               'build_outcome': os.environ.get('BUILD_OUTCOME'),
               'upload_outcome': os.environ.get('UPLOAD_OUTCOME'),
