@@ -1,0 +1,53 @@
+{
+  "source_id": "11100017001078-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 74,
+      "product_height_percent": 42,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Visible human legs and feet (driver) in the background on the tractor, violating the zero-person rule."
+      ],
+      "correction_prompt": "Remove all visible human body parts, specifically the driver's legs and boots on the tractor. Ensure no humans are present in the background or foreground.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 45,
+      "product_height_percent": 40,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The right object is a flat coiled hose/ribbon, not a 3D 'bare black woven coil' or standard irrigation tape roll.",
+        "The left object is a packaged coil, but the right object is not the requested second coil, violating the 'approved layflat pair' requirement.",
+        "Role violation: The scene is on open soil/dirt, not on a 'clean concrete pad' as requested in the headworks detail role."
+      ],
+      "correction_prompt": "Regenerate on a clean concrete pad. Place one coiled black tape and one packaged AFP coil side-by-side. Keep the background pump and manifold. Ensure both are standard coiled tape rolls.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 74,
+      "product_height_percent": 38,
+      "product_x_center_percent": 46,
+      "reasons": [
+        "The image correctly displays the two required objects: a packaged AFP coil and a bare black woven coil.",
+        "The combined width of the product pair is approximately 74% of the frame, which falls within the accepted 25-82% range.",
+        "Both coils are sitting on a clean, flat concrete pad (infrastructure), and the 'distant unattended tractor' is allowed as relevant background equipment, not an extra commercial product.",
+        "The watermark 'AFP | 09134922013' is correctly displayed in the bottom-right corner.",
+        "There are zero people or human body parts in the frame.",
+        "The perspective and contact shadows of both coils are physically plausible with no pasted/cutout artifacts or white halos.",
+        "Placement is centered/lower, which is an editorial preference and not a standalone hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
