@@ -1,40 +1,58 @@
 {
   "source_id": "11000017002448-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 1 fails to function as an EDITORIAL HERO; it is a low-level field shot with the coils as primary subjects, not a wide high-oblique water-transfer context that keeps the coils small and off-center",
-        "Panel 2 shows a cardboard box with extra panels, which breaks the required two-coil composition and introduces a non-approved packaging artifact",
-        "Panel 3 does not display the required equipment-only headworks detail: a fixed pump, gauge, and manifold on an empty concrete pad are absent, and the two coils remain co-primary rather than secondary",
-        "Overall, the three images share an identical ground-level camera angle and similar field layout, so they fail the requirement of visibly distinct camera height/angle and technical narrative"
+      "score": 45,
+      "duplicate_roles": [
+        1
       ],
-      "correction_prompt": "Replace the set with a true high-oblique wide hero shot that keeps both coils small and off-center, an elevated two-coil comparison showing diameter/construction differences with no box, and a separate elevated equipment-only headworks shot with a fixed pump, gauge, and manifold on an empty concrete pad while the two coils remain small and secondary",
+      "reasons": [
+        "Role 3 violates the specific equipment constraint by missing the required fixed pump, gauge, and manifold; it incorrectly features a tractor instead.",
+        "Role 1's camera angle and environmental composition are nearly identical to Role 2, rendering them near-duplicates.",
+        "The mandatory 'wide elevated field view' for Role 1 is not met due to the duplicated low-angle perspective of Role 2."
+      ],
+      "correction_prompt": "For Role 1, increase the camera elevation to a high-angle wide field view to differentiate from Role 2. For Role 3, remove the tractor and replace it with a dedicated technical still life on a concrete pad featuring a fixed pump, pressure gauge, and manifold with the two-coil pair at the far edge.",
       "panel_scores": [
-        35
+        45
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 30,
+      "score": 45,
       "duplicate_roles": [
-        2,
-        3
+        1
       ],
       "reasons": [
-        "Role 2 (Selection Evidence) and Role 3 (Headworks Detail) are nearly identical: both use the same static top-down angle on a flat concrete pad, with a nearly identical arrangement of the same 3 coil objects.",
-        "The visual narrative between Role 2 and Role 3 is duplicated (Role 3 does not elevate the technical focus or change the environment structure significantly enough to be distinct from Role 2).",
-        "Role 2 is missing the required 'gauge and manifold' equipment for the Headworks context, and the overall composition fails the 'visibly distinct camera height/angle' requirement for a 3-image editorial set."
+        "Role 2 (Image 2) lacks the mandatory 'connector or diameter cue' required for Selection Evidence.",
+        "Role 3 (Image 3) fails to provide a complete 'Headworks' equipment still life; the background tractor and coil pair are present, but the specific fixed pump, regulator, and manifold described in the role requirements are missing or not depicted as the dominant subject.",
+        "Image 1 and Image 2 share a similar near-field perspective (near-duplicate camera/environment structure), failing to establish the distinct 'wide elevated' view required for Role 1 versus 'near-overhead' for Role 2."
       ],
-      "correction_prompt": "Regenerate Role 3 to visually distinguish it from Role 2 by changing the camera angle to a high-oblique or horizontal eye-level shot, adding the required gauge and manifold hardware, and shifting the composition so the coils are smaller and clearly secondary.",
+      "correction_prompt": "Regenerate the panel to strictly enforce role-specific camera angles: Image 1 must be a wide landscape shot; Image 2 must be a top-down close-up including a diameter ruler or connector; Image 3 must clearly depict a fixed pump and manifold assembly on a concrete pad, replacing the tractor/soil composition.",
       "panel_scores": [
-        30
+        45
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 is not a 'wide elevated water-transfer field view'; it is a ground-level still life with a foreground product composition.",
+        "Role 2 is not a 'steep near-overhead technical layout'; it is a horizontal mid-shot similar to Role 1.",
+        "Role 3 lacks mandatory equipment evidence (fixed filter, regulator, and manifold)."
+      ],
+      "correction_prompt": "Redraw Role 1 as a wide elevated view of a field irrigation system and Role 2 as a steep overhead shot of the soil layout showing a connector; for Role 3, add a fixed filter, regulator, and manifold assembly on the concrete pad.",
+      "panel_scores": [
+        40
+      ],
+      "set_attempt": 3
     }
   ]
 }
