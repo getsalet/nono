@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-05T07:00:44+00:00`
+- آخرین بروزرسانی: `2026-10-05T07:53:46+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **886 از 1894 (46.78٪)**
-- تکمیل‌شده: **886**
+- پیشرفت: **888 از 1894 (46.88٪)**
+- تکمیل‌شده: **888**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **1008**
+- ناموفق: **1006**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **ورزنه** — اصفهان — `tape20` — 1564 کلمه — `2026-10-05T07:53:43+00:00`
+- **هرند** — اصفهان — `tape20` — 1262 کلمه — `2026-10-05T07:47:35+00:00`
 - **نطنز** — اصفهان — `layflat` — 1503 کلمه — `2026-10-05T06:57:47+00:00`
 - **نطنز** — اصفهان — `tape20` — 1185 کلمه — `2026-10-05T06:52:12+00:00`
 - **علویجه** — اصفهان — `tape20` — 1299 کلمه — `2026-10-05T05:49:29+00:00`
@@ -50,11 +52,11 @@
 - **مینادشت** — اصفهان — `tape20` — 1393 کلمه — `2026-10-04T23:36:24+00:00`
 - **ابریشم** — اصفهان — `layflat` — 1491 کلمه — `2026-10-04T22:38:10+00:00`
 - **طاد** — اصفهان — `tape20` — 1247 کلمه — `2026-10-04T22:37:21+00:00`
-- **گزبرخوار** — اصفهان — `layflat` — 1784 کلمه — `2026-10-04T21:48:21+00:00`
-- **وزوان** — اصفهان — `tape20` — 1235 کلمه — `2026-10-04T20:39:23+00:00`
 
 ## خطاهای اخیر
 
+- **اژیه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **هرند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بادرود** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **خالدآباد** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کهریزسنگ** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **بافران** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کرکوند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **طالخونچه** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **کرکوند** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **دیزیچه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
