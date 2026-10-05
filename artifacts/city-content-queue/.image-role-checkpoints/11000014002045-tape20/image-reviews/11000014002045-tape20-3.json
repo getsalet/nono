@@ -1,0 +1,76 @@
+{
+  "source_id": "11000014002045-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 25,
+      "product_height_percent": 50,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Second commercial package visible (cardboard box in background)",
+        "Gibberish/misleading text on product label (reads 'Irrigation TQJ' instead of 'Tape')",
+        "Text corruption on label violates hard reject criteria for gibberish writing"
+      ],
+      "correction_prompt": "Regenerate image removing the cardboard box in the background. Correct the text on the white and blue roll to read 'Drip Irrigation Tape'. Ensure all text is clear, legible, and free of gibberish.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 48,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "The image contains two AFP commercial packages (the roll and the cardboard box in the background), which violates the requirement for exactly one product.",
+        "Visible text on the product roll is gibberish ('DrIp Irrigaiun TapT'), which is a hard reject.",
+        "The product name 'Drip-Tape' (implied by the gibberish) is not 'drip tape' as per the role description, but the main issue is the presence of the second package and illegible text."
+      ],
+      "correction_prompt": "Regenerate the image to show only one AFP white-and-blue wide low cylindrical drip-tape roll on the concrete pad. Remove the cardboard box in the background. Ensure the text on the roll is clearly legible and correctly spelled.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 42,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Hard reject: presence of a second commercial package (large cardboard box) which violates the 'exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll' requirement."
+      ],
+      "correction_prompt": "Regenerate image showing only the white-and-blue cylindrical drip-tape roll on the concrete pad. Remove the cardboard box completely. Maintain the irrigation manifold, pressure gauge, and filter on the left side. Ensure the roll is the sole commercial packaging element.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible on the right, which is a hard reject.",
+        "The primary object (drip tape roll) is on the right; the role blueprint specifies the integrated product carton should be at the far edge."
+      ],
+      "correction_prompt": "Remove the secondary cardboard box on the right. Ensure the primary AFP carton roll is the sole commercial package clearly integrated at the far edge of the setup.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 25,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Missing mandatory bottom-right watermark 'AFP | 09134922013'.",
+        "Visual presence of a second commercial package (brown cardboard AFP box in the background).",
+        "Visual presence of a fertilizer/pesticide container (black cylindrical vessel integrated into the pump structure on the left)."
+      ],
+      "correction_prompt": "Remove the bottom-right watermark, remove the brown AFP cardboard box in the background, and remove the black cylindrical container attached to the blue pump rig.",
+      "attempt": 5
+    }
+  ]
+}
