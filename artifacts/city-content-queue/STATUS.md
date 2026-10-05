@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-05T13:52:03+00:00`
+- آخرین بروزرسانی: `2026-10-05T14:51:38+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **898 از 1894 (47.41٪)**
-- تکمیل‌شده: **898**
+- پیشرفت: **900 از 1894 (47.52٪)**
+- تکمیل‌شده: **900**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **996**
+- ناموفق: **994**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -18,8 +18,7 @@
 
 ## بسته‌های آماده آپلود
 
-- بسته‌های 50تایی آماده: **17**
-- [batch-008-posts-0351-0400.zip](./packages/batch-008-posts-0351-0400.zip) — 50 پست — 18827412 بایت
+- بسته‌های 50تایی آماده: **18**
 - [batch-009-posts-0401-0450.zip](./packages/batch-009-posts-0401-0450.zip) — 50 پست — 17601600 بایت
 - [batch-010-posts-0451-0500.zip](./packages/batch-010-posts-0451-0500.zip) — 50 پست — 13986604 بایت
 - [batch-011-posts-0501-0550.zip](./packages/batch-011-posts-0501-0550.zip) — 50 پست — 12330394 بایت
@@ -29,9 +28,12 @@
 - [batch-015-posts-0701-0750.zip](./packages/batch-015-posts-0701-0750.zip) — 50 پست — 11090318 بایت
 - [batch-016-posts-0751-0800.zip](./packages/batch-016-posts-0751-0800.zip) — 50 پست — 11287604 بایت
 - [batch-017-posts-0801-0850.zip](./packages/batch-017-posts-0801-0850.zip) — 50 پست — 11408618 بایت
+- [batch-018-posts-0851-0900.zip](./packages/batch-018-posts-0851-0900.zip) — 50 پست — 12030197 بایت
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **سرجنگل** — سیستان و بلوچستان — `tape20` — 1545 کلمه — `2026-10-05T14:51:24+00:00`
+- **بنجار** — سیستان و بلوچستان — `layflat` — 1370 کلمه — `2026-10-05T14:48:42+00:00`
 - **نگور** — سیستان و بلوچستان — `tape20` — 1239 کلمه — `2026-10-05T13:51:56+00:00`
 - **پیشین** — سیستان و بلوچستان — `layflat` — 1536 کلمه — `2026-10-05T13:50:04+00:00`
 - **پارود** — سیستان و بلوچستان — `tape20` — 1285 کلمه — `2026-10-05T13:49:39+00:00`
@@ -50,11 +52,11 @@
 - **گلدشت** — اصفهان — `tape20` — 1579 کلمه — `2026-10-05T05:46:04+00:00`
 - **گلدشت** — اصفهان — `layflat` — 1236 کلمه — `2026-10-05T05:46:00+00:00`
 - **نایین** — اصفهان — `tape20` — 1227 کلمه — `2026-10-05T04:52:48+00:00`
-- **جوزدان** — اصفهان — `layflat` — 1135 کلمه — `2026-10-05T04:50:43+00:00`
-- **انارک** — اصفهان — `tape20` — 1273 کلمه — `2026-10-05T03:45:09+00:00`
 
 ## خطاهای اخیر
 
+- **جزینک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بنجار** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **چگرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **گوگد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بریس** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **گلشهر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کوهپایه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سجزی** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کوهپایه** — `tape20`: `Editorial review failed: internal link count must equal minimum`
-- **تودشک** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 

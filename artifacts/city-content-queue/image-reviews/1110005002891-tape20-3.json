@@ -1,0 +1,80 @@
+{
+  "source_id": "1110005002891-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 18,
+      "product_height_percent": 28,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: Second commercial package (open cardboard box) is present.",
+        "Hard reject: Layflat hose and pipe visible through/near the roll.",
+        "Hard reject: Visible bottle/canister container (blue cylindrical tank) on the pump head.",
+        "Hard reject: Missing mandatory watermark 'AFP | 09134922013'."
+      ],
+      "correction_prompt": "Regenerate to remove the open cardboard box, blue bottle/canister, and the coiled hose. Include only the white-and-blue AFP drip-tape carton roll on a concrete pad with a fixed pressure gauge and regulator. Add the watermark 'AFP | 09134922013' in the bottom right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 22,
+      "product_height_percent": 34,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Second commercial package: The image displays an open cardboard carton with the 'AFP' brand behind the roll. The prompt explicitly requires 'exactly one' carton roll and lists 'second commercial package' as a hard reject. The presence of a separate box violates the constraint to show a single integrated product unit."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right. Keep only the white and blue cylindrical drip tape roll. Ensure it is placed at the far edge of the concrete pad next to the fixed irrigation equipment, maintaining the clean still-life context without any secondary packaging.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 28,
+      "product_height_percent": 33,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible in the background, violating the single package rule",
+        "Pipe/hose is seen passing through the center hole of the drip tape roll, violating the hard reject criteria for pipes through the roll",
+        "The text on the product packaging is gibberish/distorted (e.g., 'Iritigalun')"
+      ],
+      "correction_prompt": "Regenerate the image removing the cardboard box and the central pipe passing through the drip tape roll. Correct the packaging text to clearly read 'AFP Drip Irrigation Tape' without gibberish characters.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 18,
+      "product_height_percent": 28,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Contains a second commercial package (the large brown AFP cardboard box in the background).",
+        "The product placement is centered/lower-third rather than 'at the far edge' as preferred by the role blueprint, although centered placement itself is not a hard reject.",
+        "Distant crop rows are visible, which are generally allowed, but the hard reject criteria regarding the second package (the box) must take precedence."
+      ],
+      "correction_prompt": "Remove the large brown AFP cardboard box from the background to ensure only one commercial package (the drip tape roll) is visible. Retain the elevated equipment still life on the concrete pad.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 36,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "The image correctly displays exactly one AFP white-and-blue drip-tape roll integrated with the headworks equipment on a concrete pad.",
+        "The product dimensions are physically plausible and fall within the approved width and height envelopes.",
+        "Zero people or human body parts are present in the frame.",
+        "The required watermark 'AFP | 09134922013' is correctly positioned in the bottom right corner.",
+        "Commercial packaging (the open carton) matches the product brand without introducing prohibited items or stickers."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
