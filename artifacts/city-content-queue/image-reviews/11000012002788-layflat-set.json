@@ -1,25 +1,53 @@
 {
   "source_id": "11000012002788-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 20,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
+      "score": 55,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails by placing the product large and centered in the foreground instead of small, separate, and off-center in a wide high-oblique context. The product is not a secondary element. The required water-transfer context is weak and the layout conflicts with the 'SELECTION EVIDENCE' and 'HEADWORKS' roles.",
-        "Role 2 fails by adding a third commercial item (the wooden PVC spool/pipe) which is explicitly forbidden. The layout (two coils on dirt) is nearly identical to Role 3, resulting in a duplication of the product presentation without the required high-elevation camera angle or distinct technical narrative.",
-        "Role 3 fails to meet the 'HEADWORKS DETAIL' requirement. The image shows only two coils of hose on a concrete slab with a distant tractor; it does not feature the required equipment (fixed pump, gauge, and manifold). This layout is effectively a duplicate of Role 2 with a background swap."
+        "Role 3 (HEADWORKS DETAIL) mandates a concrete-pad equipment still life featuring a complete fixed filter, gauge, regulator, and manifold.",
+        "The third image only displays a tractor and generic hoses on a concrete surface, completely missing the mandatory equipment elements.",
+        "There is no physically implausible integration or living subject violation."
       ],
-      "correction_prompt": "Replace all three images: 1. Wide shot of the water channel with tiny product on the distant edge; 2. High-elevation close-up of only the two coils showing diameter difference; 3. Close-up of pump, gauge, and manifold on a concrete pad with tiny coils in the background.",
+      "correction_prompt": "Re-render image 3 as a close-up concrete-pad equipment still life featuring a fixed pump, gauge, and manifold assembly, with the integrated two-coil pair located at the far edge of the frame.",
       "panel_scores": [
-        20
+        55
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Roles 1 and 2 are near-duplicates; both show the same two-coil product pair on dirt from nearly identical low horizontal camera angles, failing to provide the required distinct near-overhead technical view for Role 2.",
+        "Role 1 is not a wide elevated view; the camera is positioned at a low level on the soil, missing the required elevated perspective."
+      ],
+      "correction_prompt": "Regenerate the set with a wide elevated view for Role 1 and a steep near-overhead angle for Role 2 to differentiate the environments and camera heights.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 (Editorial Hero): The wide elevated view successfully displays the open rural landscape with the two coils integrated on the soil plane in the lower third.",
+        "Role 2 (Selection Evidence): The steep, near-overhead angle focuses on the textured soil, clearly showing the coil pairs and the connector/diameter cue, which provides the necessary technical context.",
+        "Role 3 (Headworks Detail): The image shifts to a concrete pad setting and introduces the complete irrigation equipment (pump and manifold), with the coils positioned at the far edge as a reference."
+      ],
+      "correction_prompt": "No further correction required; the current panel composition successfully distinguishes the three roles through camera height and surface environment.",
+      "panel_scores": [
+        95
+      ],
+      "set_attempt": 3
     }
   ]
 }
