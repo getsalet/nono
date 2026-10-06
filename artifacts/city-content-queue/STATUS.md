@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-06T04:47:34+00:00`
+- آخرین بروزرسانی: `2026-10-06T05:47:11+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **917 از 1894 (48.42٪)**
-- تکمیل‌شده: **917**
+- پیشرفت: **919 از 1894 (48.52٪)**
+- تکمیل‌شده: **919**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **977**
+- ناموفق: **975**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **آجین** — همدان — `tape20` — 1372 کلمه — `2026-10-06T05:44:55+00:00`
+- **آجین** — همدان — `layflat` — 2262 کلمه — `2026-10-06T05:44:29+00:00`
 - **مالوجه** — کردستان — `layflat` — 1329 کلمه — `2026-10-06T04:47:32+00:00`
 - **چناره** — کردستان — `tape20` — 1291 کلمه — `2026-10-06T04:45:38+00:00`
 - **قروه** — کردستان — `tape20` — 1480 کلمه — `2026-10-06T04:44:59+00:00`
@@ -50,11 +52,11 @@
 - **اسپکه** — سیستان و بلوچستان — `tape20` — 1713 کلمه — `2026-10-05T17:39:28+00:00`
 - **ساربوک** — سیستان و بلوچستان — `layflat` — 1527 کلمه — `2026-10-05T16:45:47+00:00`
 - **سرجنگل** — سیستان و بلوچستان — `tape20` — 1545 کلمه — `2026-10-05T14:51:24+00:00`
-- **بنجار** — سیستان و بلوچستان — `layflat` — 1370 کلمه — `2026-10-05T14:48:42+00:00`
-- **نگور** — سیستان و بلوچستان — `tape20` — 1239 کلمه — `2026-10-05T13:51:56+00:00`
 
 ## خطاهای اخیر
 
+- **چناره** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **موچش** — `tape20`: `Editorial review failed: non-20cm emitter spacing claim; word count below minimum`
 - **دزج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **دلبران** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **زرینه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **یاسوکند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **دهگلان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **دهگلان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **یاسوکند** — `tape20`: `image hard gate rejected role 1 after 5 attempt`
-- **پیرتاج** — `layflat`: `Editorial review failed: internal link count must equal minimum`
 
 ## فایل‌های خروجی
 
