@@ -1,43 +1,53 @@
 {
   "source_id": "1120002001455-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 20,
-      "duplicate_roles": [
-        2
-      ],
+      "score": 60,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 2 (Image 2) violates the specific constraint 'no third commercial package, bottle, person or extra coil' by including a large wooden connector/plug and a small bottle in the foreground, which are not part of the approved two-coil pair.",
-        "Role 3 (Image 3) fails the 'HEADWORKS DETAIL' requirement, as it shows only the two coils on a concrete pad and completely lacks the mandatory fixed pump, gauge, and manifold equipment.",
-        "Role 1 (Image 1) features a person operating the tractor, which conflicts with the requirement to have 'no person' in the editorial set (allowed contexts are 'unattended').",
-        "Layouts for Roles 1 and 2 are highly repetitive, with the product pair placed in the bottom foreground of both images against a similar dirt field background."
+        "Role 2 missing mandatory steep near-overhead technical still life framing; it is a low-angle horizontal view similar to Role 1, failing the 'Selection Evidence' requirement."
       ],
-      "correction_prompt": "Regenerate the set by: 1) removing the tractor operator in Role 1 to show only the machine; 2) removing the wooden connector and small bottle from Role 2 to isolate only the approved two-coil pair; 3) adding the required fixed pump, gauge, and manifold to the concrete pad in Role 3.",
+      "correction_prompt": "Re-shoot or generate Role 2 with a steep near-overhead camera angle looking down on the two coils placed on the textured soil to match the technical still life brief.",
       "panel_scores": [
-        20
+        60
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 20,
+      "score": 45,
       "duplicate_roles": [
-        1,
-        2,
         3
       ],
       "reasons": [
-        "Role 2 contains prohibited objects: a container/bottle (dosing pump or chemical tank) and is not a pure 'technical comparison' of the two coils.",
-        "Role 3 fails to meet the 'HEADWORKS DETAIL' brief: it lacks the fixed pump, gauge, and manifold required on the concrete pad, showing only the coils.",
-        "Layout duplication: Roles 1 and 3 use the identical 'packaged coil on left, bare coil on right' composition, violating the requirement for visibly distinct layouts."
+        "Role 3 is missing the mandatory 'HEADWORKS' components (fixed pump, gauge, and manifold) specified in the requirements.",
+        "Image 3 features a tractor and large chemical tank in the background, which constitutes 'extra commercial products' not part of the approved filter system."
       ],
-      "correction_prompt": "Re-capture Role 2 to show only the two coils comparing diameter/construction with no bottles or pumps. Re-capture Role 3 to feature a high-angle shot of a fixed pump and gauge setup on a concrete pad, with the coils appearing small and secondary in the background.",
+      "correction_prompt": "Regenerate Role 3 to depict a concrete-pad still life showing a fixed pump, gauge, and manifold with the two-coil pair at the edge; remove the tractor and tank.",
       "panel_scores": [
-        20
+        45
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 and Role 2 are near-duplicates in camera structure: both present a near-surface, soil-based still life with identical framing and placement of the two-coil pair.",
+        "Role 1 fails its mandatory 'wide elevated field view' requirement; the camera is too low and tightly composed, making it indistinguishable from Role 2.",
+        "Role 3 shows the required concrete pad, complete gauge and manifold, but lacks the 'fixed pump' specified in the description."
+      ],
+      "correction_prompt": "Reshoot Role 1 with a significantly elevated wide-angle camera to separate it from the close-up soil still life of Role 2, and add a fixed pump to the equipment setup in Role 3.",
+      "panel_scores": [
+        62
+      ],
+      "set_attempt": 3
     }
   ]
 }
