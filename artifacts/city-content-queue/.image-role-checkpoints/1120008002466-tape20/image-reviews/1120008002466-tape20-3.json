@@ -1,0 +1,75 @@
+{
+  "source_id": "1120008002466-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Hard reject: A second commercial package (a cardboard box) is clearly visible in the background.",
+        "Hard reject: The 'AFP white-and-blue wide low cylindrical drip-tape carton roll' (the carton) is a cuboid box, not the cylindrical roll specified in the requirements."
+      ],
+      "correction_prompt": "Remove the cardboard box and replace the rectangular carton with a white-and-blue cylindrical drip-tape roll. Ensure the image contains exactly one wide, low cylindrical roll at the far edge. Keep the equipment still life on the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 29,
+      "product_height_percent": 38,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Two additional unbranded brown cardboard boxes are visible in the background and right foreground, violating the 'single roll/carton' and 'zero second commercial package' hard rejects.",
+        "The text on the front of the roll is gibberish and illegible rather than the required clear 'AFP' and 'Drip Irrigation Tape' branding."
+      ],
+      "correction_prompt": "Remove all background boxes and the cardboard box on the right; regenerate the text on the white roll to clearly read 'AFP' and 'Drip Irrigation Tape' in a standard font without distortion.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 33,
+      "product_height_percent": 45,
+      "product_x_center_percent": 75,
+      "reasons": [
+        "The image contains a second commercial package (the brown cardboard box labeled AFP next to the drip tape roll).",
+        "The presence of the second box violates the hard reject rule requiring exactly one AFP carton roll and zero second commercial packages."
+      ],
+      "correction_prompt": "Remove the brown cardboard box labeled 'AFP' from the right side of the concrete pad, leaving only the single white and blue drip tape roll.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 24,
+      "product_height_percent": 48,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Contains a second commercial package (a large cardboard box with the AFP brand logo visible on the right side), which is a hard reject trigger.",
+        "Text on the carton roll is slightly illegible ('Drifp Tirrigalion Tepe' appears to be distorted/gibberish relative to the clear box logo).",
+        "The watermark text differs slightly from the strict format (includes a vertical bar 'AFP | 09134922013' instead of the required exact string 'AFP | 09134922013' - assuming the pipe is the separator, the box logo presence remains the primary blocker)."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right entirely. Ensure the carton roll is the only packaging present. Regenerate the text on the white roll to read 'AFP Drip Irrigation Tape' clearly without distortion. Retain the pressure gauge, blue filter, and concrete pad setup.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Missing mandatory bottom-right watermark",
+        "Extraneous second commercial package (cardboard box) is present"
+      ],
+      "correction_prompt": "Regenerate to include the bottom-right watermark 'AFP | 09134922013' and completely remove the second cardboard box located in the background.",
+      "attempt": 5
+    }
+  ]
+}
