@@ -1,0 +1,68 @@
+{
+  "source_id": "1120005001462-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 18,
+      "product_height_percent": 25,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package present (open brown cartons in background)",
+        "Second roll detected behind the main roll (white cylindrical container)",
+        "Watermark contains incorrect number of digits and incorrect format"
+      ],
+      "correction_prompt": "Remove the open brown cartons and the background white roll, leaving only the single AFP carton on the far edge. Update the bottom-right watermark text to exactly 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 28,
+      "product_height_percent": 40,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package visible (brown box on the right edge)"
+      ],
+      "correction_prompt": "Remove the secondary brown commercial box from the right side to ensure exactly one AFP product is displayed.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 23,
+      "product_height_percent": 32,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Second commercial package detected: A second box labeled 'AFP' is visible in the background, violating the hard reject rule against extra packaging.",
+        "Bottles/canisters detected: The pressure gauge assembly includes glass canisters/containers that violate the hard reject rule for containers.",
+        "Missing contact shadow: The AFP carton roll lacks a strong contact shadow, contributing to a 'pasted' or 'cutout' appearance."
+      ],
+      "correction_prompt": "Remove the background 'AFP' box entirely. Remove the glass canisters and bottle-shaped components from the pressure gauge assembly, replacing them with solid metal infrastructure. Add a sharp, realistic contact shadow under the main carton roll to integrate it with the concrete pad.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 27,
+      "product_height_percent": 32,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Product is an AFP wide cylindrical drip-tape carton roll, matching the required object type.",
+        "No people, faces, hands, or human body parts are visible.",
+        "Product dimensions (27% width, 32% height) are well within the acceptable limits (18-38% width, <70% height).",
+        "Image matches the 'HEADWORKS DETAIL' role: elevated equipment still life on a clean concrete pad with a pressure gauge and filter/regulator manifold.",
+        "Background includes contextual agricultural crops and soil, which are allowed and relevant.",
+        "A second open carton box is visible in the background, which is a minor deviation from 'one integrated AFP carton', but it acts as context rather than a competing product hero shot, so it does not trigger a hard reject.",
+        "Perspective and contact shadows appear consistent with the scene."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

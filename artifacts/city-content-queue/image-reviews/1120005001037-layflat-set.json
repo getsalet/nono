@@ -1,24 +1,57 @@
 {
   "source_id": "1120005001037-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 40,
+      "score": 15,
       "duplicate_roles": [
         1,
-        2
+        2,
+        3
       ],
       "reasons": [
-        "Roles 1 and 2 are visually identical: they both depict the coil pair on a tilled brown field with distant tractors, failing to provide the required distinct camera angle and technical narrative separation.",
-        "The images appear to be a horizontal flip of the same shot (swapping the left/right position of the coil pair), which counts as a repeated layout.",
-        "Role 3 contains a cardboard container, which is explicitly forbidden in the brief ('no bottle/container')."
+        "Role 1 fails to match the 'wide elevated water-transfer field view' specification; the provided image is a low-angle close-up shot that lacks the required wide, high camera height.",
+        "Role 2 fails to match the 'steep near-overhead technical still life' requirement; the provided image is a low-angle perspective rather than an overhead view.",
+        "Role 3 is missing the required 'fixed pump, gauge and manifold' components and instead depicts the two-coil pair as the primary subject on a concrete surface, which is not consistent with the specific role 3 equipment still life requirement.",
+        "No physical integration is visible between the packaged coil and the bare woven coil in any of the three images; they are shown as separate entities."
       ],
-      "correction_prompt": "Regenerate Role 2 as a macro technical close-up of the coil pair on a neutral studio background to highlight the diameter difference, and replace the cardboard container in Role 3 with a bare coiled hose segment.",
+      "correction_prompt": "Generate three separate images: 1. A wide, high-angle shot of the two coils integrated on a field, 2. A near-overhead still life of the coils on textured soil, and 3. A still life on a concrete pad featuring a pump, gauge, and manifold with the coils in the background.",
       "panel_scores": [
-        40
+        15
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 requires a composition dominated by a fixed filter, gauge, regulator, and manifold on a concrete pad, but the image instead features a large red tractor in the background and the coil pair on the pad, violating the mandatory equipment layout and 'far edge' positioning for the coils.",
+        "The presence of the red tractor in Role 3 introduces prominent, unapproved commercial machinery and living-context elements (tractor cabin/wheels) that conflict with the requirement for a clean, static equipment still-life narrative and physically plausible integration."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 96,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 successfully executes the editorial hero wide elevated field view with the integrated coils sharing the soil plane and required watermarks.",
+        "Role 2 provides the required steep near-overhead soil-based technical layout with clear selection evidence of the integrated two-coil pair.",
+        "Role 3 correctly presents the equipment still life on a concrete pad dominated by the fixed filter, gauge, and manifold with the coil pair at the far edge.",
+        "All individual image QA requirements, including the prominent but physically integrated product and Iranian farm context, are met.",
+        "Camera heights, surfaces, and technical narratives make the three roles clearly distinct with no duplicates."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        96
+      ],
+      "set_attempt": 3
     }
   ]
 }
