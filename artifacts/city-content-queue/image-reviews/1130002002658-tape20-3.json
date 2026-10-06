@@ -1,0 +1,55 @@
+{
+  "source_id": "1130002002658-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Presence of a second commercial cardboard package (box) behind the roll",
+        "Watermark number '09134922013' does not exactly match the required string '091349220'"
+      ],
+      "correction_prompt": "Remove the cardboard box in the background. Change the bottom-right watermark text to exactly 'AFP | 091349220'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package present: There is a large carton box next to the roll, violating the hard reject rule against 'second commercial package' or 'second roll'. The brief strictly requires exactly one AFP carton roll.",
+        "Text error on product: The label on the roll reads 'Drip Irrigation Tape', but the specific asset required is 'drip-tape carton roll', and 'Irrigation' suggests a different, possibly non-tape product category, though primarily the extra box is the disqualifier."
+      ],
+      "correction_prompt": "Regenerate image showing ONLY a single white-and-blue wide low cylindrical drip-tape roll. Remove the large cardboard box and the black coiled hose. Maintain the elevated equipment still life with pressure gauge and filter on a clean concrete pad. Ensure exactly one AFP carton roll is visible.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 27,
+      "product_height_percent": 42,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "One AFP white-and-blue drip-tape carton roll present in the foreground center-right",
+        "Elevated equipment still-life role: filter, pressure gauge, regulator, manifold, and integrated AFP carton on a clean concrete pad",
+        "Zero visible people, farmers, faces, hands, limbs, or human silhouettes",
+        "No bottles, jars, canisters, buckets, fertilizer/pesticide containers, or second commercial package",
+        "Exact required watermark 'AFP | 09134922013' present in bottom-right",
+        "Plausible perspective and contact shadow with no pasted/cutout look, halo, or missing shadow",
+        "Width (27%) is within 18–38% and height (42%) is within the up-to-70% envelope",
+        "Distant ordinary farm buildings and crop rows are contextually relevant and allowed",
+        "No gibberish fake headline, caption, or severely distorted geometry"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

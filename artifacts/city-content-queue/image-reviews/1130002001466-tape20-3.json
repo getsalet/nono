@@ -1,0 +1,67 @@
+{
+  "source_id": "1130002001466-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 75,
+      "reasons": [
+        "Multiple commercial packages: The image contains a primary roll in the foreground and a second, distinct AFP branded carton in the background.",
+        "Hard reject: second commercial package."
+      ],
+      "correction_prompt": "Remove the cardboard AFP box in the background; keep only the single roll on the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 30,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package visible: two AFP cardboard boxes in the background to the right.",
+        "Gibberish writing and labels on the cardboard boxes ('AFp' and 'AF P').",
+        "The image contains multiple AFP-branded commercial products (the roll and the boxes), violating the 'zero second commercial package' and product-integration rules for a single-product still life.",
+        "Required exact bottom-right watermark 'AFP | 09134922013' is missing (a similar but non-exact watermark 'AF P | 09134922013' with a space is present instead)."
+      ],
+      "correction_prompt": "Regenerate the image to show strictly one AFP white-and-blue wide low cylindrical drip-tape carton roll on the clean concrete pad next to the elevated irrigation equipment. Remove all second commercial packages, cardboard boxes, and duplicate brands. Fix the product label to exact 'AFP Drip Irrigation Tape'. Add the exact bottom-right watermark 'AFP | 09134922013' without any spacing or formatting errors.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Multiple 'second commercial package' violations: The image displays two large brown cartons in the background/foreground right, which violates the 'exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll' requirement.",
+        "Role mismatch: The image includes a large blue tank sprayer (bottle/container equivalent) on the left, which conflicts with the 'clean' still life brief and the 'zero containers' hard reject list.",
+        "Layflat hose present: A flat irrigation tape/hose is lying across the foreground, which is explicitly listed as a hard reject item."
+      ],
+      "correction_prompt": "Remove all brown background cartons, the blue tank sprayer, and the flat irrigation tape lying on the ground. Keep only the single white-and-blue cylindrical AFP drip-tape roll integrated with the fixed filter, gauge, and manifold on a clean concrete pad.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 80,
+      "product_width_percent": 26,
+      "product_height_percent": 30,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Product placement and size are within the approved width (18-38%) and height (<70%) envelopes.",
+        "Elevated equipment still life on a concrete pad matches the specified image role.",
+        "Presence of a fixed filter, pressure gauge, regulator, and manifold correctly integrates the product into the scene.",
+        "Zero visible people or human body parts are present in the image.",
+        "Required bottom-right watermark 'AFP | 09134922013' is clearly visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
