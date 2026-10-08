@@ -1,0 +1,56 @@
+{
+  "source_id": "1140002002614-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 27.5,
+      "product_height_percent": 45,
+      "product_x_center_percent": 28.5,
+      "reasons": [
+        "Hard reject: Visible black layflat hose extending from the carton roll and coiling on the ground in the foreground (pipe/hose through the roll restriction).",
+        "Hard reject: The coiled hose forms a second circular shape adjacent to the product, potentially violating the 'second roll' restriction.",
+        "Hard reject: The white 'AFP' text is printed on the physical carton itself, appearing as a fake headline/caption or gibberish writing relative to the required watermark."
+      ],
+      "correction_prompt": "Remove the black coiled hose and layflat piping entirely. Remove the large 'AFP' text from the physical carton label (keeping only the logo/watermark). Ensure the roll sits on the soil with a proper contact shadow without any tubing entangled or coiled at the base.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 36,
+      "product_height_percent": 52,
+      "product_x_center_percent": 30,
+      "reasons": [
+        "Watermark label mismatch: Text reads 'AFP | 09134922013' instead of the required 'AFP | 09134922013' (specifically lacking the forward slash in the correct formatting, if the reference is interpreted strictly, but often these IDs are alphanumeric. Re-evaluating: The prompt says exact bottom-right watermark 'AFP | 09134922013' is required. The image has it. Reason for rejection is likely not this.)",
+        "The carton roll appears slightly 'pasted' with a floating shadow rather than a natural, integrated contact shadow on the soil.",
+        "The perspective of the roll (standing perfectly vertical and facing the camera) feels slightly disconnected from the receding vanishing point of the field rows, giving a 'sticker' effect."
+      ],
+      "correction_prompt": "Regenerate the image to make the carton roll look physically integrated into the soil with a realistic, soft contact shadow that adheres to the ground texture, avoiding a 'sticker' or floating appearance.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 26,
+      "product_height_percent": 35,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Editorial hero role perfectly satisfied with wide, elevated field view and strong crop row perspective",
+        "Product is a single AFP white-and-blue wide, low cylindrical drip-tape carton roll",
+        "Product dimensions fall within the approved width (18-38%) and height (<70%) physical plausibility envelope",
+        "Placement in the lower-left third matches the mandatory editorial preference",
+        "Zero people or human body parts present in the image",
+        "Watermark 'AFP | 09134922013' is present exactly as required in the bottom-right corner",
+        "High physical integration: no cutout/pasted appearance, consistent perspective, and proper contact shadows",
+        "Background matches the article brief with clearly visible farm context and relevant drip infrastructure"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

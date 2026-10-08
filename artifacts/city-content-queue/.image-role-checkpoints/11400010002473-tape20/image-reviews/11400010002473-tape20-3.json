@@ -1,0 +1,76 @@
+{
+  "source_id": "11400010002473-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Hard reject: Second commercial package (open cardboard box with 'AFP' branding) visible on the right side of the image.",
+        "Role blueprint mismatch: The scene includes a wheeled pump and tubing arrangement rather than an elevated still life with fixed hardware."
+      ],
+      "correction_prompt": "Regenerate image without the cardboard box. Remove the wheeled pump and tubing. Create an elevated equipment still life on a concrete pad featuring a fixed filter, pressure gauge, regulator, and manifold integrated with a single AFP drip-tape carton at the far edge.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 33,
+      "product_height_percent": 55,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Presence of a second commercial package (cardboard box in the background).",
+        "Watermark 'AFP | 09134922013' appears twice, which is incorrect."
+      ],
+      "correction_prompt": "Remove the second cardboard box. Ensure the watermark 'AFP | 09134922013' appears only once in the bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Hard reject: A second commercial package (brown AFP cardboard box) is visible in the background to the right.",
+        "Hard reject: An extra layflat hose (black tubing) is coiled on the ground behind the product, violating the 'single roll' constraint.",
+        "Text error: The watermark ID is missing a '4'; it reads '09134922013' instead of '09134922413'.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate to show only the single white AFP drip tape roll in the foreground. Remove the brown box in the background and the coiled black tubing. Update the watermark ID to 'AFP | 09134922413'. Maintain the concrete pad and irrigation equipment context. Enlarge the product group from 0% to 18-38% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 27,
+      "product_height_percent": 32,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Contains a second commercial package (the open brown cardboard carton in the background).",
+        "Product (tape roll) placement is not at the 'far edge' of the concrete pad; it is positioned in the foreground alongside the other equipment."
+      ],
+      "correction_prompt": "Regenerate the image to strictly show only the AFP drip-tape roll on the far edge of the concrete pad. Remove the open cardboard carton and move the filter/regulator assembly further into the background to maintain the headworks detail context.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 25,
+      "product_height_percent": 33,
+      "product_x_center_percent": 71,
+      "reasons": [
+        "The required bottom-right watermark string is incorrect (displays 'AFP | 09134922013' instead of 'AFP | 09134922013').",
+        "There is a second commercial package visible (the brown cardboard box in the background), which is a hard reject."
+      ],
+      "correction_prompt": "Remove the brown cardboard box in the background. Correct the bottom-right watermark text to exactly 'AFP | 09134922013'.",
+      "attempt": 5
+    }
+  ]
+}
