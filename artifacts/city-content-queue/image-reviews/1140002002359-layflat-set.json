@@ -1,52 +1,54 @@
 {
   "source_id": "1140002002359-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 40,
+      "score": 35,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Roles 1 and 2 use nearly identical camera angles and product placement (low ground level, foreground two-coil pair), failing to provide the required distinct 'high-oblique' perspective for Role 1.",
-        "Role 1 fails to keep the product small and off-center; the coils are prominently centered and occupy a large portion of the frame, violating the 'EDITORIAL HERO' constraints.",
-        "The layout repetition between Role 1 and 2 creates a redundant visual narrative instead of distinct editorial progression."
+        "Role 1 (Image 1) fails to be 'elevated'; it is an eye-level close-up, not a 'wide elevated field view' from the lower third.",
+        "Role 2 (Image 2) fails to be 'steep near-overhead'; it is an eye-level close-up of the same product pair on soil, making it a near-duplicate of Role 1 in terms of framing and subject placement, only differing in soil color.",
+        "Role 3 (Image 3) is missing the 'gauge and manifold' and 'fixed pump' required by the 'HEADWORKS DETAIL' role, showing only the coils and background tractors.",
+        "Duplicate structure detected between Role 1 and Role 2: both feature the exact same 'integrated two-coil pair' placement on soil from a low angle."
       ],
-      "correction_prompt": "Reframe Role 1 as a high-oblique wide shot where the two-coil pair is small, off-center, and subordinate to the water-transfer field context, ensuring a clearly distinct vantage point from the eye-level close-up in Role 2.",
+      "correction_prompt": "Regenerate Role 1 as a high-angle wide shot from the lower third showing the field; regenerate Role 2 as a steep top-down overhead shot on soil; and regenerate Role 3 on a concrete pad, adding a fixed pump, gauge, and manifold to the equipment still life.",
       "panel_scores": [
-        40
+        35
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 65,
+      "score": 62,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 layout violation: The two coils are not 'separate'; they are touching each other, whereas the brief explicitly required the packaged coil and bare coil to remain separate.",
-        "Role 3 layout violation: The 'approved two-coil pair' (one packaged, one bare) is not present. Instead, there is only a single bare coil, and the 'packaged' item is shown as an open rectangular carton, not the coiled packaging seen in Roles 1 and 2. This constitutes missing the required secondary product reference.",
-        "Role 2 layout violation: The composition includes a third commercial package (the rectangular carton in the background) alongside the two coils, which directly contradicts the instruction to show 'no third commercial package'."
+        "Role 2 (Image 2) is a near-duplicate of Role 1 (Image 1) regarding camera angle (low field view), environmental context (brown soil), and composition (identical left-right product layout).",
+        "Role 2 does not fulfill the 'Selection Evidence' requirement; it lacks the steep near-overhead technical angle and visible connector/diameter cues required for selection proof.",
+        "Role 3 (Image 3) fails to include the mandatory equipment details; it shows only the coils on a concrete pad, omitting the required fixed pump, gauge, and manifold."
       ],
-      "correction_prompt": "In Role 1, separate the two coils so they are not touching; in Role 2, remove the background carton to ensure only the two coils are shown; in Role 3, replace the single coil and box with the required pair (one packaged, one bare) acting as secondary context.",
+      "correction_prompt": "Replace Image 2 with a steep top-down technical close-up of a connector/fitting on textured soil; replace Image 3 with a still life on a concrete pad showing the coils alongside a pump, pressure gauge, and manifold.",
       "panel_scores": [
-        65
+        62
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 15,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 (Image 1): The approved two-coil pair is not present; it only shows one coiled hose and one small silver pump unit, missing the 'bare black woven coil' required for the hero shot.",
-        "Role 2 (Image 2): The shot is low-angle and eye-level, not 'elevated technical comparison.' It fails to show diameter or construction difference (one looks like a flat tape, the other round), and lacks the required contrast between the packaged coil and the bare coil.",
-        "Role 3 (Image 3): Severe role violation. The required fixed pump and gauge on the concrete pad are completely missing. It shows a small silver pump unit instead of a 'fixed pump,' and includes the black coiled hose, which is not part of the equipment-only narrative."
+      "score": 55,
+      "duplicate_roles": [
+        2
       ],
-      "correction_prompt": "Regenerate Role 2 as a high-angle technical comparison of a packaged coil and a bare coil to show construction differences. Regenerate Role 3 on a concrete pad to show ONLY a fixed industrial pump and gauge with no hoses, tanks, or other equipment.",
+      "reasons": [
+        "Role 2 (Selection Evidence) is not a 'steep near-overhead technical still life' as required. The image depicts a low-angle (nearly eye-level or crouching height) side-view of the soil, which fails to capture the mandatory top-down selection perspective.",
+        "Role 2 lacks the 'visible selection evidence' of a connector; instead, it shows a simple horizontal layout on the ground with a blurred crop background that does not differentiate it from the low-angle field views of Role 1."
+      ],
+      "correction_prompt": "Re-shoot Role 2 using a steep near-overhead camera angle (bird's-eye view) to clearly show the two-coil pair and a visible connector or diameter cue on the textured soil surface.",
       "panel_scores": [
-        15
+        55
       ],
       "set_attempt": 3
     }

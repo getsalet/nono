@@ -1,24 +1,53 @@
 {
   "source_id": "1140002002838-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 65,
+      "score": 35,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1 and Role 2 fail to provide the required visual distinction: Role 1 is not a high-oblique view as requested and lacks the 'city-article' visual context (showing distant city/mountain instead of a clear city setting). Role 2 is also not an 'elevated technical comparison' with the required diameter difference, but rather a low-angle view nearly identical in perspective to Role 1, resulting in duplicated role execution.",
-        "The 'water-transfer context' requested for Role 1 is not clearly depicted; the foreground crop and general landscape obscure the article-specific narrative.",
-        "Role 3 successfully satisfies its prompt as an equipment-only record photograph on a concrete pad with secondary coils."
+        "Image 1 is shot at eye level; the required role 1 must be a wide ELEVATED field view.",
+        "Image 2 lacks a steep near-overhead camera angle; it is a close-up at a low angle and does not function as a 'selection evidence' layout.",
+        "Image 3 does not contain the required fixed pump, gauge, and manifold; it is dominated by a tractor which is not the mandated 'complete fixed filter' equipment narrative."
       ],
-      "correction_prompt": "Redo roles 1 and 2: Regenerate role 1 as a wide high-oblique water-transfer context with small off-center approved packages; regenerate role 2 as an elevated technical comparison showing clear diameter/construction difference without low-angle duplication.",
+      "correction_prompt": "Remake image 1 as a high-angle, wide shot; remake image 2 as a steep top-down close-up; remake image 3 as a still life on a concrete pad featuring a pump, gauge, and manifold instead of a tractor.",
       "panel_scores": [
-        65
+        35
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Missing Role 3: The third image lacks the required 'Headworks Detail' components (fixed pump, gauge, and manifold on a concrete pad). It instead features a tractor, which is not part of the specified technical narrative for this role.",
+        "Missing Role 2: The second image lacks the required 'selection evidence' such as a specific connector or diameter cue, functioning instead as a general soil scene."
+      ],
+      "correction_prompt": "For image 3, replace the tractor background with a clean concrete pad and add a visible pump, gauge, and manifold unit to satisfy the Headworks Detail role.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 successfully establishes a wide elevated field view in an agricultural setting, placing the product pairs on the soil plane in the lower third as required.",
+        "Role 2 provides a clear technical 'selection evidence' still life from a steep near-overhead angle, showing the integrated two-coil pair and a connector on textured soil, clearly distinct from Role 1.",
+        "Role 3 executes the concrete-pad equipment still life requirement, featuring a fixed pump, gauge, and manifold, with the coil pairs positioned at the edge of the surface."
+      ],
+      "correction_prompt": "",
+      "panel_scores": [
+        92
+      ],
+      "set_attempt": 3
     }
   ]
 }

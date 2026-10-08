@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-08T21:42:51+00:00`
+- آخرین بروزرسانی: `2026-10-08T22:43:22+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **934 از 1894 (49.31٪)**
-- تکمیل‌شده: **934**
+- پیشرفت: **936 از 1894 (49.42٪)**
+- تکمیل‌شده: **936**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **960**
+- ناموفق: **958**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **هارونی** — چهارمحال و بختیاری — `layflat` — 1324 کلمه — `2026-10-08T22:43:20+00:00`
+- **کیان** — چهارمحال و بختیاری — `tape20` — 1144 کلمه — `2026-10-08T22:39:15+00:00`
 - **سودجان** — چهارمحال و بختیاری — `tape20` — 1394 کلمه — `2026-10-08T21:42:49+00:00`
 - **آلونی** — چهارمحال و بختیاری — `layflat` — 1182 کلمه — `2026-10-08T21:40:35+00:00`
 - **وردنجان** — چهارمحال و بختیاری — `tape20` — 1185 کلمه — `2026-10-08T20:45:51+00:00`
@@ -50,11 +52,11 @@
 - **آجین** — همدان — `tape20` — 1372 کلمه — `2026-10-06T05:44:55+00:00`
 - **آجین** — همدان — `layflat` — 2262 کلمه — `2026-10-06T05:44:29+00:00`
 - **مالوجه** — کردستان — `layflat` — 1329 کلمه — `2026-10-06T04:47:32+00:00`
-- **چناره** — کردستان — `tape20` — 1291 کلمه — `2026-10-06T04:45:38+00:00`
-- **قروه** — کردستان — `tape20` — 1480 کلمه — `2026-10-06T04:44:59+00:00`
 
 ## خطاهای اخیر
 
+- **طاقانک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **نافچ** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **آلونی** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **هوره** — `layflat`: `Editorial review failed: internal link count must equal minimum`
 - **گندمان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **دشتک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سرخون** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کبودرآهنگ** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **فیروزان** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **برزول** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
