@@ -1,40 +1,7 @@
 {
   "source_id": "1140005002807-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
-    {
-      "pass": false,
-      "score": 38,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 fails the 'EDITORIAL HERO' camera specification: the shot is a low-angle ground-level perspective, not the required wide high-oblique view.",
-        "Role 2 fails the 'SELECTION EVIDENCE' specification: the image uses a low-angle shot instead of an elevated technical comparison, and it does not visibly demonstrate a diameter or construction difference between the two coils.",
-        "Role 3 fails the 'HEADWORKS DETAIL' specification: the image is missing the required pump, gauge, and manifold, showing only the coils on a concrete pad without the necessary equipment narrative."
-      ],
-      "correction_prompt": "Role 1: Re-shoot from a high-oblique wide angle to establish the water-transfer context; Role 2: Use an elevated technical camera angle and adjust lighting/position to clearly distinguish the diameter or weave construction of the two coils; Role 3: Add a fixed pump, gauge, and manifold to the empty concrete pad while keeping the two coils small and in the background.",
-      "panel_scores": [
-        38
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 15,
-      "duplicate_roles": [
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 2 contains a prohibited bottle/container (green canister) and oversized extra coils instead of showing the diameter difference through the two-coil pair.",
-        "Role 3 displays a large single coil rather than the required two-coil pair as secondary subjects.",
-        "Role 1 uses a low-angle shot instead of the required high-oblique hero angle, making the coils dominate the frame."
-      ],
-      "correction_prompt": "Generate a high-oblique Role 1 hero; a Role 2 comparison showing only the two-coil pair on the pad without bottles; and a Role 3 equipment shot where the two-coil pair is secondary and smaller.",
-      "panel_scores": [
-        15
-      ],
-      "set_attempt": 2
-    },
     {
       "pass": false,
       "score": 20,
@@ -43,14 +10,47 @@
         2
       ],
       "reasons": [
-        "Role 1 and Role 2 feature nearly identical framing, camera height, and environment (farm field with tractors in the background), failing to provide the distinct high-oblique context required for the Hero and the elevated technical angle required for Selection Evidence.",
-        "Role 3 depicts the product on a concrete pad but lacks the required 'fixed pump, gauge, and manifold' equipment; it appears to be only a small brass nozzle/fitting, failing the technical detail requirement for Headworks.",
-        "The 'diameter or construction difference' in Role 2 is not visually established through the pair, as both coils appear identical in thickness and structure.",
-        "The product is oversized in the foreground for both Role 1 and 2, violating the 'small' constraint."
+        "Role 2 [Image 2] is a near-duplicate of Role 1 [Image 1] (same low camera height, framing, and environmental structure) instead of the required 'steep near-overhead technical still life'.",
+        "Role 3 [Image 3] contains 'extra commercial products' (large tractor) and lacks the mandatory 'fixed pump, gauge and manifold' equipment narrative."
       ],
-      "correction_prompt": "Re-capture Role 1 with a high-oblique shot showing the water transfer context with the coils small in frame. Re-capture Role 2 as a close-up elevated shot clearly differentiating the woven texture and diameter of the pair. For Role 3, place the small coils in front of a prominent, visible pump head with gauges and a manifold on an empty concrete pad.",
+      "correction_prompt": "Redo Role 2 as a steep near-overhead shot focusing on the soil; redo Role 3 to replace the tractor with a static filter head assembly featuring a pump, gauge, and manifold.",
       "panel_scores": [
         20
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails: The image is a low-angle hero shot on soil, missing the required 'wide elevated water-transfer field view' and 'lower third' framing.",
+        "Role 3 fails: The image lacks the required 'complete fixed filter, gauge, regulator and manifold'; it only shows the coils and a tractor background.",
+        "Role 2 marginal: While it matches the soil/technical layout better, the panel overall fails because Roles 1 and 3 do not match their distinct structural requirements."
+      ],
+      "correction_prompt": "Regenerate Panel 1 as a high-angle aerial view of the field; Regenerate Panel 3 to explicitly include a fixed pump unit with gauge and manifold on a concrete pad alongside the coils.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 (Image 1) is a wide field view but lacks the 'elevated' perspective and fails to place the pair in the lower third, instead using a ground-level composition.",
+        "Role 2 (Image 2) is a ground-level near view that is physically too similar in structure and camera height to Role 1, failing to provide the steep near-overhead perspective required for the 'selection evidence' role.",
+        "Role 3 (Image 3) contains a visible living subject (the farmer driving the tractor in the background), which is an explicit rejection criterion.",
+        "The roles are not visually distinct; Roles 1 and 2 share the same soil plane and subject arrangement without the requested variation in camera height and technical narrative."
+      ],
+      "correction_prompt": "Adjust Role 1 to a wide elevated shot with the coil pair in the lower third; modify Role 2 to a steep near-overhead technical still life; and replace the farmer in Role 3 with a static background featuring the required fixed pump, gauge, and manifold equipment setup.",
+      "panel_scores": [
+        30
       ],
       "set_attempt": 3
     }

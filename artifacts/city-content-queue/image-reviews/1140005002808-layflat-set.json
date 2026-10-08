@@ -1,24 +1,21 @@
 {
   "source_id": "1140005002808-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 30,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Images 1 and 2 are nearly identical in composition, camera angle, and subject placement (ground level, two coils in foreground, tractors in background), failing the requirement for visible distinctness.",
-        "Images 1 and 2 use a generic farm setting with active machinery, which the brief specifically prohibits for the 'Editorial Hero' role; it requires a wide high-oblique perspective focusing on water-transfer context.",
-        "Image 3 features a coiled hose built into the pump unit and a box, which violates the role-3 requirement to have the 'approved two-coil pair remain small, separate and secondary'; the coils here are primary and integrated.",
-        "A person is visible in the background of Image 1 (walking near the tractor), which is explicitly a rejection reason.",
-        "The layout repeats the 'two coils on dirt' motif across roles 1 and 2 instead of distinct technical narratives."
+        "Role 1 (Editorial Hero) fails to show a wide elevated field view; it is a ground-level static shot where the product dominates the foreground without the required wide field context.",
+        "Role 2 (Selection Evidence) is a near-duplicate of Role 1 (same camera height, same horizontal soil plane, and same composition); it lacks the steep near-overhead angle required for the selection narrative."
       ],
-      "correction_prompt": "Replace Images 1 and 2 with a high-oblique wide shot (no people) and a distinct elevated close-up technical comparison of the two coils; modify Image 3 to show the pump/gauge on a concrete pad with the two coils placed separately in the background as secondary context.",
+      "correction_prompt": "Redo image 1 as a high-angle wide shot of the field with the coils tiny in the lower third, and redo image 2 as a direct 90-degree top-down shot focusing on the soil texture and coil details.",
       "panel_scores": [
-        35
+        30
       ],
       "set_attempt": 1
     },
@@ -29,14 +26,27 @@
         3
       ],
       "reasons": [
-        "Role 3 includes a third commercial package (a box on the left coil) which violates the 'approved two-coil pair' requirement of showing only the packaged coil and the bare black woven coil.",
-        "Role 3 introduces a pump with a prominent 'AFF' label and a large box with a graphic face on the hose, contradicting the brand identity of 'AFP' and the instruction to keep product identity consistent across the set."
+        "Role 3 specification requires a specific equipment still life (fixed pump, gauge, regulator, and manifold) on a clean concrete pad. The provided image for Role 3 instead displays a general tractor and the water-transfer product pair, completely omitting the required plumbing hardware (gauge/manifold) mandated by the specification."
       ],
-      "correction_prompt": "Replace Role 3 to show only the two approved coils (packaged and bare) as secondary elements on an empty concrete pad; remove all third-party boxes or packages and ensure the pump branding is strictly 'AFP' without any other logos.",
+      "correction_prompt": "Regenerate image 3 to depict an elevated still life of a water-transfer assembly on a concrete surface, clearly showing a fixed pump, a pressure gauge, and a manifold, with the coil products integrated at the periphery.",
       "panel_scores": [
         45
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 fails to match the 'steep near-overhead' specification and lacks 'selection evidence' cues.",
+        "Role 3 is missing the mandatory 'fixed pump, gauge, and manifold' equipment required for the 'HEADWORKS DETAIL' narrative."
+      ],
+      "correction_prompt": "Re-shoot Role 2 with a steep near-overhead camera angle on the soil showing a connector/diameter cue; Re-shoot Role 3 on a concrete pad to include a fixed pump, gauge, and manifold unit with the two coil pair at the far edge.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 3
     }
   ]
 }

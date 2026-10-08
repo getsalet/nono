@@ -1,18 +1,21 @@
 {
   "source_id": "1140005002809-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
       "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 lacks the required 'high-oblique' camera angle; the wide context is presented from a low perspective that does not meet the 'EDITORIAL HERO' criteria.",
-        "Role 2 includes an unapproved animal (a grazing horse) in the background; the rules prohibit farm activity or extra elements beyond the approved pair.",
-        "Role 2 displays the coils centered on the foreground with no visible technical comparison, failing the 'elevated' and 'comparison' requirements.",
-        "Role 3 shows only the coils and a single gauge; the required 'pump and manifold' components are missing, making the technical narrative incomplete."
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Re-shoot Role 1 as a high-oblique aerial wide shot with the coils off-center; remove all animals from Role 2 and add an elevated angle showing a diameter gap; update Role 3 to show a fixed pump and manifold on the concrete pad.",
+      "reasons": [
+        "Role 1 and Role 2 are near-duplicates; both present a low-angle perspective of the same two coiled items on soil with identical composition and lighting",
+        "Role 1 fails the 'wide elevated' requirement, instead showing a ground-level shot",
+        "Role 2 fails the 'steep near-overhead' requirement, instead showing a low-angle shot of the same subject",
+        "Role 3 fails the 'elevated equipment still life on a clean concrete pad' requirement; it shows a ground-level view with a tractor in the background instead of a clean pad and fixed equipment"
+      ],
+      "correction_prompt": "Generate a steep near-overhead (90-degree) top-down technical layout for Role 2 to distinctively represent the 'Selection Evidence' role, and ensure Role 1 is captured from a high vantage point.",
       "panel_scores": [
         45
       ],
@@ -20,18 +23,35 @@
     },
     {
       "pass": false,
-      "score": 30,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 contains a visible person (worker) in the background, which is a strict rejection criterion.",
-        "Role 2 contains a visible person standing next to the tractor in the background, which is a strict rejection criterion.",
-        "Role 3 depicts product-on-pump (a 'hardware duplication' of the role 2 narrative), failing the requirement to isolate the two coils as small/secondary elements separate from the pump assembly."
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Remove all people from the backgrounds of all panels; regenerate Panel 3 as an elevated wide shot featuring a large isolated fixed pump unit with the two coils strictly rendered as small secondary elements in the foreground, distinct from the main equipment.",
+      "reasons": [
+        "Role 1 and Role 2 are visually near-duplicates: both feature the same foreground layout of the integrated coil and bare coil on textured soil, failing to distinguish between the required wide elevated field view (Role 1) and the steep technical still life (Role 2).",
+        "Role 1 fails to demonstrate the required 'elevated' or 'wide' camera height; it is a low-level ground shot that mirrors Role 2.",
+        "Role 3 contains extra commercial products (a large green tractor) which constitutes a rejection criterion."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide aerial/overhead field shot and Role 2 as a steep near-overhead close-up to ensure camera angle differentiation; regenerate Role 3 to remove the tractor and show only the fixed pump, gauge, and manifold on a clean concrete pad.",
       "panel_scores": [
-        30
+        40
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 fails: The panel depicts a tractor and open field rather than a clean concrete-pad equipment still life dominated by a fixed filter, gauge, and manifold. The required 'headworks' technical narrative is missing.",
+        "Role 1 fails: The wide elevated field view does not show the coils in the required lower third placement; the products are centered in the foreground, failing to match the specific compositional brief."
+      ],
+      "correction_prompt": "Regenerate Role 3 as a close-up equipment still life on a clean concrete pad featuring a fixed pump, gauge, and manifold, with the integrated two-coil pair at the far edge; adjust Role 1 to place the integrated and bare coils in the lower third of the frame.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 3
     }
   ]
 }
