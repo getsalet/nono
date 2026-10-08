@@ -1,39 +1,49 @@
 {
   "source_id": "1140001002706-tape20",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "score": 78,
+      "duplicate_roles": [],
       "reasons": [
-        "Panel 1 fails the 'off-center' requirement; the product is centered in the foreground rather than positioned in the lower third off-center.",
-        "Panels 1 and 2 are nearly identical in composition (low angle, product centered, farm background), resulting in a lack of visual distinction for roles 1 and 2.",
-        "Panel 2 fails to show 'emitter-spacing or field-selection evidence' as required for the SELECTION EVIDENCE role.",
-        "Panel 3 background contains farm activity (tractor and hay bales) which is not allowed in the HEADWORKS DETAIL role."
+        "Role 3 fails to meet the mandatory 'clean concrete pad' requirement; the image displays a grass/soil surface and includes an extra 'AFP' cardboard box which constitutes an unapproved extra commercial product."
       ],
-      "correction_prompt": "Move the product in Panel 1 to the off-center lower third, differentiate the camera angles of Panels 1 and 2, and remove active machinery from the background of Panel 3.",
+      "correction_prompt": "Regenerate Role 3 on a strictly clean, light-gray concrete slab with no vegetation and remove the secondary cardboard box to isolate the mandatory equipment components (filter, gauge, regulator, and manifold).",
       "panel_scores": [
-        45
+        78
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
+      "score": 75,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Editorial Hero) failed: The product is too large and centrally located, violating the 'small and off-center' requirement.",
-        "Role 3 (Headworks Detail) failed: Contains multiple pieces of hardware (gauge and regulator) and a tractor/farm building in the background, violating the 'equipment-only' and 'no farm activity' rules."
+        "Role 1 fails specification: depicts a 'Headworks' detail on a concrete pad (gauge, filter, regulator) rather than the required 'wide elevated field view' of long crop geometry. The required elevated wide-angle perspective of the farm landscape is missing.",
+        "Role 2 is a near-duplicate of Role 3 (specifically the equipment cluster portion): both images feature the exact same physical arrangement of the blue disc filter, coiled hoses, and pressure gauge on a concrete slab. This violates the structural distinctness requirement."
       ],
-      "correction_prompt": "In Role 1, reduce the product size and move it to the lower-right third to keep the farm landscape dominant. In Role 3, remove the gauge, regulator, and tractor/building to show only a single filter on an empty concrete pad.",
+      "correction_prompt": "Regenerate Role 1 as a wide elevated 'Editorial Hero' shot of the crop field with an integrated carton on the lower-left; regenerate Role 2 as a steep near-overhead still life on dark soil showing a straight drip-tape line and carton; remove the concrete slab equipment cluster from Role 2.",
       "panel_scores": [
-        45
+        75
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 94,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 matches: Wide elevated view of a farm field with long crop geometry, with the AFP carton physically integrated on the foreground surface.",
+        "Role 2 matches: Steep overhead technical layout on dark soil featuring a drip tape segment with visible emitter points alongside the AFP carton.",
+        "Role 3 matches: Equipment still life on a concrete pad showing a pressure gauge, regulator, and manifold, with the AFP carton integrated at the edge.",
+        "All three camera angles (wide elevated, steep overhead, horizontal close-up) and surfaces (field, soil, concrete) are clearly distinct with no duplicate structures."
+      ],
+      "correction_prompt": "No corrections required.",
+      "panel_scores": [
+        94
+      ],
+      "set_attempt": 3
     }
   ]
 }

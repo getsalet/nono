@@ -1,0 +1,84 @@
+{
+  "source_id": "1140009002732-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 80,
+      "product_width_percent": 14,
+      "product_height_percent": 23,
+      "product_x_center_percent": 59,
+      "reasons": [
+        "Product is an AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Dimensions and aspect ratio are within physical plausibility constraints and approved width envelope.",
+        "Image contains zero people or human body parts.",
+        "Fixed infrastructure like the pressure gauge and manifold is present, matching the required 'HEADWORKS DETAIL' role blueprint.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and intact.",
+        "Natural lighting and soft contact shadows present; no pasted or cutout appearance detected.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 14% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 14% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Hard reject: Presence of a second commercial package (the cardboard box) visible in the background.",
+        "Hard reject: The image contains two items labeled 'AFP' (the roll and the box), violating the 'exactly one AFP' constraint."
+      ],
+      "correction_prompt": "Remove the cardboard box in the background completely, leaving only the single drip tape roll and the irrigation equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 23,
+      "product_height_percent": 28,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Product carton is brown, not white-and-blue.",
+        "Contains a second commercial package (large brown box) and pump cart, violating the requirement for a single roll on a clean concrete pad.",
+        "Watermark ID '09134922013' is an invalid 11-digit format; expected 12-digit ID '091349220130'.",
+        "Does not match the Headworks Detail role blueprint for a clean infrastructure still life."
+      ],
+      "correction_prompt": "Redraw the scene as a clean concrete pad with only a single white-and-blue wide cylindrical AFP drip-tape roll. Add a fixed filter, pressure gauge, regulator, and manifold infrastructure. Remove the brown carton box and pump cart. Ensure the watermark in the bottom-right reads exactly 'AFP | 091349220130'. Set roll width to 18% and height to 25% of the frame.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Presence of a second commercial package (cardboard box) on the right, which violates the 'single AFP carton' requirement",
+        "Roll geometry appears physically implausible (a wide, short cylinder) for a drip-tape product, resembling a flat ring rather than a standard roll"
+      ],
+      "correction_prompt": "Regenerate the image to feature only a single AFP white-and-blue cylindrical drip-tape roll without the cardboard box. Ensure the roll has correct tall-diameter proportions and a realistic contact shadow on the concrete pad.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 20,
+      "product_height_percent": 35,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll, matching the specified dimensions and role.",
+        "The background infrastructure (pressure gauges, regulator, and manifold) is integrated into the scene as required for the 'HEADWORKS DETAIL' role blueprint.",
+        "No people, human body parts, bottles, jars, or other prohibited containers are visible.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The object has a natural contact shadow and does not appear to be a pasted cutout or sticker."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
