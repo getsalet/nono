@@ -1,62 +1,51 @@
 {
   "source_id": "1130003002206-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 20,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
+      "score": 40,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 2 (SELECTION EVIDENCE) violates brief by including a large active green tractor in the foreground, which constitutes 'farm activity'.",
-        "Role 3 (HEADWORKS DETAIL) fails the 'no farm activity' constraint due to the presence of a large green tractor in the background.",
-        "Role 3 fails the 'one fixed pump' constraint; it depicts two coiled pumps with gauges instead of a single equipment unit.",
-        "The composition of Role 2 and Role 3 is nearly identical (two coils on a pad with gauges), creating layout duplication and preventing the required distinction in technical narrative.",
-        "Role 1 (EDITORIAL HERO) likely fails as the coils appear too large relative to the 'small, separate and off-center' requirement."
+        "Role 3 (HEADWORKS DETAIL) fails to show required technical evidence (fixed pump, gauge, regulator, manifold). Instead, it displays generic farming equipment (tractor, buckets) which does not meet the narrative requirement for a specific filter assembly.",
+        "Role 3 contains 'extra commercial products' (tractor) that dilute the focus on the required filter headworks.",
+        "Role 1 camera angle appears to be ground-level rather than the specified 'wide elevated field view'.",
+        "Role 2 camera angle is not steep enough to be considered a 'near-overhead' technical still life; it is a high-angle close-up similar to Role 1."
       ],
-      "correction_prompt": "Regenerate Role 2 and 3 to strictly exclude any tractors or active machinery. Role 2 must be a high-angle close-up of just the two coils to highlight diameter differences. Role 3 must be a record shot of a single pump, gauge, and manifold on a concrete pad, with the two coils placed small and separate in the background.",
+      "correction_prompt": "Regenerate Role 3 as an elevated still life on a concrete pad featuring a fixed pump, gauge, and manifold with the coil pair at the edge; regenerate Role 1 with a distinctly elevated, wide field perspective.",
       "panel_scores": [
-        20
+        40
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 62,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "score": 45,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 2 and Role 3 both feature equipment on the same concrete surface, resulting in duplicated layout and environment structure",
-        "Role 2 includes the unapproved commercial package (box), which violates the 'no extra package' constraint for selection evidence",
-        "Role 3 places the product pair as the primary subject rather than as a small, secondary element, failing the 'secondary' visual hierarchy requirement"
+        "Role 2 requirement violation: The image is not a steep near-overhead technical still life, nor does it prominently feature the 'selection evidence' elements such as the integrated two-coil pair and a specific connector or diameter cue. It is instead a general farm scene.",
+        "Role 3 requirement violation: The 'HEADWORKS DETAIL' is missing the mandatory components: a complete fixed filter, gauge, regulator, and manifold. The image shows a small green tractor, which does not align with the required technical equipment narrative."
       ],
-      "correction_prompt": "Replace Role 2 with a close-up elevated comparison of the two coils showing diameter differences without any packaging, and replace Role 3 with a detailed shot of the pump and manifold where the coils are pushed to the far background as small context elements.",
+      "correction_prompt": "Re-shoot Role 2 as a steep near-overhead still life on textured soil focusing on two coils and a connector for selection evidence. Re-shoot Role 3 as a concrete-pad still life featuring a fixed filter, gauge, and manifold with the coil pair at the far edge.",
       "panel_scores": [
-        62
+        45
       ],
       "set_attempt": 2
     },
     {
-      "pass": false,
-      "score": 25,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "pass": true,
+      "score": 98,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 2 (image 2) includes a person in the background, which is explicitly forbidden by the brief",
-        "Role 3 (image 3) fails to depict the required 'headworks detail' of a pump, gauge, and manifold; instead, it repeats the coil pair on a concrete pad",
-        "Role 3 and Role 2 are conceptually duplicated in that they both focus on the coil pair without the required technical equipment narrative for role 3",
-        "The three images do not establish visibly distinct technical narratives as required (water transfer context vs selection evidence vs headworks detail)"
+        "Role 1 provides the required wide elevated field view with the product integrated into the landscape.",
+        "Role 2 delivers the steep near-overhead soil-based technical layout showing the selection evidence.",
+        "Role 3 correctly displays the concrete pad equipment still life with the fixed filtration unit and gauges.",
+        "No near-duplicate camera or environmental structures were detected between roles.",
+        "The integrated product maintains physical plausibility across all panels."
       ],
-      "correction_prompt": "Regenerate role 2 to remove all background people and strictly show only the two coils; regenerate role 3 to clearly feature a pump, gauge, and manifold on a concrete pad with the coils as small, secondary background objects, ensuring a distinct 'headworks' environment from the agricultural field of role 2.",
+      "correction_prompt": "Maintain the current distinct camera angles and product integration levels for future production runs.",
       "panel_scores": [
-        25
+        98
       ],
       "set_attempt": 3
     }
