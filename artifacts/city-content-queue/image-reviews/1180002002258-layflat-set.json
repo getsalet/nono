@@ -1,52 +1,38 @@
 {
   "source_id": "1180002002258-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 55,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 (Image 2) fails the 'no third commercial package' and 'show diameter difference through the pair' constraints: it shows one coil on a cardboard spool and one free coil (implying identical diameters), includes an unapproved third commercial package (the spool/box), and a farm tractor in the foreground which violates the technical comparison narrative.",
-        "Role 3 (Image 3) fails the 'fixed pump, gauge and manifold on an empty concrete pad' requirement, instead showing only the two product items (package and coil) on a flat surface with no headworks equipment visible; furthermore, it contains an unapproved bottle/container object (a blue bag with tubes) and a person's face printed on the packaging, which is explicitly prohibited."
+      "score": 75,
+      "duplicate_roles": [
+        2
       ],
-      "correction_prompt": "Regenerate role 2 as an elevated close-up of two distinct coils showing diameter differences with no extra packaging or tractor, and regenerate role 3 to feature a fixed pump unit with a pressure gauge and manifold on an empty concrete pad, ensuring the approved product pair is small and secondary and removing any visible bottles or faces.",
+      "reasons": [
+        "Image 2 fails to meet the 'near-overhead' and 'technical layout' requirements for Role 2; it is nearly identical in composition and angle to Image 1, presenting a side profile of the products on soil.",
+        "Image 3 displays a large skid-mounted pump unit in the background, which violates the requirement for the integrated two-coil pair to sit at the far edge of a 'clean concrete pad' dominated by a fixed filter assembly; the skid distracts from the required Headworks Detail."
+      ],
+      "correction_prompt": "Regenerate Role 2 with a steep near-overhead camera angle showing the two-coil pair and a connector on the textured soil, and regenerate Role 3 to feature a standalone manifold, gauge, and filter assembly on a clean concrete pad with the two-coil pair positioned at the edge, removing the skid pump.",
       "panel_scores": [
-        55
+        75
       ],
       "set_attempt": 1
     },
     {
-      "pass": false,
-      "score": 42,
-      "duplicate_roles": [
-        3
-      ],
-      "reasons": [
-        "Role 1 fails the 'high-oblique' requirement by using a ground-level perspective that lacks the mandated wide, high-angle editorial context.",
-        "Role 3 violates the 'two-coil pair' constraint by including a third (brown) coil instead of the approved packaged/bare pair.",
-        "Role 3 background is overly generic (empty concrete) and lacks the relevant agricultural context established in Roles 1 and 2."
-      ],
-      "correction_prompt": "Redraw Role 1 with a high-oblique angle to show more of the water-transfer field; in Role 3, strictly limit the product evidence to only the approved two-coil pair on a concrete pad with an agricultural setting in the background.",
-      "panel_scores": [
-        42
-      ],
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 25,
+      "pass": true,
+      "score": 92,
       "duplicate_roles": [],
       "reasons": [
-        "Role 3 (Image 3) completely fails to meet the 'HEADWORKS DETAIL' requirements: it is a product-only shot on a concrete slab that lacks the required fixed pump, gauge, and manifold equipment.",
-        "Role 2 (Image 2) is structurally closer to the required headworks equipment than Role 3, creating a narrative mismatch where the 'SELECTION EVIDENCE' role visually contains more technical equipment than the 'HEADWORKS' role.",
-        "The layout and product scale are inconsistent with the brief's requirement for the 'packaged coil' to remain 'small and off-center' in Role 1 and 'small and secondary' in Role 3."
+        "Role 1 correctly presents the required wide elevated view of the water-transfer field, with the integrated product pair sharing the soil plane.",
+        "Role 2 provides a steep near-overhead angle on textured soil showing the technical layout and selection evidence with visible connectors.",
+        "Role 3 shifts to a distinct concrete-pad environment dominated by a complete fixed pump system with gauges, regulators, and manifold.",
+        "All roles feature the required integrated AFP products without rejecting physical implausibility, missing identities, or extra living subjects."
       ],
-      "correction_prompt": "Regenerate Image 3 to display the fixed pump, gauges, and manifold on an empty concrete pad as the primary subject, while keeping the approved two-coil pair small and secondary in the foreground; ensure Image 2 focuses on the two coils only for the comparison role.",
+      "correction_prompt": "Retain all images as they are; the visual narrative and required evidence points meet the production contract.",
       "panel_scores": [
-        25
+        92
       ],
-      "set_attempt": 3
+      "set_attempt": 2
     }
   ]
 }
