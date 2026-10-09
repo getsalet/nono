@@ -1,20 +1,38 @@
 {
   "source_id": "1140007002153-tape20",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 fails: Contains a realistic horse and tractor, which violates the 'no farm activity' or 'ordinary context' boundary for this technical panel.",
-        "Role 3 fails: Depicts a generic concrete pad with a product roll, completely missing the required 'elevated record photograph of one fixed filter, gauge, regulator and manifold' (headworks equipment)."
+      "score": 60,
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "Re-shoot Role 2 as a simplified ground-level view with only static farm structures; re-shoot Role 3 to feature a close-up technical arrangement of the filter, gauge, regulator, and manifold on a concrete pad, with the product carton small and secondary in the frame.",
+      "reasons": [
+        "Role 3 mandates a physically integrated AFP carton at the far edge; the image displays a second, redundant commercial carton box next to the integrated spool, which constitutes an 'extra commercial product' and creates a duplicate/ambiguous product presence.",
+        "The presence of two distinct containers (spool and box) in Role 3 violates the 'one integrated AFP carton' constraint for that specific role."
+      ],
+      "correction_prompt": "Regenerate image 3: Remove the background cardboard carton box, retaining only the integrated cylindrical spool at the edge of the concrete pad to satisfy the single-product constraint.",
       "panel_scores": [
-        45
+        60
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 94,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 is a wide elevated field view with long crop geometry and the AFP carton integrated on the lower-left third, with the farm remaining visible.",
+        "Role 2 is a steep near-overhead technical still life on dark soil, clearly showing one integrated AFP carton and a straight drip-tape segment with repeated emitter points as selection evidence.",
+        "Role 3 is an elevated equipment still life on a clean concrete pad, featuring a complete fixed filter, pressure gauge, regulator, and manifold with the AFP carton at the far edge.",
+        "All three roles are clearly distinct in camera height, surface, and technical narrative, with no near-duplicates, no missing mandatory evidence, no visible living subjects, no extra commercial products, and no physically implausible integration."
+      ],
+      "correction_prompt": "No corrections needed; the panel meets all role requirements.",
+      "panel_scores": [
+        94
+      ],
+      "set_attempt": 2
     }
   ]
 }

@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-09T01:59:36+00:00`
+- آخرین بروزرسانی: `2026-10-09T02:56:18+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **941 از 1894 (49.68٪)**
-- تکمیل‌شده: **941**
+- پیشرفت: **943 از 1894 (49.79٪)**
+- تکمیل‌شده: **943**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **953**
+- ناموفق: **951**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **شلمزار** — چهارمحال و بختیاری — `tape20` — 1314 کلمه — `2026-10-09T02:54:34+00:00`
+- **چلگرد** — چهارمحال و بختیاری — `tape20` — 1425 کلمه — `2026-10-09T02:54:11+00:00`
 - **منج** — چهارمحال و بختیاری — `layflat` — 1322 کلمه — `2026-10-09T01:43:31+00:00`
 - **پردنجان** — چهارمحال و بختیاری — `layflat` — 1773 کلمه — `2026-10-09T00:55:34+00:00`
 - **چلیچه** — چهارمحال و بختیاری — `layflat` — 1150 کلمه — `2026-10-09T00:54:52+00:00`
@@ -50,21 +52,19 @@
 - **فیروزان** — همدان — `layflat` — 1221 کلمه — `2026-10-08T17:43:09+00:00`
 - **گیان** — همدان — `tape20` — 1392 کلمه — `2026-10-08T17:41:13+00:00`
 - **سامن** — همدان — `tape20` — 1239 کلمه — `2026-10-06T08:46:21+00:00`
-- **زنگنه** — همدان — `tape20` — 1575 کلمه — `2026-10-06T08:46:00+00:00`
-- **شاهنجرین** — همدان — `tape20` — 1326 کلمه — `2026-10-06T07:43:50+00:00`
 
 ## خطاهای اخیر
 
-- **چلگرد** — `tape20`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
-- **بازفت** — `tape20`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
-- **صمصامی** — `layflat`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
+- **دستنا** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **چلگرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **صمصامی** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بازفت** — `tape20`: `The read operation timed out`
+- **شلمزار** — `layflat`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
 - **سردشت** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **منج** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **پردنجان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **کیان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **طاقانک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **نافچ** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **آلونی** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 
