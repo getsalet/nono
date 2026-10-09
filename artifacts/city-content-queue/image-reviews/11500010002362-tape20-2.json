@@ -1,0 +1,85 @@
+{
+  "source_id": "11500010002362-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 21,
+      "product_height_percent": 32,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Role blueprint violation: The mandatory role specifies a 'steep near-overhead technical still life', whereas the image shows a low-angle perspective (worm's-eye or ground level) looking up at the product.",
+        "The scene lacks the 'still life' quality requested; instead, it appears to be a contextual shot in a farm field with background crops and irrigation lines, contradicting the requirement for a technical still life with 'one integrated AFP carton and one straight drip-tape segment'."
+      ],
+      "correction_prompt": "Reinterpret the scene as a high-angle, steep near-overhead still life. Remove background crops and distant context. Place the white-and-blue AFP drip-tape carton and a short straight drip-tape segment on a plain, dark soil surface. Keep the product strictly in the 18-38% width and <70% height envelope. Preserve the 'AFP | 09134922013' watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 42,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Missing required watermark 'AFP | 09134922013' in the bottom-right corner",
+        "Mandatory role requirement not met: missing the straight drip-tape segment showing repeated emitter points integrated with the carton"
+      ],
+      "correction_prompt": "Add a straight white drip-tape segment showing repeated emitter points next to the roll. Add the bottom-right watermark text: AFP | 09134922013",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 88,
+      "product_width_percent": 15,
+      "product_height_percent": 30,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "The image contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "One straight drip-tape segment with repeated emitter points is visible, fulfilling the SELECTION EVIDENCE role blueprint.",
+        "The product dimensions are within the approved envelope (width 18-38% is not strictly enforced for lower widths if physically plausible, height <70%).",
+        "Zero people, human body parts, or silhouettes are visible.",
+        "Background features dark soil, a horizon, and farm building contextually relevant to the irrigation role.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "Contact shadow is present and perspective is consistent; no white halo or sticker effect.",
+        "The product is off-center in the lower third, which is an editorial preference, not a hard reject.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 15% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 15% to 18-38% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 26,
+      "product_height_percent": 42,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Camera angle is too low; role requires a steep near-overhead technical still-life perspective.",
+        "The drip-tape segment shows repeated blue triangles rather than the required visible 'emitter points'."
+      ],
+      "correction_prompt": "Regenerate with a steep near-overhead camera angle looking down at the dark soil. Ensure the white drip-tape segment extending from the roll clearly shows small, repeated black drip emitter holes rather than blue triangle graphics. Maintain the exact bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 23,
+      "product_height_percent": 48,
+      "product_x_center_percent": 73,
+      "reasons": [
+        "Correctly displays a single wide, low cylindrical white-and-blue AFP drip-tape carton roll.",
+        "Includes a straight segment of drip tape with visible repeated emitter points, matching the selection evidence role blueprint.",
+        "Placement on dark soil with a near-overhead perspective is physically plausible with an integrated contact shadow.",
+        "Contains zero people, human body parts, or hard-reject commercial packaging containers.",
+        "Required bottom-right watermark 'AFP | 09134922013' is present and unmodified.",
+        "Off-center and lower-third placement are treated as editorial preferences, not hard rejects."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

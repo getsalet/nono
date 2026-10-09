@@ -1,0 +1,80 @@
+{
+  "source_id": "1150008001497-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Multiple commercial packages are present; the image shows both a large cylindrical roll and a cardboard box labeled 'AFP', violating the single-product requirement.",
+        "The exact watermark 'AFP | 09134922013' is located at the bottom-center rather than the bottom-right as required by the hard reject criteria.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll as the only product. Remove the cardboard box. Move the watermark to the bottom-right corner of the image. Enlarge the product group from 0% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 24,
+      "product_height_percent": 42,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (cardboard box) present",
+        "Layflat hose in frame"
+      ],
+      "correction_prompt": "Remove the cardboard box on the right and the coiled hose; keep only the AFP roll, fixed filter/gauge infrastructure, and concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Visible second commercial package: There is a separate brown cardboard box on the right labeled 'AFP', which triggers a hard reject for a 'second commercial package'.",
+        "Mandatory water mark missing: The specific string 'AFP | 09134922013' is not present in the bottom right corner; instead, there is a black box with '09134922013' (missing 'AFP |').",
+        "Role mismatch: The brief requires a clean concrete pad with 'one integrated AFP carton at the far edge' showing elevated equipment. The image shows a wheeled pump cart and a separate box, failing the 'integrated carton' requirement."
+      ],
+      "correction_prompt": "Remove the separate brown cardboard box on the right. Integrate the 'AFP | 09134922013' text precisely in the bottom-right corner. Ensure the drip tape roll is the only product and is placed on a clean concrete pad with a filter, pressure gauge, regulator, and manifold as specified.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image displays two distinct AFP products: one cylindrical roll and one separate open cardboard box, violating the requirement to show exactly one roll or integrated package.",
+        "A standard open commercial cardboard box is present, which corresponds to a 'second commercial package' and 'second roll/package' hard reject condition.",
+        "The product composition is cluttered with multiple items rather than a single focus."
+      ],
+      "correction_prompt": "Remove the open cardboard box on the right to leave only the single cylindrical drip-tape roll on the concrete pad, ensuring no other commercial packaging is visible.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 40,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Product is an AFP white-and-blue drip-tape roll correctly sized (width 24%, height 40%) and centered at 63% horizontally",
+        "Watermark 'AFP | 09134922013' is present and intact in the bottom-right corner",
+        "Zero people or human body parts visible",
+        "Background features the required fixed filter, pressure gauge, and manifold on a clean concrete pad",
+        "Product shows correct perspective and integrated contact shadow with no sticker or cutout appearance"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
