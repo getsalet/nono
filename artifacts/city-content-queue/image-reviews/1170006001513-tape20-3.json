@@ -1,0 +1,79 @@
+{
+  "source_id": "1170006001513-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 41,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package detected (large brown carton in the background right).",
+        "Second roll detected (dark coiled hose/tape visible in the bottom right corner).",
+        "Required product color mismatch (target is 'white-and-blue', but the background carton is brown).",
+        "Presence of a pipe/coil running through the foreground around the main subject."
+      ],
+      "correction_prompt": "Remove the brown cardboard box in the background and the secondary coiled hose on the bottom right. Ensure only one white and blue AFP drip tape carton roll is present. Remove the pipe running through the foreground loop. Keep the equipment still life on the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 22,
+      "product_height_percent": 38,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Contains a second commercial package (the cardboard box labeled 'APP'/'AFP') to the right of the roll, which violates the 'zero second commercial package' hard reject criteria.",
+        "Product height is approx 38%, which falls below the 70% limit in the prompt (which likely implies a 30-70% window), though the width (22%) is within the 18-38% envelope."
+      ],
+      "correction_prompt": "Remove the cardboard box and the silver valve on the right. Increase the height of the white and blue drip tape roll to approximately 50% of the frame. Keep the filter, gauges, and concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Second commercial package visible: The image contains a second, distinct cardboard 'AFP' box behind the roll, violating the strict 'zero second commercial package' constraint."
+      ],
+      "correction_prompt": "Remove the large cardboard 'AFP' box from the background; keep only the single white cylindrical roll with a clean uncluttered background.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 21,
+      "product_height_percent": 22,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Secondary commercial package (cardboard box) is visible in the background, which is a hard reject.",
+        "The product does not appear to be an integrated AFP carton at the far edge; it is a standalone roll in the foreground.",
+        "The scene includes a wheeled pump and unmanaged coiled hoses rather than a clean still life of fixed equipment as described in the role blueprint."
+      ],
+      "correction_prompt": "Remove the cardboard box in the background. Integrate the drip tape roll into a commercial carton at the far right edge of the composition. Ensure the central focus is a fixed irrigation manifold and gauge on a clean concrete pad without loose coiled hoses.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The image correctly depicts a still-life setup on a clean concrete pad featuring fixed hardware (filters, gauges, manifold) integrated with the specified drip-tape product.",
+        "Product dimensions and placement are within the approved envelope (width 18-38%, height up to 70%).",
+        "No people, human body parts, or other prohibited commercial containers are visible.",
+        "Physical context is coherent and matches the image role."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

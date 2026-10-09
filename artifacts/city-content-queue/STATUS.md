@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-09T20:42:36+00:00`
+- آخرین بروزرسانی: `2026-10-09T21:41:18+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **989 از 1894 (52.22٪)**
-- تکمیل‌شده: **989**
+- پیشرفت: **992 از 1894 (52.38٪)**
+- تکمیل‌شده: **992**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **905**
+- ناموفق: **902**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,9 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **چرام** — کهگیلویه و بویراحمد — `tape20` — 1348 کلمه — `2026-10-09T21:41:12+00:00`
+- **دیشموک** — کهگیلویه و بویراحمد — `layflat` — 1632 کلمه — `2026-10-09T21:40:33+00:00`
+- **لنده** — کهگیلویه و بویراحمد — `layflat` — 1609 کلمه — `2026-10-09T21:40:13+00:00`
 - **چیتاب** — کهگیلویه و بویراحمد — `layflat` — 1107 کلمه — `2026-10-09T20:42:33+00:00`
 - **چیتاب** — کهگیلویه و بویراحمد — `tape20` — 1431 کلمه — `2026-10-09T20:41:11+00:00`
 - **یاسوج** — کهگیلویه و بویراحمد — `layflat` — 1105 کلمه — `2026-10-09T20:40:21+00:00`
@@ -49,12 +52,10 @@
 - **لومار** — ایلام — `layflat` — 1338 کلمه — `2026-10-09T15:44:33+00:00`
 - **پهله** — ایلام — `tape20` — 1562 کلمه — `2026-10-09T14:53:38+00:00`
 - **بدره** — ایلام — `layflat` — 1440 کلمه — `2026-10-09T13:44:55+00:00`
-- **ایلام** — ایلام — `layflat` — 1066 کلمه — `2026-10-09T12:52:49+00:00`
-- **بدره** — ایلام — `tape20` — 1754 کلمه — `2026-10-09T12:51:59+00:00`
-- **ایوان** — ایلام — `layflat` — 1446 کلمه — `2026-10-09T12:51:36+00:00`
 
 ## خطاهای اخیر
 
+- **چرام** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **پاتاوه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **مادوان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سپیدار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -64,7 +65,6 @@
 - **مهران** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **پهله** — `layflat`: `Editorial review failed: internal link count must equal minimum`
 - **ارکواز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **میمه** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
