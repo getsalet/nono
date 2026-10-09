@@ -1,55 +1,57 @@
 {
   "source_id": "1150005001491-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 2 (SELECTION EVIDENCE) places the two coils centrally and prominently, violating the 'elevated technical comparison' specification and the 'no oversized product' constraint.",
-        "Role 3 (HEADWORKS DETAIL) features a large surveying total station/level instead of the required 'fixed pump, gauge and manifold', and the coils are foregrounded prominently rather than 'small, separate and secondary'.",
-        "Role 2 and Role 3 share a similar camera angle and foreground emphasis on the product pair, reducing the visual distinctness required between roles."
-      ],
-      "correction_prompt": "Regenerate Role 2 as an elevated technical shot with the two coils small and off-center; regenerate Role 3 with a concrete pad showing a pump/gauge manifold as the hero and the two coils small and secondary in the background.",
-      "panel_scores": [
-        45
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 25,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 (Image 2) violates the brief by including people, which is an automatic rejection trigger.",
-        "Role 2 (Image 2) shows three coils (the main pair plus one on the concrete pad in the background), whereas the brief specifies only the 'approved two-coil pair' and 'no extra coil'.",
-        "Role 2 (Image 2) depicts people working on a concrete pad, which is an activity explicitly prohibited for this role and belongs to the 'no farm activity' constraint of Role 3.",
-        "Role 1 (Image 1) shows the products in the foreground (large), whereas the brief requires them to be 'small... and off-center' to emphasize the wide water-transfer context."
-      ],
-      "correction_prompt": "Replace Role 2 with a high-angle technical close-up of only the two-coil pair to highlight construction differences, removing all people, the concrete pad, and the extra coil; adjust Role 1 to make the coils small and off-center to prioritize the water canal context.",
-      "panel_scores": [
-        25
-      ],
-      "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 58,
+      "score": 40,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Panel 1 and Panel 2 feature nearly identical framing, camera height, and product placement (the two-coil pair in the immediate foreground) with very similar background environments, failing to provide the 'visibly distinct in camera height/angle' narrative required for the panel roles.",
-        "Panel 3 fails to meet the visual brief for the 'HEADWORKS DETAIL' role, as it lacks the required equipment (pump, gauge, manifold) and instead only displays static coils on a concrete pad, resulting in hardware duplication/omission."
+        "Role 1 fails: Background contains city-specific architecture (tower/castle) instead of an ordinary farm context; view is not wide/elevated enough to properly frame the field transfer view.",
+        "Role 2 fails: Camera is at eye-level/ground-level (not steep near-overhead) and lacks mandatory selection cues (connector/diameter) required for technical evidence.",
+        "Role 3 fails: Equipment setup is incomplete, missing the gauge and manifold required for the 'complete fixed filter' narrative."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Regenerate: (1) Wide elevated field view with rural farm background; (2) Steep near-overhead technical still life on soil with visible diameter/connector cues; (3) Concrete-pad equipment still life including gauge and manifold.",
       "panel_scores": [
-        58
+        40
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Roles 1 and 2 are near-duplicates: both feature a low-angle, eye-level view of the coiled product pair placed on textured soil, failing to satisfy Role 1's requirement for a wide elevated view and Role 2's requirement for a steep near-overhead layout.",
+        "Role 3 lacks the mandatory technical narrative of 'Headworks Detail'; the scene is dominated by a background tractor and lacks the required fixed pump, gauge, and manifold equipment."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide elevated water-transfer view and Role 2 as a steep near-overhead technical still life; replace the background tractor in Role 3 with a fixed headworks equipment setup (pump, gauge, manifold).",
+      "panel_scores": [
+        65
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Image 1 is a low-angle wide shot containing a pump that is not part of the required equipment list; it lacks the 'elevated' perspective required for Role 1, failing to provide the 'lower third' product placement specified for the HERO shot.",
+        "Image 2 is a near-duplicate of the crop composition in Image 1. It is a low-angle ground shot rather than the 'steep near-overhead technical still life' required for Role 2.",
+        "Role 3 requires the integrated coils to sit at the far edge of a clean concrete pad. In Image 3, they are placed in the extreme foreground, dominating the frame rather than receding to the edge, and the equipment cluster is cut off."
+      ],
+      "correction_prompt": "Generate 1 (wide elevated hero view with coils in lower third), 2 (steep overhead close-up of the two coils and a connector on textured soil), and 3 (concrete pad still life where the equipment is fully visible and the coils are pushed to the far background edge).",
+      "panel_scores": [
+        40
       ],
       "set_attempt": 3
     }
