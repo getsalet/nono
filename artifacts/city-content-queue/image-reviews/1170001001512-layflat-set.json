@@ -1,60 +1,41 @@
 {
   "source_id": "1170001001512-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
       "score": 40,
       "duplicate_roles": [
-        2
+        1,
+        2,
+        3
       ],
       "reasons": [
-        "Role 2 (image 2) fails the SELECTION EVIDENCE requirement: it displays nearly the exact same camera angle, product arrangement, and soil environment as Role 1 (image 1), making them visually indistinguishable in layout and narrative (duplicating the role 5 pattern of repeated layouts).",
-        "Role 1 (image 1) is rejected because the product coils are significantly oversized, dominating the foreground instead of remaining 'small, separate and off-center' as requested for the EDITORIAL HERO.",
-        "Role 3 (image 3) is rejected because it does not feature the required specific equipment (pump, gauge, and manifold); instead, it shows a generic motor unit and lacks the technical details requested for the HEADWORKS DETAIL role."
+        "Role 1 fails to provide a wide elevated field view of water transfer; instead shows a low, static product still life on soil.",
+        "Role 2 is not a steep near-overhead technical layout with connector or diameter cues; it mirrors Role 1 with a similar low side-angle composition.",
+        "Role 3 lacks the required fixed pump, gauge, and manifold; instead shows a tractor and two coils on a generic pad.",
+        "All three images use nearly identical subject arrangement and camera proximity, creating duplicate structures across roles."
       ],
-      "correction_prompt": "Redesign image 1 to show the coils as small, off-center elements within a wide high-oblique landscape; design image 2 as a low-angle technical close-up of just the two coils highlighting diameter difference on a neutral background; and redesign image 3 to feature a specific pump with a visible gauge and manifold on an empty concrete pad.",
+      "correction_prompt": "Replace panel with: 1) a high wide-angle shot of a farm field with integrated coils placed in the lower third, 2) a near-overhead soil still life showing only two coils plus one connector or diameter marker, and 3) a concrete pad scene featuring a fixed pump, gauge, regulator, and manifold with the two-coil pair placed at the far edge.",
       "panel_scores": [
         40
       ],
       "set_attempt": 1
     },
     {
-      "pass": false,
-      "score": 65,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "pass": true,
+      "score": 95,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 2 requires the two-coil pair to be the sole subject for technical comparison, but the image includes a prominent pump and tire which violates the 'no third commercial package' rule.",
-        "Role 3 specifies a 'one fixed pump, gauge and manifold' setup, but the image shows a distinct industrial electric motor without a gauge, failing to match the required narrative.",
-        "The layout for Roles 2 and 3 is nearly identical (static concrete pad, equipment and product side-by-side), violating the requirement for distinct environments and structures."
+        "Role 1 successfully provides a wide, elevated field view where the integrated coil and bare coil share a single soil plane in the lower third.",
+        "Role 2 provides a distinct steep near-overhead technical still life with visible soil texture and crop evidence, maintaining product identity and the required diameter cue.",
+        "Role 3 successfully transitions to an elevated concrete-pad still life featuring a complete fixed filter, gauge, and manifold, with the two-coil pair positioned at the far edge as specified."
       ],
-      "correction_prompt": "Regenerate Role 2 to show ONLY the two coils on the concrete pad (remove pump/tire). Regenerate Role 3 to feature the specific gauge and manifold hardware (remove the industrial motor) on a distinct pad or background.",
+      "correction_prompt": "none",
       "panel_scores": [
-        65
+        95
       ],
       "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 25,
-      "duplicate_roles": [
-        1,
-        2
-      ],
-      "reasons": [
-        "Role 1 (Hero) and Role 2 (Evidence) use an identical low-angle ground-level perspective and identical spatial arrangement of the product pair.",
-        "Role 1 violates the 'Editorial Hero' requirement by failing to provide a wide high-oblique shot; the coils are oversized and off-center.",
-        "Role 2 does not distinctly demonstrate the 'diameter or construction difference' through the pair itself; the product sizes appear uniform.",
-        "Role 3 is weak because it lacks the required 'pump' and 'manifold' equipment, showing only a disconnected valve on a generic concrete slab."
-      ],
-      "correction_prompt": "Role 1: Regenerate as a wide high-oblique aerial shot with the two coils significantly smaller and off-center. Role 2: Regenerate to show the two coils at distinctly different diameters (thick vs thin). Role 3: Regenerate to include a visible centrifugal pump and a multi-port manifold on the concrete pad, keeping the coils small in the background.",
-      "panel_scores": [
-        25
-      ],
-      "set_attempt": 3
     }
   ]
 }
