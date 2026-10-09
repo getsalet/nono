@@ -1,45 +1,56 @@
 {
   "source_id": "1150007001488-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 20,
-      "duplicate_roles": [
-        1,
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 1 (Hero) places the product coils oversized in the immediate foreground and center-left rather than 'small, separate and off-center' as specified for a high-oblique context shot.",
-        "Role 2 (Selection Evidence) fails to provide an 'elevated technical comparison' showing diameter or construction differences through the pair; instead, it uses a similar low-angle ground shot, making it visually near-identical to Role 1's layout.",
-        "Role 3 (Headworks Detail) completely lacks the required equipment (fixed pump, gauge, and manifold). It shows only the two coils on a concrete pad with farm activity (tractor) in the background, violating the 'no farm activity' and 'equipment-only' constraints.",
-        "Roles 1, 2, and 3 present a repeated layout (two coils side-by-side on flat ground), which explicitly violates the requirement to pass only when shown roles are visibly distinct in camera height/angle and environment structure."
-      ],
-      "correction_prompt": "Regenerate the 3-image set to strictly follow: 1. High-oblique wide context shot with coils kept small, separate, and off-center in a water-transfer field; 2. Elevated technical close-up of the two coils stacked or offset to clearly show diameter or woven construction differences; 3. Equipment-only high-angle shot of a pump and manifold on an empty concrete pad with the coils tucked small in the corner and no active farm work.",
-      "panel_scores": [
-        20
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 25,
+      "score": 42,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1: Fails the 'off-center' and 'separate' layout constraint. The two coils and the packaged bundle are clustered tightly together in the center of the frame, failing the specific compositional requirement to be small, separate, and off-center.",
-        "Role 2: Violates the 'no extra coil' constraint. The image displays a stacked arrangement of two large coils plus a central wooden dowel/spool (resembling a container), which conflicts with the requirement to show the approved 'two-coil pair' to demonstrate construction difference without adding extra coils or commercial items.",
-        "Role 2 & 3: Layout duplication risk. Roles 2 and 3 use nearly identical low-angle framing and object arrangement (packaged item on the left, coil on the right), differing primarily in the concrete surface rather than a distinct technical narrative change.",
-        "Role 3: Missing required equipment. The role 3 requirement specifies a 'pump, gauge and manifold', but the image only shows a valve assembly on the concrete pad, lacking the mandated pump and gauge components."
+        "Image 1 does not fulfill Role 1: it is not a wide elevated water-transfer field view and lacks the required lower-third composition of the integrated packaged coil and bare woven coil sharing one soil plane.",
+        "Image 2 provides the required Role 2 steep near-overhead soil-based technical layout, clearly distinguishing it from the other frames.",
+        "Image 3 fails Role 3: the surface is a white tabletop or tray rather than a clean concrete pad, and the background lacks the mandatory fixed pump, gauge, and manifold equipment.",
+        "Both Image 1 and Image 2 depict the same core subject arrangement, resulting in near-duplicate roles."
       ],
-      "correction_prompt": "For Role 1, spread the coils and package apart and move them off-center; for Role 2, replace the stacked coils with a single coil and one uncoiled length showing construction; for Role 3, add a pump and pressure gauge to the concrete pad assembly.",
+      "correction_prompt": "Replace Image 1 with a wide elevated field view showing the integrated and bare coils in the lower third, and replace Image 3 with a concrete-pad still life featuring a fixed pump, gauge, and manifold in the background.",
       "panel_scores": [
-        25
+        42
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 is not a steep near-overhead shot, it's a standard low horizontal angle.",
+        "Role 3 is a table still-life, not an equipment setup on a concrete pad with fixed pumps and gauges.",
+        "Roles 1 and 2 have similar camera heights and environments."
+      ],
+      "correction_prompt": "Replace image 2 with a steep near-overhead shot of the two coils on textured soil, and replace image 3 with a concrete-pad still life of a fixed pump, gauge, and manifold with the coils at the edge.",
+      "panel_scores": [
+        62
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 correctly frames the wide elevated field view, establishing the agricultural context with soil planes and the two required coil products in the lower third.",
+        "Role 2 provides the necessary steep, near-overhead technical still life on textured soil, focusing on selection evidence (the two-coil pair and a diameter cue), effectively isolating the products from the background.",
+        "Role 3 executes the concrete-pad equipment still life requirement, using the distinct surface (concrete pad vs. soil) and the complete technical narrative (fixed pump, gauges, manifold) to clearly differentiate from Role 2 despite the similar product framing.",
+        "All three roles successfully integrate the approved AFP product identity and watermark without introducing living subjects or extraneous commercial products."
+      ],
+      "correction_prompt": "None",
+      "panel_scores": [
+        88
+      ],
+      "set_attempt": 3
     }
   ]
 }

@@ -1,0 +1,78 @@
+{
+  "source_id": "1140007002154-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 50,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "The image contains a visible cardboard box with the text 'AFP' in the background, which is identified as a second commercial package (hard reject).",
+        "A section of hose/pipe is visibly threaded through the central hole of the product roll, which is explicitly a hard reject criterion.",
+        "Text on the front of the product is gibberish/garbled ('Drip Irrigation Ta...'), which is a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image with only a single AFP white and blue drip-tape roll, removing the background cardboard box and the hose threading through the roll hole. Ensure all text on the roll is sharp and legible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 44,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Visible human figure standing in the background field (distant silhouette) which triggers a hard reject for any person.",
+        "Presence of two distinct AFP cartons on the left and right (second commercial package), violating the 'exactly one AFP carton' requirement.",
+        "Multiple bottles and containers (black, blue, red) are visible on the pad, triggering a hard reject for bottles, jars, or containers.",
+        "Multiple loose coiled hoses are scattered on the pad, inconsistent with the specific still-life setup required."
+      ],
+      "correction_prompt": "Remove all human figures from the background. Delete the two side cartons on the left and right, leaving only the single drip-tape roll at the far edge of the concrete pad. Remove all standing bottles, jars, and loose coiled hoses from the foreground. Retain the fixed filter, pressure gauge, and manifold on the concrete pad. Ensure the watermark 'AFP | 09134922013' remains in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 28,
+      "product_width_percent": 29,
+      "product_height_percent": 44,
+      "product_x_center_percent": 69,
+      "reasons": [
+        "Gibberish text found on the main product label (reads 'Drlp Irrigation Tje' instead of correct spelling)",
+        "The required bottom-right watermark 'AFP | 09134922013' has incorrect digit formatting (missing one '1')",
+        "A second commercial package (an open cardboard box) is visible on the far right"
+      ],
+      "correction_prompt": "Regenerate with correctly spelled 'Drip Irrigation Tape' text, the exact watermark 'AFP | 09134922013', and remove the secondary cardboard box on the right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 25,
+      "product_height_percent": 25,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (brown AFP cardboard box) is present on the right side, which is a hard reject for 'exactly one carton'."
+      ],
+      "correction_prompt": "Remove the brown cardboard AFP box from the right side of the image, leaving only the white and blue drip tape roll and the irrigation hardware on the concrete pad.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "The image contains a second commercial package (a cardboard box) behind the roll, which is explicitly a hard reject.",
+        "The product label text is mangled/gibberish ('Drip Irrigation Tape' appears distorted/misspelled), which is a hard reject for fake/gibberish writing.",
+        "The mandatory bottom-right watermark is 'AFP | 09134922013' but the brief required exactly 'AFP | 09134922013' - upon close inspection the required string was present, however, the primary failures (second box and gibberish text) render the image a hard reject."
+      ],
+      "correction_prompt": "Remove the cardboard box in the background completely. Ensure all product text on the roll is sharp, legible, and grammatically correct. Maintain the equipment still-life composition on the concrete pad without any extraneous commercial packaging.",
+      "attempt": 5
+    }
+  ]
+}
