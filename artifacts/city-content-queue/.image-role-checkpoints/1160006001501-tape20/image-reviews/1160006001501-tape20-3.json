@@ -1,0 +1,76 @@
+{
+  "source_id": "1160006001501-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 42,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "The image contains a second commercial package (a boxed package marked 'AFP') at the right edge, which is a hard reject.",
+        "A fixed blue and grey container/canister is present on the pump unit, which falls under the hard reject criteria for 'fertilizer or pesticide container' or 'bottles/jars/canisters'.",
+        "The presence of the second package and the fixed container violates the requirement to feature exactly one AFP carton roll."
+      ],
+      "correction_prompt": "Regenerate the image showing only one cylindrical AFP drip-tape roll on the far right edge of the concrete pad. Remove the second boxed 'AFP' package on the far right and modify the pump unit on the left to completely remove the large blue/grey cylindrical container, leaving only a fixed filter, pressure gauge, and regulator. Keep the bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 28,
+      "product_height_percent": 25,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Multiple commercial packages present (two AFP cartons visible)",
+        "Layflat hose/coils visible on the ground"
+      ],
+      "correction_prompt": "Remove the secondary AFP carton in the background and any layflat hose or coils from the concrete pad. Keep only a single AFP drip tape roll and the fixed irrigation equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 31,
+      "product_height_percent": 50,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Second commercial package (the open carton box in the background) is visible, violating the 'exactly one' rule.",
+        "Watermark text in the bottom right corner is rendered as gibberish/incorrect, containing a double '1' (09134922011 instead of 09134922013)."
+      ],
+      "correction_prompt": "Remove the open carton box in the background, leaving only the single drip tape roll. Correct the bottom-right watermark to read 'AFP | 09134922013' with distinct digits.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 25,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package visible: a brown box with the 'AFP' logo is present on the concrete pad in the background.",
+        "Watermark text is garbled and misspelled ('09134922013' instead of '09134922013' which is close, but let's look closer: the required is 09134922013, the image has 09134922013. Wait, looking at the image, the number ends in 2013. The prompt asks for 09134922013. Let me re-read the prompt carefully. The prompt says '09134922013'. The image clearly shows '09134922013'. Okay, that part is fine. But the 'Second commercial package' is a hard reject. Also, the object is not 'exactly one AFP... carton roll'. There is a roll AND a box. The prompt says 'The image must show exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.' It does not explicitly ban the box, but the hard reject list includes 'second commercial package'. The box is a second commercial package."
+      ],
+      "correction_prompt": "Regenerate the image showing ONLY the single white and blue cylindrical drip tape roll. Remove the brown cardboard box in the background. Ensure the equipment (gauges, manifold) remains on the concrete pad with the roll integrated at the edge.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package",
+        "Third commercial package",
+        "Multiple identical rolls or packages present"
+      ],
+      "correction_prompt": "Retain only a single white-and-blue cylindrical drip-tape carton roll; remove all additional boxes and extraneous commercial packaging from the scene.",
+      "attempt": 5
+    }
+  ]
+}
