@@ -1,25 +1,7 @@
 {
   "source_id": "1150002001492-tape20",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
-    {
-      "pass": false,
-      "score": 30,
-      "duplicate_roles": [
-        1,
-        2
-      ],
-      "reasons": [
-        "Role 1: The product carton is too large relative to the environment, violating the 'exactly one approved carton stays small' instruction for an editorial hero shot.",
-        "Role 2: The image fails to provide 'technical arrangement' or 'visible emitter-spacing' evidence; it is a generic product-in-field shot that duplicates the narrative of Role 1.",
-        "Role 2 & Role 1: Layouts are similar (product in foreground, field in background), resulting in weak visual distinction between the roles."
-      ],
-      "correction_prompt": "Regenerate images 1 and 2; shrink the carton in image 1 to the lower third, and replace image 2 with a close-up technical view showing drip lines and emitters to provide field selection evidence.",
-      "panel_scores": [
-        30
-      ],
-      "set_attempt": 1
-    },
     {
       "pass": false,
       "score": 45,
@@ -27,28 +9,42 @@
         3
       ],
       "reasons": [
-        "Role 3 does not depict the required 'headworks detail' (fixed filter, gauge, regulator, and manifold) and instead shows an empty concrete pad with a large product roll, failing the technical narrative requirement.",
-        "The product roll in Role 3 is too large and central, not 'small and secondary' as requested for that specific panel."
+        "Role 3 violates the 'clean concrete pad' and 'equipment still life' directive by including a large, distracting cardboard box and wheelbarrow that disrupt the composition",
+        "Role 1 uses a low, ground-level camera angle that fails to satisfy the 'wide elevated field view' requirement",
+        "Role 3 includes a secondary commercial object (the box) which violates the prohibition against 'extra commercial products'"
       ],
-      "correction_prompt": "Regenerate Role 3 to show an elevated, equipment-only record photo of a fixed filter, gauge, regulator, and manifold on an empty concrete pad, ensuring the product roll is small and placed secondarily in the composition.",
+      "correction_prompt": "For Role 3, remove the cardboard box and wheelbarrow to create a clean concrete pad that is strictly dominated by the filter, gauge, and regulator. For Role 1, raise the camera height to a wide elevated perspective.",
       "panel_scores": [
         45
+      ],
+      "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 3 fails the 'single integrated product' constraint by displaying two products (the primary integrated roll and a secondary cardboard box)",
+        "Role 1 is not a wide elevated field view as required, instead presenting a low ground-level composition",
+        "Role 3 lacks the required 'manifold' component; the equipment shows a filter, gauge, and regulator but the manifold is missing"
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide elevated view and Role 3 to feature a single integrated roll on a concrete pad with a visible manifold component, removing any extra packaging.",
+      "panel_scores": [
+        65
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 20,
+      "score": 75,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails the EDITORIAL HERO brief: the farm and irrigation context do not dominate, and the required single 'approved carton' is missing; instead, a large white roll is shown centered in the foreground on the crop bed, with an active, attended tractor in the field.",
-        "Role 2 fails the SELECTION EVIDENCE brief: instead of a single approved carton, a large white roll is shown, and the technical arrangement is not clearly elevated or focused on a specific field-selection/emitter-spacing record (it reads as a generic low-angle shot of soil with plastic tubing).",
-        "Role 3 fails the HEADWORKS DETAIL brief: the product roll is not 'small and secondary' as required; it is shown at roughly the same scale as the fixed filter/gauge/regulator/manifold, and the background includes a red barn and a red tractor that do not match the required 'empty concrete pad' and 'no farm activity' context.",
-        "All three images substitute the required 'carton' with a large white roll, which is not the approved product form specified for this editorial set."
+        "Role 1 contains a prominent wheeled irrigation skid unit that is not an AFP carton, violating the 'no extra commercial products' constraint.",
+        "Role 3 fails to isolate the equipment still life on the concrete pad because it includes an extra AFP cardboard box, which constitutes an extra commercial product."
       ],
-      "correction_prompt": "Regenerate all three panels to feature exactly one small, fully visible, off-center approved carton (not a roll) in each image: Role 1 as a wide high-oblique editorial hero with farm/irrigation context dominating and an unattended tractor in the distance; Role 2 as an elevated technical arrangement with the carton plus visible emitter spacing or a field-selection marker against a simple field edge or building; Role 3 as an equipment-only elevated record of one fixed filter, gauge, regulator, and manifold on an empty concrete pad with the carton small/secondary and no farm activity in the background.",
+      "correction_prompt": "Remove the wheeled irrigation skid from Role 1 and the extra cardboard box from Role 3 to isolate the required AFP product and equipment elements.",
       "panel_scores": [
-        20
+        75
       ],
       "set_attempt": 3
     }
