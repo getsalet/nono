@@ -1,0 +1,45 @@
+{
+  "source_id": "1150003002361-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 28,
+      "product_width_percent": 33,
+      "product_height_percent": 40,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image contains two distinct commercial packages: one in the foreground and a box in the background, which violates the 'exactly one' constraint and the hard reject for a 'second commercial package'.",
+        "Two large pressure gauges are visible in the image (one on the blue equipment and one on the background box), exceeding the 'one integrated... pressure gauge' role blueprint requirement."
+      ],
+      "correction_prompt": "Regenerate the image to include exactly one white-and-blue AFP drip-tape roll on the concrete pad. Ensure the foreground roll is the only commercial package, remove the background box, and keep only one integrated pressure gauge on the equipment.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package (a large open AFN box) is present in the background. The image must contain exactly one AFP carton roll. The second package is a hard reject.",
+        "The image contains a large hose reel (layflat hose/pipe through the roll). This violates the requirement for a single roll product and constitutes an extra item not allowed in the still life composition."
+      ],
+      "correction_prompt": "Regenerate the image to include only the single AFP white-and-blue carton roll on the concrete pad. Remove the large cardboard box and the hose reel. Retain the filter, pressure gauge, and regulator from the 'HEADWORKS DETAIL' role blueprint. Ensure no other commercial packages or hoses are visible.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 26,
+      "product_height_percent": 38,
+      "product_x_center_percent": 66,
+      "reasons": [],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
