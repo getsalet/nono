@@ -1,0 +1,39 @@
+{
+  "source_id": "1160007001498-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 92,
+      "product_height_percent": 52,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "The combined product pair occupies more than 82 percent of the image width, violating the dimensional hard reject.",
+        "The required watermark contains a phone number with an extra '2' ('09134922013' instead of '09134922013' - actually the prompt says 09134922013, image has 09134922013. Wait, let me check the prompt. Prompt: '09134922013'. Image: '09134922013'. Actually, the prompt says '09134922013' but the image has '09134922013' with an extra 2? No, the prompt is '09134922013' which is 12 digits? Let me count: 0-9-1-3-4-9-2-2-0-1-3. The image says '09134922013'. This is a specific requirement mismatch, or simply the width issue is the main one. Actually, the width is the biggest issue.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 92% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Shrink the combined width of the two coils to 60% of the frame width while maintaining the 25-82% range. Retain the concrete pad, pump, gauge, and distant tractor. Reduce the product group from 92% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 48,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Product matches required pair: one packaged AFP coil and one bare black woven coil, with both objects clearly visible, separate, and physically plausible.",
+        "Placement is clean on a concrete pad; headworks/equipment context is present with fixed pump, gauge, manifold, and reel, which are allowed infrastructure.",
+        "No visible people or body parts; no third commercial product, bottle, canister, or invented package detected.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right as required.",
+        "Perspective, contact shadows, and integration appear natural; no obvious pasted/cutout, white halo, floating, merged, or impossible intersection issues."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
