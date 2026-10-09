@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-09T18:46:27+00:00`
+- آخرین بروزرسانی: `2026-10-09T19:43:53+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **984 از 1894 (51.95٪)**
-- تکمیل‌شده: **984**
+- پیشرفت: **986 از 1894 (52.06٪)**
+- تکمیل‌شده: **986**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **910**
+- ناموفق: **908**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **مادوان** — کهگیلویه و بویراحمد — `tape20` — 1167 کلمه — `2026-10-09T19:41:51+00:00`
+- **سپیدار** — کهگیلویه و بویراحمد — `tape20` — 1433 کلمه — `2026-10-09T19:41:48+00:00`
 - **لیکک** — کهگیلویه و بویراحمد — `layflat` — 1563 کلمه — `2026-10-09T18:45:47+00:00`
 - **بوستان** — کهگیلویه و بویراحمد — `layflat` — 1534 کلمه — `2026-10-09T18:44:03+00:00`
 - **چوار** — ایلام — `layflat` — 1158 کلمه — `2026-10-09T17:40:47+00:00`
@@ -50,11 +52,11 @@
 - **جعفراباد** — ایلام — `layflat` — 1252 کلمه — `2026-10-09T12:49:58+00:00`
 - **ایلام** — ایلام — `tape20` — 1451 کلمه — `2026-10-09T11:41:35+00:00`
 - **کوهنانی** — لرستان — `layflat` — 1568 کلمه — `2026-10-09T11:40:42+00:00`
-- **گراب** — لرستان — `tape20` — 1339 کلمه — `2026-10-09T11:39:07+00:00`
-- **کوهدشت** — لرستان — `layflat` — 1156 کلمه — `2026-10-09T10:43:50+00:00`
 
 ## خطاهای اخیر
 
+- **مادوان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **سپیدار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **باشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بوستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **باشت** — `tape20`: `Editorial review failed: internal link count must equal minimum`
@@ -63,8 +65,6 @@
 - **ارکواز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **میمه** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **میمه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **موسیان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **دهلران** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 
