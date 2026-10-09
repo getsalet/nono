@@ -1,0 +1,52 @@
+{
+  "source_id": "1160004001507-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24.5,
+      "product_height_percent": 22.0,
+      "product_x_center_percent": 65.5,
+      "reasons": [
+        "Hard reject: Second commercial package (the cardboard box in the background) is visible in the frame.",
+        "The product is a standalone roll, failing to match the mandatory 'HEADWORKS DETAIL' role which requires an 'integrated AFP carton' at the far edge alongside fixed hardware."
+      ],
+      "correction_prompt": "Remove the cardboard box in the background. Replace it with a cardboard shipping carton (with flap open showing internal packaging) placed at the far edge of the concrete pad next to the drip tape roll.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 14,
+      "product_height_percent": 40,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Hard reject: Visible second commercial package (standard cardboard box with 'AFP' branding) violates the 'exactly one roll' and 'zero second commercial package' constraints.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 14% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the cardboard box in the background. Ensure only the single white and blue drip-tape roll is present on the pad. Enlarge the product group from 14% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 26,
+      "product_height_percent": 42,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image shows a single AFP white-and-blue wide low cylindrical drip-tape carton roll as the primary subject.",
+        "The product's dimensions are well within the approved envelope (width 18-38%, height up to 70%).",
+        "The 'HEADWORKS DETAIL' role is executed with fixed filters, a pressure gauge, and manifold elements on a concrete pad.",
+        "The mandatory watermark 'AFP | 09134922013' is clearly visible and intact in the bottom right corner.",
+        "Zero human figures or body parts are present.",
+        "The background context (farm field and building) is relevant to the irrigation product without violating hard reject criteria."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
