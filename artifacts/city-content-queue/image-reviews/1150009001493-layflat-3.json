@@ -1,0 +1,67 @@
+{
+  "source_id": "1150009001493-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 95,
+      "product_height_percent": 38,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: human body parts (legs, torso, arms) are visible in the background next to the tractor.",
+        "The product pair spans approximately 95% of the frame width, which significantly exceeds the maximum 82% width limit.",
+        "The image fails the negative constraint of containing zero people.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 95% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Remove all people and body parts from the image. Reduce the combined width of the two coils to approximately 70% of the frame to ensure they are clearly within the 82% limit. Keep the concrete pad, fixed pump, gauge, and manifold infrastructure as specified. Reduce the product group from 95% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 72,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Role mismatch: The prompt requires 'HEADWORKS DETAIL: elevated equipment still life on a clean concrete pad with fixed pump, gauge and manifold' but the image displays ground-level coils on concrete.",
+        "Role mismatch: The mandatory role demands 'integrated two-coil pair' placed at the far edge, which is not present in this flat-lay composition.",
+        "Role mismatch: The image is missing the required fixed pump and manifold components specified for this specific 'headworks' detail role."
+      ],
+      "correction_prompt": "Regenerate the image to match the 'HEADWORKS DETAIL' role: show an elevated still life on a concrete pad. Include a fixed pump, gauge, and manifold. The two-coil pair (packaged AFP and black woven) must sit at the far edge. Remove the background tractor.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 55,
+      "product_height_percent": 40,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible person (operator) inside the tractor cab; hard reject for any person or human silhouette"
+      ],
+      "correction_prompt": "Remove the operator from the tractor cab to leave it unattended; keep the pump, gauge, and manifold infrastructure as is; ensure the two coils remain in the same position and lighting",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 60,
+      "product_height_percent": 30,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "The scene perfectly matches the 'HEADWORKS DETAIL' role blueprint, featuring an elevated equipment still life on a concrete pad with a fixed pump, gauges, and the two-coil pair at the far edge.",
+        "The image contains the approved layflat pair: one packaged AFP coil and one bare black woven coil, which are distinct, fully visible, and physically plausible.",
+        "Zero people or human body parts are visible in the image.",
+        "The required watermark 'AFP | 09134922013' is clearly present in the bottom-right corner.",
+        "Background elements such as the farm building, tractor, and hay bales are permitted as they provide context without acting as third commercial products.",
+        "Product width is within the approved envelope (25 to 82 percent)."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
