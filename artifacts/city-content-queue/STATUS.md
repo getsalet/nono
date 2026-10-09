@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-08T23:41:20+00:00`
+- آخرین بروزرسانی: `2026-10-09T00:59:04+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **938 از 1894 (49.52٪)**
-- تکمیل‌شده: **938**
+- پیشرفت: **940 از 1894 (49.63٪)**
+- تکمیل‌شده: **940**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **956**
+- ناموفق: **954**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **پردنجان** — چهارمحال و بختیاری — `layflat` — 1773 کلمه — `2026-10-09T00:55:34+00:00`
+- **چلیچه** — چهارمحال و بختیاری — `layflat` — 1150 کلمه — `2026-10-09T00:54:52+00:00`
 - **بآباحیدر** — چهارمحال و بختیاری — `layflat` — 1311 کلمه — `2026-10-08T23:39:57+00:00`
 - **بآباحیدر** — چهارمحال و بختیاری — `tape20` — 1282 کلمه — `2026-10-08T23:37:28+00:00`
 - **هارونی** — چهارمحال و بختیاری — `layflat` — 1324 کلمه — `2026-10-08T22:43:20+00:00`
@@ -50,11 +52,11 @@
 - **زنگنه** — همدان — `tape20` — 1575 کلمه — `2026-10-06T08:46:00+00:00`
 - **شاهنجرین** — همدان — `tape20` — 1326 کلمه — `2026-10-06T07:43:50+00:00`
 - **مهاجران** — همدان — `tape20` — 1157 کلمه — `2026-10-06T06:55:00+00:00`
-- **فرسفج** — همدان — `tape20` — 1259 کلمه — `2026-10-06T06:49:09+00:00`
-- **آجین** — همدان — `tape20` — 1372 کلمه — `2026-10-06T05:44:55+00:00`
 
 ## خطاهای اخیر
 
+- **سردشت** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **منج** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **پردنجان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **کیان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **طاقانک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **هوره** — `layflat`: `Editorial review failed: internal link count must equal minimum`
 - **گندمان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سفیددشت** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **کاج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **دشتک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

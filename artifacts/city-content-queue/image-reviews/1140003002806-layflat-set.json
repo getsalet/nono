@@ -1,37 +1,40 @@
 {
   "source_id": "1140003002806-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 55,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 fails the 'no third commercial package' constraint as it depicts an extra cardboard box in addition to the required packaged coil and bare coil.",
-        "Role 3 fails the 'equipment-only' and 'manifold' requirements, as it displays only the two coils on a concrete slab without the required fixed pump or manifold hardware.",
-        "Role 3 fails the 'elevated' camera angle requirement, as it is shot at eye-level with a strong shadow indicating a low sun position, making it distinct but non-compliant with the specified record view."
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "Regenerate Role 2 removing the extra cardboard box to show only the two approved coils, and regenerate Role 3 as an elevated shot of a pump and manifold on a concrete pad with the two coils placed small and secondary beside them.",
+      "reasons": [
+        "All three images are near-duplicates showing the same side-by-side coil and pack placed on the ground from similar low angles.",
+        "Role 1 fails to provide the required wide elevated water-transfer field view with the products in the lower third; instead, the products dominate the foreground in a static layout.",
+        "Role 2 fails to provide a steep near-overhead technical still life on textured soil; the perspective remains low and oblique.",
+        "Role 3 fails to show a concrete pad with a fixed pump, gauge, and manifold; the equipment shown is a tractor and sprayer, and the camera angle and framing are redundant with the first two images."
+      ],
+      "correction_prompt": "Role 1: Shoot a wide elevated field view with the two-coil pair in the lower third. Role 2: Use a steep near-overhead angle on textured soil focusing on the pair. Role 3: Place the pair on a clean concrete pad next to a fixed pump, gauge, and manifold for a distinct equipment still life.",
       "panel_scores": [
-        55
+        45
       ],
       "set_attempt": 1
     },
     {
-      "pass": false,
-      "score": 40,
-      "duplicate_roles": [
-        1,
-        2
-      ],
+      "pass": true,
+      "score": 95,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 1 fails the EDITORIAL HERO brief: the approved packaged coil and bare black woven coil are oversized, dominating the foreground instead of remaining small, separate, and off-center within a wide water-transfer context.",
-        "Role 2 fails the SELECTION EVIDENCE brief: it features a green motor pump unit which is not the required fixed headworks equipment, and the technical narrative is obscured by the prominent machinery.",
-        "Role 1 and Role 2 share a redundant 'field with background tractors' environment structure and lack distinct camera height/angle progression, effectively duplicating the layout of product-on-ground."
+        "Role 1 accurately depicts a wide, elevated editorial field view with the integrated coil pair in the foreground.",
+        "Role 2 provides the required steep near-overhead selection evidence on textured soil, clearly distinct from the wide context of Role 1.",
+        "Role 3 successfully transitions to a concrete-pad equipment still life, dominated by a complete pump and manifold, with the coil pair integrated at the far edge.",
+        "All images maintain the approved product identity and context without missing mandatory role evidence or including duplicate structures."
       ],
-      "correction_prompt": "Re-shoot Role 1 as a wide high-oblique shot with the coils small and off-center, and replace Role 2's green pump with an elevated technical comparison showing only the two coils with no extra hardware or machinery.",
+      "correction_prompt": "No replacement needed.",
       "panel_scores": [
-        40
+        95
       ],
       "set_attempt": 2
     }

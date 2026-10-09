@@ -1,0 +1,42 @@
+{
+  "source_id": "1140004002840-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 38,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "The image contains two commercial packages (one white roll and a second cardboard box), violating the 'one integrated AFP carton' and 'zero second commercial package' constraints.",
+        "Pipe through the roll: The white roll is depicted with blue irrigation tubing passing through its core, which is explicitly a hard reject element.",
+        "Product shape mismatch: The requested object is a 'wide low cylindrical drip-tape carton roll', but the white object is a narrow, tall spool (resembling a hose reel), which does not match the required geometry.",
+        "Role violation: The 'Editorial Hero' role requires the single product to be the primary integrated element on the lower-left, which is disrupted by the large cardboard box and gauge assembly dominating the right foreground."
+      ],
+      "correction_prompt": "Remove the cardboard box and the coiled tubing on the right. Remove the piping passing through the central roll. Replace the tall spool with a wide, low-profile cylindrical cardboard carton roll (flat shape). Keep the single white-and-blue roll in the lower-left third as the only product.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 27,
+      "product_height_percent": 32,
+      "product_x_center_percent": 29,
+      "reasons": [
+        "Exactly one AFP white-and-blue drip-tape carton roll present.",
+        "Product dimensions fall within the approved width and height envelopes (27% width, 32% height).",
+        "Position is correctly located in the lower-left third as required for the editorial hero role.",
+        "Background matches the article brief with clear long crop geometry and farm visibility.",
+        "Watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "No hard reject elements found (no people, body parts, second containers, or cutout artifacts).",
+        "Physical integration with contact shadow and perspective is acceptable."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "source_id": "1140004002840-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 21,
+      "product_height_percent": 33,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Presence of a second AFP cardboard carton box on the right side, which triggers a hard reject for 'second commercial package'",
+        "The mandatory role requires 'one integrated AFP carton at the far edge', but the main product is an exposed white drip tape roll instead of a carton",
+        "Gibberish/unreadable typography on both the roll and the background box ('Orfp Irrigation Tape' instead of correct wording)"
+      ],
+      "correction_prompt": "Regenerate: Replace the visible drip tape roll with a white-and-blue wide low cylindrical drip-tape carton roll placed at the far edge. Remove the second brown cardboard box on the right entirely to ensure exactly one product is shown. Correct all visible text labels to be legible and brand-consistent, eliminating gibberish.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 27,
+      "product_height_percent": 43,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Hard reject: multiple second commercial packages (AFD boxes) are present on the far edge instead of a single integrated AFP carton as required.",
+        "Role mismatch: The image contains additional cardboard packaging that violates the 'exactly one' carton constraint for the product unit.",
+        "Text error: The product roll displays 'Drip Irrigation T...pe' and the carton displays 'AFP' (misspelled or different brand style) instead of clearly 'Drip Tapes'."
+      ],
+      "correction_prompt": "Remove the three cardboard boxes on the right. Keep only the single white and blue drip tape roll in the center-right foreground. Ensure the text on the roll clearly reads 'AFP Drip Tapes'. Keep the concrete pad, filter, gauge, and distant tractor.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 42,
+      "product_x_center_percent": 69,
+      "reasons": [
+        "Second commercial package (brown AFP box) is visible on the right side, which violates the single-roll rule.",
+        "Product bounding box height of 42 percent and width of 22 percent are within the acceptable envelope."
+      ],
+      "correction_prompt": "Remove the brown AFP cardboard box on the right side, ensuring only the single white and blue drip-tape roll is present on the concrete pad alongside the equipment.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Hard reject due to the presence of a second commercial package (brown AFP carton) on the left side of the frame.",
+        "Hard reject due to the presence of a second commercial package (brown carton) on the right side of the frame.",
+        "Text gibberish found on the right-hand carton ('DSPRION').",
+        "Contains a coiled black hose/pile of tubing, which violates the 'zero second roll/hose' strict interpretation."
+      ],
+      "correction_prompt": "Remove all brown cartons (left and right) and the coiled black tubing. Isolate the white and blue AFP roll on the concrete pad with the existing gauges and regulators. Ensure the roll is the only product present and all text is correct.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 25,
+      "product_height_percent": 45,
+      "product_x_center_percent": 75,
+      "reasons": [
+        "Second commercial package (open cardboard box) present in the background",
+        "Visible gibberish/illegible writing on the roll label and box which violates the 'zero gibberish writing' hard reject rule",
+        "Product does not contain the mandatory exact bottom-right watermark 'AFP | 09134922013'"
+      ],
+      "correction_prompt": "Regenerate without the background cardboard box. Rewrite the text on the tape roll label so it is clearly legible English text. Add the exact watermark 'AFP | 09134922013' in the bottom-right corner.",
+      "attempt": 5
+    }
+  ]
+}
