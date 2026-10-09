@@ -1,0 +1,78 @@
+{
+  "source_id": "1150006001495-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 27,
+      "product_height_percent": 24,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Hard reject: Second commercial package (large brown carton box) is visible behind the primary product.",
+        "Hard reject: Presence of a spray/fertilizer/pesticide applicator unit (blue tank with wheels) on the left, which violates the 'no container' rule."
+      ],
+      "correction_prompt": "Remove the large brown carton box and the wheeled blue spray tank. Replace with fixed irrigation infrastructure like filters, manifolds, or pressure gauges to match the 'Headworks Detail' role. Ensure only one white AFP drip tape roll remains.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 23,
+      "product_height_percent": 42,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Roll geometry and orientation are severely distorted; the cylindrical roll is rendered vertically like a bucket rather than laid horizontally as a wide low drip-tape carton roll.",
+        "Second commercial package present: a large brown cardboard box labeled 'AFP' stands in the background, violating the 'exactly one AFP roll' and 'no second commercial package' hard rejects.",
+        "Ghosting/duplicate roll issue: A secondary, smaller roll structure is visible on the cart behind the main product, violating the 'exactly one roll' constraint."
+      ],
+      "correction_prompt": "Regenerate showing a single wide low cylindrical white-and-blue drip tape roll lying horizontally. Remove the cardboard box in the background and remove the extra roll on the cart. Ensure the roll is on a clean concrete pad next to a filter system.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Image contains a second commercial package (an open cardboard box behind the roll), which is a hard reject.",
+        "The 'carton roll' described in the mandatory role is not a wide cylindrical roll wrapped in a carton, but rather two cylindrical cartridges mounted on a trolley, failing the role blueprint.",
+        "The mandatory role required a 'fixed filter, pressure gauge, regulator and manifold' setup on a concrete pad, whereas the image shows a mobile trolley-based system which is not the required still-life configuration."
+      ],
+      "correction_prompt": "Regenerate image to show a single wide white-and-blue cylindrical drip tape carton roll (no open box) placed on a concrete pad next to fixed infrastructure (filter, gauge, manifold) instead of a mobile trolley. Ensure no people or second commercial packages are visible. Keep the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 52,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Hard reject: The image contains a second commercial package (the brown cardboard box on the right side).",
+        "Role violation: The mandatory role specifies 'one integrated AFP carton', but the image displays two distinct products (a roll and a box).",
+        "Role violation: The image shows both a roll and a box, failing to isolate the required 'wide low cylindrical drip-tape carton roll' as the sole subject."
+      ],
+      "correction_prompt": "Regenerate the image to include ONLY a single wide, low cylindrical white-and-blue AFP drip-tape roll on a concrete pad. Remove the cardboard box and any other commercial packaging. Include the fixed irrigation infrastructure (filter, gauge, manifold) as context. Ensure the bottom-right watermark 'AFP | 09134922013' is visible. No people.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 26,
+      "product_height_percent": 44,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Presence of a second commercial package (brown and blue cardboard box) in the background",
+        "Gibberish/misspelled text on the product label ('irrigasion Tajt')",
+        "Role description mismatch: Image depicts a field setup rather than a clean still-life composition on a concrete pad at the far edge"
+      ],
+      "correction_prompt": "Remove the cardboard box from the background. Ensure the image strictly follows the 'elevated equipment still life' role by removing background fields and focusing on the concrete surface. Correct the gibberish text on the label to professional irrigation terminology. Retain the mandatory watermark 'AFP | 09134922013'.",
+      "attempt": 5
+    }
+  ]
+}
