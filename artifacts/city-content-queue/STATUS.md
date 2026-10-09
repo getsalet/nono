@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-09T00:59:04+00:00`
+- آخرین بروزرسانی: `2026-10-09T01:59:36+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **940 از 1894 (49.63٪)**
-- تکمیل‌شده: **940**
+- پیشرفت: **941 از 1894 (49.68٪)**
+- تکمیل‌شده: **941**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **954**
+- ناموفق: **953**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,7 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **منج** — چهارمحال و بختیاری — `layflat` — 1322 کلمه — `2026-10-09T01:43:31+00:00`
 - **پردنجان** — چهارمحال و بختیاری — `layflat` — 1773 کلمه — `2026-10-09T00:55:34+00:00`
 - **چلیچه** — چهارمحال و بختیاری — `layflat` — 1150 کلمه — `2026-10-09T00:54:52+00:00`
 - **بآباحیدر** — چهارمحال و بختیاری — `layflat` — 1311 کلمه — `2026-10-08T23:39:57+00:00`
@@ -51,10 +52,12 @@
 - **سامن** — همدان — `tape20` — 1239 کلمه — `2026-10-06T08:46:21+00:00`
 - **زنگنه** — همدان — `tape20` — 1575 کلمه — `2026-10-06T08:46:00+00:00`
 - **شاهنجرین** — همدان — `tape20` — 1326 کلمه — `2026-10-06T07:43:50+00:00`
-- **مهاجران** — همدان — `tape20` — 1157 کلمه — `2026-10-06T06:55:00+00:00`
 
 ## خطاهای اخیر
 
+- **چلگرد** — `tape20`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
+- **بازفت** — `tape20`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
+- **صمصامی** — `layflat`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
 - **سردشت** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **منج** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **پردنجان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
@@ -62,9 +65,6 @@
 - **طاقانک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **نافچ** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **آلونی** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **هوره** — `layflat`: `Editorial review failed: internal link count must equal minimum`
-- **گندمان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **سفیددشت** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 
