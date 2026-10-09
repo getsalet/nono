@@ -1,0 +1,76 @@
+{
+  "source_id": "1160003001505-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 34,
+      "product_height_percent": 46,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible in the background, which is a hard reject condition",
+        "Multiple pressure gauges visible in the infrastructure, whereas the role blueprint strictly requires one integrated pressure gauge"
+      ],
+      "correction_prompt": "Remove the cardboard box on the right to ensure only one commercial package is present, and reduce the multiple pressure gauges on the manifold to a single gauge to meet the headworks detail requirements.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 35,
+      "product_height_percent": 60,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "The image includes an open secondary packaging carton (box) to the right of the drip tape roll. The strict 'one AFP' requirement prohibits a second commercial package.",
+        "The image fails the mandatory role blueprint, which requires the AFP carton to be integrated as a 'far edge' component within a single assembly with a fixed manifold and filter, rather than being a separate object."
+      ],
+      "correction_prompt": "Remove the secondary open carton on the right. Regenerate to show a single AFP drip-tape roll integrated with the equipment assembly as a far-edge component on a fixed manifold, strictly matching the 'HEADWORKS DETAIL' role blueprint.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 31.5,
+      "product_height_percent": 38.0,
+      "product_x_center_percent": 68.0,
+      "reasons": [
+        "Multiple commercial products visible: the mandatory rule requires exactly one AFP package (the drip tape roll). However, the image displays a second, distinct commercial package: a brown cardboard carton bearing the 'AFP' logo and product text. The presence of this secondary packaging constitutes a hard reject under the 'second commercial package' or 'second roll' (implied) rule.",
+        "The co-presence of a drip tape roll and an empty product carton suggests a mixed inventory or packaging display, violating the specificity of showing 'exactly one... drip-tape carton roll' as the sole product focus."
+      ],
+      "correction_prompt": "Remove the brown cardboard carton entirely. Retain only the single white and blue AFP drip tape roll positioned near the filtration equipment on the concrete pad. Ensure the background remains a clean concrete pad with the fixed irrigation hardware and a water-drip-irrigation field.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 72,
+      "product_width_percent": 18,
+      "product_height_percent": 28,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Second commercial package present: There is a brown cardboard box behind the product roll, which violates the 'zero second commercial package' rule.",
+        "Watermark text formatting mismatch: The visible digits in the bottom-right watermark read '09134922013', whereas the required standard format is '09134922013' (identical here, but '2013' is often a year placeholder in briefs; however, the main rejection driver is the box)."
+      ],
+      "correction_prompt": "Remove the brown cardboard box located in the background. Keep the equipment still life and the AFP tape roll exactly as is.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 15,
+      "product_height_percent": 30,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image contains a second commercial package (the cardboard box marked 'AFP' on the right), which is a hard reject.",
+        "There is a coiled black hose lying on the concrete pad, which falls under the 'layflat hose' hard reject category.",
+        "The blue vertical cylinder on the cart strongly resembles a chemical tank or container, violating the 'zero container' rule.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 15% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right, remove the coiled black hose on the ground, and replace the blue vertical tank on the cart with a standard irrigation filter. Ensure only the white-and-blue AFP drip-tape roll remains as the commercial product. Enlarge the product group from 15% to 18-38% of frame width.",
+      "attempt": 5
+    }
+  ]
+}

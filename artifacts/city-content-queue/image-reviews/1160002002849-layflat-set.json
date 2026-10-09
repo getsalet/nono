@@ -1,53 +1,55 @@
 {
   "source_id": "1160002002849-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 20,
+      "score": 45,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1 fails the HERO layout requirement: the product pair is 'centered' in the foreground rather than 'off-center' as specified for the wide high-oblique water-transfer context.",
-        "Role 2 fails the 'elevated technical comparison' and 'construction difference' requirement: it is merely a low-angle repeat of the Role 1 pair on a similar dirt background without showing the internal structure or diameter difference between the coils.",
-        "Role 3 fails the 'equipment-only' and 'no farm activity' requirements: the presence of an active red tractor with cattle on the concrete pad constitutes 'farm activity', which is explicitly prohibited for the fixed pump/gauge record shot."
+        "Role 1 fails to provide a 'wide elevated water-transfer field view'; it is a low angle shot of the product on soil rather than an elevated wide shot of the field.",
+        "Role 2 fails to provide a 'steep near-overhead technical still life'; it is a low angle shot nearly identical to Role 1.",
+        "Role 1 and Role 2 use the same camera angle, framing, and environmental setting, resulting in near-duplicate structure.",
+        "Role 3 fails the 'HEADWORKS DETAIL' requirement as it features a tractor rather than a fixed pump, gauge, and manifold setup on a concrete pad."
       ],
-      "correction_prompt": "Shift the hero product pair to an off-center position to open the wide landscape; crop into the product pair for an elevated close-up showing the woven texture difference between the two coils; replace the farm activity background with a static pump and gauge setup on a clean concrete pad.",
+      "correction_prompt": "Regenerate the panel with distinct environments: Image 1 must be a high wide-angle view of a farm field; Image 2 must be a top-down technical shot on soil; Image 3 must be a close-up of a concrete pad with a fixed pump and manifold system.",
       "panel_scores": [
-        20
+        45
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 40,
-      "duplicate_roles": [],
-      "reasons": [
-        "Image 2 fails the 'SELECTION EVIDENCE' role by including a prominent pump and tank in the foreground/background, which violates the negative constraint against hardware or extra commercial items.",
-        "Image 3 fails the 'HEADWORKS DETAIL' role by completely omitting the required equipment (pump, gauge, and manifold) on the concrete pad.",
-        "The two coil products in Image 3 are oversized and dominant, violating the requirement that they remain small, separate, and secondary to the (missing) headworks equipment."
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Regenerate the panel set: Remove all hardware from the second image to show only the two coils for selection evidence; for the third image, add a fixed pump, gauge, and manifold as the main subject on the concrete pad, and drastically reduce the size of the coils to keep them secondary.",
+      "reasons": [
+        "Roles 1 and 2 are near-duplicates: both feature the two-coil pair on a soil plane with an identical low-angle perspective, failing to establish the required distinction between a wide elevated field view and a steep near-overhead technical layout.",
+        "Role 3 lacks the mandatory 'complete fixed filter, gauge, regulator and manifold' equipment still life; it displays a tractor and a water tank instead, which does not fulfill the 'HEADWORKS DETAIL' role requirements."
+      ],
+      "correction_prompt": "Redesign the set to feature a wide aerial view for Role 1, a steep top-down technical layout on soil for Role 2, and a concrete pad equipped with a visible fixed filter, pressure gauge, regulator, and manifold for Role 3.",
       "panel_scores": [
-        40
+        55
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 25,
-      "duplicate_roles": [
-        3
-      ],
+      "score": 55,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 2 (Image 2) violates the requirement for 'SELECTION EVIDENCE' by including a black commercial container instead of the required 'approved two-coil pair' consisting of one packaged and one bare coil.",
-        "Role 3 (Image 3) contains an unapproved object (copper pipe section) on the ground, failing the 'no extra coil' or 'no commercial package' constraints for a clean equipment record."
+        "Role 1 fails because the camera is at ground level, not an elevated view, which creates a near-duplicate composition with Role 2 rather than a distinct 'Hero' shot.",
+        "Role 3 is rejected because the required concrete equipment still life with a fixed pump, gauge, and manifold is missing, showing only the coil pair on a paved surface.",
+        "Role 3 includes a tractor in the background, which is considered an extra commercial product violating the specific narrative of a fixed filtration setup."
       ],
-      "correction_prompt": "Replace Image 2 with the exact two-coil pair (one packaged, one bare) to show diameter difference without containers; replace Image 3 by removing the loose copper pipe and ensuring the two-coil pair remains small and separate on the concrete pad.",
+      "correction_prompt": "Regenerate Role 1 as a high-angle wide shot of the integrated coil pair on the field. Regenerate Role 3 as a clean close-up on a concrete slab showing a manual filter pump with a pressure gauge and manifold, with the coil pair placed at the far edge; strictly remove the tractor.",
       "panel_scores": [
-        25
+        55
       ],
       "set_attempt": 3
     }

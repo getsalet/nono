@@ -1,57 +1,40 @@
 {
   "source_id": "11600010001502-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 60,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 (SELECTION EVIDENCE) contains a hand/arm in the bottom-right corner, violating the 'no person' rule for the product comparison shot.",
-        "Role 3 (HEADWORKS DETAIL) fails to show the required specific equipment (fixed pump, gauge, and manifold); it instead displays two coils and a small wooden spool on a pad.",
-        "Role 3 background contains farm tractors and a visible person, violating the 'no farm activity' constraint for the equipment-only detail shot."
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Remove the hand from the second image to strictly isolate the product pair; for the third image, replace the coils with a close-up of a pump, gauge, and manifold on a plain concrete pad with an empty background, removing all tractors and people.",
+      "reasons": [
+        "Role 1 and Role 2 are near-duplicates: both display the integrated coil and bare coil on soil from a low/medium angle, lacking the distinct 'wide elevated field view' required for Role 1 or the 'steep near-overhead technical still life' required for Role 2.",
+        "Role 3 fails the 'clean concrete pad' specification, presenting equipment on a vehicle-mounted stand instead.",
+        "Role 3 is missing mandatory technical narrative evidence: no fixed pump, gauge, or manifold are present, only hoses and a tank."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide, elevated field view of the farmland with coils in the lower third; generate Role 2 as a steep, near-overhead technical shot on soil showing only the coils and a connector cue; generate Role 3 on a clean concrete pad featuring a fixed filter, gauge, regulator, and manifold.",
       "panel_scores": [
-        60
+        45
       ],
       "set_attempt": 1
     },
     {
-      "pass": false,
-      "score": 40,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "pass": true,
+      "score": 88,
+      "duplicate_roles": [],
       "reasons": [
-        "Role 3 (Panel 2) features a vertical pump/gauge unit that directly violates the explicit 'no pump' instruction for the headworks detail slot, which required only a fixed gauge and manifold on an empty pad.",
-        "Role 3 (Panel 2) and Role 2 (Panel 3) fail to be 'visibly distinct' as they both feature identical product pairings sitting on the same plain light concrete surface, effectively duplicating the layout and environment structure.",
-        "The environment in Role 3 (Panel 2) is not 'empty' as required, due to the prominent tilled brown field and farm buildings in the background."
+        "Role 1 correctly displays a wide elevated view with the two-coil pair integrated on the soil plane and a clear farm background.",
+        "Role 2 provides the steep near-overhead technical layout on textured soil, showing the integrated pair and diameter cues for selection evidence.",
+        "Role 3 clearly transitions to a concrete-pad equipment still life with a fixed pressure system and the coil pair positioned at the edge, distinct from the soil-based roles.",
+        "All three roles maintain the approved product identity and required watermark without visible living subjects or duplicate composition."
       ],
-      "correction_prompt": "Replace Role 3 with an equipment-only photo of a fixed gauge and manifold on an empty concrete pad (no pump, no background field) and replace Role 2 with an elevated technical comparison of the two coils on a different textured surface.",
+      "correction_prompt": "None",
       "panel_scores": [
-        40
+        88
       ],
       "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 20,
-      "duplicate_roles": [
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 2 fails the 'SELECTION EVIDENCE' brief: the image is a low-angle ground-level shot rather than an elevated technical comparison, and the two coils are not presented to show diameter or construction difference (one is merely unspooled).",
-        "Role 3 fails the 'HEADWORKS DETAIL' brief: it is a low-angle shot of a concrete pad with an abstract device and coil, lacking the required visible pump and manifold.",
-        "Roles 2 and 3 are visually redundant as they both feature a low-level shot of a packaged product and a black coil on a flat, barren surface, failing to provide distinct camera narratives."
-      ],
-      "correction_prompt": "Regenerate Role 2 as an elevated bird's-eye shot comparing a thick and thin coil; regenerate Role 3 as an elevated medium shot of a fixed pump and gauge assembly on a concrete pad with the coils placed small in the background.",
-      "panel_scores": [
-        20
-      ],
-      "set_attempt": 3
     }
   ]
 }

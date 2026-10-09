@@ -1,54 +1,50 @@
 {
   "source_id": "1160003001505-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 40,
       "duplicate_roles": [
-        2,
-        3
+        1,
+        2
       ],
       "reasons": [
-        "Role 3 fails the strict requirement to show an 'elevated record photograph of one fixed pump, gauge and manifold'; it instead shows only the two coils on a concrete pad, lacking the required hardware.",
-        "Roles 2 and 3 are visually indistinct, failing to differentiate the 'technical comparison' (Role 2) from the 'headworks equipment' (Role 3), resulting in a near-duplicate product-shot layout.",
-        "Role 1 fails the 'off-center' requirement; the coils are positioned directly in the center of the frame, dominating the wide-angle shot."
+        "Role 1 and Role 2 are near-duplicates: both show a low-angle shot of the coiled product on textured soil with a similar background and framing, failing to provide the required 'wide elevated field view' for Role 1.",
+        "Role 3 does not meet the 'HEADWORKS DETAIL' specification; the required 'clean concrete pad with fixed pump, gauge and manifold' is missing, and the scene instead features a large green tractor (visible living subject/commercial vehicle) that disrupts the still life.",
+        "Role 1 fails the 'elevated' camera height requirement, instead using a camera height near the soil surface."
       ],
-      "correction_prompt": "Redesign Role 3 to feature a fixed pump, pressure gauge, and manifold on a concrete pad with the coils shown small in the background, and reposition the product coils in Role 1 to be strictly off-center.",
+      "correction_prompt": "Regenerate Image 1 as a wide, elevated field view looking down on the product pair; Regenerate Image 3 as a close-up still life on a clean concrete pad showing a fixed pump, gauge, and manifold, strictly excluding any tractors or visible people.",
       "panel_scores": [
-        35
+        40
       ],
       "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        2,
-        3
-      ],
-      "reasons": [
-        "Role 2 includes a person handling equipment, which violates the 'no person' and 'no farm activity' restriction.",
-        "Role 2 includes a 'third commercial package' (blue barrel) that must not appear in the visual composition.",
-        "Role 3 displays a bottle/cap-like container object in the center of the bare coil, violating the 'no bottle/container' rule.",
-        "Roles 2 and 3 share a nearly identical low-angle 'product on concrete slab' layout, failing to provide distinct camera heights and technical narratives."
-      ],
-      "correction_prompt": "In Role 2, remove the person and blue barrel to show only the two-coil pair on a clean concrete slab; in Role 3, remove the foreign object from the coil center to maintain a hardware-only equipment record photograph.",
-      "panel_scores": [
-        35
-      ],
-      "set_attempt": 2
     },
     {
       "pass": false,
       "score": 45,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 Failure: The approved product coils (packaged and bare black woven) are significantly oversized and serve as the foreground focal point, violating the requirement to keep them small, separate, and off-center to prioritize the wide high-oblique water-transfer context.",
-        "Role 3 Failure: The image displays at least three distinct coils (a blue-wrapped package, a cardboard-wrapped coil, and a loose coil), whereas the required role specifies the 'approved two-coil pair' must remain small, secondary, and separate.",
-        "Role 3 Failure: The presence of multiple coils in the foreground dilutes the narrative focus, which should be on a 'one fixed pump, gauge, and manifold' equipment detail on an empty pad."
+        "Role 3 (Image 3) contains visible living subjects (tractor operator), which is a mandatory rejection reason.",
+        "Role 3 (Image 3) features extra commercial products (tractor) beyond the approved two-coil pair."
       ],
-      "correction_prompt": "Reduce the product coils to small off-center elements in Role 1 to emphasize the water-transfer environment, and strictly limit Role 3 to the approved two-coil pair (max two items) in the background to prioritize the fixed pump/gauge/manifold hardware on the pad.",
+      "correction_prompt": "Regenerate Role 3 to strictly show the concrete-pad equipment still life with a fixed pump, gauge, and manifold on the pad, removing the tractor and all living subjects from the frame.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Role 2 was requested as a 'steep near-overhead' technical still life on textured soil, but the image is an eye-level shot of the coils on a clean concrete pad with a tractor in the background; this camera and environment structure is a near-duplicate of Role 3, failing to provide the required distinct technical narrative.",
+        "The 'steep near-overhead' angle and 'textured soil' surface required for Role 2 are completely missing from the provided panel."
+      ],
+      "correction_prompt": "Replace Image 2 with a steep, near-overhead still-life shot of the integrated two-coil pair on a bed of coarse, textured soil, showing only the coils and one diameter cue, eliminating the tractor and concrete pad.",
       "panel_scores": [
         45
       ],
