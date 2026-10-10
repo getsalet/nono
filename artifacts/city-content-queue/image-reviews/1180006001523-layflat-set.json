@@ -1,24 +1,58 @@
 {
   "source_id": "1180006001523-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 40,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Role 1 is not a wide high-oblique shot but a standard ground-level view where the product pair is dominant and centered, failing the 'small, separate, off-center' requirement.",
-        "Role 1 and Role 2 have nearly identical camera angles and framing (low-angle product focus in a field), making them layout duplicates.",
-        "Role 3 fails the 'equipment-only' requirement by missing the mandatory fixed pump, gauge, and manifold on a concrete pad, instead showing the product pair in a static, disconnected location."
+        "Role 1 and Role 2 are near-duplicates: both feature the same two coil products on a soil surface with a wide-angle, low-camera field view, failing to distinguish the 'wide elevated hero' (Role 1) from the 'steep near-overhead technical still life' (Role 2).",
+        "Role 2 lacks the steep, near-overhead perspective required for a technical layout; instead, it remains a low-angle field shot similar to Role 1.",
+        "Role 3 contains a 'moving water cart' which conflicts with the 'fixed pump' requirement and the 'still life' nature of the role; the composition is also not dominated by a complete fixed filter, gauge, regulator, and manifold."
       ],
-      "correction_prompt": "Re-shoot Role 1 as a high-oblique wide landscape with the coils small and off-center; re-shoot Role 2 as an elevated technical close-up showing diameter difference; replace Role 3 with an elevated record of a fixed pump, gauge, and manifold on an empty concrete pad with the coils secondary.",
+      "correction_prompt": "Re-shoot Role 2 as a steep near-overhead still life on textured soil with a visible connector; replace the cart in Role 3 with a fixed pump and manifold assembly on a concrete pad.",
       "panel_scores": [
-        35
+        40
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 1 fails: The image contains a small garden sprayer in the background, which violates the rule against extra commercial products or cluttered non-farm equipment.",
+        "Role 2 fails: The image is a low-angle shot of the coiled tubing and connector. It lacks the required 'steep near-overhead' camera angle mandated for Selection Evidence.",
+        "Role 3 fails: The image lacks the specific fixed filter, gauge, and manifold required for the Headworks Detail. Instead, it shows a wheeled water cart/pump unit, which is not the mandated static concrete-pad equipment still life."
+      ],
+      "correction_prompt": "Regenerate panel: 1. Wide elevated field view with only coiled tube, removing the background sprayer. 2. Steep near-overhead shot on soil of only the tube pair and connector. 3. Concrete-pad still life of a static pump, gauge, and manifold, moving the coils to the far edge.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 successfully executes the wide elevated field view, placing the integrated coil pair on the soil in the lower third of the frame with a strong horizon line.",
+        "Role 2 provides the required steep near-overhead technical layout on textured soil, serving as selection evidence without living subjects or city-specific architecture.",
+        "Role 3 is distinct as a concrete-pad equipment still life, featuring the integrated product pair at the edge alongside a fixed pump and gauge manifold, with a tractor visible in the background to complete the context."
+      ],
+      "correction_prompt": "Maintain the current panel structure as the roles are clearly distinct and correctly executed.",
+      "panel_scores": [
+        95
+      ],
+      "set_attempt": 3
     }
   ]
 }

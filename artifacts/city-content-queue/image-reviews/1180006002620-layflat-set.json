@@ -1,21 +1,54 @@
 {
   "source_id": "1180006002620-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 65,
+      "score": 45,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Editorial Hero) fails to meet the brief by showing the product pair as large and center-staged rather than small, separate, and off-center.",
-        "Role 2 (Selection Evidence) includes a person (tractor operator) and a third commercial package (hopper), violating the 'no person' and 'no third commercial package' constraints.",
-        "Role 3 (Headworks Detail) fails to depict the required 'fixed pump, gauge and manifold' and instead focuses on hose connectors, deviating from the equipment-only specification."
+        "Image 3 contains visible commercial vehicles (two tractors) which are not part of the required 'fixed pump, gauge and manifold' equipment still life and do not belong in the 'ordinary Iranian farm context' as non-commercial product props.",
+        "Image 2 does not meet the 'steep near-overhead' angle required for Role 2, instead showing a side perspective similar to Role 1, resulting in a lack of camera structure distinction between roles 1 and 2."
       ],
-      "correction_prompt": "Re-image Role 1 with the coil pair small and off-center; re-image Role 2 showing the coils clearly with no operator or third packages; re-image Role 3 to feature the fixed pump and gauge manifold on the concrete pad.",
+      "correction_prompt": "Regenerate image 3 to remove the two tractors, replacing them with a static fixed filtration pump, pressure gauge, and manifold assembly sitting on the concrete pad. Regenerate image 2 to use a high-angle, steep near-overhead perspective to clearly differentiate it from the low-angle field view of image 1.",
       "panel_scores": [
-        65
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 and Role 2 are near-duplicates in camera angle and framing: both show the integrated AFP product and the bare woven coil on soil from a similar low-to-mid angle, failing to distinguish the required 'wide elevated field view' of Role 1 from the 'steep near-overhead technical layout' of Role 2."
+      ],
+      "correction_prompt": "Re-render Role 1 as a wide, high-elevation aerial perspective emphasizing the field horizon and scale, and re-render Role 2 with a steep, near-vertical camera angle focused exclusively on the soil surface and the two coil pair.",
+      "panel_scores": [
+        50
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 and Role 2 share nearly identical composition, camera angle, and subject arrangement (soil close-up of the two coils).",
+        "Role 1 lacks the 'wide elevated water-transfer field view' required, appearing instead as a ground-level close-up duplicate of Role 2.",
+        "Role 3 violates the 'clean concrete pad' requirement by including a mobile pump cart and field background elements instead of an isolated equipment still life."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide elevated field view with coils in the lower third; generate Role 3 on a clean concrete pad containing only the pump, gauge, and manifold.",
+      "panel_scores": [
+        45
+      ],
+      "set_attempt": 3
     }
   ]
 }
