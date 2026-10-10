@@ -6,22 +6,34 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 92,
-      "product_width_percent": 76,
-      "product_height_percent": 31,
-      "product_x_center_percent": 47,
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
       "reasons": [
-        "Image contains exactly two objects: a packaged AFP coil and a bare black woven coil.",
-        "Both objects are separate, fully visible, and physically plausible with contact shadows.",
-        "Width of approximately 76% falls within the approved 25–82% envelope.",
-        "The pair is at the far edge of a clean concrete pad as requested by the role.",
-        "No people, faces, or human body parts are present.",
-        "The background contains a distant unattended tractor and farm buildings, which are permitted.",
-        "The required watermark 'AFP | 09134922013' is present in the bottom right."
+        "Watermark mismatch: Image shows \"AFP | 09134922013\" instead of the required \"AFP | 0913492201\".",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Remove the incorrect watermark and add the exact required watermark \"AFP | 0913492201\" to the bottom right corner. Enlarge the product group from 0% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 82,
+      "product_height_percent": 58,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Image contains the required one packaged AFP coil and one bare black woven coil pair.",
+        "The combined width of the product pair sits exactly at the 82 percent upper limit of the allowed envelope.",
+        "The role blueprint is accurately depicted as an elevated equipment still life on a concrete pad with a green pump, gauge, and manifold integrated in the background.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly present and correctly formatted.",
+        "The image contains zero people and zero human body parts.",
+        "No hard reject elements such as pasted appearance, missing contact shadows, distorted dimensions, or additional commercial products are present."
       ],
       "correction_prompt": "",
-      "attempt": 1
+      "attempt": 2
     }
   ]
 }
