@@ -1,35 +1,41 @@
 {
   "source_id": "1190003002039-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 55,
+      "score": 40,
       "duplicate_roles": [
         1,
         2
       ],
       "reasons": [
-        "Image 2 (Role 2: SELECTION EVIDENCE) shows an extraneous orange nozzle fitting next to the coil, which violates the 'no third commercial package, bottle, person or extra coil' constraint and creates an 'oversized product' or foreign object issue.",
-        "Image 1 (Role 1: EDITORIAL HERO) positions the two coils in the immediate foreground (bottom center) rather than being small, separate, and off-center as required; the camera angle is also very low rather than the specified 'wide high-oblique'."
+        "Role 1 (Image 1) fails: The shot is a low, ground-level view rather than the required 'wide elevated field view.' It also fails to include the 'water-transfer field' context; instead, it shows a tilled field with a distant building that does not fit the technical narrative.",
+        "Role 2 (Image 2) fails: The camera angle is low and frontal, not 'steep near-overhead' as requested for the technical still life. This makes it visually nearly identical to Role 1 (both are low-angle soil shots), resulting in duplicate composition.",
+        "Role 3 (Image 3) fails: The prompt requires a still life 'dominated by a complete fixed filter, gauge, regulator and manifold' with the coils sitting at the 'far edge.' Here, the coils are in the foreground, and the background subject is a tractor/military vehicle with no manifold or gauges, missing the mandatory technical equipment narrative."
       ],
-      "correction_prompt": "Remove the orange nozzle from the selection evidence image; reset the hero image to a high-oblique angle with the coils placed small and off-center in the mid-ground.",
+      "correction_prompt": "Replace all images: 1) Reposition to a high, wide aerial view showing the water field with coils in the foreground; 2) Set a steep overhead camera angle looking directly down at the soil-based still life to differentiate from the first; 3) Place the two coils on the far edge of the frame and center the shot on a visible pressure gauge and manifold system, removing the vehicle.",
       "panel_scores": [
-        55
+        40
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Panel 2 violates the SELECTION EVIDENCE role by showing two bare black coils of different sizes instead of the required 'approved two-coil pair' (packaged coil + bare black coil).",
-        "Panel 3 violates the HEADWORKS DETAIL role by showing only one bare coil; the required 'approved two-coil pair' (packaged + bare) is missing."
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2,
+        3
       ],
-      "correction_prompt": "Replace Panel 2 with a technical comparison of the approved packaged coil and bare black woven coil, and replace Panel 3 with an elevated record shot of a pump, gauge, and manifold on an empty concrete pad where both the packaged and bare coils are visible but small and secondary.",
+      "reasons": [
+        "Image 1: The composition is not an 'elevated' wide view as required; it is a ground-level shot. The product is placed on the soil in the immediate foreground, not integrated in the 'lower third' of a wide field perspective.",
+        "Image 2: Fails to provide the 'steep near-overhead technical layout' required. The angle is close to a low oblique/eye-level perspective, lacking the 'top-down' evidence of diameter cues or connector visibility.",
+        "Image 3: The 'HEADWORKS DETAIL' role is completely missing. While there is a concrete pad, the required 'complete fixed filter, gauge, regulator, and manifold' equipment is absent; the tractor in the background is a power source, not the specific filtration headworks required."
+      ],
+      "correction_prompt": "Regenerate the three images: 1) An elevated wide field view with product in the lower third; 2) A steep overhead shot on soil showing coil diameter/connector; 3) A concrete pad close-up featuring the fixed filter, gauge, and manifold with the coils at the far edge.",
       "panel_scores": [
-        45
+        30
       ],
       "set_attempt": 2
     },
@@ -37,15 +43,15 @@
       "pass": false,
       "score": 45,
       "duplicate_roles": [
+        1,
         2,
         3
       ],
       "reasons": [
-        "Panel 2 fails Role 2 (SELECTION EVIDENCE) by including a pump, violating the 'no extra hardware' rule; it also places the coils in the immediate foreground, making them oversized relative to the 'elevated technical comparison' brief.",
-        "Panel 3 fails Role 3 (HEADWORKS DETAIL) because the coils are not 'small, separate and secondary' as required; they are placed at the same visual scale and prominence as the pump, competing for focus.",
-        "Panels 2 and 3 are visually indistinguishable in their narrative logic, both showing equipment on a concrete pad in a way that duplicates the 'hardware' role and fails to distinguish the 'Selection' vs 'Headworks' functions."
+        "The three images are nearly identical duplicates, failing the 'clearly distinct' narrative requirement for all three roles.",
+        "Role 3 is missing the mandatory technical evidence: the concrete pad lacks the fixed pump, gauge, regulator, and manifold required for the 'HEADWORKS DETAIL' narrative."
       ],
-      "correction_prompt": "Re-shoot Role 2 as a close-up macro shot of just the two coils side-by-side to emphasize construction differences, and Role 3 as a high-angle 'record' shot where the pump is the hero and the two coils are pushed to the extreme background at a distance.",
+      "correction_prompt": "Re-shoot the three panels to ensure distinct environments: 1) a wide elevated view of a farm field, 2) a steep near-overhead shot focusing on a single connector on soil, and 3) a static concrete-pad shot including a visible pump, gauge, and manifold.",
       "panel_scores": [
         45
       ],
