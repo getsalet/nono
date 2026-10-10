@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-10T06:56:52+00:00`
+- آخرین بروزرسانی: `2026-10-10T07:51:25+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1016 از 1894 (53.64٪)**
-- تکمیل‌شده: **1016**
+- پیشرفت: **1017 از 1894 (53.70٪)**
+- تکمیل‌شده: **1017**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **878**
+- ناموفق: **877**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,7 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **شیرینو** — بوشهر — `tape20` — 1666 کلمه — `2026-10-10T07:44:23+00:00`
 - **سیراف** — بوشهر — `layflat` — 1303 کلمه — `2026-10-10T06:56:49+00:00`
 - **بندرکنگان** — بوشهر — `layflat` — 1207 کلمه — `2026-10-10T06:54:04+00:00`
 - **بنک** — بوشهر — `tape20` — 1312 کلمه — `2026-10-10T06:53:14+00:00`
@@ -51,10 +52,12 @@
 - **برازجان** — بوشهر — `layflat` — 1146 کلمه — `2026-10-10T00:53:19+00:00`
 - **برازجان** — بوشهر — `tape20` — 1128 کلمه — `2026-10-10T00:52:10+00:00`
 - **بوشکان** — بوشهر — `tape20` — 1372 کلمه — `2026-10-10T00:51:36+00:00`
-- **بهارستان** — بوشهر — `layflat` — 1281 کلمه — `2026-10-09T23:37:48+00:00`
 
 ## خطاهای اخیر
 
+- **بندرریگ** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **بندرگناوه** — `tape20`: `Editorial review failed: internal link count must equal minimum`
+- **شیرینو** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بنک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بیدخون** — `layflat`: `Editorial review failed: internal link count must equal minimum`
 - **بندردیر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -62,9 +65,6 @@
 - **بردستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **بردستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **وحدتیه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **کلمه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **بوشکان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **بهارستان** — `tape20`: `Editorial review failed: internal link count must equal minimum`
 
 ## فایل‌های خروجی
 
