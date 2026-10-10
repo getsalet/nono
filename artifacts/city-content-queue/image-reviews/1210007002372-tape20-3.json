@@ -1,0 +1,79 @@
+{
+  "source_id": "1210007002372-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 15,
+      "product_height_percent": 35,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package (brown AFP box) is present to the right, which is a hard reject for role 3.",
+        "The AFP white-and-blue roll appears cut off by the black watermark box on the bottom right.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 15% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the brown AFP cardboard box on the right to ensure only one carton roll is present. Ensure the roll is not obscured by the bottom-right watermark and remains a single fully visible cylindrical object. Enlarge the product group from 15% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 38,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "The image contains a second commercial package (an open carton) in the background, which violates the requirement for exactly one product.",
+        "The mandatory role 'HEADWORKS DETAIL' (elevated equipment) was not followed; the product is a ground-level still life on a concrete pad.",
+        "The text on the product roll is gibberish ('Drip Irrigation Tape' is misspelled and stylized strangely)."
+      ],
+      "correction_prompt": "Regenerate to feature exactly one AFP white-and-blue drip-tape roll on an elevated still life. Remove the second open box in the background. Ensure all product text is sharp, readable, and grammatically correct.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 23,
+      "product_height_percent": 38,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (unrelated brown AFP cardboard box) is visible in the right background, which is a hard reject item",
+        "Missing required bottom-right watermark 'AFP | 09134922013'",
+        "Low third placement and off-center are acceptable, but the hard rejects and missing required elements fail the image"
+      ],
+      "correction_prompt": "Regenerate the image removing the brown cardboard box in the background and adding the exact bottom-right watermark 'AFP | 09134922013'",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 45,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Hard reject: Second commercial package (a brown AFP cardboard box) is visible in the background to the right, violating the requirement for 'exactly one' product and 'zero second commercial package'.",
+        "Watermark text error: The required watermark 'AFP | 09134922013' is rendered as 'AFP | 09134922010' (ends in zero instead of one)."
+      ],
+      "correction_prompt": "Remove the brown cardboard box in the background to ensure only one product unit is visible. Correct the watermark text at the bottom right to exactly match 'AFP | 09134922013'.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 21,
+      "product_height_percent": 28,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Product is a single AFP white-and-blue drip tape roll with proper contact shadow and integrated perspective",
+        "Contains the mandatory bottom-right watermark 'AFP | 09134922013'",
+        "Matches the 'HEADWORKS DETAIL' role blueprint showing elevated equipment still life on concrete with fixed filter, pressure gauge, and manifold",
+        "No people or human body parts present"
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
