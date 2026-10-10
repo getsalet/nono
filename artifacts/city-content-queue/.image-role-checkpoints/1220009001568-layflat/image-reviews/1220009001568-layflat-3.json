@@ -1,0 +1,75 @@
+{
+  "source_id": "1220009001568-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 70,
+      "product_height_percent": 42,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The exact required watermark text 'AFP | 09134922013' is missing. The bottom-right label in the image reads 'AFP | 09134922013' with the last two digits being '13', but the requested text ends in '013' (which matches), wait - looking closely at the prompt: '09134922013'. Looking at the image watermark: '09134922013'. The numbers match perfectly. Correction: My initial visual inspection was too hasty. Let's re-evaluate other factors.",
+        "The two product units (packaged coil and bare coil) appear to be floating or sitting on the surface without any visible contact shadow or reflection anchoring them to the concrete pad, creating a 'pasted' or sticker-like appearance that violates the hard reject criteria."
+      ],
+      "correction_prompt": "Ground the two product coils on the concrete pad by adding realistic, subtle contact shadows directly beneath them to ensure they appear physically present in the scene and not pasted. Ensure the bottom-right watermark remains exactly 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 88,
+      "product_height_percent": 58,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "Hard reject: Presence of multiple people (human figures) in the background violates the 'zero people' and 'zero human body parts' requirement.",
+        "The combined width of the two coiled products is approximately 88% of the frame width, which exceeds the 82% upper limit for the envelope.",
+        "The products are placed low in the frame and slightly off-center; a tighter crop or repositioning is needed to meet the 25-82% width constraint.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 88% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Regenerate: completely remove all human figures from the background. Shrink the two coils significantly to fit within a 25% to 82% width envelope (aim for ~65%). Retain the concrete headworks detail (pump, gauge, manifold) and the exact bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 88% to 25-82% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 76,
+      "product_height_percent": 42,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The image violates the strict 'zero people' rule as it clearly contains a visible person (farmer) operating equipment in the background.",
+        "A human silhouette and body parts are present, which are standalone hard rejects."
+      ],
+      "correction_prompt": "Regenerate with a strictly empty scene. Remove all human figures, farmers, and workers. The concrete pad must be a clean equipment still life with only the two coils and relevant infrastructure (fixed pump, gauge, manifold), with no people or body parts visible anywhere in the frame.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 64,
+      "product_height_percent": 28,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "The image depicts a distant tractor and pump equipment in the field, which violates the role's requirement for a 'clean concrete pad' with 'far edge' product placement. The product is not at the far edge of a clean pad; instead, it is placed on the concrete in the foreground, with the background showing agricultural field and equipment, making the layout inconsistent with the requested 'HEADWORKS DETAIL' context."
+      ],
+      "correction_prompt": "Regenerate image focusing strictly on the concrete pad still life. Place the pump, gauge, and manifold on the concrete with the two coils (one packaged AFP, one black woven) positioned at the far edge of the frame. Remove the distant tractor and field from the background to maintain the clean pad aesthetic.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 75,
+      "product_height_percent": 35,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Visible person (farmer/operator) is present in the driver's seat of the tractor, which is a hard reject requirement.",
+        "The mandatory 'HEADWORKS DETAIL' role (clean concrete pad with fixed pump, gauge, and manifold) is not represented; the scene features a large tractor rather than a static equipment still life."
+      ],
+      "correction_prompt": "Remove the human operator from the tractor seat completely to ensure zero people or body parts. Change the scene to a 'headworks' still-life: replace the tractor with a static infrastructure setup consisting of a fixed pump, a pressure gauge, and a manifold on a clean concrete pad. Position the combined two-coil pair (packaged AFP coil and bare black coil) at the far edge of the pad.",
+      "attempt": 5
+    }
+  ]
+}
