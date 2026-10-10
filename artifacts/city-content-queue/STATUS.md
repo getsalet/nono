@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-09T23:39:08+00:00`
+- آخرین بروزرسانی: `2026-10-10T00:53:29+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **997 از 1894 (52.64٪)**
-- تکمیل‌شده: **997**
+- پیشرفت: **1000 از 1894 (52.80٪)**
+- تکمیل‌شده: **1000**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **897**
+- ناموفق: **894**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -18,8 +18,7 @@
 
 ## بسته‌های آماده آپلود
 
-- بسته‌های 50تایی آماده: **19**
-- [batch-010-posts-0451-0500.zip](./packages/batch-010-posts-0451-0500.zip) — 50 پست — 13986604 بایت
+- بسته‌های 50تایی آماده: **20**
 - [batch-011-posts-0501-0550.zip](./packages/batch-011-posts-0501-0550.zip) — 50 پست — 12330394 بایت
 - [batch-012-posts-0551-0600.zip](./packages/batch-012-posts-0551-0600.zip) — 50 پست — 10846317 بایت
 - [batch-013-posts-0601-0650.zip](./packages/batch-013-posts-0601-0650.zip) — 50 پست — 10384826 بایت
@@ -29,9 +28,13 @@
 - [batch-017-posts-0801-0850.zip](./packages/batch-017-posts-0801-0850.zip) — 50 پست — 11408618 بایت
 - [batch-018-posts-0851-0900.zip](./packages/batch-018-posts-0851-0900.zip) — 50 پست — 12030197 بایت
 - [batch-019-posts-0901-0950.zip](./packages/batch-019-posts-0901-0950.zip) — 50 پست — 12028832 بایت
+- [batch-020-posts-0951-1000.zip](./packages/batch-020-posts-0951-1000.zip) — 50 پست — 12028199 بایت
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **برازجان** — بوشهر — `layflat` — 1146 کلمه — `2026-10-10T00:53:19+00:00`
+- **برازجان** — بوشهر — `tape20` — 1128 کلمه — `2026-10-10T00:52:10+00:00`
+- **بوشکان** — بوشهر — `tape20` — 1372 کلمه — `2026-10-10T00:51:36+00:00`
 - **بهارستان** — بوشهر — `layflat` — 1281 کلمه — `2026-10-09T23:37:48+00:00`
 - **دلوار** — بوشهر — `layflat` — 1187 کلمه — `2026-10-09T23:37:23+00:00`
 - **خارک** — بوشهر — `layflat` — 1669 کلمه — `2026-10-09T22:42:04+00:00`
@@ -49,12 +52,10 @@
 - **بوستان** — کهگیلویه و بویراحمد — `layflat` — 1534 کلمه — `2026-10-09T18:44:03+00:00`
 - **چوار** — ایلام — `layflat` — 1158 کلمه — `2026-10-09T17:40:47+00:00`
 - **سرابله** — ایلام — `tape20` — 1134 کلمه — `2026-10-09T17:39:31+00:00`
-- **شباب** — ایلام — `tape20` — 1420 کلمه — `2026-10-09T17:39:15+00:00`
-- **توحید** — ایلام — `layflat` — 1441 کلمه — `2026-10-09T16:46:17+00:00`
-- **توحید** — ایلام — `tape20` — 1408 کلمه — `2026-10-09T16:42:13+00:00`
 
 ## خطاهای اخیر
 
+- **بوشکان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بهارستان** — `tape20`: `Editorial review failed: internal link count must equal minimum`
 - **انارستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **دوگنبدان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -64,7 +65,6 @@
 - **سپیدار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **باشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بوستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **باشت** — `tape20`: `Editorial review failed: internal link count must equal minimum`
 
 ## فایل‌های خروجی
 
