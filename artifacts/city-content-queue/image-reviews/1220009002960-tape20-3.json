@@ -1,0 +1,85 @@
+{
+  "source_id": "1220009002960-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The bottom-right watermark text is 'AFP | 09134922013', but the mandatory watermark is 'AFP | 09134922013' (Wait, re-checking: The mandatory watermark IS 'AFP | 09134922013'. Let me re-read the prompt carefully. The prompt says 'The exact bottom-right watermark \"AFP | 09134922013\" is REQUIRED'. Looking at the image, the watermark is 'AFP | 09134922013'. So the watermark is actually correct. Let me re-evaluate.",
+        "The primary product shown is a white roll of tape (drip tape), not the 'AFP white-and-blue wide low cylindrical drip-tape carton' specified in the brief. The white roll is not a carton.",
+        "The visible carton in the background is plain brown cardboard with a blue logo, not the 'white-and-blue' carton required.",
+        "The specific 'AFP white-and-blue wide low cylindrical drip-tape carton' is not present in the image.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate to prominently feature the 'AFP white-and-blue wide low cylindrical drip-tape carton' (approx 18-38% width) in the foreground, replacing the current white roll and brown carton. Keep the concrete pad and fixed irrigation hardware context. Ensure the watermark 'AFP | 09134922013' remains. Enlarge the product group from 0% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Hard reject: Second commercial package (drip tape carton box) is visible on the right, violating the 'exactly one AFP carton' rule.",
+        "Hard reject: The water pressure tanks on the cart visually function as prohibited 'canisters/bottles' within the equipment cluster.",
+        "Gibberish writing on the tank label."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right and the gray/black pressure tanks on the cart. Replace the cart equipment with a simple stainless steel filter and regulator manifold without any tank-like shapes. Ensure the product label text is legible or absent. Keep the single white and blue AFP drip tape roll as the only package.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 42,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "A second commercial package (a large brown cardboard box labeled AFP) is visible in the background, which violates the 'one integrated AFP carton' or 'zero second commercial package' constraint.",
+        "The product appears to be a large industrial jumbo roll or coil rather than a wide, low cylindrical drip-tape carton roll as specified.",
+        "The presence of the large cardboard box creates a cluttered scene that fails to meet the 'clean' and 'single object' focus required for the detail role."
+      ],
+      "correction_prompt": "Remove the large cardboard box and any additional commercial packaging from the background. Replace the product with a single wide, low cylindrical drip-tape carton roll to match the specific product description.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 42,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Presence of a second commercial package (layflat hose roll and a second large AFP carton box) violates the 'exactly one' and 'zero second commercial package' constraints.",
+        "Visible black layflat hose violates the 'no layflat hose' rule.",
+        "The image shows two AFP-branded items (the roll and the box in the background), which is a hard reject."
+      ],
+      "correction_prompt": "Regenerate the image containing ONLY the single white AFP drip tape roll on the concrete pad. Remove the second AFP carton box in the background and remove all black layflat hoses to strictly satisfy the 'exactly one' commercial package and 'no layflat hose' constraints.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 24,
+      "product_height_percent": 42,
+      "product_x_center_percent": 69,
+      "reasons": [
+        "Image shows exactly one AFP white-and-blue wide low cylindrical drip-tape roll.",
+        "Watermark 'AFP | 09134922013' is present in bottom-right.",
+        "Hard rejects are absent: no people, human body parts, or silhouettes.",
+        "Width (24%) is within 18-38% range; Height (42%) is below 70% limit.",
+        "Editorial preference of lower-third/off-center placement is met.",
+        "HEADWORKS DETAIL role is satisfied with the still life on concrete featuring a filter, gauge, and manifold hardware.",
+        "Physical integration is plausible with correct contact shadows; no floating or sticker appearance."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
