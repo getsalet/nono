@@ -1,0 +1,53 @@
+{
+  "source_id": "1180005002737-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Missing required watermark 'AFP | 09134922013' at bottom-right; current text in that location is different ('AFP | 09134922015').",
+        "Product bounding box estimation requested in prompt; 0 reported due to structural fail of watermark verification, so pixel estimation not returned. (Visually, the two-coil pair spans approximately 65% of the image width, centered horizontally, which is within acceptable bounds, but the fail prevents a 'pass' state).",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Regenerate to display the watermark 'AFP | 09134922013' clearly at the bottom right, maintaining the near-overhead perspective, textured soil, and the specific two-coil pair (packaged AFP coil and bare black woven coil) with sharp focus and physical integration. Enlarge the product group from 0% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 70,
+      "product_height_percent": 48,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Background contains multiple third commercial packages (red, blue, and white containers) which violates the hard reject criteria for extra items.",
+        "The mandated perspective for the 'SELECTION EVIDENCE' role is a steep near-overhead shot, but the image is a low-angle, eye-level shot."
+      ],
+      "correction_prompt": "Re-shoot from a steep, near-overhead angle on the textured soil. Strictly exclude all background items; crop or clean the scene so that only the two coiled products and the soil are visible.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 62,
+      "product_height_percent": 45,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "Required watermarked text 'AFP | 09134922013' present in bottom-right.",
+        "Zero people, body parts, or human silhouettes visible.",
+        "Approved layflat pair visible: one packaged AFP coil (left) and one bare black woven coil (right).",
+        "No third commercial packages, bottles, cans, or floating products.",
+        "Perspective, contact shadows, and physical integration are plausible.",
+        "Product combined width and height fall within the 25-82 percent envelope."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

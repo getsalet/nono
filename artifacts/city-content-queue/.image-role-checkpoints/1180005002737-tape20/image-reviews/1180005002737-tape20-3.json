@@ -1,0 +1,78 @@
+{
+  "source_id": "1180005002737-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 27,
+      "product_height_percent": 40,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "The image contains multiple rolls of drip tape: the primary white-and-blue carton roll in the foreground, a coiled black hose on a blue reel, and a separate coiled black hose to the right. The role blueprint specifically requests 'one integrated AFP carton at the far edge', but the image shows a prominent foreground carton roll plus additional coils, creating a cluttered multi-roll scene that fails the 'single carton roll' requirement.",
+        "The foreground carton roll is placed in the center-right foreground, not at the 'far edge' as specified in the mandatory role blueprint ('far edge' usually implies background depth)."
+      ],
+      "correction_prompt": "Remove the foreground white-and-blue carton roll and the extra black coil on the right. Position a single white-and-blue AFP drip-tape carton roll at the far right edge of the concrete pad (background). Ensure the foreground is occupied by a fixed filter, pressure gauge, regulator, and manifold with attached tubing to satisfy the 'HEADWORKS DETAIL' still life requirement. Keep the 'AFP' branding visible on the background carton.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 15,
+      "product_height_percent": 22,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "A second commercial package (the open brown carton containing only the text 'AFP') is visible on the far right, which is a hard reject for a 'second commercial package'.",
+        "The required water mark is 'AFP | 09134922013' (with the number 49), but the image displays 'AFP | 0913422013' (with an extra 2), violating the exact watermark requirement.",
+        "The required role is 'elevated equipment still life on a clean concrete pad', but the equipment is placed on a large dirt/sand mat on the concrete pad.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 15% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate with a single AFP drip tape roll (no other commercial cartons). Change the watermark text in the bottom right to exactly 'AFP | 09134922013'. Place the filtration equipment directly on the concrete surface, not on a mat. Enlarge the product group from 15% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 45,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible, which is a hard reject condition ('second commercial package').",
+        "Watermark text is garbled and misspelled ('09134922013' instead of the required '09134922013'), failing the 'gibberish writing' and exact watermark requirements."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right side. Fix the bottom-right watermark text to read exactly 'AFP | 09134922013' with clear, legible typography.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 57,
+      "reasons": [
+        "Second commercial package",
+        "Second roll",
+        "Missing contact shadow",
+        "Layout deviation: centered placement instead of lower-third/off-center"
+      ],
+      "correction_prompt": "Remove the cardboard box and coiled black hose. Replace with fixed filter, pressure gauge, regulator, and manifold on clean concrete pad. Move AFP drip-tape roll to far edge lower-third. Add subtle contact shadow.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 18,
+      "product_height_percent": 22,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image contains a second commercial package (a brown cardboard box) in the background, which is a hard reject.",
+        "The product is placed on a dirt/concrete surface rather than an elevated concrete pad as specified for the HEADWORKS DETAIL role."
+      ],
+      "correction_prompt": "Remove the brown cardboard box from the background. Reposition the AFP drip tape roll on an elevated concrete pad next to the fixed filtration and gauge system.",
+      "attempt": 5
+    }
+  ]
+}
