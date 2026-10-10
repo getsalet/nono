@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-10T11:42:20+00:00`
+- آخرین بروزرسانی: `2026-10-10T12:55:22+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **1025 از 1894 (54.12٪)**
 - تکمیل‌شده: **1025**
@@ -55,16 +55,16 @@
 
 ## خطاهای اخیر
 
+- **سرخه** — `tape20`: `Agnes Image HTTP 503: {"error":{"message":"image queue is full, please retry later (request id: 20261010125520458602203r7J8ENoe)","type":"","param":"","code":null}}`
+- **دیباج** — `layflat`: `Agnes Image HTTP 503: {"error":{"message":"image queue is full, please retry later (request id: 20261010124942660261914AZ0Hu41Y)","type":"","param":"","code":null}}`
+- **دیباج** — `tape20`: `Agnes Image HTTP 503: {"error":{"message":"image queue is full, please retry later (request id: 20261010124903664866810lP6fddNh)","type":"","param":"","code":null}}`
+- **کلاته** — `layflat`: `Agnes Image HTTP 503: {"error":{"message":"image queue is full, please retry later (request id: 20261010124837813426168pKtbnbEJ)","type":"","param":"","code":null}}`
 - **آرادان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **دامغان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **امیریه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **گرماب** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سهرورد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **بندرگناوه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **سهرورد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **هیدج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **بندرریگ** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **بندرگناوه** — `tape20`: `Editorial review failed: internal link count must equal minimum`
 
 ## فایل‌های خروجی
 
