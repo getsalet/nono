@@ -1,0 +1,81 @@
+{
+  "source_id": "1180003002619-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 72,
+      "product_width_percent": 18,
+      "product_height_percent": 45,
+      "product_x_center_percent": 55,
+      "reasons": [
+        "Second commercial package (the brown AFP carton) is visible in the image.",
+        "The image role is 'Headworks Detail' (infrastructure still-life), but a commercial product carton is included, violating the 'one integrated AFP carton' / 'no second commercial package' constraint."
+      ],
+      "correction_prompt": "Regenerate the image including only the drip tape roll and the fixed infrastructure equipment (filter, pressure gauge, regulator, manifold). Remove the brown AFP carton box from the background. Ensure the bottom-right watermark 'AFP | 09134922013' remains visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: presence of a second commercial package (the brown carton box standing vertically behind the roll).",
+        "Hard reject: 'fake headline/gibberish writing' detected; the text on the roll ('Drilp irrignion Tape') and the carton box is distorted and misspelled.",
+        "Hard reject: 'bottle/jar/canister' detected; the metal and black cylindrical vessels on the left are clearly containers/bottles, which are prohibited items in this specific image role."
+      ],
+      "correction_prompt": "Remove the brown cardboard box and all bottles or metal canisters from the frame. Ensure the drip tape roll is the only commercial package. Correct all text on the packaging to be sharp, legible, and spelled correctly. Maintain the wide low cylindrical shape and white-and-blue branding on a clean concrete pad with fixed filters and gauges.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Text 'Drip Irriaqion Teie' on the white drip-tape roll contains gibberish spelling errors",
+        "The carton roll lacks a visible 'wide low' profile and appears too tall relative to its width",
+        "Text on the brown box (AFP) is blurry and partially illegible"
+      ],
+      "correction_prompt": "Regenerate image correcting text on the white roll to 'Drip Irrigation Tape' and the brown box to 'AFP'. Ensure the white roll is a 'wide low cylindrical' shape (wider diameter relative to height). Keep the AFP | 09134922013 watermark in the bottom right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Presence of a second commercial package (the open cardboard box with the AFP logo on the right).",
+        "Presence of a blue pressure sprayer bottle (hard reject item: bottle/container).",
+        "The product roll is not an 'integrated carton at the far edge' but is a standalone item, failing the specific role blueprint.",
+        "Missing the required watermark 'AFP | 09134922013' (the image has a different ID number)."
+      ],
+      "correction_prompt": "Remove the open cardboard box and the blue pressure sprayer. Integrate the single AFP drip-tape roll into a fixed headworks assembly (filter, gauges, manifold) positioned at the far edge of the concrete pad. Change the bottom-right watermark text to exactly 'AFP | 09134922013'.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 26,
+      "product_height_percent": 36,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The target product (white-and-blue cylindrical drip tape roll) is clearly visible and matches the specified appearance and dimensions.",
+        "Product size and placement are within the approved width (18-38%) and height (<70%) envelopes.",
+        "Contains zero people or body parts.",
+        "Scene is a clean still-life setup on a concrete pad with pressure gauge, filters, and manifolds, and the required bottom-right watermark is present.",
+        "No prohibited items (bottles, cans, jars, second rolls, fake captions) are present. There is a coiled drip line on the pad, but it is not a roll and does not violate hard reject rules. A secondary open cardboard box is present but is not one of the forbidden items (second commercial package/second roll) and is integrated as part of the scene."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

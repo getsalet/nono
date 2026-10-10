@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-10T00:53:29+00:00`
+- آخرین بروزرسانی: `2026-10-10T01:46:39+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1000 از 1894 (52.80٪)**
-- تکمیل‌شده: **1000**
+- پیشرفت: **1002 از 1894 (52.90٪)**
+- تکمیل‌شده: **1002**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **894**
+- ناموفق: **892**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **کلمه** — بوشهر — `tape20` — 1083 کلمه — `2026-10-10T01:46:07+00:00`
+- **شبانکاره** — بوشهر — `layflat` — 1238 کلمه — `2026-10-10T01:40:45+00:00`
 - **برازجان** — بوشهر — `layflat` — 1146 کلمه — `2026-10-10T00:53:19+00:00`
 - **برازجان** — بوشهر — `tape20` — 1128 کلمه — `2026-10-10T00:52:10+00:00`
 - **بوشکان** — بوشهر — `tape20` — 1372 کلمه — `2026-10-10T00:51:36+00:00`
@@ -50,11 +52,11 @@
 - **سپیدار** — کهگیلویه و بویراحمد — `tape20` — 1433 کلمه — `2026-10-09T19:41:48+00:00`
 - **لیکک** — کهگیلویه و بویراحمد — `layflat` — 1563 کلمه — `2026-10-09T18:45:47+00:00`
 - **بوستان** — کهگیلویه و بویراحمد — `layflat` — 1534 کلمه — `2026-10-09T18:44:03+00:00`
-- **چوار** — ایلام — `layflat` — 1158 کلمه — `2026-10-09T17:40:47+00:00`
-- **سرابله** — ایلام — `tape20` — 1134 کلمه — `2026-10-09T17:39:31+00:00`
 
 ## خطاهای اخیر
 
+- **وحدتیه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **کلمه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بوشکان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بهارستان** — `tape20`: `Editorial review failed: internal link count must equal minimum`
 - **انارستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **پاتاوه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **مادوان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سپیدار** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **باشت** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **بوستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 
