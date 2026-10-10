@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-10T15:51:18+00:00`
+- آخرین بروزرسانی: `2026-10-10T16:45:59+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1033 از 1894 (54.54٪)**
-- تکمیل‌شده: **1033**
+- پیشرفت: **1034 از 1894 (54.59٪)**
+- تکمیل‌شده: **1034**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **861**
+- ناموفق: **860**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,7 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **شهمیرزاد** — سمنان — `layflat` — 1314 کلمه — `2026-10-10T16:40:34+00:00`
 - **مجن** — سمنان — `tape20` — 1588 کلمه — `2026-10-10T15:51:16+00:00`
 - **درجزین** — سمنان — `tape20` — 1541 کلمه — `2026-10-10T15:42:22+00:00`
 - **شاهرود** — سمنان — `layflat` — 1386 کلمه — `2026-10-10T14:43:49+00:00`
@@ -51,10 +52,12 @@
 - **شیرینو** — بوشهر — `tape20` — 1666 کلمه — `2026-10-10T07:44:23+00:00`
 - **سیراف** — بوشهر — `layflat` — 1303 کلمه — `2026-10-10T06:56:49+00:00`
 - **بندرکنگان** — بوشهر — `layflat` — 1207 کلمه — `2026-10-10T06:54:04+00:00`
-- **بنک** — بوشهر — `tape20` — 1312 کلمه — `2026-10-10T06:53:14+00:00`
 
 ## خطاهای اخیر
 
+- **گرمسار** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **رضوان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **ایوانکی** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **شهمیرزاد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **درجزین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **شاهرود** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -62,9 +65,6 @@
 - **بیارجمند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **دیباج** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **سمنان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **دیباج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **آرادان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **دامغان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

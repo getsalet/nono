@@ -1,24 +1,50 @@
 {
   "source_id": "1200004001548-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 64,
+      "score": 65,
       "duplicate_roles": [
-        2,
-        3
+        1
       ],
       "reasons": [
-        "Role 2 and Role 3 both share a nearly identical low-angle horizontal camera height and foreground scale, making the layouts feel repetitive.",
-        "In Role 3, the carton competes with the manifold hardware for visual focus, violating the requirement that the product must remain strictly secondary and small.",
-        "Role 1 (overgrown crop) and Role 2 (pre-plant tilled soil) are visually distinct, but the overlap in composition between Roles 2 and 3 triggers the duplication constraint."
+        "Role 1: The AFP carton is placed in the lower-center of the frame, not the required lower-left third.",
+        "Role 3: There are two visible AFP products (the roll in the foreground and a separate cardboard box in the background), violating the 'one integrated AFP carton' and 'no extra commercial products' constraints."
       ],
-      "correction_prompt": "Regenerate Role 3 as a strictly medium side view of the unattended fixed filter, ensuring the carton is reduced to a smaller secondary element, and distinguish the camera angle from Role 2.",
+      "correction_prompt": "Role 1: Move the AFP roll to the lower-left third of the frame. Role 3: Remove the background cardboard box to ensure only one product is visible on the concrete pad.",
       "panel_scores": [
-        64
+        65
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 fails: The wide field view contains the entire headworks assembly (filter, gauge, regulator, manifold, and hose reel) in the foreground instead of only the required AFP carton, violating the role's specific integration constraint.",
+        "Role 3 fails: The image includes a cardboard product box in the background, which is not part of the required still-life layout of a single carton, and the required manifold components are missing."
+      ],
+      "correction_prompt": "Role 1: Remove all headworks equipment from the wide field view, leaving only the AFP carton on the lower-left third of the soil. Role 3: Remove the background cardboard box and add a visible multi-outlet manifold to the concrete pad equipment still life.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 72,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 contains a visible living subject (red barn/building) in the background, which is a mandatory rejection reason.",
+        "Role 3 contains an extra commercial product (brown cardboard box) alongside the required AFP tape, which is a mandatory rejection reason."
+      ],
+      "correction_prompt": "Regenerate Role 1 with a clean horizon and no buildings or red structures; regenerate Role 3 to remove the cardboard box, keeping only the AFP tape and equipment on the concrete pad.",
+      "panel_scores": [
+        72
+      ],
+      "set_attempt": 3
     }
   ]
 }
