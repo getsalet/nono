@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-10T03:47:57+00:00`
+- آخرین بروزرسانی: `2026-10-10T04:44:30+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1008 از 1894 (53.22٪)**
-- تکمیل‌شده: **1008**
+- پیشرفت: **1010 از 1894 (53.33٪)**
+- تکمیل‌شده: **1010**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **886**
+- ناموفق: **884**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **بندردیر** — بوشهر — `tape20` — 1463 کلمه — `2026-10-10T04:42:31+00:00`
+- **دوراهک** — بوشهر — `tape20` — 1139 کلمه — `2026-10-10T04:41:41+00:00`
 - **کاکی** — بوشهر — `tape20` — 1333 کلمه — `2026-10-10T03:47:24+00:00`
 - **آبدان** — بوشهر — `tape20` — 1234 کلمه — `2026-10-10T03:47:04+00:00`
 - **شنبه** — بوشهر — `tape20` — 1261 کلمه — `2026-10-10T02:44:34+00:00`
@@ -50,11 +52,11 @@
 - **خارک** — بوشهر — `tape20` — 1392 کلمه — `2026-10-09T22:39:45+00:00`
 - **چرام** — کهگیلویه و بویراحمد — `tape20` — 1348 کلمه — `2026-10-09T21:41:12+00:00`
 - **دیشموک** — کهگیلویه و بویراحمد — `layflat` — 1632 کلمه — `2026-10-09T21:40:33+00:00`
-- **لنده** — کهگیلویه و بویراحمد — `layflat` — 1609 کلمه — `2026-10-09T21:40:13+00:00`
-- **چیتاب** — کهگیلویه و بویراحمد — `layflat` — 1107 کلمه — `2026-10-09T20:42:33+00:00`
 
 ## خطاهای اخیر
 
+- **بندردیر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **دوراهک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بردستان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **بردستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **وحدتیه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **بهارستان** — `tape20`: `Editorial review failed: internal link count must equal minimum`
 - **انارستان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **دوگنبدان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **چرام** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **پاتاوه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
