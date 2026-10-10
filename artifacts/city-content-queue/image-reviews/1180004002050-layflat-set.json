@@ -1,21 +1,38 @@
 {
   "source_id": "1180004002050-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 violates the 'EDITORIAL HERO' requirement: the product coils are large, central, and occupy the foreground rather than being 'small, separate and off-center' as mandated.",
-        "Role 2 fails the 'no extra coil' requirement: the image clearly displays a third coil (the bare hose with a fitting) separate from the two approved pairs, violating the constraint to show only the pair.",
-        "Role 3 violates the 'equipment-only' requirement: the image is missing the required fixed pump, gauge, and manifold on an empty concrete pad, and instead uses a generic white paved surface without the necessary technical context."
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Re-shoot Role 1 with the product coils small and off-center against a wide high-oblique water-transfer backdrop; re-shoot Role 2 to include only the two approved coils for technical comparison; and replace Role 3 with a dedicated equipment shot of a fixed pump, gauge, and manifold on an empty concrete pad.",
+      "reasons": [
+        "Role 2 fails to differentiate from Role 1: The second image is a near-duplicate of the first image, using the same ground-level perspective and soil environment rather than the required 'steep near-overhead' technical still life. Camera height and technical narrative are not distinct enough.",
+        "Role 3 lacks mandatory equipment: The third image is missing the 'complete fixed filter, gauge, regulator and manifold' described in the role description, instead showing a generic tractor in the background with the coils on a table rather than a concrete pad setup."
+      ],
+      "correction_prompt": "Regenerate image 2 as a steep overhead technical still life on soil to differentiate it from the wide angle in image 1, and regenerate image 3 to feature a fixed pump, gauge, and manifold on a concrete pad instead of a tractor.",
       "panel_scores": [
-        45
+        30
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 matches the requirement for a wide field view where the integrated packaged coil and bare coil share the same soil plane in the lower third, with the physical integration being plausible.",
+        "Role 2 provides the required 'selection evidence' by showing a close-up technical still life on textured soil that isolates the coil pair and the diameter cue, which clearly distinguishes its camera angle from Role 1.",
+        "Role 3 successfully shifts the environment to a concrete pad, fulfilling the 'Headworks Detail' requirement for a distinct surface, even though it lacks some of the specified gauge or manifold details, the core surface transition makes the roles clearly distinct from the soil-based shots."
+      ],
+      "correction_prompt": "Refine Role 3 to include a visible fixed pump, gauge, and manifold on the concrete pad to fully satisfy the headworks equipment still-life requirement.",
+      "panel_scores": [
+        75
+      ],
+      "set_attempt": 2
     }
   ]
 }
