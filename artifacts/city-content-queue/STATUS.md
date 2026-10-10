@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-10T18:47:36+00:00`
+- آخرین بروزرسانی: `2026-10-10T19:40:55+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1039 از 1894 (54.86٪)**
-- تکمیل‌شده: **1039**
+- پیشرفت: **1041 از 1894 (54.96٪)**
+- تکمیل‌شده: **1041**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **855**
+- ناموفق: **853**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **شاهدیه** — یزد — `tape20` — 1080 کلمه — `2026-10-10T19:37:15+00:00`
+- **ندوشن** — یزد — `tape20` — 1309 کلمه — `2026-10-10T19:36:29+00:00`
 - **بهاباد** — یزد — `tape20` — 1256 کلمه — `2026-10-10T18:45:31+00:00`
 - **مهردشت** — یزد — `tape20` — 1197 کلمه — `2026-10-10T18:44:15+00:00`
 - **مجومرد** — یزد — `tape20` — 1210 کلمه — `2026-10-10T18:43:05+00:00`
@@ -50,11 +52,11 @@
 - **دندی** — زنجان — `layflat` — 1218 کلمه — `2026-10-10T10:40:29+00:00`
 - **چورزق** — زنجان — `layflat` — 1428 کلمه — `2026-10-10T10:40:17+00:00`
 - **آرادان** — سمنان — `tape20` — 1279 کلمه — `2026-10-10T10:39:46+00:00`
-- **ارمغانخانه** — زنجان — `layflat` — 1212 کلمه — `2026-10-10T10:38:47+00:00`
-- **نوربهار** — زنجان — `layflat` — 1790 کلمه — `2026-10-10T09:45:47+00:00`
 
 ## خطاهای اخیر
 
+- **بهاباد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **حمیدیا** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **عقدا** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **خرانق** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **خرانق** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **ایوانکی** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **شهمیرزاد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **درجزین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **شاهرود** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **بیارجمند** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 
 ## فایل‌های خروجی
 

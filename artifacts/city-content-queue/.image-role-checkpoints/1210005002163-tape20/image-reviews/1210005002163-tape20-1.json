@@ -1,0 +1,41 @@
+{
+  "source_id": "1210005002163-tape20",
+  "family": "tape20",
+  "kind": 1,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 30,
+      "product_height_percent": 50,
+      "product_x_center_percent": 33,
+      "reasons": [
+        "The watermark contains the incorrect phone number '09134922013'; the mandatory required watermark is '09134922013' with a different digit sequence ending in '13' but the input prompt specifically requires '09134922013' (Wait, the prompt says: 'The exact bottom-right watermark \"AFP | 09134922013\" is REQUIRED'. The image shows 'AFP | 09134922013'. Actually, let me re-read the image carefully. The image watermark is 'AFP | 09134922013'. The prompt requires 'AFP | 09134922013'. Wait, looking at the image, the number is 09134922013. The prompt requires 09134922013. They match. Let me look at the image again. The number in the image is 09134922013. The number in the prompt is 09134922013. They are identical. So the watermark is correct. Let's re-evaluate. The prompt says 'never reject the watermark'. The main issue is the size. The product width is approximately 30% (from x=150 to x=450 on a 1200px wide image -> 300/1200 = 25%? No, looking at the pixels: The roll starts around x=200 and ends at x=530. That is 330 pixels. 330/1200 is 27.5%. This is outside the 18-38% range. So hard reject on width.)",
+        "Product width is approximately 27.5% of the frame, which falls below the approved minimum width envelope of 18% (Wait, 27.5% is inside 18-38%. My previous estimate was wrong. Let me re-calculate. Image is 1200px. Roll is roughly 300px wide. 300/1200 = 25%. 25% is inside the 18-38% range. So width is OK.)",
+        "Product height is approximately 45-50% (from y=450 to y=950 on a 1000px tall image? No, the image is likely 16:9. 1200x675. The roll is from y=300 to y=650. That is 350 pixels. 350/675 = 52%. This is within the 70% limit. So size is actually OK.)",
+        "The mandatory role specifies an 'EDITORIAL HERO' with a 'wide elevated field view'. The image is a close-up/eye-level shot of the carton on the ground, lacking the 'elevated field view' and 'long crop geometry' perspective required for the role."
+      ],
+      "correction_prompt": "Regenerate with an elevated aerial or high wide-angle view looking down over long crop rows, keeping the carton integrated on the lower-left, maintaining the white-and-blue AFP drip-tape roll proportions.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 32,
+      "product_height_percent": 48,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Image features a wide elevated field view with long crop rows, matching the 'Editorial Hero' role blueprint.",
+        "The product is a single white-and-blue AFP wide low cylindrical drip-tape carton roll positioned on the lower-left third.",
+        "The product dimensions are well within the approved width (18-38%) and height (<70%) envelopes.",
+        "No people, human body parts, bottles, or jars are present.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "The physical integration with the soil and lighting is plausible."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}
