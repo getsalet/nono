@@ -1,20 +1,57 @@
 {
   "source_id": "1200003002161-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 45,
       "duplicate_roles": [],
       "reasons": [
-        "Role 2 fails the 'elevated technical comparison' brief and shows 'extra coils'; instead of displaying two coiled pipes for direct comparison, the image features one packaged coil and one unrolled hose loop with a wooden stake, failing to show diameter differences between the pair.",
-        "Role 3 fails the 'equipment-only' and 'fixed pump, gauge, and manifold' briefs; the image depicts the coils on a concrete pad without any pump or plumbing equipment, violating the specific record-photograph requirement."
+        "Role 3 fails: The required 'fixed pump, gauge and manifold' (headworks) is replaced by a motorized sprayer vehicle on wheels, which is technically incorrect for a water-transfer system static still life.",
+        "Role 2 fails: The camera angle is too low (approx. 30 degrees) and lacks the required 'steep near-overhead' perspective; it also omits the mandatory 'one connector or diameter cue' for selection evidence.",
+        "Role 1 is acceptable as a wide elevated field view, but the overall rejection is due to the missing equipment in Role 3 and incorrect camera height in Role 2."
       ],
-      "correction_prompt": "Replace Role 2 with an elevated side-by-side of two coiled pipes highlighting size difference; Replace Role 3 with a pump, gauge, and manifold on a concrete pad with the coils as secondary elements.",
+      "correction_prompt": "Regenerate Role 2 with a near-vertical top-down camera angle on soil, showing the coil pair plus one connector/diameter marker; regenerate Role 3 by replacing the wheeled vehicle with a static fixed pump system (filter, gauge, regulator, manifold) on a concrete pad, with the coil pair at the far edge.",
       "panel_scores": [
-        35
+        45
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 is not a wide elevated view; it is a low-ground static shot where the background architecture dominates rather than the field",
+        "Role 2 is not a steep near-overhead view; it uses a low angle similar to Role 1, lacking the required technical bird's-eye perspective",
+        "Roles 1 and 2 share near-duplicate camera/environment structure (low soil angle with the same coil composition)"
+      ],
+      "correction_prompt": "Regenerate Role 1 as a wide high-angle panoramic shot of the water-transfer field and Role 2 as a 90-degree top-down technical still life on textured soil.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 1 fails to meet the 'wide elevated' camera requirement; the shot is at low ground level and does not present the integrated pair in the 'lower third' as specified.",
+        "Role 2 fails to provide the required 'steep near-overhead' camera angle; instead, it is a low-angle soil shot nearly identical in composition and perspective to Role 1.",
+        "Role 3 fails to include a 'complete fixed filter' and 'regulator'; the depicted green component is a simple tank rather than the necessary equipment, and the coils are centered instead of sitting at the 'far edge'."
+      ],
+      "correction_prompt": "Role 1: Generate a wide, elevated drone shot of the field with the coils positioned in the lower third. Role 2: Generate a steep, near-overhead technical still life on textured soil. Role 3: Generate an elevated concrete-pad still life featuring a fixed filter, gauge, and regulator with the coils at the far edge.",
+      "panel_scores": [
+        25
+      ],
+      "set_attempt": 3
     }
   ]
 }
