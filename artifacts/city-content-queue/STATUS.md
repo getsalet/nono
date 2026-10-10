@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-10T08:46:44+00:00`
+- آخرین بروزرسانی: `2026-10-10T09:45:50+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1017 از 1894 (53.70٪)**
-- تکمیل‌شده: **1017**
+- پیشرفت: **1020 از 1894 (53.85٪)**
+- تکمیل‌شده: **1020**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **877**
+- ناموفق: **874**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,9 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **نوربهار** — زنجان — `layflat` — 1790 کلمه — `2026-10-10T09:45:47+00:00`
+- **ارمغانخانه** — زنجان — `tape20` — 1128 کلمه — `2026-10-10T09:43:55+00:00`
+- **کرسف** — زنجان — `layflat` — 1155 کلمه — `2026-10-10T09:42:07+00:00`
 - **شیرینو** — بوشهر — `tape20` — 1666 کلمه — `2026-10-10T07:44:23+00:00`
 - **سیراف** — بوشهر — `layflat` — 1303 کلمه — `2026-10-10T06:56:49+00:00`
 - **بندرکنگان** — بوشهر — `layflat` — 1207 کلمه — `2026-10-10T06:54:04+00:00`
@@ -49,12 +52,10 @@
 - **خورموج** — بوشهر — `layflat` — 1422 کلمه — `2026-10-10T02:42:10+00:00`
 - **کلمه** — بوشهر — `tape20` — 1083 کلمه — `2026-10-10T01:46:07+00:00`
 - **شبانکاره** — بوشهر — `layflat` — 1238 کلمه — `2026-10-10T01:40:45+00:00`
-- **برازجان** — بوشهر — `layflat` — 1146 کلمه — `2026-10-10T00:53:19+00:00`
-- **برازجان** — بوشهر — `tape20` — 1128 کلمه — `2026-10-10T00:52:10+00:00`
-- **بوشکان** — بوشهر — `tape20` — 1372 کلمه — `2026-10-10T00:51:36+00:00`
 
 ## خطاهای اخیر
 
+- **گرماب** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سهرورد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **بندرگناوه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سهرورد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -64,7 +65,6 @@
 - **شیرینو** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بنک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بیدخون** — `layflat`: `Editorial review failed: internal link count must equal minimum`
-- **بندردیر** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
