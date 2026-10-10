@@ -1,37 +1,54 @@
 {
   "source_id": "1200005002022-tape20",
-  "policy": "article-parity-v13-no-human-no-container-scale-topic-role-reviewed",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 62,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 violation: The product (drip tape roll) is large, centered, and placed in the foreground, violating the requirement to be small, off-center in the lower third, and fully visible without dominating the view.",
-        "Role 2 violation: The product is oversized relative to the visual hierarchy; while emitter spacing is visible, the packaging dominates the frame too much for the 'technical evidence' role.",
-        "Role 3 violation: The hardware depicted is a pressurized manifold system, which does not align with the 'unattended fixed filter, gauge, regulator' requirement typically associated with the drip tape system described; the layout also feels disconnected from the 'headworks' narrative.",
-        "General: The product is the same AFP drip tape in all three, but in Role 1 it fails the 'secondary' or 'contextual' sizing rules."
+      "score": 65,
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "Role 1: Move the tape roll to the bottom-right corner, reducing its size to fit within the lower third and shifting focus to the vast field landscape. Role 3: Replace the manifold hardware with a static filtration setup (filter housing + pressure gauge) to match the specific drip-line headworks brief.",
+      "reasons": [
+        "Role 3 violates the 'one integrated AFP carton at the far edge' constraint by displaying two commercial AFP products simultaneously (the carton in the foreground and the roll spool in the background).",
+        "Role 2's drip-tape segment lacks the required 'repeated emitter points' to provide sufficient selection evidence, appearing as a smooth flat sheet instead."
+      ],
+      "correction_prompt": "Remove the extra AFP product from Role 3 to ensure only a single carton is visible; regenerate Role 2 so the straight drip-tape segment explicitly shows repeated emitter holes to establish selection evidence.",
       "panel_scores": [
-        62
+        65
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 40,
+      "score": 70,
       "duplicate_roles": [],
       "reasons": [
-        "Panel 3 contains a visible person (operator) inside the tractor, which is explicitly prohibited in the brief.",
-        "Panel 3 features 'machinery' hardware (tractor and portable pump system) rather than the requested 'fixed' farm infrastructure (unattended filter, gauge, manifold).",
-        "Panel 3 includes two cartons (one on the ground, one on top), violating the 'exactly one approved carton' rule and causing a product layout similar to other panels."
+        "Role 1 fails to place the required AFP carton on the lower-left third; the carton is positioned near the center, violating the spatial integration constraint.",
+        "Role 3 includes an extra commercial product (a cardboard box) in addition to the mandated AFP carton, violating the 'no extra commercial products' rule.",
+        "The AFP text watermark in the bottom right corner appears to overlap with the coiled drip tape in Role 3, which may be considered as compromising the cleanliness of the still-life equipment presentation."
       ],
-      "correction_prompt": "Remove the tractor and visible driver from Panel 3, replacing them with an unattended, fixed irrigation manifold assembly (filter, pressure gauge, and regulator) on the ground; ensure only one product carton is visible and positioned as secondary.",
+      "correction_prompt": "Reposition the AFP carton in Role 1 to the lower-left third of the frame; and in Role 3, remove the cardboard box to retain only the single mandated AFP carton while ensuring it does not overlap with the coiled tape or watermarks.",
       "panel_scores": [
-        40
+        70
       ],
       "set_attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 94,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 successfully executes the 'Editorial Hero' requirement with a wide, elevated field view showing long crop geometry and the AFP carton integrated in the lower-left third.",
+        "Role 2 meets the 'Selection Evidence' brief with a steep near-overhead angle on dark soil, clearly displaying the repeated emitter points on the straight drip-tape segment alongside the product carton.",
+        "Role 3 correctly depicts the 'Headworks Detail' on a concrete pad, featuring the required technical equipment (filter, gauges, regulator) and maintaining product identity.",
+        "All three roles are physically distinct in terms of camera height and surface type, avoiding duplication or structural redundancy.",
+        "No visible living subjects, missing technical components, or physically implausible product placements were detected."
+      ],
+      "correction_prompt": "Maintain the current distinct role structure; refine the focus of the Role 3 technical gauges for enhanced clarity.",
+      "panel_scores": [
+        94
+      ],
+      "set_attempt": 3
     }
   ]
 }

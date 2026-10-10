@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-10T14:44:43+00:00`
+- آخرین بروزرسانی: `2026-10-10T15:51:18+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1031 از 1894 (54.44٪)**
-- تکمیل‌شده: **1031**
+- پیشرفت: **1033 از 1894 (54.54٪)**
+- تکمیل‌شده: **1033**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **863**
+- ناموفق: **861**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **مجن** — سمنان — `tape20` — 1588 کلمه — `2026-10-10T15:51:16+00:00`
+- **درجزین** — سمنان — `tape20` — 1541 کلمه — `2026-10-10T15:42:22+00:00`
 - **شاهرود** — سمنان — `layflat` — 1386 کلمه — `2026-10-10T14:43:49+00:00`
 - **کلاته** — سمنان — `layflat` — 2195 کلمه — `2026-10-10T13:49:18+00:00`
 - **سمنان** — سمنان — `tape20` — 1345 کلمه — `2026-10-10T13:47:38+00:00`
@@ -50,11 +52,11 @@
 - **سیراف** — بوشهر — `layflat` — 1303 کلمه — `2026-10-10T06:56:49+00:00`
 - **بندرکنگان** — بوشهر — `layflat` — 1207 کلمه — `2026-10-10T06:54:04+00:00`
 - **بنک** — بوشهر — `tape20` — 1312 کلمه — `2026-10-10T06:53:14+00:00`
-- **عسلویه** — بوشهر — `tape20` — 1367 کلمه — `2026-10-10T05:43:50+00:00`
-- **بندردیلم** — بوشهر — `layflat` — 1323 کلمه — `2026-10-10T05:42:24+00:00`
 
 ## خطاهای اخیر
 
+- **شهمیرزاد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **درجزین** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **شاهرود** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بیارجمند** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **بیارجمند** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **دیباج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **آرادان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **دامغان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **امیریه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **گرماب** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 

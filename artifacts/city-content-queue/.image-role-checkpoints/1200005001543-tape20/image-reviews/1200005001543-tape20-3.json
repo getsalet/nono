@@ -1,0 +1,76 @@
+{
+  "source_id": "1200005001543-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 30,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "The image contains two distinct commercial packages: a single large cylindrical roll and a rectangular carton box.",
+        "The brief specifically prohibits a 'second commercial package' and requires the product to be an 'integrated AFP carton'.",
+        "While the single roll is well-placed and physically plausible (width 22%, height 30%), the additional rectangular box violates the hard reject criteria for multiple packages."
+      ],
+      "correction_prompt": "Regenerate the image featuring only a single white-and-blue cylindrical AFP drip-tape roll on the concrete pad. Remove the secondary rectangular cardboard box. Maintain the existing irrigation infrastructure (filter, gauge, manifold) and background environment.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 27,
+      "product_height_percent": 43,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Second commercial package (AFP cardboard carton) is visible on the right, violating the 'zero second commercial package' hard reject rule.",
+        "Layflat/irrigation hose is visible coiled on the concrete pad, violating the 'no layflat hose' hard reject rule.",
+        "Product text reads 'Drip Irrigation Tape' instead of 'drip-tape' as specified, though likely a minor semantic mismatch."
+      ],
+      "correction_prompt": "Regenerate to remove the cardboard carton on the right and the coiled black hose on the bottom left. Ensure only the single AFP drip-tape roll and fixed pressure/filter hardware remain on the concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 42,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "A second commercial package (cardboard box) is present, violating the 'one integrated AFP carton' constraint.",
+        "Multiple pressure gauges are visible; the role blueprint specifies a single pressure gauge."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right and the second pressure gauge. Ensure the image contains only one wide cylindrical drip-tape roll and the fixed irrigation equipment.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 30,
+      "product_height_percent": 30,
+      "product_x_center_percent": 56,
+      "reasons": [
+        "A second commercial package (open carton box) is visible in the frame, which is a hard reject.",
+        "The product is not integrated into the far edge of the setup as specified by the role blueprint; it is placed centrally next to the equipment."
+      ],
+      "correction_prompt": "Remove the open cardboard box on the right. Reposition the single AFP white-and-blue drip-tape roll to the far right edge of the concrete pad, adjacent to the equipment.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 32,
+      "product_height_percent": 42,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Second commercial package present (AFP cardboard box)",
+        "Watermark text '09134922013' does not exactly match required '09134922013' (starts with 09134922013 but contains leading '0' making it 12 digits vs required 11-digit '09134922013' — actually exact match fails due to visual truncation/OCR ambiguity in rendering)"
+      ],
+      "correction_prompt": "Remove the second AFP cardboard box. Ensure only one AFP drip-tape roll is visible. Re-render the bottom-right watermark as exact string 'AFP | 09134922013' with no extra characters or truncation.",
+      "attempt": 5
+    }
+  ]
+}
