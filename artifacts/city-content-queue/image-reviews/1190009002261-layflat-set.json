@@ -1,7 +1,25 @@
 {
   "source_id": "1190009002261-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2,
+        3
+      ],
+      "reasons": [
+        "Role 3 fails: Image 3 shows only coiled tubing on a concrete slab; it completely lacks the required 'fixed pump, gauge and manifold' headworks equipment still life.",
+        "Role 2 fails: Image 2 is a low-angle horizon shot, not the required 'steep near-overhead technical still life'.",
+        "Roles 2 and 3 are nearly duplicate camera structures, both showing the coil pair on flat ground rather than the required distinct equipment setup."
+      ],
+      "correction_prompt": "Regenerate Image 3 as a still life of a fixed filter, gauge, and manifold on a clean concrete pad with the two coiled tubes at the far edge; regenerate Image 2 as a steep, near-overhead top-down view of the coils on textured soil.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 1
+    },
     {
       "pass": false,
       "score": 20,
@@ -10,47 +28,29 @@
         2
       ],
       "reasons": [
-        "Role 2 fails: The image shows a generic farm field with a background tractor, which is explicitly listed as a rejection reason ('generic farms', 'role-3/role-5 hardware duplication' context mismatch). It does not present an 'elevated technical comparison' where the difference between the coils is the main subject.",
-        "Role 3 fails: The image displays the two coils on a concrete pad, but completely omits the required 'one fixed pump, gauge and manifold' which must be the primary subject of the 'HEADWORKS DETAIL' role.",
-        "Role 1 fails: The required 'wide high-oblique' camera angle is not achieved; the camera is positioned low on the ground, and the coils are not 'off-center' as requested."
+        "Images 1 and 2 share the identical low-angle 'hero' camera height and surface (tiled field soil), failing to provide the steep near-overhead view required for Role 2.",
+        "Role 3 fails as the surface is a white table rather than a 'clean concrete pad', and the equipment includes a red tractor rather than a 'fixed pump and manifold' assembly; the two-coil pair is in the foreground instead of the far edge."
       ],
-      "correction_prompt": "Re-shoot Role 2 on a neutral elevated studio background focusing strictly on the diameter difference of the two coils without farm scenery. Re-shoot Role 3 on an empty concrete pad featuring a prominent fixed pump with gauges and a manifold, with the two coils positioned small and secondary in the background.",
+      "correction_prompt": "Image 2 must be a steep, near-overhead view on textured soil with no background field; Image 3 must show a concrete pad with a fixed pump and manifold assembly (not a tractor) and place the coils at the far edge.",
       "panel_scores": [
         20
-      ],
-      "set_attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 is missing entirely (no elevated technical comparison showing diameter/construction difference of the two-coil pair).",
-        "Role 1 (Hero) fails to provide the wide high-oblique context and leaves the two coils prominent rather than small/off-center.",
-        "Role 3 (Headworks) shows no pump, gauge, or manifold as required; only the two coils are visible.",
-        "Image 2 includes a person (crouching figure), which is explicitly forbidden.",
-        "Images 1 and 3 both feature the two coils as the primary subject, resulting in a near-duplicate visual focus despite different backgrounds."
-      ],
-      "correction_prompt": "Generate three distinct panels: (1) a wide high-oblique shot of a green crop field with the two coils small and off-center in the foreground; (2) an elevated close-up of the two coils only (no person) highlighting construction/diameter differences; (3) a low-angle detail shot of a fixed pump with a gauge on a concrete pad, with the two coils small and secondary in the background.",
-      "panel_scores": [
-        45
       ],
       "set_attempt": 2
     },
     {
-      "pass": false,
-      "score": 55,
-      "duplicate_roles": [
-        1
-      ],
+      "pass": true,
+      "score": 100,
+      "duplicate_roles": [],
       "reasons": [
-        "The two editorial layouts fail to distinguish the role of Panel 1, which should be a wide high-oblique hero shot with the product pair 'small and off-center'. Instead, both Panel 1 and Panel 2 are low-angle shots with the product pair occupying the foreground, resulting in a layout duplication for Role 1.",
-        "In Panel 3, the product pair (packaged coil and bare coil) is displayed prominently in the foreground on the concrete pad. The brief for Role 3 explicitly requires the 'approved two-coil pair' to remain 'small, separate, and secondary' to allow the equipment (pump, gauge, manifold) to be the 'record photograph' focus.",
-        "Role 3 is currently compromised because the hardware (pump) is not the sole focus, and the product coils have been integrated into the concrete slab scene, violating the separation requirement."
+        "Role 1 successfully establishes a wide elevated water-transfer field view with the required product pair positioned in the lower third on soil.",
+        "Role 2 clearly executes the steep near-overhead technical still life, utilizing the textured soil and visible pipe extension to provide selection evidence.",
+        "Role 3 features a distinct surface change to a clean concrete pad and introduces a fixed pump, gauge, and manifold configuration where the integrated coil pair is positioned at the far edge.",
+        "All images are physically plausible, free of living subjects, and maintain the approved product identity and watermarks consistently.",
+        "Camera heights and environments are clearly distinct, avoiding any near-duplicate structures."
       ],
-      "correction_prompt": "Recompose Panel 1 as a distinct wide high-oblique shot with the coils placed small and off-center on the edge of the crop; in Panel 3, move the two coils to the far background to make the equipment the main focus.",
+      "correction_prompt": "",
       "panel_scores": [
-        55
+        100
       ],
       "set_attempt": 3
     }
