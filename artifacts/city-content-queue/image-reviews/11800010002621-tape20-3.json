@@ -1,0 +1,80 @@
+{
+  "source_id": "11800010002621-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package present: There are two large AFP cardboard boxes visible in the background, violating the 'zero second commercial package' rule.",
+        "Watermark violation: The required watermark 'AFP | 09134922013' is missing; instead, a different number 'AFP | 09134922013' is displayed (if it is different in value) or if it is the correct one but the prompt implies strict formatting, but the primary fatal flaw is the extra boxes."
+      ],
+      "correction_prompt": "Remove the two cardboard boxes in the background to ensure only the single white and blue cylindrical drip-tape roll is present. Keep the filtration system, pressure gauge, and coiled black tubing. Ensure the bottom-right watermark strictly reads 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 28,
+      "product_height_percent": 32,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "The image contains two AFP commercial packages (the rolled drip tape and a cardboard box), violating the 'exactly one' and 'zero second commercial package' hard rejects.",
+        "The primary product appears to be a roll of tape wrapped in paper/plastic, which contradicts the requirement for an 'AFP white-and-blue wide low cylindrical drip-tape carton roll.'",
+        "An AFP cardboard box is present on the right side, which constitutes a second commercial package not allowed by the brief."
+      ],
+      "correction_prompt": "Remove the open AFP cardboard box from the right side of the image. Ensure the single AFP drip-tape product on the concrete pad is clearly a low, wide cylindrical carton roll, not a paper-wrapped tape roll.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 30,
+      "product_height_percent": 45,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Image contains a second commercial package (the brown cardboard box with the AFP logo in the background).",
+        "Product label text is gibberish/unreadable ('Drip Irrigation Tje').",
+        "Missing mandatory exact bottom-right watermark text 'AFP | 09134922013' (currently displays a different fake string)."
+      ],
+      "correction_prompt": "Remove the second cardboard box in the background. Correct the drip tape label text to be legible and professional. Replace the fake caption with the exact string 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 46,
+      "product_height_percent": 52,
+      "product_x_center_percent": 56,
+      "reasons": [
+        "The image contains a second commercial package (an open AFP carton in the background), which is explicitly a hard reject under the 'zero second commercial package' rule. Although the required role blueprint mentions 'one integrated AFP carton', the strict 'hard reject' criteria for a 'second commercial package' takes precedence, likely requiring the second unit to be a generic, unbranded box if one is present.",
+        "The product width (46%) exceeds the 38% hard reject threshold, making the object appear overly large relative to the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 46% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Reduce the width of the central drip-tape roll to approximately 30% of the frame width. Replace the branded AFP open carton in the background with a generic, unmarked brown cardboard box. Ensure the 'AFP | 09134922013' watermark remains in the bottom right. Reduce the product group from 46% to 18-38% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 92,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Correctly features the AFP white-and-blue drip tape roll in the right-hand foreground.",
+        "Image matches the 'Headworks Detail' role blueprint with the filter, gauge, and manifold assembly on a clean pad.",
+        "The mandatory bottom-right watermark 'AFP | 09134922013' is present and correctly positioned.",
+        "Zero people or human body parts are visible in the frame.",
+        "Product dimensions and placement are well within the physical and positional limits."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}

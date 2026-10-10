@@ -1,0 +1,52 @@
+{
+  "source_id": "1180008001524-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 70,
+      "product_height_percent": 38,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "The mandatory role blueprint requires 'elevated equipment still life on a clean concrete pad', specifically listing a 'fixed pump, gauge and manifold' which are completely missing from the image.",
+        "The scene depicts a ground-level outdoor shot with a distant tractor and farm building; while unattended equipment is allowed, the prompt forbids inferring regional architecture, and the complete absence of the required infrastructure (pump/manifold) constitutes a role mismatch.",
+        "The image lacks the 'fixed pump, gauge and manifold' that are hard requirements for this specific image role."
+      ],
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 50,
+      "product_height_percent": 32,
+      "product_x_center_percent": 48,
+      "reasons": [
+        "The foreground products are sitting on an open concrete pad, not the requested 'far edge' of an elevated equipment still life setup. The 'fixed pump, gauge and manifold' requirement is not clearly integrated in the foreground; the large vehicle in the background does not satisfy this specific role blueprint for a still-life display.",
+        "The image composition places the products too centrally and prominently in the foreground, conflicting with the specific role requirement for an elevated equipment still life where the pair sits at the far edge."
+      ],
+      "correction_prompt": "Redesign the scene as an elevated equipment still life on a clean concrete pad. In the foreground, explicitly place a fixed pump, a gauge, and a manifold setup. Position the integrated two-coil pair (one packaged AFP coil and one bare black woven coil) at the far edge of this equipment arrangement. Do not just show a large tractor in the background; integrate the specific plumbing infrastructure in the foreground with the products.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 42,
+      "product_height_percent": 23,
+      "product_x_center_percent": 35,
+      "reasons": [
+        "Mandatory bottom-right watermark 'AFP | 09134922013' is present.",
+        "Image shows the approved layflat pair: one packaged AFP coil and one bare black woven coil.",
+        "Role blueprint 'HEADWORKS DETAIL' is followed: fixed pump, gauge, and manifold are present as infrastructure in the background, and the two-coil pair is on the clean concrete pad.",
+        "Combined-width envelope is ~42%, which is well within the 25-82% approved range.",
+        "No people, human body parts, or silhouettes are present.",
+        "No prohibited objects like bottles, cans, or a third commercial package are visible."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
