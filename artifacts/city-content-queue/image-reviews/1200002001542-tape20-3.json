@@ -1,0 +1,70 @@
+{
+  "source_id": "1200002001542-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 27,
+      "product_height_percent": 40,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Hard reject: The scene contains a second commercial package (large open brown AFP carton box) on the right side, which is explicitly prohibited by the prompt constraints.",
+        "Hard reject: There are black coils of tubing/hose lying on the concrete pad and running through the scene; the prompt strictly rejects 'layflat hose' and 'pipe through the roll' configurations.",
+        "The setup includes multiple pieces of equipment (pump, filter, gauges) which, while allowed as infrastructure, clutter the 'clean' still-life composition required for the HEADWORKS DETAIL role when combined with the forbidden elements."
+      ],
+      "correction_prompt": "Remove the large open brown cardboard box and all black coiled tubing. Ensure only the single white-and-blue AFP drip tape roll, a fixed filter, a pressure gauge, a regulator, and a manifold are visible on the concrete pad. Maintain the required bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "Missing required bottom-right watermark 'AFP | 09134922013'",
+        "Roll is not physically integrated with the concrete pad (no contact shadow)",
+        "Excessive gap between the roll and the equipment (non-adjacent placement)",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate with the required watermark 'AFP | 09134922013' in the bottom right. Tighten the composition so the drip-tape roll sits adjacent to the manifold on the concrete pad with proper contact shadows. Enlarge the product group from 0% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 26,
+      "product_height_percent": 33,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Visible gibberish/distorted text on the carton label (the second word below the AFP logo is illegible and misspelled)",
+        "A second commercial package (plain brown box with 'AFP' text) is visible on the right, violating the zero-second-package rule",
+        "Watermark number '09134922013' in the image does not match the required fixed watermark '09134922013' (extra trailing zero present)"
+      ],
+      "correction_prompt": "Regenerate showing only one drip-tape carton roll on the concrete pad with fixed filter, gauge, regulator and manifold. Remove the second brown box entirely. Ensure all label text is clean and legible. Replace the bottom-right watermark with the exact string 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 31,
+      "product_height_percent": 48,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Meets the mandatory 'headworks detail' image role with a clean concrete pad and integrated irrigation equipment.",
+        "Contains exactly one AFP drip-tape carton roll with accurate blue-and-white branding.",
+        "No people, human body parts, or human silhouettes are visible.",
+        "Product bounding box falls within the approved physical envelope (18-38% width, up to 70% height).",
+        "Includes all required fixed infrastructure elements: filter, pressure gauge, manifold, and hose.",
+        "The required bottom-right watermark 'AFP | 09134922013' is clearly present.",
+        "The co-present AFP carton box is contextually relevant as a second packaging unit rather than a forbidden 'extra commercial product' (e.g., fertilizer bottle/jar)."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

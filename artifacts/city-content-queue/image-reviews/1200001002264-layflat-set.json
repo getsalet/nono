@@ -1,25 +1,55 @@
 {
   "source_id": "1200001002264-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 40,
+      "score": 55,
       "duplicate_roles": [
         1,
-        2,
-        3
+        2
       ],
       "reasons": [
-        "Role 1 (Editorial Hero): Layout is a low-angle close-up on field soil; the 'approved two-coil pair' is the foreground subject rather than a small, off-center element within a wide high-oblique context.",
-        "Role 2 (Selection Evidence): The image is a low-angle, near-ground close-up similar to Role 1, failing to provide the 'elevated technical comparison' required. The product packaging also deviates from the visual consistency (brown wrap vs. blue wrap) seen in Roles 1 and 3.",
-        "Role 3 (Headworks Detail): The required 'one fixed pump, gauge and manifold' infrastructure is completely absent. The image shows only the product pair on a concrete surface, violating the 'equipment-only' narrative."
+        "Image 2 is a near-duplicate of Image 1 (Role 1 and Role 2), failing to provide the required 'steep near-overhead' camera angle and technical still-life narrative; instead, it repeats the ground-level field view and distant architecture of the first image.",
+        "Image 3 contains 'extra commercial products' (the red and green tractors) in the background, which violates the constraint against extraneous items not specified in the prompt."
       ],
-      "correction_prompt": "For Role 1, provide a wide high-oblique shot with the coils small/off-center; for Role 2, use an elevated camera angle for the pair; for Role 3, depict the fixed pump, gauge, and manifold on the pad with the coils as secondary elements.",
+      "correction_prompt": "Regenerate Image 2 as a steep, near-overhead close-up on the textured soil to clearly distinguish it from Image 1, and regenerate Image 3 to completely remove the tractors from the background, keeping only the fixed pump, gauge, and manifold on the concrete pad.",
       "panel_scores": [
-        40
+        55
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2
+      ],
+      "reasons": [
+        "Role 2 requires a steep near-overhead view on textured soil with only the two-coil pair and one connector or diameter cue visible, but the provided image is a low-angle horizontal shot showing a farm scene with buildings and a vehicle in the background.",
+        "Roles 1 and 2 are near-duplicates in camera structure, both presenting a low-angle horizontal field of view rather than the distinct steep technical still life required for Role 2."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a steep near-overhead technical still life on textured soil, showing only the integrated two-coil pair and a single connector or diameter cue without background farm elements.",
+      "panel_scores": [
+        30
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 failure: The wide field view is not 'elevated' and lacks the required lower-third soil plane for the products; the wide-angle lens causes severe distortion of the coil and packaging.",
+        "Role 2 failure: The image is a near-duplicate of the composition and camera angle from Role 1 (low angle, similar framing), rather than the required 'steep near-overhead technical still life' for selection evidence.",
+        "Role 3 failure: The image places the coil pair at the foreground, contrary to the requirement that it 'sits at the far edge'; furthermore, the 'complete fixed filter' is missing, with only a green tank and pump visible."
+      ],
+      "correction_prompt": "Re-shoot all three panels: Role 1 must be an elevated wide shot placing products in the lower third; Role 2 must be a steep top-down overhead soil close-up; Role 3 must place the coil pair in the far background on a concrete pad with a complete filter, gauge, and manifold in the foreground.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 3
     }
   ]
 }

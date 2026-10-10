@@ -1,0 +1,80 @@
+{
+  "source_id": "1200001002264-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 27,
+      "product_height_percent": 38,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "The required bottom-right watermark is 'AFP | 09134922013', but the image displays 'AFP | 09134922013' which is slightly too small, partially cropped by the frame edge, and lacks the clean legibility required for a hard pass.",
+        "The product placement, while in a lower-third region, is not at the 'far edge' relative to the equipment (pump, gauges, filters) as specified in the HEADWORKS DETAIL role blueprint, which calls for the roll to be integrated at the periphery of the still-life setup rather than in the immediate foreground right."
+      ],
+      "correction_prompt": "Enlarge the bottom-right watermark 'AFP | 09134922013' to be fully legible and not cropped by the frame edges. Reposition the AFP drip tape roll to the far right edge of the concrete pad, placing it further back to act as a peripheral element to the central irrigation equipment setup, keeping zero people.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The mandatory 'HEADWORKS DETAIL' role blueprint requires exactly one AFP carton. This image contains two AFP cartons (a large open box in the background and a smaller one at the front), violating the single-product constraint.",
+        "The scene does not match the mandatory role description of 'elevated equipment still life on a clean concrete pad'; it shows the items sitting directly on the ground/surface level.",
+        "The visible text on the product packaging contains gibberish (e.g., 'Drip Irngation Tape'), which is a hard reject.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image with exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll. The scene must be an elevated still life on a clean concrete pad with a pressure gauge and filter. Remove the second background carton box. Ensure all packaging text is legible and accurate. Include the watermark 'AFP | 09134922013' in the bottom right. Enlarge the product group from 0% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 30,
+      "product_height_percent": 50,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package present (cardboard box on the right)",
+        "Second roll of tape present (coiled on the ground)",
+        "Layflat hose visible in the foreground",
+        "Extraneous commercial packaging and multiple products violate the single-product rule"
+      ],
+      "correction_prompt": "Remove the cardboard box, the coiled tape on the ground, and the black hose. Keep only the central AFP drip tape roll, the regulator with gauges, and the concrete pad background. Ensure the single roll is the primary focus without any secondary commercial packaging.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 36,
+      "product_height_percent": 44,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "A second commercial carton package with visible rolls inside is present in the background, violating the 'single product' constraint.",
+        "The product label text is garbled ('Drio Irrigation Tore') instead of a professional 'Drip Tape' label.",
+        "The background setting shows a lush green field, which contradicts the 'clean concrete pad' requirement for the specific 'HEADWORKS DETAIL' role."
+      ],
+      "correction_prompt": "Remove the second open carton in the background. Regenerate the text on the main roll to be legible professional 'Drip Tape' branding. Change the background to a sterile concrete pad or close-up equipment detail, removing the green field and farm building. Keep the bottom-right watermark 'AFP | 09134922013' intact.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 35,
+      "product_height_percent": 35,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Violation: The image contains a second commercial package (a cardboard box labeled 'AFP') on the right side, which is explicitly forbidden by the 'second commercial package' hard reject rule.",
+        "Violation: The product on the main roll appears to be a plastic reel rather than the specified 'AFP white-and-blue wide low cylindrical drip-tape carton roll'.",
+        "Role Mismatch: The instruction requires 'exactly one' carton roll. The presence of the box in the background (even if unattended) violates the 'exactly one' constraint and the ban on multiple commercial items."
+      ],
+      "correction_prompt": "Regenerate the image strictly featuring only one large white and blue cylindrical carton roll of drip tape on a concrete pad. Remove the cardboard box on the right and the plastic reel. Ensure the roll is the only product packaging present. Keep the fixed infrastructure (filter, gauges, manifold) and the watermark.",
+      "attempt": 5
+    }
+  ]
+}

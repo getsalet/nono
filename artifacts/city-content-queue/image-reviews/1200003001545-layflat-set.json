@@ -1,58 +1,39 @@
 {
   "source_id": "1200003001545-layflat",
-  "policy": "article-parity-v17-role3-throughput-safe-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 55,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 2 requires showing the diameter or construction difference through the pair itself, but the two coils are shown as similar in size and construction.",
-        "Role 3 must show a fixed pump, gauge, and manifold on an empty concrete pad; the image only shows the product pair on a concrete pad without the required equipment.",
-        "All panels place the product pair as the primary, oversized foreground element, failing to keep it small, separate, or secondary as specified for Roles 1 and 3."
+      "score": 45,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Role 2 must clearly contrast the physical diameter or construction of the two coils; Role 3 must add a pump, gauge, and manifold to the concrete pad, making the coils a small, secondary element.",
+      "reasons": [
+        "Role 1 lacks the 'elevated' camera position specified in the prompt; the current shot is a low, ground-level perspective.",
+        "Role 2 has the same low, flat camera angle as Role 1, failing the 'steep near-overhead' requirement and causing the two roles to be nearly duplicates in structure."
+      ],
+      "correction_prompt": "Regenerate images 1 and 2 from elevated and steep near-overhead angles respectively to ensure distinct camera positions and avoid duplicate role structures.",
       "panel_scores": [
-        55
+        45
       ],
       "set_attempt": 1
     },
     {
-      "pass": false,
-      "score": 40,
-      "duplicate_roles": [
-        2,
-        3
-      ],
+      "pass": true,
+      "score": 85,
+      "duplicate_roles": [],
       "reasons": [
-        "The third panel shows the two-coil product pair in a foreground/primary position with high visual weight, which directly violates the requirement for Role 3 to have the pair as small, separate, and secondary.",
-        "Role 3 (Headworks Detail) fails to isolate the pump equipment as the primary subject; the product coils compete for attention instead of remaining background context.",
-        "The 'empty concrete pad' environment for Role 3 is compromised by the distracting close-cropping and foreground framing of the product pair."
+        "Role 1 effectively demonstrates the wide elevated field view with the integrated coil and bare coil sharing the soil plane in the lower third.",
+        "Role 2 successfully provides the steep near-overhead technical still life on textured soil, clearly distinguishing it from the perspective of Role 1.",
+        "Role 3 accurately depicts the equipment still life on a clean concrete pad, including the fixed pump, gauge, and manifold, with the coil pair appropriately positioned at the edge.",
+        "All images maintain the required product identity, physical integration, and approved context without prohibited elements."
       ],
-      "correction_prompt": "For the third panel, recapture or edit to clearly place the two-coil product pair in the far background (scaled down to approx 10-15% of the frame) so the fixed pump, gauge, and manifold are the dominant technical subjects on the concrete pad.",
+      "correction_prompt": "no correction needed",
       "panel_scores": [
-        40
+        85
       ],
       "set_attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 35,
-      "duplicate_roles": [
-        1
-      ],
-      "reasons": [
-        "Role 1 failure: The 'packaged' and 'bare' coils are centered and oversized relative to the frame, violating the requirement to be small, separate, and off-center.",
-        "Role 1 failure: The presence of the large mechanical pump/tractor unit contradicts the 'product-only' intent of the hero shot and overlaps with Role 3's hardware requirements.",
-        "Role 3 failure: The image displays three separate coils on the ground instead of the required 'one fixed pump, gauge and manifold' equipment-only composition.",
-        "Role 3 failure: The 'approved two-coil pair' is not present or secondary; instead, individual coils are scattered.",
-        "Role 2 failure: The shot is ground-level and generic, failing to provide the 'elevated technical comparison' required to show diameter or construction differences through the pair."
-      ],
-      "correction_prompt": "Regenerate Role 1 as a wide high-oblique view of the field with two small, separate coils (one packaged, one bare) placed off-center, removing any pumps or machinery; regenerate Role 3 as a close-up of a fixed pump and gauge manifold on a concrete pad with no scattered coils; elevate Role 2 to a technical angle.",
-      "panel_scores": [
-        35
-      ],
-      "set_attempt": 3
     }
   ]
 }

@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-10T12:55:22+00:00`
+- آخرین بروزرسانی: `2026-10-10T13:49:21+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1025 از 1894 (54.12٪)**
-- تکمیل‌شده: **1025**
+- پیشرفت: **1030 از 1894 (54.38٪)**
+- تکمیل‌شده: **1030**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **869**
+- ناموفق: **864**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,11 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **کلاته** — سمنان — `layflat` — 2195 کلمه — `2026-10-10T13:49:18+00:00`
+- **سمنان** — سمنان — `tape20` — 1345 کلمه — `2026-10-10T13:47:38+00:00`
+- **بسطام** — سمنان — `tape20` — 1508 کلمه — `2026-10-10T13:45:51+00:00`
+- **بسطام** — سمنان — `layflat` — 1268 کلمه — `2026-10-10T13:43:56+00:00`
+- **سرخه** — سمنان — `tape20` — 1204 کلمه — `2026-10-10T13:40:06+00:00`
 - **امیریه** — سمنان — `tape20` — 1228 کلمه — `2026-10-10T11:39:16+00:00`
 - **دندی** — زنجان — `layflat` — 1218 کلمه — `2026-10-10T10:40:29+00:00`
 - **چورزق** — زنجان — `layflat` — 1428 کلمه — `2026-10-10T10:40:17+00:00`
@@ -47,24 +52,19 @@
 - **عسلویه** — بوشهر — `tape20` — 1367 کلمه — `2026-10-10T05:43:50+00:00`
 - **بندردیلم** — بوشهر — `layflat` — 1323 کلمه — `2026-10-10T05:42:24+00:00`
 - **بندردیلم** — بوشهر — `tape20` — 1231 کلمه — `2026-10-10T05:40:57+00:00`
-- **بندردیر** — بوشهر — `tape20` — 1463 کلمه — `2026-10-10T04:42:31+00:00`
-- **دوراهک** — بوشهر — `tape20` — 1139 کلمه — `2026-10-10T04:41:41+00:00`
-- **کاکی** — بوشهر — `tape20` — 1333 کلمه — `2026-10-10T03:47:24+00:00`
-- **آبدان** — بوشهر — `tape20` — 1234 کلمه — `2026-10-10T03:47:04+00:00`
-- **شنبه** — بوشهر — `tape20` — 1261 کلمه — `2026-10-10T02:44:34+00:00`
 
 ## خطاهای اخیر
 
-- **سرخه** — `tape20`: `Agnes Image HTTP 503: {"error":{"message":"image queue is full, please retry later (request id: 20261010125520458602203r7J8ENoe)","type":"","param":"","code":null}}`
-- **دیباج** — `layflat`: `Agnes Image HTTP 503: {"error":{"message":"image queue is full, please retry later (request id: 20261010124942660261914AZ0Hu41Y)","type":"","param":"","code":null}}`
-- **دیباج** — `tape20`: `Agnes Image HTTP 503: {"error":{"message":"image queue is full, please retry later (request id: 20261010124903664866810lP6fddNh)","type":"","param":"","code":null}}`
-- **کلاته** — `layflat`: `Agnes Image HTTP 503: {"error":{"message":"image queue is full, please retry later (request id: 20261010124837813426168pKtbnbEJ)","type":"","param":"","code":null}}`
+- **دیباج** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **سمنان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **دیباج** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **آرادان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **دامغان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **امیریه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **گرماب** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سهرورد** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **بندرگناوه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **سهرورد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
