@@ -1,21 +1,49 @@
 {
   "source_id": "12200011001569-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 35,
+      "score": 75,
       "duplicate_roles": [],
       "reasons": [
-        "Panel 3 shows multiple cartons (a large open box and a second small can) plus equipment, violating the 'exactly one approved carton remains small and secondary' constraint; required background was 'empty concrete pad' but it contains heavy farm activity (tractors, barn, silage).",
-        "Panel 2 is a low-level ground shot, failing the 'elevated technical arrangement' requirement for SELECTION EVIDENCE.",
-        "The brief mandates one specific carton ('exactly one approved carton') as the product identity across all panels, but the sets differ (single large roll vs. large box + small can + gauge)."
+        "Role 1: The AFP carton is placed in the lower-center rather than the required 'lower-left third'.",
+        "Role 3: The required 'manifold' is missing from the equipment still life, which shows only a filter, gauge, and regulator."
       ],
-      "correction_prompt": "Reshoot Panel 2 from an elevated high-oblique angle on a simple field edge; replace the cluttered farm in Panel 3 with an empty concrete pad showing exactly one small approved AFP carton as secondary element, removing the large box and gauges to match the product identity.",
+      "correction_prompt": "Reposition the carton in image 1 to the lower-left third and add a visible manifold block to the equipment setup in image 3.",
       "panel_scores": [
-        35
+        75
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2 fails the 'steep near-overhead' and 'surface' requirements; the shot is an angled perspective rather than a top-down technical layout, and the scene contains visible background equipment/structures (likely concrete) that violate the 'soil-based' constraint.",
+        "Role 1 fails the 'mandatory role evidence' requirement; the AFP product is positioned in the immediate foreground (center-left) rather than the required 'lower-left third'."
+      ],
+      "correction_prompt": "Re-render Role 2 as a steep near-overhead top-down view of dark soil with the AFP carton and drip tape, removing all background equipment and concrete. Adjust Role 1 to move the AFP carton to the lower-left third.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 2: Shows two product units (one roll and one box) instead of one integrated AFP carton.",
+        "Role 3: Contains a prominent, unlisted pump/reel unit that violates the 'no extra commercial products' rule.",
+        "Role 1: Product placement is on the lower-right third, not the required lower-left third."
+      ],
+      "correction_prompt": "Regenerate all images: strictly limit to one product unit (roll or carton) per scene; move Role 1 product to lower-left; remove extra equipment from Role 3.",
+      "panel_scores": [
+        55
+      ],
+      "set_attempt": 3
     }
   ]
 }
