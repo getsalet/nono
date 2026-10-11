@@ -1,0 +1,62 @@
+name: Roya blog city backlink queue
+
+on:
+  workflow_dispatch:
+    inputs:
+      count:
+        description: 'how many posts this run'
+        required: false
+        default: '3'
+      dry_run:
+        description: '1 = offline sample, no Agnes call'
+        required: false
+        default: '0'
+      target:
+        description: 'single queue key to process (optional)'
+        required: false
+        default: ''
+  schedule:
+    - cron: '15 */2 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: roya-backlink-queue
+  cancel-in-progress: false
+
+jobs:
+  queue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+      AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+      AGNES_MODEL: agnes-2.5-flash
+      ROYA_COUNT: ${{ github.event.inputs.count || '3' }}
+      ROYA_DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
+      ROYA_TARGET: ${{ github.event.inputs.target || '' }}
+      ROYA_MIN_WORDS: '500'
+      ROYA_MAX_WORDS: '1000'
+      ROYA_MIN_LINKS: '3'
+      ROYA_MAX_LINKS: '5'
+      ROYA_BLOG_URL: https://afp.royablog.ir
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Build or refresh the city queue
+        run: python automation/build_roya_queue.py
+      - name: Generate city backlink posts
+        run: python automation/roya_backlink_queue.py
+      - name: Commit queue, state and artifacts
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/roya/backlink-queue.json state/roya-backlink-progress.json artifacts/roya-backlink-queue
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Update Roya city backlink queue"
+          git pull --rebase origin main
+          git push origin main
