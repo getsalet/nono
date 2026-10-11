@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-11T17:35:54+00:00`
+- آخرین بروزرسانی: `2026-10-11T17:39:03+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **1074 از 1894 (56.71٪)**
 - تکمیل‌شده: **1074**
 - در حال پردازش: **0**
-- در انتظار: **140**
-- آماده انتخاب در اجرای بعدی: **140**
+- در انتظار: **144**
+- آماده انتخاب در اجرای بعدی: **144**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **680**
+- ناموفق: **676**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -55,16 +55,16 @@
 
 ## خطاهای اخیر
 
-- **چهاردانگه** — `layflat`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173552491143832X1aV3Fpx)","type":"AgnesAI_error"}}`
-- **صالحیه** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173551880301134LHmJC4Ul)","type":"AgnesAI_error"}}`
-- **آبسرد** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173552447780549qZbAbItd)","type":"AgnesAI_error"}}`
-- **دماوند** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173551905988071lRYz352u)","type":"AgnesAI_error"}}`
-- **رباطکریم** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173551877183475iJcHT3Iy)","type":"AgnesAI_error"}}`
-- **نصیرشهر** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173551907708590N7BLghtr)","type":"AgnesAI_error"}}`
-- **کهریزک** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 2026101117355186513053943SbYAV2)","type":"AgnesAI_error"}}`
-- **تجریش** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173552493999671KUGPBD9n)","type":"AgnesAI_error"}}`
-- **شمشک** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173551908269966A1hi54rC)","type":"AgnesAI_error"}}`
-- **فشم** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173552537249477Qls9lH31)","type":"AgnesAI_error"}}`
+- **صالحیه** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173901481497480ZrOjfQOI)","type":"AgnesAI_error"}}`
+- **آبعلی** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 202610111739014764943541nPuTh2d)","type":"AgnesAI_error"}}`
+- **نصیرشهر** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173901474103807cKhfHHO1)","type":"AgnesAI_error"}}`
+- **فشم** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 202610111739014733124772cmT9zt4)","type":"AgnesAI_error"}}`
+- **شاهدشهر** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173901652374001T3N1zQMh)","type":"AgnesAI_error"}}`
+- **صباشهر** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173901601216702msCyZ0CD)","type":"AgnesAI_error"}}`
+- **جوادآباد** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173901516990228yMczQrsF)","type":"AgnesAI_error"}}`
+- **پاکدشت** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 202610111739014880542070wHVeKmG)","type":"AgnesAI_error"}}`
+- **چهاردانگه** — `layflat`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 20261011173901467964766CRZUSVmJ)","type":"AgnesAI_error"}}`
+- **آبسرد** — `tape20`: `Agnes JSON response invalid after retries: HTTP 401 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"This token status is unavailable (request id: 2026101117390146376599968lIHu5g)","type":"AgnesAI_error"}}`
 
 ## فایل‌های خروجی
 
