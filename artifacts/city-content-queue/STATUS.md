@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-11T07:49:21+00:00`
+- آخرین بروزرسانی: `2026-10-11T08:45:53+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1072 از 1894 (56.60٪)**
-- تکمیل‌شده: **1072**
+- پیشرفت: **1074 از 1894 (56.71٪)**
+- تکمیل‌شده: **1074**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **822**
+- ناموفق: **820**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **اسلامشهر** — تهران — `layflat` — 1401 کلمه — `2026-10-11T08:43:06+00:00`
+- **چهاردانگه** — تهران — `tape20` — 1192 کلمه — `2026-10-11T08:42:29+00:00`
 - **هشتبندی** — هرمزگان — `tape20` — 1149 کلمه — `2026-10-11T07:46:12+00:00`
 - **هشتبندی** — هرمزگان — `layflat` — 1515 کلمه — `2026-10-11T07:43:30+00:00`
 - **کرگان** — هرمزگان — `tape20` — 1280 کلمه — `2026-10-11T07:40:52+00:00`
@@ -50,11 +52,11 @@
 - **سیریک** — هرمزگان — `tape20` — 1686 کلمه — `2026-10-11T02:43:25+00:00`
 - **زیارتعلی** — هرمزگان — `tape20` — 1395 کلمه — `2026-10-11T02:42:58+00:00`
 - **رویدر** — هرمزگان — `tape20` — 1333 کلمه — `2026-10-11T01:42:20+00:00`
-- **دهبارز** — هرمزگان — `tape20` — 1329 کلمه — `2026-10-11T01:41:18+00:00`
-- **کیش** — هرمزگان — `tape20` — 2067 کلمه — `2026-10-11T00:59:26+00:00`
 
 ## خطاهای اخیر
 
+- **پارسیان** — `layflat`: `Editorial review failed: internal link count must equal minimum`
+- **کوشکنار** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
 - **پارسیان** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **قشم** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **طبل** — `tape20`: `Editorial review failed: internal link count must equal minimum`
@@ -63,8 +65,6 @@
 - **دهبارز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سیریک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **بیکاء** — `tape20`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **بیکاء** — `layflat`: `HTTP Error 500: Internal Server Error`
-- **کیش** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
