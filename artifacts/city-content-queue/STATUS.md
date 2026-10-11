@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-11T03:45:43+00:00`
+- آخرین بروزرسانی: `2026-10-11T04:48:33+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1060 از 1894 (55.97٪)**
-- تکمیل‌شده: **1060**
+- پیشرفت: **1062 از 1894 (56.07٪)**
+- تکمیل‌شده: **1062**
 - در حال پردازش: **0**
 - در انتظار: **0**
 - آماده انتخاب در اجرای بعدی: **0**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **834**
+- ناموفق: **832**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **سوزا** — هرمزگان — `layflat` — 1676 کلمه — `2026-10-11T04:45:07+00:00`
+- **سوزا** — هرمزگان — `tape20` — 1465 کلمه — `2026-10-11T04:42:42+00:00`
 - **کوهستک** — هرمزگان — `tape20` — 1234 کلمه — `2026-10-11T03:45:40+00:00`
 - **رمکان** — هرمزگان — `tape20` — 1120 کلمه — `2026-10-11T03:42:53+00:00`
 - **درگهان** — هرمزگان — `tape20` — 2195 کلمه — `2026-10-11T03:42:48+00:00`
@@ -50,11 +52,11 @@
 - **تخت** — هرمزگان — `tape20` — 1247 کلمه — `2026-10-10T22:39:33+00:00`
 - **گوهران** — هرمزگان — `tape20` — 1461 کلمه — `2026-10-10T22:39:10+00:00`
 - **کوهیچ** — هرمزگان — `tape20` — 1223 کلمه — `2026-10-10T21:39:53+00:00`
-- **ابوموسی** — هرمزگان — `tape20` — 1498 کلمه — `2026-10-10T20:38:36+00:00`
-- **شاهدیه** — یزد — `tape20` — 1080 کلمه — `2026-10-10T19:37:15+00:00`
 
 ## خطاهای اخیر
 
+- **طبل** — `tape20`: `Editorial review failed: internal link count must equal minimum`
+- **رمکان** — `layflat`: `Editorial review failed: internal link count must equal minimum`
 - **درگهان** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **دهبارز** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **سیریک** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
@@ -63,8 +65,6 @@
 - **کیش** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **گوهران** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کوهیچ** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **جناح** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **هنگوییه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 
 ## فایل‌های خروجی
 
