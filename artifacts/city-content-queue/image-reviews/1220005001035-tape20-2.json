@@ -1,0 +1,40 @@
+{
+  "source_id": "1220005001035-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 52,
+      "product_width_percent": 24,
+      "product_height_percent": 58,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Severe perspective mismatch: the camera angle is ground-level/horizontal, failing to meet the mandatory 'steep near-overhead' role blueprint.",
+        "Object dimensions are out of envelope: at 24% width, the roll is too small; it should span the 18-38% range but ideally be closer to 24-38% to appear physically integrated.",
+        "Lighting mismatch: the contact shadow is sharp and directional (side-light), whereas a near-overhead shot should feature a more diffused, central shadow to appear integrated."
+      ],
+      "correction_prompt": "Re-render with a steep near-overhead camera angle (approx. 75 degrees). Increase the product width to 30% of the frame to better fill the width envelope. Ensure a soft, ambient contact shadow on the soil and align the drip-tape segment with the roll's perspective.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 25,
+      "product_height_percent": 48,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "The image shows exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "The bounding box of the product (25% width, 48% height) falls well within the 18-38% width and <70% height plausibility envelope.",
+        "One straight drip-tape segment with repeated emitter points is integrated into the foreground on dark soil, satisfying the mandatory role blueprint.",
+        "The bottom-right watermark is the exact required string 'AFP | 09134922013'.",
+        "No hard rejects are present: zero people, zero body parts, no extra commercial packages, and no fake captions/gibberish.",
+        "Perspective, lighting, and contact shadow appear physically plausible and well-integrated."
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "source_id": "1220005001035-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "The image shows a second commercial package (a cardboard box) in the background, which is explicitly a hard reject.",
+        "The mandatory 'HEADWORKS DETAIL' context of a clean concrete pad with fixed filter, pressure gauge, and regulator (infrastructure) is missing; instead, a pump-like device and coiled pipe are shown.",
+        "The product packaging is a flat spool carton rather than an integrated wide low cylindrical roll."
+      ],
+      "correction_prompt": "Regenerate to show a clean concrete pad with a fixed irrigation manifold, filter, pressure gauge, and regulator in the foreground (Headworks Detail). Place a single AFP white-and-blue wide low cylindrical drip-tape roll at the far edge. Remove the cardboard box, the pump, and the coiled pipe.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "The image contains a second commercial package (a cardboard box) in the background, which is a hard reject according to the instructions ('Hard reject... second commercial package').",
+        "The image features an unregulated filter (a mesh basket filter is common, but here it looks like a canister) and manifold, but the presence of the second box is the primary failure point."
+      ],
+      "correction_prompt": "Remove the cardboard box in the background. Ensure only the single white-and-blue cylindrical drip-tape roll is visible as the commercial product. Keep the filter, gauges, and regulator.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 45,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Contains a second commercial package (wooden carton box on the right).",
+        "Visible gibberish writing on the product roll label.",
+        "Watermark format mismatch (expected '09134922013' vs visible '09134922013' - actually matches, but the required watermark is in bottom right and present. Correction: The main reason for failure is the second package box).",
+        "Product roll label text is illegible/gibberish ('Drip Irrigalini Taqti')."
+      ],
+      "correction_prompt": "Remove the wooden carton box on the right and all other secondary packaging. Rewrite the label on the white roll to be clear and legible as 'AFP Drip Tape'. Ensure the white-and-blue cylindrical roll is the sole product focus, maintaining its wide, low cylindrical shape. Keep the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 16,
+      "product_height_percent": 22,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image contains multiple commercial items that violate the 'single integrated AFP carton' mandate; specifically, the open cardboard box on the right containing additional rolls constitutes a 'second commercial package'.",
+        "The mandatory 'integrated' AFP carton is not integrated into the elevated headworks equipment (still life) but is instead separated, and there is a second roll/box visible.",
+        "The presence of multiple rolls inside the open box violates the 'zero second commercial package' hard reject criteria.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 16% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the open cardboard box on the right. Remove the spray pump on the left. Create a single flat elevated tray or concrete pad holding exactly one white and blue AFP drip-tape carton roll, integrating it into a headworks setup (filter, gauge, manifold) so the carton is the single commercial product on display. Enlarge the product group from 16% to 18-38% of frame width.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Image successfully depicts the mandated HEADWORKS DETAIL role featuring elevated equipment (filter, gauge, manifold) on a clean concrete pad.",
+        "The AFP carton is correctly placed at the far edge of the composition.",
+        "No people, body parts, or human silhouettes are present.",
+        "Product dimensions and perspective are physically plausible within the approved envelope.",
+        "Required watermark is visible in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
