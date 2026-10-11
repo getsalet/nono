@@ -1,49 +1,48 @@
 {
   "source_id": "1220007002006-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 55,
+      "score": 88,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 violation: The approved carton is placed on the ground within the crop rows rather than being off-center on the lower third; its size is also disproportionately large relative to the field context, failing the 'exactly one approved carton stays small' requirement.",
-        "Role 2 violation: The approved carton is placed centrally and dominates the foreground instead of being a secondary element, contradicting the requirement for it to remain smaller or less prominent relative to the technical evidence.",
-        "Role 3 violation: The background contains significant farm activity (tractor, trailer, and barn), which directly violates the 'no farm activity' requirement for an equipment-only record on an empty pad."
+        "Role 2 (Image 2) contains two AFP drip tape rolls, violating the requirement of 'one integrated AFP carton'."
       ],
-      "correction_prompt": "For Role 1, reposition the carton to be visibly smaller on the lower third off-center without entering the crop rows. For Role 2, reduce the carton's visual weight relative to the background field. For Role 3, completely remove all machinery and background structures to ensure an empty concrete pad with no farm activity.",
+      "correction_prompt": "In the Role 2 image, remove the second AFP drip tape roll to ensure there is only one integrated product alongside the straight drip-tape segment.",
       "panel_scores": [
-        55
+        88
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 42,
+      "score": 85,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 places the product oversized in the immediate foreground, violating the requirement for a small, off-center placement on the lower third.",
-        "Role 3 includes a tractor and active farm equipment in the background, which violates the specific requirement for an empty pad with no farm activity."
+        "Role 3 (HEADWORKS DETAIL) explicitly requires a 'clean concrete pad' (a flat, smooth surface), but the image depicts an outdoor dirt/soil ground which is incorrect for the required role structure."
       ],
-      "correction_prompt": "Reshoot Role 1 with the product scaled down to 15% of its current size and placed in the lower right, and Reframe Role 3 on a blank concrete pad to remove the background tractor and building.",
+      "correction_prompt": "Regenerate image 3 placing the fixed filter, gauge, regulator, and manifold on a clean, flat concrete pad instead of outdoor dirt, keeping the AFP carton at the far edge.",
       "panel_scores": [
-        42
+        85
       ],
       "set_attempt": 2
     },
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 3 violates the 'equipment-only' and 'no farm activity' constraints: the background is heavily cluttered with large farm machinery (tractor, wagon, trailer) and farm buildings, conflicting with the required clean, empty concrete pad visual narrative.",
-        "Role 3 hardware is incomplete: the brief explicitly requires a 'fixed filter' in the equipment setup, but only a pressure gauge and valve body are clearly visible.",
-        "Role 1 and Role 2 environments feel visually repetitive as both depict the same 'product on concrete edge next to a flat field with a building in the far background' composition, weakening the 'elevated technical arrangement' distinction required for Role 2.",
-        "All product placements are somewhat large, and Role 3's layout does not clearly treat the carton as 'secondary' or 'small' when compared to the large piece of hardware next to it."
+      "score": 55,
+      "duplicate_roles": [
+        2,
+        3
       ],
-      "correction_prompt": "Regenerate Role 3 to isolate the headworks equipment on an empty, uncluttered concrete pad; include a clearly visible fixed filter in the arrangement and make the carton smaller and positioned in the periphery to ensure it reads as a secondary element. Regenerate Role 2 by moving the camera to a higher, distinct angle or closer perspective to clearly differentiate the background structure from Role 1.",
+      "reasons": [
+        "Role 3 fails by including a secondary 'extra commercial product' (the brown cardboard box) in addition to the required roll, violating the singular product integration rule.",
+        "Role 2 fails the physical integration requirement by showing the irrigation equipment floating in mid-air above the concrete pad rather than resting on it or being physically attached.",
+        "Role 1 deviates from the specified composition by placing the product roll on a concrete platform rather than the 'lower-left third' of the field as requested, compromising the editorial hero effect."
+      ],
+      "correction_prompt": "Redo Role 2 to rest the equipment flat on the concrete pad; delete the extra brown box from Role 3; move the product roll in Role 1 to the lower-left field area.",
       "panel_scores": [
-        45
+        55
       ],
       "set_attempt": 3
     }

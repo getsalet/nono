@@ -1,20 +1,36 @@
 {
   "source_id": "12200010002005-tape20",
-  "policy": "article-parity-v15-equipment-only-headworks-practical-metrics",
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
   "history": [
     {
       "pass": false,
-      "score": 45,
+      "score": 50,
       "duplicate_roles": [],
       "reasons": [
-        "Role 1 (Hero): The product carton in the foreground is significantly oversized (approx. 25% of image width) and violates the instruction to keep it 'small' and 'off-center on the lower third'. The product placement dominates the foreground, breaking the 20cm-scale context of a wide landscape view.",
-        "Role 3 (Headworks): The brief explicitly required 'no farm activity', but the image clearly depicts a tractor and a barn in the background, violating this specific constraint for the equipment-only role."
+        "Role 1 (EDITORIAL HERO): The AFP product is placed in the foreground center rather than the required lower-left third.",
+        "Role 3 (HEADWORKS DETAIL): The required 'regulator' and 'manifold' components are missing from the equipment still life, and the scene includes an extra unbranded cardboard box that was not part of the integration.",
+        "Role 1 and Role 3 both feature a large building in the background, whereas the brief specifies a standard farm context without city-specific architecture."
       ],
-      "correction_prompt": "Reshoot Role 1 with a smaller, off-center product carton in the lower third to maintain wide landscape scale; Reshoot Role 3 with a clean concrete background removing the barn and tractor to ensure 'no farm activity'.",
+      "correction_prompt": "Role 1: Reposition the AFP carton to the lower-left third and remove the large background building. Role 3: Remove the extra cardboard box and explicitly add a pressure regulator and drip irrigation manifold to the equipment setup.",
       "panel_scores": [
-        45
+        50
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "duplicate_roles": [],
+      "reasons": [
+        "Role 1 successfully executes the EDITORIAL HERO requirement with a wide elevated perspective, long crop geometry, and the integrated AFP carton on the lower-left third.",
+        "Role 2 clearly presents SELECTION EVIDENCE with a steep near-overhead view, showing dark soil and a straight drip-tape segment with visible repeated emitters alongside the integrated carton.",
+        "Role 3 perfectly frames the HEADWORKS DETAIL as an elevated equipment still life on a clean concrete pad, featuring all mandatory components: fixed filter, pressure gauge, regulator, and manifold with the carton at the edge."
+      ],
+      "correction_prompt": "Maintain the current visual hierarchy and environmental specificity for each role.",
+      "panel_scores": [
+        95
+      ],
+      "set_attempt": 2
     }
   ]
 }

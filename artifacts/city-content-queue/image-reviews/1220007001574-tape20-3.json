@@ -1,0 +1,79 @@
+{
+  "source_id": "1220007001574-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 21,
+      "product_height_percent": 45,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (carton) present",
+        "Ghosted/duplicated watermark in bottom right"
+      ],
+      "correction_prompt": "Remove the brown cardboard carton and any duplicate watermarks to the right and top of the main roll, retaining only the single AFP tape roll and the fixed irrigation equipment on the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 27,
+      "product_height_percent": 38,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Image contains two commercial packages (one roll and one brown carton box), violating the 'single item' and 'zero second commercial package' rule."
+      ],
+      "correction_prompt": "Remove the brown cardboard carton box on the right side of the frame, retaining only the white and blue drip tape roll.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package present: A separate open brown cardboard box with 'AFP' branding is visible on the far right, violating the 'one integrated AFP carton' rule for the role.",
+        "Role mismatch: The image shows two separate items (a roll and a box) rather than a single integrated carton at the far edge as required for the 'HEADWORKS DETAIL' role."
+      ],
+      "correction_prompt": "Remove the open cardboard box on the far right. Ensure the composition features only the drip-tape roll integrated with the irrigation equipment (filter, gauge, manifold) on the concrete pad, maintaining the 'Headworks Detail' role blueprint.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 69,
+      "reasons": [
+        "Contains a second commercial package (cardboard box with AFP branding), which violates the 'exactly one' constraint.",
+        "Fails to meet the strict 'zero human body parts' instruction; the 'e' in 'tape' on the roll is clearly shaped like a human leg, and the 'a' in 'irrigation' resembles a head/human profile, which triggers a hard reject for body parts.",
+        "Dripping water from the central filter is physically impossible for a static 'still life' headworks detail."
+      ],
+      "correction_prompt": "Regenerate the image strictly following the role blueprint: one elevated AFP carton on a clean concrete pad with fixed filter, pressure gauge, regulator, and manifold. Remove the large cardboard box on the right. Change the text 'Drip Irrigation Tape' to 'Drip Line Roll' to completely remove any letters that resemble human body parts. Ensure a static, dry still-life composition with zero dripping water and no visible humans or body parts.",
+      "attempt": 4
+    },
+    {
+      "pass": true,
+      "score": 98,
+      "product_width_percent": 25,
+      "product_height_percent": 28,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "The image successfully executes the HEADWORKS DETAIL role with an elevated equipment still life on a concrete pad.",
+        "The fixed filter, pressure gauge, and regulator are integrated naturally as infrastructure.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correct.",
+        "The main product is a white and blue cylindrical drip-tape carton roll that fits the approved width envelope (18-38%) and height limit (<70%).",
+        "The second AFP carton at the far edge is correctly identified as an integrated part of the product display rather than a rejected 'second commercial package'.",
+        "The image contains zero people or human body parts.",
+        "The lighting and perspective are physically plausible with appropriate contact shadows."
+      ],
+      "correction_prompt": "",
+      "attempt": 5
+    }
+  ]
+}
