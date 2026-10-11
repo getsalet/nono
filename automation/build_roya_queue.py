@@ -109,6 +109,7 @@ def main():
         prev = old.get(key, {})
         item = {'key': key, 'province': t['province'], 'province_fa': t['province_fa'], 'city_fa': city,
                 'family': family, 'target_url': t['url'], 'hub_url': t.get('hub_url', ''),
+                'site_title': prev.get('site_title', t.get('page_title', '')),
                 'prepared_title': title, 'page_title': page_title,
                 'status': prev.get('status', 'pending'), 'attempts': prev.get('attempts', 0),
                 'title': prev.get('title', ''), 'slug': prev.get('slug', ''),

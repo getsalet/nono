@@ -30,11 +30,13 @@ MIN_WORDS = int(os.getenv('ROYA_MIN_WORDS', '500'))
 MAX_WORDS = int(os.getenv('ROYA_MAX_WORDS', '1000'))
 MIN_LINKS = int(os.getenv('ROYA_MIN_LINKS', '3'))
 MAX_LINKS = int(os.getenv('ROYA_MAX_LINKS', '5'))
+ROTATE_EVERY = max(1, int(os.getenv('AGNES_KEY_ROTATE_EVERY', '25')))
 DRY_RUN = os.getenv('ROYA_DRY_RUN', '0') == '1'
 RETRY_FAILED = os.getenv('ROYA_RETRY_FAILED', '0') == '1'
 ONLY = os.getenv('ROYA_TARGET', '').strip()
 BANNED = ['نمایندگی', 'موجود در انبار', 'ارسال رایگان', 'قیمت تومان', 'بهترین خاک',
           'خاک مناسب', 'اقلیم', 'آب و هوای', 'شوری خاک', 'گارانتی', 'تخفیف']
+GENERIC_ANCHORS = {'اینجا', 'کلیک کنید', 'اینجا کلیک کنید', 'لینک', 'ادامه مطلب', 'مشاهده'}
 LATIN_OK = {'afp', 'navar', 'cm', 'mm', 'pe', 'uv', 'iso', 'drip'}
 now = lambda: datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
@@ -48,12 +50,26 @@ class Agnes:
                            or 'https://apihub.agnes-ai.com/v1').rstrip('/')
         self.AGNES_MODEL = os.getenv('AGNES_MODEL', 'agnes-2.5-flash')
         self._i = 0
+        self.calls = 0
+
+    def current_key(self):
+        return self.AGNES_KEYS[self._i] if self.AGNES_KEYS else self.AGNES_KEY
+
+    def rotate_key(self):
+        if len(self.AGNES_KEYS) > 1:
+            self._i = (self._i + 1) % len(self.AGNES_KEYS)
+            print(f'agnes key rotated -> #{self._i + 1}/{len(self.AGNES_KEYS)} after {self.calls} call(s)', flush=True)
+        return self.current_key()
+
+    def key_for_call(self):
+        """One API key per {ROTATE_EVERY} calls, then the next key in the pool."""
+        if self.AGNES_KEYS and self.calls and self.calls % ROTATE_EVERY == 0:
+            self.rotate_key()
+        self.calls += 1
+        return self.current_key()
 
     def next_agnes_key(self):
-        if not self.AGNES_KEYS:
-            return ''
-        self._i = (self._i + 1) % len(self.AGNES_KEYS)
-        return self.AGNES_KEYS[self._i]
+        return self.key_for_call()
 
     def fetch_json(self, url, headers, payload, timeout=180):
         req = urllib.request.Request(url, data=json.dumps(payload).encode('utf-8'),
@@ -93,7 +109,7 @@ def agnes(prompt):
                    'temperature': 0.45, 'max_tokens': 8000}
         try:
             data = BASE.fetch_json(BASE.AGNES_BASE + '/chat/completions',
-                                   {'Authorization': 'Bearer ' + (BASE.next_agnes_key() or BASE.AGNES_KEY),
+                                   {'Authorization': 'Bearer ' + (BASE.key_for_call() or BASE.AGNES_KEY),
                                     'Content-Type': 'application/json',
                                     'User-Agent': 'roya-backlink-queue-v1'}, payload, timeout=180)
             return parse_object(data.get('choices', [{}])[0].get('message', {}).get('content', ''))
@@ -108,21 +124,33 @@ def words(html):
     return len(re.findall(r'[\u0600-\u06FF]+', re.sub(r'<[^>]+>', ' ', html or '')))
 
 
+def anchor_pairs(html):
+    return [(m.group(1), re.sub(r'<[^>]+>', ' ', m.group(2)).strip())
+            for m in re.finditer(r'<a\s[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', html or '', flags=re.I | re.S)]
+
+
 def hrefs(html):
     return re.findall(r'<a\s[^>]*href=["\']([^"\']+)["\']', html or '', flags=re.I)
 
 
 def approved_links(item, lib):
     fam = lib['families'].get(item.get('family', 'tape20'), lib['families']['tape20'])
+    site_title = re.split(r'\s*\|\s*', item.get('site_title') or '')[0].strip()
+    hub_title = re.split(r'\s*\|\s*', item.get('hub_title') or '')[0].strip()
+    city_anchor = site_title if len(site_title) >= 8 else f"{fam['anchor']} {item['city_fa']}"
     links = [
-        {'url': item['target_url'], 'anchor': f"{fam['anchor']} {item['city_fa']}", 'role': 'city'},
-        {'url': item['hub_url'], 'anchor': f"{fam['anchor']} {item['province_fa']}", 'role': 'province'},
-        {'url': lib['shop']['url'], 'anchor': lib['shop']['anchor'], 'role': 'shop'},
+        {'url': item['target_url'], 'anchor': city_anchor,
+         'title': site_title or f"{fam['anchor']} {item['city_fa']}", 'role': 'city'},
+        {'url': item['hub_url'], 'anchor': f"{fam['anchor']} {item['province_fa']}",
+         'title': hub_title or f"{item['province_fa']} | نوار تیپ AFP", 'role': 'province'},
+        {'url': lib['shop']['url'], 'anchor': lib['shop']['anchor'],
+         'title': 'فروشگاه نوار تیپ و لوله آبیاری AFP', 'role': 'shop'},
     ]
     extra = lib['after_sales'] if item.get('family') == 'hose' else lib['faq']
-    links.append({'url': extra['url'], 'anchor': extra['anchor'], 'role': 'extra'})
+    links.append({'url': extra['url'], 'anchor': extra['anchor'], 'title': extra['anchor'], 'role': 'extra'})
     if item.get('family') == 'hub':
-        links.append({'url': lib['contact']['url'], 'anchor': lib['contact']['anchor'], 'role': 'contact'})
+        links.append({'url': lib['contact']['url'], 'anchor': lib['contact']['anchor'],
+                      'title': lib['contact']['anchor'], 'role': 'contact'})
     seen, unique = set(), []
     for link in links:
         if link['url'] in seen:
@@ -135,7 +163,9 @@ def approved_links(item, lib):
 def build_prompt(item, links):
     fam = item.get('family', 'tape20')
     product = 'نوار تیپ ۲۰ سانتی‌متری (قطره‌چکان ۲۰ سانتی)' if fam != 'hose' else 'لوله نخی و لوله تاشو'
-    link_lines = '\n'.join(f"- {x['url']}  ←  لنگر پیشنهادی: {x['anchor']} ({x['role']})" for x in links)
+    link_lines = '\n'.join(
+        f"- {x['url']}\n  عنوان پست مقصد در سایت: {x.get('title', '')}\n  لنگر پیشنهادی: {x['anchor']} ({x['role']})"
+        for x in links)
     return f'''برای شهر {item['city_fa']} در استان {item['province_fa']} یک مقاله تازه، کاربردی و سئوشده فارسی درباره {product} بنویس.
 این مقاله در وبلاگ آموزشی AFP (نشانی {BLOG}) منتشر می‌شود و هدف آن راهنمایی کشاورزان همان شهر است؛ در متن به‌طور طبیعی به لینک‌های زیر به سایت navar-abyari.ir اشاره کن.
 
@@ -145,7 +175,7 @@ def build_prompt(item, links):
 قواعد محتوا:
 1. طول متن بین {MIN_WORDS} و {MAX_WORDS} کلمه فارسی باشد (نه کمتر، نه بیشتر).
 2. ساختار: یک پاراگراف مقدمه، سپس حداقل ۳ بخش با تگ h2 (و در صورت نیاز h3)، یک لیست ul یا ol برای نکات فنی، و در پایان بخش «سوالات متداول» با دقیقاً ۳ سوال که هر کدام در ساختار <details><summary>پرسش</summary>پاسخ</details> نوشته شود. بعد از بخش سوالات متداول هیچ بخش h2 یا h3 جدیدی نساز.
-3. هر ۴ لینک بالا را با لنگر طبیعی و متفاوت در متن پخش کن؛ لنگر باید معنادار باشد (نه «اینجا کلیک کنید») و حداکثر یک بار برای هر URL.
+3. هر لینک بالا را با لنگر طبیعی در متن پخش کن؛ لنگر لینک صفحه شهری باید همان «عنوان پست مقصد» یا نزدیک‌ترین عبارت طبیعی به آن باشد (مثلاً «خرید نوار تیپ ۲۰ سانتی در قندمان») تا بک‌لینک معنادار شود. لنگر باید شامل نام شهر باشد، معنادار باشد (نه «اینجا کلیک کنید») و برای هر URL حداکثر یک بار بیاید. در متن به موضوع همان پست مقصد اشاره کن تا لینک زمینه‌دار شود.
 4. هیچ قیمت، عدد ریالی/تومانی، تخفیف، موجودی، نمایندگی، زمان قطعی ارسال یا ادعای محلی درباره خاک، آب، شوری، اقلیم و فصل کشت شهر را ننویس؛ به جای آن بنویس که کارشناس AFP شرایط زمین را بررسی می‌کند و قیمت روز را استعلام بگیرد.
 5. مشخصات فنی را فقط در حد عمومی بنویس: ضخامت ۱۷۵ تا ۲۰۰ میکرون، قطر لوله‌های آبیاری، فاصله قطره‌چکان، فشار کار، مقاومت در برابر UV. از ادعای عددی جدید و نادرست پرهیز کن.
 6. متن فقط فارسی باشد؛ تنها واژه‌های لاتین مجاز: AFP، navar، cm، mm، PE، UV، ISO.
@@ -180,6 +210,17 @@ def qa(item, obj, links):
         errors.append('missing the province hub link')
     if not title or len(title) > 65:
         errors.append(f'title length {len(title)} (max 65)')
+    pairs = anchor_pairs(html)
+    city_anchor = next((a for h, a in pairs if h.split('#')[0] == item['target_url']), '')
+    if not city_anchor:
+        errors.append('city backlink anchor text missing')
+    else:
+        if len(city_anchor) < 8:
+            errors.append('city backlink anchor too short')
+        if item['city_fa'] and item['city_fa'] not in city_anchor:
+            errors.append('city backlink anchor must contain the city name')
+    if any(a in GENERIC_ANCHORS for _, a in pairs):
+        errors.append('generic anchor text found')
     if item['city_fa'] and item['city_fa'] not in (title + ' ' + html):
         errors.append('city name missing from title/body')
     if len(re.findall(r'<details', html, flags=re.I)) < 3:
@@ -204,7 +245,8 @@ def qa(item, obj, links):
         errors.append('slug must be latin lowercase hyphenated (max 60)')
     if not (obj.get('meta_description') or '').strip():
         errors.append('meta_description is required')
-    return errors, {'words': n, 'links': found, 'title': title, 'slug': slug}
+    return errors, {'words': n, 'links': found, 'title': title, 'slug': slug,
+                    'city_anchor': city_anchor, 'key_index': BASE._i, 'agnes_calls': BASE.calls}
 
 
 def offline_sample(item, links):
