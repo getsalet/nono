@@ -1,0 +1,65 @@
+{
+  "source_id": "1220003001570-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 32,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Presence of a second commercial package (cardboard box) in the frame, which violates the single-object rule.",
+        "The mandatory role 'HEADWORKS DETAIL' failed: the image shows a hose reel cart instead of a still life on a clean pad with fixed filter, pressure gauge, regulator, and manifold infrastructure."
+      ],
+      "correction_prompt": "Remove the cardboard box. Remove the mobile hose reel cart and replace it with a static infrastructure arrangement (filter, gauge, manifold) on a clean concrete pad to strictly match the Headworks Detail role.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 31,
+      "product_height_percent": 45,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package (brown carton) is present in the frame, which triggers a hard reject for multiple commercial packages.",
+        "The product bounding box estimate for the white roll is width ~31%, height ~45%, x_center ~68%."
+      ],
+      "correction_prompt": "Remove the brown box in the background. Keep only the white and blue cylindrical drip tape roll on the right, the fixed irrigation equipment on the left, and the field background. Retain the watermark AFP | 09134922013 in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 40,
+      "product_x_center_percent": 56,
+      "reasons": [
+        "Presence of a second commercial package (the open carton labeled AFP) to the right of the roll.",
+        "Missing or low-intensity contact shadow under the drip-tape roll, creating a floating or pasted appearance."
+      ],
+      "correction_prompt": "Remove the open cardboard carton from the right side. Enhance the contact shadow beneath the white and blue drip-tape roll to ensure it looks physically grounded on the concrete pad.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image accurately depicts the required 'HEADWORKS DETAIL' role, featuring elevated irrigation equipment (filter, gauges, manifold) on a concrete pad.",
+        "The single AFP drip-tape roll is correctly placed in the foreground with a natural perspective and contact shadow.",
+        "The product's dimensions (width and height) fall within the approved 18-38% and 70% envelope respectively.",
+        "Required bottom-right watermark is present and correctly formatted.",
+        "Zero people, human body parts, or banned items (bottles, jars, cans, etc.) are present.",
+        "The background includes a distant unattended box labeled 'AFP' which is contextually relevant and allowed as it is not a second commercial package (like a fertilizer container) but rather consistent with the equipment/infrastructure setup."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
