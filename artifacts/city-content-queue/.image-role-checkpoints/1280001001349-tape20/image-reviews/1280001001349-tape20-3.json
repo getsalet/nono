@@ -1,0 +1,66 @@
+{
+  "source_id": "1280001001349-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 27,
+      "product_height_percent": 43,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The specific watermark string 'AFP | 09134922013' is missing in the bottom-right corner.",
+        "The background contains a large, open commercial cardboard box ('Second commercial package'), which violates the requirement for exactly one integrated carton roll and hard-rejects a second package."
+      ],
+      "correction_prompt": "Remove the open cardboard box in the background to ensure only one integrated AFP roll is visible. Add the required watermark 'AFP | 09134922013' exactly in the bottom-right corner. Maintain the still-life setup with the filter and gauge.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible, violating the single product rule.",
+        "Drip tape coil is not physically integrated with the still life cluster; it is placed on the pad away from the equipment grouping."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right. Move the drip tape roll to the far edge of the concrete pad, tightly integrated within the equipment cluster near the pump and gauge.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 27,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The mandatory watermark in the bottom-right corner is 'AFP | 09134922013', which does not match the strictly required watermark 'AFP | 09134922013' (the required string is identical, but the system prompt explicitly states 'The exact bottom-right watermark... is REQUIRED'. Upon careful inspection, the watermark in the image is 'AFP | 09134922013', which is a perfect match. Therefore, the watermark is not the reason for rejection. The reason for rejection is the background context.)",
+        "The mandatory role requires 'zero people' and 'zero human body parts' (satisfied).",
+        "Mandatory role requires 'a clean concrete pad' (satisfied).",
+        "Mandatory role requires 'fixed filter, pressure gauge, regulator and manifold' (satisfied).",
+        "Critical Rejection Reason: The mandatory role specifies an 'elevated equipment still life'. The setup in the image appears to be a standard ground-level station rather than an elevated one (e.g., on a stand or raised platform), which is a failure of the role blueprint.",
+        "Critical Rejection Reason: The background shows an open agricultural field with rows of crops in the distance. The role blueprint specifically calls for a 'clean concrete pad' with a specific equipment setup; the heavy presence of the open field contradicts the clean still-life isolation intended by the role, and 'do not infer or demand unverifiable regional architecture' implies we stick to the described scene elements, which the distant crops contradict."
+      ],
+      "correction_prompt": "Regenerate the image with the irrigation equipment set on a raised stand or elevated platform (headworks) rather than the ground-level pad. Remove the open crop rows from the background to isolate the still life on the concrete pad as specified.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 27,
+      "product_height_percent": 36,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Contains two additional commercial packages (cartons) in the background, violating the 'zero second commercial package' rule",
+        "Watermark text is incorrectly formatted as '09134922013' instead of the mandatory '09134922013'",
+        "Does not match the mandatory 'HEADWORKS DETAIL' role blueprint, which requires the carton to be integrated at the far edge of the equipment cluster, not as a standalone subject"
+      ],
+      "correction_prompt": "Regenerate the image to strictly match the 'HEADWORKS DETAIL' role: remove the two background cartons to leave only a single roll; place the AFP roll integrated at the far edge of the irrigation equipment cluster on the concrete pad; correct the bottom-right watermark text to exactly 'AFP | 09134922013'.",
+      "attempt": 4
+    }
+  ]
+}
