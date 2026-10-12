@@ -31,6 +31,57 @@
       ],
       "correction_prompt": "Remove the cardboard box on the right side of the concrete pad. Keep only one integrated AFP drip-tape roll. Add a realistic dark contact shadow under the roll to ground it on the concrete pad.",
       "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 22,
+      "product_height_percent": 38,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "Hard reject: Two additional commercial cardboard boxes (second/third package) are visible on the right, violating the 'single integrated carton' rule.",
+        "Role blueprint failure: The image includes multiple commercial products rather than exactly one AFP carton roll and fixed irrigation hardware (filters/gauges/manifolds).",
+        "Extraneous items: The extra boxes act as commercial packaging duplicates which are explicitly forbidden."
+      ],
+      "correction_prompt": "Regenerate to show exactly one white-and-blue cylindrical drip-tape roll as the only commercial product, surrounded by fixed irrigation hardware. Remove the two cardboard boxes on the right. Ensure the bottom-right watermark is present.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 31,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Second commercial package present (cardboard box on the right side of the frame)",
+        "Hard reject triggered by the presence of a second roll or packaging container"
+      ],
+      "correction_prompt": "Remove the brown cardboard box on the right side of the image; keep only the single white-and-blue cylindrical drip tape roll and the fixed irrigation equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 12,
+      "product_height_percent": 25,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Critical failure: The image contains a second commercial package (the open cardboard box in the background). The brief explicitly states 'one integrated AFP carton' and hard rejects a 'second commercial package'.",
+        "Role mismatch: The blueprint requires 'one integrated AFP carton at the far edge' within an elevated equipment still life context, not a loose roll with a separate box. The current image shows a loose roll and a separate box, violating the singular requirement.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 12% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the open cardboard box from the background. The composition must contain exactly one product (the white and blue drip tape roll) without any secondary packaging, boxes, or containers. Enlarge the product group from 12% to 18-38% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "review_unavailable": true,
+      "reasons": [
+        "visual reviewer unavailable after 3 retries: HTTPError"
+      ],
+      "correction_prompt": "Retry visual review of the preserved candidate without regenerating it.",
+      "attempt": 4
     }
   ]
 }
