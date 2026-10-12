@@ -1,0 +1,79 @@
+{
+  "source_id": "1290007001373-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 27,
+      "product_height_percent": 33,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "The image contains a second commercial package (an AFP cardboard box) positioned between the irrigation equipment and the drip-tape roll, which violates the 'exactly one AFP carton roll' and 'second commercial package' hard reject criteria.",
+        "Product bounding box estimated at ~27% width and ~33% height with x-center at ~63%."
+      ],
+      "correction_prompt": "Remove the cardboard AFP box completely. Keep only the single white-and-blue drip-tape roll on the concrete pad with the filter, gauges, and manifold. Do not add any other packaging, bottles, or containers.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 42,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The scene contains a blue bottle container (likely for chlorine or chemical additive) next to the filtration equipment. The hard reject criteria explicitly lists 'bottle' as a disqualifying element, even in the context of infrastructure.",
+        "The carton roll is wide and cylindrical, matching the required product shape.",
+        "No people or human body parts are present."
+      ],
+      "correction_prompt": "Remove the blue bottle container located near the pressure gauge and filter. Regenerate the scene to include only the filtration system (filter, gauge, manifold) and the AFP drip tape roll on the concrete pad, eliminating all commercial containers or bottles.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible on the right side",
+        "Watermark text is partially cut off on the right edge",
+        "Gibberish/illegible text on the main carton roll label"
+      ],
+      "correction_prompt": "Remove the cardboard box on the right. Ensure the watermark 'AFP | 09134922013' is fully visible and not cut off. Correct the text on the main roll to be legible and consistent with 'Drip Irrigation Tape'.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 20,
+      "product_height_percent": 28,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: Second commercial package present (AFP cardboard box in the right background).",
+        "Hard reject: The required exact bottom-right watermark 'AFP | 09134922013' is missing (image displays a different string: 'AFP | 091349220131')."
+      ],
+      "correction_prompt": "Regenerate by removing the cardboard box on the right to ensure only one AFP carton roll is present. Add the required watermark 'AFP | 09134922013' in the bottom right corner.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 19,
+      "product_height_percent": 24,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Hard reject: A second commercial package (cardboard box) with AFP branding is visible in the background, which violates the 'zero second commercial package' constraint.",
+        "Hard reject: The product shown is a loose spool/roll of tape rather than the mandated 'wide low cylindrical drip-tape carton roll'.",
+        "Hard reject: The 'elevated equipment still life' (sprayer tank with wheels) is a standalone piece of equipment not physically integrated or fixed as required by the blueprint.",
+        "Hard reject: The product's physical form does not match the 'carton roll' specification; it is an unboxed reel.",
+        "Hard reject: The layout features multiple commercial items (roll and box) instead of a single integrated carton at the far edge."
+      ],
+      "correction_prompt": "Regenerate with a single wide cylindrical AFP drip-tape roll (with the carton packaging still on). Place it at the far edge of a clean concrete pad. To the left, depict a wall-mounted filter, pressure gauge, and manifold (fixed hardware) with no rolling equipment. Remove the second cardboard box. Ensure the AFP | 09134922013 watermark remains in the bottom-right corner. No people.",
+      "attempt": 5
+    }
+  ]
+}

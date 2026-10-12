@@ -1,0 +1,37 @@
+{
+  "source_id": "1290004001375-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 20,
+      "product_height_percent": 25,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Hard reject: A second commercial package (the cardboard shipping box) is clearly visible behind the product roll, violating the zero-second-package rule.",
+        "The cardboard box also displays 'gibberish writing' rather than the required AFP branding, which is a hard reject condition."
+      ],
+      "correction_prompt": "Regenerate the image and completely remove the cardboard box. Ensure only the white and blue cylindrical drip-tape roll is present as the product on the concrete pad, eliminating any second commercial package or unreadable text.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 42,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The required bottom-right watermark 'AFP | 09134922013' is completely missing from the image.",
+        "The presence of a blue container on the left and an open carton on the right constitutes 'second commercial package' or 'container' hard rejects.",
+        "Product bounding box estimation is not feasible without the required brand watermark or due to the hard reject conditions present.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate to include the required watermark 'AFP | 09134922013' in the bottom-right. Remove the blue container and open carton to isolate the single wide cylindrical roll. Ensure the roll width is 18-38% and height is under 70% of the frame. Enlarge the product group from 0% to 18-38% of frame width.",
+      "attempt": 2
+    }
+  ]
+}

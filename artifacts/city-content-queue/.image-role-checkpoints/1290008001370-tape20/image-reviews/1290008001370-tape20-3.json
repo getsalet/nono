@@ -62,6 +62,48 @@
       ],
       "correction_prompt": "Remove the brown cardboard carton on the right and the coiled blue hose/tape on the cart to the left. Keep only the single white and blue cylindrical AFP drip-tape roll integrated with the filtration setup.",
       "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 23,
+      "product_height_percent": 32,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Second commercial package: An AFP cardboard carton box containing irrigation tape is clearly visible in the background to the right of the main product, which violates the strict 'one AFP carton roll' requirement and the rule against a 'second commercial package'.",
+        "Watermark text distortion: While the bottom-right watermark is present, the text appears rendered with a non-standard font and is partially obscured by the drop shadow effect. The text is legible but slightly garbled compared to the precise string 'AFP | 09134922013', which typically triggers a hard reject in automated pipelines for gibberish or illegible text."
+      ],
+      "correction_prompt": "Regenerate the image to strictly feature ONLY a single white and blue AFP drip-tape carton roll on the concrete pad. Completely remove the brown cardboard box in the background. Ensure the bottom-right watermark 'AFP | 09134922013' is rendered clearly and legibly without distortion or overlapping artifacts.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 16,
+      "product_height_percent": 25,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "The product is depicted as a roll with a visible center hole, which is physically impossible for a carton (the product is identified as a carton in the prompt).",
+        "The packaging lacks realistic structural details (seams, box shape) and appears as a generic cylindrical roll with a white label. There are no visible side flaps or box corners. The label also contains illegible, low-detail text on the sides. The requirement specifically calls for a 'wide low cylindrical drip-tape carton roll', but the visual is of a generic roll of tubing, not a box.",
+        "The prompt requires a 'carton' but the image shows a roll.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 16% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Replace the generic roll in the foreground with a white-and-blue wide, low, rectangular carton box containing a drip tape roll. Ensure the carton has visible box corners, seams, and printed text. Keep the water mark 'AFP | 09134922013' in the bottom right. Keep the concrete pad, filter, gauge, regulator, and manifold, and the open box with the logo in the background. Enlarge the product group from 16% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 42,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Hard reject: The image contains a second commercial package (a brown AF... carton box) to the right of the product roll, violating the 'exactly one roll' and 'zero second commercial package' rules.",
+        "Hard reject: The mandatory watermark text is garbled; it displays as 'AFP | 09134922013' instead of the required 'AFP | 09134922013'.",
+        "Layout conflict: The mandatory 'HEADWORKS DETAIL' blueprint requires the carton to be an integrated part of the elevated equipment stack. Here, it is placed loose on the concrete pad alongside a separate second box."
+      ],
+      "correction_prompt": "Regenerate the image. Remove the brown carton box on the right. Keep only the single white and blue cylindrical drip-tape roll. Integrate the roll into the headworks equipment stack (e.g., stacked behind the manifold) to satisfy the 'integrated AFP carton' requirement. Correct the bottom-right watermark text to exactly 'AFP | 09134922013'. Ensure no other people or bottles are present.",
+      "attempt": 3
     }
   ]
 }
