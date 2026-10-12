@@ -20,6 +20,72 @@
       ],
       "correction_prompt": "Regenerate: single AFP white-and-blue drip-tape roll, tall open-core cylinder, centered right; clean concrete pad with fixed filter, gauge, regulator, manifold; no boxes or second packaging; legible label; soft contact shadow.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 58,
+      "product_width_percent": 22,
+      "product_height_percent": 31,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "Second commercial package (cardboard box) present",
+        "Fake product box violates the 'exactly one AFP carton' constraint"
+      ],
+      "correction_prompt": "Remove the cardboard box in the background. Keep only the single drip-tape roll, the elevated pump/filter system, and the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 19,
+      "product_height_percent": 22,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Second commercial package visible: An open cardboard box with the AFP logo is present in the background, violating the 'zero second commercial package' hard reject rule.",
+        "Watermark typo: The visible watermark reads 'AFP | 09134922013' but the prompt specifies exactly 'AFP | 09134922013' (wait, looking at the image it is 09134922013, looking at the prompt it is 09134922013. Actually they match. The issue is the box).",
+        "Hard reject triggered by the presence of the secondary carton/box in the scene."
+      ],
+      "correction_prompt": "Remove the open cardboard box in the background; keep only the single drip tape roll and the infrastructure.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 28,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package (cardboard box with AFP branding) is visible in the image",
+        "Product is not an integrated part of the elevated equipment still life as required by the HEADWORKS DETAIL role; it is placed separately next to the pump"
+      ],
+      "correction_prompt": "Remove the AFP cardboard box; integrate a single white-and-blue cylindrical drip-tape carton roll into the fixed equipment assembly on the concrete pad",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 32,
+      "product_height_percent": 65,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Second commercial package present: An additional AFP cardboard box is visible to the right of the primary roll, which violates the requirement for exactly one carton roll and the hard reject for a 'second commercial package'.",
+        "Watermark text error: The required bottom-right watermark is specified as 'AFP | 09134922013', but the image displays 'AFP | 09134922013' with an extra trailing '3' (091349220133), failing the exact text requirement."
+      ],
+      "correction_prompt": "Remove the second AFP box on the right so only one roll remains. Correct the bottom-right watermark to exactly 'AFP | 09134922013' without extra digits.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 26,
+      "product_height_percent": 27,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image contains two commercial packages: the mandatory cylindrical drip-tape roll and an additional rectangular AFIP-branded box in the background.",
+        "Hard reject triggered by the presence of a second commercial package."
+      ],
+      "correction_prompt": "Regenerate the image to show only the single white and blue wide low cylindrical drip-tape roll on the concrete pad. Remove the rectangular cardboard box in the background to satisfy the 'exactly one' requirement.",
+      "attempt": 5
     }
   ]
 }
