@@ -4,16 +4,19 @@
   "history": [
     {
       "pass": false,
-      "score": 65,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 fails because the camera angle is low-level (eye-level) rather than the required wide elevated view",
-        "Role 2 fails because the image is eye-level rather than the required steep near-overhead technical still life",
-        "Role 3 fails to meet the 'far edge' requirement; the coals dominate the foreground and center instead of sitting at the far edge of the concrete pad"
+      "score": 30,
+      "duplicate_roles": [
+        3
       ],
-      "correction_prompt": "Regenerate: Role 1 (high-angle drone view showing field horizon), Role 2 (90-degree bird's-eye view looking straight down on the soil), Role 3 (foreground pump setup with coils strictly placed at the far edge of the pad).",
+      "reasons": [
+        "Role 3 is physically implausible: the equipment still life contains background machinery (tractors), which violates the requirement for a clean concrete pad.",
+        "Role 3 is missing mandatory technical evidence: the panel shows only coils, lacking the required fixed pump, gauge, regulator, and manifold that must dominate the foreground.",
+        "Role 2 is not steep: the camera angle is at a low eye level, failing to provide the requested near-overhead technical 'selection evidence' view.",
+        "Role 3 is missing approved product identity: the required AFP watermark is absent."
+      ],
+      "correction_prompt": "Replace Role 2 with a steep overhead technical still life of the two coils and one connector. Replace Role 3 with an elevated still life on a clean concrete pad featuring a complete fixed pump, gauge, and manifold with the coils at the far edge, ensuring the AFP watermark is present.",
       "panel_scores": [
-        65
+        30
       ],
       "set_attempt": 1
     }

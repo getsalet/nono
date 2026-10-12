@@ -1,0 +1,79 @@
+{
+  "source_id": "1290002002725-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 33,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Second commercial package (cardboard box) present in frame",
+        "Mandatory role requirement of 'one' integrated AFP carton is violated by the additional box"
+      ],
+      "correction_prompt": "Regenerate the image showing only the single white and blue cylindrical drip-tape roll as the commercial product. Completely remove the cardboard box in the background. Ensure the bottom-right watermark 'AFP | 09134922013' remains visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 27,
+      "product_height_percent": 32,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Visible second commercial package (drip tape cardboard box) in the background",
+        "Visible uncontained rolled hose (black loops) on the concrete pad",
+        "Missing required exact bottom-right watermark: 'AFP | 09134922013'",
+        "Missing required AFP white-and-blue wide low cylindrical roll (only black hose roll visible)"
+      ],
+      "correction_prompt": "Replace the background cardboard box with open empty space; remove the black coiled hose on the concrete pad; add the exact bottom-right watermark 'AFP | 09134922013'; place one AFP white-and-blue wide low cylindrical drip-tape carton roll at the far edge of the concrete pad, ensuring physical contact shadow and matching perspective.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 40,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Presence of a second commercial package (cardboard box) which is a hard reject.",
+        "Product bounding box height (~40%) is below the mandatory minimum width/height ratio requirement (width 18-38% requires height up to 70%, but in this aspect ratio the object is too small relative to the frame height constraint).",
+        "The required white-and-blue wide low cylindrical drip-tape carton roll is present, but the additional box and scale issues trigger a reject."
+      ],
+      "correction_prompt": "Remove the cardboard box completely. Regenerate the AFP drip tape roll to be significantly larger, ensuring its height occupies at least 50 percent of the image height while maintaining a wide, low cylindrical shape (width 18-38 percent). Keep the concrete pad, background farm, and infrastructure, but ensure only the single roll is visible as the product.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 26,
+      "product_height_percent": 55,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Hard reject: presence of a second commercial package (the brown cardboard box labeled 'AFP' to the right of the roll).",
+        "Ambiguity in 'single integrated AFP carton': The image shows a core-wrap roll, but the prompt likely expects the roll itself to be presented as the primary single unit. The extra box is a definitive rule violation.",
+        "Watermark is present and correct."
+      ],
+      "correction_prompt": "Regenerate the image completely removing the second cardboard box on the right side. Ensure only the single white and blue AFP drip tape roll remains on the concrete pad next to the irrigation equipment.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "A second open commercial carton (brown box) is visible behind the product, which is a hard reject trigger.",
+        "The required bottom-right watermark is incorrect: it reads 'AFP | 09134922013' instead of the required 'AFP | 09134922013'.",
+        "The product dimensions are valid (width ~28%, height ~42%), but the presence of extraneous commercial packaging and the watermark typo prevent a pass."
+      ],
+      "correction_prompt": "Remove the open brown carton behind the roll. Ensure the bottom-right watermark is exactly 'AFP | 09134922013'.",
+      "attempt": 5
+    }
+  ]
+}

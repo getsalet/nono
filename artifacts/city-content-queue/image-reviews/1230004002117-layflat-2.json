@@ -1,0 +1,55 @@
+{
+  "source_id": "1230004002117-layflat",
+  "family": "layflat",
+  "kind": 2,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 15,
+      "product_width_percent": 88,
+      "product_height_percent": 50,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject due to the presence of a human figure (legs/feet) visible in the background, which violates the requirement for zero people or human body parts.",
+        "The combined width of the two coils spans nearly the entire frame (approx. 88%), exceeding the 82% maximum limit for this role.",
+        "The image fails the mandatory 'SELECTION EVIDENCE' role blueprint, which requires a steep near-overhead technical still life showing only the two-coil pair and a connector/diameter cue, without background context or figures.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 88% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Regenerate as a steep near-overhead technical still life of the approved layflat pair (one packaged AFP coil and one bare black woven coil) and one connector on textured soil. Remove all people, human silhouettes, and background figures. Ensure the combined product width is less than 82% of the frame. Keep the bottom-right watermark 'AFP | 09134922013'. Reduce the product group from 88% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 48,
+      "product_height_percent": 42,
+      "product_x_center_percent": 52,
+      "reasons": [
+        "Missing required 'one connector or diameter cue' as specified in the SELECTION EVIDENCE role blueprint.",
+        "Missing mandated bottom-right watermark 'AFP | 09134922013'.",
+        "Left object is a bulk octagonal bag (not the 'packaged AFP coil' specified in the approved layflat pair)."
+      ],
+      "correction_prompt": "Regenerate to strictly show one packaged AFP coil and one bare black woven coil, include one visible connector or diameter cue, and add the mandatory bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 75,
+      "product_height_percent": 45,
+      "product_x_center_percent": 45,
+      "reasons": [
+        "Required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "Image contains exactly two products: one packaged AFP coil and one bare black woven coil; no third commercial products detected.",
+        "Zero people or human body parts visible.",
+        "Objects are physically plausible, fully visible, and separate with realistic contact shadows.",
+        "Product bounding box width (~75%) falls within the approved 25-82% envelope.",
+        "Scene texture (soil) and background (distant crops) are consistent with the 'SELECTION EVIDENCE' role blueprint without requiring specific regional architecture."
+      ],
+      "correction_prompt": "",
+      "attempt": 1
+    }
+  ]
+}
