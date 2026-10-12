@@ -7,59 +7,71 @@
   "history": [
     {
       "pass": false,
-      "score": 55,
-      "product_width_percent": 25,
-      "product_height_percent": 35,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 38,
       "product_x_center_percent": 65,
       "reasons": [
-        "Hard reject: Second commercial package (box) present in the background."
+        "Second commercial package (brown 'Ryto' carton) visible in the background on the right side.",
+        "The 'Ryto' carton violates the constraint of containing zero extra commercial packages or second rolls.",
+        "The AFP carton contains slightly distorted/gibberish sub-text ('Drip Irrigatin Tape') though the main logo is legible."
       ],
-      "correction_prompt": "Remove the cardboard box on the right to ensure only one AFP roll and infrastructure equipment are visible.",
+      "correction_prompt": "Remove the brown 'Ryto' carton from the background completely. Keep the AFP white and blue drip tape roll and the filtration unit on the concrete pad. Ensure the AFP carton text is clean and legible. Maintain the bottom-right watermark.",
       "attempt": 1
     },
     {
       "pass": false,
-      "score": 20,
-      "product_width_percent": 27,
-      "product_height_percent": 45,
-      "product_x_center_percent": 67,
+      "score": 55,
+      "product_width_percent": 30,
+      "product_height_percent": 50,
+      "product_x_center_percent": 48,
       "reasons": [
-        "The image contains a second commercial package (an open cardboard box with a black roll inside), which is a hard reject.",
-        "There is a second roll (black) visible inside the box, violating the 'exactly one roll' constraint.",
-        "The required exact watermark 'AFP | 09134922013' is missing; instead, there is a different watermark 'AFP | 09134922013' which does not match the specific string required in the instructions."
+        "The image contains a second commercial package (a box/crate labeled AFP) in the background, which violates the 'second commercial package' hard reject rule.",
+        "The mandatory role (image role 3) describes a 'HEADWORKS DETAIL' showing a filter integrated with a gauge and manifold. The image instead shows a pressure regulator on a stand, which is a mismatch with the specific role blueprint."
       ],
-      "correction_prompt": "Remove the open cardboard box and the black roll inside it. Ensure only the single white-and-blue AFP drip tape roll is visible. Replace the current bottom-right watermark with the exact text 'AFP | 09134922013'.",
+      "correction_prompt": "Remove the AFP box in the background. Rearrange the equipment to show a filter head integrated with a pressure gauge and regulator manifold, matching the 'HEADWORKS DETAIL' role. Keep the single drip tape roll in the foreground.",
       "attempt": 2
     },
     {
       "pass": false,
-      "score": 10,
-      "product_width_percent": 22.5,
-      "product_height_percent": 38,
-      "product_x_center_percent": 67,
+      "score": 58,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 68,
       "reasons": [
-        "Multiple commercial packages/boxes are visible in the background, violating the 'exactly one AFP carton' requirement.",
-        "Layflat hose and pipe are visible (connected to the filter and lying on the pad), which are hard rejects."
+        "Text on the product carton is gibberish (e.g., 'Ivlgaien'), which is a hard reject criterion.",
+        "The scene contains two commercial packaging items (a second brown box in the background), whereas the brief specifies exactly one carton roll."
       ],
-      "correction_prompt": "Remove all background boxes, remove the black hose and pipe from the foreground and background. Ensure exactly one AFP white-and-blue drip-tape carton is visible. Maintain the fixed filter and gauges.",
+      "correction_prompt": "Regenerate the image with only one AFP carton roll; remove the distant background box and ensure all text on the carton (brand name and product description) is clearly legible and spelled correctly.",
       "attempt": 3
     },
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 24,
-      "product_height_percent": 32,
-      "product_x_center_percent": 63,
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 26,
+      "product_height_percent": 48,
+      "product_x_center_percent": 58,
       "reasons": [
-        "Exact image role 'HEADWORKS DETAIL' satisfied: elevated equipment still life on concrete pad with fixed filter/gauge/regulator/manifold.",
-        "Correct product: one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
-        "Required watermark 'AFP | 09134922013' is present and correctly formatted.",
-        "No visible people or body parts.",
-        "Product is physically integrated with a correct contact shadow and plausible perspective.",
-        "Background context (soil, crop rows, distant building, unattended equipment) is appropriate and not a hard reject."
+        "The mandatory 'HEADWORKS DETAIL' role was not followed; the roll is resting on the ground instead of being an integrated still-life element on an elevated equipment pad.",
+        "Text on the product carton is in gibberish/illegible English (reads 'Irrigaeten Taja' instead of 'Irrigation Tape'),",
+        "The watermark 'AFP | 09134922013' is missing from the image.",
+        "A second unopened commercial package (white box) is visible in the background, violating the 'exactly one carton roll' constraint."
       ],
-      "correction_prompt": "",
+      "correction_prompt": "Regenerate image to match HEADWORKS DETAIL role: place the AFP white-and-blue wide cylindrical drip-tape roll on an elevated concrete pad integrated with fixed irrigation equipment (filter, pressure gauge, regulator). Ensure the carton label text clearly reads 'Drip Irrigation Tape'. Remove the second white box from the background. Add the exact bottom-right watermark 'AFP | 09134922013'. Ensure no people are visible.",
       "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 24,
+      "product_height_percent": 28,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Second commercial package present (cardboard box)",
+        "Watermark contains gibberish/incorrect digits ('09134922013' instead of '09134922013')"
+      ],
+      "correction_prompt": "Remove the cardboard box on the right. Ensure the watermark text is exactly 'AFP | 09134922013'.",
+      "attempt": 5
     }
   ]
 }

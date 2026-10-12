@@ -7,16 +7,49 @@
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "product_width_percent": 26,
-      "product_height_percent": 45,
-      "product_x_center_percent": 65,
+      "score": 25,
+      "product_width_percent": 12,
+      "product_height_percent": 18,
+      "product_x_center_percent": 45,
       "reasons": [
-        "Text on the product carton is gibberish (reads 'Drtp' and 'Tas') which triggers a hard reject for fake/gibberish writing.",
-        "The required 'AFP' logo at the bottom right is completely missing, replaced by 'AFP | 09134922013' (note the phone number format)."
+        "Violation of 'exactly one roll' constraint: The image contains three roll objects (the main carton, a white roll in the mid-ground, and a roll in the background)",
+        "Violation of 'single integrated carton' role: The main roll is a separate white carton rather than the integrated brown AFP carton specified in the role blueprint",
+        "Missing required content: The white-and-blue wide low cylindrical drip-tape carton roll required by the image spec is absent",
+        "Visible gibberish text on the background brown carton",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 12% to 18-38% of frame width."
       ],
-      "correction_prompt": "Regenerate the image. Replace the gibberish text on the carton with 'Drip Irrigation Tape'. Add the required watermark 'AFP' exactly at the bottom right corner. Remove the phone number from the watermark.",
+      "correction_prompt": "Regenerate to show exactly one wide low cylindrical drip-tape carton roll in white and blue, integrated with the brown AFP carton branding on the same object. Remove all other background rolls and independent cartons. Maintain a steep near-overhead technical still life on dark soil with a straight drip-tape segment and repeated emitters. Ensure the bottom-right watermark 'AFP | 09134922013' remains visible. Enlarge the product group from 12% to 18-38% of frame width.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 21,
+      "product_height_percent": 35,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Product bounding box height and width are within the acceptable envelope, but the roll is standing upright rather than lying horizontally, violating the requirement for a wide low cylindrical carton roll.",
+        "The image lacks the required bottom-right watermark 'AFP | 09134922013'."
+      ],
+      "correction_prompt": "Generate a strict horizontal, wide low cylindrical drip-tape carton roll lying flat on dark soil. Ensure the roll is integrated with a straight drip-tape segment showing repeated emitter points. Add the exact watermark 'AFP | 09134922013' in the bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Contains exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll with correct branding.",
+        "Physical dimensions are well within the 18-38% width and <70% height limits.",
+        "Includes one straight drip-tape segment showing repeated emitter points on dark soil.",
+        "Zero people, human body parts, or silhouettes are visible.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present.",
+        "Product is integrated naturally with no pasted/cutout appearance and features a clear contact shadow."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
     }
   ]
 }

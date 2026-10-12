@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-12T13:18:48+00:00`
+- آخرین بروزرسانی: `2026-10-12T13:37:52+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1080 از 1894 (57.02٪)**
-- تکمیل‌شده: **1080**
+- پیشرفت: **1085 از 1894 (57.29٪)**
+- تکمیل‌شده: **1085**
 - در حال پردازش: **0**
-- در انتظار: **154**
-- آماده انتخاب در اجرای بعدی: **154**
+- در انتظار: **147**
+- آماده انتخاب در اجرای بعدی: **147**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **660**
+- ناموفق: **662**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,11 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **فشم** — تهران — `tape20` — 1524 کلمه — `2026-10-12T13:28:57+00:00`
+- **عنبران** — اردبیل — `tape20` — 1263 کلمه — `2026-10-12T13:26:59+00:00`
+- **کهریزک** — تهران — `tape20` — 1367 کلمه — `2026-10-12T13:25:19+00:00`
+- **النی** — اردبیل — `tape20` — 1698 کلمه — `2026-10-12T13:25:16+00:00`
+- **بومهن** — تهران — `tape20` — 1654 کلمه — `2026-10-12T13:24:52+00:00`
 - **کلور** — اردبیل — `tape20` — 1260 کلمه — `2026-10-12T13:16:46+00:00`
 - **قرچک** — تهران — `tape20` — 1382 کلمه — `2026-10-12T13:15:56+00:00`
 - **تجریش** — تهران — `tape20` — 1320 کلمه — `2026-10-12T13:07:11+00:00`
@@ -47,24 +52,19 @@
 - **میناب** — هرمزگان — `tape20` — 1190 کلمه — `2026-10-11T06:50:15+00:00`
 - **تیرور** — هرمزگان — `layflat` — 1874 کلمه — `2026-10-11T06:49:10+00:00`
 - **سندرک** — هرمزگان — `tape20` — 1460 کلمه — `2026-10-11T06:48:47+00:00`
-- **لافت** — هرمزگان — `tape20` — 1427 کلمه — `2026-10-11T05:46:52+00:00`
-- **تیرور** — هرمزگان — `tape20` — 1630 کلمه — `2026-10-11T05:43:11+00:00`
-- **قشم** — هرمزگان — `tape20` — 1289 کلمه — `2026-10-11T05:42:17+00:00`
-- **سوزا** — هرمزگان — `layflat` — 1676 کلمه — `2026-10-11T04:45:07+00:00`
-- **سوزا** — هرمزگان — `tape20` — 1465 کلمه — `2026-10-11T04:42:42+00:00`
 
 ## خطاهای اخیر
 
-- **جعفرآباد** — `tape20`: `Editorial review failed: internal link count must equal minimum`
-- **ثمرین** — `tape20`: `Editorial review failed: internal link count must equal minimum; blocked utility link`
-- **جوادآباد** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012131600842574922bXkr6Q4G)","type":"AgnesAI_error"}}`
-- **دماوند** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012131544369775888Ii8I2NMC)","type":"AgnesAI_error"}}`
-- **نصیرشهر** — `tape20`: `HTTP Error 401: Unauthorized`
-- **لواسان** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012131524724181182HbjM2J5X)","type":"AgnesAI_error"}}`
-- **سعیداباد** — `tape20`: `HTTP Error 401: Unauthorized`
-- **کهریزک** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 2026101213150535696999dBnA3OHr)","type":"AgnesAI_error"}}`
-- **چهاردانگه** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 2026101213145086610682jfURZBfq)","type":"AgnesAI_error"}}`
-- **پاکدشت** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 2026101213143763321618PMZ4qUA5)","type":"AgnesAI_error"}}`
+- **پردیس** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012133731767819774uThMrBp3)","type":"AgnesAI_error"}}`
+- **مرادلو** — `tape20`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 202610121328464021594869IUtJoXP)","type":"AgnesAI_error"}}`
+- **لواسان** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **اولتان** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 202610121328424803101558koreH38)","type":"AgnesAI_error"}}`
+- **آبعلی** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 202610121327431216773978yRHYNfa)","type":"AgnesAI_error"}}`
+- **پاکدشت** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 2026101213270975244361U5sOkkui)","type":"AgnesAI_error"}}`
+- **چهاردانگه** — `layflat`: `Editorial review failed: internal link count must equal minimum`
+- **کوراییم** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 202610121326273279384046OUdrmll)","type":"AgnesAI_error"}}`
+- **صفادشت** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012132532106017409ezQSkXFZ)","type":"AgnesAI_error"}}`
+- **فخراباد** — `tape20`: `HTTP Error 403: Forbidden`
 
 ## فایل‌های خروجی
 

@@ -1,0 +1,88 @@
+{
+  "source_id": "1230004001582-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 18,
+      "product_height_percent": 38,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (cardboard box) visible in the background"
+      ],
+      "correction_prompt": "Remove the large cardboard box on the right; show only the white-and-blue drip-tape carton roll on the concrete pad with the pump/filter/gauge/rails; keep watermark at bottom-right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Second commercial package (brown AFP carton) is present in the scene, violating the hard reject rule against multiple commercial packages.",
+        "The AFP roll appears to be a coiled hose or layflat pipe rather than a cylindrical drip-tape carton roll; the texture and sheen suggest water pipe."
+      ],
+      "correction_prompt": "Remove the brown cardboard carton in the background and ensure the foreground AFP roll is explicitly rendered as a cardboard carton roll for drip tape, not a plastic hose or pipe.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 31,
+      "product_height_percent": 25,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Second commercial package (large brown carton) is visible in the background.",
+        "Watermark text is incorrect; it reads '09134922013' but must be '09134922013' (actually the reference string in the prompt was 'AFP | 09134922013' which matches, but wait, looking closely at the crop images and the main image, the last digit is ambiguous. However, the presence of the second package is a definite hard reject)."
+      ],
+      "correction_prompt": "Remove the large brown AFP carton in the background. Keep only the white and blue drip tape roll, the equipment cart, and the background scenery. Ensure the watermark reads exactly 'AFP | 09134922013'.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 35,
+      "product_height_percent": 50,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Second commercial package (brown AFP carton) is visible",
+        "Roll height is 50%, significantly exceeding the 38% width constraint and looking disproportionately tall for a wide drip tape roll"
+      ],
+      "correction_prompt": "Remove the brown AFP carton box on the right. Reduce the height of the white drip tape roll to approximately 35% of the image height to match realistic drip tape proportions, ensuring height is strictly less than width.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Presence of a second commercial package (open cardboard box) in the background violates the rule against 'second commercial package'.",
+        "Visible gibberish/illegible writing on the front label of the product roll ('irrigation Tap' is cut off/nonsensical) constitutes a hard reject."
+      ],
+      "correction_prompt": "Remove the open cardboard box from the background completely. Redraw the product roll label to ensure all text is sharp, legible, and spells 'Drip Irrigation Tape' clearly without cutoffs. Maintain the single white-and-blue roll, elevated equipment still life, and required watermark.",
+      "attempt": 5
+    },
+    {
+      "pass": true,
+      "score": 85,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 71,
+      "reasons": [
+        "Image successfully executes the 'HEADWORKS DETAIL' role blueprint, featuring the roll on a clean concrete pad alongside fixed infrastructure (filter, gauge, manifold).",
+        "The product is a single white-and-blue cylindrical carton roll that is physically plausible and integrated with a contact shadow.",
+        "Zero people or human body parts are visible.",
+        "The 'AFP | 09134922013' watermark is present in the bottom right as required."
+      ],
+      "correction_prompt": "",
+      "attempt": 1
+    }
+  ]
+}
