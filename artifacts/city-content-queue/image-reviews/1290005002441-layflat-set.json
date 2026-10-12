@@ -4,36 +4,39 @@
   "history": [
     {
       "pass": false,
-      "score": 35,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 3 fails: image displays a concrete pad but lacks the required equipment still life elements (pump, gauge, manifold). It is instead dominated by a large blue tractor and a red tanker trailer.",
-        "Role 3 fails: the required 'integrated two-coil pair' is not placed at the far edge of the concrete pad; instead, two coils are placed in the foreground.",
-        "Role 3 fails: the image introduces unauthorized, extra commercial products (tractor and tanker trailer) and features visible living subjects (an operator in the tractor).",
-        "Role 1 and Role 2 are extremely similar in camera angle, scale, and subject framing (low-angle shot of the two coils on soil), lacking the required distinction between a 'wide elevated' hero view and a 'steep near-overhead' technical still life."
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Regenerate Role 3: create a still life on a clean concrete pad featuring a fixed pump, gauge, and manifold in the foreground; place the two coils at the far edge and remove the tractor and operator. Regenerate Role 1 to be a wide elevated view and Role 2 to be a steep near-overhead view.",
+      "reasons": [
+        "Role 1 and Role 2 are near-duplicates: both use a low-angle, horizontal soil perspective rather than the required distinct camera heights.",
+        "Role 1 fails to meet the 'wide elevated' view requirement; the horizon is level with the subject and the field view is not sufficiently broad.",
+        "Role 2 fails to meet the 'steep near-overhead' perspective requirement; it uses a low, ground-level camera angle identical to Role 1.",
+        "Role 3 does not feature the mandatory 'complete fixed filter, gauge, regulator and manifold'; instead, it features a large tractor and generic barrels, which conflicts with the strict still-life specification."
+      ],
+      "correction_prompt": "Regenerate Role 1 as a high wide-angle elevated shot of the field; regenerate Role 2 as a steep top-down macro soil shot; replace the tractor in Role 3 with a professional fixed pump assembly featuring a filter and gauge.",
       "panel_scores": [
-        35
+        40
       ],
       "set_attempt": 1
     },
     {
       "pass": false,
-      "score": 45,
+      "score": 65,
       "duplicate_roles": [
         1,
-        2,
-        3
+        2
       ],
       "reasons": [
-        "Role 3 misses mandatory narrative: the concrete pad scene shows a blue tractor rather than the required fixed filter, gauge, regulator, and manifold. The coil pair is not the dominant equipment on a clean pad, which breaks Role 3’s required camera height, surface, and technical narrative.",
-        "The three panels share near-duplicate camera and environment structure: all are static, ground-level still lifes of the same packaged coil plus bare woven coil on similar field soil (with the tractor only appearing in the background of Role 3). They fail to make the roles clearly distinct as a wide elevated field view, a steep near-overhead soil layout, and an elevated concrete-pad equipment still life.",
-        "Required Role 2 evidence is incomplete: the near-overhead technical layout does not show the specified connector or diameter cue, leaving selection evidence missing."
+        "Role 1 is not a wide elevated view; it is a ground-level perspective shot within the field.",
+        "Role 2 is not a steep near-overhead technical still life; it is a standard angled perspective shot on soil.",
+        "Role 3 fails to include the mandatory fixed pump, gauge, and manifold, showing instead a tractor.",
+        "The integrated product pair is not physically integrated but shown as separate loose items."
       ],
-      "correction_prompt": "Make Role 1 a wide elevated water-transfer field view with both coils in the lower third; make Role 2 a steep near-overhead soil layout adding one visible connector or diameter cue; and replace Role 3’s tractor with a clean concrete pad dominated by a fixed filter, gauge, regulator, and manifold with the coil pair at the far edge.",
+      "correction_prompt": "Generate Role 1 as a high wide-angle shot of the field with products placed together on the ground; Role 2 as a top-down technical layout on soil showing connector details; and Role 3 on a concrete pad featuring a fixed pump, gauge, and manifold unit.",
       "panel_scores": [
-        45
+        65
       ],
       "set_attempt": 2
     }
