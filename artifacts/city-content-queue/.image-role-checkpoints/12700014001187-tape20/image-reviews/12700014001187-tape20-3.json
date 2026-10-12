@@ -44,6 +44,73 @@
       ],
       "correction_prompt": "Remove the brown AFP cardboard box and any secondary rolls behind the main product to leave exactly one roll. Replace the mobile cart/wagon with a fixed irrigation manifold, pressure gauge, and inline filter assembly on the concrete pad, creating a still-life headworks setup.",
       "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 48,
+      "product_width_percent": 28,
+      "product_height_percent": 42,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Critical violation: Image contains two commercial packages (one roll and one carton box), hard reject rule requires exactly one.",
+        "Text anomaly: Product labeling displays 'Irrigatina Tapy' which matches the 'gibberish writing' hard reject criteria.",
+        "Role conflict: 'Headworks Detail' role blueprint mandates the carton be at the far edge; current composition places it adjacent in the mid-ground."
+      ],
+      "correction_prompt": "Generate a single AFP drip-tape roll on a concrete pad with pressure gauges, filter, and regulator. Remove the cardboard box completely. Fix label text to standard English. Ensure the watermark 'AFP | 09134922013' is present in the bottom right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Multiple commercial packages are present (two large brown cartons with 'AFP' branding), which violates the 'exactly one carton' requirement.",
+        "The required exact bottom-right watermark is missing; the text 'AFP | 09134922013' is present in the bottom-right corner but lacks the specific '091349' code format required by the prompt."
+      ],
+      "correction_prompt": "Remove the two brown cartons. Add the exact text watermark 'AFP | 09134922013' to the bottom-right corner.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 20,
+      "product_height_percent": 30,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image contains a second commercial package (the open brown AFP cardboard box to the right of the roll), which is a hard reject.",
+        "The layout is inverted relative to the mandatory role blueprint: the roll is in the center/foreground while the equipment (filter, gauge, regulator) is on the left, rather than the roll being at the far edge."
+      ],
+      "correction_prompt": "Regenerate the image to remove the brown cardboard box entirely. Re-compose the scene so the white-and-blue drip tape roll is placed at the far right edge of the concrete pad, while the filtration equipment (filter, gauges, manifold) is positioned in the foreground to its left.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package (cardboard carton) is visible to the right of the roll, which is a hard reject. The brief specifies exactly one roll."
+      ],
+      "correction_prompt": "Regenerate the image to include only the single white-and-blue drip-tape roll and the irrigation equipment (gauge, filter, manifold). Remove the cardboard carton to ensure only one commercial package is present.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Contains a second commercial package (cardboard box) to the right, which is a hard reject",
+        "Text on the product carton is gibberish and illegible",
+        "Required watermark text is '09134922013' but the image displays '09134922013' with a mismatched format/prefix",
+        "Multiple coiled hoses and pump infrastructure violate the 'single integrated product' mandate for the image role"
+      ],
+      "correction_prompt": "Remove the cardboard box and coiled hoses. Leave only the single drip-tape carton on the concrete pad. Add a clear, legible 'AFP' brand label. Replace the watermark text with exactly 'AFP | 09134922013'.",
+      "attempt": 5
     }
   ]
 }

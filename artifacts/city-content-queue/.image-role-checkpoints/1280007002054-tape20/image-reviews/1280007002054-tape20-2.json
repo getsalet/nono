@@ -1,0 +1,55 @@
+{
+  "source_id": "1280007002054-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: Presence of a second commercial package (the cube-shaped box on the left).",
+        "Hard reject: Presence of a second roll/container (the cube box acts as a secondary object alongside the main cylindrical roll).",
+        "The role blueprint specifies 'one integrated AFP carton and one straight drip-tape segment', but the cube box disrupts the clean integration of the main cylinder with the tape."
+      ],
+      "correction_prompt": "Remove the cube-shaped box on the left. Show only the cylindrical drip-tape roll and the straight segment of drip tape extending from it on the soil. Keep the watermark 'AFP | 09134922013' in the bottom right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 17,
+      "product_height_percent": 35,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Multiple commercial packages present (carton box and tape roll).",
+        "Image shows two distinct products rather than the single integrated roll and tape segment required by the role blueprint.",
+        "Gibberish text on the packaging labels.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 17% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the carton box entirely. Show only one AFP drip-tape roll and one straight segment of the tape with repeated emitter points. Fix packaging text to be legible and non-gibberish. Maintain the near-overhead technical still life perspective on dark soil. Enlarge the product group from 17% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 26,
+      "product_height_percent": 46,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "The product is a single AFP wide low cylindrical drip-tape carton roll, matching the white-and-blue packaging and low cylindrical shape.",
+        "The product is physically plausible with a correct contact shadow on the dark soil and no pasted/cutout appearance.",
+        "The required straight drip-tape segment with repeated emitter points is clearly visible in the foreground, satisfying the mandatory selection evidence role blueprint.",
+        "The bottom-right watermark is present and correctly formatted.",
+        "The image contains zero people or human body parts, zero prohibited containers or extra commercial packages.",
+        "Placement is off-center to the right but not a hard reject, and proportions are within the approved width and height envelopes."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
