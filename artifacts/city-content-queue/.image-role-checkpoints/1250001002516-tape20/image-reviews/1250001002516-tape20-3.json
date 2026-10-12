@@ -1,0 +1,38 @@
+{
+  "source_id": "1250001002516-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 45,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Role Blueprint Violation: The mandatory role 'HEADWORKS DETAIL' requires one integrated AFP carton at the far edge, but the image contains two AFP packages (one open carton box and one closed roll).",
+        "Hard Reject: Presence of a second commercial package (the open AFP carton box).",
+        "Hard Reject: Presence of a second roll (the closed white roll in the foreground).",
+        "Prohibited Object: The pump unit on the left features a transparent white cylindrical vessel/bottle, which violates the 'zero bottle/container' rule."
+      ],
+      "correction_prompt": "Regenerate image showing ONLY a single AFP wide low cylindrical drip-tape roll. Remove the open carton box. Remove the wheeled pump unit and its container bottle. Keep the fixed filter, pressure gauge, and regulator on the concrete pad. Ensure one commercial package total.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 24,
+      "product_height_percent": 45,
+      "product_x_center_percent": 58,
+      "reasons": [
+        "Presence of a second commercial package (brown carton box) and a loose unattached gauge, violating the zero-extra-package and no-hardware-props rule.",
+        "The drip tape is not shown on the roll, which is a fundamental feature of the 'drip-tape carton roll' description.",
+        "The 'Drip Irrigation Tape' text on the primary roll is rendered as gibberish/low-quality, which is a hard reject."
+      ],
+      "correction_prompt": "Regenerate showing only a single white-and-blue AFP drip-tape roll on a concrete pad. Integrate the fixed infrastructure (filter, gauge, manifold) as a separate unit or cleanly behind the roll without a loose secondary carton box. Ensure the tape is clearly visible coiled on the roll and all typography is crisp and legible.",
+      "attempt": 2
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "source_id": "1240006001032-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: A second commercial package (brown carton) is visible in the background next to the main roll",
+        "Product appearance: The roll is a solid cylindrical roll, not the specific 'wide low' cylindrical carton roll required",
+        "Hard reject: 'Drip Irrigation Tape' text on the roll is partially cut off/cut away in this crop, affecting readability",
+        "Watermark/Labeling mismatch: The label reads 'Drip' (likely for tape) while the requirement is for a specific wide low carton roll which implies tape, but the second box creates a redundant commercial packaging violation"
+      ],
+      "correction_prompt": "Remove the brown cardboard box from the background to ensure there is only one product item. Modify the foreground white roll to be a wider, shorter, low-profile cylindrical shape. Ensure the 'Drip Irrigation Tape' text on the roll is fully legible and not truncated.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 27,
+      "product_height_percent": 31,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Presence of a second commercial package (cardboard box) which is a hard reject",
+        "Image role must show exactly one product, the extra packaging violates the blueprint"
+      ],
+      "correction_prompt": "Remove the cardboard box in the background, retaining only the single drip tape roll and the fixed irrigation infrastructure on the concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 84,
+      "product_width_percent": 22,
+      "product_height_percent": 33,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Product is within width and height tolerance",
+        "Zero people or body parts present",
+        "Fixed infrastructure elements (filter, gauges, manifold) visible",
+        "Required watermark present in bottom-right corner"
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
