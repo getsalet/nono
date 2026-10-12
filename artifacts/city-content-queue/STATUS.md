@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-12T18:51:15+00:00`
+- آخرین بروزرسانی: `2026-10-12T19:44:24+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **1145 از 1894 (60.45٪)**
 - تکمیل‌شده: **1145**
@@ -55,16 +55,16 @@
 
 ## خطاهای اخیر
 
-- **زهان** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012185112258206772LITyK5X9)","type":"AgnesAI_error"}}`
-- **اشتهارد** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012184935435288545JieMTKpe)","type":"AgnesAI_error"}}`
-- **کوراییم** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012184841343442428t71a6ST7)","type":"AgnesAI_error"}}`
-- **آیسک** — `layflat`: `HTTP Error 403: Forbidden`
-- **هشتگرد** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012184832579167407dRsvYEv)","type":"AgnesAI_error"}}`
-- **طبس** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012184810345717862boDRgeRe)","type":"AgnesAI_error"}}`
-- **بیرجند** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 202610121848067530957792F0F5xtD)","type":"AgnesAI_error"}}`
-- **کوهسار** — `layflat`: `HTTP Error 403: Forbidden`
-- **قصابه** — `layflat`: `HTTP Error 401: Unauthorized`
-- **نهبندان** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012184733215942674FhC9LbK7)","type":"AgnesAI_error"}}`
+- **هشتگرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **بشرویه** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012194235316471575qrrghAw9)","type":"AgnesAI_error"}}`
+- **بیرجند** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012194217684898155b1BQqOx3)","type":"AgnesAI_error"}}`
+- **کوراییم** — `layflat`: `HTTP Error 401: Unauthorized`
+- **زهان** — `layflat`: `HTTP Error 403: Forbidden`
+- **حصارگرمخان** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012194039890678120MfCyLNeC)","type":"AgnesAI_error"}}`
+- **اشتهارد** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012194033318104359TVZeC0zU)","type":"AgnesAI_error"}}`
+- **کرج** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012194013779242927cDUfeYcc)","type":"AgnesAI_error"}}`
+- **طبس** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012194005827546907CxJLiu3f)","type":"AgnesAI_error"}}`
+- **نهبندان** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012193952621231769QbdP5L7H)","type":"AgnesAI_error"}}`
 
 ## فایل‌های خروجی
 

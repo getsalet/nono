@@ -4,16 +4,19 @@
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 ('Editorial Hero') is not a wide elevated view: the shot is ground-level, placing the product in the immediate foreground rather than in the lower third of a wide field.",
-        "Role 2 ('Selection Evidence') lacks the required steep near-overhead perspective: the camera angle is low and horizontal, failing to provide the top-down technical layout described in the requirements.",
-        "Role 3 ('Headworks Detail') is missing mandatory equipment evidence: the image displays a tractor and irrigation reel instead of the required fixed pump, gauge, and manifold on a concrete pad."
+      "score": 40,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Regenerate all three images: 1) Wide elevated field view with coils in the lower third; 2) Steep near-overhead soil layout; 3) Concrete pad still life showing fixed pump, gauge, and manifold.",
+      "reasons": [
+        "Role 1 fails: The required wide elevated field view is missing; the camera is at low eye level, making the product appear disproportionately large relative to the background.",
+        "Role 1 & 2 duplicate: The camera angle, surface, and composition are nearly identical between the first two images.",
+        "Role 2 fails: The steep near-overhead angle required for a technical still-life layout is missing; the shot remains low-level."
+      ],
+      "correction_prompt": "Replace Role 1 with a wide shot from a significantly higher camera position (e.g., 45-60 degrees) to establish scale and context. Replace Role 2 with a steep near-overhead (60-90 degree) angle to create a technical layout distinct from the first image.",
       "panel_scores": [
-        45
+        40
       ],
       "set_attempt": 1
     }
