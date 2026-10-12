@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-12T22:43:20+00:00`
+- آخرین بروزرسانی: `2026-10-12T23:42:34+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **1148 از 1894 (60.61٪)**
 - تکمیل‌شده: **1148**
@@ -55,9 +55,9 @@
 
 ## خطاهای اخیر
 
-- **طبس** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012224250480600998Tx6jmwQj)","type":"AgnesAI_error"}}`
-- **اشتهارد** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 2026101222395314639280291rrKFge)","type":"AgnesAI_error"}}`
-- **بشرویه** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012223836546467411oYPZCE5D)","type":"AgnesAI_error"}}`
+- **طبس** — `layflat`: `HTTP Error 401: Unauthorized`
+- **بشرویه** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012233950967788351oCwbh15D)","type":"AgnesAI_error"}}`
+- **اشتهارد** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012233903272524316mQ7328ne)","type":"AgnesAI_error"}}`
 - **کرج** — `layflat`: `HTTP Error 401: Unauthorized`
 - **هشتگرد** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
 - **کوراییم** — `layflat`: `HTTP Error 401: Unauthorized`
