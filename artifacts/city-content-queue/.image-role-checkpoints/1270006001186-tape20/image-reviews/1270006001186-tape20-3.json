@@ -43,6 +43,51 @@
       ],
       "correction_prompt": "Remove the cardboard box completely. Reposition the white and blue AFP drip-tape roll to the far edge of the concrete pad behind the equipment, maintaining the still-life arrangement.",
       "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 45,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Incorrect watermark: The image displays 'AFP | 09134922013', which does not match the required format 'AFP | 09134922013' (extra '0' in the string before the pipe).",
+        "Second commercial package: There is an open brown cardboard box visible in the background right, violating the 'zero second commercial package' rule.",
+        "Missing integration: The drip-tape roll lacks a proper contact shadow on the concrete pad, appearing slightly suspended rather than resting on the surface."
+      ],
+      "correction_prompt": "Regenerate image. Ensure the bottom-right watermark is exactly 'AFP | 09134922013'. Remove the cardboard box from the background. Ensure the white AFP drip tape roll has a visible contact shadow on the concrete to ground it.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 30,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Contains a second commercial package (box labeled 'AFP') which is explicitly a hard reject.",
+        "The image shows two distinct drip-tape products (the roll and the box), failing the 'exactly one' requirement."
+      ],
+      "correction_prompt": "Remove the cardboard box in the background. Ensure only a single white and blue cylindrical drip-tape roll is visible as the main product.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 90,
+      "product_width_percent": 16,
+      "product_height_percent": 28,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "The image displays the AFP white-and-blue cylindrical drip-tape carton roll exactly as described in the blueprint.",
+        "Zero people or human body parts are present.",
+        "The fixed infrastructure (regulator, pressure gauge, manifold) is integrated correctly on the concrete pad, matching the 'HEADWORKS DETAIL' role.",
+        "The exact watermark 'AFP | 09134922013' is present in the bottom-right corner.",
+        "Physical dimensions are plausible with a clear contact shadow, and no prohibited commercial packages (bottles, buckets, etc.) are visible.",
+        "Product dimensions fall comfortably within the approved 18-38% width and <70% height envelopes.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 16% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Enlarge the product group from 16% to 18-38% of frame width.",
+      "attempt": 3
     }
   ]
 }

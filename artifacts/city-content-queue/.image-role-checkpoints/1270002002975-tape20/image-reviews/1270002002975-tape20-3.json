@@ -30,6 +30,46 @@
       ],
       "correction_prompt": "Remove the cardboard box on the right side of the image. Fix the text on the white drip tape carton so it is clearly legible English. Ensure the single cartoon roll is the only commercial packaging visible.",
       "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 15,
+      "product_height_percent": 27,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Presence of a layflat hose (the blue tubing wound on the reel and running on the ground) triggers a hard reject according to the specific constraints.",
+        "The required water-drip-tape carton roll is missing; instead, the image features a coiled hose and a cardboard box, failing to match the object description.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 15% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the coiled blue layflat hose and the cardboard box. Place a large, cylindrical white and blue carton roll of drip tape on the concrete pad. Integrate it into the irrigation setup next to the filter and pressure gauge. Ensure no bottles, jars, or hoses are visible. Enlarge the product group from 15% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 18,
+      "product_height_percent": 35,
+      "product_x_center_percent": 75,
+      "reasons": [
+        "Second commercial package detected: A second box labeled 'AFP' is visible in the background (bottom right), which violates the 'zero second commercial package' rule.",
+        "Watermark placement error: The required watermark 'AFP | 09134922013' is not positioned in the bottom-right corner as specified in the instructions."
+      ],
+      "correction_prompt": "Remove the second 'AFP' cardboard box located in the background. Move the 'AFP | 09134922013' watermark to the bottom-right corner of the image.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 35,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "The image contains a second commercial package (the brown cardboard box in the background).",
+        "The mandatory HEADWORKS DETAIL role blueprint is not followed; the primary focus is on the drip tape roll rather than elevated equipment on a pad."
+      ],
+      "correction_prompt": "Regenerate the image to strictly follow the HEADWORKS DETAIL role: show elevated equipment still life (filter, gauge, regulator, manifold) on a clean concrete pad with the drip tape roll as a single integrated element. Remove the brown cardboard box and any second commercial packages.",
+      "attempt": 3
     }
   ]
 }

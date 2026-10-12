@@ -1,0 +1,77 @@
+{
+  "source_id": "1270007002883-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image contains a second commercial package (an open cardboard box labeled 'AFP') in the background, which triggers a hard reject.",
+        "The product bounding box is approximately 22% wide and 28% high, fitting the physical plausibility constraints, but the presence of the extra object is a disqualifying factor.",
+        "The mandatory watermark 'AFP | 09134922013' is present and correctly formatted in the bottom-right corner."
+      ],
+      "correction_prompt": "Remove the open cardboard box on the right; keep only the cylindrical roll, the pressure equipment on the left, and the concrete pad background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Second commercial package: A second cardboard box containing 'AFP' branding is visible in the background, violating the constraint of exactly one AFP carton roll.",
+        "Extra container: A metal bucket/container is visible in the bottom right corner, which is a hard reject for bottle, jar, canister, or bucket.",
+        "Watermark error: The required watermark 'AFP | 09134922013' is missing from the image (the visible ID is different)."
+      ],
+      "correction_prompt": "Remove the second cardboard box in the background and the metal bucket in the bottom right. Ensure the watermark in the bottom right reads exactly 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 50,
+      "product_width_percent": 22,
+      "product_height_percent": 32,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "The image contains a second commercial package (a cardboard box) on the concrete pad, which violates the rule against 'second commercial package' or 'second roll'.",
+        "The product is a single large roll, not 'one integrated AFP carton at the far edge' as specified in the role blueprint."
+      ],
+      "correction_prompt": "Regenerate the image containing only one AFP white-and-blue wide low cylindrical drip-tape carton roll on the concrete pad. Remove the cardboard box and the pump infrastructure to strictly isolate the product as a still life.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 45,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Second commercial package (carton) visible on the far right",
+        "Gibberish/distorted writing on the product label (e.g., 'Drip ttrigation Taje')"
+      ],
+      "correction_prompt": "Remove the secondary carton box on the right. Correct the text on the main roll label to clean, legible 'Drip Irrigation Tape'. Ensure the product is a single white and blue cylindrical roll.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 24,
+      "product_height_percent": 42,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Second commercial package visible: An open cardboard box with 'AFP' branding is present on the right side of the image, which is a hard reject for multiple packages.",
+        "Layout violation: The 'HEADWORKS DETAIL' blueprint requires the product roll to be at the far edge of the elevated equipment setup; here it is placed in the foreground/center.",
+        "Watermark error: The visible watermark in the bottom-right corner reads 'AFP | 09134922013', which does not match the required string 'AFP | 09134922013'."
+      ],
+      "correction_prompt": "Regenerate the image featuring only one cylindrical AFP drip-tape roll positioned at the far edge of the equipment setup. Remove the open cardboard box and the coiled hose. Correct the bottom-right watermark to 'AFP | 09134922013'.",
+      "attempt": 5
+    }
+  ]
+}

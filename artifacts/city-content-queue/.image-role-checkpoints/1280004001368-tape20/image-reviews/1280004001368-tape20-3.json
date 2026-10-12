@@ -1,0 +1,67 @@
+{
+  "source_id": "1280004001368-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 26,
+      "product_height_percent": 42,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image contains a second commercial package (a brown cardboard box) to the right of the roll, which violates the 'zero second commercial package' rule.",
+        "The roll is not an integrated 'AFP carton' (as specified in the role blueprint) but a standard poly-wrapped roll, failing the 'carton' requirement.",
+        "The visible text on the roll's label is garbled and inconsistent with standard English/German drip tape labels ('Drip Irrigation Tape' is partially misspelled/mixed).",
+        "The watermark at the bottom right is an internal production code, not the exact required external customer-facing watermark."
+      ],
+      "correction_prompt": "Regenerate: Replace the roll with a white and blue 'AFP branded carton roll' of drip tape. Completely remove the cardboard box on the right. Ensure all label text is clear and legible. Add the specific bottom-right watermark 'AFP | 09134922013'. Keep the elevated concrete pad and infrastructure setup.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 21,
+      "product_height_percent": 31,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image contains two commercial packages for the product (one roll and one carton box), violating the 'zero second commercial package' hard reject rule.",
+        "The product is not integrated into the carton, but rather sitting next to a separate empty carton.",
+        "The mandatory image role specifies 'elevated equipment still life', but the depicted pump/tank assembly is resting on wheels on the ground rather than elevated on a still life stand."
+      ],
+      "correction_prompt": "Regenerate the image to show the drip tape integrated into a single carton roll. Remove the separate cardboard box. Ensure the irrigation pump assembly is elevated on a concrete pad or stand rather than on wheels. Keep the 'AFP | 09134922013' watermark in the bottom right.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 15,
+      "product_height_percent": 35,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Hard reject: contains two additional commercial packages (cardboard boxes) with 'AFP' branding.",
+        "Hard reject: contains a prominent filter/regulator system (blue bottle), gauges, and manifold hardware that does not fit the 'drip-tape carton roll' object description.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 15% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove all cardboard boxes, the blue filter bottle, gauges, manifold, and coiled blue tubing. Keep only the white and blue cylindrical drip tape roll on the concrete pad. Ensure the roll is the sole product object in the still life. Enlarge the product group from 15% to 18-38% of frame width.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 14,
+      "product_height_percent": 26,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "The image contains multiple prohibited containers, specifically two gas cylinders in the foreground, which are hard-rejected as 'bottle, jar, canister, bucket... container'.",
+        "Hard reject rule triggered: 'second commercial package' due to the second 'AFP' cardboard box and another box visible in the bottom right corner.",
+        "The required watermark 'AFP | 09134922013' is missing from the image.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 14% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image to include exactly one wide white-and-blue drip-tape carton roll on a clean concrete pad. Remove all gas cylinders, remove the second cardboard box and bottom-right box, and ensure the watermark 'AFP | 09134922013' is visible in the bottom-right corner. Keep the fixed filter, pressure gauge, and manifold as part of the still-life setup. Enlarge the product group from 14% to 18-38% of frame width.",
+      "attempt": 4
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "source_id": "12700014001187-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 25,
+      "product_height_percent": 45,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible on the right side",
+        "Bottle/container-like object (regulator/filter assembly) is visible on the manifold",
+        "Product bounding box estimation is based on the visible white cylindrical roll"
+      ],
+      "correction_prompt": "Regenerate the image strictly as an elevated equipment still life on a clean concrete pad with a fixed filter, pressure gauge, regulator, and manifold; include exactly one integrated AFP white-and-blue drip-tape roll at the far edge, with zero other commercial packages, boxes, bottles, or containers, and maintain the mandatory bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 40,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Hard reject: The image contains two commercial packages. There is a brown cardboard carton with the AFP logo on the right, which violates the 'zero second commercial package' constraint."
+      ],
+      "correction_prompt": "Remove the brown cardboard carton on the right; retain only the white and blue AFP drip tape roll and the left-side filtration equipment.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 24,
+      "product_height_percent": 38,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Multiple commercial packages present: In addition to the primary roll, there is a large brown 'AFP' cardboard box and what appears to be a secondary roll or package behind the main product, violating the 'exactly one' requirement.",
+        "Missing required role elements: The image lacks the 'fixed filter, pressure gauge, regulator and manifold' specified in the 'HEADWORKS DETAIL' role. Instead, it shows a mobile portable cart/wagon setup, which fails to meet the specific blueprint for elevated fixed equipment still life.",
+        "Secondary product clutter: The prominent 'AFP' carton acts as a second commercial package, creating visual competition with the single required roll."
+      ],
+      "correction_prompt": "Remove the brown AFP cardboard box and any secondary rolls behind the main product to leave exactly one roll. Replace the mobile cart/wagon with a fixed irrigation manifold, pressure gauge, and inline filter assembly on the concrete pad, creating a still-life headworks setup.",
+      "attempt": 3
+    }
+  ]
+}

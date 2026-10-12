@@ -1,0 +1,51 @@
+{
+  "source_id": "1280006002848-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 22,
+      "product_height_percent": 32,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image contains a second commercial package (the cardboard box with AFP branding), which is a hard reject.",
+        "The watermark in the bottom right corner is 'AFP | 09134922013', but the required watermark is 'AFP | 09134922013'. While this matches, the presence of the second package is the primary failure."
+      ],
+      "correction_prompt": "Remove the cardboard box in the background. Ensure only a single AFP white-and-blue cylindrical drip-tape roll is visible on the concrete pad alongside the filtration equipment.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 25,
+      "product_width_percent": 23,
+      "product_height_percent": 45,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Hard reject: second commercial package (two additional AFK cartons are visible in the background).",
+        "Hard reject: mismatched perspective; the main roll is sitting directly on the concrete slab while the cartons and hose are in the field behind it, breaking the spatial plane of the scene."
+      ],
+      "correction_prompt": "Regenerate with exactly one AFK drip-tape carton on the concrete pad. Remove the second roll, the two background cartons, and the blue hose. The main roll must be physically integrated onto the pad with correct perspective and contact shadow.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 24,
+      "product_height_percent": 27,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Exactly one AFP wide low cylindrical drip-tape roll is present, positioned at the lower-right edge of the concrete pad.",
+        "The product dimensions and physical placement are within the approved width envelope and remain physically plausible.",
+        "The role blueprint is met: elevated still life on a clean concrete pad with fixed infrastructure (filter, pressure gauge, manifold) and one integrated carton.",
+        "Zero people or human body parts are visible.",
+        "The required bottom-right watermark 'AFP | 09134922013' is present and correctly formatted."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
