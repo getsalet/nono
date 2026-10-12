@@ -19,6 +19,49 @@
       ],
       "correction_prompt": "Remove the secondary cardboard box in the background. Ensure the roll is the only visible AFP product. Enlarge the roll to meet minimum height and width thresholds. Fix label text to 'Drip Irrigation Tape' with sharp, legible typography. Maintain the headworks equipment and concrete pad setup. Enlarge the product group from 17% to 18-38% of frame width.",
       "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 25,
+      "product_height_percent": 50,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Second commercial package detected: there is a second empty cardboard box located behind the product.",
+        "The secondary packaging contradicts the requirement for exactly one AFP carton roll and the hard reject for a second commercial package.",
+        "The background box with 'AFP' branding is a hard reject element."
+      ],
+      "correction_prompt": "Remove the second cardboard box in the background to ensure only one AFP roll is visible. Retain the drip tape roll, the irrigation equipment (filter, gauges), and the required bottom-right watermark.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 15,
+      "product_height_percent": 15,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Presence of a second commercial package (the brown cardboard box next to the roll)",
+        "Missing 'Headworks Detail' role blueprint: lacks an integrated filter, pressure gauge, regulator, and manifold configuration",
+        "Product width is approximately 15%, which is below the approved 18% minimum threshold",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 15% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the brown cardboard box. Redesign the scene to clearly feature an integrated irrigation headworks system including a sediment filter, pressure gauge, and manifold. Increase the scale of the white and blue drip tape roll so its width occupies between 18 and 38 percent of the frame. Ensure the watermark 'AFP | 09134922013' remains in the bottom-right. Enlarge the product group from 15% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Contains a second commercial package (carton box) to the right of the roll, which is a hard reject.",
+        "Contains a coiled hose/tape spool on the cart, which violates the 'single roll' requirement.",
+        "The product bounding box excludes the carton on the right, which is not part of the required integrated carton at the far edge."
+      ],
+      "correction_prompt": "Remove the brown cardboard carton on the right and the coiled blue hose/tape on the cart to the left. Keep only the single white and blue cylindrical AFP drip-tape roll integrated with the filtration setup.",
+      "attempt": 3
     }
   ]
 }
