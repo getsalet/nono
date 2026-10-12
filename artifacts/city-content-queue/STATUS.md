@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-12T17:44:09+00:00`
+- آخرین بروزرسانی: `2026-10-12T17:54:12+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1137 از 1894 (60.03٪)**
-- تکمیل‌شده: **1137**
+- پیشرفت: **1139 از 1894 (60.14٪)**
+- تکمیل‌شده: **1139**
 - در حال پردازش: **0**
-- در انتظار: **17**
-- آماده انتخاب در اجرای بعدی: **17**
+- در انتظار: **6**
+- آماده انتخاب در اجرای بعدی: **6**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **740**
+- ناموفق: **749**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,8 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **قرق** — گلستان — `layflat` — 1197 کلمه — `2026-10-12T17:49:40+00:00`
+- **کلاله** — گلستان — `layflat` — 1815 کلمه — `2026-10-12T17:49:29+00:00`
 - **قاضی** — خراسان شمالی — `layflat` — 1158 کلمه — `2026-10-12T17:40:23+00:00`
 - **لاهرود** — اردبیل — `layflat` — 1408 کلمه — `2026-10-12T17:39:50+00:00`
 - **طبس** — خراسان جنوبی — `tape20` — 1136 کلمه — `2026-10-12T17:39:32+00:00`
@@ -50,21 +52,19 @@
 - **تجریش** — تهران — `layflat` — 1254 کلمه — `2026-10-12T16:48:29+00:00`
 - **فردیس** — البرز — `tape20` — 1431 کلمه — `2026-10-12T16:40:15+00:00`
 - **فاروج** — خراسان شمالی — `tape20` — 1146 کلمه — `2026-10-12T16:39:39+00:00`
-- **اسلامیه** — خراسان جنوبی — `tape20` — 1336 کلمه — `2026-10-12T16:37:37+00:00`
-- **چهارباغ** — البرز — `tape20` — 1398 کلمه — `2026-10-12T16:32:10+00:00`
 
 ## خطاهای اخیر
 
-- **تیتکانلو** — `layflat`: `HTTP Error 401: Unauthorized`
-- **گرمه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
-- **غلامان** — `layflat`: `Agnes 3 draft QA failed: link count 8 invalid`
-- **قرق** — `layflat`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
-- **کلاله** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012174131693747405yiesQh0w)","type":"AgnesAI_error"}}`
-- **سعیداباد** — `layflat`: `HTTP Error 403: Forbidden`
-- **سلفچگان** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012174049484596822N5vgB0W2)","type":"AgnesAI_error"}}`
-- **نظرآباد** — `tape20`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012174008114217142yw9pklmy)","type":"AgnesAI_error"}}`
-- **مرادلو** — `layflat`: `HTTP Error 403: Forbidden`
-- **ایور** — `layflat`: `HTTP Error 403: Forbidden`
+- **نظرآباد** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012175408892287369nrNaixha)","type":"AgnesAI_error"}}`
+- **سلفچگان** — `layflat`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
+- **شوسف** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012175208757390058tV5j8gcV)","type":"AgnesAI_error"}}`
+- **کوراییم** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 202610121752019853589462sCUjxYO)","type":"AgnesAI_error"}}`
+- **غلامان** — `layflat`: `HTTP Error 401: Unauthorized`
+- **جاجرم** — `layflat`: `HTTP Error 403: Forbidden`
+- **سربیشه** — `layflat`: `HTTP Error 403: Forbidden`
+- **قصابه** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 2026101217505250554691AGMEuOGq)","type":"AgnesAI_error"}}`
+- **سنگدوین** — `layflat`: `HTTP Error 401: Unauthorized`
+- **حصارگرمخان** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 202610121750245134655668pO3KR0p)","type":"AgnesAI_error"}}`
 
 ## فایل‌های خروجی
 
