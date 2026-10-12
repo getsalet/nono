@@ -1,0 +1,67 @@
+{
+  "source_id": "12900010001003-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 30,
+      "product_height_percent": 35,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: Presence of a second commercial package (the cardboard carton labeled 'AFP') in the background. The requirements specify exactly one roll and a hard reject for any 'second commercial package' or 'second roll'."
+      ],
+      "correction_prompt": "Regenerate the image to remove the cardboard carton in the background, ensuring only the single white drip-tape roll and the irrigation equipment (filter, gauge, pump) are visible on the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 45,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Second commercial package present: there is a cardboard box with 'AFP' branding next to the roll, which violates the 'zero second commercial package' constraint.",
+        "Typographical errors/gibberish text on the product roll: 'Drip IrrigaTion Tape' contains incorrect capitalization and formatting, violating the 'no gibberish writing' constraint.",
+        "Watermark format mismatch: The requirement specifies the exact string 'AFP | 09134922013', but the image displays 'AFP | 09134922013' with a trailing digit (9) that was not in the prompt specification."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right. Fix the text on the roll to read 'Drip Irrigation Tape' with correct spelling and capitalization. Update the watermark in the bottom right to exactly 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 38,
+      "product_height_percent": 38,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Missing required bottom-right watermark 'AFP | 09134922013'",
+        "Second commercial package (cardboard box) present in the frame",
+        "Product bounding box width is at the absolute upper limit (38%), which is risky",
+        "Drip tape is visible on the ground, which could be interpreted as an extraneous roll/object"
+      ],
+      "correction_prompt": "Remove the cardboard box. Add the text watermark 'AFP | 09134922013' in the bottom right corner. Slightly reduce the apparent width of the central drip tape roll to ensure it fits comfortably within the 38% limit. Ensure no drip tape is visible on the ground.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 24,
+      "product_height_percent": 35,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Zero persons or human body parts present",
+        "Correct role blueprint (HEADWORKS DETAIL) with clean concrete pad, fixed filter, gauge, regulator, and manifold",
+        "Drip tape roll is a physically plausible wide, low cylinder with correct white-and-blue AFP branding",
+        "Single integrated carton positioned at the far edge matches role blueprint",
+        "Watermark 'AFP | 09134922013' is present and correctly positioned in the bottom-right corner",
+        "Proportions fall within the 18-38% width and up-to-70% height envelope"
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

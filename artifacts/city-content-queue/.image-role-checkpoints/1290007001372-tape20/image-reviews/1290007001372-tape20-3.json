@@ -1,0 +1,51 @@
+{
+  "source_id": "1290007001372-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 14,
+      "product_height_percent": 28,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Presence of a second commercial package (cardboard box) in the background",
+        "Gibberish and unreadable text on the secondary carton",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 14% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the open cardboard box in the background, leaving only the single AFP drip-tape carton roll as the featured product. Enlarge the product group from 14% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 22,
+      "product_height_percent": 24,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Secondary commercial package: A distinct second cardboard box is visible on the right side of the frame, which is a hard reject.",
+        "Role mismatch: The required blueprint calls for the carton to be 'integrated at the far edge' rather than placed as a central foreground still-life object."
+      ],
+      "correction_prompt": "Remove the second cardboard box on the right. Reposition the AFP carton to the far edge of the concrete pad, integrated into the background layout, and clean the gibberish text on the carton label.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 38,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Watermark text reads '09134922013' but the mandatory required sequence is '0913492201' (contains a typo/extra digit)",
+        "Second commercial package (cardboard box with AFP branding) is visible on the far right, which is a hard reject",
+        "Product label text is gibberish/illegible ('Drip Irigation Tepe')",
+        "Product height is 38% of the frame, which is disproportionately tall for a wide cylindrical drip-tape roll, violating physical plausibility"
+      ],
+      "correction_prompt": "Regenerate image: Remove the cardboard box on the right. Fix the watermark text to exactly 'AFP | 09134922013' without typos. Flatten the cylindrical roll so its height is roughly 40% of its width. Ensure the label text is sharp and legible. Maintain the concrete pad, fixed filter stack, gauges, and background crops.",
+      "attempt": 3
+    }
+  ]
+}

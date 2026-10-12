@@ -104,6 +104,34 @@
       ],
       "correction_prompt": "Regenerate the image. Remove the brown carton box on the right. Keep only the single white and blue cylindrical drip-tape roll. Integrate the roll into the headworks equipment stack (e.g., stacked behind the manifold) to satisfy the 'integrated AFP carton' requirement. Correct the bottom-right watermark text to exactly 'AFP | 09134922013'. Ensure no other people or bottles are present.",
       "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Two distinct commercial packages are visible (a cylindrical roll and a rectangular cardboard box), violating the 'exactly one' rule.",
+        "The mandatory AFP watermark is missing from the image."
+      ],
+      "correction_prompt": "Remove the rectangular cardboard box on the right to leave only the cylindrical tape roll. Add the text 'AFP | 09134922013' as a watermark in the bottom-right corner.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The image contains a second commercial package (a cardboard box with the AFP logo) in addition to the drip tape roll, violating the 'zero second commercial package' rule.",
+        "There is a blue cylindrical container on the left that resembles a pressure tank or pump, which violates the prohibition on bottle, jar, canister, or container types.",
+        "The presence of a second roll/box and a container results in a hard reject.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the second cardboard box from the right side. Remove the blue cylindrical pressure tank and replace it with a standard fixed filter, pressure gauge, and manifold infrastructure on a concrete pad. Ensure the primary AFP drip-tape roll is the only commercial packaging shown. Enlarge the product group from 0% to 18-38% of frame width.",
+      "attempt": 2
     }
   ]
 }

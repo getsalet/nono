@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-12T16:11:41+00:00`
+- آخرین بروزرسانی: `2026-10-12T16:21:35+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1112 از 1894 (58.71٪)**
-- تکمیل‌شده: **1112**
+- پیشرفت: **1115 از 1894 (58.87٪)**
+- تکمیل‌شده: **1115**
 - در حال پردازش: **0**
-- در انتظار: **76**
-- آماده انتخاب در اجرای بعدی: **76**
+- در انتظار: **70**
+- آماده انتخاب در اجرای بعدی: **70**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **706**
+- ناموفق: **709**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,9 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **درح** — خراسان جنوبی — `tape20` — 1528 کلمه — `2026-10-12T16:19:18+00:00`
+- **سربیشه** — خراسان جنوبی — `tape20` — 1518 کلمه — `2026-10-12T16:18:15+00:00`
+- **هشتگرد** — البرز — `tape20` — 1846 کلمه — `2026-10-12T16:17:32+00:00`
 - **شوقان** — خراسان شمالی — `tape20` — 1082 کلمه — `2026-10-12T16:07:53+00:00`
 - **نهبندان** — خراسان جنوبی — `tape20` — 1369 کلمه — `2026-10-12T16:07:02+00:00`
 - **آشخانه** — خراسان شمالی — `tape20` — 1502 کلمه — `2026-10-12T16:06:12+00:00`
@@ -49,22 +52,19 @@
 - **مراوه** — گلستان — `tape20` — 1398 کلمه — `2026-10-12T14:42:03+00:00`
 - **سرخنکلاته** — گلستان — `tape20` — 2471 کلمه — `2026-10-12T14:31:10+00:00`
 - **نوکنده** — گلستان — `tape20` — 1556 کلمه — `2026-10-12T14:23:04+00:00`
-- **ضیاآباد** — قزوین — `tape20` — 1505 کلمه — `2026-10-12T14:19:38+00:00`
-- **فراغی** — گلستان — `tape20` — 1317 کلمه — `2026-10-12T14:19:14+00:00`
-- **مینودشت** — گلستان — `tape20` — 1247 کلمه — `2026-10-12T14:19:03+00:00`
 
 ## خطاهای اخیر
 
-- **بشرویه** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012161137968893549LZO1kPYq)","type":"AgnesAI_error"}}`
-- **رباطکریم** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012160723435826228nX9J6s0G)","type":"AgnesAI_error"}}`
-- **سیجوال** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **مهستان** — `tape20`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 2026101216063431075587105kIQIfE)","type":"AgnesAI_error"}}`
-- **اسلامیه** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012160540100656572m2BnVhuu)","type":"AgnesAI_error"}}`
-- **اشتهارد** — `tape20`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 2026101216052687281342725i9CC7v)","type":"AgnesAI_error"}}`
-- **آیسک** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012160511267695074hiZnM3oW)","type":"AgnesAI_error"}}`
-- **گزیک** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 202610121604049978589688GoBCThv)","type":"AgnesAI_error"}}`
-- **فردوس** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
-- **طبس** — `tape20`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012160350967227241QaLJ2tGY)","type":"AgnesAI_error"}}`
+- **ارسک** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012162131887647717jXOHnYLl)","type":"AgnesAI_error"}}`
+- **رباطکریم** — `layflat`: `Editorial review failed: blocked utility link`
+- **اسلامیه** — `tape20`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 2026101216200013849509h89sJtVw)","type":"AgnesAI_error"}}`
+- **فاروج** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012161937476133402k4OUepqp)","type":"AgnesAI_error"}}`
+- **شوسف** — `tape20`: `image hard gate rejected role 3 after 5 attempt`
+- **مهستان** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012161914919688987846B46Yp)","type":"AgnesAI_error"}}`
+- **چهارباغ** — `tape20`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 202610121619096998359129ynkSaQr)","type":"AgnesAI_error"}}`
+- **بشرویه** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012161904809643062FsksJOwA)","type":"AgnesAI_error"}}`
+- **اشتهارد** — `tape20`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012161854641197494xQqQrSRr)","type":"AgnesAI_error"}}`
+- **اسفراین** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012161847681239940QNuTCQqZ)","type":"AgnesAI_error"}}`
 
 ## فایل‌های خروجی
 
