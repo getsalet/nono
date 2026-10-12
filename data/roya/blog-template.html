@@ -370,6 +370,55 @@ html { overflow-x: hidden; }
 .about-img { display: block; margin: 0 auto 12px; border-radius: var(--radius-sm); max-height: 170px; width: auto; max-width: 100%; }
 .thumb-list img { width: 84px; height: 64px; object-fit: cover; border-radius: var(--radius-sm); flex-shrink: 0; background: var(--lime-100); }
 
+/* ---------- فهرست مطالب: یک‌ردیفه در همه اندازه‌ها ---------- */
+.main-col,
+.main-col:has(> .post-card + .post-card) { display: block !important; }
+.main-col > .post-card { margin-bottom: 20px; }
+
+/* ==========================================================================
+   معرفی و کارت محصولات در صفحه‌های فهرست
+   ========================================================================== */
+.home-intro { display: none; }
+body:has(.main-col > .pagination) .home-intro { display: block; }
+.home-intro {
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbf3 100%);
+  border: 1px solid var(--line, #e3ebdd);
+  border-radius: var(--radius, 16px);
+  box-shadow: var(--shadow-1, 0 1px 2px rgba(20, 54, 31, .06));
+  padding: 26px 28px 24px;
+  margin: 0 0 24px;
+}
+.hi-kicker { display: inline-block; margin: 0 0 12px; padding: 5px 13px; border-radius: 999px; background: var(--lime-100, #eef7e3); color: var(--green-700, #1f6b34); font-size: .82rem; font-weight: 700; }
+.home-intro-title { margin: 0 0 12px; font-size: 1.6rem; line-height: 1.6; color: var(--green-900, #14361f); }
+.hi-lead { margin: 0 0 18px; font-size: 1.06rem; line-height: 2.05; color: var(--ink-2, #3a4a3f); }
+.hi-body p { margin: 0 0 14px; line-height: 2.05; color: var(--ink-2, #3a4a3f); }
+.hi-sub { margin: 24px 0 12px; font-size: 1.1rem; color: var(--green-900, #14361f); }
+.hi-sub::before { content: ""; display: inline-block; width: 6px; height: 18px; background: var(--lime-500, #8bc34a); border-radius: 3px; margin-inline-end: 9px; vertical-align: -3px; }
+.hi-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.hi-list li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.95; color: var(--ink-2, #3a4a3f); }
+.hi-list svg { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 6px; color: var(--green-600, #1f6b34); }
+.hi-facts { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.hi-facts li { background: #fff; border: 1px solid var(--line, #e3ebdd); border-radius: var(--radius-sm, 12px); padding: 13px 14px; text-align: center; }
+.hi-facts b { display: block; font-size: 1.04rem; color: var(--green-700, #1f6b34); margin-bottom: 5px; }
+.hi-facts span { display: block; font-size: .84rem; color: var(--muted, #6b7d70); line-height: 1.75; }
+.hi-prod-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.hi-prod { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line, #e3ebdd); border-radius: var(--radius-sm, 12px); overflow: hidden; text-decoration: none; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.hi-prod:hover { border-color: var(--green-600, #1f6b34); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(20, 54, 31, .10); }
+.hi-prod img { display: block; width: 100%; height: 150px; object-fit: cover; margin: 0; flex: 0 0 auto; }
+.hi-prod-body { display: block; padding: 12px 14px 15px; }
+.hi-prod-name { display: block; color: var(--green-900, #14361f); font-weight: 700; margin-bottom: 6px; line-height: 1.7; }
+.hi-prod-desc { display: block; font-size: .85rem; color: var(--muted, #6b7d70); line-height: 1.8; }
+.home-intro-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+@media (max-width: 1100px) {
+  .hi-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hi-prod-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .home-intro { padding: 18px 16px; }
+  .home-intro-title { font-size: 1.22rem; }
+  .hi-facts, .hi-prod-grid { grid-template-columns: 1fr; }
+  .home-intro-actions .btn { width: 100%; text-align: center; }
+}
 </style>
 
 <!-- لایه ارتقای ظاهر حرفه‌ای: سربرگ، منو، سایدبار، پابرگ -->
@@ -1028,57 +1077,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .cta-band { padding: 26px 30px; }
   .footer-grid { gap: 32px; }
 
-  /* فهرست مطالب: یک‌ردیفه در دسکتاپ (هر پست تمام عرض ستون محتوا) */
-  .main-col,
-  .main-col:has(> .post-card + .post-card) { display: block !important; }
-  .main-col > .post-card { margin-bottom: 20px; }
+  /* فهرست مطالب یک‌ردیفه است (قاعده در CSS اصلی قالب) */
 }
 
 
-/* ==========================================================================
-   معرفی و کارت محصولات در صفحه‌های فهرست
-   ========================================================================== */
-.home-intro { display: none; }
-body:has(.main-col > .pagination) .home-intro { display: block; }
-.home-intro {
-  background: linear-gradient(180deg, #ffffff 0%, #f7fbf3 100%);
-  border: 1px solid var(--line, #e3ebdd);
-  border-radius: var(--radius, 16px);
-  box-shadow: var(--shadow-1, 0 1px 2px rgba(20, 54, 31, .06));
-  padding: 26px 28px 24px;
-  margin: 0 0 24px;
-}
-.hi-kicker { display: inline-block; margin: 0 0 12px; padding: 5px 13px; border-radius: 999px; background: var(--lime-100, #eef7e3); color: var(--green-700, #1f6b34); font-size: .82rem; font-weight: 700; }
-.home-intro-title { margin: 0 0 12px; font-size: 1.6rem; line-height: 1.6; color: var(--green-900, #14361f); }
-.hi-lead { margin: 0 0 18px; font-size: 1.06rem; line-height: 2.05; color: var(--ink-2, #3a4a3f); }
-.hi-body p { margin: 0 0 14px; line-height: 2.05; color: var(--ink-2, #3a4a3f); }
-.hi-sub { margin: 24px 0 12px; font-size: 1.1rem; color: var(--green-900, #14361f); }
-.hi-sub::before { content: ""; display: inline-block; width: 6px; height: 18px; background: var(--lime-500, #8bc34a); border-radius: 3px; margin-inline-end: 9px; vertical-align: -3px; }
-.hi-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-.hi-list li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.95; color: var(--ink-2, #3a4a3f); }
-.hi-list svg { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 6px; color: var(--green-600, #1f6b34); }
-.hi-facts { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.hi-facts li { background: #fff; border: 1px solid var(--line, #e3ebdd); border-radius: var(--radius-sm, 12px); padding: 13px 14px; text-align: center; }
-.hi-facts b { display: block; font-size: 1.04rem; color: var(--green-700, #1f6b34); margin-bottom: 5px; }
-.hi-facts span { display: block; font-size: .84rem; color: var(--muted, #6b7d70); line-height: 1.75; }
-.hi-prod-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-.hi-prod { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line, #e3ebdd); border-radius: var(--radius-sm, 12px); overflow: hidden; text-decoration: none; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
-.hi-prod:hover { border-color: var(--green-600, #1f6b34); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(20, 54, 31, .10); }
-.hi-prod img { display: block; width: 100%; height: 150px; object-fit: cover; margin: 0; flex: 0 0 auto; }
-.hi-prod-body { display: block; padding: 12px 14px 15px; }
-.hi-prod-name { display: block; color: var(--green-900, #14361f); font-weight: 700; margin-bottom: 6px; line-height: 1.7; }
-.hi-prod-desc { display: block; font-size: .85rem; color: var(--muted, #6b7d70); line-height: 1.8; }
-.home-intro-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-@media (max-width: 1100px) {
-  .hi-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hi-prod-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 640px) {
-  .home-intro { padding: 18px 16px; }
-  .home-intro-title { font-size: 1.22rem; }
-  .hi-facts, .hi-prod-grid { grid-template-columns: 1fr; }
-  .home-intro-actions .btn { width: 100%; text-align: center; }
-}
 </style>
 </head>
 <body>
@@ -1245,11 +1247,11 @@ body:has(.main-col > .pagination) .home-intro { display: block; }
 <p>مقالات بر پایه شهر و استان دسته‌بندی شده‌اند تا کشاورزان هر منطقه — از سیستان و بلوچستان و خراسان تا شهرکرد، اراک و گیلان — راهنمای متناسب با زمین، منبع آب و نوع کشت خود را پیدا کنند. اگر در انتخاب محصول شک دارید، پیش از سفارش با کارشناس فنی ما تماس بگیرید؛ بررسی زمین و صدور پیش‌فاکتور رایگان است.</p>
 <h3 class="hi-sub">در این وبلاگ چه چیزی یاد می‌گیرید؟</h3>
 <ul class="hi-list">
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>محاسبه متراژ نوار تیپ و لوله مورد نیاز زمین، بر پایه فاصله ردیف‌ها و طول قطعه‌ها</span></li>
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>انتخاب ضخامت نوار (۱۷۵ یا ۲۰۰ میکرون) و فاصله قطره‌چکان متناسب با بافت زمین و نوع کشت</span></li>
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>اصول نصب خط آبیاری، فیلتراسیون، شست‌وشوی دوره‌ای و جلوگیری از گرفتگی قطره‌چکان‌ها</span></li>
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>جمع‌آوری، انبارداری و نگهداری نوار برای استفاده در چند فصل کشت</span></li>
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>مقایسه نوار تیپ بغل دوخت و پلاکدار و انتخاب اقتصادی‌ترین گزینه برای هر مزرعه</span></li>
+<li><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>محاسبه متراژ نوار تیپ و لوله مورد نیاز زمین، بر پایه فاصله ردیف‌ها و طول قطعه‌ها</span></li>
+<li><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>انتخاب ضخامت نوار (۱۷۵ یا ۲۰۰ میکرون) و فاصله قطره‌چکان متناسب با بافت زمین و نوع کشت</span></li>
+<li><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>اصول نصب خط آبیاری، فیلتراسیون، شست‌وشوی دوره‌ای و جلوگیری از گرفتگی قطره‌چکان‌ها</span></li>
+<li><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>جمع‌آوری، انبارداری و نگهداری نوار برای استفاده در چند فصل کشت</span></li>
+<li><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>مقایسه نوار تیپ بغل دوخت و پلاکدار و انتخاب اقتصادی‌ترین گزینه برای هر مزرعه</span></li>
 </ul>
 <h3 class="hi-sub">آبیاری قطره‌ای در یک نگاه</h3>
 <ul class="hi-facts">
@@ -1392,9 +1394,9 @@ body:has(.main-col > .pagination) .home-intro { display: block; }
 <h3 class="box-title">مشاوره و پشتیبانی</h3>
 <div class="box-body">
 <ul class="trust-list">
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>انتخاب ضخامت و فاصله قطره‌چکان متناسب با زمین شما</span></li>
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>قیمت مستقیم از تولیدکننده، بدون واسطه</span></li>
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>پیش‌فاکتور ۲۴ ساعته و ارسال به سراسر ایران</span></li>
+<li><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>انتخاب ضخامت و فاصله قطره‌چکان متناسب با زمین شما</span></li>
+<li><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>قیمت مستقیم از تولیدکننده، بدون واسطه</span></li>
+<li><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>پیش‌فاکتور ۲۴ ساعته و ارسال به سراسر ایران</span></li>
 </ul>
 <a class="btn btn-primary" href="tel:+989134922013">تماس با کارشناس فنی</a>
 </div>
