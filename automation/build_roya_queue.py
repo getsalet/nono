@@ -154,7 +154,8 @@ def main():
                 'status': prev.get('status', 'pending'), 'attempts': prev.get('attempts', 0),
                 'title': prev.get('title', ''), 'slug': prev.get('slug', ''),
                 'generated_at': prev.get('generated_at'), 'published': prev.get('published', False),
-                'published_url': prev.get('published_url')}
+                'published_url': prev.get('published_url'), 'pid': prev.get('pid'),
+                'image_url': prev.get('image_url')}
         items.append(item)
         counter += 1
     QUEUE.write_text(json.dumps({'generated_at': __import__('datetime').datetime.now(

@@ -9,7 +9,7 @@ Env: ROYA_COUNT ROYA_TARGET ROYA_DRY_RUN ROYA_RETRY_FAILED ROYA_MIN_WORDS
      ROYA_MAX_WORDS ROYA_MIN_LINKS ROYA_MAX_LINKS ROYA_ATTEMPTS
      AGNES_API_KEY AGNES_API_KEYS AGNES_API_BASE AGNES_MODEL
 """
-import datetime, json, os, re, sys, time, urllib.request
+import datetime, json, os, re, sys, time, urllib.parse, urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -22,6 +22,7 @@ ART = ROOT / 'artifacts' / 'roya-backlink-queue'
 ITEMS = ART / 'items'
 PUBLISH_QUEUE = ART / 'publish-queue.json'
 STATUS_MD = ART / 'status.md'
+IMAGE_CACHE = ART / 'image-cache.json'
 
 BLOG = os.getenv('ROYA_BLOG_URL', 'https://afp.royablog.ir').rstrip('/')
 COUNT = int(os.getenv('ROYA_COUNT', '3'))
@@ -186,6 +187,51 @@ def build_prompt(item, links):
 {{"title":"...","slug":"latin-lowercase-hyphenated-max-60","meta_title":"...","meta_description":"...","focus_keyword":"...","tags":["..."],"html":"...","links_used":["..."]}}'''
 
 
+def encode_url(url):
+    parts = urllib.parse.urlsplit(url)
+    return urllib.parse.urlunsplit((parts.scheme, parts.netloc,
+                                    urllib.parse.quote(parts.path, safe='/%'), parts.query, parts.fragment))
+
+
+def target_image(item):
+    """The image already hosted on navar-abyari.ir for the matching city page.
+
+    Roya's upload centre is disabled and its edit endpoint returns HTTP 500, so each
+    blog post carries the same AI-generated image that the target city page uses.
+    """
+    url = item.get('target_url') or ''
+    if not url:
+        return ''
+    cache = load_json(IMAGE_CACHE, {})
+    if url in cache:
+        return cache[url]
+    found = ''
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        page = urllib.request.urlopen(req, timeout=60).read().decode('utf-8', 'ignore')
+        imgs = re.findall(r'https://navar-abyari\.ir/wp-content/uploads/[^"\' ]+?\.(?:webp|jpe?g|png)', page)
+        city = [u for u in imgs if 'navar-city-generated' in u]
+        article = [u for u in imgs if 'navar-article-generated' in u]
+        found = encode_url((city or article or imgs or [''])[0])
+    except Exception as exc:
+        print(f'image lookup failed for {url}: {str(exc)[:140]}', flush=True)
+    cache[url] = found
+    save_json(IMAGE_CACHE, cache)
+    return found
+
+
+def inject_image(item, obj, image_url):
+    """Put the city image first in the article; Roya uses the first body image as the post image."""
+    html = (obj.get('html') or '')
+    if not image_url or '<img' in html.lower():
+        return obj
+    alt = (item.get('site_title') or obj.get('title') or item.get('city_fa') or 'نوار آبیاری AFP')
+    alt = re.sub(r'\s+', ' ', alt.split('|')[0]).strip()[:90]
+    obj['html'] = f'<p><img src="{image_url}" alt="{alt}" width="1200" height="675"></p>' + html
+    obj['image_url'] = image_url
+    return obj
+
+
 def qa(item, obj, links):
     errors = []
     html = obj.get('html', '') or ''
@@ -236,6 +282,18 @@ def qa(item, obj, links):
         errors.append('numeric price claim')
     if re.search(r'```|<script|<style|style=|\*\*|!\[', html, flags=re.I):
         errors.append('markdown, script, style or image markup found')
+    imgs = re.findall(r'<img\b[^>]*>', html, flags=re.I)
+    if len(imgs) != 1:
+        errors.append(f'exactly one post image is required, found {len(imgs)}')
+    else:
+        src = re.search(r'src=["\']([^"\']+)["\']', imgs[0], flags=re.I)
+        alt = re.search(r'alt=["\']([^"\']+)["\']', imgs[0], flags=re.I)
+        if not src or not src.group(1).startswith('https://navar-abyari.ir/wp-content/uploads/'):
+            errors.append('post image must be hosted on navar-abyari.ir/wp-content/uploads')
+        if not alt or len(alt.group(1).strip()) < 4:
+            errors.append('post image needs a descriptive alt text')
+        if html.strip().find(imgs[0]) > 30:
+            errors.append('post image must be the first element of the article')
     latin = {w.lower() for w in re.findall(r'[A-Za-z]+', re.sub(r'<[^>]+>', ' ', html))}
     stray = sorted(w for w in latin if w not in LATIN_OK)
     if stray:
@@ -341,6 +399,7 @@ def main():
         item['attempts'] = int(item.get('attempts', 0)) + 1
         state['in_progress'] = item['key']
         links = approved_links(item, lib)
+        image_url = target_image(item)
         errors, obj = ['not generated'], None
         for attempt in range(1, ATTEMPTS + 1):
             try:
@@ -354,6 +413,7 @@ def main():
                 errors = ['agnes error: ' + str(exc)[:200]]
                 print(f'{item["key"]} attempt={attempt} {errors[0]}', flush=True)
                 continue
+            obj = inject_image(item, obj, image_url)
             errors, info = qa(item, obj, links)
             print(f'{item["key"]} attempt={attempt} words={info["words"]} links={len(info["links"])} errors={len(errors)}', flush=True)
             if not errors:
