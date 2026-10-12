@@ -1,0 +1,35 @@
+{
+  "source_id": "12300020002268-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 18,
+      "product_height_percent": 30,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Watermark is missing (the required bottom-right 'AFP | 09134922013' watermark is absent).",
+        "The scene contains a second cartoned product (the box on the left with 'AFP' printed on it) and a large second cartoned roll, violating the 'exactly one AFP... carton roll' requirement."
+      ],
+      "correction_prompt": "Regenerate the image to show exactly one AFP white and blue drip-tape roll on the concrete pad, removing the extra cartons on the left and right background, and add the required bottom-right watermark 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Contains multiple commercial packages (two brown AFP boxes in the background), which is a hard reject condition requiring exactly one integrated carton.",
+        "Contains a second commercial package (the coiled black drip tape/hose in the bottom-left), which conflicts with the 'single roll' and 'zero second commercial package' constraints."
+      ],
+      "correction_prompt": "Remove all background boxes and the coiled tape in the bottom-left corner, keeping only the single white-and-blue drip tape roll integrated at the far edge of the concrete pad with the fixed filtration hardware.",
+      "attempt": 2
+    }
+  ]
+}

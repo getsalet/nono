@@ -1,0 +1,65 @@
+{
+  "source_id": "1230004001583-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 25,
+      "product_height_percent": 35,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Hard reject: Second commercial package (box) present in the background."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right to ensure only one AFP roll and infrastructure equipment are visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 20,
+      "product_width_percent": 27,
+      "product_height_percent": 45,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "The image contains a second commercial package (an open cardboard box with a black roll inside), which is a hard reject.",
+        "There is a second roll (black) visible inside the box, violating the 'exactly one roll' constraint.",
+        "The required exact watermark 'AFP | 09134922013' is missing; instead, there is a different watermark 'AFP | 09134922013' which does not match the specific string required in the instructions."
+      ],
+      "correction_prompt": "Remove the open cardboard box and the black roll inside it. Ensure only the single white-and-blue AFP drip tape roll is visible. Replace the current bottom-right watermark with the exact text 'AFP | 09134922013'.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 10,
+      "product_width_percent": 22.5,
+      "product_height_percent": 38,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "Multiple commercial packages/boxes are visible in the background, violating the 'exactly one AFP carton' requirement.",
+        "Layflat hose and pipe are visible (connected to the filter and lying on the pad), which are hard rejects."
+      ],
+      "correction_prompt": "Remove all background boxes, remove the black hose and pipe from the foreground and background. Ensure exactly one AFP white-and-blue drip-tape carton is visible. Maintain the fixed filter and gauges.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 24,
+      "product_height_percent": 32,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Exact image role 'HEADWORKS DETAIL' satisfied: elevated equipment still life on concrete pad with fixed filter/gauge/regulator/manifold.",
+        "Correct product: one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+        "Required watermark 'AFP | 09134922013' is present and correctly formatted.",
+        "No visible people or body parts.",
+        "Product is physically integrated with a correct contact shadow and plausible perspective.",
+        "Background context (soil, crop rows, distant building, unattended equipment) is appropriate and not a hard reject."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}

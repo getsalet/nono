@@ -1,0 +1,51 @@
+{
+  "source_id": "1240003002165-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 44,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "The correct bottom-right watermark is 'AFP | 09134922013'; the image displays 'AFP | 09134922013' with an erroneous extra '2' at the end.",
+        "Multiple commercial packages are present: the primary roll, a white box (right), and a brown box (left), whereas exactly one roll is required.",
+        "The role mandates the integrated carton be at the far edge; it is centrally/right-foreground placed, breaking the specific 'far edge' blueprint."
+      ],
+      "correction_prompt": "Remove the extra '2' from the bottom-right watermark to match 'AFP | 09134922013'. Delete the brown and white boxes to ensure exactly one roll is visible. Move the AFP roll to the far edge of the concrete pad.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 33,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Presence of a second commercial package (the cardboard box behind the roll) is a hard reject."
+      ],
+      "correction_prompt": "Remove the cardboard box behind the roll to ensure the image features exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 88,
+      "product_width_percent": 23,
+      "product_height_percent": 42,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Product is exactly one white and blue cylindrical drip-tape carton roll with the required AFP | 09134922013 watermark.",
+        "No people or human body parts are visible.",
+        "The product's width (23%) and height (42%) are within the specified tolerance ranges (18-38% and up to 70%).",
+        "The scene features elevated equipment (filter, gauges, manifold) on a concrete pad, which aligns with the HEADWORKS DETAIL role and the presence of a matching AFP carton.",
+        "Grounding shadows and perspective are physically plausible and correctly oriented."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
