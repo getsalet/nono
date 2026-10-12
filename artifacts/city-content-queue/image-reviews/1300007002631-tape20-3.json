@@ -1,0 +1,50 @@
+{
+  "source_id": "1300007002631-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 28,
+      "product_height_percent": 32,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "The image contains a second commercial package (a large cardboard carton on the left side) in addition to the primary roll, violating the 'exactly one AFP carton roll' requirement.",
+        "An unopened bottle/container is partially visible in the far right foreground, which is a hard reject trigger.",
+        "The watermark at the bottom right is rendered with the incorrect identifier 'AFP | 09134922013' instead of the required 'AFP | 09134922013'."
+      ],
+      "correction_prompt": "Remove the secondary cardboard carton on the left and the bottle on the right. Ensure only one AFP drip-tape roll is present as the product focus. Correct the bottom-right watermark text to 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "The image contains two AFP packages (the cylindrical roll in the foreground and the cardboard box in the background), which violates the 'zero second commercial package' rule."
+      ],
+      "correction_prompt": "Regenerate the image showing only the single white-and-blue wide low cylindrical drip-tape carton roll. Remove the cardboard box in the background entirely. Keep the irrigation equipment still life setup on the concrete pad.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 75,
+      "product_width_percent": 25,
+      "product_height_percent": 42,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Correct product identity: AFP white-and-blue wide cylindrical drip-tape carton roll.",
+        "Meets role blueprint: elevated still life on a clean concrete pad with fixed filter, pressure gauges, and regulators.",
+        "No hard rejects: zero people, body parts, or commercial containers visible.",
+        "Product dimensions are within the approved envelopes (width < 38%, height < 70%)."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

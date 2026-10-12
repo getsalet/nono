@@ -1,0 +1,77 @@
+{
+  "source_id": "1290009002898-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 23,
+      "product_height_percent": 45,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Second commercial package present",
+        "Visible text gibberish on roll labels (not 'Drip Irrigation Tape')"
+      ],
+      "correction_prompt": "Remove the cardboard box on the right. Correct the label text on the white roll to clearly read 'Drip Irrigation Tape' in sharp, legible font.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 23,
+      "product_height_percent": 38,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "The mandatory role 'HEADWORKS DETAIL' requires one integrated AFP carton to be placed at the 'far edge' of the equipment. In this image, the product is placed prominently in the foreground center-right, which fails the spatial requirements of the role.",
+        "Instead of the required integrated carton, the image shows a second, separate open box (with wheels) at the back, which violates the 'single integrated carton' and 'no second commercial package' constraints."
+      ],
+      "correction_prompt": "Regenerate the image to match the 'HEADWORKS DETAIL' role: an elevated still-life of irrigation filters, gauges, and a manifold on a concrete pad. Place the single AFP drip-tape carton at the far edge of this still-life composition. Remove the separate wheeled box and the foreground roll. Keep the bottom-right watermark intact.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 28,
+      "product_height_percent": 48,
+      "product_x_center_percent": 72,
+      "reasons": [
+        "Product is not a wide cylindrical drip-tape roll; it is a vertical spool/carton (prohibited 'cylindrical roll' form factor).",
+        "Contains a spray bottle/liquid container (visible white bottle on the rig), which is a hard reject.",
+        "Contains second commercial packages (open cardboard box with logo) in the frame.",
+        "Contains prohibited pressure gauge and filter/regulator hardware; 'HEADWORKS DETAIL' requires fixed infrastructure, not a portable mobile cart unit.",
+        "Watermark is not the exact required string ('09134922013' vs '09134922013').",
+        "Perspective mismatch: background is a far-off horizon/fields while product sits on a low pad, creating depth discontinuity."
+      ],
+      "correction_prompt": "Replace mobile cart with fixed irrigation infrastructure. Ensure product is a wide, low, cylindrical spool (not vertical). Remove all bottles, cans, and secondary packaging. Keep only one white and blue AFP roll on a concrete pad. Ensure exact watermark 'AFP | 09134922013'. Maintain perspective alignment.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 20,
+      "product_height_percent": 30,
+      "product_x_center_percent": 67,
+      "reasons": [
+        "Second commercial package (large cardboard box) is present behind the main roll"
+      ],
+      "correction_prompt": "Remove the large cardboard box in the background to ensure only one integrated AFP carton is visible.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image contains two AFP products: a white-and-blue roll in the foreground and a brown cardboard carton box in the background. The brief strictly demands exactly one wide low cylindrical drip-tape carton roll and forbids a 'second commercial package'.",
+        "The required white-and-blue roll appears to be placed on the same level concrete pad as the filter stand, whereas the role blueprint (HEADWORKS DETAIL) and the 'far edge' instruction suggest an elevation or depth that distinguishes the product from the primary equipment layout."
+      ],
+      "correction_prompt": "Regenerate the image to include exactly one AFP white-and-blue wide low cylindrical drip-tape roll. Remove the second AFP cardboard box in the background. Ensure the roll is positioned at the far edge of the clean concrete pad, integrated into the elevated equipment still life with the fixed filter, pressure gauge, regulator and manifold.",
+      "attempt": 5
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "source_id": "12900011001369-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 62,
+      "product_width_percent": 24,
+      "product_height_percent": 33,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "The foreground product is not wide/low; its height is too significant relative to its width.",
+        "An open commercial cardboard box (banned 'second commercial package') is visible in the background, which violates the 'exactly one' AFP carton rule."
+      ],
+      "correction_prompt": "Replace the foreground roll with a wider, flatter cylindrical drip-tape roll (width 18-38%, height <20% of frame) and remove the open cardboard box in the background.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 15,
+      "product_height_percent": 35,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Presence of a second open commercial carton box with 'AFP' branding, violating the 'zero second commercial package' constraint.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 15% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the large open carton box in the background right. Ensure only the single white-and-blue drip-tape roll remains as the primary commercial product visible. Enlarge the product group from 15% to 18-38% of frame width.",
+      "attempt": 2
+    }
+  ]
+}

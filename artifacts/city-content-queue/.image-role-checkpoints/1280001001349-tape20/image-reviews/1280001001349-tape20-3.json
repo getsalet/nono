@@ -1,0 +1,39 @@
+{
+  "source_id": "1280001001349-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 38,
+      "product_height_percent": 50,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (AFP box) visible in the background",
+        "Bottle/container detected (silver pressure vessel/tank in the equipment rig)",
+        "Missing required bottom-right watermark 'AFP | 09134922013'"
+      ],
+      "correction_prompt": "Remove the silver bottle/vessel and the background AFP box. Retain only the pressure gauge, hose, and the white-and-blue AFP drip tape roll. Add the required watermark 'AFP | 09134922013' to the bottom right.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 27,
+      "product_height_percent": 29,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "Second commercial package present: A large cardboard box is visible in the background, violating the single-object rule.",
+        "Fake headline/label: The black bar with text at the bottom is a visual overlay/watermark, not the required physical string 'AFP | 09134922013'.",
+        "Role Mismatch: The prompt requires the product to be at the 'far edge', but the roll is in the foreground.",
+        "Text Gibberish: The label on the product roll reads 'Drip Irrigation Tsp' instead of 'Tape'.",
+        "Geometry/Context: While the equipment still life elements are present, the inclusion of the second box and the overlay bar makes this an immediate hard reject."
+      ],
+      "correction_prompt": "Regenerate to show only the single white and blue AFP tape roll. Remove the cardboard box. Place the roll on the far edge of the concrete pad. Integrate the string 'AFP | 09134922013' directly into the scene as a physical tag or label, not a screen overlay. Correct the text on the roll to read 'Drip Irrigation Tape'.",
+      "attempt": 2
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "source_id": "1300007002631-tape20",
+  "family": "tape20",
+  "kind": 2,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 70,
+      "product_height_percent": 40,
+      "product_x_center_percent": 50,
+      "reasons": [
+        "Hard reject: two commercial package rolls are visible in the frame instead of one",
+        "Hard reject: two straight drip-tape segments are visible, violating the 'one straight segment' requirement",
+        "Strict blueprint violation: The image is not a 'steep near-overhead' shot; it is a side-angle low perspective",
+        "Strict blueprint violation: The prompt requested one integrated carton and one tape segment, but the image shows two cartons and two tape segments",
+        "machine-enforced bounding-box check failed: Reduce the product group from 70% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Regenerate with a single AFP carton roll and a single straight drip-tape segment. Use a steep near-overhead camera angle on dark soil. Ensure exactly one roll and one tape line are visible. Reduce the product group from 70% to 18-38% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 24,
+      "product_height_percent": 42,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Product meets mandated role: one integrated AFP white-and-blue carton roll with straight drip-tape segment showing repeated emitters",
+        "Within width (18-38%) and height (≤70%) envelope",
+        "No people/body parts, no extra containers/packages, plausible contact shadow and perspective",
+        "Required bottom-right watermark present"
+      ],
+      "correction_prompt": "",
+      "attempt": 2
+    }
+  ]
+}

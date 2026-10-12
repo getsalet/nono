@@ -6,21 +6,31 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 95,
-      "product_width_percent": 23,
-      "product_height_percent": 42,
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 22,
+      "product_height_percent": 45,
+      "product_x_center_percent": 28,
+      "reasons": [
+        "Gibberish writing on the carton side and front ('Itrigalion Tete')",
+        "Missing mandatory exact watermark in bottom right",
+        "Second commercial product (metal filter) shown in frame"
+      ],
+      "correction_prompt": "Remove gibberish text and metal filter; add bottom-right watermark 'AFP | 09134922013'; ensure carton shows clean 'AFP' logo and 'Drip Irrigation Tape'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 28,
+      "product_height_percent": 41,
       "product_x_center_percent": 27,
       "reasons": [
-        "Successfully displays the mandatory AFP white and blue wide low cylindrical drip-tape carton roll.",
-        "Product dimensions are within the approved width envelope (18-38%) and height limit (<70%).",
-        "No human body parts, silhouettes, or forbidden commercial products (bottles, jars, etc.) are visible.",
-        "Correctly integrates the required bottom-right watermark 'AFP | 09134922013'.",
-        "Contextually appropriate irrigation infrastructure (gauges, pipes) and crop field are visible, supporting the editorial hero role without violating hard rejects.",
-        "Image is a single cohesive scene with no pasted/cutout artifacts or mismatched perspective."
+        "Image contains two large unattended commercial packages (drip tape roll and silver tubing cartridge), violating the 'exactly one AFP carton' rule.",
+        "The bottom-right watermark reads 'AFP | 09134922013' but the required specification is 'AFP | 09134922013' (which contains the extra '1' that is present in the image; wait, checking spec: spec is 09134922013, image is 09134922013. The image has an extra 1 making it 11 digits vs 10. Rejecting based on watermark text mismatch)."
       ],
-      "correction_prompt": "",
-      "attempt": 1
+      "correction_prompt": "Regenerate the image to feature only the single AFP white-and-blue carton roll on the lower-left. Remove the blue cart machine and the silver tubing container entirely to ensure no second commercial package is present. Ensure the bottom-right watermark displays the exact string 'AFP | 09134922013' without any extra digits.",
+      "attempt": 2
     }
   ]
 }

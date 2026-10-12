@@ -7,130 +7,33 @@
   "history": [
     {
       "pass": false,
-      "score": 60,
-      "product_width_percent": 17,
-      "product_height_percent": 28,
-      "product_x_center_percent": 62,
-      "reasons": [
-        "Second commercial package (AFP carton box) visible in the background violates the requirement for 'exactly one' AFP carton roll.",
-        "Text on the product label is partially gibberish/distorted ('Drip Irrigation Tap' vs 'Tape') rather than clean professional typography.",
-        "The product height (28%) is significantly below the approved minimum envelope (18%) when combined with the small width (17%), failing to meet the required visual mass for a 'wide' roll detail shot.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 17% to 18-38% of frame width."
-      ],
-      "correction_prompt": "Remove the secondary cardboard box in the background. Ensure the roll is the only visible AFP product. Enlarge the roll to meet minimum height and width thresholds. Fix label text to 'Drip Irrigation Tape' with sharp, legible typography. Maintain the headworks equipment and concrete pad setup. Enlarge the product group from 17% to 18-38% of frame width.",
-      "attempt": 1
-    },
-    {
-      "pass": false,
       "score": 40,
-      "product_width_percent": 25,
-      "product_height_percent": 50,
-      "product_x_center_percent": 72,
+      "product_width_percent": 30,
+      "product_height_percent": 40,
+      "product_x_center_percent": 65,
       "reasons": [
-        "Second commercial package detected: there is a second empty cardboard box located behind the product.",
-        "The secondary packaging contradicts the requirement for exactly one AFP carton roll and the hard reject for a second commercial package.",
-        "The background box with 'AFP' branding is a hard reject element."
+        "Second commercial package (cardboard box) present in frame",
+        "Watermark 'AFP | 09134922013' has extra black background container",
+        "Filter assembly includes pressure gauges which fall under hard reject rule",
+        "Blue regulator/filter unit appears to be a distinct container/bottle"
       ],
-      "correction_prompt": "Remove the second cardboard box in the background to ensure only one AFP roll is visible. Retain the drip tape roll, the irrigation equipment (filter, gauges), and the required bottom-right watermark.",
+      "correction_prompt": "Remove the cardboard box. Remove the pressure gauges and blue regulator/filter from the assembly. Retain only a clean concrete pad with a single integrated AFP drip-tape roll and basic unmarked manifold connectors. Ensure the required watermark text is present without a black background container.",
       "attempt": 1
     },
     {
-      "pass": false,
-      "score": 30,
-      "product_width_percent": 15,
-      "product_height_percent": 15,
-      "product_x_center_percent": 70,
+      "pass": true,
+      "score": 90,
+      "product_width_percent": 20,
+      "product_height_percent": 22,
+      "product_x_center_percent": 65,
       "reasons": [
-        "Presence of a second commercial package (the brown cardboard box next to the roll)",
-        "Missing 'Headworks Detail' role blueprint: lacks an integrated filter, pressure gauge, regulator, and manifold configuration",
-        "Product width is approximately 15%, which is below the approved 18% minimum threshold",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 15% to 18-38% of frame width."
+        "Single AFP white-and-blue wide low cylindrical drip-tape roll present.",
+        "Roll dimensions are well within the approved width (18-38%) and height (<=70%) envelopes.",
+        "No people, human body parts, or prohibited containers (bottles, jars, fertilizer) are visible.",
+        "Watermark 'AFP | 09134922013' is present and correct in the bottom-right corner.",
+        "Scene matches the 'HEADWORKS DETAIL' role blueprint: equipment still life on a concrete pad with integrated carton."
       ],
-      "correction_prompt": "Remove the brown cardboard box. Redesign the scene to clearly feature an integrated irrigation headworks system including a sediment filter, pressure gauge, and manifold. Increase the scale of the white and blue drip tape roll so its width occupies between 18 and 38 percent of the frame. Ensure the watermark 'AFP | 09134922013' remains in the bottom-right. Enlarge the product group from 15% to 18-38% of frame width.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 45,
-      "product_width_percent": 24,
-      "product_height_percent": 35,
-      "product_x_center_percent": 64,
-      "reasons": [
-        "Contains a second commercial package (carton box) to the right of the roll, which is a hard reject.",
-        "Contains a coiled hose/tape spool on the cart, which violates the 'single roll' requirement.",
-        "The product bounding box excludes the carton on the right, which is not part of the required integrated carton at the far edge."
-      ],
-      "correction_prompt": "Remove the brown cardboard carton on the right and the coiled blue hose/tape on the cart to the left. Keep only the single white and blue cylindrical AFP drip-tape roll integrated with the filtration setup.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 40,
-      "product_width_percent": 23,
-      "product_height_percent": 32,
-      "product_x_center_percent": 62,
-      "reasons": [
-        "Second commercial package: An AFP cardboard carton box containing irrigation tape is clearly visible in the background to the right of the main product, which violates the strict 'one AFP carton roll' requirement and the rule against a 'second commercial package'.",
-        "Watermark text distortion: While the bottom-right watermark is present, the text appears rendered with a non-standard font and is partially obscured by the drop shadow effect. The text is legible but slightly garbled compared to the precise string 'AFP | 09134922013', which typically triggers a hard reject in automated pipelines for gibberish or illegible text."
-      ],
-      "correction_prompt": "Regenerate the image to strictly feature ONLY a single white and blue AFP drip-tape carton roll on the concrete pad. Completely remove the brown cardboard box in the background. Ensure the bottom-right watermark 'AFP | 09134922013' is rendered clearly and legibly without distortion or overlapping artifacts.",
-      "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 35,
-      "product_width_percent": 16,
-      "product_height_percent": 25,
-      "product_x_center_percent": 63,
-      "reasons": [
-        "The product is depicted as a roll with a visible center hole, which is physically impossible for a carton (the product is identified as a carton in the prompt).",
-        "The packaging lacks realistic structural details (seams, box shape) and appears as a generic cylindrical roll with a white label. There are no visible side flaps or box corners. The label also contains illegible, low-detail text on the sides. The requirement specifically calls for a 'wide low cylindrical drip-tape carton roll', but the visual is of a generic roll of tubing, not a box.",
-        "The prompt requires a 'carton' but the image shows a roll.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 16% to 18-38% of frame width."
-      ],
-      "correction_prompt": "Replace the generic roll in the foreground with a white-and-blue wide, low, rectangular carton box containing a drip tape roll. Ensure the carton has visible box corners, seams, and printed text. Keep the water mark 'AFP | 09134922013' in the bottom right. Keep the concrete pad, filter, gauge, regulator, and manifold, and the open box with the logo in the background. Enlarge the product group from 16% to 18-38% of frame width.",
-      "attempt": 2
-    },
-    {
-      "pass": false,
-      "score": 45,
-      "product_width_percent": 24,
-      "product_height_percent": 42,
-      "product_x_center_percent": 68,
-      "reasons": [
-        "Hard reject: The image contains a second commercial package (a brown AF... carton box) to the right of the product roll, violating the 'exactly one roll' and 'zero second commercial package' rules.",
-        "Hard reject: The mandatory watermark text is garbled; it displays as 'AFP | 09134922013' instead of the required 'AFP | 09134922013'.",
-        "Layout conflict: The mandatory 'HEADWORKS DETAIL' blueprint requires the carton to be an integrated part of the elevated equipment stack. Here, it is placed loose on the concrete pad alongside a separate second box."
-      ],
-      "correction_prompt": "Regenerate the image. Remove the brown carton box on the right. Keep only the single white and blue cylindrical drip-tape roll. Integrate the roll into the headworks equipment stack (e.g., stacked behind the manifold) to satisfy the 'integrated AFP carton' requirement. Correct the bottom-right watermark text to exactly 'AFP | 09134922013'. Ensure no other people or bottles are present.",
-      "attempt": 3
-    },
-    {
-      "pass": false,
-      "score": 40,
-      "product_width_percent": 22,
-      "product_height_percent": 45,
-      "product_x_center_percent": 62,
-      "reasons": [
-        "Two distinct commercial packages are visible (a cylindrical roll and a rectangular cardboard box), violating the 'exactly one' rule.",
-        "The mandatory AFP watermark is missing from the image."
-      ],
-      "correction_prompt": "Remove the rectangular cardboard box on the right to leave only the cylindrical tape roll. Add the text 'AFP | 09134922013' as a watermark in the bottom-right corner.",
-      "attempt": 1
-    },
-    {
-      "pass": false,
-      "score": 0,
-      "product_width_percent": 0,
-      "product_height_percent": 0,
-      "product_x_center_percent": 0,
-      "reasons": [
-        "The image contains a second commercial package (a cardboard box with the AFP logo) in addition to the drip tape roll, violating the 'zero second commercial package' rule.",
-        "There is a blue cylindrical container on the left that resembles a pressure tank or pump, which violates the prohibition on bottle, jar, canister, or container types.",
-        "The presence of a second roll/box and a container results in a hard reject.",
-        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
-      ],
-      "correction_prompt": "Remove the second cardboard box from the right side. Remove the blue cylindrical pressure tank and replace it with a standard fixed filter, pressure gauge, and manifold infrastructure on a concrete pad. Ensure the primary AFP drip-tape roll is the only commercial packaging shown. Enlarge the product group from 0% to 18-38% of frame width.",
+      "correction_prompt": "",
       "attempt": 2
     }
   ]
