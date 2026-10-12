@@ -1,0 +1,64 @@
+{
+  "source_id": "1230004002778-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 30,
+      "product_width_percent": 25,
+      "product_height_percent": 38,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (kraft carton box) is visible in the background, violating the 'exactly one' rule.",
+        "Background contains hand-pump sprayers which fall under the hard reject criteria for 'bottle, fertilizer or pesticide container'.",
+        "Watermark reads '09134922013' instead of the required '09134922013' suffix."
+      ],
+      "correction_prompt": "Remove the kraft cardboard carton box in the background. Remove all hand-pump sprayers, bottles, and pesticide containers. Keep the concrete pad, fixed filtration system, and single white AFP drip-tape roll. Ensure the bottom-right watermark reads exactly 'AFP | 09134922013'.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 21,
+      "product_height_percent": 32,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Second commercial package visible in the background (an 'AFP' cardboard box)",
+        "Fake/gibberish headline text on the product packaging ('Dril Utrirgation Tape')"
+      ],
+      "correction_prompt": "Regenerate the image to remove the cardboard box in the background and correct the text on the drip tape roll to be legible and accurate.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 38,
+      "product_x_center_percent": 66,
+      "reasons": [
+        "Presence of a second commercial package (the carton box in the background right)."
+      ],
+      "correction_prompt": "Regenerate the image with only the single white and blue AFP drip-tape roll, removing the background carton box completely.",
+      "attempt": 3
+    },
+    {
+      "pass": true,
+      "score": 82,
+      "product_width_percent": 24,
+      "product_height_percent": 40,
+      "product_x_center_percent": 62,
+      "reasons": [
+        "Product is a single white and blue cylindrical drip tape roll positioned in the foreground.",
+        "Zero people, human body parts, or human silhouettes are present.",
+        "The background contains fixed infrastructure (filters, gauges, hose reels) and distant farm equipment as per the role blueprint, without violating the 'single roll' rule.",
+        "Dimensions of the roll are physically plausible and fit within the 18-38% width and <70% height envelope.",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner."
+      ],
+      "correction_prompt": "",
+      "attempt": 4
+    }
+  ]
+}
