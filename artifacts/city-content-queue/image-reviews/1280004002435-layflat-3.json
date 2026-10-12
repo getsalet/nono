@@ -1,0 +1,55 @@
+{
+  "source_id": "1280004002435-layflat",
+  "family": "layflat",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 40,
+      "product_width_percent": 83,
+      "product_height_percent": 50,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The image contains a visible human silhouette (operator) sitting in the tractor cab in the background.",
+        "The combined width of the two product objects exceeds the 82% threshold, appearing to take up approximately 83% of the frame.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 83% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Remove the person visible in the tractor cab, ensuring zero people or body parts in the frame. Slightly decrease the relative width of the two product coils so their combined bounding box is 80% or less of the frame width. Reduce the product group from 83% to 25-82% of frame width.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "product_width_percent": 95,
+      "product_height_percent": 45,
+      "product_x_center_percent": 49,
+      "reasons": [
+        "The combined product bounding box (from the left edge of the packaged coil to the right edge of the black coil) spans 95% of the image width, which exceeds the maximum limit of 82%.",
+        "The pair is too wide for the frame relative to the other scene elements, violating the dimension constraint.",
+        "machine-enforced bounding-box check failed: Reduce the product group from 95% to 25-82% of frame width."
+      ],
+      "correction_prompt": "Regenerate the image, scaling the two coil products down to approximately 70% of their current width. Ensure the combined bounding box stays within the 25-82% frame width limit while keeping the objects on the concrete pad and distinct. Reduce the product group from 95% to 25-82% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 95,
+      "product_width_percent": 50,
+      "product_height_percent": 44,
+      "product_x_center_percent": 36,
+      "reasons": [
+        "Meets the mandatory HEADWORKS DETAIL role blueprint with elevated still life on a concrete pad featuring a fixed pump, gauge, and manifold.",
+        "Contains exactly the two required objects: one packaged AFP coil and one bare black woven coil.",
+        "The combined product width is approximately 50%, falling well within the 25-82% acceptability range.",
+        "Zero people or human body parts are present in the image.",
+        "Perspective, contact shadows, and physical integration are plausible with no pasted appearance or distorted dimensions.",
+        "Required bottom-right watermark 'AFP | 09134922013' is clearly visible and correctly formatted.",
+        "Fixed pump, filter, and other infrastructure elements are present without creating a false 'third commercial product' issue."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}

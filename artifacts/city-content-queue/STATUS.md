@@ -2,15 +2,15 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-12T17:33:10+00:00`
+- آخرین بروزرسانی: `2026-10-12T17:44:09+00:00`
 - وضعیت صف: **ready_with_failures**
-- پیشرفت: **1133 از 1894 (59.82٪)**
-- تکمیل‌شده: **1133**
+- پیشرفت: **1137 از 1894 (60.03٪)**
+- تکمیل‌شده: **1137**
 - در حال پردازش: **0**
-- در انتظار: **24**
-- آماده انتخاب در اجرای بعدی: **24**
+- در انتظار: **17**
+- آماده انتخاب در اجرای بعدی: **17**
 - در انتظار ولی قفل‌شده در سقف تلاش: **0**
-- ناموفق: **737**
+- ناموفق: **740**
 - مسدودشده توسط مدل تصویر: **0**
 - مدل متن و بازبینی: `agnes-3.0-flash`
 - مدل تصویر: `agnes-image-2.5-flash`
@@ -32,6 +32,10 @@
 
 ## آخرین پست‌های تکمیل‌شده
 
+- **قاضی** — خراسان شمالی — `layflat` — 1158 کلمه — `2026-10-12T17:40:23+00:00`
+- **لاهرود** — اردبیل — `layflat` — 1408 کلمه — `2026-10-12T17:39:50+00:00`
+- **طبس** — خراسان جنوبی — `tape20` — 1136 کلمه — `2026-10-12T17:39:32+00:00`
+- **لوجلی** — خراسان شمالی — `layflat` — 1097 کلمه — `2026-10-12T17:39:13+00:00`
 - **النی** — اردبیل — `layflat` — 1552 کلمه — `2026-10-12T17:32:47+00:00`
 - **گرمدره** — البرز — `tape20` — 1412 کلمه — `2026-10-12T17:28:12+00:00`
 - **پیشوا** — تهران — `layflat` — 1373 کلمه — `2026-10-12T17:15:40+00:00`
@@ -48,23 +52,19 @@
 - **فاروج** — خراسان شمالی — `tape20` — 1146 کلمه — `2026-10-12T16:39:39+00:00`
 - **اسلامیه** — خراسان جنوبی — `tape20` — 1336 کلمه — `2026-10-12T16:37:37+00:00`
 - **چهارباغ** — البرز — `tape20` — 1398 کلمه — `2026-10-12T16:32:10+00:00`
-- **ارسک** — خراسان جنوبی — `tape20` — 1421 کلمه — `2026-10-12T16:30:01+00:00`
-- **آیسک** — خراسان جنوبی — `tape20` — 1266 کلمه — `2026-10-12T16:27:17+00:00`
-- **درح** — خراسان جنوبی — `tape20` — 1528 کلمه — `2026-10-12T16:19:18+00:00`
-- **سربیشه** — خراسان جنوبی — `tape20` — 1518 کلمه — `2026-10-12T16:18:15+00:00`
 
 ## خطاهای اخیر
 
-- **رامیان** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012173307250410997CtTDH4yT)","type":"AgnesAI_error"}}`
-- **لاهرود** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 202610121730254095748796zyN61Ti)","type":"AgnesAI_error"}}`
-- **قنوات** — `layflat`: `Editorial review failed: blocked utility link`
-- **کوراییم** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 2026101217293144385234P3oJIJCv)","type":"AgnesAI_error"}}`
-- **آسارا** — `tape20`: `HTTP Error 401: Unauthorized`
-- **کلور** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012172902520379934hEJtq9Lb)","type":"AgnesAI_error"}}`
-- **سلفچگان** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012172847719621126g1wQ9AhX)","type":"AgnesAI_error"}}`
-- **جاجرم** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012172841758553484Mqk0mC1k)","type":"AgnesAI_error"}}`
-- **دوزین** — `layflat`: `HTTP Error 403: Forbidden`
-- **نظرآباد** — `tape20`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012172826710415670LBB594A3)","type":"AgnesAI_error"}}`
+- **تیتکانلو** — `layflat`: `HTTP Error 401: Unauthorized`
+- **گرمه** — `layflat`: `Image-set diversity gate rejected the 3-image editorial set after 3 rounds`
+- **غلامان** — `layflat`: `Agnes 3 draft QA failed: link count 8 invalid`
+- **قرق** — `layflat`: `visual reviewer unavailable after retries; candidate checkpoint preserved`
+- **کلاله** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012174131693747405yiesQh0w)","type":"AgnesAI_error"}}`
+- **سعیداباد** — `layflat`: `HTTP Error 403: Forbidden`
+- **سلفچگان** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20261012174049484596822N5vgB0W2)","type":"AgnesAI_error"}}`
+- **نظرآباد** — `tape20`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261012174008114217142yw9pklmy)","type":"AgnesAI_error"}}`
+- **مرادلو** — `layflat`: `HTTP Error 403: Forbidden`
+- **ایور** — `layflat`: `HTTP Error 403: Forbidden`
 
 ## فایل‌های خروجی
 

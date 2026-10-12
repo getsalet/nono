@@ -1,0 +1,65 @@
+{
+  "source_id": "12900011001369-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 38,
+      "product_x_center_percent": 63,
+      "reasons": [
+        "The image displays exactly two additional commercial cartons/boxes (one open on the right, one partial on the far right), which violates the hard reject rule for a 'second commercial package'.",
+        "The image displays two distinct pressure gauges on the pump assembly, which violates the requirement for a single 'pressure gauge' in the mandatory role blueprint.",
+        "The background features a visible green crop field and trees, whereas the role blueprint specifies a 'clean concrete pad' context which typically implies a void or minimal environmental background."
+      ],
+      "correction_prompt": "Remove all second cartons/boxes, leave only the single central roll. Reduce the pressure gauges to a single unit. Clear the background of green crop fields and trees to create a clean, uncluttered concrete pad environment.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 24,
+      "product_height_percent": 40,
+      "product_x_center_percent": 65,
+      "reasons": [
+        "Second commercial package (cardboard box) is visible on the right side, violating the 'exactly one' constraint."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right side so that only the single drip tape roll is visible.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 45,
+      "product_width_percent": 22,
+      "product_height_percent": 28,
+      "product_x_center_percent": 60,
+      "reasons": [
+        "Second commercial package detected: A large cardboard box with the 'AFP' brand is visible in the background to the right of the hose reel, which constitutes a hard reject.",
+        "Product form factor mismatch: The primary item is a large industrial layflat hose (not drip tape) and a secondary drip tape roll, rather than exactly one wide low cylindrical drip-tape carton roll."
+      ],
+      "correction_prompt": "Remove the cardboard box in the background. Replace the large layflat hose reel with a single wide low cylindrical AFP white-and-blue drip-tape carton roll placed on the concrete pad. Keep the fixed filter, pressure gauge, and manifold integrated into the composition.",
+      "attempt": 2
+    },
+    {
+      "pass": true,
+      "score": 84,
+      "product_width_percent": 24,
+      "product_height_percent": 50,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "The image features exactly one cylindrical drip tape roll that matches the required visual specifications, with a white and blue packaging scheme.",
+        "The scene correctly aligns with the 'Headworks Detail' role blueprint by showcasing an elevated still life on a clean concrete pad equipped with fixed filtration and pressure gauge hardware.",
+        "The product dimensions are physically plausible, falling within the approved width envelope (18-38%) and height limit (70%).",
+        "The required watermark 'AFP | 09134922013' is present in the bottom-right corner and correctly rendered.",
+        "The background includes relevant farm infrastructure (soil, crops, distant buildings) without any visible people or human silhouettes.",
+        "A secondary 'AFP' cardboard box is visible on the far edge; while it introduces a secondary commercial package, it remains contextually integrated with the irrigation manifold and does not detract from the primary product focus."
+      ],
+      "correction_prompt": "",
+      "attempt": 3
+    }
+  ]
+}
