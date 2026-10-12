@@ -6,20 +6,70 @@
   "fast_mode": false,
   "history": [
     {
-      "pass": true,
-      "score": 92,
+      "pass": false,
+      "score": 30,
       "product_width_percent": 27,
       "product_height_percent": 38,
+      "product_x_center_percent": 61,
+      "reasons": [
+        "Two commercial package objects are present: a cardboard carton on the right and the cylindrical roll in the center (hard reject for 'second commercial package').",
+        "The cardboard box contains gibberish/illegible text, which triggers a hard reject for 'gibberish writing'."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right and any other secondary commercial package, ensuring only one AFP drip-tape roll is visible. Rewrite the carton text to be legible or remove it entirely.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 24,
+      "product_height_percent": 41,
+      "product_x_center_percent": 61,
+      "reasons": [
+        "The image contains a second commercial package (the brown cardboard box with AFP logo) which is a hard reject.",
+        "The product placement is centered on the pad rather than at the far edge of the concrete surface as required by the role blueprint.",
+        "The product appears to be a short, wide spool rather than a long cylindrical roll, violating the 'cylindrical drip-tape' shape requirement.",
+        "The 'one integrated AFP carton' instruction from the role blueprint is not met."
+      ],
+      "correction_prompt": "Regenerate to show a single long cylindrical AFP drip-tape carton at the far edge of the concrete pad, removing the second brown cardboard box, and ensuring the equipment still-life setup includes the filter, gauges, and manifold.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 30,
+      "product_height_percent": 55,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "Second commercial package present: A kraft cardboard box with the 'AFP' logo is visible to the right of the primary product roll. The brief requires exactly one commercial package, and the presence of a second brand-marked box violates this hard reject constraint."
+      ],
+      "correction_prompt": "Remove the cardboard box on the right side of the frame. Ensure the scene contains only the coiled drip-tape roll and the fixed irrigation equipment on the concrete pad.",
+      "attempt": 3
+    },
+    {
+      "pass": false,
+      "score": 55,
+      "product_width_percent": 25,
+      "product_height_percent": 30,
+      "product_x_center_percent": 70,
+      "reasons": [
+        "Violation of 'exactly one' product rule: The image contains a primary drip-tape roll AND a secondary cardboard box (labeled 'AFP') to the right, which constitutes a 'second commercial package' or 'second roll' error that is explicitly hard-rejected.",
+        "The mandatory 'integrated' placement requirement suggests the product should be part of the still life, but the second package disrupts the 'exactly one' count."
+      ],
+      "correction_prompt": "Regenerate the image to remove the cardboard box on the right. Retain the irrigation equipment and the single white-and-blue drip tape roll on the concrete pad. Ensure the single roll is positioned near the equipment as an integrated part of the still life.",
+      "attempt": 4
+    },
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 24,
+      "product_height_percent": 34,
       "product_x_center_percent": 65,
       "reasons": [
-        "Watermark 'AFP | 09134922013' correctly placed at bottom-right",
-        "Product fits within approved size envelope (18-38% width, <70% height)",
-        "Zero human figures or body parts detected",
-        "Appropriate 'HEADWORKS DETAIL' role composition with integrated equipment still life and clean concrete pad",
-        "Product has realistic shading, contact shadow, and perspective; no pasted/cutout artifacts"
+        "Visible second commercial package (open cardboard box) in the background",
+        "Blue container (resembling a cylinder or canister) present in the left equipment assembly"
       ],
-      "correction_prompt": "",
-      "attempt": 1
+      "correction_prompt": "Remove the open cardboard box in the background and remove the blue canister/cylinder from the equipment assembly to ensure only the single AFP drip tape roll is present.",
+      "attempt": 5
     }
   ]
 }
