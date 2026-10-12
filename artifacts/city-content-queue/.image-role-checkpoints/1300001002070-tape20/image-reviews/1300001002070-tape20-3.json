@@ -1,0 +1,51 @@
+{
+  "source_id": "1300001002070-tape20",
+  "family": "tape20",
+  "kind": 3,
+  "policy": "approved-single-pass-integrated-v23-positive-scenes",
+  "fast_mode": false,
+  "history": [
+    {
+      "pass": false,
+      "score": 65,
+      "product_width_percent": 34,
+      "product_height_percent": 40,
+      "product_x_center_percent": 68,
+      "reasons": [
+        "A second commercial package (cardboard box) is visible on the left side, which is a hard reject condition.",
+        "The object in the foreground has a visible core, characteristic of a hose roll, rather than the solid structure of a drip-tape carton roll."
+      ],
+      "correction_prompt": "Regenerate the image using ONLY a solid white and blue drip-tape carton roll. Remove the cardboard box and the hose reel. Ensure no other packaging, bottles, or containers are visible in the scene.",
+      "attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 0,
+      "product_width_percent": 15,
+      "product_height_percent": 25,
+      "product_x_center_percent": 64,
+      "reasons": [
+        "Second commercial package",
+        "Second roll",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 15% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the two cardboard boxes from the background to ensure exactly one AFP white-and-blue wide low cylindrical drip-tape carton roll is visible. Enlarge the product group from 15% to 18-38% of frame width.",
+      "attempt": 2
+    },
+    {
+      "pass": false,
+      "score": 60,
+      "product_width_percent": 0,
+      "product_height_percent": 0,
+      "product_x_center_percent": 0,
+      "reasons": [
+        "The image contains two visible commercial packages (a box and a roll), which violates the hard reject rule against a 'second commercial package'.",
+        "The required 'AFP white-and-blue wide low cylindrical drip-tape carton roll' is not clearly identified as the primary product; the presence of the second box makes the scene ambiguous and fails the role of 'one integrated AFP carton'.",
+        "The image does not isolate a single roll for inspection, failing the requirement to show 'exactly one' roll without conflicting commercial packaging.",
+        "machine-enforced bounding-box check failed: Enlarge the product group from 0% to 18-38% of frame width."
+      ],
+      "correction_prompt": "Remove the cardboard box from the background. Ensure only a single AFP drip-tape roll is visible on the concrete pad alongside the filter and gauge equipment. Enlarge the product group from 0% to 18-38% of frame width.",
+      "attempt": 3
+    }
+  ]
+}
