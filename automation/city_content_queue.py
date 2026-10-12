@@ -48,9 +48,16 @@ if not re.fullmatch(r'[A-Za-z0-9_]+',DB_NAME):raise RuntimeError('WORDPRESS_DB_N
 
 AGNES_BASE=os.getenv('AGNES_API_BASE','https://apihub.agnes-ai.com/v1').rstrip('/')
 AGNES_KEYS=[]
+# AGNES_API_KEYS may hold a comma/whitespace separated pool and is preferred:
+# the numbered single-key secrets can expire independently of it.
+for _value in re.split(r'[,\s]+',os.getenv('AGNES_API_KEYS','')):
+ _value=_value.strip()
+ if _value and _value not in AGNES_KEYS:AGNES_KEYS.append(_value)
 for _name in ['AGNES_API_KEY',*[f'AGNES_API_KEY{i}' for i in range(2,15)]]:
  _value=os.getenv(_name,'').strip()
- if _value and _value not in AGNES_KEYS:AGNES_KEYS.append(_value)
+ # a pooled value (list) was already expanded above; never add it as one key
+ if not _value or re.search(r'[,\s]',_value):continue
+ if _value not in AGNES_KEYS:AGNES_KEYS.append(_value)
 AGNES_KEY=AGNES_KEYS[0] if AGNES_KEYS else ''
 _KEY_COUNTER=itertools.count();_KEY_LOCK=threading.Lock()
 def next_agnes_key():
