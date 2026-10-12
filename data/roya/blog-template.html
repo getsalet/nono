@@ -1,0 +1,1701 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language"  content="Fa">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>[#blog_title#]</title>
+<meta name="keywords" content="[#blog_keyword#]">
+<meta name="describtion" content="[#blog_describtion#]">
+<metatags></metatags><!-- متاتگ ها خالي باشد -->
+<scripts></scripts><!-- كد هاي اسكريپت خالي باشد -->
+<styles></styles><!-- استايل ها خالي باشد -->
+<link href="[#blog_url#]temp/templates/3theme/91/css/res.css" rel="stylesheet" type="text/css">
+<link href="[#blog_url#]temp/templates/3theme/91/css/general.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="[#blog_url#]temp/templates/3theme/91/js/jquery.js"></script>
+<script type="text/javascript" src="[#blog_url#]temp/templates/3theme/91/js/res.js"></script>
+
+<!-- استایل اختصاصی قالب کشاورزی AFP -->
+<style type="text/css">
+/* ============================================================
+   قالب حرفه‌ای کشاورزی و آبیاری — AFP (آبگستر فرا پارسیان)
+   بازطراحی کامل استایل قالب رویا بلاگ
+   ============================================================ */
+
+/* ---------- توکن‌های طراحی ---------- */
+:root {
+  color-scheme: light;
+  --green-900: #14361f;
+  --green-700: #1f6b34;
+  --green-600: #2e8b45;
+  --green-500: #4caf50;
+  --lime-500: #8bc34a;
+  --lime-100: #eef7e3;
+  --amber-500: #f0a72a;
+  --ink: #17211c;
+  --ink-2: #2b3a33;
+  --muted: #5d6f66;
+  --line: #e2ebdc;
+  --bg: #f6faf4;
+  --surface: #ffffff;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow-1: 0 1px 2px rgba(16, 40, 24, .05), 0 6px 18px rgba(16, 40, 24, .05);
+  --shadow-2: 0 2px 6px rgba(16, 40, 24, .07), 0 14px 32px rgba(16, 40, 24, .08);
+  --font-head: 'Yekan', Tahoma, 'Iranian Sans', sans-serif;
+  --font-body: Tahoma, 'Iranian Sans', Arial, sans-serif;
+  --wrap: 1200px;
+}
+
+/* ---------- پایه ---------- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.9;
+  direction: rtl;
+  text-align: right;
+  overflow-x: hidden;
+}
+img { max-width: 100%; height: auto; border: 0; }
+a { color: var(--green-700); text-decoration: none; transition: color .18s ease; }
+a:link, a:visited { color: var(--green-700); }
+a:hover, a:focus { color: var(--green-900); }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-head); color: var(--ink); margin: 0 0 .5em; line-height: 1.5; font-weight: normal; }
+p { margin: 0 0 1em; }
+ul { margin: 0; padding: 0; list-style: none; }
+button, input, select, textarea { font-family: inherit; font-size: 100%; }
+table { width: 100%; border-collapse: collapse; margin: 0 0 1.2em; font-size: .95rem; }
+th, td { border: 1px solid var(--line); padding: 10px 12px; text-align: right; }
+th { background: var(--lime-100); font-family: var(--font-head); }
+blockquote { margin: 1em 0; padding: 12px 18px; background: var(--lime-100); border-right: 4px solid var(--lime-500); border-radius: var(--radius-sm); }
+.wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 16px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.skip-link { position: absolute; right: -9999px; top: 0; z-index: 999; background: var(--green-700); color: #fff; padding: 10px 16px; border-radius: 0 0 var(--radius-sm) var(--radius-sm); }
+.skip-link:focus { right: 16px; color: #fff; }
+:focus-visible { outline: 3px solid var(--green-600); outline-offset: 2px; border-radius: 4px; }
+.fblogo { display: none; }
+
+/* ---------- دکمه‌ها ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 10px 18px;
+  border: 1px solid transparent; border-radius: var(--radius-sm);
+  font-family: var(--font-head); font-size: 1rem; line-height: 1.2;
+  cursor: pointer; text-align: center; transition: transform .15s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--green-700); color: #fff; box-shadow: 0 4px 14px rgba(31, 107, 52, .25); }
+.btn-primary:hover { background: var(--green-900); color: #fff; }
+.btn-outline { background: #fff; color: var(--green-700); border-color: var(--green-700); }
+.btn-outline:hover { background: var(--lime-100); color: var(--green-900); }
+.btn-light { background: #fff; color: var(--green-900); border-color: #fff; }
+.btn-light:hover { background: var(--lime-100); color: var(--green-900); }
+.btn-lg { min-height: 52px; padding: 14px 26px; font-size: 1.05rem; }
+.btn-sm { min-height: 38px; padding: 7px 14px; font-size: .9rem; }
+.btn-block { width: 100%; }
+
+/* ---------- نوار بالای سایت ---------- */
+.topstrip { background: var(--green-900); color: #dff0d8; font-size: .85rem; }
+.ts-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 18px; min-height: 42px; }
+.ts-phone a { color: #fff; font-family: var(--font-head); }
+.ts-links { display: flex; gap: 16px; }
+.ts-links a { color: #cfe6c2; }
+.ts-links a:hover { color: #fff; }
+
+/* ---------- سربرگ ---------- */
+.site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+.header-in { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 18px; padding-bottom: 18px; }
+.brand { font-size: 1.6rem; margin: 0 0 4px; }
+.brand a { color: var(--green-900); }
+.brand-tag { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.7; max-width: 60ch; }
+.header-actions { display: flex; gap: 10px; flex-shrink: 0; }
+
+/* ---------- منوی اصلی ---------- */
+.site-nav { background: var(--green-700); position: sticky; top: 0; z-index: 60; box-shadow: 0 2px 10px rgba(16, 40, 24, .12); }
+.nav-in { display: flex; align-items: center; }
+.navbar-toggle { display: none; background: transparent; border: 1px solid rgba(255, 255, 255, .5); border-radius: var(--radius-sm); color: #fff; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; cursor: pointer; }
+.resmenu, .resmenu::before, .resmenu::after { display: block; width: 20px; height: 2px; background: #fff; content: ""; position: relative; }
+.resmenu::before { position: absolute; top: -6px; }
+.resmenu::after { position: absolute; top: 6px; }
+.navbar-collapse { display: block; width: 100%; }
+.nav { display: flex; flex-wrap: wrap; align-items: center; }
+.nav li a { display: block; padding: 14px 16px; color: #eaf6e4; font-family: var(--font-head); font-size: .98rem; min-height: 44px; }
+.nav li a:hover { background: rgba(255, 255, 255, .12); color: #fff; }
+.nav li a.active, .nav li a.current, .nav li a.menu_active { background: var(--lime-500); color: var(--green-900); }
+
+/* ---------- اسلایدر ---------- */
+.slide-box { margin: 22px 0; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-1); background: var(--surface); }
+.slide-box img { display: block; width: 100%; }
+
+/* ---------- دسته‌بندی محصولات ---------- */
+.page { padding-bottom: 30px; }
+.sec-head { margin: 26px 0 14px; }
+.sec-title { font-size: 1.35rem; margin: 0 0 4px; color: var(--green-900); position: relative; padding-right: 14px; }
+.sec-title::before { content: ""; position: absolute; right: 0; top: .35em; width: 5px; height: 1.1em; background: var(--lime-500); border-radius: 3px; }
+.sec-sub { margin: 0; color: var(--muted); font-size: .92rem; }
+.cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.cat-card { display: flex; flex-direction: column; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow-1); transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.cat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-color: var(--lime-500); }
+.cat-name { font-family: var(--font-head); font-size: 1.05rem; color: var(--green-900); }
+.cat-desc { font-size: .85rem; color: var(--muted); line-height: 1.8; }
+
+/* ---------- نوار فراخوان ---------- */
+.cta-band { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; margin: 26px 0; padding: 24px 26px; border-radius: var(--radius); background: linear-gradient(90deg, var(--green-900), var(--green-700) 65%, var(--green-600)); color: #fff; box-shadow: var(--shadow-2); }
+.cta-text h2 { color: #fff; font-size: 1.3rem; margin: 0 0 6px; }
+.cta-text p { margin: 0; color: #dcefd6; font-size: .92rem; max-width: 62ch; }
+.cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ---------- پیام‌های سیستمی ---------- */
+.messages-box { margin: 16px 0; padding: 14px 18px; border-radius: var(--radius-sm); background: var(--lime-100); border: 1px solid var(--line); color: var(--green-900); }
+.messages-text { margin: 0; }
+
+/* ---------- چیدمان اصلی ---------- */
+.main-grid { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 22px; align-items: start; }
+.main-col { min-width: 0; }
+.side-col { display: flex; flex-direction: column; gap: 16px; }
+
+/* ---------- کارت مطلب ---------- */
+.post-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-1); overflow: hidden; margin-bottom: 20px; }
+.post-thumb { display: block; }
+.post-thumb img { display: block; width: 100%; max-height: 420px; object-fit: cover; }
+.post-body { padding: 20px 22px 22px; }
+.post-title { font-size: 1.4rem; margin: 0 0 10px; }
+.post-title a { color: var(--green-900); }
+.post-title a:hover { color: var(--green-600); }
+.post-meta { display: flex; flex-wrap: wrap; gap: 6px 16px; color: var(--muted); font-size: .84rem; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px dashed var(--line); }
+.post-content { color: var(--ink-2); font-size: 1rem; }
+.post-content img { border-radius: var(--radius-sm); margin: 8px 0; }
+.post-content a { text-decoration: underline; }
+.post-tags { margin-top: 14px; font-size: .85rem; color: var(--muted); }
+.post-tags a { display: inline-block; margin: 0 4px 4px 0; padding: 3px 10px; background: var(--lime-100); border-radius: 20px; color: var(--green-900); font-size: .8rem; }
+.post-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.rating { display: inline-flex; align-items: center; gap: 6px; font-size: .85rem; color: var(--muted); }
+.rate { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 50%; color: var(--green-700); }
+.rate:hover { background: var(--lime-100); }
+.rate-num { margin-left: 8px; }
+
+/* ---------- صفحه‌بندی ---------- */
+.pagination { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; margin: 22px 0; }
+.pagination a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--green-700); font-family: var(--font-head); }
+.pagination a:hover { border-color: var(--green-600); background: var(--lime-100); }
+.pagination a.active, .pagination a.current { background: var(--green-700); border-color: var(--green-700); color: #fff; }
+
+/* ---------- نظرات ---------- */
+.comments { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; box-shadow: var(--shadow-1); }
+.no-comment { color: var(--muted); background: var(--lime-100); border-radius: var(--radius-sm); padding: 14px 16px; }
+.comment { border-bottom: 1px solid var(--line); padding: 14px 0; }
+.comment:last-of-type { border-bottom: 0; }
+.comment-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.comment-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); }
+.comment-name { font-family: var(--font-head); color: var(--green-900); }
+.comment-date { color: var(--muted); font-size: .82rem; }
+.comment-text { margin-top: 8px; color: var(--ink-2); }
+.comment-reply { margin: 12px 0 4px; padding: 12px 16px; background: var(--lime-100); border-radius: var(--radius-sm); border-right: 3px solid var(--green-600); }
+.reply-name { font-family: var(--font-head); color: var(--green-900); }
+.reply-date { color: var(--muted); font-size: .8rem; margin-right: 8px; }
+.reply-text { margin-top: 6px; }
+.comment-form { margin-top: 18px; }
+.comment-form input[type=text], .comment-form input[type=email], .comment-form textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 10px; background: #fcfdfb; }
+.comment-form textarea { min-height: 120px; }
+.comment-form input[type=submit], .comment-form button { min-height: 44px; padding: 10px 22px; background: var(--green-700); color: #fff; border: 0; border-radius: var(--radius-sm); cursor: pointer; font-family: var(--font-head); }
+.comment-form input[type=submit]:hover, .comment-form button:hover { background: var(--green-900); }
+
+/* ---------- جعبه‌های کناری ---------- */
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-1); overflow: hidden; }
+.box-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 13px 16px; font-size: 1.02rem; color: #fff; background: var(--green-700); }
+.box-title .count { font-size: .78rem; color: #dcefd6; font-family: var(--font-body); }
+.box-body { padding: 14px 16px; }
+.list li { border-bottom: 1px dashed var(--line); }
+.list li:last-child { border-bottom: 0; }
+.list li a { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 0; min-height: 40px; color: var(--ink-2); }
+.list li a:hover { color: var(--green-700); }
+.count { color: var(--muted); font-size: .82rem; }
+.sub-list { padding-right: 14px; }
+.sub-list li a { font-size: .9rem; }
+.thumb-list li { padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.thumb-list li:last-child { border-bottom: 0; }
+.thumb-list a { display: flex; align-items: center; gap: 10px; color: var(--ink-2); }
+.thumb-list a:hover { color: var(--green-700); }
+.thumb-list img { width: 74px; height: 58px; object-fit: cover; border-radius: var(--radius-sm); flex-shrink: 0; }
+.thumb-list span { font-size: .9rem; line-height: 1.7; }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-cloud a { display: inline-block; padding: 5px 12px; background: var(--lime-100); border-radius: 20px; color: var(--green-900); font-size: .82rem; min-height: 32px; line-height: 22px; }
+.tag-cloud a:hover { background: var(--lime-500); color: var(--green-900); }
+.follower-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.follower-list img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); }
+.social-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.social-list a { display: block; padding: 8px 10px; background: var(--lime-100); border-radius: var(--radius-sm); font-size: .85rem; color: var(--green-900); text-align: center; min-height: 38px; line-height: 22px; }
+.social-list a:hover { background: var(--lime-500); }
+.stat-list li { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; font-size: .88rem; color: var(--muted); }
+.stat-list .count { font-family: var(--font-head); color: var(--green-900); font-size: .95rem; }
+.about-img { display: block; margin: 0 auto 12px; border-radius: var(--radius-sm); }
+.about-text { font-size: .9rem; color: var(--muted); }
+.vote-list .poll-question { font-family: var(--font-head); padding: 6px 0 10px; color: var(--green-900); }
+.vote-list .poll-answer { padding: 6px 0; font-size: .9rem; }
+.vote-list label { display: flex; align-items: center; gap: 8px; min-height: 40px; cursor: pointer; }
+.clock-body, .music-body { text-align: center; }
+.todaytime { margin-top: 10px; color: var(--muted); font-size: .85rem; text-align: center; }
+.searchform { display: flex; gap: 8px; }
+.searchform .isearch { flex: 1; min-height: 44px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: #fcfdfb; }
+
+/* ---------- پابرگ ---------- */
+.site-footer { margin-top: 34px; background: var(--green-900); color: #cfe0c8; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.1fr; gap: 26px; padding-top: 34px; padding-bottom: 26px; }
+.f-title { color: #fff; font-size: 1.05rem; margin: 0 0 12px; }
+.f-col p { font-size: .88rem; line-height: 1.9; color: #bcd2b4; }
+.f-col ul li { padding: 5px 0; }
+.f-col ul a { color: #cfe0c8; font-size: .9rem; }
+.f-col ul a:hover { color: #fff; }
+.f-phone { font-family: var(--font-head); font-size: 1.5rem; margin: 0 0 4px; }
+.f-phone a { color: #fff; }
+.f-note { color: #a9c2a1; font-size: .82rem; }
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, .12); }
+.fb-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding-top: 14px; padding-bottom: 14px; font-size: .82rem; color: #a9c2a1; }
+.copyright a { color: #cfe0c8; }
+.dashboard { display: flex; flex-wrap: wrap; gap: 14px; }
+.dashboard a { color: #a9c2a1; }
+.dashboard a:hover { color: #fff; }
+
+/* ---------- واکنش‌گرایی ---------- */
+@media (max-width: 1024px) {
+  .main-grid { grid-template-columns: 1fr; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .header-in { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .header-actions { width: 100%; }
+  .header-actions .btn { flex: 1; }
+  .navbar-toggle { display: inline-flex; }
+  .site-nav .navbar-collapse { display: none; }
+  .site-nav .navbar-collapse.in, .site-nav .navbar-collapse.show { display: block; }
+  .nav { flex-direction: column; align-items: stretch; width: 100%; }
+  .nav li a { border-top: 1px solid rgba(255, 255, 255, .12); }
+  .nav-in { padding-top: 8px; padding-bottom: 8px; }
+}
+@media (min-width: 901px) {
+  .site-nav .navbar-collapse { display: block !important; height: auto !important; }
+}
+@media (max-width: 640px) {
+  body { font-size: 15.5px; }
+  .cat-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 18px; }
+  .cta-band { padding: 18px; }
+  .cta-actions .btn { width: 100%; }
+  .post-body { padding: 16px; }
+  .post-title { font-size: 1.2rem; }
+  .social-list { grid-template-columns: 1fr; }
+  .brand { font-size: 1.35rem; }
+  .ts-in { flex-direction: column; align-items: flex-start; gap: 2px; padding-top: 6px; padding-bottom: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .btn:hover, .cat-card:hover { transform: none; }
+}
+
+/* ---------- هم‌سطح‌سازی با استایل قدیمی قالب ---------- */
+.dashboard li a { color: #a9c2a1; font-size: .82rem; }
+.dashboard li a:hover { color: #fff; }
+.dashboard li a:before { content: none; }
+.copyright a:link, .copyright a:visited { color: #cfe0c8; }
+.copyright a:hover { color: #fff; }
+.nav > li > a { padding: 14px 16px; }
+
+/* ---------- بازنشانی استایل‌های قالب قدیمی (اولویت با این بخش) ---------- */
+.post-title { background: none; background-image: none; padding: 0; border-radius: 0; }
+.post-title:after { content: none; }
+.post-title a:link, .post-title a:visited, .post-title a:hover { color: var(--green-900); }
+.post-body { background: none; padding: 20px 22px 22px; }
+.post-thumb { overflow: visible; }
+.post-thumb img { margin: 0; }
+.post-tags a:link, .post-tags a:visited { color: var(--green-900); background: var(--lime-100); }
+.post-tags a:hover { color: var(--green-900); background: var(--lime-500); }
+.pagination a:link, .pagination a:visited { background: var(--surface); color: var(--green-700); border: 1px solid var(--line); }
+.pagination a:hover { background: var(--lime-100); color: var(--green-900); }
+.pagination a.active:link, .pagination a.active:visited, .pagination a.current:link, .pagination a.current:visited { background: var(--green-700); color: #fff; border-color: var(--green-700); }
+.comment-box, .comment-list, .comment-send-form { border: 0; background: none; }
+.comments-cunt-box, .comments-cunt-text { background: none; color: var(--muted); }
+.menu-block { background: none; }
+.post-info, .post-details { background: none; }
+.post-info a:link, .post-info a:visited { color: var(--green-700); }
+.searchbox { text-align: right; }
+.dashboard li a:link, .dashboard li a:visited { color: #a9c2a1; }
+.dashboard li a:hover { color: #fff; }
+.footer { background: none; }
+
+/* ---------- دکمه روی زمینه تیره ---------- */
+.btn-ghost-light { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .75); }
+.btn-ghost-light:hover { background: rgba(255, 255, 255, .16); color: #fff; border-color: #fff; }
+
+/* ---------- متن روشن روی زمینه تیره ---------- */
+.ts-phone a:link, .ts-phone a:visited { color: #fff; }
+.ts-links a:link, .ts-links a:visited { color: #cfe6c2; }
+a.skip-link:link, a.skip-link:visited { color: #fff; }
+.btn-primary, a.btn-primary:link, a.btn-primary:visited { color: #fff; }
+.btn-light, a.btn-light:link, a.btn-light:visited { color: var(--green-900); }
+.btn-outline, a.btn-outline:link, a.btn-outline:visited { color: var(--green-700); }
+.btn-ghost-light, a.btn-ghost-light:link, a.btn-ghost-light:visited { color: #fff; border-color: rgba(255, 255, 255, .75); }
+.f-col ul a:link, .f-col ul a:visited { color: #cfe0c8; }
+.dashboard a:link, .dashboard a:visited { color: #a9c2a1; }
+.social-list a:link, .social-list a:visited { color: var(--green-900); }
+.tag-cloud a:link, .tag-cloud a:visited { color: var(--green-900); }
+
+/* ---------- کوتاه‌سازی متن درباره وبلاگ ---------- */
+.about-text { display: -webkit-box; -webkit-line-clamp: 14; -webkit-box-orient: vertical; overflow: hidden; position: relative; }
+.about-text:after { content: ""; position: absolute; bottom: 0; right: 0; left: 0; height: 2.6em; background: linear-gradient(rgba(255,255,255,0), var(--surface)); pointer-events: none; }
+
+/* ---------- اصلاحات صفحه‌های مستقل و جلوگیری از سرریز افقی ---------- */
+html { overflow-x: hidden; }
+.slide-box:empty { display: none; }
+.mce-container, .mce-tinymce, .mce-floatpanel, .mce-panel, .mce-toolbar, .mce-toolbar-grp, .mce-statusbar, .mce-menu, .mce-popupcontainer, .mce-widget.mce-btn { display: none !important; }
+.page-content, .static-page, .post-content table { max-width: 100%; overflow-x: auto; }
+.post-content { overflow-wrap: break-word; word-wrap: break-word; }
+
+/* ---------- جایگاه محتوای صفحه‌های مستقل ---------- */
+.no-comment { color: var(--ink-2); background: none; border-radius: 0; padding: 0; }
+.no-comment:empty { display: none; }
+
+.no-comment-text { color: var(--ink-2); }
+.no-comment-text:empty { display: none; }
+
+/* ---------- اصلاح اندازه تصاویر ---------- */
+.about-img { display: block; margin: 0 auto 12px; border-radius: var(--radius-sm); max-height: 170px; width: auto; max-width: 100%; }
+.thumb-list img { width: 84px; height: 64px; object-fit: cover; border-radius: var(--radius-sm); flex-shrink: 0; background: var(--lime-100); }
+
+</style>
+
+<!-- لایه ارتقای ظاهر حرفه‌ای: سربرگ، منو، سایدبار، پابرگ -->
+<style type="text/css">
+
+/* ==========================================================================
+   AFP — لایه ارتقای ظاهر حرفه‌ای
+   سربرگ، منوی اصلی، سایدبار، پابرگ و پرداخت عمومی
+   ========================================================================== */
+
+:root {
+  --green-50: #f2f8ee;
+  --green-100: #e3f0dc;
+  --line-2: #d7e5d0;
+  --shadow-3: 0 12px 34px rgba(16, 40, 24, .12);
+  --ring: 0 0 0 3px rgba(139, 195, 74, .5);
+}
+
+/* ---------- پرداخت عمومی ---------- */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: 10px;
+}
+::selection { background: var(--lime-500); color: var(--green-900); }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+
+/* ==========================================================================
+   ۱) نوار بالای سایت
+   ========================================================================== */
+.topstrip {
+  background: linear-gradient(90deg, var(--green-900) 0%, #1b4a2a 55%, var(--green-700) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  font-size: .82rem;
+  color: #cfe4c6;
+}
+.ts-in { min-height: 40px; gap: 6px 18px; }
+.ts-item { display: inline-flex; align-items: center; gap: 7px; }
+.ts-item svg { width: 15px; height: 15px; flex: none; opacity: .85; }
+.ts-phone { color: #cfe4c6; }
+.ts-phone a:link, .ts-phone a:visited { color: #fff; }
+.ts-phone a { font-family: var(--font-head); letter-spacing: .2px; }
+.ts-phone a:hover { color: var(--lime-500); }
+.ts-links { display: flex; align-items: center; gap: 0; }
+.ts-links a:link, .ts-links a:visited { color: #cfe4c6; }
+.ts-links a { padding: 0 12px; }
+.ts-links a + a { border-inline-start: 1px solid rgba(255, 255, 255, .18); }
+.ts-links a:hover { color: #fff; }
+
+/* ==========================================================================
+   ۲) سربرگ
+   ========================================================================== */
+.site-header {
+  background: var(--surface);
+  background-image: linear-gradient(180deg, #ffffff 0%, #fbfdf9 100%);
+  border-bottom: 1px solid var(--line);
+}
+.header-in { gap: 22px; padding-top: 16px; padding-bottom: 16px; }
+.brand-box { margin: 0; font-size: 1rem; font-weight: normal; min-width: 0; }
+.brand-box .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+.brand-box .brand:hover .brand-mark { transform: translateY(-1px); box-shadow: var(--shadow-2); }
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--green-700) 0%, var(--green-500) 55%, var(--lime-500) 100%);
+  color: #fff;
+  font-family: var(--font-head);
+  font-size: 1.02rem;
+  letter-spacing: .5px;
+  box-shadow: 0 6px 16px rgba(31, 107, 52, .28);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.brand-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.brand-name {
+  font-family: var(--font-head);
+  font-size: 1.32rem;
+  font-weight: 700;
+  color: var(--green-900);
+  line-height: 1.5;
+}
+.brand-sub {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 44ch;
+}
+.header-side { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+
+/* جستجوی سربرگ */
+.header-search {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #f4f8f1;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  padding: 4px 6px 4px 4px;
+  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+.header-search:focus-within { background: #fff; border-color: var(--green-500); box-shadow: var(--ring); }
+.header-search input[type=text] {
+  width: 200px;
+  min-height: 38px;
+  border: 0;
+  background: transparent;
+  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: .88rem;
+  color: var(--ink);
+}
+.header-search input[type=text]::placeholder { color: #93a79a; }
+.header-search button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border: 0;
+  border-radius: 50%;
+  background: var(--green-700);
+  color: #fff;
+  cursor: pointer;
+  transition: background .18s ease;
+}
+.header-search button:hover { background: var(--green-900); }
+.header-search button svg { width: 17px; height: 17px; }
+
+/* بلوک تماس سربرگ */
+.header-phone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: var(--green-50);
+  border: 1px solid var(--line-2);
+  transition: border-color .18s ease, background .18s ease;
+}
+.header-phone:hover { background: var(--green-100); border-color: var(--green-500); }
+.hp-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 10px;
+  background: var(--green-700);
+  color: #fff;
+}
+.hp-ico svg { width: 18px; height: 18px; }
+.hp-txt { display: flex; flex-direction: column; gap: 1px; }
+.hp-lbl { font-size: .72rem; color: var(--muted); }
+.hp-num { font-family: var(--font-head); font-size: 1.02rem; color: var(--green-900); letter-spacing: .3px; }
+
+/* ==========================================================================
+   ۳) منوی اصلی
+   ========================================================================== */
+.site-nav {
+  background: linear-gradient(180deg, #1f6b34 0%, #1a5c2d 100%);
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  box-shadow: 0 3px 14px rgba(16, 40, 24, .16);
+  transition: box-shadow .2s ease;
+}
+.nav-in { display: flex; align-items: center; gap: 10px; min-height: 54px; }
+.site-nav .navbar-collapse { flex: 1; min-width: 0; }
+.site-nav .nav > li > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 15px 15px;
+  color: #eaf6e4;
+  font-family: var(--font-head);
+  font-size: .96rem;
+  border-radius: 0;
+  position: relative;
+  transition: background .16s ease, color .16s ease;
+}
+.site-nav .nav > li > a::after {
+  content: "";
+  position: absolute;
+  inset-inline: 12px;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--lime-500);
+  transform: scaleX(0);
+  transition: transform .18s ease;
+}
+.site-nav .nav > li > a:hover { background: rgba(255, 255, 255, .1); color: #fff; }
+.site-nav .nav > li > a:hover::after { transform: scaleX(1); }
+.site-nav .nav > li > a.active,
+.site-nav .nav > li > a.current,
+.site-nav .nav > li > a.menu_active {
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  font-weight: 700;
+}
+.site-nav .nav > li > a.active::after,
+.site-nav .nav > li > a.current::after,
+.site-nav .nav > li > a.menu_active::after { transform: scaleX(1); }
+
+/* دکمه فراخوان در انتهای منو */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-inline-start: auto;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--lime-500);
+  color: var(--green-900);
+  font-family: var(--font-head);
+  font-size: .88rem;
+  min-height: 40px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(139, 195, 74, .35);
+  transition: background .18s ease, transform .18s ease;
+}
+.nav-cta:link, .nav-cta:visited { color: var(--green-900); }
+.nav-cta:hover, .nav-cta:focus { background: #9ed85a; color: var(--green-900); transform: translateY(-1px); }
+.nav-cta svg { width: 16px; height: 16px; }
+
+/* مگا منو */
+.site-nav .nav > li.has-mega { position: relative; }
+.caret {
+  width: 0;
+  height: 0;
+  border-inline-start: 4px solid transparent;
+  border-inline-end: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  opacity: .8;
+}
+.mega {
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 0;
+  z-index: 90;
+  width: min(720px, 92vw);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--lime-500);
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow-3);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .16s ease, transform .16s ease, visibility .16s;
+  transform: translateY(6px);
+}
+.site-nav .nav > li.has-mega:hover .mega,
+.site-nav .nav > li.has-mega:focus-within .mega {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+}
+.site-nav .nav > li.has-mega:hover > a,
+.site-nav .nav > li.has-mega:focus-within > a { background: rgba(255, 255, 255, .14); color: #fff; }
+.site-nav .nav > li.has-mega:hover > a::after,
+.site-nav .nav > li.has-mega:focus-within > a::after { transform: scaleX(1); }
+.mega-title {
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-head);
+  font-size: .92rem;
+  color: var(--green-900);
+}
+.mega-col ul { margin: 0; padding: 0; list-style: none; }
+.mega-col ul li { padding: 0; }
+.mega-col ul li a {
+  display: block;
+  padding: 7px 8px;
+  border-radius: 8px;
+  color: var(--ink-2);
+  font-size: .87rem;
+  transition: background .16s ease, color .16s ease, padding .16s ease;
+}
+.mega-col ul li a:link, .mega-col ul li a:visited { color: var(--ink-2); }
+.mega-col ul li a:hover { background: var(--green-50); color: var(--green-700); padding-inline-start: 14px; }
+.mega-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--green-50);
+  color: var(--green-700);
+  font-size: .8rem;
+  line-height: 1.8;
+}
+
+/* ==========================================================================
+   ۴) جعبه‌های سایدبار
+   ========================================================================== */
+.side-col { display: flex; flex-direction: column; gap: 16px; }
+.side-col .box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+.side-col .box:hover { box-shadow: var(--shadow-2); border-color: var(--line-2); }
+.side-col .box-title {
+  justify-content: flex-start;
+  gap: 9px;
+  padding: 13px 16px;
+  font-family: var(--font-head);
+  font-size: .97rem;
+  background: linear-gradient(90deg, var(--green-700) 0%, #1a5c2d 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+.side-col .box-title::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--lime-500);
+  box-shadow: 0 0 0 3px rgba(139, 195, 74, .28);
+}
+.side-col .box-title .count {
+  margin-inline-start: auto;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: #f2f8ee;
+  color: var(--green-900);
+  font-size: .76rem;
+  font-weight: 700;
+}
+.side-col .box-body { padding: 14px 16px; }
+
+/* جستجو */
+.side-col .searchform { flex-direction: column; gap: 10px; }
+.side-col .searchform .isearch {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  background: #fbfdf9;
+  font-family: var(--font-body);
+  transition: border-color .18s ease, background .18s ease;
+}
+.side-col .searchform .isearch:focus { background: #fff; border-color: var(--green-500); }
+.side-col .searchform .btn { width: 100%; }
+.side-col .todaytime {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--green-50);
+  color: var(--green-700);
+  font-size: .82rem;
+}
+
+/* درباره وبلاگ */
+.side-col .about-box .about-img {
+  width: 100%;
+  max-height: 132px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+.side-col .about-text {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: .87rem;
+  line-height: 1.9;
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* فهرست‌ها */
+.side-col .list li { border-bottom: 1px solid #f0f5ec; }
+.side-col .list li a {
+  justify-content: space-between;
+  padding: 9px 10px;
+  border-radius: 9px;
+  color: var(--ink-2);
+  font-size: .89rem;
+  transition: background .16s ease, color .16s ease, padding .16s ease;
+}
+.side-col .list li a:hover { background: var(--green-50); color: var(--green-700); padding-inline-start: 15px; }
+.side-col .list li a .count,
+.side-col .list li a span.count { flex: none; color: var(--muted); font-size: .78rem; }
+.side-col .sub-list { padding-inline-start: 14px; }
+.side-col .sub-list li a { font-size: .85rem; color: var(--muted); }
+
+/* فهرست تصویری */
+.side-col .thumb-list li { border-bottom: 1px solid #f0f5ec; padding: 8px 0; }
+.side-col .thumb-list a { gap: 11px; }
+.side-col .thumb-list img {
+  width: 68px;
+  height: 60px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+.side-col .thumb-list span {
+  font-size: .87rem;
+  line-height: 1.75;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* برچسب‌ها */
+.side-col .tag-cloud { gap: 7px; }
+.side-col .tag-cloud a {
+  padding: 6px 13px;
+  min-height: 34px;
+  line-height: 22px;
+  border: 1px solid var(--line-2);
+  background: #fbfdf9;
+  border-radius: 999px;
+  font-size: .81rem;
+  color: var(--green-700);
+  transition: background .16s ease, color .16s ease, border-color .16s ease;
+}
+.side-col .tag-cloud a:hover { background: var(--green-700); border-color: var(--green-700); color: #fff; }
+
+/* دنبال‌کنندگان و شبکه‌ها */
+.side-col .follower-list img { width: 42px; height: 42px; border: 2px solid #fff; box-shadow: var(--shadow-1); }
+.side-col .social-list { gap: 8px; }
+.side-col .social-list a {
+  border: 1px solid var(--line-2);
+  background: #fbfdf9;
+  border-radius: 10px;
+  font-size: .84rem;
+  transition: background .16s ease, border-color .16s ease, color .16s ease;
+}
+.side-col .social-list a:hover { background: var(--green-700); border-color: var(--green-700); color: #fff; }
+
+/* آمار */
+.side-col .stat-list li { padding: 9px 0; border-bottom: 1px solid #f0f5ec; font-size: .87rem; }
+.side-col .stat-list .count { font-size: 1rem; }
+
+/* جعبه اعتماد */
+.trust-box .box-title { background: linear-gradient(90deg, var(--green-900) 0%, var(--green-700) 100%); }
+.trust-list { margin: 0 0 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.trust-list li { display: flex; align-items: flex-start; gap: 9px; font-size: .87rem; color: var(--ink-2); line-height: 1.8; }
+.trust-list li svg { width: 17px; height: 17px; flex: none; margin-top: 4px; color: var(--green-600); }
+.trust-box .btn { width: 100%; }
+
+/* ==========================================================================
+   ۵) پابرگ
+   ========================================================================== */
+.site-footer {
+  margin-top: 40px;
+  background: linear-gradient(180deg, #14361f 0%, #0f2a18 100%);
+  color: #c9dcc0;
+  position: relative;
+}
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--lime-500) 0%, var(--green-500) 50%, var(--lime-500) 100%);
+}
+.f-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 26px 0 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+.f-brand { display: flex; align-items: center; gap: 13px; }
+.f-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  flex: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--green-600) 0%, var(--lime-500) 100%);
+  color: #fff;
+  font-family: var(--font-head);
+  font-size: 1rem;
+}
+.f-brand-name { display: block; font-family: var(--font-head); font-size: 1.12rem; color: #fff; }
+.f-brand-sub { display: block; font-size: .8rem; color: #9fbb96; margin-top: 3px; }
+.f-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+.f-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, .13);
+  color: #e6f2df;
+  font-size: .83rem;
+  transition: background .18s ease, border-color .18s ease;
+}
+.f-chip:link, .f-chip:visited { color: #e6f2df; }
+.f-chip:hover, .f-chip:focus { background: rgba(255, 255, 255, .14); border-color: rgba(255, 255, 255, .28); color: #fff; }
+.f-chip svg { width: 15px; height: 15px; flex: none; opacity: .9; }
+
+.footer-grid { gap: 28px; padding-top: 30px; padding-bottom: 24px; }
+.f-title {
+  position: relative;
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  color: #fff;
+  font-family: var(--font-head);
+  font-size: 1rem;
+}
+.f-title::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: 34px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--lime-500);
+}
+.f-col p { font-size: .87rem; line-height: 1.95; color: #b6cdae; }
+.f-col ul { margin: 0; padding: 0; list-style: none; }
+.f-col ul li { padding: 0; }
+.f-col ul a {
+  display: inline-block;
+  padding: 6px 0;
+  color: #c9dcc0;
+  font-size: .88rem;
+  transition: color .16s ease, padding .16s ease;
+}
+.f-col ul a:link, .f-col ul a:visited { color: #c9dcc0; }
+.f-col ul a:hover { color: var(--lime-500); padding-inline-start: 6px; }
+.f-phone { margin: 0 0 6px; font-family: var(--font-head); font-size: 1.45rem; }
+.f-phone a:link, .f-phone a:visited { color: #fff; }
+.f-phone a:hover { color: var(--lime-500); }
+.f-note { color: #9fbb96; font-size: .81rem; margin: 0 0 12px; }
+
+.f-trust {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+}
+.f-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .09);
+}
+.f-trust-item svg { width: 22px; height: 22px; flex: none; color: var(--lime-500); }
+.f-trust-item b { display: block; color: #fff; font-family: var(--font-head); font-size: .89rem; font-weight: 700; }
+.f-trust-item span { display: block; font-size: .78rem; color: #9fbb96; margin-top: 2px; }
+
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, .1); }
+.fb-in { padding-top: 15px; padding-bottom: 15px; color: #9fbb96; }
+.copyright { line-height: 1.9; }
+.copyright a:link, .copyright a:visited { color: #c9dcc0; }
+.copyright a:hover { color: #fff; }
+.dashboard a:link, .dashboard a:visited { color: #9fbb96; }
+.dashboard a:hover { color: #fff; }
+
+/* ==========================================================================
+   ۷) واکنش‌گرایی
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .header-search input[type=text] { width: 150px; }
+  .hp-lbl { display: none; }
+}
+@media (max-width: 900px) {
+  .header-in { flex-direction: column; align-items: stretch; gap: 14px; }
+  .header-side { flex-wrap: wrap; }
+  .header-search { flex: 1 1 100%; }
+  .header-search input[type=text] { width: 100%; flex: 1; }
+  .header-phone { flex: 1 1 100%; }
+  .nav-in { min-height: 0; padding-top: 10px; padding-bottom: 10px; gap: 8px; }
+  .nav-cta { margin-inline-start: auto; font-size: .82rem; padding: 8px 13px; }
+  .site-nav .nav { width: 100%; }
+  .site-nav .nav > li > a {
+    padding: 13px 14px;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 8px;
+  }
+  .site-nav .nav > li > a::after { display: none; }
+  .site-nav .nav > li.has-mega > a { justify-content: space-between; }
+  .mega { display: none; }
+  .footer-grid { gap: 22px; }
+  .f-trust { grid-template-columns: 1fr; gap: 10px; }
+}
+@media (max-width: 640px) {
+  .brand-mark { width: 46px; height: 46px; border-radius: 12px; font-size: .92rem; }
+  .brand-name { font-size: 1.12rem; }
+  .brand-sub { white-space: normal; font-size: .78rem; }
+  .ts-in { align-items: flex-start; }
+  .ts-links a { padding: 0 9px; }
+  .f-top { flex-direction: column; align-items: flex-start; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .f-phone { font-size: 1.3rem; }
+}
+
+/* ---------- پنهان‌سازی جعبه‌های خالی بدون جاوااسکریپت ---------- */
+.side-col .box:has(.box-body > ul:empty),
+.side-col .box:has(.box-body > .thumb-list:empty),
+.side-col .box:has(.box-body > .tag-cloud:empty),
+.side-col .box:has(.box-body > .social-list:empty),
+.side-col .box:has(.box-body > .follower-list:empty) { display: none; }
+</style>
+
+<!-- AFP: پل نمای واید تا زمان کامپایل CSS قالب -->
+<style id="afp-wide-bridge">
+/* ==========================================================================
+   نمای واید دسکتاپ — هم‌تراز با عرض سایت navar-abyari.ir
+   ========================================================================== */
+:root { --wrap: 1760px; }
+
+@media (min-width: 1440px) {
+  .wrap { padding-left: 24px; padding-right: 24px; }
+
+  /* چیدمان اصلی: ستون محتوا پهن‌تر، ستون کنار کمی عریض‌تر */
+  .main-grid { grid-template-columns: minmax(0, 1fr) 360px; gap: 26px; }
+  .side-col { gap: 18px; }
+  .cat-grid { gap: 16px; }
+  .post-body { padding: 24px 26px 26px; }
+  .cta-band { padding: 26px 30px; }
+  .footer-grid { gap: 32px; }
+
+  /* فهرست مطالب: یک‌ردیفه در دسکتاپ (هر پست تمام عرض ستون محتوا) */
+  .main-col,
+  .main-col:has(> .post-card + .post-card) { display: block !important; }
+  .main-col > .post-card { margin-bottom: 20px; }
+}
+
+
+/* ==========================================================================
+   معرفی و کارت محصولات در صفحه‌های فهرست
+   ========================================================================== */
+.home-intro { display: none; }
+body:has(.main-col > .pagination) .home-intro { display: block; }
+.home-intro {
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbf3 100%);
+  border: 1px solid var(--line, #e3ebdd);
+  border-radius: var(--radius, 16px);
+  box-shadow: var(--shadow-1, 0 1px 2px rgba(20, 54, 31, .06));
+  padding: 26px 28px 24px;
+  margin: 0 0 24px;
+}
+.hi-kicker { display: inline-block; margin: 0 0 12px; padding: 5px 13px; border-radius: 999px; background: var(--lime-100, #eef7e3); color: var(--green-700, #1f6b34); font-size: .82rem; font-weight: 700; }
+.home-intro-title { margin: 0 0 12px; font-size: 1.6rem; line-height: 1.6; color: var(--green-900, #14361f); }
+.hi-lead { margin: 0 0 18px; font-size: 1.06rem; line-height: 2.05; color: var(--ink-2, #3a4a3f); }
+.hi-body p { margin: 0 0 14px; line-height: 2.05; color: var(--ink-2, #3a4a3f); }
+.hi-sub { margin: 24px 0 12px; font-size: 1.1rem; color: var(--green-900, #14361f); }
+.hi-sub::before { content: ""; display: inline-block; width: 6px; height: 18px; background: var(--lime-500, #8bc34a); border-radius: 3px; margin-inline-end: 9px; vertical-align: -3px; }
+.hi-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.hi-list li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.95; color: var(--ink-2, #3a4a3f); }
+.hi-list svg { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 6px; color: var(--green-600, #1f6b34); }
+.hi-facts { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.hi-facts li { background: #fff; border: 1px solid var(--line, #e3ebdd); border-radius: var(--radius-sm, 12px); padding: 13px 14px; text-align: center; }
+.hi-facts b { display: block; font-size: 1.04rem; color: var(--green-700, #1f6b34); margin-bottom: 5px; }
+.hi-facts span { display: block; font-size: .84rem; color: var(--muted, #6b7d70); line-height: 1.75; }
+.hi-prod-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.hi-prod { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line, #e3ebdd); border-radius: var(--radius-sm, 12px); overflow: hidden; text-decoration: none; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.hi-prod:hover { border-color: var(--green-600, #1f6b34); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(20, 54, 31, .10); }
+.hi-prod img { display: block; width: 100%; height: 150px; object-fit: cover; margin: 0; flex: 0 0 auto; }
+.hi-prod-body { display: block; padding: 12px 14px 15px; }
+.hi-prod-name { display: block; color: var(--green-900, #14361f); font-weight: 700; margin-bottom: 6px; line-height: 1.7; }
+.hi-prod-desc { display: block; font-size: .85rem; color: var(--muted, #6b7d70); line-height: 1.8; }
+.home-intro-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+@media (max-width: 1100px) {
+  .hi-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hi-prod-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .home-intro { padding: 18px 16px; }
+  .home-intro-title { font-size: 1.22rem; }
+  .hi-facts, .hi-prod-grid { grid-template-columns: 1fr; }
+  .home-intro-actions .btn { width: 100%; text-align: center; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
+
+<!-- نوار بالای سایت -->
+<div class="topstrip">
+<div class="wrap ts-in">
+<span class="ts-item ts-phone">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+<span>استعلام قیمت روز: <a href="tel:+989134922013">۰۹۱۳۴۹۲۲۰۱۳</a></span>
+</span>
+<span class="ts-links">
+<a href="https://navar-abyari.ir/shop/">فروشگاه محصولات</a>
+<a href="https://navar-abyari.ir/%d8%ae%d8%af%d9%85%d8%a7%d8%aa-%d9%be%d8%b3-%d8%a7%d8%b2-%d9%81%d8%b1%d9%88%d8%b4/">خدمات پس از فروش</a>
+</span>
+</div>
+</div>
+
+<!-- سربرگ -->
+<header class="site-header">
+<div class="wrap header-in">
+<h1 class="brand-box">
+<a class="brand" href="[#blog_url#]" title="[#blog_title#]">
+<span class="brand-mark" aria-hidden="true">AFP</span>
+<span class="brand-text">
+<span class="brand-name">آبگستر فرا پارسیان</span>
+<span class="brand-sub">تولیدکننده نوار تیپ و لوله‌های آبیاری قطره‌ای</span>
+</span>
+</a>
+</h1>
+<div class="header-side">
+<form class="header-search" method="GET" action="https://www.google.com/search" role="search">
+<input type="hidden" name="ie" value="UTF-8">
+<input type="hidden" name="oe" value="UTF-8">
+<input type="hidden" name="sitesearch" value="[#blog_url#]">
+<label class="sr-only" for="hs-q">جستجو در مطالب وبلاگ</label>
+<input id="hs-q" type="text" name="q" placeholder="جستجو در مطالب…" dir="rtl">
+<button type="submit" aria-label="جستجو">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+</button>
+</form>
+<a class="header-phone" href="tel:+989134922013">
+<span class="hp-ico" aria-hidden="true">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+</span>
+<span class="hp-txt">
+<span class="hp-lbl">کارشناس فروش و مشاوره فنی</span>
+<span class="hp-num">۰۹۱۳۴۹۲۲۰۱۳</span>
+</span>
+</a>
+</div>
+</div>
+</header>
+
+<!-- منوي اصلي -->
+<nav class="site-nav" id="site-nav" aria-label="منوی اصلی">
+<div class="wrap nav-in">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="bs-example-navbar-collapse-1">
+<span class="sr-only">فهرست</span><span class="resmenu" aria-hidden="true"></span>
+</button>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<ul class="nav navbar-nav">
+<li class="has-mega">
+<a href="https://navar-abyari.ir/shop/">دسته‌بندی محصولات <span class="caret" aria-hidden="true"></span></a>
+<div class="mega">
+<div class="mega-col">
+<p class="mega-title">نوار تیپ (نوار آبیاری)</p>
+<ul>
+<li><a href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/%d8%a8%d8%ba%d9%84-%d8%af%d9%88%d8%ae%d8%aa/">نوار تیپ بغل دوخت</a></li>
+<li><a href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/%d9%be%d9%84%d8%a7%da%a9%d8%af%d8%a7%d8%b1/">نوار تیپ پلاکدار</a></li>
+<li><a href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/">همه سایزها و ضخامت‌ها</a></li>
+</ul>
+</div>
+<div class="mega-col">
+<p class="mega-title">لوله و اتصالات</p>
+<ul>
+<li><a href="https://navar-abyari.ir/product-category/%d9%84%d9%88%d9%84%d9%87-%d8%aa%d8%a7%d8%b4%d9%88-%d8%a8%d8%af%d9%88%d9%86-%d9%86%d8%ae-%d9%88-%d9%86%d8%ae-%d8%af%d8%a7%d8%b1/">لوله تاشو و نخ‌دار</a></li>
+<li><a href="https://navar-abyari.ir/product-category/%d9%84%d9%88%d9%84%d9%87-%d8%aa%d8%a7%d8%b4%d9%88-%d8%a8%d8%af%d9%88%d9%86-%d9%86%d8%ae/">لوله تاشو بدون نخ</a></li>
+<li><a href="https://navar-abyari.ir/shop/">اتصالات و لوازم جانبی</a></li>
+</ul>
+</div>
+<div class="mega-col">
+<p class="mega-title">خدمات و پشتیبانی</p>
+<ul>
+<li><a href="https://navar-abyari.ir/%d8%ae%d8%af%d9%85%d8%a7%d8%aa-%d9%be%d8%b3-%d8%a7%d8%b2-%d9%81%d8%b1%d9%88%d8%b4/">خدمات پس از فروش</a></li>
+<li><a href="tel:+989134922013">مشاوره فنی رایگان</a></li>
+<li><a href="https://navar-abyari.ir/shop/">ثبت سفارش و پیش‌فاکتور</a></li>
+</ul>
+<p class="mega-note">ارسال به سراسر ایران · قیمت مستقیم از تولیدکننده · مشاوره انتخاب نوار تیپ مناسب زمین شما</p>
+</div>
+</div>
+</li>
+<fb:menu> <!--منو-->
+<fb:menu_item><!--آيتم هاي منو-->
+<li><a href="[#menu_link#]" class="[#menu_active#]">[#menu_title#]</a></li>
+</fb:menu_item>
+</fb:menu>
+</ul>
+</div>
+<a class="nav-cta" href="tel:+989134922013">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+تماس و استعلام قیمت
+</a>
+</div>
+</nav>
+
+<div class="wrap page">
+
+<fb:slide><section class="slide-box" aria-label="اسلایدر">[#slide#]</section></fb:slide>
+
+<!-- دسته بندي محصولات -->
+<section class="cat-strip" aria-labelledby="cat-strip-title">
+<div class="sec-head">
+<h2 class="sec-title" id="cat-strip-title">دسته‌بندی محصولات آبیاری</h2>
+<p class="sec-sub">خرید مستقیم از تولیدکننده، با مشاوره فنی رایگان پیش از سفارش</p>
+</div>
+<div class="cat-grid">
+<a class="cat-card" href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/">
+<span class="cat-name">نوار تیپ (نوار آبیاری)</span>
+<span class="cat-desc">بغل دوخت و پلاکدار، رول ۱۰۰۰ متری، ضخامت ۱۷۵ تا ۲۰۰ میکرون</span>
+</a>
+<a class="cat-card" href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/%d8%a8%d8%ba%d9%84-%d8%af%d9%88%d8%ae%d8%aa/">
+<span class="cat-name">نوار تیپ بغل دوخت</span>
+<span class="cat-desc">مناسب کشت ردیفی صیفی، باغ و گلخانه</span>
+</a>
+<a class="cat-card" href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/%d9%be%d9%84%d8%a7%da%a9%d8%af%d8%a7%d8%b1/">
+<span class="cat-name">نوار تیپ پلاکدار</span>
+<span class="cat-desc">قطره‌چکان تزریقی با توزیع یکنواخت‌تر آب</span>
+</a>
+<a class="cat-card" href="https://navar-abyari.ir/product-category/%d9%84%d9%88%d9%84%d9%87-%d8%aa%d8%a7%d8%b4%d9%88-%d8%a8%d8%af%d9%88%d9%86-%d9%86%d8%ae-%d9%88-%d9%86%d8%ae-%d8%af%d8%a7%d8%b1/">
+<span class="cat-name">لوله تاشو و نخ‌دار</span>
+<span class="cat-desc">لوله آبرسانی پلی‌اتیلن برای خطوط اصلی مزرعه</span>
+</a>
+</div>
+</section>
+
+<!-- نوار فراخوان سفارش -->
+<section class="cta-band">
+<div class="cta-text">
+<h2>قیمت روز نوار تیپ و لوله آبیاری</h2>
+<p>قبل از خرید، ضخامت و فاصله قطره‌چکان مناسب زمین شما را رایگان بررسی می‌کنیم و پیش‌فاکتور ۲۴ ساعته صادر می‌شود.</p>
+</div>
+<div class="cta-actions">
+<a class="btn btn-light btn-lg" href="tel:+989134922013">تماس و استعلام قیمت</a>
+<a class="btn btn-ghost-light btn-lg" href="https://navar-abyari.ir/shop/">ثبت سفارش در فروشگاه</a>
+</div>
+</section>
+
+<fb:messages>
+<div class="messages-box item_[#message_type#]">
+<div class="messages-text">  </div>
+</div>
+</fb:messages>
+
+<!-- AFP: معرفی و کارت محصولات در صفحه‌های فهرست -->
+<section class="home-intro" aria-labelledby="home-intro-title">
+<span class="hi-kicker">راهنمای تخصصی آبیاری قطره‌ای و نوار تیپ</span>
+<h2 class="home-intro-title" id="home-intro-title">از انتخاب نوار تیپ تا نصب خط آبیاری؛ راهنمای کامل برای کشاورزان ایران</h2>
+<p class="hi-lead">آبیاری قطره‌ای امروز یکی از کم‌هزینه‌ترین راه‌ها برای کاهش مصرف آب و بالا بردن بازدهی مزرعه است؛ اما نتیجه فقط به کیفیت تجهیزات بستگی ندارد. انتخاب درست ضخامت نوار، فاصله قطره‌چکان، قطر لوله اصلی و نحوه نگهداری، همان اندازه مهم است. این وبلاگ برای همین نوشته شده: راهنمایی ساده و کاربردی برای انتخاب و راه‌اندازی خط آبیاری قطره‌ای.</p>
+<div class="hi-body">
+<p>این وبلاگ مرجع مقالات فنی <b>شرکت آبگستر فرا پارسیان (AFP)</b> است؛ تولیدکننده نوار تیپ بغل دوخت و پلاکدار، لوله‌های تاشو و نخ‌دار و اتصالات آبیاری قطره‌ای. AFP از سال ۱۳۹۰ در بازار تجهیزات آبیاری فعال بوده و از سال ۱۳۹۵ تولید نوار آبیاری را در برنامه خود قرار داده است. مقالات این بخش بر پایه پرسش‌های واقعی کشاورزان نوشته می‌شوند؛ نه ترجمه‌های تکراری، بلکه پاسخ‌هایی که در مزرعه آزموده شده‌اند.</p>
+<p>در آبیاری سطحی بخش زیادی از آب در مسیر ردیف تبخیر می‌شود یا از دسترس ریشه بیرون می‌ماند. نوار تیپ آب را به‌صورت قطره‌ای و نزدیک ریشه تحویل می‌دهد؛ نتیجه این است که رطوبت در ناحیه ریشه می‌ماند، علف هرز بین ردیف‌ها کمتر رشد می‌کند و امکان کوددهی همراه آب فراهم می‌شود. همین دو اثر — مصرف کمتر آب و وجین کمتر — هزینه تمام‌شده هر هکتار را پایین می‌آورد.</p>
+<p>مقالات بر پایه شهر و استان دسته‌بندی شده‌اند تا کشاورزان هر منطقه — از سیستان و بلوچستان و خراسان تا شهرکرد، اراک و گیلان — راهنمای متناسب با زمین، منبع آب و نوع کشت خود را پیدا کنند. اگر در انتخاب محصول شک دارید، پیش از سفارش با کارشناس فنی ما تماس بگیرید؛ بررسی زمین و صدور پیش‌فاکتور رایگان است.</p>
+<h3 class="hi-sub">در این وبلاگ چه چیزی یاد می‌گیرید؟</h3>
+<ul class="hi-list">
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>محاسبه متراژ نوار تیپ و لوله مورد نیاز زمین، بر پایه فاصله ردیف‌ها و طول قطعه‌ها</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>انتخاب ضخامت نوار (۱۷۵ یا ۲۰۰ میکرون) و فاصله قطره‌چکان متناسب با بافت زمین و نوع کشت</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>اصول نصب خط آبیاری، فیلتراسیون، شست‌وشوی دوره‌ای و جلوگیری از گرفتگی قطره‌چکان‌ها</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>جمع‌آوری، انبارداری و نگهداری نوار برای استفاده در چند فصل کشت</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>مقایسه نوار تیپ بغل دوخت و پلاکدار و انتخاب اقتصادی‌ترین گزینه برای هر مزرعه</span></li>
+</ul>
+<h3 class="hi-sub">آبیاری قطره‌ای در یک نگاه</h3>
+<ul class="hi-facts">
+<li><b>۱۷۵ تا ۲۰۰ میکرون</b><span>ضخامت رایج نوار تیپ</span></li>
+<li><b>۱۰ / ۲۰ / ۳۰ سانتی‌متر</b><span>فاصله قطره‌چکان‌ها</span></li>
+<li><b>۱۰۰۰ متر</b><span>طول استاندارد هر رول</span></li>
+<li><b>۳۱ استان</b><span>ارسال بار تا محل پروژه</span></li>
+</ul>
+<h3 class="hi-sub">محصولات پرکاربرد AFP</h3>
+<div class="hi-prod-grid">
+<a class="hi-prod" href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/%d8%a8%d8%ba%d9%84-%d8%af%d9%88%d8%ae%d8%aa/">
+<img src="https://navar-abyari.ir/wp-content/uploads/نوارتیپ-بغل-دوخت-768x576.jpg" alt="نوار تیپ بغل دوخت" width="768" height="576" loading="lazy" decoding="async">
+<span class="hi-prod-body"><span class="hi-prod-name">نوار تیپ بغل دوخت</span><span class="hi-prod-desc">رول ۱۰۰۰ متری، ضخامت ۱۷۵ تا ۲۰۰ میکرون، مناسب کشت ردیفی و گلخانه</span></span>
+</a>
+<a class="hi-prod" href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/%d9%be%d9%84%d8%a7%da%a9%d8%af%d8%a7%d8%b1/">
+<img src="https://navar-abyari.ir/wp-content/uploads/خرید-نوار-آبیاری-پلاکدار-768x576.jpg" alt="نوار تیپ پلاکدار" width="768" height="576" loading="lazy" decoding="async">
+<span class="hi-prod-body"><span class="hi-prod-name">نوار تیپ پلاکدار</span><span class="hi-prod-desc">قطره‌چکان تزریق‌شده با دبی یکنواخت، مناسب زمین‌های شیب‌دار و ردیف‌های بلند</span></span>
+</a>
+<a class="hi-prod" href="https://navar-abyari.ir/product-category/%d9%84%d9%88%d9%84%d9%87-%d8%aa%d8%a7%d8%b4%d9%88-%d8%a8%d8%af%d9%88%d9%86-%d9%86%d8%ae-%d9%88-%d9%86%d8%ae-%d8%af%d8%a7%d8%b1/">
+<img src="https://navar-abyari.ir/wp-content/uploads/خرید-لوله-تاشو.jpg" alt="لوله تاشو و نخ‌دار" width="768" height="576" loading="lazy" decoding="async">
+<span class="hi-prod-body"><span class="hi-prod-name">لوله تاشو و نخ‌دار</span><span class="hi-prod-desc">انتقال آب از چاه تا سر مزرعه در قطرهای ۱.۵ تا ۳ اینچ، سبک و مقاوم به کشش</span></span>
+</a>
+<a class="hi-prod" href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/">
+<img src="https://navar-abyari.ir/wp-content/uploads/نوار-آبیاری-768x576.webp" alt="همه سایزها و ضخامت‌های نوار تیپ" width="768" height="576" loading="lazy" decoding="async">
+<span class="hi-prod-body"><span class="hi-prod-name">همه سایزها و ضخامت‌های نوار تیپ</span><span class="hi-prod-desc">فاصله قطره‌چکان ۱۰، ۲۰ و ۳۰ سانتی‌متر با ضخامت‌های مختلف برای هر نوع کشت</span></span>
+</a>
+</div>
+</div>
+<div class="home-intro-actions">
+<a class="btn btn-primary" href="https://navar-abyari.ir/shop/">مشاهده فروشگاه محصولات</a>
+<a class="btn btn-outline" href="tel:+989134922013">تماس و استعلام قیمت</a>
+<a class="btn btn-outline" href="https://navar-abyari.ir/%D8%B3%D9%88%D8%A7%D9%84%D8%A7%D8%AA-%D9%85%D8%AA%D8%AF%D8%A7%D9%88%D9%84/">سوالات متداول خرید</a>
+</div>
+</section>
+
+<div class="main-grid">
+<div class="main-col" id="main-content">
+
+<fb:royablog>
+<article class="post-card">
+<fb:post_image><a class="post-thumb" href="[#post_link#]" tabindex="-1"><img src="[#post_image#]" alt="[#post_title#]" loading="lazy"></a></fb:post_image>
+<div class="post-body">
+<h2 class="post-title"><a href="[#post_link#]">[#post_title#]</a></h2>
+<div class="post-meta">
+<span class="meta-item">[#post_date="l d F y"#]</span>
+<span class="meta-item">[#post_date="H:i"#]</span>
+<span class="meta-item">[#post_view#] بازدید</span>
+<span class="meta-item">نویسنده: [#post_author#]</span>
+<span class="meta-item"><a href="[#post_comment_link#]">[#post_comments#] نظر</a></span>
+</div>
+<div class="post-content">[#post_content#]</div>
+<fb:post_tag>
+<div class="post-tags">برچسب‌ها: <fb:tags><a href="[#tag_link#]">[#tag_title#]</a></fb:tags></div>
+</fb:post_tag>
+<div class="post-foot">
+<fb:post_short><a class="btn btn-outline btn-sm" href="[#post_link#]">ادامه مطلب</a></fb:post_short>
+<fb:post_rating>
+<span class="rating">
+<a class="rate rate-up" href="[#rate_up_link#]" aria-label="پسندیدن این مطلب">&#9650;</a><span class="rate-num">[#rate_up#]</span>
+<a class="rate rate-down" href="[#rate_down_link#]" aria-label="نپسندیدن این مطلب">&#9660;</a><span class="rate-num">[#rate_down#]</span>
+</span>
+</fb:post_rating>
+</div>
+</div>
+</article>
+</fb:royablog>
+
+<fb:blog_page>
+<nav class="pagination" aria-label="صفحه‌بندی مطالب">
+<fb:page_prev><a href="[#prev_page_link#]">صفحه قبلی</a></fb:page_prev>
+<fb:page_item>
+<a href="[#page_link#]" class="[#page_class#]">[#page_num#]</a>
+</fb:page_item>
+<fb:page_next><a href="[#next_page_link#]">صفحه بعدی</a></fb:page_next>
+</nav>
+</fb:blog_page>
+
+<!--- Start PAGES --->
+<!--- end PAGES --->
+
+<fb:post_comments>
+<section class="comments" id="comments">
+<h2 class="sec-title">نظرات کاربران</h2>
+<fb:comment_has_not><div class="no-comment"><div class="no-comment-text">هنوز نظری ثبت نشده است.</div></div></fb:comment_has_not>
+<fb:comment_item>
+<div class="comment">
+<div class="comment-head">
+<img class="comment-avatar" src="[#comment_avatar#]" alt="[#comment_name#]" loading="lazy">
+<span class="comment-name"><fb:comment_name>[#comment_name#]</fb:comment_name></span>
+<span class="comment-date">[#comment_date="l d F y"#]</span>
+</div>
+<div class="comment-text">[#comment_text#]</div>
+<fb:comment_reply>
+<div class="comment-reply">
+<span class="reply-name">پاسخ مدیر</span>
+<span class="reply-date">[#comment_replay_date="l d F y, H:i"#]</span>
+<div class="reply-text">[#comment_reply#]</div>
+</div>
+</fb:comment_reply>
+</div>
+</fb:comment_item>
+<div class="comment-form">[#post_comment_form#]</div>
+</section>
+</fb:post_comments>
+
+</div>
+
+<aside class="side-col">
+
+<fb:search_box>
+<div class="box search-box">
+<h3 class="box-title">جستجو در مطالب</h3>
+<div class="box-body">
+<form method="GET" action="https://www.google.com/search" class="searchform" role="search">
+<input type="hidden" name="ie" value="UTF-8">
+<input type="hidden" name="oe" value="UTF-8">
+<input type="hidden" name="domains" value="[#blog_url#]">
+<input type="hidden" name="sitesearch" value="[#blog_url#]">
+<label class="sr-only" for="search-q">عبارت جستجو</label>
+<input id="search-q" class="isearch" type="text" name="q" placeholder="مثلاً: نوار تیپ ۲۰ سانتی" dir="rtl">
+<button class="btn btn-primary" type="submit">جستجو</button>
+</form>
+<div class="todaytime">[#today_time#]</div>
+</div>
+</div>
+</fb:search_box>
+
+<fb:bloginfo>
+<div class="box about-box">
+<h3 class="box-title">درباره وبلاگ</h3>
+<div class="box-body">
+<fb:blogimage><img class="about-img" src="[#blog_image#]" alt="[#blog_title#]" loading="lazy"></fb:blogimage>
+<fb:blogabout><p class="about-text">[#blog_about#]</p></fb:blogabout>
+<a class="btn btn-outline btn-sm btn-block" href="https://navar-abyari.ir/shop/">مشاهده فروشگاه محصولات</a>
+</div>
+</div>
+</fb:bloginfo>
+
+<div class="box trust-box">
+<h3 class="box-title">مشاوره و پشتیبانی</h3>
+<div class="box-body">
+<ul class="trust-list">
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>انتخاب ضخامت و فاصله قطره‌چکان متناسب با زمین شما</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>قیمت مستقیم از تولیدکننده، بدون واسطه</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>پیش‌فاکتور ۲۴ ساعته و ارسال به سراسر ایران</span></li>
+</ul>
+<a class="btn btn-primary" href="tel:+989134922013">تماس با کارشناس فنی</a>
+</div>
+</div>
+
+<fb:category>
+<div class="box cat-box">
+<h3 class="box-title">موضوعات مطالب</h3>
+<div class="box-body">
+<ul class="list">
+<fb:category_item>
+<li><a href="[#category_link#]">[#category_title#] <span class="count">([#category_count#])</span></a>
+<fb:sub_category>
+<ul class="list sub-list">
+<fb:sub_category_item>
+<li><a href="[#category_sub_link#]">[#category_sub_title#] <span class="count">([#category_sub_count#])</span></a></li>
+</fb:sub_category_item>
+</ul>
+</fb:sub_category>
+</li>
+</fb:category_item>
+</ul>
+</div>
+</div>
+</fb:category>
+
+<fb:top_post>
+<div class="box">
+<h3 class="box-title">پربازدیدترین مطالب</h3>
+<div class="box-body">
+<ul class="thumb-list">
+<fb:post_item limit="6">
+<li><a href="[#post_link#]"><img src="[#post_image#]" alt="[#post_title#]" loading="lazy"><span>[#post_title#]</span></a></li>
+</fb:post_item>
+</ul>
+</div>
+</div>
+</fb:top_post>
+
+<fb:last_posts>
+<div class="box">
+<h3 class="box-title">تازه‌ترین مطالب</h3>
+<div class="box-body">
+<ul class="thumb-list">
+<fb:post_item limit="6">
+<li><a href="[#post_link#]"><img src="[#Post_Image#]" alt="[#post_title#]" loading="lazy"><span>[#post_title#]</span></a></li>
+</fb:post_item>
+</ul>
+</div>
+</div>
+</fb:last_posts>
+
+<fb:blog_tags>
+<div class="box">
+<h3 class="box-title">برچسب‌ها</h3>
+<div class="box-body">
+<div class="tag-cloud">
+<fb:tag_item>
+<a href="[#tag_link#]">[#tag_title#]</a>
+</fb:tag_item>
+</div>
+</div>
+</div>
+</fb:blog_tags>
+
+<fb:stat>
+<div class="box">
+<h3 class="box-title">خلاصه آمار</h3>
+<div class="box-body">
+<ul class="list stat-list">
+<fb:stat_item><li><span>[#stat_title#]</span> <span class="count">[#stat_value#]</span></li></fb:stat_item>
+</ul>
+</div>
+</div>
+</fb:stat>
+
+<fb:socials>
+<div class="box">
+<h3 class="box-title">شبکه‌های اجتماعی</h3>
+<div class="box-body">
+<ul class="social-list">
+<fb:rss><li><a href="[#rss#]" target="_blank" rel="nofollow">خوراک RSS</a></li></fb:rss>
+<fb:instagram><li><a href="[#instagram#]" target="_blank" rel="nofollow">اینستاگرام</a></li></fb:instagram>
+<fb:telegram><li><a href="[#telegram#]" target="_blank" rel="nofollow">تلگرام</a></li></fb:telegram>
+<fb:twitter><li><a href="[#twitter#]" target="_blank" rel="nofollow">توییتر</a></li></fb:twitter>
+<fb:facebook><li><a href="[#facebook#]" target="_blank" rel="nofollow">فیسبوک</a></li></fb:facebook>
+<fb:linkedin><li><a href="[#linkedin#]" target="_blank" rel="nofollow">لینکدین</a></li></fb:linkedin>
+<fb:youtube><li><a href="[#youtube#]" target="_blank" rel="nofollow">یوتیوب</a></li></fb:youtube>
+<fb:google_plus><li><a href="[#google_plus#]" target="_blank" rel="nofollow">گوگل پلاس</a></li></fb:google_plus>
+<fb:pinterest><li><a href="[#pinterest#]" target="_blank" rel="nofollow">پینترست</a></li></fb:pinterest>
+<fb:vimeo><li><a href="[#vimeo#]" target="_blank" rel="nofollow">ویمیو</a></li></fb:vimeo>
+<fb:flicker><li><a href="[#flicker#]" target="_blank" rel="nofollow">فلیکر</a></li></fb:flicker>
+<fb:yahoo><li><a href="[#yahoo#]" target="_blank" rel="nofollow">یاهو</a></li></fb:yahoo>
+</ul>
+</div>
+</div>
+</fb:socials>
+
+<fb:follower>
+<div class="box">
+<h3 class="box-title">دنبال‌کنندگان <span class="count">[#flower_count#] نفر</span></h3>
+<div class="box-body">
+<ul class="follower-list">
+<fb:follower_item limit="16"><li><a href="[#follower_link#]" target="_blank" rel="nofollow"><img src="[#follower_avatar#]" alt="دنبال‌کننده" loading="lazy"></a></li></fb:follower_item>
+</ul>
+<a href="https://www.royablog.ir/User/Flowing/?blog=[#blog_url#]" class="btn btn-outline btn-sm btn-block thisFlow">این وبلاگ را دنبال کنید</a>
+</div>
+</div>
+</fb:follower>
+
+<fb:vote>
+<div class="box">
+<h3 class="box-title">نظرسنجی</h3>
+<div class="box-body">
+<ul class="list vote-list">
+<li class="poll-question">[#vote_titr#]</li>
+<form method="post">
+<fb:vote_item><li class="poll-answer"><label><input type="radio" name="vote" value="[#vote_id#]">[#vote_title#]</label></li></fb:vote_item>
+<li class="poll-send"><input class="btn btn-primary btn-sm" type="submit" name="[#vote_item#]" value="ثبت نظر"/></li>
+</form>
+</ul>
+</div>
+</div>
+</fb:vote>
+
+<fb:archives>
+<div class="box">
+<h3 class="box-title">آرشیو مطالب</h3>
+<div class="box-body">
+<ul class="list">
+<fb:archive_item><li><a href="[#archive_link#]">[#archive_title#] <span class="count">([#archive_count#])</span></a></li></fb:archive_item>
+</ul>
+</div>
+</div>
+</fb:archives>
+
+<fb:authors>
+<div class="box">
+<h3 class="box-title">نویسندگان</h3>
+<div class="box-body">
+<ul class="list">
+<fb:author_item><li><a href="[#author_link#]">[#author_name#] <span class="count">([#author_post_count#])</span></a></li></fb:author_item>
+</ul>
+</div>
+</div>
+</fb:authors>
+
+<fb:links>
+<div class="box">
+<h3 class="box-title">پیوندها</h3>
+<div class="box-body">
+<ul class="list">
+<fb:link_item><li><a href="[#link_url#]" target="_blank" rel="nofollow">[#link_title#]</a></li></fb:link_item>
+</ul>
+</div>
+</div>
+</fb:links>
+
+<fb:daily_link>
+<div class="box">
+<h3 class="box-title">پیوندهای روزانه</h3>
+<div class="box-body">
+<ul class="list">
+<fb:link_item><li><a href="[#link_url#]" target="_blank" rel="nofollow">[#link_title#]</a></li></fb:link_item>
+</ul>
+</div>
+</div>
+</fb:daily_link>
+
+<fb:last_comments>
+<div class="box">
+<h3 class="box-title">آخرین نظرات</h3>
+<div class="box-body">
+<ul class="list">
+<fb:comment_item><li><a href="[#comment_link#]">[#comment_title#]</a></li></fb:comment_item>
+</ul>
+</div>
+</div>
+</fb:last_comments>
+
+<fb:dictionery>
+<div class="box">
+<h3 class="box-title">دیکشنری آنلاین</h3>
+<div class="box-body">[#dictionery#]</div>
+</div>
+</fb:dictionery>
+
+<fb:translate>
+<div class="box">
+<h3 class="box-title">مترجم سایت</h3>
+<div class="box-body">[#translate#]</div>
+</div>
+</fb:translate>
+
+<fb:clock>
+<div class="box">
+<h3 class="box-title">ساعت</h3>
+<div class="box-body clock-body">[#clock#]</div>
+</div>
+</fb:clock>
+
+<fb:music>
+<div class="box">
+<h3 class="box-title">پخش موزیک</h3>
+<div class="box-body music-body">[#music#]</div>
+</div>
+</fb:music>
+
+</aside>
+</div>
+</div>
+
+<footer class="site-footer">
+<div class="wrap f-top">
+<div class="f-brand">
+<span class="f-mark" aria-hidden="true">AFP</span>
+<span>
+<span class="f-brand-name">شرکت آبگستر فرا پارسیان</span>
+<span class="f-brand-sub">تولیدکننده نوار تیپ و لوله‌های آبیاری قطره‌ای — همراه کشاورزان ایران</span>
+</span>
+</div>
+<div class="f-chips">
+<a class="f-chip" href="tel:+989134922013">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+۰۹۱۳۴۹۲۲۰۱۳
+</a>
+<a class="f-chip" href="https://navar-abyari.ir/shop/">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18l-1.5 9h-15z"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg>
+فروشگاه محصولات
+</a>
+<a class="f-chip" href="[#blog_url#]rss/">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/><path d="M4 12a8 8 0 0 1 8 8"/><path d="M4 5a15 15 0 0 1 15 15"/></svg>
+خوراک RSS
+</a>
+</div>
+</div>
+
+<div class="wrap footer-grid">
+<div class="f-col">
+<h3 class="f-title">درباره AFP</h3>
+<p>تولیدکننده نوار تیپ و لوله‌های آبیاری قطره‌ای؛ همراه با مقالات تخصصی کشاورزی، راهنمای خرید و پشتیبانی فنی برای کشاورزان سراسر ایران.</p>
+</div>
+<div class="f-col">
+<h3 class="f-title">محصولات</h3>
+<ul>
+<li><a href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/">نوار تیپ (نوار آبیاری)</a></li>
+<li><a href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/%d8%a8%d8%ba%d9%84-%d8%af%d9%88%d8%ae%d8%aa/">نوار تیپ بغل دوخت</a></li>
+<li><a href="https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/%d9%be%d9%84%d8%a7%da%a9%d8%af%d8%a7%d8%b1/">نوار تیپ پلاکدار</a></li>
+<li><a href="https://navar-abyari.ir/product-category/%d9%84%d9%88%d9%84%d9%87-%d8%aa%d8%a7%d8%b4%d9%88-%d8%a8%d8%af%d9%88%d9%86-%d9%86%d8%ae-%d9%88-%d9%86%d8%ae-%d8%af%d8%a7%d8%b1/">لوله تاشو و نخ‌دار</a></li>
+<li><a href="https://navar-abyari.ir/product-category/%d9%84%d9%88%d9%84%d9%87-%d8%aa%d8%a7%d8%b4%d9%88-%d8%a8%d8%af%d9%88%d9%86-%d9%86%d8%ae/">لوله تاشو بدون نخ</a></li>
+</ul>
+</div>
+<div class="f-col">
+<h3 class="f-title">دسترسی سریع</h3>
+<ul>
+<li><a href="[#blog_url#]">صفحه اصلی</a></li>
+<li><a href="https://navar-abyari.ir/shop/">فروشگاه محصولات</a></li>
+<li><a href="https://navar-abyari.ir/%d8%ae%d8%af%d9%85%d8%a7%d8%aa-%d9%be%d8%b3-%d8%a7%d8%b2-%d9%81%d8%b1%d9%88%d8%b4/">خدمات پس از فروش</a></li>
+<li><a href="[#blog_url#]rss/">خوراک RSS مطالب</a></li>
+</ul>
+</div>
+<div class="f-col f-contact">
+<h3 class="f-title">تماس و استعلام قیمت</h3>
+<p class="f-phone"><a href="tel:+989134922013">۰۹۱۳۴۹۲۲۰۱۳</a></p>
+<p class="f-note">پاسخگویی در ساعات کاری · ارسال به ۳۱ استان</p>
+<a class="btn btn-light" href="https://navar-abyari.ir/shop/">ثبت سفارش در فروشگاه</a>
+</div>
+</div>
+
+<div class="wrap">
+<div class="f-trust">
+<div class="f-trust-item">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.2-2.9 7.7-7 9-4.1-1.3-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+<span><b>ضمانت اصالت کالا</b><span>تولید مستقیم کارخانه AFP</span></span>
+</div>
+<div class="f-trust-item">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v10H3z"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
+<span><b>ارسال به سراسر ایران</b><span>بارگیری و حمل تا محل پروژه</span></span>
+</div>
+<div class="f-trust-item">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v3a2 2 0 0 0 2 2h1v-5H6a2 2 0 0 0-2 2z"/><path d="M20 13v3a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2z"/></svg>
+<span><b>مشاوره فنی رایگان</b><span>انتخاب نوار تیپ مناسب زمین شما</span></span>
+</div>
+</div>
+</div>
+
+<div class="footer-bottom">
+<div class="wrap fb-in">
+<div class="copyright"><a href="http://royablog.ir" target="_blank" title="رویابلاگ" class="fblogo"></a> [#blog_copyright#]</div>
+<ul class="dashboard">
+<fb:HOME_URL><li><a href="[#HOME_URL#]" target="_blank">رویابلاگ</a></li></fb:HOME_URL>
+<fb:UPLOADCENTER_URL><li><a href="[#UPLOADCENTER_URL#]" target="_blank">آپلودسنتر</a></li></fb:UPLOADCENTER_URL>
+<fb:CHARGE_URL><li><a href="[#CHARGE_URL#]" target="_blank">کارت شارژ</a></li></fb:CHARGE_URL>
+<fb:TIME_URL><li><a href="[#TIME_URL#]" target="_blank">تاریخ و ساعت رسمی</a></li></fb:TIME_URL>
+<fb:VIDEO_URL><li><a href="[#VIDEO_URL#]" target="_blank">اشتراک ویدئو</a></li></fb:VIDEO_URL>
+<fb:TEMPLATE_URL><li><a href="[#TEMPLATE_URL#]" target="_blank">قالب</a></li></fb:TEMPLATE_URL>
+</ul>
+</div>
+</div>
+</footer>
+
+
+</body>
+</html>
