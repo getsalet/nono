@@ -4,19 +4,38 @@
   "history": [
     {
       "pass": false,
-      "score": 45,
-      "duplicate_roles": [],
-      "reasons": [
-        "Role 1 is shot at a low ground angle rather than a wide elevated field view; it lacks the specified high camera height and depth.",
-        "Role 2 is not a steep near-overhead layout; it uses a similar low-to-medium angle as Role 1, failing to provide the required overhead technical perspective or clear selection cues like connectors.",
-        "Role 3 depicts the coils on a white table instead of a concrete pad, and is missing the mandatory fixed equipment (pump, gauge, manifold) on the surface.",
-        "No image satisfies the camera height or environmental structure requirements for its assigned role."
+      "score": 30,
+      "duplicate_roles": [
+        1,
+        2
       ],
-      "correction_prompt": "Reframe Role 1 as a wide elevated view with both coils in the lower third; shoot Role 2 from a steep overhead angle on soil; stage Role 3 on a concrete pad featuring a pump, gauge, and manifold.",
+      "reasons": [
+        "Role 1 (Editorial Hero) is failed: The prompt explicitly demands a 'wide elevated water-transfer field view,' but the image shows a low, ground-level still life. It does not capture the wide environmental context required.",
+        "Role 2 (Selection Evidence) is failed: The prompt specifies a 'steep near-overhead technical still life,' but the image is a low-angle horizontal shot, lacking the required high-angle technical perspective.",
+        "Roles 1 and 2 are near-duplicates: Both images use the same low camera height and subject arrangement, failing to provide the visual distinction between a wide hero shot and a technical detail shot.",
+        "Role 3 (Headworks Detail) is borderline: While it includes the concrete pad and the integrated coil pair, the background equipment is a generic tractor-mounted filter rather than a dedicated fixed pump/manifold setup, but the primary rejection is due to the failures in Roles 1 and 2."
+      ],
+      "correction_prompt": "Role 1 must be a wide elevated field view showing the long-term water transfer path; Role 2 must be a steep near-overhead soil shot; Role 3 should feature a dedicated fixed pump manifold on a concrete pad.",
       "panel_scores": [
-        45
+        30
       ],
       "set_attempt": 1
+    },
+    {
+      "pass": false,
+      "score": 35,
+      "duplicate_roles": [
+        2
+      ],
+      "reasons": [
+        "Role 2 fails: The image depicts a low-angle shot of the product on soil, lacking the required steep near-overhead technical layout that would show connector or diameter details.",
+        "Role 3 fails: The equipment in the background is a red tractor rather than the required standalone fixed pump, gauge, regulator, and manifold assembly on a concrete pad."
+      ],
+      "correction_prompt": "Regenerate Role 2 as a steep overhead technical shot on soil showing the coil diameter; regenerate Role 3 with a red tractor replaced by a fixed industrial pump and manifold system on the concrete pad.",
+      "panel_scores": [
+        35
+      ],
+      "set_attempt": 2
     }
   ]
 }
