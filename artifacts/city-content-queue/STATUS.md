@@ -2,7 +2,7 @@
 
 > این صفحه پس از پردازش هر پست به‌روزرسانی می‌شود. برای دیدن مقدار تازه، صفحه را Refresh کنید.
 
-- آخرین بروزرسانی: `2026-10-13T01:45:10+00:00`
+- آخرین بروزرسانی: `2026-10-13T02:45:54+00:00`
 - وضعیت صف: **ready_with_failures**
 - پیشرفت: **1148 از 1894 (60.61٪)**
 - تکمیل‌شده: **1148**
@@ -55,7 +55,7 @@
 
 ## خطاهای اخیر
 
-- **بشرویه** — `layflat`: `Agnes Image HTTP 401: {"error":{"code":"","message":"This token status is unavailable (request id: 20261013014504660867244Q2QLlem1)","type":"AgnesAI_error"}}`
+- **بشرویه** — `layflat`: `Agnes Image HTTP 403: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 202610130245293338275515OPLkfMJ)","type":"AgnesAI_error"}}`
 - **اشتهارد** — `layflat`: `unsupported operand type(s) for +=: 'NoneType' and 'str'`
 - **طبس** — `layflat`: `HTTP Error 401: Unauthorized`
 - **کرج** — `layflat`: `HTTP Error 401: Unauthorized`
