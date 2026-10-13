@@ -81,9 +81,34 @@ def login(page):
     for label in ('مرا به خاطر بسپار','Remember me','Keep me signed in'):
         cb=page.get_by_label(label,exact=True)
         if cb.count() and cb.first.is_visible():cb.first.check()
-    page.click('#login');page.wait_for_url('**/User/**',timeout=60000)
+    # Do not wait for every ad/third-party resource to finish loading.
+    # Submit once, then verify access to the protected post table.
+    navigation_error = False
+    try:
+        with page.expect_navigation(wait_until='domcontentloaded', timeout=30000):
+            page.click('#login')
+    except Exception as exc:
+        from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+        if not isinstance(exc, PlaywrightTimeoutError):
+            raise
+        navigation_error = True
+    if '/SignIn/' in page.url:
+        # Classify visible feedback without logging page text or credentials.
+        text = page.inner_text('body')
+        if any(s in text for s in ('نام كاربري وارد شده معتبر', 'نام کاربری وارد شده معتبر')):
+            raise RuntimeError('Roya login: username rejected by site format validation; check ROYA_USERNAME')
+        if any(s in text for s in ('نام کاربری وارد نشده', 'رمز ورود وارد نشده')):
+            raise RuntimeError('Roya login: site reports an empty login field')
+        if any(s in text for s in ('اشتباه', 'نادرست', 'نامعتبر', 'صحیح نمی', 'معتبر نمی', 'معتبر نمي')):
+            raise RuntimeError('Roya login: site rejected supplied credentials; check repository login secrets')
+        if navigation_error:
+            raise RuntimeError('Roya login: form did not navigate within 30 seconds; no second submission attempted')
+        raise RuntimeError('Roya login: submitted form returned to SignIn without an authenticated session')
     page.goto(POSTS_URL,wait_until='domcontentloaded',timeout=90000)
-    if '/SignIn/' in page.url:raise RuntimeError('Roya login failed; check the repository credentials')
+    if '/SignIn/' in page.url:
+        raise RuntimeError('Roya login: protected posts page redirected to SignIn')
+    page.wait_for_selector('table.poststable',timeout=30000)
+    print('Unattended Roya login verified against protected posts table',flush=True)
 
 def verify_live(page,item,pid):
     post=item['post'];slug=(post.get('slug') or '').strip('-')[:60]
