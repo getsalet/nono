@@ -4,28 +4,41 @@ on:
   workflow_dispatch:
     inputs:
       limit:
-        description: 'how many ready posts to publish'
+        description: 'Maximum ready posts this run'
         required: false
-        default: '3'
+        default: '30'
       publish:
-        description: '1 = publish in the panel, 0 = export only'
+        description: '1 = publish, 0 = explicitly export only'
         required: false
-        default: '0'
+        default: '1'
+  workflow_run:
+    workflows: ['Roya blog city backlink queue']
+    types: [completed]
+    branches: [main]
+  schedule:
+    - cron: '*/30 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/roya-backlink-publish.yml
+      - automation/publish_roya_posts.py
 
 permissions:
   contents: write
 
 concurrency:
-  group: roya-backlink-publish
+  group: roya-backlink-pipeline
   cancel-in-progress: false
 
 jobs:
   publish:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_repository.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      ROYA_PUBLISH: ${{ github.event.inputs.publish || '0' }}
-      ROYA_PUBLISH_LIMIT: ${{ github.event.inputs.limit || '3' }}
+      ROYA_PUBLISH: ${{ github.event.inputs.publish || '1' }}
+      ROYA_PUBLISH_LIMIT: ${{ github.event.inputs.limit || '30' }}
+      ROYA_DELAY_SECONDS: '10'
       ROYA_USERNAME: ${{ secrets.ROYA_USERNAME }}
       ROYA_PASSWORD: ${{ secrets.ROYA_PASSWORD }}
     steps:
@@ -33,20 +46,27 @@ jobs:
         with: {fetch-depth: 0}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
+      - name: Validate unattended login credentials
+        if: env.ROYA_PUBLISH == '1'
+        run: |
+          if [ -z "$ROYA_USERNAME" ] || [ -z "$ROYA_PASSWORD" ]; then
+            echo '::error::Set ROYA_USERNAME and ROYA_PASSWORD repository secrets for unattended Roya publication.'
+            exit 1
+          fi
       - name: Install Playwright
-        if: ${{ github.event.inputs.publish == '1' }}
+        if: env.ROYA_PUBLISH == '1'
         run: |
           python -m pip install --quiet playwright
           python -m playwright install --with-deps chromium
-      - name: Export or publish ready posts
+      - name: Publish and verify ready posts
         run: python automation/publish_roya_posts.py
-      - name: Commit publish state
+      - name: Commit per-post publication checkpoints
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f data/roya/backlink-queue.json artifacts/roya-backlink-queue
+          git add -f data/roya/backlink-queue.json state/roya-backlink-progress.json artifacts/roya-backlink-queue
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Update Roya publish queue"
+          git commit -m "Record verified Roya publication checkpoints"
           git pull --rebase origin main
           git push origin main

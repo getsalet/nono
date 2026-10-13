@@ -1,216 +1,170 @@
 #!/usr/bin/env python3
-"""Publish generated Roya backlink posts to the Roya blog panel (afp.royablog.ir).
+"""Publish QA-approved Roya posts, checkpointing every verified native-form save.
 
-Reads artifacts/roya-backlink-queue/publish-queue.json, exports every ready post as
-HTML + JSON and - when ROYA_PUBLISH=1 with ROYA_USERNAME/ROYA_PASSWORD - publishes it
-through the panel with Playwright.
-
-Panel behaviour verified on the live panel (2026-10-12):
-  * Roya has **no bulk/CSV/WordPress import**. مهاجرت (User/Transfer) only accepts
-    بلاگفا / میهن‌بلاگ / لوکس‌بلاگ blogs, so every post is created one at a time.
-  * The only save path that really persists a post is the panel's own form submit:
-    fill form#fbmyposting, sync TinyMCE, then `jQuery('.npost').submit()` and let the
-    browser navigate. The post is written and the browser lands on /User/Posts/.
-  * Do NOT use fetch/XHR to /User/AddPost/ (neither the mb81_ajax_publish helper nor a
-    plain FormData fetch): the server answers {"status":"ok","pid":N} but writes nothing.
-  * Fields: ptitle, plink (latin slug), pshort = article HTML (main body),
-    pfull = ادامه مطلب, ppublic (1 منتشر شود، 2 پیش نویس، 3 انتشار در آینده).
-  * Delete: POST /Op/ with othReq=rmps_<pid> and header X-Requested-With: XMLHttpRequest.
-
-Env: ROYA_PUBLISH ROYA_USERNAME ROYA_PASSWORD ROYA_PUBLISH_LIMIT ROYA_DRAFT
-     ROYA_DELAY_SECONDS ROYA_QUEUE_FILE ROYA_BLOG_URL ROYA_PANEL_URL
+GitHub Actions uses ROYA_USERNAME/ROYA_PASSWORD repository secrets. A one-time
+interactive run may attach to AGENT_BROWSER_CDP; it never closes that browser.
+Ready-file paths are resolved within this checkout rather than a previous runner.
 """
-import json, os, random, re, sys, time
+import json, os, re, sys, time
 from pathlib import Path
-
+from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parent.parent
-QUEUE = ROOT / 'data' / 'roya' / 'backlink-queue.json'
-ART = ROOT / 'artifacts' / 'roya-backlink-queue'
-PUBLISH_QUEUE = ART / 'publish-queue.json'
-EXPORT = ART / 'publish'
-STATE = ROOT / 'state' / 'roya-backlink-progress.json'
-LOG = ART / 'publish-log.jsonl'
+QUEUE = ROOT/'data/roya/backlink-queue.json'
+ART = ROOT/'artifacts/roya-backlink-queue'
+PUBLISH_QUEUE = ART/'publish-queue.json'
+STATE = ROOT/'state/roya-backlink-progress.json'
+LOG = ART/'publish-log.jsonl'
+EXPORT = ART/'publish'
+PANEL = os.getenv('ROYA_PANEL_URL','https://www.royablog.ir').rstrip('/')
+BLOG = os.getenv('ROYA_BLOG_URL','https://afp.royablog.ir').rstrip('/')
+POSTS_URL = PANEL+'/User/Posts/'
+ADD_URL = PANEL+'/User/AddPost/'
+LIMIT = max(1,int(os.getenv('ROYA_PUBLISH_LIMIT','30')))
+DO_PUBLISH = os.getenv('ROYA_PUBLISH','0') == '1'
+DELAY = max(0,float(os.getenv('ROYA_DELAY_SECONDS','10')))
+def now(): return time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())
+def load(path,default):
+    p=Path(path)
+    return json.loads(p.read_text(encoding='utf-8')) if p.exists() else default
 
-PANEL = os.getenv('ROYA_PANEL_URL', 'https://www.royablog.ir').rstrip('/')
-BLOG = os.getenv('ROYA_BLOG_URL', 'https://afp.royablog.ir').rstrip('/')
-ADD_URL = PANEL + '/User/AddPost/'
-POSTS_URL = PANEL + '/User/Posts/'
-LIMIT = int(os.getenv('ROYA_PUBLISH_LIMIT', '3'))
-DO_PUBLISH = os.getenv('ROYA_PUBLISH', '0') == '1'
-DRAFT = os.getenv('ROYA_DRAFT', '0') == '1'
-DELAY = float(os.getenv('ROYA_DELAY_SECONDS', '10'))
+def save(path,data):
+    path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
+    tmp=path.with_name(path.name+'.tmp');tmp.write_text(json.dumps(data,ensure_ascii=False,indent=1),encoding='utf-8');tmp.replace(path)
 
+def resolve_item(entry):
+    return ART/'items'/Path(entry.get('item_file','')).name
 
-def load(path, default):
-    try:
-        return json.loads(Path(path).read_text(encoding='utf-8'))
-    except Exception:
-        return default
+def export_post(item):
+    EXPORT.mkdir(parents=True,exist_ok=True)
+    safe=re.sub(r'[^A-Za-z0-9._-]+','_',item['key'])
+    post=item['post'];(EXPORT/(safe+'.html')).write_text(post['html'],encoding='utf-8')
+    save(EXPORT/(safe+'.json'),{'key':item['key'],**post})
 
+def checkpoint(entry,item,row):
+    queue=load(QUEUE,{'items':[]})
+    updates={'published':True,'published_url':row['url'],'published_at':row['at'],'pid':row['pid'],'status':'published'}
+    for record in queue['items']:
+        if record['key']==entry['key']:record.update(updates)
+    save(QUEUE,queue);item.update(updates);save(resolve_item(entry),item)
+    state=load(STATE,{})
+    rows={r['key']:r for r in state.get('published',[])}
+    rows[entry['key']]={k:row[k] for k in ('key','pid','url','at')}
+    state['published']=list(rows.values());state['last_publish_run']=now();state['updated_at']=now();save(STATE,state)
+    pq=load(PUBLISH_QUEUE,{'items':[]});pq['items']=[e for e in pq['items'] if e['key']!=entry['key']];pq['count']=len(pq['items']);save(PUBLISH_QUEUE,pq)
+    LOG.parent.mkdir(parents=True,exist_ok=True)
+    with LOG.open('a',encoding='utf-8') as f:f.write(json.dumps(row,ensure_ascii=False)+'\n')
 
-def save(path, data):
-    Path(path).parent.mkdir(parents=True, exist_ok=True)
-    Path(path).write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding='utf-8')
+def scan_panel(page):
+    found={};pending=[POSTS_URL];seen=set()
+    while pending:
+        url=pending.pop(0)
+        if url in seen:continue
+        if len(seen)>=100:raise RuntimeError('Panel pagination limit exceeded')
+        seen.add(url);page.goto(url,wait_until='domcontentloaded',timeout=90000)
+        if '/SignIn/' in page.url:raise RuntimeError('Roya login session is not active')
+        page.wait_for_selector('table.poststable',timeout=30000)
+        rows=page.eval_on_selector_all('table.poststable tbody tr',r"""rows=>rows.map(r=>({title:(r.querySelector('.tdtitle')?.innerText||'').trim(),pid:(r.querySelector('a.actionedit')?.href||'').match(/EditPosts\/(\d+)/)?.[1]}))""")
+        for r in rows:
+            if r['pid'] and r['title']:found[r['title']]=int(r['pid'])
+        links=page.eval_on_selector_all('a[href]','a=>a.map(e=>e.href)')
+        for link in links:
+            if urlsplit(link).netloc==urlsplit(PANEL).netloc and urlsplit(link).path.rstrip('/')=='/User/Posts' and link not in seen and link not in pending:pending.append(link)
+    return found
 
+def login(page):
+    page.goto(POSTS_URL,wait_until='domcontentloaded',timeout=90000)
+    if '/SignIn/' not in page.url:return
+    user,password=os.getenv('ROYA_USERNAME',''),os.getenv('ROYA_PASSWORD','')
+    if not user or not password:raise RuntimeError('ROYA_USERNAME and ROYA_PASSWORD repository secrets are required')
+    page.fill('#username',user);page.fill('#password',password)
+    # Remember-me, when this particular site visibly offers it.
+    for label in ('مرا به خاطر بسپار','Remember me','Keep me signed in'):
+        cb=page.get_by_label(label,exact=True)
+        if cb.count() and cb.first.is_visible():cb.first.check()
+    page.click('#login');page.wait_for_url('**/User/**',timeout=60000)
+    page.goto(POSTS_URL,wait_until='domcontentloaded',timeout=90000)
+    if '/SignIn/' in page.url:raise RuntimeError('Roya login failed; check the repository credentials')
 
-def export_post(item_file, item):
-    post = item.get('post', {})
-    EXPORT.mkdir(parents=True, exist_ok=True)
-    safe = re.sub(r'[^A-Za-z0-9._-]+', '_', item['key'])[:80]
-    (EXPORT / f'{safe}.html').write_text(
-        f"<!-- {post.get('title','')} -->\n{post.get('html','')}\n", encoding='utf-8')
-    save(EXPORT / f'{safe}.json', {'key': item['key'], 'target_url': item.get('target_url'),
-                                   'site_title': item.get('site_title'),
-                                   'title': post.get('title'), 'slug': post.get('slug'),
-                                   'meta_description': post.get('meta_description'),
-                                   'focus_keyword': post.get('focus_keyword'),
-                                   'tags': post.get('tags'), 'html': post.get('html')})
-    return safe
+def verify_live(page,item,pid):
+    post=item['post'];slug=(post.get('slug') or '').strip('-')[:60]
+    url=f'{BLOG}/post/{pid}/{slug}/' if slug else f'{BLOG}/post/{pid}/'
+    response=page.goto(url,wait_until='domcontentloaded',timeout=90000)
+    if not response or response.status>=400:raise RuntimeError('Published URL returned an error')
+    content=page.content()
+    if post['title'].strip()[:25] not in page.inner_text('body'):raise RuntimeError('Published page title did not verify')
+    # Verify the city backlink, not a success response alone.
+    target=item.get('target_url')
+    if target and target not in page.eval_on_selector_all('a[href]','a=>a.map(e=>e.href)'):
+        from urllib.parse import unquote
+        links=page.eval_on_selector_all('a[href]','a=>a.map(e=>e.href)')
+        if unquote(target) not in [unquote(v) for v in links]:raise RuntimeError('City backlink did not verify')
+    return url
 
-
-def panel_rows(page):
-    return page.eval_on_selector_all(
-        'table.poststable tbody tr',
-        'rows => rows.map(r => r.innerText.replace(/\\s+/g, " ").trim())')
-
-
-def find_pid(page, title):
-    return page.evaluate("""(title) => {
-        const head = title.trim().slice(0, 25);
-        const row = [...document.querySelectorAll('table.poststable tbody tr')]
-            .find(tr => (tr.innerText || '').includes(head));
-        if (!row) return null;
-        const a = row.querySelector('a.actionedit');
-        return a ? (a.getAttribute('href') || '').match(/(\\d+)/)[1] : null;
-    }""", title)
-
-
-def publish_with_panel(todo):
+def publish(todo):
     from playwright.sync_api import sync_playwright
-    user, password = os.getenv('ROYA_USERNAME', ''), os.getenv('ROYA_PASSWORD', '')
-    if not (user and password):
-        raise RuntimeError('ROYA_USERNAME/ROYA_PASSWORD are required for publishing')
-    results = []
+    attached=bool(os.getenv('AGENT_BROWSER_CDP'));completed=0
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(args=['--no-sandbox'])
-        ctx = browser.new_context(locale='fa-IR', viewport={'width': 1440, 'height': 900})
-        page = ctx.new_page()
-        page.on('dialog', lambda d: d.accept())
-
-        page.goto(PANEL + '/', wait_until='domcontentloaded', timeout=90000)
-        if page.query_selector('input[name=passwd]'):
-            page.fill('input[name=username]', user)
-            page.fill('input[name=passwd]', password)
-            page.click('input[name=login]')
-            page.wait_for_load_state('domcontentloaded')
-        page.goto(ADD_URL, wait_until='domcontentloaded', timeout=90000)
-        page.wait_for_selector('#ptitle', timeout=60000)
-        if page.query_selector('input[name=passwd]'):
-            raise RuntimeError('Roya panel login failed (check ROYA_USERNAME/ROYA_PASSWORD)')
-
-        for n, entry in enumerate(todo):
-            item = load(entry['item_file'], {})
-            post = item.get('post', {})
-            title = (post.get('title') or item.get('prepared_title') or '')[:120]
-            slug = (post.get('slug') or re.sub(r'[^a-z0-9]+', '-', entry['key'].split('/')[-1].lower()))[:60].strip('-')
-            row = {'key': entry['key'], 'title': title, 'slug': slug,
-                   'at': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}
-            for attempt in (1, 2):
-                try:
-                    page.goto(ADD_URL, wait_until='domcontentloaded', timeout=90000)
-                    page.wait_for_selector('#ptitle', timeout=60000)
-                    page.fill('#ptitle', title)
-                    if slug:
-                        page.fill('#plink', slug)
-                    page.evaluate("""(payload) => {
-                        const tags = (payload.tags || []).join(',');
-                        const k = document.querySelector('#keyword'); if (k) k.value = tags;
-                        const kw = document.querySelector('#kw'); if (kw) kw.value = tags;
-                        const pub = document.querySelector('input[name=ppublic][value="' + payload.ppublic + '"]');
-                        if (pub) pub.checked = true;
-                        if (window.tinymce && tinymce.get('pshort')) tinymce.get('pshort').setContent(payload.html);
-                        else { const ta = document.querySelector('#pshort'); if (ta) ta.value = payload.html; }
-                    }""", {'html': post.get('html', ''), 'tags': post.get('tags') or [item.get('city_fa', '')],
-                           'ppublic': '2' if DRAFT else '1'})
-                    page.wait_for_timeout(1200)
+        if attached:
+            browser=pw.chromium.connect_over_cdp(os.environ['AGENT_BROWSER_CDP']);ctx=browser.contexts[0]
+        else:
+            browser=pw.chromium.launch(args=['--no-sandbox']);ctx=browser.new_context(locale='fa-IR',viewport={'width':1440,'height':900})
+        page=ctx.new_page();page.on('dialog',lambda d:d.accept())
+        try:
+            login(page);existing=scan_panel(page)
+            for n,entry in enumerate(todo,1):
+                item=load(resolve_item(entry),{});post=item['post'];title=post['title'].strip();pid=existing.get(title)
+                recovered=bool(pid)
+                if not pid:
+                    page.goto(ADD_URL,wait_until='domcontentloaded',timeout=90000)
+                    if '/SignIn/' in page.url:raise RuntimeError('Roya login expired; refusing a blind retry')
+                    page.wait_for_selector('#ptitle',timeout=30000)
+                    page.wait_for_function("()=>window.tinymce && tinymce.get('pshort') && tinymce.get('pshort').parser && tinymce.get('pshort').getBody()",timeout=45000)
+                    page.fill('#ptitle',title);page.fill('#plink',(post.get('slug') or '')[:60].strip('-'))
+                    page.evaluate("""post=>{
+                      const tags=(post.tags||[]).join(',');for(const id of ['keyword','kw']){const e=document.getElementById(id);if(e)e.value=tags;}
+                      const pub=document.querySelector('input[name=ppublic][value="1"]');if(!pub)throw Error('Publish option missing');pub.checked=true;
+                      if(window.tinymce&&tinymce.get('pshort')){tinymce.get('pshort').setContent(post.html);tinymce.triggerSave();}
+                      else document.querySelector('#pshort').value=post.html;
+                    }""",post)
+                    # Native form submit is the only endpoint confirmed to persist posts.
                     with page.expect_navigation(timeout=90000):
-                        page.evaluate("() => window.jQuery ? window.jQuery('.npost').submit() "
-                                      ": document.querySelector('form.npost').submit()")
-                    page.wait_for_timeout(2500)
-                    if '/User/Posts/' not in page.url:
-                        page.goto(POSTS_URL, wait_until='domcontentloaded', timeout=90000)
-                    pid = find_pid(page, title)
-                    if not pid:
-                        raise RuntimeError('post not found in the panel list after submit')
-                    url = f'{BLOG}/post/{pid}/{slug}/' if slug else f'{BLOG}/post/{pid}/'
-                    page.goto(url, wait_until='domcontentloaded', timeout=90000)
-                    live_html = page.content()
-                    if title.split('|')[0].strip()[:20] not in live_html:
-                        raise RuntimeError(f'published page did not verify at {url}')
-                    row.update({'pid': pid, 'url': url, 'verified': True, 'draft': DRAFT,
-                                'attempts': attempt})
-                    print(f'[{n+1}/{len(todo)}] {"draft" if DRAFT else "published"} '
-                          f'{entry["key"]} -> {url}', flush=True)
-                    break
-                except Exception as exc:
-                    row.update({'error': str(exc)[:300]})
-                    print(f'[{n+1}/{len(todo)}] attempt {attempt} failed for {entry["key"]}: {exc}',
-                          flush=True)
-                    page.wait_for_timeout(4000)
-            results.append(row)
-            with LOG.open('a', encoding='utf-8') as fh:
-                fh.write(json.dumps(row, ensure_ascii=False) + '\n')
-            if n + 1 < len(todo) and DELAY:
-                time.sleep(DELAY + random.uniform(0, DELAY / 2))
-        browser.close()
-    return results
-
+                        page.evaluate("()=>window.jQuery?window.jQuery('.npost').submit():document.querySelector('form.npost').submit()")
+                    if '/User/Posts/' not in page.url:page.goto(POSTS_URL,wait_until='domcontentloaded',timeout=90000)
+                    page.wait_for_selector('table.poststable',timeout=30000)
+                    pid=page.evaluate(r"""title=>{const row=[...document.querySelectorAll('table.poststable tbody tr')].find(r=>(r.querySelector('.tdtitle')?.innerText||'').trim()===title);return(row?.querySelector('a.actionedit')?.href||'').match(/EditPosts\/(\d+)/)?.[1]||null;}""",title)
+                    if not pid:pid=scan_panel(page).get(title)
+                    if not pid:raise RuntimeError('Post was not found after native submit; stop and reconcile before any retry')
+                    pid=int(pid);existing[title]=pid
+                url=verify_live(page,item,pid)
+                row={'key':entry['key'],'title':title,'pid':pid,'url':url,'at':now(),'verified':True,'recovered_existing':recovered}
+                checkpoint(entry,item,row);completed+=1;print(f'[{n}/{len(todo)}] verified {item.get("city_fa","")} pid={pid} -> {url}',flush=True)
+                if n<len(todo) and DELAY:time.sleep(DELAY)
+        finally:
+            page.close()
+            if not attached:browser.close()
+    return completed
 
 def main():
-    queue = load(QUEUE, {'items': []})
-    pq = load(PUBLISH_QUEUE, {'items': []})
-    ready = [e for e in pq.get('items', []) if Path(e.get('item_file', '')).exists()]
-    if not ready:
-        print('nothing ready to publish')
-        return 0
-    todo = ready[:LIMIT]
-    for entry in todo:
-        export_post(entry['item_file'], load(entry['item_file'], {}))
-    print(f'exported {len(todo)} post(s) to {EXPORT}')
-    if not DO_PUBLISH:
-        print('ROYA_PUBLISH is not 1; skipping panel publish')
-        return 0
-    if not (os.getenv('ROYA_USERNAME') and os.getenv('ROYA_PASSWORD')):
-        print('ROYA_USERNAME/ROYA_PASSWORD are not set; skipping panel publish')
-        return 0
-
-    results = publish_with_panel(todo)
-    by_key = {i['key']: i for i in queue.get('items', [])}
-    ok = {}
-    for row in results:
-        if not row.get('pid'):
-            continue
-        ok[row['key']] = row
-        item = by_key.get(row['key'])
-        if item:
-            item['published'] = not DRAFT
-            item['published_url'] = row['url']
-            item['published_at'] = row['at']
-            item['pid'] = row['pid']
-            if not DRAFT:
-                item['status'] = 'published'
-    save(QUEUE, queue)
-    state = load(STATE, {})
-    state['last_publish_run'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
-    state.setdefault('published', []).extend(
-        {'key': k, 'pid': v['pid'], 'url': v['url'], 'at': v['at']} for k, v in ok.items())
-    save(STATE, state)
-    pq['items'] = [e for e in pq.get('items', []) if e['key'] not in ok]
-    pq['count'] = len(pq['items'])
-    save(PUBLISH_QUEUE, pq)
-    print(f'published {len(ok)} post(s), {len(results) - len(ok)} failed')
-    return 0 if len(ok) == len(results) else 1
-
-
-if __name__ == '__main__':
-    sys.exit(main())
+    if os.getenv('ROYA_DRAFT','0')=='1':raise RuntimeError('This queue publisher is configured for public publication, not drafts')
+    pq=load(PUBLISH_QUEUE,{'items':[]});queue=load(QUEUE,{'items':[]});state=load(STATE,{})
+    known={i['key'] for i in queue['items'] if i.get('published')}
+    known.update(r['key'] for r in state.get('published',[]))
+    todo=[]
+    for e in pq['items']:
+        if e['key'] in known:continue
+        p=resolve_item(e)
+        if not p.exists():raise RuntimeError('Ready artifact missing: '+p.name)
+        i=load(p,{});post=i.get('post',{})
+        if i.get('key')!=e['key'] or not post.get('title') or not post.get('html'):raise RuntimeError('Ready artifact is incomplete')
+        if not i.get('qa',{}).get('passed',False):raise RuntimeError('Ready artifact has not passed QA: '+e['key'])
+        todo.append(e)
+    todo=todo[:LIMIT]
+    if not todo:print('nothing ready to publish');return 0
+    for e in todo:export_post(load(resolve_item(e),{}))
+    if not DO_PUBLISH:print(f'exported {len(todo)} posts; publication disabled explicitly');return 0
+    if not os.getenv('AGENT_BROWSER_CDP') and not(os.getenv('ROYA_USERNAME') and os.getenv('ROYA_PASSWORD')):
+        raise RuntimeError('ROYA_USERNAME and ROYA_PASSWORD secrets are missing; publication cannot run unattended')
+    count=publish(todo);print(f'published and verified {count}; remaining {load(PUBLISH_QUEUE,{"count":0})["count"]}',flush=True);return 0
+if __name__=='__main__':
+    try:sys.exit(main())
+    except Exception as exc:print('PUBLISH FAILED: '+str(exc),file=sys.stderr,flush=True);sys.exit(1)
