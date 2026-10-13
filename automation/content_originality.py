@@ -46,7 +46,7 @@ class PublishedBody(HTMLParser):
         if self.depth and not self.done:self.parts.append(html.escape(data))
 
 def published_snapshot(root,blog,item):
-    url=item.get('published_url');host={'roya':'afp.royablog.ir','farsiblog':'afp.farsiblog.com','rozblog':'drip-irrigation.rozblog.com'}[blog]
+    url=item.get('published_url');host={'roya':'afp.royablog.ir','farsiblog':'afp.farsiblog.com','rozblog':'afp-pipe.rozblog.com'}[blog]
     parts=urlsplit(url or '')
     if parts.scheme!='https'or parts.hostname!=host or not parts.path.startswith('/post/'):
         raise RuntimeError('originality published history missing a verified public URL for '+blog)

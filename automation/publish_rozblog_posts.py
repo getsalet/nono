@@ -14,7 +14,7 @@ state.QUEUE=engine.QUEUE;state.ART=engine.ART;state.PUBLISH_QUEUE=engine.ART/'pu
 BLOG=engine.BLOG;PANEL='https://www.rozblog.com';DO_PUBLISH=os.getenv('ROZBLOG_PUBLISH','0')=='1'
 def active(page):
  urls=page.locator('a[href]').evaluate_all('a=>a.map(x=>x.href)')
- if 'drip-irrigation.rozblog.com'not in {urlsplit(u).hostname for u in urls}:raise RuntimeError('Wrong active RozBlog; never publish to spadan1')
+ if 'afp-pipe.rozblog.com'not in {urlsplit(u).hostname for u in urls}:raise RuntimeError('Wrong active RozBlog; never publish to spadan1 or drip-irrigation')
 def login(page):
  page.goto(PANEL+'/usercp.php',wait_until='domcontentloaded',timeout=60000)
  if '/login.php'in page.url:
@@ -29,7 +29,7 @@ def login(page):
  links=page.locator('a[href]').evaluate_all('a=>a.map(x=>x.href)')
  site=next((u for u in links if u.endswith('/list_site')),None)
  if not site:raise RuntimeError('Authenticated site-list link missing')
- page.goto(site,wait_until='domcontentloaded');choice=page.locator('.site-item').filter(has=page.locator('a[href*="drip-irrigation."]'))
+ page.goto(site,wait_until='domcontentloaded');choice=page.locator('.site-item').filter(has=page.locator('a[href*="afp-pipe."]'))
  if choice.count()!=1:raise RuntimeError('Cannot uniquely locate intended blog')
  manage=choice.get_by_role('link',name='مدیریت',exact=True)
  if manage.count()!=1:raise RuntimeError('Verified native blog selection missing')
@@ -49,7 +49,7 @@ def scan(page,posts):
   rows=page.locator('a[href]').evaluate_all('a=>a.map(x=>({text:x.textContent.trim(),url:x.href}))')
   for r in rows:
    m=re.search(r'/post/(\d+)(?:[/.]|$)',r['url'])
-   if m and urlsplit(r['url']).hostname=='drip-irrigation.rozblog.com'and r['text']:
+   if m and urlsplit(r['url']).hostname=='afp-pipe.rozblog.com'and r['text']:
     if r['text']in found and found[r['text']]!=int(m[1]):raise RuntimeError('Ambiguous duplicate title in live panel')
     found[r['text']]=int(m[1])
    if r['url'].startswith(posts+'?')and re.search(r'[?&](page|p)=\d+',r['url'])and r['url']not in seen:pending.append(r['url'])
@@ -59,7 +59,7 @@ def scan(page,posts):
 def verify(page,item,pid):
  url=BLOG+'/post/'+str(pid)
  response=page.goto(url,wait_until='domcontentloaded',timeout=60000)
- if not response or response.status>=400 or urlsplit(page.url).hostname!='drip-irrigation.rozblog.com':raise RuntimeError('Public post inaccessible; stop and reconcile, no second submit')
+ if not response or response.status>=400 or urlsplit(page.url).hostname!='afp-pipe.rozblog.com':raise RuntimeError('Public post inaccessible; stop and reconcile, no second submit')
  article=page.locator('article.post-card').filter(has=page.get_by_text(item['post']['title'],exact=True)).first
  if not article.count():raise RuntimeError('Published AFP article/title missing')
  content=article.locator('.post-content');hrefs={unquote(u).rstrip('/')for u in content.locator('a[href]').evaluate_all('a=>a.map(x=>x.href)')}

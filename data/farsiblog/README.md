@@ -23,7 +23,7 @@ Workflow: **FarsiBlog original content pipeline**. برای نخستین آزم�
 ## City-image upgrade
 # AFP city-image backlink pipelines
 
-FarsiBlog: afp.farsiblog.com. RozBlog: drip-irrigation.rozblog.com (not spadan1).
+FarsiBlog: afp.farsiblog.com. RozBlog: afp-pipe.rozblog.com (not spadan1 or drip-irrigation).
 
 Only target metadata is shared; each blog has a separate angle, AI call, artifact, queue and checkpoint. Matrix titles are authored separately for each blog and are not claimed to be the exact prior matrix. data/blog-city-title-matrix.json now contains newly authored independent city and article title matrices, approved under the user request to construct these matrices. This gate prevents new AI calls and publication, preserving all legacy records.
 

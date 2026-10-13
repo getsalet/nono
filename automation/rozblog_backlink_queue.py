@@ -4,7 +4,7 @@ import os,sys
 for suffix in ('COUNT','TARGET','DRY_RUN','PUBLISH','PUBLISH_LIMIT'):
  if 'ROZBLOG_'+suffix in os.environ:os.environ['FARSIBLOG_'+suffix]=os.environ['ROZBLOG_'+suffix]
 import farsiblog_backlink_queue as engine
-engine.CITY_BLOG='rozblog';engine.BLOG='https://drip-irrigation.rozblog.com'
+engine.CITY_BLOG='rozblog';engine.BLOG='https://afp-pipe.rozblog.com'
 engine.QUEUE=engine.ROOT/'data/rozblog/backlink-queue.json';engine.ART=engine.ROOT/'artifacts/rozblog-backlink-queue';engine.STATE=engine.ROOT/'state/rozblog-backlink-progress.json'
 if __name__=='__main__':
  try:sys.exit(engine.main())

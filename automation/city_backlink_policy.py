@@ -8,7 +8,7 @@ import roya_backlink_queue as roya
 from content_originality import check_corpus
 ROOT=Path(__file__).resolve().parent.parent
 MATRIX=ROOT/'data/blog-city-title-matrix.json'
-BLOGS={'farsiblog':'https://afp.farsiblog.com','rozblog':'https://drip-irrigation.rozblog.com'}
+BLOGS={'farsiblog':'https://afp.farsiblog.com','rozblog':'https://afp-pipe.rozblog.com'}
 ANGLES={'farsiblog':['چک‌لیست پیش از سفارش','مقایسه مشخصات و هزینه واقعی','خطاهای انتخاب و نصب','پرسش‌های مشاوره فنی'], 'rozblog':['آماده‌سازی مسیر آبیاری و نصب','بازرسی و نگهداری پس از نصب','اطلاعات لازم برای طراحی مسیر','مقایسه پیشنهادهای فنی فروشندگان']}
 def read(p,default):return json.loads(Path(p).read_text())if Path(p).exists()else copy.deepcopy(default)
 def write(p,obj):
