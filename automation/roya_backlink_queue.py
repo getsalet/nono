@@ -263,6 +263,18 @@ def normalize_approved_hrefs(obj, links):
     return obj
 
 
+
+def has_numeric_price(markup):
+    """Product dimensions in price questions are not monetary amounts."""
+    text = html_lib.unescape(re.sub(r'<[^>]+>', ' ', markup or ''))
+    amount = r'[0-9۰-۹٠-٩]+(?:[.,٬٫][0-9۰-۹٠-٩]+)*'
+    if re.search(amount + r'\s*(?:(?:هزار|میلیون|میلیارد)\s*)?(?:تومان|ریال)', text):
+        return True
+    quantity = amount + r'(?:\s*(?:تا|الی|[-–])\s*' + amount + r')?'
+    units = r'(?:سانتی(?:[\s‌-]*متر(?:ی)?)?|میلی[\s‌-]*متر(?:ی)?|میکرون|متر(?:ی)?|اینچ(?:ی)?|بار|درصد|لیتر(?:ی)?|cm|mm)'
+    text = re.sub(quantity + r'\s*' + units, ' ', text, flags=re.I)
+    return bool(re.search(r'(?:قیمت|نرخ)[^.!؟<]{0,25}' + amount, text))
+
 def qa(item, obj, links):
     errors = []
     # Encoding differences are not invalid destinations. Normalize only approved equivalents.
@@ -328,7 +340,7 @@ def qa(item, obj, links):
     for term in BANNED:
         if term in low:
             errors.append(f'banned claim: {term}')
-    if re.search(r'(قیمت|نرخ)[^<]{0,25}\d', low) or re.search(r'\d+\s*(تومان|ریال)', low):
+    if has_numeric_price(low):
         errors.append('numeric price claim')
     if re.search(r'```|<script|<style|style=|\*\*|!\[', html, flags=re.I):
         errors.append('markdown, script, style or image markup found')
