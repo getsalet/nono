@@ -173,6 +173,33 @@ def approved_links(item, lib):
     return unique
 
 
+def assign_roya_titles(queue, root=None):
+    """Assign independent titles only to ungenerated items; preserve old posts."""
+    # Lazy import: city policy imports Roya's image/link helpers at module load.
+    from city_backlink_policy import title_candidates, matrix_ready
+    root = root or ROOT
+    if not matrix_ready(root):
+        raise RuntimeError('Independent Roya title matrix awaiting approval')
+    used = {x.get('title') for x in queue['items'] if x.get('title')}
+    for item in queue['items']:
+        if item.get('published') or item.get('status') not in ('pending', 'failed', 'needs_title_review'):
+            continue
+        pool = title_candidates(item, 'royablog', root)
+        previous = item.get('assigned_title')
+        title = previous if previous in pool and previous not in used else next((t for t in pool if t not in used), None)
+        if title:
+            item['assigned_title'] = title
+            used.add(title)
+            if item.get('status') == 'needs_title_review':
+                item['status'] = 'pending'
+                item.pop('last_error', None)
+        else:
+            item['status'] = 'needs_title_review'
+            item['last_error'] = 'No unique meaningful Roya matrix title; manual review required'
+    queue['title_matrix'] = 'data/blog-city-title-matrix.json'
+    return queue
+
+
 def build_prompt(item, links):
     fam = item.get('family', 'tape20')
     product = 'نوار تیپ ۲۰ سانتی‌متری (قطره‌چکان ۲۰ سانتی)' if fam != 'hose' else 'لوله نخی و لوله تاشو'
@@ -195,7 +222,9 @@ def build_prompt(item, links):
 7. فقط HTML ساده: p، h2، h3، ul، ol، li، strong، a، details، summary، table. هیچ script، style، iframe، تصویر یا Markdown (بدون ``` و بدون **) استفاده نکن.
 8. اگر لینک با نقش home در فهرست مجاز هست، آن را فقط یک بار در یک پاراگراف توضیحی مرتبط با انتخاب تجهیزات نوار تیپ بیاور؛ متن لنگر همین لینک را دقیقاً همان «لنگر پیشنهادی» آن بنویس. عبارت مستقل «نوار تیپ» یا «نوار آبیاری» فقط به صفحه نخست اشاره کند؛ لینک شهر و استان همچنان نام شهر/استان و زمینه محصول خود را داشته باشند. دو کلیدواژه اصلی را کنار هم به شکل دو لینک تکراری به صفحه نخست نچین. لینک صفحه نخست را در سوالات متداول یا یک پاراگراف صرفاً تبلیغاتی قرار نده. اگر لینک home در فهرست نیست، آن را اضافه نکن و کلمات نوار تیپ را به متن مربوط به لوله تحمیل نکن.
 9. اولویت مقاله پاسخ دقیق به نیاز خواننده است، نه تکرار کلیدواژه یا افزایش تعداد بک‌لینک. بدون مقدمه و جمله تبلیغاتی قالبی، توصیه کاربردی مرتبط با موضوع بده.
-10. عنوان مقاله حداکثر ۶۵ کاراکتر، شامل نام شهر، و سئویی باشد. برای وبلاگ رویا بلاگ، عنوان را از الگوهایی مثل «خرید نوار تیپ ۲۰ سانتی در {item['city_fa']} + راهنمای انتخاب» یا «راهنمای خرید لوله نخی و تاشو در {item['city_fa']}» بساز و از تکرار عین عنوان سایت اصلی پرهیز کن.
+10. عنوان دقیق از ماتریس مستقل رویابلاگ: {item['assigned_title']}. آن را بدون تغییر استفاده کن؛ حداکثر ۶۵ کاراکتر است و نام شهر را دارد.
+11. اگر عنوان نام محصول کشت ردیفی دارد، متن، چک‌لیست و FAQ به کاربرد آبیاری همان محصول پاسخ دهند. مثال‌ها مشروط باشند؛ رایج بودن کشت آن در شهر یا تناسب قطعی با خاک و اقلیم را ادعا نکن. فاصله، فشار، دبی و نیاز آبی را بدون مرجع معتبر به محصول نسبت نده.
+12. زاویه اختصاصی رویا: برنامه‌ریزی آبیاری، نیازسنجی مزرعه، تناسب تجهیزات و تصمیم‌های پیش از اجرا. مقدمه، مثال، چک‌لیست و FAQ را از صفر و با همین زاویه بنویس؛ متن فارسی‌بلاگ، رز‌بلاگ و سایت اصلی را کپی یا بازنویسی سطحی نکن. نام شهر فقط زمینه مخاطب است، نه شاهد ویژگی‌های اقلیم یا خاک.
 
 خروجی را فقط به شکل این شیء JSON برگردان:
 {{"title":"...","slug":"latin-lowercase-hyphenated-max-60","meta_title":"...","meta_description":"...","focus_keyword":"...","tags":["..."],"html":"...","links_used":["..."]}}'''
@@ -282,6 +311,14 @@ def qa(item, obj, links):
     # Encoding differences are not invalid destinations. Normalize only approved equivalents.
     html = normalize_approved_hrefs(obj, links).get('html', '') or ''
     title = (obj.get('title', '') or '').strip()
+    if item.get('assigned_title') and title != item['assigned_title']:
+        errors.append('title differs from assigned independent Roya matrix')
+    for crop in load_json(ROOT / 'data/blog-city-title-matrix.json', {}).get('row_crops', []):
+        if item.get('assigned_title') and crop in title and crop not in re.sub(r'<[^>]+>', ' ', html):
+            errors.append('Title crop must be addressed in article body')
+    for crop in load_json(ROOT / 'data/blog-city-title-matrix.json', {}).get('row_crops', []):
+        if item.get('assigned_title') and crop in title and crop not in re.sub(r'<[^>]+>', ' ', html):
+            errors.append('Title crop must be addressed in article body')
     n = words(html)
     if n < MIN_WORDS:
         errors.append(f'too short: {n} words < {MIN_WORDS}')
@@ -465,6 +502,8 @@ def main():
                 item['last_error'] = 'recovered interrupted run'
         state['in_progress'] = None
     ITEMS.mkdir(parents=True, exist_ok=True)
+    assign_roya_titles(queue)
+    save_json(QUEUE_PATH, queue)
     targets = pick(queue, state, COUNT)
     print(f'picked {len(targets)} target(s) of {len(queue["items"])} queued', flush=True)
     completed = []
