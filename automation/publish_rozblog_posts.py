@@ -62,6 +62,10 @@ def scan(page,posts):
   if url in seen:continue
   seen.add(url);page.goto(url,wait_until='domcontentloaded',timeout=60000)
   if '/login.php'in page.url:raise RuntimeError('Session expired before title scan')
+  # Missing/invalid panel is not an empty blog: never deduplicate partial data.
+  page.wait_for_selector('table.tb_new',state='attached',timeout=30000)
+  headers=page.locator('table.tb_new th').all_text_contents()
+  if not any('عنوان' in h for h in headers):raise RuntimeError('Native post table identity missing')
   rows=page.locator('a[href]').evaluate_all('a=>a.map(x=>({text:x.textContent.trim(),url:x.href}))')
   for r in rows:
    m=re.search(r'/post/(\d+)(?:[/.]|$)',r['url'])
@@ -129,7 +133,12 @@ def main():
      page.locator('#mtitle').fill(post['title']);page.locator('#input_url_seo').fill(post['slug']);page.locator('input[name=pimg]').fill('')
      page.locator('select[name=status]').select_option('1');page.locator('select[name=member]').select_option('0');page.locator('select[name=pcm]').select_option('7')
      page.evaluate('post=>{tinymce.get("mtex").setContent(post.html);if(tinymce.get("mtex2"))tinymce.get("mtex2").setContent("");document.querySelector("#ptags").value=(post.tags||[]).join(",");tinymce.triggerSave()}',post)
-     page.get_by_role('button',name='ارسال مطلب و بازسازی سایت',exact=False).click();page.wait_for_load_state('domcontentloaded');existing=scan(page,posts);pid=existing.get(post['title'])
+     # Arm navigation BEFORE the only native POST. A load-state check after
+     # click can return while the old document is still loaded; navigating to
+     # the list then aborts the in-flight save.
+     with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):
+      page.get_by_role('button',name='ارسال مطلب و بازسازی سایت',exact=False).click()
+     existing=scan(page,posts);pid=existing.get(post['title'])
      if not pid:raise RuntimeError('No panel confirmation after one submit; reconcile before retry')
     url=verify(page,item,pid);row={'key':entry['key'],'title':post['title'],'pid':pid,'url':url,'at':state.now(),'verified':True,'recovered_existing':recovered};state.checkpoint(entry,item,row)
     print('Verified RozBlog post '+str(pid)+' -> '+url,flush=True);time.sleep(10)

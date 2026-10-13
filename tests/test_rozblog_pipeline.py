@@ -37,6 +37,14 @@ class DestinationTests(unittest.TestCase):
   def click():page.url='https://www.rozblog.com/panel140163524/list_site?change_accont=800519';links.evaluate_all.return_value=[];events.append(('select',page.url))
   page.goto.side_effect=goto;page.locator.return_value=links;page.expect_navigation.return_value=nullcontext();manage.click.side_effect=click
   self.assertEqual(self.publisher.login(page),tuple(self.routes[1:]));self.assertEqual(events[-1],('goto','https://www.rozblog.com/usercp.php'));manage.click.assert_called_once()
+ def test_missing_native_table_is_not_treated_as_empty_blog(self):
+  page=Mock();page.url='https://www.rozblog.com/panel140163524/admin_post';page.wait_for_selector.side_effect=RuntimeError('native table absent')
+  with self.assertRaises(RuntimeError):self.publisher.scan(page,page.url)
+ def test_native_submit_arms_navigation_before_click(self):
+  import inspect
+  source=inspect.getsource(self.publisher.main)
+  self.assertIn("with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):",source)
+  self.assertNotIn("click();page.wait_for_load_state",source)
  def test_each_blog_preserves_recovery_artifacts(self):
   for blog in ('farsiblog','rozblog'):
    config=(ROOT/'.github/workflows'/f'{blog}-content.yml').read_text()
