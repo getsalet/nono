@@ -141,8 +141,6 @@ def qa(item,obj,links,blog,root=None):
  roya.normalize_approved_hrefs(obj,links);p=Inspect();p.feed(obj.get('html',''));plain=' '.join(p.plain);e=p.errors;n=len(re.findall(r'[\u0600-\u06FF]+',plain))
  for crop in read(Path(root or ROOT)/'data/blog-city-title-matrix.json',{}).get('row_crops',[]):
   if crop in obj.get('title','') and crop not in plain:e.append('Title crop must be addressed in article body')
- for crop in read(Path(root or ROOT)/'data/blog-city-title-matrix.json',{}).get('row_crops',[]):
-  if crop in obj.get('title','') and crop not in plain:e.append('Title crop must be addressed in article body')
  if not matrix_ready(root):e.append('Independent title matrix awaiting approval')
  if obj.get('title')!=matrix_title(item,blog,root):e.append('title differs from assigned city matrix')
  if not 500<=n<=1000:e.append('Persian word count outside 500-1000')

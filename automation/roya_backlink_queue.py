@@ -316,9 +316,6 @@ def qa(item, obj, links):
     for crop in load_json(ROOT / 'data/blog-city-title-matrix.json', {}).get('row_crops', []):
         if item.get('assigned_title') and crop in title and crop not in re.sub(r'<[^>]+>', ' ', html):
             errors.append('Title crop must be addressed in article body')
-    for crop in load_json(ROOT / 'data/blog-city-title-matrix.json', {}).get('row_crops', []):
-        if item.get('assigned_title') and crop in title and crop not in re.sub(r'<[^>]+>', ' ', html):
-            errors.append('Title crop must be addressed in article body')
     n = words(html)
     if n < MIN_WORDS:
         errors.append(f'too short: {n} words < {MIN_WORDS}')
