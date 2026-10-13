@@ -55,6 +55,20 @@ def login(page):
  page.wait_for_selector('a[href*="/new_post"]',state='attached',timeout=30000)
  return active(page)
 
+def post_records(rows):
+ found={}
+ for row in rows:
+  match=re.fullmatch(r'tr_(\d+)',row.get('row_id',''))
+  if not match or int(match[1])<1 or row.get('checkbox_id')!=match[1]:
+   raise RuntimeError('Native post row identity incomplete; refuse partial dedup')
+  title=row.get('title','').strip();url=row.get('url','');parts=urlsplit(url)
+  if not title or parts.hostname!=EXPECTED_HOST or parts.scheme not in ('http','https') or parts.path in ('','/'):
+   raise RuntimeError('Native post title/public destination incomplete')
+  record={'pid':int(match[1]),'url':url}
+  if title in found and found[title]!=record:raise RuntimeError('Ambiguous duplicate title in live panel')
+  found[title]=record
+ return found
+
 def scan(page,posts):
  found={};pending=[posts];seen=set()
  while pending:
@@ -62,22 +76,24 @@ def scan(page,posts):
   if url in seen:continue
   seen.add(url);page.goto(url,wait_until='domcontentloaded',timeout=60000)
   if '/login.php'in page.url:raise RuntimeError('Session expired before title scan')
-  # Missing/invalid panel is not an empty blog: never deduplicate partial data.
   page.wait_for_selector('table.tb_new',state='attached',timeout=30000)
   headers=page.locator('table.tb_new th').all_text_contents()
   if not any('عنوان' in h for h in headers):raise RuntimeError('Native post table identity missing')
-  rows=page.locator('a[href]').evaluate_all('a=>a.map(x=>({text:x.textContent.trim(),url:x.href}))')
-  for r in rows:
-   m=re.search(r'/post/(\d+)(?:[/.]|$)',r['url'])
-   if m and urlsplit(r['url']).hostname=='afp-pipe.rozblog.com'and r['text']:
-    if r['text']in found and found[r['text']]!=int(m[1]):raise RuntimeError('Ambiguous duplicate title in live panel')
-    found[r['text']]=int(m[1])
-   if r['url'].startswith(posts+'?')and re.search(r'[?&](page|p)=\d+',r['url'])and r['url']not in seen:pending.append(r['url'])
+  # RozBlog supports custom public URL formats. Read the native row ID and
+  # public title link; never infer an ID from a /post/ URL that may not exist.
+  rows=page.locator('table.tb_new tr[id^="tr_"]').evaluate_all(r"""rows=>rows.map(r=>({row_id:r.id,checkbox_id:r.querySelector('input[name="deleted_items[]"]')?.value,title:r.querySelector('a.post-title-link')?.textContent.trim(),url:r.querySelector('a.post-title-link')?.href}))""")
+  for title,record in post_records(rows).items():
+   if title in found and found[title]!=record:raise RuntimeError('Ambiguous duplicate title in live panel')
+   found[title]=record
+  links=page.locator('a[href]').evaluate_all('a=>a.map(x=>x.href)')
+  for link in links:
+   if link.startswith(posts+'?')and re.search(r'[?&](page|p)=\d+',link)and link not in seen:pending.append(link)
   if len(seen)>100:raise RuntimeError('Title scan page limit exceeded; no partial dedup')
  return found
 
-def verify(page,item,pid):
- url=BLOG+'/post/'+str(pid)
+def verify(page,item,pid,public_url):
+ url=public_url
+ if urlsplit(url).hostname!=EXPECTED_HOST:raise RuntimeError('Native public URL belongs to another blog')
  response=page.goto(url,wait_until='domcontentloaded',timeout=60000)
  if not response or response.status>=400 or urlsplit(page.url).hostname!='afp-pipe.rozblog.com':raise RuntimeError('Public post inaccessible; stop and reconcile, no second submit')
  article=page.locator('article.post-card').filter(has=page.get_by_text(item['post']['title'],exact=True)).first
@@ -127,7 +143,7 @@ def main():
   try:
    posts,add=login(page);existing=scan(page,posts)
    for entry in todo[:limit]:
-    item=state.load(state.resolve_item(entry),{});post=item['post'];pid=existing.get(post['title']);recovered=bool(pid)
+    item=state.load(state.resolve_item(entry),{});post=item['post'];record=existing.get(post['title']);pid=record['pid']if record else None;recovered=bool(record)
     if not pid:
      page.goto(add,wait_until='domcontentloaded',timeout=60000);page.wait_for_selector('#mtitle');page.wait_for_function('()=>window.tinymce&&tinymce.get("mtex")&&tinymce.get("mtex").getBody()')
      page.locator('#mtitle').fill(post['title']);page.locator('#input_url_seo').fill(post['slug']);page.locator('input[name=pimg]').fill('')
@@ -138,9 +154,9 @@ def main():
      # the list then aborts the in-flight save.
      with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):
       page.get_by_role('button',name='ارسال مطلب و بازسازی سایت',exact=False).click()
-     existing=scan(page,posts);pid=existing.get(post['title'])
+     existing=scan(page,posts);record=existing.get(post['title']);pid=record['pid']if record else None
      if not pid:raise RuntimeError('No panel confirmation after one submit; reconcile before retry')
-    url=verify(page,item,pid);row={'key':entry['key'],'title':post['title'],'pid':pid,'url':url,'at':state.now(),'verified':True,'recovered_existing':recovered};state.checkpoint(entry,item,row)
+    url=verify(page,item,pid,record['url']);row={'key':entry['key'],'title':post['title'],'pid':pid,'url':url,'at':state.now(),'verified':True,'recovered_existing':recovered};state.checkpoint(entry,item,row)
     print('Verified RozBlog post '+str(pid)+' -> '+url,flush=True);time.sleep(10)
   finally:
    page.close()

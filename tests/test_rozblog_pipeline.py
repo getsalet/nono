@@ -45,6 +45,16 @@ class DestinationTests(unittest.TestCase):
   source=inspect.getsource(self.publisher.main)
   self.assertIn("with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):",source)
   self.assertNotIn("click();page.wait_for_load_state",source)
+ def test_custom_native_public_url_is_not_assumed_to_contain_post_id(self):
+  row={'row_id':'tr_1','checkbox_id':'1','title':'عنوان واقعی','url':'https://afp-pipe.rozblog.com/custom-title-kmbuy'}
+  self.assertEqual(self.publisher.post_records([row]),{'عنوان واقعی':{'pid':1,'url':row['url']}})
+ def test_partial_or_wrong_blog_post_rows_fail_closed(self):
+  row={'row_id':'tr_1','checkbox_id':'1','title':'عنوان واقعی','url':'https://afp-pipe.rozblog.com/custom-title-kmbuy'}
+  for patch in ({'checkbox_id':'2'},{'title':''},{'url':'https://spadan1.rozblog.com/custom'},{'row_id':'invalid'}):
+   with self.assertRaises(RuntimeError):self.publisher.post_records([{**row,**patch}])
+ def test_duplicate_native_title_is_ambiguous(self):
+  row={'row_id':'tr_1','checkbox_id':'1','title':'عنوان واقعی','url':'https://afp-pipe.rozblog.com/custom-title-kmbuy'}
+  with self.assertRaises(RuntimeError):self.publisher.post_records([row,{**row,'row_id':'tr_2','checkbox_id':'2','url':'https://afp-pipe.rozblog.com/other'}])
  def test_each_blog_preserves_recovery_artifacts(self):
   for blog in ('farsiblog','rozblog'):
    config=(ROOT/'.github/workflows'/f'{blog}-content.yml').read_text()
