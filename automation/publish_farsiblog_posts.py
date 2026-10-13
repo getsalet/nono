@@ -34,13 +34,6 @@ old_scan=native.scan_panel;old_verify=native.verify_live
 
 def scan(page):
     found=old_scan(page);active_blog(page)
-    for entry in native.load(native.PUBLISH_QUEUE,{'items':[]})['items']:
-        item=native.load(native.resolve_item(entry),{})
-        if item.get('kind')in('city','article'):
-            from blog_image_gate import review
-            review(item,item['image_url'])
-        errors,_=generator.qa(item,item['post'],generator.links_for(item))
-        if errors:raise RuntimeError('Publication revalidation failed: '+'; '.join(errors[:3]))
     return found
 
 def verify(page,item,pid):
@@ -64,6 +57,28 @@ def main():
         if remaining==0:
             print('Hourly publication budget exhausted; approved drafts remain queued.');return 0
         native.LIMIT=min(native.LIMIT,remaining)
+    # Check each draft before the browser. A bad draft cannot block healthy drafts.
+    queue=native.load(native.PUBLISH_QUEUE,{'items':[]});approved=[]
+    for entry in queue['items']:
+        item=native.load(native.resolve_item(entry),{})
+        try:
+            if item.get('kind')in('city','article'):
+                from blog_image_gate import review
+                generator.retry_transient(lambda:review(item,item['image_url']))
+            errors,_=generator.qa(item,item['post'],generator.links_for(item))
+            if errors:raise RuntimeError('Publication QA rejected')
+        except Exception as exc:
+            item['status']='failed';item['last_error']='publication preflight rejected: '+type(exc).__name__
+            item['attempts']=item.get('attempts',0)+1;generator.defer_item(item)
+            source=generator.load(generator.QUEUE,{'items':[]})
+            for row in source['items']:
+                if row['key']==entry['key']:row.update(status='failed',last_error=item['last_error'],attempts=item['attempts'],next_retry_at=item['next_retry_at'])
+            generator.save(native.resolve_item(entry),item);generator.save(generator.QUEUE,source)
+            print(entry['key']+': preflight deferred; continuing queue',flush=True)
+            continue
+        approved.append(entry)
+    queue['items']=approved;queue['count']=len(approved);generator.save(native.PUBLISH_QUEUE,queue)
+    if not approved:print('No approved drafts now; deferred queue preserved.');return 0
     # The generic publisher guard uses these names; map only in process memory.
     os.environ['ROYA_USERNAME']=os.getenv('FARSIBLOG_USERNAME','');os.environ['ROYA_PASSWORD']=os.getenv('FARSIBLOG_PASSWORD','')
     return native.main()
