@@ -13,6 +13,8 @@ import datetime, hashlib, html as html_lib, json, os, re, sys, time, urllib.pars
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+from content_originality import check_corpus
+
 ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 QUEUE_PATH = ROOT / 'data' / 'roya' / 'backlink-queue.json'
@@ -365,6 +367,7 @@ def qa(item, obj, links):
         errors.append('slug must be latin lowercase hyphenated (max 60)')
     if not (obj.get('meta_description') or '').strip():
         errors.append('meta_description is required')
+    errors.extend(check_corpus(ROOT, 'roya', item['key'], html))
     return errors, {'words': n, 'links': found, 'title': title, 'slug': slug,
                     'city_anchor': city_anchor, 'key_index': BASE._i, 'agnes_calls': BASE.calls}
 
@@ -441,6 +444,11 @@ def pick(queue, state, count):
 
 
 def main():
+    if DRY_RUN:
+        print('Configuration check only; offline samples are not queued for publication.')
+        return 0
+    if not (BASE.AGNES_KEY or BASE.AGNES_KEYS):
+        raise RuntimeError('Agnes API key required; refusing fake publishable sample fallback')
     queue = load_json(QUEUE_PATH, {'items': []})
     if not queue.get('items'):
         print('queue is empty; run automation/build_roya_queue.py first', file=sys.stderr)
