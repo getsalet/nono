@@ -91,6 +91,14 @@ def scan(page,posts):
   if len(seen)>100:raise RuntimeError('Title scan page limit exceeded; no partial dedup')
  return found
 
+def confirm_post(page,posts,title):
+ # Read-only retries for eventual consistency; never a second form submission.
+ for attempt in range(3):
+  found=scan(page,posts);record=found.get(title)
+  if record:return found,record
+  if attempt<2:time.sleep(2)
+ raise RuntimeError('No panel confirmation after one submit; reconcile before retry')
+
 def verify(page,item,pid,public_url):
  url=public_url
  if urlsplit(url).hostname!=EXPECTED_HOST:raise RuntimeError('Native public URL belongs to another blog')
@@ -154,8 +162,7 @@ def main():
      # the list then aborts the in-flight save.
      with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):
       page.get_by_role('button',name='ارسال مطلب و بازسازی سایت',exact=False).click()
-     existing=scan(page,posts);record=existing.get(post['title']);pid=record['pid']if record else None
-     if not pid:raise RuntimeError('No panel confirmation after one submit; reconcile before retry')
+     existing,record=confirm_post(page,posts,post['title']);pid=record['pid']
     url=verify(page,item,pid,record['url']);row={'key':entry['key'],'title':post['title'],'pid':pid,'url':url,'at':state.now(),'verified':True,'recovered_existing':recovered};state.checkpoint(entry,item,row)
     print('Verified RozBlog post '+str(pid)+' -> '+url,flush=True);time.sleep(10)
   finally:

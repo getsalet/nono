@@ -55,6 +55,12 @@ class DestinationTests(unittest.TestCase):
  def test_duplicate_native_title_is_ambiguous(self):
   row={'row_id':'tr_1','checkbox_id':'1','title':'عنوان واقعی','url':'https://afp-pipe.rozblog.com/custom-title-kmbuy'}
   with self.assertRaises(RuntimeError):self.publisher.post_records([row,{**row,'row_id':'tr_2','checkbox_id':'2','url':'https://afp-pipe.rozblog.com/other'}])
+ def test_confirmation_retries_read_only_and_never_submits_twice(self):
+  from unittest.mock import patch
+  record={'pid':1,'url':'https://afp-pipe.rozblog.com/custom'};page=Mock()
+  with patch.object(self.publisher,'scan',side_effect=[{}, {'عنوان':record}])as scan,patch.object(self.publisher.time,'sleep'):
+   self.assertEqual(self.publisher.confirm_post(page,'posts','عنوان'),({'عنوان':record},record));self.assertEqual(scan.call_count,2)
+  page.get_by_role.assert_not_called()
  def test_each_blog_preserves_recovery_artifacts(self):
   for blog in ('farsiblog','rozblog'):
    config=(ROOT/'.github/workflows'/f'{blog}-content.yml').read_text()
