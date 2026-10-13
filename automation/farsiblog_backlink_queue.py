@@ -83,13 +83,22 @@ def main():
     for item in candidates[:count]:
         links=links_for(item);obj=None;errors=[];info={}
         try:
-            source=source_text(item)
-            for attempt in range(3):
-                obj=agnes(prompt(item,links,source)+('\nپاسخ قبلی رد شد؛ اصلاح کن: '+'; '.join(errors)if errors else ''))
-                obj['html']='<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+html.escape(item['image_alt'],quote=True)+'" width="'+str(item['image_width'])+'" height="'+str(item['image_height'])+'" loading="lazy"></p>'+obj.get('html','');obj['image_url']=item['image_url']
-                errors,info=qa(item,obj,links);print(f'{item["key"]}: attempt={attempt+1}, words={info.get("words")}, errors={len(errors)}',flush=True)
-                if not errors:break
-        except Exception as exc:errors=['generation/source/validation failed: '+type(exc).__name__]
+            previous=load(item_path(item['key']),{})
+            if item.get('status')=='failed' and isinstance(previous.get('post'),dict):
+                old=previous['post'];errors,info=qa(item,old,links)
+                if not errors:
+                    obj=old
+                    print(item['key']+': recovered existing draft after complete cross-blog validation; no new AI charge',flush=True)
+            if obj is None:
+                source=source_text(item)
+                for attempt in range(3):
+                    obj=agnes(prompt(item,links,source)+('\nپاسخ قبلی رد شد؛ اصلاح کن: '+'; '.join(errors)if errors else ''))
+                    obj['html']='<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+html.escape(item['image_alt'],quote=True)+'" width="'+str(item['image_width'])+'" height="'+str(item['image_height'])+'" loading="lazy"></p>'+obj.get('html','');obj['image_url']=item['image_url']
+                    errors,info=qa(item,obj,links);print(f'{item["key"]}: attempt={attempt+1}, words={info.get("words")}, errors={len(errors)}',flush=True)
+                    if not errors:break
+        except Exception as exc:
+            errors=['generation/source/validation failed: '+type(exc).__name__]
+            if isinstance(exc,RuntimeError)and str(exc).startswith('originality '):errors.append(str(exc))
         item.update({'status':'failed'if errors else 'completed','attempts':item.get('attempts',0)+1,'generated_at':now(),'last_error':'; '.join(errors)})
         if errors:failed.append(item['key'])
         else:item.update({'title':obj['title'],'slug':obj['slug']});completed.append(item['key'])
