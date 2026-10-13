@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Independent educational FarsiBlog articles; never recycle Roya drafts."""
-import copy,datetime,hashlib,html,json,os,re,sys,urllib.request
+import copy,datetime,hashlib,html,json,os,re,sys,time,urllib.request,urllib.error
 from html.parser import HTMLParser
 from pathlib import Path
 from roya_backlink_queue import agnes,BASE,encode_url,normalize_approved_hrefs,has_numeric_price,now
@@ -88,6 +88,23 @@ def prompt(item,links,source):
 بدون عدد فنی جدید، قیمت، تخفیف، موجودی، نمایندگی، زمان ارسال یا ادعای کمّی و محلی تأییدنشده. درباره فشار و جنس به مشخصات همان مدل ارجاع بده. فقط واژه‌های لاتین AFP,PE,UV,ISO,cm,mm مجازند.
 فقط HTML ساده p,h2,h3,ul,ol,li,strong,em,a,details,summary,table,thead,tbody,tr,th,td,br. بدون تصویر، style، script، iframe یا Markdown. تصویر واقعی بعداً اضافه می‌شود.
 فقط JSON: {{"title":"...","slug":"latin-lowercase-hyphenated-max-60","meta_description":"توضیح فارسی ۷۰ تا ۱۸۰ کاراکتر","tags":["..."],"html":"..."}}'''
+def retry_due(item,current=None):
+    current=current or datetime.datetime.now(datetime.timezone.utc)
+    stamp=item.get('next_retry_at')
+    if not stamp:return True
+    try:return datetime.datetime.fromisoformat(stamp.replace('Z','+00:00'))<=current
+    except (ValueError,TypeError):return False  # Corrupt timestamps need review, not a busy loop.
+def defer_item(item,current=None):
+    current=current or datetime.datetime.now(datetime.timezone.utc)
+    hours=min(24,2**min(max(0,int(item.get('attempts',1))-1),5))
+    item['next_retry_at']=(current+datetime.timedelta(hours=hours)).isoformat().replace('+00:00','Z')
+def retry_transient(operation):
+    for attempt in range(3):
+        try:return operation()
+        except (TimeoutError,urllib.error.URLError) as exc:
+            if isinstance(exc,urllib.error.HTTPError) and exc.code not in (408,429,500,502,503,504):raise
+            if attempt==2:raise
+            time.sleep(2**(attempt+1))
 def refresh_ready(q):
     entries=[{'key':x['key'],'title':x.get('title'),'slug':x.get('slug'),'target_url':x.get('target_url','https://navar-abyari.ir/'),'item_file':str(item_path(x['key']))}for x in q['items']if x.get('status')=='completed'and not x.get('published') and x.get('kind')in('city','article')]
     save(ART/'publish-queue.json',{'generated_at':now(),'blog':BLOG,'count':len(entries),'items':entries})
@@ -106,7 +123,7 @@ def main():
     if count==0:refresh_ready(q);print('Publish-only; no generation.');return 0
     if not(BASE.AGNES_KEY or BASE.AGNES_KEYS):raise RuntimeError('Agnes API key required; no fake content fallback')
     if any(x.get('status')=='completed'and not x.get('published')and x.get('kind')in('city','article')for x in q['items']):refresh_ready(q);print('Approved content already waiting; backlog capped.');return 0
-    candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article')]
+    candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article') and retry_due(x)]
     if target:candidates=[x for x in candidates if x['key']==target]
     else:
         city=[x for x in candidates if x.get('kind')=='city'];articles=[x for x in candidates if x.get('kind')=='article'];candidates=[]
@@ -114,7 +131,8 @@ def main():
             if i<len(city):candidates.append(city[i])
             if i<len(articles):candidates.append(articles[i])
     completed=[];failed=[]
-    for item in candidates[:count]:
+    for item in candidates[:min(9,max(3,count*3))]:
+        if len(completed)>=count:break
         links=links_for(item);obj=None;errors=[];info={}
         try:
             previous=load(item_path(item['key']),{})
@@ -124,10 +142,10 @@ def main():
                     obj=old
                     print(item['key']+': recovered existing draft after complete cross-blog validation; no new AI charge',flush=True)
             if obj is None:
-                if item.get("kind")in("city","article"):prepare_image(item)
-                source=source_text(item)
+                if item.get("kind")in("city","article"):retry_transient(lambda:prepare_image(item))
+                source=retry_transient(lambda:source_text(item))
                 for attempt in range(3):
-                    obj=agnes(prompt(item,links,source)+('\nپاسخ قبلی رد شد؛ اصلاح کن: '+'; '.join(errors)if errors else ''))
+                    obj=retry_transient(lambda:agnes(prompt(item,links,source)+('\nپاسخ قبلی رد شد؛ اصلاح کن: '+'; '.join(errors)if errors else '')))
                     obj['html']='<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+html.escape(item['image_alt'],quote=True)+'" width="'+str(item['image_width'])+'" height="'+str(item['image_height'])+'" loading="lazy"></p>'+obj.get('html','');obj['image_url']=item['image_url']
                     errors,info=qa(item,obj,links);print(f'{item["key"]}: attempt={attempt+1}, words={info.get("words")}, errors={len(errors)}',flush=True)
                     if not errors:break
@@ -135,12 +153,15 @@ def main():
             errors=['generation/source/validation failed: '+type(exc).__name__]
             if isinstance(exc,RuntimeError)and str(exc).startswith('originality '):errors.append(str(exc))
         item.update({'status':'failed'if errors else 'completed','attempts':item.get('attempts',0)+1,'generated_at':now(),'last_error':'; '.join(errors)})
-        if errors:failed.append(item['key'])
-        else:item.update({'title':obj['title'],'slug':obj['slug']});completed.append(item['key'])
+        if errors:
+            failed.append(item['key']);defer_item(item)
+            print(item['key']+': deferred; continuing queue; retry at '+item['next_retry_at'],flush=True)
+        else:
+            item.pop('next_retry_at',None);item.update({'title':obj['title'],'slug':obj['slug']});completed.append(item['key'])
         save(item_path(item['key']),{**item,'post':obj,'blog':BLOG,'target_url':item.get('target_url','https://navar-abyari.ir/'),'qa':{'passed':not errors,'errors':errors,**info}});save(QUEUE,q)
     refresh_ready(q);state=load(STATE,{});state.update({'updated_at':now(),'completed_keys':[x['key']for x in q['items']if x['status']in('completed','published')],'failed':{x['key']:x.get('last_error','')for x in q['items']if x['status']=='failed'}});save(STATE,state)
     (ART/'status.md').write_text('# فارسی‌بلاگ AFP\n\nصف شهری تصویردار با کنترل شباهت بین سه وبلاگ.\n\n'+f'آخرین اجرا: {now()}\nموفق این اجرا: {len(completed)}\nناموفق: {len(failed)}\n')
-    print('Original articles generated:',len(completed));return 1 if failed and not completed else 0
+    print('Original articles generated:',len(completed),'Deferred items:',len(failed));return 0  # Item rejection never blocks publication of other approved drafts.
 if __name__=='__main__':
     try:sys.exit(main())
     except Exception as exc:print('FarsiBlog generation stopped: '+str(exc),file=sys.stderr);sys.exit(1)

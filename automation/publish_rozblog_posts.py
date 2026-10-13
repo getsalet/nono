@@ -77,12 +77,28 @@ def main():
   print('Export only; no remote mutation');return 0
  if not os.getenv('AGENT_BROWSER_CDP')and not(os.getenv('ROZBLOG_USERNAME')and os.getenv('ROZBLOG_PASSWORD')):raise RuntimeError('Set ROZBLOG_USERNAME and ROZBLOG_PASSWORD secrets')
  if not todo or limit==0:print('No approved article or hourly publication capacity.');return 0
- for entry in todo[:limit]:
+ approved=[]
+ for entry in todo[:9]:
+  if len(approved)>=limit:break
   item=state.load(state.resolve_item(entry),{})
-  from blog_image_gate import review
-  review(item,item['image_url'])
-  errors,_=qa(item,item['post'],links_for(item),'rozblog')
-  if errors:raise RuntimeError('Publication QA rejected: '+'; '.join(errors[:3]))
+  try:
+   from blog_image_gate import review
+   engine.retry_transient(lambda:review(item,item['image_url']))
+   errors,_=qa(item,item['post'],links_for(item),'rozblog')
+   if errors:raise RuntimeError('Publication QA rejected')
+  except Exception as exc:
+   item['status']='failed';item['last_error']='publication preflight rejected: '+type(exc).__name__
+   item['attempts']=item.get('attempts',0)+1;engine.defer_item(item)
+   queue=engine.load(engine.QUEUE,{'items':[]})
+   for row in queue['items']:
+    if row['key']==entry['key']:
+     row.update(status='failed',last_error=item['last_error'],attempts=item['attempts'],next_retry_at=item['next_retry_at'])
+   engine.save(state.resolve_item(entry),item);engine.save(engine.QUEUE,queue);engine.refresh_ready(queue)
+   print(entry['key']+': preflight deferred; continuing to next approved draft',flush=True)
+   continue
+  approved.append(entry)
+ todo=approved
+ if not todo:print('All current drafts deferred; queue preserved for next scheduled run.');return 0
  from playwright.sync_api import sync_playwright
  attached=bool(os.getenv('AGENT_BROWSER_CDP'))
  with sync_playwright()as pw:
