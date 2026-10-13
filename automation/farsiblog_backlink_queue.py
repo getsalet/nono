@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Independent educational FarsiBlog articles; never recycle Roya drafts."""
-import copy,hashlib,html,json,os,re,sys,urllib.request
+import copy,datetime,hashlib,html,json,os,re,sys,urllib.request
 from html.parser import HTMLParser
 from pathlib import Path
 from roya_backlink_queue import agnes,BASE,encode_url,normalize_approved_hrefs,has_numeric_price,now
@@ -12,6 +12,18 @@ LATIN={'afp','pe','uv','iso','cm','mm'}
 def load(path,default):return json.loads(path.read_text()) if path.exists() else copy.deepcopy(default)
 def save(path,data):
     path.parent.mkdir(parents=True,exist_ok=True);tmp=path.with_suffix(path.suffix+'.tmp');tmp.write_text(json.dumps(data,ensure_ascii=False,indent=2));tmp.replace(path)
+def remaining_publication_budget(state_path=None,current=None):
+    """At most three verified generator publications in any rolling 60 minutes."""
+    current=current or datetime.datetime.now(datetime.timezone.utc)
+    if current.tzinfo is None:raise RuntimeError('hourly publication budget requires a timezone-aware clock')
+    cutoff=current-datetime.timedelta(hours=1)
+    recent=0
+    for row in load(Path(state_path or STATE),{}).get('published',[]):
+        try:stamp=datetime.datetime.fromisoformat(row['at'].replace('Z','+00:00'))
+        except (KeyError,TypeError,ValueError,AttributeError):raise RuntimeError('invalid publication timestamp; reconcile history before publishing')from None
+        if stamp.tzinfo is None:raise RuntimeError('publication history timestamp lacks timezone')
+        if stamp>=cutoff:recent+=1
+    return max(0,3-recent)
 def item_path(key):return ART/'items'/(re.sub(r'[^A-Za-z0-9._-]+','_',key)+'.json')
 def links_for(item):
     variants=['نوار تیپ','نوار آبیاری','نوار تیپ AFP','نوار آبیاری قطره‌ای AFP','آبگستر فرا پارسیان','وب‌سایت AFP']
@@ -74,6 +86,10 @@ def main():
     q=load(QUEUE,{'items':[]})
     if os.getenv('FARSIBLOG_DRY_RUN','0')=='1':print(f'Configuration check: {len(q["items"])} topics. No AI call or publishable sample.');return 0
     count=max(0,min(3,int(os.getenv('FARSIBLOG_COUNT','1'))));target=os.getenv('FARSIBLOG_TARGET','').strip()
+    remaining=remaining_publication_budget()
+    if count>0 and remaining==0:
+        refresh_ready(q);print('Hourly publication budget exhausted; skip new AI generation.');return 0
+    count=min(count,remaining)
     if count==0:refresh_ready(q);print('Publish-only; no generation.');return 0
     if not(BASE.AGNES_KEY or BASE.AGNES_KEYS):raise RuntimeError('Agnes API key required; no fake content fallback')
     if any(x.get('status')=='completed'and not x.get('published')for x in q['items']):refresh_ready(q);print('Approved content already waiting; backlog capped.');return 0

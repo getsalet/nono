@@ -52,6 +52,11 @@ native.login=login;native.scan_panel=scan;native.verify_live=verify
 
 def main():
     if native.DO_PUBLISH and not os.getenv('AGENT_BROWSER_CDP')and not(os.getenv('FARSIBLOG_USERNAME')and os.getenv('FARSIBLOG_PASSWORD')):raise RuntimeError('Set FARSIBLOG_USERNAME and FARSIBLOG_PASSWORD repository secrets')
+    if native.DO_PUBLISH:
+        remaining=generator.remaining_publication_budget()
+        if remaining==0:
+            print('Hourly publication budget exhausted; approved drafts remain queued.');return 0
+        native.LIMIT=min(native.LIMIT,remaining)
     # The generic publisher guard uses these names; map only in process memory.
     os.environ['ROYA_USERNAME']=os.getenv('FARSIBLOG_USERNAME','');os.environ['ROYA_PASSWORD']=os.getenv('FARSIBLOG_PASSWORD','')
     return native.main()

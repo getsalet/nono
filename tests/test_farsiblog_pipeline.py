@@ -41,4 +41,21 @@ class PipelineTests(unittest.TestCase):
                 with self.assertRaises(RuntimeError):f.main()
             self.assertFalse((f.ART/'publish-queue.json').exists())
         finally:f.QUEUE,f.ART,f.STATE,f.BASE.AGNES_KEY,f.BASE.AGNES_KEYS=original
+    def test_rolling_hourly_budget(self):
+        import datetime
+        current=datetime.datetime(2026,10,13,18,30,tzinfo=datetime.timezone.utc)
+        state=self.root/'budget.json'
+        state.write_text(json.dumps({'published':[{'at':'2026-10-13T17:00:00Z'},{'at':'2026-10-13T18:05:00Z'},{'at':'2026-10-13T18:10:00Z'}]}))
+        self.assertEqual(f.remaining_publication_budget(state,current),1)
+        state.write_text(json.dumps({'published':[{'at':'2026-10-13T18:05:00Z'}]*3}))
+        self.assertEqual(f.remaining_publication_budget(state,current),0)
+    def test_bad_hourly_history_fails_closed(self):
+        import datetime
+        state=self.root/'budget.json';state.write_text(json.dumps({'published':[{'at':'invalid'}]}))
+        with self.assertRaises(RuntimeError):f.remaining_publication_budget(state,datetime.datetime.now(datetime.timezone.utc))
+    def test_exhausted_budget_prevents_publication(self):
+        import publish_farsiblog_posts as publisher
+        from unittest.mock import patch
+        with patch.object(publisher.native,'DO_PUBLISH',True),patch.object(publisher.native,'main')as publish,patch.object(publisher.generator,'remaining_publication_budget',return_value=0),patch.dict(os.environ,{'FARSIBLOG_USERNAME':'unit-test','FARSIBLOG_PASSWORD':'unit-test'}):
+            self.assertEqual(publisher.main(),0);publish.assert_not_called()
 if __name__=='__main__':unittest.main()
