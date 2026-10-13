@@ -9,7 +9,7 @@ Env: ROYA_COUNT ROYA_TARGET ROYA_DRY_RUN ROYA_RETRY_FAILED ROYA_MIN_WORDS
      ROYA_MAX_WORDS ROYA_MIN_LINKS ROYA_MAX_LINKS ROYA_ATTEMPTS
      AGNES_API_KEY AGNES_API_KEYS AGNES_API_BASE AGNES_MODEL
 """
-import datetime, json, os, re, sys, time, urllib.parse, urllib.request
+import datetime, hashlib, json, os, re, sys, time, urllib.parse, urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -147,8 +147,18 @@ def approved_links(item, lib):
         {'url': lib['shop']['url'], 'anchor': lib['shop']['anchor'],
          'title': 'فروشگاه نوار تیپ و لوله آبیاری AFP', 'role': 'shop'},
     ]
-    extra = lib['after_sales'] if item.get('family') == 'hose' else lib['faq']
-    links.append({'url': extra['url'], 'anchor': extra['anchor'], 'title': extra['anchor'], 'role': 'extra'})
+    if item.get('family', 'tape20') in ('tape20', 'hub'):
+        # One useful homepage reference replaces the optional FAQ link; no link-count inflation.
+        # Stable variety across articles, not a claimed 'safe' SEO ratio.
+        anchors = ('نوار تیپ', 'نوار آبیاری', 'نوار تیپ AFP',
+                   'نوار آبیاری قطره‌ای AFP', 'آبگستر فرا پارسیان', 'وب‌سایت AFP')
+        bucket = int(hashlib.sha256(item['key'].encode('utf-8')).hexdigest()[:8], 16) % len(anchors)
+        links.append({'url': lib['home']['url'], 'anchor': anchors[bucket],
+                      'title': 'نوار تیپ | خرید نوار آبیاری قطره‌ای AFP', 'role': 'home'})
+    else:
+        # Do not force tape keywords into hose-only articles.
+        extra = lib['after_sales'] if item.get('family') == 'hose' else lib['faq']
+        links.append({'url': extra['url'], 'anchor': extra['anchor'], 'title': extra['anchor'], 'role': 'extra'})
     if item.get('family') == 'hub':
         links.append({'url': lib['contact']['url'], 'anchor': lib['contact']['anchor'],
                       'title': lib['contact']['anchor'], 'role': 'contact'})
@@ -181,7 +191,9 @@ def build_prompt(item, links):
 5. مشخصات فنی را فقط در حد عمومی بنویس: ضخامت ۱۷۵ تا ۲۰۰ میکرون، قطر لوله‌های آبیاری، فاصله قطره‌چکان، فشار کار، مقاومت در برابر UV. از ادعای عددی جدید و نادرست پرهیز کن.
 6. متن فقط فارسی باشد؛ تنها واژه‌های لاتین مجاز: AFP، navar، cm، mm، PE، UV، ISO.
 7. فقط HTML ساده: p، h2، h3، ul، ol، li، strong، a، details، summary، table. هیچ script، style، iframe، تصویر یا Markdown (بدون ``` و بدون **) استفاده نکن.
-8. عنوان مقاله حداکثر ۶۵ کاراکتر، شامل نام شهر، و سئویی باشد. برای وبلاگ رویا بلاگ، عنوان را از الگوهایی مثل «خرید نوار تیپ ۲۰ سانتی در {item['city_fa']} + راهنمای انتخاب» یا «راهنمای خرید لوله نخی و تاشو در {item['city_fa']}» بساز و از تکرار عین عنوان سایت اصلی پرهیز کن.
+8. اگر لینک با نقش home در فهرست مجاز هست، آن را فقط یک بار در یک پاراگراف توضیحی مرتبط با انتخاب تجهیزات نوار تیپ بیاور؛ متن لنگر همین لینک را دقیقاً همان «لنگر پیشنهادی» آن بنویس. عبارت مستقل «نوار تیپ» یا «نوار آبیاری» فقط به صفحه نخست اشاره کند؛ لینک شهر و استان همچنان نام شهر/استان و زمینه محصول خود را داشته باشند. دو کلیدواژه اصلی را کنار هم به شکل دو لینک تکراری به صفحه نخست نچین. لینک صفحه نخست را در سوالات متداول یا یک پاراگراف صرفاً تبلیغاتی قرار نده. اگر لینک home در فهرست نیست، آن را اضافه نکن و کلمات نوار تیپ را به متن مربوط به لوله تحمیل نکن.
+9. اولویت مقاله پاسخ دقیق به نیاز خواننده است، نه تکرار کلیدواژه یا افزایش تعداد بک‌لینک. بدون مقدمه و جمله تبلیغاتی قالبی، توصیه کاربردی مرتبط با موضوع بده.
+10. عنوان مقاله حداکثر ۶۵ کاراکتر، شامل نام شهر، و سئویی باشد. برای وبلاگ رویا بلاگ، عنوان را از الگوهایی مثل «خرید نوار تیپ ۲۰ سانتی در {item['city_fa']} + راهنمای انتخاب» یا «راهنمای خرید لوله نخی و تاشو در {item['city_fa']}» بساز و از تکرار عین عنوان سایت اصلی پرهیز کن.
 
 خروجی را فقط به شکل این شیء JSON برگردان:
 {{"title":"...","slug":"latin-lowercase-hyphenated-max-60","meta_title":"...","meta_description":"...","focus_keyword":"...","tags":["..."],"html":"...","links_used":["..."]}}'''
@@ -257,6 +269,24 @@ def qa(item, obj, links):
     if not title or len(title) > 65:
         errors.append(f'title length {len(title)} (max 65)')
     pairs = anchor_pairs(html)
+    # Defragment and normalize root trailing slash to catch repeated homepage links.
+    normalized = [urllib.parse.urldefrag(h)[0].rstrip('/') for h in found]
+    if len(normalized) != len(set(normalized)):
+        errors.append('each destination URL may be linked at most once')
+    home_url = 'https://navar-abyari.ir'
+    home_pairs = [(h, a) for h, a in pairs if urllib.parse.urldefrag(h)[0].rstrip('/') == home_url]
+    if len(home_pairs) > 1:
+        errors.append('homepage may be linked at most once')
+    expected_home = next((x for x in links if x.get('role') == 'home'), None)
+    if expected_home:
+        if len(home_pairs) != 1:
+            errors.append('one contextual homepage link is required for this tape article')
+        elif home_pairs[0][1] != expected_home['anchor']:
+            errors.append('homepage anchor must use the assigned natural variant')
+    for destination, anchor in pairs:
+        plain = re.sub(r'\s+', ' ', anchor.replace('ي', 'ی').replace('ك', 'ک').replace('\u200c', ' ')).strip()
+        if plain in ('نوار تیپ', 'نوار آبیاری') and urllib.parse.urldefrag(destination)[0].rstrip('/') != home_url:
+            errors.append('standalone primary keyword anchors must point to the homepage')
     city_anchor = next((a for h, a in pairs if h.split('#')[0] == item['target_url']), '')
     if not city_anchor:
         errors.append('city backlink anchor text missing')
@@ -322,6 +352,10 @@ def offline_sample(item, links):
             f'<a href="{item["target_url"]}">نوار تیپ {city}</a> و '
             f'<a href="{item["hub_url"]}">نوار تیپ {prov}</a> مراجعه کنید یا از '
             f'<a href="{links[2]["url"]}">{links[2]["anchor"]}</a> سفارش دهید.</p>'
+            + (f'<p>برای آشنایی با گزینه‌های نوار تیپ و مقایسه تجهیزات می‌توانید اطلاعات '
+               f'<a href="{next(x["url"] for x in links if x.get("role") == "home")}">'
+               f'{next(x["anchor"] for x in links if x.get("role") == "home")}</a> را بررسی کنید.</p>'
+               if any(x.get('role') == 'home' for x in links) else '') +
             f'<h2>سوالات متداول</h2><details><summary>چه ضخامتی مناسب است؟</summary>'
             f'۱۷۵ تا ۲۰۰ میکرون برای کشت ردیفی رایج است.</details>'
             f'<details><summary>ارسال به {city} چگونه است؟</summary>هماهنگی بار توسط کارشناس انجام می‌شود.</details>'
@@ -455,7 +489,8 @@ def main():
         f'| باقی‌مانده | {total - done} |\n| پیشرفت | {round(100 * done / max(1, total), 2)}% |\n'
         f'| آخرین اجرا | {now()} |\n| مدل | `{BASE.AGNES_MODEL}` |\n\n'
         'هر آیتم یک مقاله ۵۰۰ تا ۱۰۰۰ کلمه فارسی برای وبلاگ AFP است که به صفحه شهری متناظر در '
-        'navar-abyari.ir، صفحه استان و فروشگاه لینک می‌دهد.\n', encoding='utf-8')
+        'navar-abyari.ir، صفحه استان و فروشگاه لینک می‌دهد؛ مطالب مرتبط با نوار تیپ یک ارجاع '
+        'متنی به صفحه نخست دارند که جایگزین لینک جانبی است و مقاله‌های لوله کلیدواژه اجباری ندارند.\n', encoding='utf-8')
     print('completed: ' + (', '.join(completed) or 'none'), flush=True)
     return 0 if completed else 1
 
