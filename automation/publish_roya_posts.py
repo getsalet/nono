@@ -159,7 +159,11 @@ def main():
         if not i.get('qa',{}).get('passed',False):raise RuntimeError('Ready artifact has not passed QA: '+e['key'])
         todo.append(e)
     todo=todo[:LIMIT]
-    if not todo:print('nothing ready to publish');return 0
+    if not todo:
+        if DO_PUBLISH and os.getenv('ROYA_VERIFY_LOGIN','0') == '1':
+            publish([]);print('Unattended Roya login verified; nothing ready to publish')
+        else:print('nothing ready to publish')
+        return 0
     for e in todo:export_post(load(resolve_item(e),{}))
     if not DO_PUBLISH:print(f'exported {len(todo)} posts; publication disabled explicitly');return 0
     if not os.getenv('AGENT_BROWSER_CDP') and not(os.getenv('ROYA_USERNAME') and os.getenv('ROYA_PASSWORD')):

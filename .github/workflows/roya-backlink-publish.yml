@@ -39,6 +39,7 @@ jobs:
       ROYA_PUBLISH: ${{ github.event.inputs.publish || '1' }}
       ROYA_PUBLISH_LIMIT: ${{ github.event.inputs.limit || '30' }}
       ROYA_DELAY_SECONDS: '10'
+      ROYA_VERIFY_LOGIN: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
       ROYA_USERNAME: ${{ secrets.ROYA_USERNAME }}
       ROYA_PASSWORD: ${{ secrets.ROYA_PASSWORD }}
     steps:
