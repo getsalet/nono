@@ -9,7 +9,7 @@ Env: ROYA_COUNT ROYA_TARGET ROYA_DRY_RUN ROYA_RETRY_FAILED ROYA_MIN_WORDS
      ROYA_MAX_WORDS ROYA_MIN_LINKS ROYA_MAX_LINKS ROYA_ATTEMPTS
      AGNES_API_KEY AGNES_API_KEYS AGNES_API_BASE AGNES_MODEL
 """
-import datetime, hashlib, json, os, re, sys, time, urllib.parse, urllib.request
+import datetime, hashlib, html as html_lib, json, os, re, sys, time, urllib.parse, urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -244,9 +244,29 @@ def inject_image(item, obj, image_url):
     return obj
 
 
+
+def comparable_url(url):
+    """Treat percent-encoding case/decoded Persian paths as equivalent, not typos."""
+    p = urllib.parse.urlsplit(html_lib.unescape(url))
+    return (p.scheme.lower(), p.netloc.lower(), urllib.parse.unquote(p.path).rstrip('/'), p.query)
+
+
+def normalize_approved_hrefs(obj, links):
+    """Canonicalize only URLs equivalent to an already-approved destination."""
+    approved = {comparable_url(x['url']): x['url'] for x in links}
+    def replace(match):
+        target = approved.get(comparable_url(match.group(3)))
+        if not target:
+            return match.group(0)  # Wrong destinations must still fail QA.
+        return match.group(1) + match.group(2) + html_lib.escape(target, quote=True) + match.group(2)
+    obj['html'] = re.sub(r"(\bhref\s*=\s*)([\"'])(.*?)\2", replace, obj.get('html', '') or '', flags=re.I | re.S)
+    return obj
+
+
 def qa(item, obj, links):
     errors = []
-    html = obj.get('html', '') or ''
+    # Encoding differences are not invalid destinations. Normalize only approved equivalents.
+    html = normalize_approved_hrefs(obj, links).get('html', '') or ''
     title = (obj.get('title', '') or '').strip()
     n = words(html)
     if n < MIN_WORDS:
