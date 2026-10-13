@@ -3,28 +3,6 @@ policy=approved-single-pass-integrated-v23-positive-scenes
 batch_size=24 article_workers=24 image_workers=56
 ftp_upload=separate_workflow_after_success
 actions_artifacts=preserved
-agnes_json_retry attempt=1/4 timeout=180s error=The read operation timed out
-agnes_json_retry attempt=1/4 timeout=180s error=HTTP 403 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20
-agnes_json_retry attempt=2/4 timeout=210s error=HTTP 403 https://apihub.agnes-ai.com/v1/chat/completions: {"error":{"code":"","message":"We've detected unusual activity on your account. Access has been temporarily restricted. Please contact support if you need assistance. (request id: 20
-Traceback (most recent call last):
-  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_fast.py", line 59, in <module>
-    runpy.run_path(str(HERE/'run_agnes_city_queue_resilient.py'),run_name='__main__')
-  File "<frozen runpy>", line 287, in run_path
-  File "<frozen runpy>", line 98, in _run_module_code
-  File "<frozen runpy>", line 88, in _run_code
-  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_resilient.py", line 20, in <module>
-    runpy.run_path(str(HERE/'run_agnes_city_queue_seo.py'),run_name='__main__')
-  File "<frozen runpy>", line 287, in run_path
-  File "<frozen runpy>", line 98, in _run_module_code
-  File "<frozen runpy>", line 88, in _run_code
-  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue_seo.py", line 97, in <module>
-    exec(
-  File "/home/runner/work/nono/nono/automation/run_agnes_city_queue.py", line 141, in <module>
-  File "/home/runner/work/nono/nono/automation/reviewed_publish_city_queue.py", line 168, in <module>
-  File "/home/runner/work/nono/nono/automation/city_content_queue_cloudflare.py", line 167, in process
-    if failures and not successes and not deferred:raise RuntimeError('All queue items failed: '+' | '.join(failures))
-                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: All queue items failed: 1290008001370-layflat (text): RuntimeError: Editorial review failed: internal link count must equal minimum
-queue_exit_code=1
+queue_exit_code=0
 city_ftps_dispatch_ready=0
 auxiliary_exit_code=0
