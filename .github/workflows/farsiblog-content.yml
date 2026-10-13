@@ -2,12 +2,12 @@ name: FarsiBlog original content pipeline
 on:
   workflow_dispatch:
     inputs:
-      count: {description: 'New articles (0 = publish existing ready queue)', default: '1'}
+      count: {description: 'New articles (0 = publish existing ready queue)', default: '3'}
       publish: {description: '1 = publish, 0 = generate/export only', default: '1'}
       dry_run: {description: '1 = configuration tests only, no publishable samples', default: '0'}
       target: {description: 'Optional topic key', default: ''}
   schedule:
-    - cron: '15 6 * * *'
+    - cron: '15 * * * *'
   push:
     branches: [main]
     paths: [automation/farsiblog_backlink_queue.py, automation/publish_farsiblog_posts.py, automation/content_originality.py, tests/test_farsiblog_pipeline.py, .github/workflows/farsiblog-content.yml]
@@ -36,9 +36,9 @@ jobs:
       AGNES_MODEL: agnes-2.5-flash
       FARSIBLOG_USERNAME: ${{ secrets.FARSIBLOG_USERNAME }}
       FARSIBLOG_PASSWORD: ${{ secrets.FARSIBLOG_PASSWORD }}
-      FARSIBLOG_COUNT: ${{ github.event.inputs.count || '1' }}
+      FARSIBLOG_COUNT: ${{ github.event.inputs.count || '3' }}
       FARSIBLOG_PUBLISH: ${{ github.event.inputs.publish || '1' }}
-      FARSIBLOG_PUBLISH_LIMIT: '1'
+      FARSIBLOG_PUBLISH_LIMIT: '3'
       FARSIBLOG_DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
       FARSIBLOG_TARGET: ${{ github.event.inputs.target || '' }}
     steps:
