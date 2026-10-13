@@ -85,12 +85,28 @@ def links_for(item):
  return links
 
 def prepare_image(item):
- from blog_image_gate import review
+ from blog_image_gate import review, family, REFERENCES
+ expected=family(item)  # Reject unknown/mismatched products before choosing a photo.
  image=roya.target_image(item)
- if not image:raise RuntimeError('Approved city-page image missing; no fabricated fallback')
- review(item,image)
- item['image_alt']=item['site_title'].split('|')[0].strip()+' - نمای محصول'
- return image
+ rejected='source image missing'
+ if image:
+  try:
+   review(item,image)
+   item['image_selection']='source-page-vision-approved'
+   item['image_alt']=item['site_title'].split('|')[0].strip()+' - نمای محصول'
+   return image
+  except RuntimeError as exc:
+   # Only a definitive content/dimension rejection permits the real-product path.
+   # Credentials, transport and malformed vision results remain fail-closed.
+   if not str(exc).startswith(('Product image rejected:', 'Image dimensions unacceptable')):raise
+   rejected=str(exc)
+ fallback=REFERENCES[expected]
+ if fallback==image:raise RuntimeError('Matching product reference also rejected; publication blocked')
+ review(item,fallback)  # Same mandatory pixel/vision gate; never mark it approved here.
+ item['image_selection']='matching-real-product-vision-approved'
+ item['source_image_rejection']=rejected
+ item['image_alt']='تصویر واقعی '+('نوار آبیاری AFP' if expected=='tape20' else 'لوله نخی و تاشو AFP')
+ return fallback
 
 def prompt(item,links,source,blog):
  title=matrix_title(item,blog)

@@ -1,4 +1,5 @@
 import copy,json,sys,tempfile,unittest
+from unittest.mock import patch
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'automation'))
 import city_backlink_policy as c
@@ -50,4 +51,20 @@ class CityBlogTests(unittest.TestCase):
   q=c.build_queue('farsiblog',self.root);self.assertEqual(len({x['assigned_title']for x in q['items']}),2)
  def test_missing_vision_record_blocks_publication(self):
   i=copy.deepcopy(self.item);del i['image_review'];self.assertTrue(c.qa(i,self.post,self.links,'farsiblog',self.root)[0])
+ def test_rejected_city_image_uses_same_family_real_photo_only_after_review(self):
+  calls=[]
+  def check(item,url):
+   calls.append(url)
+   if len(calls)==1:raise RuntimeError('Product image rejected: mixed families')
+  with patch.object(c.roya,'target_image',return_value='https://navar-abyari.ir/wp-content/uploads/city.webp'),patch.object(g,'review',side_effect=check):
+   self.assertEqual(c.prepare_image(self.item),g.REFERENCES['tape20'])
+  self.assertEqual(calls[-1],g.REFERENCES['tape20'])
+  self.assertEqual(self.item['image_selection'],'matching-real-product-vision-approved')
+ def test_real_photo_rejection_blocks_publication(self):
+  with patch.object(c.roya,'target_image',return_value='https://navar-abyari.ir/wp-content/uploads/city.webp'),patch.object(g,'review',side_effect=RuntimeError('Product image rejected: wrong family')):
+   with self.assertRaises(RuntimeError):c.prepare_image(self.item)
+ def test_vision_service_failure_does_not_trigger_photo_fallback(self):
+  with patch.object(c.roya,'target_image',return_value='https://navar-abyari.ir/wp-content/uploads/city.webp'),patch.object(g,'review',side_effect=RuntimeError('Vision credential required'))as check:
+   with self.assertRaises(RuntimeError):c.prepare_image(self.item)
+   self.assertEqual(check.call_count,1)
 if __name__=='__main__':unittest.main()
