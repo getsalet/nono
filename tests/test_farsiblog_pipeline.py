@@ -35,9 +35,9 @@ class PipelineTests(unittest.TestCase):
     def test_missing_api_key_does_not_write_fake_ready(self):
         original=(f.QUEUE,f.ART,f.STATE,f.BASE.AGNES_KEY,f.BASE.AGNES_KEYS)
         try:
-            f.QUEUE=self.root/'q.json';f.ART=self.root/'artifacts';f.STATE=self.root/'state.json';f.QUEUE.write_text(json.dumps({'items':[self.item]}));f.BASE.AGNES_KEY='';f.BASE.AGNES_KEYS=[]
+            f.QUEUE=self.root/'q.json';f.ART=self.root/'artifacts';f.STATE=self.root/'state.json';f.QUEUE.write_text(json.dumps({'items':[{**self.item,'kind':'city'}]}));f.BASE.AGNES_KEY='';f.BASE.AGNES_KEYS=[]
             from unittest.mock import patch
-            with patch.dict(os.environ,{'FARSIBLOG_DRY_RUN':'0','FARSIBLOG_COUNT':'1'}):
+            with patch('city_backlink_policy.matrix_ready',return_value=True),patch('city_backlink_policy.build_queue'),patch.dict(os.environ,{'FARSIBLOG_DRY_RUN':'0','FARSIBLOG_COUNT':'1'}):
                 with self.assertRaises(RuntimeError):f.main()
             self.assertFalse((f.ART/'publish-queue.json').exists())
         finally:f.QUEUE,f.ART,f.STATE,f.BASE.AGNES_KEY,f.BASE.AGNES_KEYS=original

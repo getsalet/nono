@@ -10,7 +10,7 @@ on:
     - cron: '15 * * * *'
   push:
     branches: [main]
-    paths: [automation/farsiblog_backlink_queue.py, automation/publish_farsiblog_posts.py, automation/content_originality.py, tests/test_farsiblog_pipeline.py, .github/workflows/farsiblog-content.yml]
+    paths: [automation/farsiblog_backlink_queue.py, automation/publish_farsiblog_posts.py, automation/content_originality.py, tests/test_farsiblog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/farsiblog-content.yml]
 permissions:
   contents: write
 concurrency:
@@ -23,6 +23,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
       - run: python -m unittest discover -s tests -p test_farsiblog_pipeline.py -v
   pipeline:
     needs: tests
@@ -53,7 +54,8 @@ jobs:
             echo '::error::Set FARSIBLOG_USERNAME and FARSIBLOG_PASSWORD repository secrets.'
             exit 1
           fi
-      - name: Generate original educational article
+      - run: python -m pip install --quiet Pillow
+      - name: Generate independent city article with approved image
         run: python automation/farsiblog_backlink_queue.py
       - name: Install Playwright
         if: env.FARSIBLOG_PUBLISH == '1' && env.FARSIBLOG_DRY_RUN != '1'
@@ -69,7 +71,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -f data/farsiblog/backlink-queue.json
-          for path in state/farsiblog-backlink-progress.json artifacts/farsiblog-backlink-queue artifacts/content-originality; do
+          for path in state/farsiblog-backlink-progress.json artifacts/farsiblog-backlink-queue artifacts/content-originality artifacts/blog-image-reviews; do
             if [ -e "$path" ]; then git add -f "$path"; fi
           done
           if git diff --cached --quiet; then exit 0; fi

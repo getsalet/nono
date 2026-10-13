@@ -46,7 +46,7 @@ class PublishedBody(HTMLParser):
         if self.depth and not self.done:self.parts.append(html.escape(data))
 
 def published_snapshot(root,blog,item):
-    url=item.get('published_url');host={'roya':'afp.royablog.ir','farsiblog':'afp.farsiblog.com'}[blog]
+    url=item.get('published_url');host={'roya':'afp.royablog.ir','farsiblog':'afp.farsiblog.com','rozblog':'drip-irrigation.rozblog.com'}[blog]
     parts=urlsplit(url or '')
     if parts.scheme!='https'or parts.hostname!=host or not parts.path.startswith('/post/'):
         raise RuntimeError('originality published history missing a verified public URL for '+blog)
@@ -68,7 +68,7 @@ def published_snapshot(root,blog,item):
 
 def corpus(root,exclude_blog='',exclude_key=''):
     records=[]
-    for blog in ('roya','farsiblog'):
+    for blog in ('roya','farsiblog','rozblog'):
         for p in sorted((Path(root)/'artifacts'/f'{blog}-backlink-queue'/'items').glob('*.json')):
             obj=json.loads(p.read_text())
             if blog==exclude_blog and obj.get('key')==exclude_key:continue

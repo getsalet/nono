@@ -35,7 +35,11 @@ old_scan=native.scan_panel;old_verify=native.verify_live
 def scan(page):
     found=old_scan(page);active_blog(page)
     for entry in native.load(native.PUBLISH_QUEUE,{'items':[]})['items']:
-        item=native.load(native.resolve_item(entry),{});errors,_=generator.qa(item,item['post'],generator.links_for(item))
+        item=native.load(native.resolve_item(entry),{})
+        if item.get('kind')in('city','article'):
+            from blog_image_gate import review
+            review(item,item['image_url'])
+        errors,_=generator.qa(item,item['post'],generator.links_for(item))
         if errors:raise RuntimeError('Publication revalidation failed: '+'; '.join(errors[:3]))
     return found
 
@@ -51,6 +55,9 @@ def verify(page,item,pid):
 native.login=login;native.scan_panel=scan;native.verify_live=verify
 
 def main():
+    from city_backlink_policy import matrix_ready
+    if not matrix_ready():
+        print("City publication paused pending title matrix approval.");return 0
     if native.DO_PUBLISH and not os.getenv('AGENT_BROWSER_CDP')and not(os.getenv('FARSIBLOG_USERNAME')and os.getenv('FARSIBLOG_PASSWORD')):raise RuntimeError('Set FARSIBLOG_USERNAME and FARSIBLOG_PASSWORD repository secrets')
     if native.DO_PUBLISH:
         remaining=generator.remaining_publication_budget()
