@@ -65,6 +65,19 @@ jobs:
       - name: Publish and verify native RozBlog post
         if: env.ROZBLOG_DRY_RUN != '1'
         run: python automation/publish_rozblog_posts.py
+      - name: Preserve rozblog recovery checkpoints
+        if: always() && env.ROZBLOG_DRY_RUN != '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: rozblog-recovery-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: ignore
+          path: |
+            data/rozblog/backlink-queue.json
+            state/rozblog-backlink-progress.json
+            artifacts/rozblog-backlink-queue
+            artifacts/content-originality
+            artifacts/blog-image-reviews
       - name: Commit generation and per-post checkpoints
         if: always() && env.ROZBLOG_DRY_RUN != '1'
         run: |
@@ -76,5 +89,16 @@ jobs:
           done
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Record original RozBlog content and verified publication'
-          git pull --rebase origin main
-          git push origin main
+          # Print paths only, never contents or secrets, if an unknown write appears.
+          if ! git diff --quiet; then
+            git diff --name-only
+            echo '::error::Unexpected unstaged tracked changes; recovery artifact retained.'
+            exit 1
+          fi
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          echo '::error::Checkpoint push failed after three attempts; recovery artifact retained.'
+          exit 1

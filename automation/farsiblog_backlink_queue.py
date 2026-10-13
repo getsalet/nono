@@ -112,6 +112,10 @@ def main():
     from city_backlink_policy import build_queue,matrix_ready,prepare_image
     if not matrix_ready():
         print("City/article mode prepared; independent matrix awaits approval. No AI or publication.");return 0
+    # The shared source lookup writes a cache. Keep it inside this blog's
+    # checkpoint artifacts, never in the concurrently running Roya pipeline.
+    import roya_backlink_queue as source_lookup
+    source_lookup.IMAGE_CACHE=ART/'image-cache.json'
     build_queue(CITY_BLOG)
     q=load(QUEUE,{'items':[]})
     if os.getenv('FARSIBLOG_DRY_RUN','0')=='1':print(f'Configuration check: {len(q["items"])} topics. No AI call or publishable sample.');return 0

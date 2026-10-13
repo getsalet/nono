@@ -11,10 +11,23 @@ import publish_roya_posts as state
 from city_backlink_policy import matrix_ready,qa,links_for
 engine=wrapper.engine
 state.QUEUE=engine.QUEUE;state.ART=engine.ART;state.PUBLISH_QUEUE=engine.ART/'publish-queue.json';state.STATE=engine.STATE;state.LOG=engine.ART/'publish-log.jsonl';state.EXPORT=engine.ART/'publish'
-BLOG=engine.BLOG;PANEL='https://www.rozblog.com';DO_PUBLISH=os.getenv('ROZBLOG_PUBLISH','0')=='1'
+BLOG=engine.BLOG;PANEL='https://www.rozblog.com';EXPECTED_HOST='afp-pipe.rozblog.com';DO_PUBLISH=os.getenv('ROZBLOG_PUBLISH','0')=='1'
 def active(page):
+ # Native change_accont returns a blank document, not the authenticated panel.
+ # This guard must run only on the reloaded protected usercp page.
+ if urlsplit(page.url).hostname!='www.rozblog.com' or urlsplit(page.url).path!='/usercp.php':
+  raise RuntimeError('Protected RozBlog panel required before destination verification')
  urls=page.locator('a[href]').evaluate_all('a=>a.map(x=>x.href)')
- if 'afp-pipe.rozblog.com'not in {urlsplit(u).hostname for u in urls}:raise RuntimeError('Wrong active RozBlog; never publish to spadan1 or drip-irrigation')
+ if EXPECTED_HOST not in {urlsplit(u).hostname for u in urls}:
+  raise RuntimeError('Wrong active RozBlog; never publish to spadan1 or drip-irrigation')
+ routes={}
+ for name in ('admin_post','new_post'):
+  matches={u for u in urls if urlsplit(u).scheme=='https' and urlsplit(u).hostname=='www.rozblog.com' and re.fullmatch(r'/panel\d+/'+name,urlsplit(u).path)}
+  if len(matches)!=1:raise RuntimeError('Missing or ambiguous native publication route: '+name)
+  routes[name]=matches.pop()
+ if urlsplit(routes['admin_post']).path.rsplit('/',1)[0]!=urlsplit(routes['new_post']).path.rsplit('/',1)[0]:
+  raise RuntimeError('Native publication routes belong to different panels')
+ return routes['admin_post'],routes['new_post']
 def login(page):
  page.goto(PANEL+'/usercp.php',wait_until='domcontentloaded',timeout=60000)
  if '/login.php'in page.url:
@@ -33,11 +46,14 @@ def login(page):
  if choice.count()!=1:raise RuntimeError('Cannot uniquely locate intended blog')
  manage=choice.get_by_role('link',name='مدیریت',exact=True)
  if manage.count()!=1:raise RuntimeError('Verified native blog selection missing')
- manage.click();page.wait_for_load_state('domcontentloaded');active(page)
- urls=page.locator('a[href]').evaluate_all('a=>a.map(x=>x.href)')
- posts=next((u for u in urls if u.endswith('/admin_post')),None);add=next((u for u in urls if u.endswith('/new_post')),None)
- if not posts or not add:raise RuntimeError('Native publication routes missing')
- return posts,add
+ # Wait for the one native selection request, then reopen the protected panel.
+ # Never treat its empty response as proof of the selected site's identity.
+ with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):
+  manage.click()
+ page.goto(PANEL+'/usercp.php',wait_until='domcontentloaded',timeout=60000)
+ if '/login.php' in page.url:raise RuntimeError('Session expired after native blog selection')
+ page.wait_for_selector('a[href*="/new_post"]',state='attached',timeout=30000)
+ return active(page)
 
 def scan(page,posts):
  found={};pending=[posts];seen=set()
