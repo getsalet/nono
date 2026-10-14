@@ -219,6 +219,7 @@ def build_prompt(item, links):
 3. هر لینک بالا را با لنگر طبیعی در متن پخش کن؛ لنگر لینک صفحه شهری باید همان «عنوان پست مقصد» یا نزدیک‌ترین عبارت طبیعی به آن باشد (مثلاً «خرید نوار تیپ ۲۰ سانتی در قندمان») تا بک‌لینک معنادار شود. لنگر باید شامل نام شهر باشد، معنادار باشد (نه «اینجا کلیک کنید») و برای هر URL حداکثر یک بار بیاید. در متن به موضوع همان پست مقصد اشاره کن تا لینک زمینه‌دار شود.
 4. هیچ قیمت، عدد ریالی/تومانی، تخفیف، موجودی، نمایندگی، زمان قطعی ارسال یا ادعای محلی درباره خاک، آب، شوری، اقلیم و فصل کشت شهر را ننویس؛ به جای آن بنویس که کارشناس AFP شرایط زمین را بررسی می‌کند و قیمت روز را استعلام بگیرد.
 5. {technical}
+5الف. منبع برگه فنی در این ورودی ارائه نشده است: جنس PE، افزودنی یا مقاومت UV، تفاوت قطعی انعطاف/هزینه/سرعت نصب لوله نخی و تاشو را ادعا نکن. فقط بررسی مشخصات همان مدل را توصیه کن. هواگیری را به عبور لوله از نقاط کم‌ارتفاع نسبت نده؛ طراحی نقاط هواگیری و تخلیه باید با بررسی اختلاف ارتفاع و نظر متخصص انجام شود. مقدمه درباره کشت محصول در این شهر مشروط باشد: «اگر در ... ... کشت می‌کنید»؛ وجود مزارع آن محصول را قطعی نگو.
 6. متن فقط فارسی باشد؛ تنها واژه‌های لاتین مجاز: AFP، navar، cm، mm، PE، UV، ISO.
 7. فقط HTML ساده: p، h2، h3، ul، ol، li، strong، a، details، summary، table. هیچ script، style، iframe، تصویر یا Markdown (بدون ``` و بدون **) استفاده نکن.
 8. اگر لینک با نقش home در فهرست مجاز هست، آن را فقط یک بار در یک پاراگراف توضیحی مرتبط با انتخاب تجهیزات نوار تیپ بیاور؛ متن لنگر همین لینک را دقیقاً همان «لنگر پیشنهادی» آن بنویس. عبارت مستقل «نوار تیپ» یا «نوار آبیاری» فقط به صفحه نخست اشاره کند؛ لینک شهر و استان همچنان نام شهر/استان و زمینه محصول خود را داشته باشند. دو کلیدواژه اصلی را کنار هم به شکل دو لینک تکراری به صفحه نخست نچین. لینک صفحه نخست را در سوالات متداول یا یک پاراگراف صرفاً تبلیغاتی قرار نده. اگر لینک home در فهرست نیست، آن را اضافه نکن و کلمات نوار تیپ را به متن مربوط به لوله تحمیل نکن.
@@ -340,9 +341,21 @@ def has_numeric_price(markup):
 
 def product_semantics_errors(item,markup):
     plain = html_lib.unescape(re.sub(r'<[^>]+>', ' ', markup or ''))
-    if item.get('family') == 'hose' and re.search(r'لوله[\s‌]+نخی[\s‌]*[（(][\s‌]*نوار[\s‌]+تیپ', plain):
-        return ['Layflat transfer hose must not be defined as drip tape']
-    return []
+    errors = []
+    if '\ufffd' in (markup or ''):
+        errors.append('Replacement characters indicate corrupted article text')
+    if item.get('family') == 'hose':
+        if re.search(r'لوله[\s‌]+نخی[\s‌]*[（(][\s‌]*نوار[\s‌]+تیپ', plain):
+            errors.append('Layflat transfer hose must not be defined as drip tape')
+        # No model-specific datasheet is supplied to this generator. Reject these
+        # unsupported categorical claims rather than inventing a material spec.
+        if re.search(r'(?:جنس|ساخته|تولید)[^.!؟]{0,90}\bPE\b|(?:افزودنی|مقاوم|مقاومت)[^.!؟]{0,60}\bUV\b|\bUV\b[^.!؟]{0,60}(?:مقاوم|مقاومت)',plain):
+            errors.append('Unsupported hose material or UV claim without model datasheet')
+        if re.search(r'(?:کم[\s‌-]*ارتفاع|پایین[\s‌-]*دست)[^.!؟]{0,100}هواگیری|هواگیری[^.!؟]{0,100}(?:کم[\s‌-]*ارتفاع|پایین[\s‌-]*دست)',plain):
+            errors.append('Air release must not be attributed to routing through low points')
+        if re.search(r'لوله[\s‌]+(?:نخی|تاشو)[^.!؟]{0,50}(?:سریع[\s‌-]*تر|به[\s‌-]*صرفه[\s‌-]*تر|انعطاف[\s‌]+بیشتر|نصب[\s‌]+سریع)',plain):
+            errors.append('Unsupported categorical comparison of transfer hose types')
+    return errors
 
 
 def qa(item, obj, links):

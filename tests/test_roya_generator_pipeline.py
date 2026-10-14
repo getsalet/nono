@@ -51,3 +51,15 @@ class ProductSemanticTests(unittest.TestCase):
   import inspect
   s=inspect.getsource(r.main)
   self.assertLess(s.index("obj['title'] = item['assigned_title']"),s.index('errors, info = qa'))
+
+class UnsupportedHoseClaimsTests(unittest.TestCase):
+ def test_material_claim_rejected(self):
+  self.assertTrue(r.product_semantics_errors({'family':'hose'},'<p>جنس لوله از PE با افزودنی UV است.</p>'))
+ def test_low_point_air_release_rejected(self):
+  self.assertTrue(r.product_semantics_errors({'family':'hose'},'<p>از نقاط کم‌ارتفاع عبور دهید تا هواگیری طبیعی انجام شود.</p>'))
+ def test_unfounded_comparison_rejected(self):
+  self.assertTrue(r.product_semantics_errors({'family':'hose'},'<p>لوله تاشو انعطاف بیشتری دارد.</p>'))
+ def test_datasheet_review_allowed(self):
+  self.assertEqual(r.product_semantics_errors({'family':'hose'},'<p>جنس و فشار مجاز همان مدل را در برگه فنی بررسی کنید. تعیین نقاط هواگیری و تخلیه به بررسی مسیر نیاز دارد.</p>'),[])
+ def test_corrupt_unicode_rejected(self):
+  self.assertTrue(r.product_semantics_errors({'family':'hose'},'<p>گرد\ufffd.</p>'))
