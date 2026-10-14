@@ -37,3 +37,9 @@ class GenerationRecoveryTests(unittest.TestCase):
     self.assertIn('next_retry_at',published);self.assertIn('next_retry_at',tape)
     failed['next_retry_at']='2099-01-01T00:00:00Z';f.recover_stale_image_deferrals(q)
     self.assertIn('next_retry_at',failed)
+
+class GenerationStatusTests(unittest.TestCase):
+ def test_all_rejected_batch_is_not_green(self):self.assertEqual(f.generation_exit_code([],['a','b']),2)
+ def test_partial_success_still_publishes_approved_content(self):self.assertEqual(f.generation_exit_code(['approved'],['rejected']),0)
+ def test_legitimate_idle_or_success_remains_green(self):
+  self.assertEqual(f.generation_exit_code([],[]),0);self.assertEqual(f.generation_exit_code(['approved'],[]),0)

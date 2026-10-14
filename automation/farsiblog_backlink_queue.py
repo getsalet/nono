@@ -139,6 +139,11 @@ def retry_transient(operation):
 def refresh_ready(q):
     entries=[{'key':x['key'],'title':x.get('title'),'slug':x.get('slug'),'target_url':x.get('target_url','https://navar-abyari.ir/'),'item_file':str(item_path(x['key']))}for x in q['items']if x.get('status')=='completed'and not x.get('published') and x.get('kind')in('city','article')]
     save(ART/'publish-queue.json',{'generated_at':now(),'blog':BLOG,'count':len(entries),'items':entries})
+def generation_exit_code(completed,failed):
+    # Partial success can still publish approved drafts. A fully rejected
+    # batch is not a successful content-producing run; expose it to Actions.
+    return 2 if failed and not completed else 0
+
 def main():
     from city_backlink_policy import build_queue,matrix_ready,prepare_image
     if not matrix_ready():
@@ -205,7 +210,10 @@ def main():
         save(item_path(item['key']),{**item,'post':obj,'blog':BLOG,'target_url':item.get('target_url','https://navar-abyari.ir/'),'qa':{'passed':not errors,'errors':errors,**info}});save(QUEUE,q)
     refresh_ready(q);state=load(STATE,{});state.update({'updated_at':now(),'completed_keys':[x['key']for x in q['items']if x['status']in('completed','published')],'failed':{x['key']:x.get('last_error','')for x in q['items']if x['status']=='failed'}});save(STATE,state)
     (ART/'status.md').write_text('# فارسی‌بلاگ AFP\n\nصف شهری تصویردار با کنترل شباهت بین سه وبلاگ.\n\n'+f'آخرین اجرا: {now()}\nموفق این اجرا: {len(completed)}\nناموفق: {len(failed)}\n')
-    print('Original articles generated:',len(completed),'Deferred items:',len(failed));return 0  # Item rejection never blocks publication of other approved drafts.
+    print('Original articles generated:',len(completed),'Deferred items:',len(failed))
+    code=generation_exit_code(completed,failed)
+    if code:print('No publishable article produced: all attempted items deferred; checkpoints preserved, next scheduled run will continue.',flush=True)
+    return code  # Partial successes still publish; all-rejected batches are visible failures.
 if __name__=='__main__':
     try:sys.exit(main())
     except Exception as exc:print('FarsiBlog generation stopped: '+str(exc),file=sys.stderr);sys.exit(1)
