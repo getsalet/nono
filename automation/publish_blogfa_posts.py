@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Single native ASP.NET submit; recover by live title, never blind retry."""
 import os,re,sys,time
+from pathlib import Path
 from urllib.parse import urlsplit,unquote
 import blogfa_backlink_queue as wrapper
 import publish_roya_posts as state
@@ -45,9 +46,11 @@ def scan_public(page):
 def assert_no_native_match(page,archive,title):
  page.goto(archive,wait_until='domcontentloaded',timeout=60000)
  page.wait_for_selector('#txtQuery',timeout=30000);page.locator('#txtQuery').fill(title)
- with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):page.locator('#btnSearch').click()
- body=page.locator('body').inner_text()
- if 'موردی یافت نشد' not in body:raise RuntimeError('Native archive found a possible published/draft match; reconcile before creation')
+ for option in ('0','-2','-1'):
+  page.locator('#cmbMonthList').select_option(option)
+  with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):page.locator('#btnSearch').click()
+  body=page.locator('body').inner_text()
+  if 'موردی یافت نشد' not in body:raise RuntimeError('Native archive found a possible published/draft match; reconcile before creation')
 
 def prepare(page,post):
  short,full=native_split(post['html'])
@@ -134,12 +137,15 @@ def main():
     if not record:
      assert_no_native_match(page,routes['archive'],title)
      page.goto(routes['new'],wait_until='domcontentloaded',timeout=60000);prepare(page,item['post']);begin(e)
-     with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):page.locator('#btnPublish').click()
+     with page.expect_navigation(wait_until='domcontentloaded',timeout=60000)as response:page.locator('#btnPublish').click()
      journal(e,'unconfirmed')
-     for attempt in range(3):
+     feedback={'key':e['key'],'at':state.now(),'http_status':response.value.status if response.value else None,'path':urlsplit(page.url).path,'native_message':page.locator('body').inner_text()[-2500:]}
+     engine.save(engine.ART/'native-submit-feedback.json',feedback)
+     print('Blogfa native submit feedback: '+str(feedback),flush=True)
+     for attempt in range(12):
       existing=scan_public(page);record=existing.get(title)
       if record:break
-      time.sleep(2)
+      time.sleep(5)
      if not record:raise RuntimeError('No live confirmation after single Blogfa POST; do not retry submission')
     url=verify(page,item,record)
     row={'key':e['key'],'title':title,'pid':record['pid'],'url':url,'at':state.now(),'verified':True,'recovered_existing':recovered}
