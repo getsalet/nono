@@ -63,3 +63,9 @@ class UnsupportedHoseClaimsTests(unittest.TestCase):
   self.assertEqual(r.product_semantics_errors({'family':'hose'},'<p>جنس و فشار مجاز همان مدل را در برگه فنی بررسی کنید. تعیین نقاط هواگیری و تخلیه به بررسی مسیر نیاز دارد.</p>'),[])
  def test_corrupt_unicode_rejected(self):
   self.assertTrue(r.product_semantics_errors({'family':'hose'},'<p>گرد\ufffd.</p>'))
+
+class TransferLineEmitterRegressionTests(unittest.TestCase):
+ def test_emitter_installation_on_transfer_hose_is_rejected(self):
+  self.assertTrue(r.product_semantics_errors({'family':'hose'},'<p>قطره‌چکان‌گذاری لوله‌ها نیازمند محاسبه است.</p>'))
+ def test_connection_to_a_separate_drip_network_is_allowed(self):
+  self.assertEqual(r.product_semantics_errors({'family':'hose'},'<p>لوله نخی آب را به شبکه توزیع و نوارهای فرعی می‌رساند.</p>'),[])

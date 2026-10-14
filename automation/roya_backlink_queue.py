@@ -203,7 +203,7 @@ def assign_roya_titles(queue, root=None):
 def build_prompt(item, links):
     fam = item.get('family', 'tape20')
     product = 'نوار تیپ ۲۰ سانتی‌متری (قطره‌چکان ۲۰ سانتی)' if fam != 'hose' else 'لوله نخی و لوله تاشو'
-    technical = ('لوله نخی و تاشو مسیر انتقال آب هستند؛ لوله نخی را نوار تیپ یا لوله دارای قطره‌چکان معرفی نکن. مشخصات قطر، فشار و اتصالات را فقط با برگه فنی همان مدل مطرح کن؛ ضخامت یا فاصله قطره‌چکان نوار تیپ را به لوله انتقال آب نسبت نده.' if fam == 'hose' else 'مشخصات فاصله خروجی، دبی، ضخامت و فشار را برای همان مدل از برگه فنی بخواه؛ بدون مرجع، مقدار عددی تجویز نکن و قابلیت جبران فشار را به همه نوارها نسبت نده.')
+    technical = ('لوله نخی و تاشو مسیر انتقال آب هستند؛ لوله نخی را نوار تیپ یا لوله دارای قطره‌چکان معرفی نکن. برای خود لوله نخی «قطره‌چکان‌گذاری» ننویس؛ اتصال به شبکه توزیع یا نوارهای فرعی را جداگانه توضیح بده. مشخصات قطر، فشار و اتصالات را فقط با برگه فنی همان مدل مطرح کن؛ ضخامت یا فاصله قطره‌چکان نوار تیپ را به لوله انتقال آب نسبت نده.' if fam == 'hose' else 'مشخصات فاصله خروجی، دبی، ضخامت و فشار را برای همان مدل از برگه فنی بخواه؛ بدون مرجع، مقدار عددی تجویز نکن و قابلیت جبران فشار را به همه نوارها نسبت نده.')
     link_lines = '\n'.join(
         f"- href=\"AFP_LINK_{index}\"\n  عنوان پست مقصد در سایت: {x.get('title', '')}\n  لنگر پیشنهادی: {x['anchor']} ({x['role']})"
         for index, x in enumerate(links, 1))
@@ -347,6 +347,8 @@ def product_semantics_errors(item,markup):
     if item.get('family') == 'hose':
         if re.search(r'لوله[\s‌]+نخی[\s‌]*[（(][\s‌]*نوار[\s‌]+تیپ', plain):
             errors.append('Layflat transfer hose must not be defined as drip tape')
+        if re.search(r'قطره[\s‌-]*چکان[\s‌-]*گذاری[\s‌]+لوله', plain):
+            errors.append('Transfer hose must not be described as an emitter-installation line')
         # No model-specific datasheet is supplied to this generator. Reject these
         # unsupported categorical claims rather than inventing a material spec.
         if re.search(r'(?:جنس|ساخته|تولید)[^.!؟]{0,90}\bPE\b|(?:افزودنی|مقاوم|مقاومت)[^.!؟]{0,60}\bUV\b|\bUV\b[^.!؟]{0,60}(?:مقاوم|مقاومت)',plain):
