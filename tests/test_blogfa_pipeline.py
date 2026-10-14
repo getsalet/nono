@@ -71,8 +71,8 @@ class BlogfaContracts(unittest.TestCase):
   pw.firefox.launch.assert_called_once_with();pw.chromium.launch.assert_not_called()
   with patch.dict('os.environ',{'BLOGFA_BROWSER':'unsupported'}):
    with self.assertRaises(RuntimeError):launch_browser(pw)
- def test_blogfa_uses_actual_firefox_install_and_engine(self):
-  w=(ROOT/'.github/workflows/blogfa-content.yml').read_text();self.assertIn('BLOGFA_BROWSER: firefox',w);self.assertIn('install_blog_browser.sh "$BLOGFA_BROWSER"',w)
+ def test_blogfa_uses_explicit_real_browser_install_and_engine(self):
+  w=(ROOT/'.github/workflows/blogfa-content.yml').read_text();self.assertIn('BLOGFA_BROWSER: chromium',w);self.assertIn('install_blog_browser.sh "$BLOGFA_BROWSER"',w)
 class DuplicateDashboardRoutes(unittest.TestCase):
  def test_unique_sidebar_beats_shortcut_with_different_nonce(self):
   links=[('❯نوشته جدید','https://www.blogfa.com/Desktop/Post.aspx?action=new&r=sidebar'),('نوشته جدید','https://www.blogfa.com/Desktop/Post.aspx?action=new&r=shortcut'),('❯نوشته‌های پیشین','https://www.blogfa.com/Desktop/Archive.aspx?t=sidebar'),('نوشته های پیشین','https://www.blogfa.com/Desktop/Archive.aspx?t=shortcut'),('❯تنظیمات و دیگر امکانات','https://www.blogfa.com/Desktop/Options.aspx'),('مشاهده وبلاگ','https://afp-pipe.blogfa.com/')]
