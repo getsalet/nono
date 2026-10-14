@@ -33,6 +33,15 @@ class BlogfaContracts(unittest.TestCase):
   self.assertLess(s.index("page.locator('#tab3').click()"),s.index("page.locator('#cmbCommentType').select_option"))
   self.assertLess(s.index("page.locator('#tab4').click()"),s.index("page.locator('#chkSticky').uncheck"))
   self.assertIn('e.filter.disable()',s);self.assertNotIn('e.filter=new CKEDITOR.filter',s)
+ def test_new_route_does_not_include_edit_links(self):
+  class Loc:
+   def evaluate_all(self,js):return ['http://afp-pipe.blogfa.com/','https://www.blogfa.com/Desktop/Post.aspx?action=new&r=one','https://www.blogfa.com/Desktop/Post.aspx?action=edit&id=1','https://www.blogfa.com/Desktop/Archive.aspx','https://www.blogfa.com/Desktop/Options.aspx']
+  class Page:
+   url='https://www.blogfa.com/Desktop/Home.aspx'
+   def locator(self,s):return Loc()
+  self.assertIn('action=new',active(Page())['new'])
+ def test_fresh_native_create_route_after_archive(self):
+  s=(ROOT/'automation/publish_blogfa_posts.py').read_text();self.assertIn("fresh=active(page)",s);self.assertIn("page.goto(fresh['new']",s)
  def test_native_login_wrong_destination(self):
   class Loc:
    def evaluate_all(self,js):return ['https://another.blogfa.com/']

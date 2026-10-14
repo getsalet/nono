@@ -2,10 +2,10 @@
 """Single native ASP.NET submit; recover by live title, never blind retry."""
 import os,re,sys,time
 from pathlib import Path
-from urllib.parse import urlsplit,unquote
+from urllib.parse import urlsplit,unquote,parse_qs
 import blogfa_backlink_queue as wrapper
 import publish_roya_posts as state
-from blogfa_native import login,BLOG,PANEL
+from blogfa_native import login,active,BLOG,PANEL
 from blog_post_excerpt import native_split
 from city_backlink_policy import qa,links_for,matrix_ready
 engine=wrapper.engine
@@ -140,10 +140,12 @@ def main():
     title=item['post']['title'];record=existing.get(title);recovered=bool(record)
     if not record:
      assert_no_native_match(page,routes['archive'],title)
-     page.goto(routes['new'],wait_until='domcontentloaded',timeout=60000);prepare(page,item['post']);begin(e)
+     # Archive postbacks may rotate native create-form nonces: follow the latest actual link.
+     fresh=active(page)
+     page.goto(fresh['new'],wait_until='domcontentloaded',timeout=60000);prepare(page,item['post']);begin(e)
      with page.expect_navigation(wait_until='domcontentloaded',timeout=60000)as response:page.locator('#btnPublish').click()
      journal(e,'unconfirmed')
-     feedback={'key':e['key'],'at':state.now(),'http_status':response.value.status if response.value else None,'path':urlsplit(page.url).path,'native_message':page.locator('body').inner_text()[-2500:]}
+     feedback={'key':e['key'],'at':state.now(),'http_status':response.value.status if response.value else None,'path':urlsplit(page.url).path,'native_message':page.locator('body').inner_text()[-2500:],'posted_field_lengths':{k:[len(v)for v in values]for k,values in parse_qs(response.value.request.post_data or '',keep_blank_values=True).items()}if response.value else {}}
      engine.save(engine.ART/'native-submit-feedback.json',feedback)
      print('Blogfa native submit feedback: '+str(feedback),flush=True)
      for attempt in range(12):
