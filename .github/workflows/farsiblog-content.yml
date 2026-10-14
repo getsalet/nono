@@ -7,10 +7,10 @@ on:
       dry_run: {description: '1 = configuration tests only, no publishable samples', default: '0'}
       target: {description: 'Optional topic key', default: ''}
   schedule:
-    - cron: '15 * * * *'
+    - cron: '*/15 * * * *'
   push:
     branches: [main]
-    paths: [automation/farsiblog_backlink_queue.py, automation/publish_farsiblog_posts.py, automation/content_originality.py, tests/test_farsiblog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/farsiblog-content.yml]
+    paths: [automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, automation/publish_farsiblog_posts.py, automation/content_originality.py, tests/test_farsiblog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/farsiblog-content.yml]
 permissions:
   contents: write
 concurrency:
@@ -24,7 +24,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: python -m pip install --quiet Pillow
-      - run: python -m unittest discover -s tests -p 'test_*pipeline.py' -v
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
   pipeline:
     needs: tests
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && vars.FARSIBLOG_AUTOMATION_ENABLED == '1')
@@ -47,28 +47,34 @@ jobs:
         with: {fetch-depth: 0, ref: main}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
+      - name: Check rolling publication budget before costly steps
+        id: budget
+        run: python automation/check_blog_run_budget.py farsiblog
       - name: Validate unattended credentials
-        if: env.FARSIBLOG_PUBLISH == '1' && env.FARSIBLOG_DRY_RUN != '1'
+        if: steps.budget.outputs.proceed == '1' && env.FARSIBLOG_PUBLISH == '1' && env.FARSIBLOG_DRY_RUN != '1'
         run: |
           if [ -z "$FARSIBLOG_USERNAME" ] || [ -z "$FARSIBLOG_PASSWORD" ]; then
             echo '::error::Set FARSIBLOG_USERNAME and FARSIBLOG_PASSWORD repository secrets.'
             exit 1
           fi
       - run: python -m pip install --quiet Pillow
+        if: steps.budget.outputs.proceed == '1'
       - name: Reconcile verified live editorial corrections
+        if: steps.budget.outputs.proceed == '1'
         run: python automation/reconcile_farsiblog_editorials.py
       - name: Generate independent city article with approved image
+        if: steps.budget.outputs.proceed == '1'
         run: python automation/farsiblog_backlink_queue.py
       - name: Install Playwright
-        if: env.FARSIBLOG_PUBLISH == '1' && env.FARSIBLOG_DRY_RUN != '1'
+        if: steps.budget.outputs.proceed == '1' && env.FARSIBLOG_PUBLISH == '1' && env.FARSIBLOG_DRY_RUN != '1'
         run: |
           python -m pip install --quiet playwright
           python -m playwright install --with-deps chromium
       - name: Publish and verify native FarsiBlog post
-        if: env.FARSIBLOG_DRY_RUN != '1'
+        if: steps.budget.outputs.proceed == '1' && env.FARSIBLOG_DRY_RUN != '1'
         run: python automation/publish_farsiblog_posts.py
       - name: Preserve farsiblog recovery checkpoints
-        if: always() && env.FARSIBLOG_DRY_RUN != '1'
+        if: always() && steps.budget.outputs.proceed == '1' && env.FARSIBLOG_DRY_RUN != '1'
         uses: actions/upload-artifact@v4
         with:
           name: farsiblog-recovery-${{ github.run_id }}-${{ github.run_attempt }}
@@ -81,7 +87,7 @@ jobs:
             artifacts/content-originality
             artifacts/blog-image-reviews
       - name: Commit generation and per-post checkpoints
-        if: always() && env.FARSIBLOG_DRY_RUN != '1'
+        if: always() && steps.budget.outputs.proceed == '1' && env.FARSIBLOG_DRY_RUN != '1'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

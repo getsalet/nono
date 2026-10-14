@@ -8,10 +8,10 @@ on:
       target: {description: 'Optional topic key', default: ''}
       diagnose_login: {description: '1 = read-only native login diagnostic; no generation or publication', default: '0'}
   schedule:
-    - cron: '35 * * * *'
+    - cron: '5,20,35,50 * * * *'
   push:
     branches: [main]
-    paths: [automation/farsiblog_backlink_queue.py, tests/test_blog_retry_pipeline.py, automation/rozblog_backlink_queue.py, automation/publish_rozblog_posts.py, automation/content_originality.py, tests/test_city_blog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/rozblog-content.yml]
+    paths: [automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, tests/test_blog_retry_pipeline.py, automation/rozblog_backlink_queue.py, automation/publish_rozblog_posts.py, automation/content_originality.py, tests/test_city_blog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/rozblog-content.yml]
 permissions:
   contents: write
 concurrency:
@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: python -m pip install --quiet Pillow
-      - run: python -m unittest discover -s tests -p 'test_*pipeline.py' -v
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
   pipeline:
     needs: tests
     # Hosted native publication verified end-to-end; repository opt-in still gates scheduled runs.
@@ -50,27 +50,31 @@ jobs:
         with: {fetch-depth: 0, ref: main}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
+      - name: Check rolling publication budget before costly steps
+        id: budget
+        run: python automation/check_blog_run_budget.py rozblog
       - name: Validate unattended credentials
-        if: env.ROZBLOG_PUBLISH == '1' && env.ROZBLOG_DRY_RUN != '1'
+        if: steps.budget.outputs.proceed == '1' && env.ROZBLOG_PUBLISH == '1' && env.ROZBLOG_DRY_RUN != '1'
         run: |
           if [ -z "$ROZBLOG_USERNAME" ] || [ -z "$ROZBLOG_PASSWORD" ]; then
             echo '::error::Set ROZBLOG_USERNAME and ROZBLOG_PASSWORD repository secrets.'
             exit 1
           fi
       - run: python -m pip install --quiet Pillow
+        if: steps.budget.outputs.proceed == '1'
       - name: Generate independent city article with approved image
-        if: env.ROZBLOG_LOGIN_DIAGNOSTIC != '1'
+        if: steps.budget.outputs.proceed == '1' && env.ROZBLOG_LOGIN_DIAGNOSTIC != '1'
         run: python automation/rozblog_backlink_queue.py
       - name: Install Playwright
-        if: env.ROZBLOG_PUBLISH == '1' && env.ROZBLOG_DRY_RUN != '1'
+        if: steps.budget.outputs.proceed == '1' && env.ROZBLOG_PUBLISH == '1' && env.ROZBLOG_DRY_RUN != '1'
         run: |
           python -m pip install --quiet playwright
           python -m playwright install --with-deps chromium
       - name: Publish and verify native RozBlog post
-        if: env.ROZBLOG_DRY_RUN != '1'
+        if: steps.budget.outputs.proceed == '1' && env.ROZBLOG_DRY_RUN != '1'
         run: python automation/publish_rozblog_posts.py
       - name: Preserve rozblog recovery checkpoints
-        if: always() && env.ROZBLOG_DRY_RUN != '1' && env.ROZBLOG_LOGIN_DIAGNOSTIC != '1'
+        if: always() && steps.budget.outputs.proceed == '1' && env.ROZBLOG_DRY_RUN != '1' && env.ROZBLOG_LOGIN_DIAGNOSTIC != '1'
         uses: actions/upload-artifact@v4
         with:
           name: rozblog-recovery-${{ github.run_id }}-${{ github.run_attempt }}
@@ -83,7 +87,7 @@ jobs:
             artifacts/content-originality
             artifacts/blog-image-reviews
       - name: Commit generation and per-post checkpoints
-        if: always() && env.ROZBLOG_DRY_RUN != '1' && env.ROZBLOG_LOGIN_DIAGNOSTIC != '1'
+        if: always() && steps.budget.outputs.proceed == '1' && env.ROZBLOG_DRY_RUN != '1' && env.ROZBLOG_LOGIN_DIAGNOSTIC != '1'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
