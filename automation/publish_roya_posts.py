@@ -8,6 +8,7 @@ Ready-file paths are resolved within this checkout rather than a previous runner
 import json, os, re, sys, time
 from pathlib import Path
 from urllib.parse import urlsplit
+from blog_post_excerpt import native_bodies
 ROOT = Path(__file__).resolve().parent.parent
 QUEUE = ROOT/'data/roya/backlink-queue.json'
 ART = ROOT/'artifacts/roya-backlink-queue'
@@ -143,15 +144,18 @@ def publish(todo):
                     page.goto(ADD_URL,wait_until='domcontentloaded',timeout=90000)
                     if '/SignIn/' in page.url:raise RuntimeError('Roya login expired; refusing a blind retry')
                     page.wait_for_selector('#ptitle',timeout=30000)
-                    page.wait_for_function("()=>window.tinymce && tinymce.get('pshort') && tinymce.get('pshort').parser && tinymce.get('pshort').getBody()",timeout=45000)
+                    page.wait_for_function("()=>['pshort','pfull'].every(id=>window.tinymce&&tinymce.get(id)?.initialized&&tinymce.get(id).parser&&tinymce.get(id).getBody())",timeout=45000)
                     page.fill('#ptitle',title);page.fill('#plink',(post.get('slug') or '')[:60].strip('-'))
+                    native_short,native_full=native_bodies(post['html'],PANEL)
                     page.evaluate("""post=>{
                       const tags=(post.tags||[]).join(',');for(const id of ['keyword','kw']){const e=document.getElementById(id);if(e)e.value=tags;}
                       const pub=document.querySelector('input[name=ppublic][value="1"]');if(!pub)throw Error('Publish option missing');pub.checked=true;
                       const comments=document.querySelector('input[name=pcomment]');if(!comments)throw Error('Comment control missing');comments.checked=false;
-                      if(window.tinymce&&tinymce.get('pshort')){tinymce.get('pshort').setContent(post.html);tinymce.triggerSave();}
-                      else document.querySelector('#pshort').value=post.html;
-                    }""",post)
+                      if(!window.tinymce||!tinymce.get('pshort')||!tinymce.get('pfull'))throw Error('Native summary/full editors missing');
+                      tinymce.get('pshort').setContent(post.native_short_html);
+                      tinymce.get('pfull').setContent(post.native_full_html);
+                      tinymce.triggerSave();
+                    }""",{**post,'native_short_html':native_short,'native_full_html':native_full})
                     # Native form submit is the only endpoint confirmed to persist posts.
                     with page.expect_navigation(timeout=90000):
                         page.evaluate("()=>window.jQuery?window.jQuery('.npost').submit():document.querySelector('form.npost').submit()")
