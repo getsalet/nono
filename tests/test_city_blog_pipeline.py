@@ -68,3 +68,11 @@ class CityBlogTests(unittest.TestCase):
    with self.assertRaises(RuntimeError):c.prepare_image(self.item)
    self.assertEqual(check.call_count,1)
 if __name__=='__main__':unittest.main()
+
+class EditorialTitleRegressionTests(unittest.TestCase):
+ def test_curated_article_titles_are_meaningful_and_fit(self):
+  from city_backlink_policy import title_candidates
+  for key,phrase in [('site-post-874','چک‌لیست نصب'),('site-post-858','تفاوت‌ها'),('site-post-895','اطلاعاتی'),('site-post-832','ضخامت')]:
+   item={'kind':'article','family':'tape20','source_key':key,'key':key,'site_title':'آموزش استفاده از نوار تیپ','city_fa':'','province_fa':''}
+   titles=title_candidates(item,'farsiblog')
+   self.assertTrue(all(12<=len(t)<=65 for t in titles));self.assertIn(phrase,titles[0]);self.assertNotIn('پیش از انتخاب آموزش',titles[0])

@@ -28,3 +28,13 @@ class RoyaGenerationTests(unittest.TestCase):
   self.assertLess(s.index('resolve_link_tokens(obj, links)'),s.index('errors, info = qa'))
   self.assertIn('repair_prompt(item, links, obj, errors)',s)
 if __name__=='__main__':unittest.main()
+
+class CheckpointRegressionTests(unittest.TestCase):
+ def test_both_roya_writers_checkout_current_main_inside_shared_lock(self):
+  for name in ('roya-backlink-queue.yml','roya-backlink-publish.yml'):
+   s=(ROOT/'.github/workflows'/name).read_text()
+   self.assertIn('group: roya-backlink-pipeline',s);self.assertIn('ref: main',s)
+ def test_generation_preserves_recovery_before_commit(self):
+  s=(ROOT/'.github/workflows/roya-backlink-queue.yml').read_text()
+  self.assertLess(s.index('actions/upload-artifact@v4'),s.index('- name: Commit queue'))
+  self.assertIn('no overwrite',s)

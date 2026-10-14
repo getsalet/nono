@@ -44,7 +44,8 @@ jobs:
       ROYA_PASSWORD: ${{ secrets.ROYA_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
-        with: {fetch-depth: 0}
+        # Queued workflow events may carry an old SHA; read main only after acquiring the shared lock.
+        with: {fetch-depth: 0, ref: main}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - name: Validate unattended login credentials
