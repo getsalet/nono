@@ -60,9 +60,19 @@ class BlogfaContracts(unittest.TestCase):
   s=(ROOT/'automation/publish_blogfa_posts.py').read_text();self.assertLess(s.index('wait_editor_ready(page)'),s.index("page.locator('#txtPostTitle').fill"))
  def test_authenticated_native_page_never_visits_public_blog(self):
   s=(ROOT/'automation/publish_blogfa_posts.py').read_text()
-  self.assertIn("public=browser.new_page(locale='fa-IR')",s)
+  self.assertIn("public=browser.new_page()",s)
   self.assertNotIn('scan_public(page)',s[s.index('def main():'):])
   self.assertIn('verify(public,item,record)',s)
+ def test_native_browser_engine_is_real_not_impersonated(self):
+  from unittest.mock import patch,Mock
+  from blogfa_native import launch_browser
+  pw=Mock()
+  with patch.dict('os.environ',{'BLOGFA_BROWSER':'firefox'}):launch_browser(pw)
+  pw.firefox.launch.assert_called_once_with();pw.chromium.launch.assert_not_called()
+  with patch.dict('os.environ',{'BLOGFA_BROWSER':'unsupported'}):
+   with self.assertRaises(RuntimeError):launch_browser(pw)
+ def test_blogfa_uses_actual_firefox_install_and_engine(self):
+  w=(ROOT/'.github/workflows/blogfa-content.yml').read_text();self.assertIn('BLOGFA_BROWSER: firefox',w);self.assertIn('install_blog_browser.sh "$BLOGFA_BROWSER"',w)
 class DuplicateDashboardRoutes(unittest.TestCase):
  def test_unique_sidebar_beats_shortcut_with_different_nonce(self):
   links=[('❯نوشته جدید','https://www.blogfa.com/Desktop/Post.aspx?action=new&r=sidebar'),('نوشته جدید','https://www.blogfa.com/Desktop/Post.aspx?action=new&r=shortcut'),('❯نوشته‌های پیشین','https://www.blogfa.com/Desktop/Archive.aspx?t=sidebar'),('نوشته های پیشین','https://www.blogfa.com/Desktop/Archive.aspx?t=shortcut'),('❯تنظیمات و دیگر امکانات','https://www.blogfa.com/Desktop/Options.aspx'),('مشاهده وبلاگ','https://afp-pipe.blogfa.com/')]

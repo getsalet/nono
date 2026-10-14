@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.parse import urlsplit,unquote,parse_qs
 import blogfa_backlink_queue as wrapper
 import publish_roya_posts as state
-from blogfa_native import login,active,wait_editor_ready,BLOG,PANEL
+from blogfa_native import login,active,wait_editor_ready,launch_browser,BLOG,PANEL
 from blog_post_excerpt import native_split
 from city_backlink_policy import qa,links_for,matrix_ready
 engine=wrapper.engine
@@ -133,10 +133,10 @@ def main():
   approved.append((e,item))
  from playwright.sync_api import sync_playwright
  with sync_playwright() as pw:
-  browser=pw.chromium.launch(args=['--no-sandbox']);page=browser.new_page(locale='fa-IR');page.on('dialog',lambda d:d.accept())
+  browser=launch_browser(pw);page=browser.new_page();page.on('dialog',lambda d:d.accept())
   # A public blog is a different application: never navigate the authenticated
   # native-management page/context through its visitor scripts and cookies.
-  public=browser.new_page(locale='fa-IR')
+  public=browser.new_page()
   try:
    routes=login(page);existing=scan_public(public)
    for e,item in approved:

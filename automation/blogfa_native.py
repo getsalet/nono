@@ -37,6 +37,12 @@ def login(page):
   with page.expect_navigation(wait_until='load',timeout=60000):page.locator('input[name=btnSubmit]').click()
  page.wait_for_selector('a[href*="Post.aspx"]',timeout=30000)
  return active(page)
+def launch_browser(pw):
+ # Use the actual requested engine; no custom user agent or browser impersonation.
+ name=os.getenv('BLOGFA_BROWSER','chromium')
+ if name=='firefox':return pw.firefox.launch()
+ if name=='chromium':return pw.chromium.launch(args=['--no-sandbox'])
+ raise RuntimeError('Unsupported native Blogfa browser engine')
 def wait_editor_ready(page):
  # The native page starts an asynchronous session refresh on load. Document load
  # and CKEditor readiness alone do not mean that server initialization finished.
@@ -47,7 +53,7 @@ def wait_editor_ready(page):
 def main():
  from playwright.sync_api import sync_playwright
  with sync_playwright() as pw:
-  browser=pw.chromium.launch(args=['--no-sandbox']);page=browser.new_page(locale='fa-IR')
+  browser=launch_browser(pw);page=browser.new_page()
   try:
    routes=login(page)
    target=os.getenv('BLOGFA_TARGET','').strip();draft=None
