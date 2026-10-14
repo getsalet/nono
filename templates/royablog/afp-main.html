@@ -1169,6 +1169,29 @@ body.afp-card-list .post-foot a,body.afp-card-list .rate{min-height:44px;min-wid
 body.afp-card-list .afp-read-more:link,body.afp-card-list .afp-read-more:visited{background:var(--green-700);color:#fff!important;border:1px solid var(--green-700);padding:10px 18px;border-radius:8px;font-size:14px;line-height:1.7;text-decoration:none}
 body.afp-card-list .afp-read-more:hover{background:var(--green-900);color:#fff}
 @media(max-width:700px){body.afp-card-list #main-content>article.post-card{grid-template-columns:minmax(0,1fr);gap:20px;padding:20px;margin-bottom:24px}body.afp-card-list .post-card>.afp-card-media{aspect-ratio:16/9}body.afp-card-list .post-title{font-size:22px!important}body.afp-card-list .afp-read-more{flex:1;text-align:center}}
+
+/* Native paginated article index: compact cards, not full article bodies. */
+body.afp-card-list .home-intro{display:none!important}
+body.afp-card-list .main-grid{margin-top:24px!important;align-items:start}
+body.afp-card-list #main-content{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;min-width:0}
+body.afp-card-list #main-content>article.post-card{display:flex!important;flex-direction:column;grid-column:auto!important;gap:0;padding:20px;margin:0!important;min-width:0;height:100%;border:1px solid var(--line);border-radius:14px}
+body.afp-card-list #main-content>.afp-list-header,body.afp-card-list #main-content>.pagination{grid-column:1/-1}
+body.afp-card-list .afp-list-header{padding:0 0 4px}
+body.afp-card-list .afp-list-header h1{font-size:28px;line-height:1.6;margin:0 0 8px;color:var(--green-900)}
+body.afp-card-list .afp-list-header p{font-size:15px;color:var(--muted);margin:0}
+body.afp-card-list .post-card>.afp-card-media{aspect-ratio:16/9;flex:none;margin-bottom:18px}
+body.afp-card-list .post-card>.post-body{flex:1;width:100%;min-width:0}
+body.afp-card-list .post-title{font-size:22px!important;line-height:1.6!important;margin-bottom:12px!important}
+body.afp-card-list .post-meta{font-size:13px!important;margin-bottom:12px!important;padding-bottom:12px!important}
+body.afp-card-list .post-meta .meta-item:nth-child(2),body.afp-card-list .post-meta .meta-item:nth-child(3){display:none}
+body.afp-card-list .afp-card-excerpt{-webkit-line-clamp:3}
+body.afp-card-list .post-content{font-size:15px!important;line-height:1.9!important;margin-bottom:16px!important}
+body.afp-card-list .pagination{display:flex!important;justify-content:center;gap:8px;margin:0!important;padding:16px 0;min-width:0}
+body.afp-card-list .pagination a[aria-current="page"]{background:var(--green-700)!important;color:#fff!important;border-color:var(--green-700)!important}
+body.afp-card-list .post-foot .rating{display:none}
+body.afp-card-list .side-col{min-width:0}
+@media(max-width:1100px){body.afp-card-list .main-grid{grid-template-columns:minmax(0,1fr)}body.afp-card-list .side-col{display:none}}
+@media(max-width:700px){body.afp-card-list #main-content{grid-template-columns:minmax(0,1fr);gap:20px}body.afp-card-list #main-content>article.post-card{padding:20px}body.afp-card-list .afp-list-header h1{font-size:24px}body.afp-card-list .afp-card-excerpt{-webkit-line-clamp:4}}
 </style>
 </head>
 <body>
@@ -1766,10 +1789,29 @@ body.afp-card-list .afp-read-more:hover{background:var(--green-900);color:#fff}
 <script src="https://cdn.jsdelivr.net/gh/getsalet/nono@a680a9ce440b9289c90183374030fac442df039d/data/roya/afp-blog-tools.js" defer></script>
 
 <script id="afp-roya-list-cards-script">(function(){
- const single=new RegExp('^/post/[0-9]+(?:/|$)').test(location.pathname);
+ const normalize=url=>{let path=new URL(url,location.href).pathname;while(path.length>1&&path.endsWith('/'))path=path.slice(0,-1);return path||'/';};
+ const current=normalize(location.href),isHome=current==='/'||current==='/page/1';
  const posts=[...document.querySelectorAll('#main-content > article.post-card')];
+ const samePath=posts.some(post=>{const a=post.querySelector('.post-title a');return a&&normalize(a.href)===current;});
+ const route=current.split('/');
+ const single=(route[1]==='post'&&Number(route[2])>0)||(!isHome&&posts.length===1&&samePath);
  if(single||!posts.length)return;
  document.body.classList.add('afp-card-list');
+ const main=document.querySelector('#main-content'),grid=main.closest('.main-grid');
+ const header=document.createElement('header');header.className='afp-list-header';
+ const heading=document.createElement('h1');heading.textContent='راهنماها و یادداشت‌های AFP';
+ const caption=document.createElement('p');caption.textContent='تازه‌ترین راهنماها؛ '+posts.length.toLocaleString('fa-IR')+' مطلب در این صفحه';header.append(heading,caption);main.prepend(header);
+ const pager=main.querySelector(':scope > .pagination');
+ if(pager){const parts=current.split('/'),number=parts[1]==='page'?(Number(parts[2])||1):1,links=[...pager.querySelectorAll('a')];
+  const previous=links.find(a=>normalize(a.href)==='/page/'+(number-1)),next=links.find(a=>normalize(a.href)==='/page/'+(number+1));
+  if(previous){const a=previous.cloneNode(true);a.className='afp-page-prev';a.textContent='صفحه قبل';pager.prepend(a);}
+  if(next){const a=next.cloneNode(true);a.className='afp-page-next';a.textContent='صفحه بعد';pager.append(a);}
+ }
+ if(pager&&pager.querySelector('a')){const topPager=pager.cloneNode(true);topPager.classList.add('afp-pagination-top');topPager.setAttribute('aria-label','انتخاب صفحه مطالب');header.after(topPager);
+  for(const nav of [topPager,pager])nav.querySelectorAll('a').forEach(a=>{const active=normalize(a.href)===current||(isHome&&normalize(a.href)==='/page/1');if(active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+ }
+ // Keep product navigation and sales content, but place it after the article index.
+ for(const section of document.querySelectorAll('.page > .cat-strip,.page > .cta-band'))grid.parentElement.append(section);
  const tools=document.querySelector('.afp-tools'),slot=document.querySelector('.header-side')||document.querySelector('#main-content'),call=document.querySelector('.afp-call');
  if(tools&&slot){if(call)tools.append(call);slot.prepend(tools);}
  posts.forEach((post,index)=>{
