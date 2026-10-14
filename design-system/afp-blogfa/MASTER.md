@@ -10,3 +10,5 @@ Native provider pager only where supported; homepage archive/all-post links rema
 44px controls; visible focus; reduced motion; keyboard skip; no disabled zoom.
 Provider-owned URLs and server-rendered titles/meta/OG/RSS. No fabricated ranking guarantees, ratings or schema dates.
 21st CLI and ProMax scripts are not present; supplied guidance applied manually, no fabricated tool review.
+
+Footer: four semantic columns (brand, reading, products, contact), actual AFP logo and confirmed telephone; two columns tablet/one mobile.
