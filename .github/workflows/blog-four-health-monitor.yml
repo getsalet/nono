@@ -1,0 +1,34 @@
+name: AFP four-blog two-hour guarded health monitor
+on:
+  workflow_dispatch:
+    inputs:
+      minutes: {description: 'Monitoring duration, minutes', required: true, default: '120'}
+      recover: {description: '1 = bounded guarded pipeline recovery; never native post submission', default: '1'}
+permissions:
+  contents: read
+  actions: write
+concurrency: {group: afp-four-blog-health-monitor, cancel-in-progress: false}
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 190
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Observe all four queues, native public posts and guarded recovery
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MONITOR_MINUTES: ${{ inputs.minutes }}
+          MONITOR_RECOVER: ${{ inputs.recover }}
+          MONITOR_INTERVAL_SECONDS: '300'
+        run: python automation/monitor_four_blogs.py
+      - name: Preserve four-blog window report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: afp-four-blog-health-${{ github.run_id }}
+          path: artifacts/four-blog-health-monitor
+          retention-days: 14
+          if-no-files-found: warn
