@@ -91,6 +91,9 @@ def main():
    sanitized=re.sub(r'\b(?:\d{8,}|[0-9a-fA-F]{24,})\b','0',sanitized)
    print('Native inline structure (all non-control literals removed): '+json.dumps(sanitized[:16000]),flush=True)
 
+   if draft:
+    from blogfa_wire_audit import capture_without_submit
+    print('READONLY native wire metadata: '+json.dumps(capture_without_submit(page),ensure_ascii=False),flush=True)
    print('Blogfa hosted login and native CKEditor contract verified; no post submitted.',flush=True)
   finally:browser.close()
  return 0
