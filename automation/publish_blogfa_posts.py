@@ -63,14 +63,15 @@ def prepare(page,post):
  page.locator('#tab1').click()
  tags=[re.sub(r'[,+،]',' ',x).strip() for x in post.get('tags',[])[:4]]
  page.locator('#txtTags').fill('+'.join(tags))
- result=page.evaluate("""async data=>{
+ result=page.evaluate(r"""async data=>{
   for(const [id,body] of [['txtPostContent',data.short],['txtPostExtended',data.full]]){
-   const e=CKEDITOR.instances[id];e.filter=new CKEDITOR.filter(true);
+   const e=CKEDITOR.instances[id];e.config.allowedContent=true;e.filter.disable();if(e.activeFilter)e.activeFilter.disable();
    await new Promise(resolve=>e.setData(body,{callback:resolve}));e.updateElement();
   }
   const form=document.querySelector('#txtPostTitle').form, fd=new FormData(form);
   return {title:fd.get('txtPostTitle')===data.title,short:String(fd.get('txtPostContent')||'').length,full:String(fd.get('txtPostExtended')||'').length,comments:fd.get('cmbCommentType'),faqs:(String(fd.get('txtPostExtended')).match(/<details\b/g)||[]).length};
  }""",{'short':short,'full':full,'title':post['title']})
+ print('Blogfa native form readiness: '+str(result),flush=True)
  if not(result['title'] and result['short']>60 and result['full']>200 and result['comments']=='2' and result['faqs']==3):raise RuntimeError('Native form serialization incomplete; not submitted')
  print('Blogfa native form ready: split summary/full, 3 FAQs, comments off.',flush=True)
  return short,full
