@@ -23,15 +23,23 @@ def active(page):
 def login(page):
  username=os.getenv('BLOGFA_USERNAME');password=os.getenv('BLOGFA_PASSWORD')
  if not username or not password:raise RuntimeError('Blogfa repository secrets missing')
- page.goto(PANEL+'/Desktop/Login.aspx?ReturnUrl=%2Fdesktop%2F',wait_until='domcontentloaded',timeout=60000)
+ # Let the service choose its canonical login return route, as in the native UI.
+ page.goto(PANEL+'/Desktop/Home.aspx',wait_until='load',timeout=60000)
  if page.locator('input[name=usrid]').count():
   page.locator('input[name=usrid]').fill(username);page.locator('input[name=ups]').fill(password)
   for label in ('مرا به خاطر بسپار','Remember me','Keep me signed in'):
    c=page.get_by_label(label,exact=True)
    if c.count() and c.first.is_visible():c.first.check()
-  with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):page.locator('input[name=btnSubmit]').click()
+  with page.expect_navigation(wait_until='load',timeout=60000):page.locator('input[name=btnSubmit]').click()
  page.wait_for_selector('a[href*="Post.aspx"]',timeout=30000)
  return active(page)
+def wait_editor_ready(page):
+ # The native page starts an asynchronous session refresh on load. Document load
+ # and CKEditor readiness alone do not mean that server initialization finished.
+ page.wait_for_load_state('load',timeout=60000)
+ page.wait_for_function('()=>window.CKEDITOR&&CKEDITOR.instances.txtPostContent?.status==="ready"',timeout=60000)
+ page.wait_for_function('()=>typeof httpreq!=="undefined"&&httpreq.readyState===4&&httpreq.status===200',timeout=60000)
+ print('Blogfa native editor and initial session refresh complete.',flush=True)
 def main():
  from playwright.sync_api import sync_playwright
  with sync_playwright() as pw:
@@ -52,8 +60,7 @@ def main():
      print('Native reconciliation filter '+option+': empty='+str('موردی یافت نشد' in page.locator('body').inner_text()),flush=True)
     fresh=active(page);print('Fresh create route differs from initial: '+str(fresh['new']!=routes['new']),flush=True);routes=fresh
    page.goto(routes['new'],wait_until='domcontentloaded',timeout=60000)
-   page.wait_for_load_state('load',timeout=60000)
-   page.wait_for_function('()=>window.CKEDITOR&&CKEDITOR.instances.txtPostContent?.status==="ready"',timeout=60000)
+   wait_editor_ready(page)
    required=['#txtPostTitle','#txtPostContent','#txtPostExtended','#cmbCommentType','#btnPublish']
    if not all(page.locator(x).count()==1 for x in required):raise RuntimeError('Native editor contract incomplete')
    if page.locator('#cmbCommentType option[value="2"]').count()!=1:raise RuntimeError('Native comments-off option unavailable')

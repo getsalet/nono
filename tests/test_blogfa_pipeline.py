@@ -51,4 +51,9 @@ class BlogfaContracts(unittest.TestCase):
   with self.assertRaises(RuntimeError):active(Page())
  def test_budget_blogfa_supported(self):
   s=(ROOT/'automation/check_blog_run_budget.py').read_text();self.assertIn("'blogfa'",s);self.assertIn('prefix=blog.upper()',s)
+ def test_native_bootstrap_uses_canonical_return_route(self):
+  s=(ROOT/'automation/blogfa_native.py').read_text();self.assertIn("page.goto(PANEL+'/Desktop/Home.aspx',wait_until='load'",s)
+ def test_editor_waits_for_initial_server_session_refresh(self):
+  s=(ROOT/'automation/blogfa_native.py').read_text();self.assertIn('httpreq.readyState===4&&httpreq.status===200',s)
+  s=(ROOT/'automation/publish_blogfa_posts.py').read_text();self.assertLess(s.index('wait_editor_ready(page)'),s.index("page.locator('#txtPostTitle').fill"))
 if __name__=='__main__':unittest.main()
