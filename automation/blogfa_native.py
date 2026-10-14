@@ -1,6 +1,6 @@
 """Native Blogfa login; discovers nonce-bearing links, never persists cookies."""
 import os,sys,re,json
-from urllib.parse import urlsplit,parse_qs
+from urllib.parse import urlsplit,parse_qs,urljoin
 BLOG='https://afp-pipe.blogfa.com/'
 PANEL='https://www.blogfa.com'
 def active(page):
@@ -11,7 +11,13 @@ def active(page):
  routes={}
  for key,path in [('new','/desktop/post.aspx'),('archive','/desktop/archive.aspx'),('options','/desktop/options.aspx')]:
   candidates={u for u in urls if urlsplit(u).hostname=='www.blogfa.com' and urlsplit(u).path.lower()==path and (key!='new' or parse_qs(urlsplit(u).query).get('action',[''])[0].lower()=='new')}
-  if len(candidates)!=1:raise RuntimeError('Native route missing or ambiguous: '+key)
+  if len(candidates)>1:
+   labels={'new':'نوشته جدید','archive':'نوشته‌های پیشین','options':'تنظیمات و دیگر امکانات'}
+   nav=page.get_by_role('link',name=re.compile(r'^(?:❯\s*)?'+re.escape(labels[key])+r'\s*$'))
+   if nav.count()==1:
+    chosen=urljoin(page.url,nav.get_attribute('href') or '')
+    if chosen in candidates:candidates={chosen}
+  if len(candidates)!=1:raise RuntimeError('Native route missing or ambiguous: '+key+' candidates='+str(len(candidates)))
   routes[key]=candidates.pop()
  return routes
 def login(page):
@@ -46,6 +52,7 @@ def main():
      print('Native reconciliation filter '+option+': empty='+str('موردی یافت نشد' in page.locator('body').inner_text()),flush=True)
     fresh=active(page);print('Fresh create route differs from initial: '+str(fresh['new']!=routes['new']),flush=True);routes=fresh
    page.goto(routes['new'],wait_until='domcontentloaded',timeout=60000)
+   page.wait_for_load_state('load',timeout=60000)
    page.wait_for_function('()=>window.CKEDITOR&&CKEDITOR.instances.txtPostContent?.status==="ready"',timeout=60000)
    required=['#txtPostTitle','#txtPostContent','#txtPostExtended','#cmbCommentType','#btnPublish']
    if not all(page.locator(x).count()==1 for x in required):raise RuntimeError('Native editor contract incomplete')
@@ -72,4 +79,4 @@ def main():
  return 0
 if __name__=='__main__':
  try:sys.exit(main())
- except Exception as exc:print('Blogfa diagnostic failed: '+type(exc).__name__,file=sys.stderr);sys.exit(1)
+ except Exception as exc:print('Blogfa diagnostic failed: '+(str(exc) if isinstance(exc,RuntimeError) else type(exc).__name__),file=sys.stderr);sys.exit(1)
