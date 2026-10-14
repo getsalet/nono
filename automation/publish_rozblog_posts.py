@@ -28,6 +28,15 @@ def active(page):
  if urlsplit(routes['admin_post']).path.rsplit('/',1)[0]!=urlsplit(routes['new_post']).path.rsplit('/',1)[0]:
   raise RuntimeError('Native publication routes belong to different panels')
  return routes['admin_post'],routes['new_post']
+def panel_diagnostics(page):
+ # DOM text never reads control values; redact credentials if a server echoes them.
+ text=page.locator('body').inner_text()
+ for name in ('ROZBLOG_USERNAME','ROZBLOG_PASSWORD','AGNES_API_KEY'):
+  value=os.getenv(name,'')
+  if value:text=text.replace(value,'[redacted]')
+ frames=[{'host':urlsplit(f.url).hostname,'path':urlsplit(f.url).path}for f in page.frames]
+ print('RozBlog protected-panel diagnostic: '+str({'host':urlsplit(page.url).hostname,'path':urlsplit(page.url).path,'title':page.title(),'body':re.sub(r'\s+',' ',text)[:1800],'frames':frames}),flush=True)
+
 def login(page):
  page.goto(PANEL+'/usercp.php',wait_until='domcontentloaded',timeout=60000)
  if '/login.php'in page.url:
@@ -39,7 +48,11 @@ def login(page):
    if c.count()and c.first.is_visible():c.first.check()
   page.locator('#login_roz input[type=submit]').click()
   page.wait_for_url('**/usercp.php',timeout=60000)
- page.wait_for_selector('a[href$="/list_site"]',state='attached',timeout=30000)
+ try:
+  page.wait_for_selector('a[href$="/list_site"]',state='attached',timeout=30000)
+ except Exception:
+  panel_diagnostics(page)
+  raise RuntimeError('Authenticated native menu not loaded; login/session diagnostics captured')
  links=page.locator('a[href]').evaluate_all('a=>a.map(x=>x.href)')
  site=next((u for u in links if u.endswith('/list_site')),None)
  if not site:raise RuntimeError('Authenticated site-list link missing')
@@ -133,9 +146,26 @@ def verify(page,item,pid,public_url):
  if item['image_url']not in images:raise RuntimeError('Approved city image did not persist')
  return page.url
 
+def diagnose_login():
+ from playwright.sync_api import sync_playwright
+ with sync_playwright()as pw:
+  browser=pw.chromium.launch(args=['--no-sandbox']);context=browser.new_context(locale='fa-IR');page=context.new_page()
+  try:
+   posts,add=login(page);found=scan(page,posts)
+   print('Read-only unattended login diagnostic succeeded; native posts: '+str(len(found)),flush=True)
+   panel_diagnostics(page)
+  except Exception:
+   panel_diagnostics(page)
+   raise
+  finally:browser.close()
+ return 0
+
 def main():
+ if os.getenv('ROZBLOG_LOGIN_DIAGNOSTIC','0')=='1':return diagnose_login()
  if not matrix_ready():print('RozBlog publication paused pending title matrix.');return 0
- q=state.load(state.PUBLISH_QUEUE,{'items':[]});todo=q['items'];limit=min(3,int(os.getenv('ROZBLOG_PUBLISH_LIMIT','3')),engine.remaining_publication_budget())
+ q=state.load(state.PUBLISH_QUEUE,{'items':[]});todo=q['items']
+ if os.getenv('ROZBLOG_TARGET'):todo=[entry for entry in todo if entry['key']==os.environ['ROZBLOG_TARGET']]
+ limit=min(3,int(os.getenv('ROZBLOG_PUBLISH_LIMIT','3')),engine.remaining_publication_budget())
  if not DO_PUBLISH:
   for entry in todo[:limit]:state.export_post(state.load(state.resolve_item(entry),{}))
   print('Export only; no remote mutation');return 0
