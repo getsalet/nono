@@ -61,6 +61,19 @@ class DestinationTests(unittest.TestCase):
   with patch.object(self.publisher,'scan',side_effect=[{}, {'عنوان':record}])as scan,patch.object(self.publisher.time,'sleep'):
    self.assertEqual(self.publisher.confirm_post(page,'posts','عنوان'),({'عنوان':record},record));self.assertEqual(scan.call_count,2)
   page.get_by_role.assert_not_called()
+ def test_native_feedback_requires_explicit_saved_message(self):
+  self.assertTrue(self.publisher.native_save_feedback('مطلب با موفقیت ارسال شد')['success'])
+  self.assertFalse(self.publisher.native_save_feedback('خطا در ثبت مطلب؛ دوباره بررسی کنید')['success'])
+ def test_uncertain_prior_submission_blocks_any_new_post(self):
+  from unittest.mock import patch
+  entry={'key':'fixture'}
+  with patch.object(self.publisher.engine,'load',return_value={'fixture':{'phase':'unconfirmed'}}),patch.object(self.publisher.engine,'save')as save:
+   with self.assertRaises(RuntimeError):self.publisher.begin_submission(entry,'عنوان')
+   save.assert_not_called()
+ def test_login_waits_for_authenticated_menu_before_reading_links(self):
+  import inspect
+  source=inspect.getsource(self.publisher.login)
+  self.assertIn('a[href$="/list_site"]',source)
  def test_each_blog_preserves_recovery_artifacts(self):
   for blog in ('farsiblog','rozblog'):
    config=(ROOT/'.github/workflows'/f'{blog}-content.yml').read_text()

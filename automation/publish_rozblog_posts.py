@@ -39,6 +39,7 @@ def login(page):
    if c.count()and c.first.is_visible():c.first.check()
   page.locator('#login_roz input[type=submit]').click()
   page.wait_for_url('**/usercp.php',timeout=60000)
+ page.wait_for_selector('a[href$="/list_site"]',state='attached',timeout=30000)
  links=page.locator('a[href]').evaluate_all('a=>a.map(x=>x.href)')
  site=next((u for u in links if u.endswith('/list_site')),None)
  if not site:raise RuntimeError('Authenticated site-list link missing')
@@ -90,6 +91,25 @@ def scan(page,posts):
    if link.startswith(posts+'?')and re.search(r'[?&](page|p)=\d+',link)and link not in seen:pending.append(link)
   if len(seen)>100:raise RuntimeError('Title scan page limit exceeded; no partial dedup')
  return found
+
+def native_save_feedback(text):
+ # Judge the native response before navigating away from it.
+ compact=re.sub(r'\s+',' ',text).strip()
+ success=('مطلب با موفقیت ارسال شد','مطلب جدید شما با موفقیت ثبت گردید')
+ return {'success':any(message in compact for message in success),'message':compact[:1600]}
+
+def begin_submission(entry,title):
+ path=engine.ART/'submission-attempts.json';journal=engine.load(path,{})
+ previous=journal.get(entry['key'],{})
+ if previous.get('phase')in ('submitting','unconfirmed'):
+  raise RuntimeError('Unconfirmed previous native POST; automatic resubmission blocked pending live reconciliation')
+ journal[entry['key']]={'phase':'submitting','title':title,'at':state.now()};engine.save(path,journal)
+
+def record_submission(entry,phase,feedback=None):
+ path=engine.ART/'submission-attempts.json';journal=engine.load(path,{})
+ row=journal.setdefault(entry['key'],{});row.update(phase=phase,updated_at=state.now())
+ if feedback:row['feedback']=feedback
+ engine.save(path,journal)
 
 def confirm_post(page,posts,title):
  # Read-only retries for eventual consistency; never a second form submission.
@@ -160,10 +180,18 @@ def main():
      # Arm navigation BEFORE the only native POST. A load-state check after
      # click can return while the old document is still loaded; navigating to
      # the list then aborts the in-flight save.
+     begin_submission(entry,post['title'])
      with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):
       page.get_by_role('button',name='ارسال مطلب و بازسازی سایت',exact=False).click()
+     feedback=native_save_feedback(page.locator('body').inner_text())
+     record_submission(entry,'unconfirmed',feedback)
+     if not feedback['success']:
+      print('Native RozBlog save feedback: '+feedback['message'],flush=True)
+      raise RuntimeError('Native save did not confirm success; response preserved, no blind resubmission')
+     print('Native RozBlog save confirmed success; reconciling native row',flush=True)
      existing,record=confirm_post(page,posts,post['title']);pid=record['pid']
     url=verify(page,item,pid,record['url']);row={'key':entry['key'],'title':post['title'],'pid':pid,'url':url,'at':state.now(),'verified':True,'recovered_existing':recovered};state.checkpoint(entry,item,row)
+    record_submission(entry,'verified')
     print('Verified RozBlog post '+str(pid)+' -> '+url,flush=True);time.sleep(10)
   finally:
    page.close()
