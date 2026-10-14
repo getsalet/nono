@@ -134,8 +134,11 @@ def main():
  from playwright.sync_api import sync_playwright
  with sync_playwright() as pw:
   browser=pw.chromium.launch(args=['--no-sandbox']);page=browser.new_page(locale='fa-IR');page.on('dialog',lambda d:d.accept())
+  # A public blog is a different application: never navigate the authenticated
+  # native-management page/context through its visitor scripts and cookies.
+  public=browser.new_page(locale='fa-IR')
   try:
-   routes=login(page);existing=scan_public(page)
+   routes=login(page);existing=scan_public(public)
    for e,item in approved:
     title=item['post']['title'];record=existing.get(title);recovered=bool(record)
     if not record:
@@ -149,11 +152,11 @@ def main():
      engine.save(engine.ART/'native-submit-feedback.json',feedback)
      print('Blogfa native submit feedback: '+str(feedback),flush=True)
      for attempt in range(12):
-      existing=scan_public(page);record=existing.get(title)
+      existing=scan_public(public);record=existing.get(title)
       if record:break
       time.sleep(5)
      if not record:raise RuntimeError('No live confirmation after single Blogfa POST; do not retry submission')
-    url=verify(page,item,record)
+    url=verify(public,item,record)
     row={'key':e['key'],'title':title,'pid':record['pid'],'url':url,'at':state.now(),'verified':True,'recovered_existing':recovered}
     state.checkpoint(e,item,row);journal(e,'verified');existing[title]=record
     print('Verified Blogfa article '+str(record['pid'])+' -> '+url,flush=True)

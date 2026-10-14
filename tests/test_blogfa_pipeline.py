@@ -58,6 +58,11 @@ class BlogfaContracts(unittest.TestCase):
  def test_editor_waits_for_initial_server_session_refresh(self):
   s=(ROOT/'automation/blogfa_native.py').read_text();self.assertIn('httpreq.readyState===4&&httpreq.status===200',s)
   s=(ROOT/'automation/publish_blogfa_posts.py').read_text();self.assertLess(s.index('wait_editor_ready(page)'),s.index("page.locator('#txtPostTitle').fill"))
+ def test_authenticated_native_page_never_visits_public_blog(self):
+  s=(ROOT/'automation/publish_blogfa_posts.py').read_text()
+  self.assertIn("public=browser.new_page(locale='fa-IR')",s)
+  self.assertNotIn('scan_public(page)',s[s.index('def main():'):])
+  self.assertIn('verify(public,item,record)',s)
 class DuplicateDashboardRoutes(unittest.TestCase):
  def test_unique_sidebar_beats_shortcut_with_different_nonce(self):
   links=[('❯نوشته جدید','https://www.blogfa.com/Desktop/Post.aspx?action=new&r=sidebar'),('نوشته جدید','https://www.blogfa.com/Desktop/Post.aspx?action=new&r=shortcut'),('❯نوشته‌های پیشین','https://www.blogfa.com/Desktop/Archive.aspx?t=sidebar'),('نوشته های پیشین','https://www.blogfa.com/Desktop/Archive.aspx?t=shortcut'),('❯تنظیمات و دیگر امکانات','https://www.blogfa.com/Desktop/Options.aspx'),('مشاهده وبلاگ','https://afp-pipe.blogfa.com/')]
