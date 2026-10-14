@@ -72,8 +72,21 @@ class DestinationTests(unittest.TestCase):
    save.assert_not_called()
  def test_login_waits_for_authenticated_menu_before_reading_links(self):
   import inspect
-  source=inspect.getsource(self.publisher.login)
+  source=inspect.getsource(self.publisher.wait_for_native_menu)
   self.assertIn('a[href$="/list_site"]',source)
+ def test_menu_reload_is_bounded_and_does_not_repeat_signin(self):
+  from unittest.mock import patch
+  page=Mock();page.url='https://www.rozblog.com/usercp.php';page.wait_for_selector.side_effect=[RuntimeError('transient empty menu'),None]
+  with patch.object(self.publisher.time,'sleep'):
+   self.publisher.wait_for_native_menu(page)
+  page.goto.assert_called_once_with('https://www.rozblog.com/usercp.php',wait_until='domcontentloaded',timeout=60000)
+  page.get_by_role.assert_not_called()
+ def test_reloads_stop_when_session_has_expired(self):
+  from unittest.mock import patch
+  page=Mock();page.url='https://www.rozblog.com/login.php';page.wait_for_selector.side_effect=RuntimeError('missing menu')
+  with patch.object(self.publisher.time,'sleep'):
+   with self.assertRaises(RuntimeError):self.publisher.wait_for_native_menu(page)
+  self.assertEqual(page.goto.call_count,1)
  def test_each_blog_preserves_recovery_artifacts(self):
   for blog in ('farsiblog','rozblog'):
    config=(ROOT/'.github/workflows'/f'{blog}-content.yml').read_text()

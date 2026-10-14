@@ -37,6 +37,20 @@ def panel_diagnostics(page):
  frames=[{'host':urlsplit(f.url).hostname,'path':urlsplit(f.url).path}for f in page.frames]
  print('RozBlog protected-panel diagnostic: '+str({'host':urlsplit(page.url).hostname,'path':urlsplit(page.url).path,'title':page.title(),'body':re.sub(r'\s+',' ',text)[:1800],'frames':frames}),flush=True)
 
+def wait_for_native_menu(page):
+ # Reload the protected menu only. Never repeat a credential POST on uncertainty.
+ for attempt in range(3):
+  try:
+   page.wait_for_selector('a[href$="/list_site"]',state='attached',timeout=10000)
+   return
+  except Exception:
+   if attempt==2:break
+   time.sleep(1)
+   page.goto(PANEL+'/usercp.php',wait_until='domcontentloaded',timeout=60000)
+   if '/login.php'in page.url:raise RuntimeError('Session lost while reloading protected native menu')
+ panel_diagnostics(page)
+ raise RuntimeError('Authenticated native menu not loaded after bounded read-only reloads')
+
 def login(page):
  page.goto(PANEL+'/usercp.php',wait_until='domcontentloaded',timeout=60000)
  if '/login.php'in page.url:
@@ -48,11 +62,7 @@ def login(page):
    if c.count()and c.first.is_visible():c.first.check()
   page.locator('#login_roz input[type=submit]').click()
   page.wait_for_url('**/usercp.php',timeout=60000)
- try:
-  page.wait_for_selector('a[href$="/list_site"]',state='attached',timeout=30000)
- except Exception:
-  panel_diagnostics(page)
-  raise RuntimeError('Authenticated native menu not loaded; login/session diagnostics captured')
+ wait_for_native_menu(page)
  links=page.locator('a[href]').evaluate_all('a=>a.map(x=>x.href)')
  site=next((u for u in links if u.endswith('/list_site')),None)
  if not site:raise RuntimeError('Authenticated site-list link missing')
