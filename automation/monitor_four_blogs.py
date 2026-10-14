@@ -71,6 +71,9 @@ def public_read(url):
  try:return request(url)
  except urllib.error.HTTPError as exc:
   if exc.code not in (403,429):raise
+ except TimeoutError:pass
+ except urllib.error.URLError as exc:
+  if not isinstance(exc.reason,TimeoutError):raise
  # Website HTTP blocking alone is not a downtime finding. Use a real public browser.
  global PUBLIC_BROWSER,PUBLIC_CONTEXT,PUBLIC_PW,PUBLIC_ATTACHED
  if PUBLIC_BROWSER is None:
@@ -105,7 +108,7 @@ def latest_article(url,host):
   'images':len(re.findall(r'<img\b',fragment,re.I)),'faqs':len(re.findall(r'<details\b',fragment,re.I))}
 def recovery_plan(blog,row,now,last_recovery,enabled):
  if not enabled:return None,'scheduled opt-in is off'
- if row.get('unverified') or row.get('public',{}).get('unverified'):return None,'observations incomplete; do not guess'
+ if row.get('unverified') or row.get('public',{}).get('unverified') or row.get('latest_article',{}).get('unverified'):return None,'observations incomplete; do not guess'
  runs=row.get('workflows',[])
  if any(x.get('status')in ACTIVE for x in runs):return None,'workflow already running or queued'
  if any(x.get('failed_steps')and any(s.get('job')=='tests' for s in x['failed_steps'])for x in runs):return None,'test failure needs code repair, not blind rerun'
@@ -145,15 +148,16 @@ def snapshot(last_recovery,article_cache,allow_recovery):
    row['ready_count']=sum(x.get('status')in ('completed','ready')and not x.get('published')for x in q.get('items',[]))
    row.update(recent_budget(blog,state.get('published',[]),now))
    row['scheduled_enabled']=not cfg['optin'] or variables.get(cfg['optin'])=='1'
-   try:
-    row['public']=public_snapshot(cfg['url']);latest=row['public'].get('latest')
-    if latest:
-     u=latest['url']
-     # Re-read even an unchanged URL: native edits must not remain hidden behind an old cache.
-     article_cache[u]=latest_article(u,urlsplit(cfg['url']).hostname)
-     row['latest_article']=article_cache[u]
+   try:row['public']=public_snapshot(cfg['url'])
    except urllib.error.HTTPError as exc:row['public']={'http_status':exc.code,'unverified':'remote HTTP response; not proof of outage'}
    except Exception as exc:row['public']={'unverified':type(exc).__name__}
+   latest=row['public'].get('latest')
+   if latest:
+    u=latest['url']
+    try:
+     # A native edit may change an unchanged permalink: re-read every sample.
+     article_cache[u]=latest_article(u,urlsplit(cfg['url']).hostname);row['latest_article']=article_cache[u]
+    except Exception as exc:row['latest_article']={'url':u,'unverified':type(exc).__name__}
    plan,reason=recovery_plan(blog,row,now,last_recovery,row['scheduled_enabled']);row['recovery_reason']=reason
    if plan and allow_recovery:
     result=api('/actions/workflows/'+plan['workflow']+'/dispatches',{'ref':'main','inputs':plan['inputs']})
@@ -181,7 +185,7 @@ def main():
   samples.append(row)
   with (root/'samples.jsonl').open('a')as f:f.write(json.dumps(row,ensure_ascii=False)+'\n')
   report(root,samples,start,deadline)
-  print(json.dumps({'at':row['at'],'unverified':row.get('unverified'),'blogs':[{'blog':r['blog'],'remaining':r.get('remaining_hourly_budget'),'last_verified':r.get('last_verified_at'),'unverified':r.get('unverified')or r.get('public',{}).get('unverified'),'recovery':r.get('recovery_reason'),'dispatches':len(r.get('recoveries',[]))}for r in row['blogs']]},ensure_ascii=False),flush=True)
+  print(json.dumps({'at':row['at'],'unverified':row.get('unverified'),'blogs':[{'blog':r['blog'],'remaining':r.get('remaining_hourly_budget'),'last_verified':r.get('last_verified_at'),'unverified':r.get('unverified')or r.get('public',{}).get('unverified')or r.get('latest_article',{}).get('unverified'),'recovery':r.get('recovery_reason'),'dispatches':len(r.get('recoveries',[]))}for r in row['blogs']]},ensure_ascii=False),flush=True)
   left=end-time.monotonic()
   if left<=0:break
   time.sleep(min(interval,left))
