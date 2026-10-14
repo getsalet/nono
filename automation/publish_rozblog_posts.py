@@ -4,7 +4,7 @@ Unattended login requires ROZBLOG_USERNAME / ROZBLOG_PASSWORD. Email OTP login i
 interactive only; no cookies, passwords or one-time codes are stored in git.
 """
 import os,re,sys,time
-from urllib.parse import urlsplit,unquote
+from urllib.parse import urlsplit,unquote,parse_qs
 from pathlib import Path
 import rozblog_backlink_queue as wrapper
 import publish_roya_posts as state
@@ -121,10 +121,13 @@ def native_save_feedback(text):
  success=('مطلب با موفقیت ارسال شد','مطلب جدید شما با موفقیت ثبت گردید')
  return {'success':any(message in compact for message in success),'message':compact[:1600]}
 
-def begin_submission(entry,title):
+def known_native_rejection(feedback):
+ return feedback.get('success')is False and 'عنوان و خلاصه مطلب را وارد کنید' in feedback.get('message','')
+
+def begin_submission(entry,title,live_missing=False):
  path=engine.ART/'submission-attempts.json';journal=engine.load(path,{})
  previous=journal.get(entry['key'],{})
- if previous.get('phase')in ('submitting','unconfirmed'):
+ if previous.get('phase')in ('submitting','unconfirmed','rejected') and not(live_missing and known_native_rejection(previous.get('feedback',{}))):
   raise RuntimeError('Unconfirmed previous native POST; automatic resubmission blocked pending live reconciliation')
  journal[entry['key']]={'phase':'submitting','title':title,'at':state.now()};engine.save(path,journal)
 
@@ -133,6 +136,41 @@ def record_submission(entry,phase,feedback=None):
  row=journal.setdefault(entry['key'],{});row.update(phase=phase,updated_at=state.now())
  if feedback:row['feedback']=feedback
  engine.save(path,journal)
+
+def prepare_native_form(page,post):
+ # getBody() can exist before asynchronous editor initialization is finished.
+ page.wait_for_function('()=>["mtex","mtex2"].every(id=>window.tinymce&&tinymce.get(id)?.initialized&&tinymce.get(id).getBody())',timeout=60000)
+ page.locator('#auto_send_post').uncheck()
+ page.locator('#mtitle').fill(post['title']);page.locator('#input_url_seo').fill(post['slug'])
+ page.locator('input[name=pimg]').fill('')
+ page.locator('select[name=status]').select_option('1');page.locator('select[name=member]').select_option('0');page.locator('select[name=pcm]').select_option('7')
+ result=page.evaluate('''post=>{
+  const editor=tinymce.get("mtex"),more=tinymce.get("mtex2");
+  editor.setContent(post.html);more.setContent("");editor.save();more.save();
+  document.querySelector("#ptags").value=(post.tags||[]).join(",");
+  const title=document.querySelector("#mtitle"),body=document.querySelector("#mtex"),form=title.form;
+  const data=new FormData(form);
+  return {same_form:body.form===form,method:form.method,target:form.target,
+   title_matches:data.get("mtitle")===post.title,body_length:String(data.get("mtex")||"").length,
+   text_length:editor.getContent({format:"text"}).trim().length};
+ }''',post)
+ print('Native form readiness: '+str(result),flush=True)
+ if not(result['same_form']and result['method']=='post'and result['target']in ('','_self')and result['title_matches']and result['body_length']>100 and result['text_length']>100):
+  raise RuntimeError('Native title/body are not ready for serialization; nothing submitted')
+
+def native_request_summary(request):
+ # Log lengths only, never hidden fields, credentials, cookies or article content.
+ if request.method!='POST':return {'method':request.method,'title_length':0,'body_length':0}
+ content_type=request.headers.get('content-type','');raw=request.post_data_buffer or b''
+ if 'application/x-www-form-urlencoded'in content_type:
+  data=parse_qs(raw.decode('utf-8'),keep_blank_values=True)
+ elif 'multipart/form-data'in content_type:
+  from email.parser import BytesParser
+  from email.policy import default
+  message=BytesParser(policy=default).parsebytes(b'Content-Type: '+content_type.encode()+b'\r\nMIME-Version: 1.0\r\n\r\n'+raw)
+  data={part.get_param('name',header='content-disposition'):[part.get_content()]for part in message.iter_parts()if part.get_param('name',header='content-disposition')in ('mtitle','mtex','mtex2')}
+ else:return {'method':'POST','encoding':content_type,'unsupported_encoding':True}
+ return {'method':'POST','encoding':content_type.split(';')[0],'title_length':len(data.get('mtitle',[''])[0]),'body_length':len(data.get('mtex',[''])[0])}
 
 def confirm_post(page,posts,title):
  # Read-only retries for eventual consistency; never a second form submission.
@@ -213,18 +251,21 @@ def main():
    for entry in todo[:limit]:
     item=state.load(state.resolve_item(entry),{});post=item['post'];record=existing.get(post['title']);pid=record['pid']if record else None;recovered=bool(record)
     if not pid:
-     page.goto(add,wait_until='domcontentloaded',timeout=60000);page.wait_for_selector('#mtitle');page.wait_for_function('()=>window.tinymce&&tinymce.get("mtex")&&tinymce.get("mtex").getBody()')
-     page.locator('#mtitle').fill(post['title']);page.locator('#input_url_seo').fill(post['slug']);page.locator('input[name=pimg]').fill('')
-     page.locator('select[name=status]').select_option('1');page.locator('select[name=member]').select_option('0');page.locator('select[name=pcm]').select_option('7')
-     page.evaluate('post=>{tinymce.get("mtex").setContent(post.html);if(tinymce.get("mtex2"))tinymce.get("mtex2").setContent("");document.querySelector("#ptags").value=(post.tags||[]).join(",");tinymce.triggerSave()}',post)
+     page.goto(add,wait_until='domcontentloaded',timeout=60000);page.wait_for_selector('#mtitle')
+     prepare_native_form(page,post)
      # Arm navigation BEFORE the only native POST. A load-state check after
      # click can return while the old document is still loaded; navigating to
      # the list then aborts the in-flight save.
-     begin_submission(entry,post['title'])
-     with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):
+     begin_submission(entry,post['title'],live_missing=True)
+     with page.expect_navigation(wait_until='domcontentloaded',timeout=60000)as navigation:
       page.get_by_role('button',name='ارسال مطلب و بازسازی سایت',exact=False).click()
+     response=navigation.value
+     if response:
+      request=response.request
+      while request.redirected_from:request=request.redirected_from
+      print('Native submitted field lengths: '+str(native_request_summary(request)),flush=True)
      feedback=native_save_feedback(page.locator('body').inner_text())
-     record_submission(entry,'unconfirmed',feedback)
+     record_submission(entry,'rejected'if known_native_rejection(feedback)else'unconfirmed',feedback)
      if not feedback['success']:
       print('Native RozBlog save feedback: '+feedback['message'],flush=True)
       raise RuntimeError('Native save did not confirm success; response preserved, no blind resubmission')

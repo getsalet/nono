@@ -43,7 +43,7 @@ class DestinationTests(unittest.TestCase):
  def test_native_submit_arms_navigation_before_click(self):
   import inspect
   source=inspect.getsource(self.publisher.main)
-  self.assertIn("with page.expect_navigation(wait_until='domcontentloaded',timeout=60000):",source)
+  self.assertIn("with page.expect_navigation(wait_until='domcontentloaded',timeout=60000)as navigation:",source)
   self.assertNotIn("click();page.wait_for_load_state",source)
  def test_custom_native_public_url_is_not_assumed_to_contain_post_id(self):
   row={'row_id':'tr_1','checkbox_id':'1','title':'عنوان واقعی','url':'https://afp-pipe.rozblog.com/custom-title-kmbuy'}
@@ -70,6 +70,30 @@ class DestinationTests(unittest.TestCase):
   with patch.object(self.publisher.engine,'load',return_value={'fixture':{'phase':'unconfirmed'}}),patch.object(self.publisher.engine,'save')as save:
    with self.assertRaises(RuntimeError):self.publisher.begin_submission(entry,'عنوان')
    save.assert_not_called()
+ def test_known_rejection_needs_fresh_absence_before_retry(self):
+  from unittest.mock import patch
+  feedback={'success':False,'message':'عنوان و خلاصه مطلب را وارد کنید !'}
+  for missing in (False,True):
+   with patch.object(self.publisher.engine,'load',return_value={'fixture':{'phase':'unconfirmed','feedback':feedback}}),patch.object(self.publisher.engine,'save')as save:
+    if missing:self.publisher.begin_submission({'key':'fixture'},'عنوان',live_missing=True);save.assert_called_once()
+    else:
+     with self.assertRaises(RuntimeError):self.publisher.begin_submission({'key':'fixture'},'عنوان')
+     save.assert_not_called()
+ def test_unknown_prior_submission_still_blocks_after_absence(self):
+  from unittest.mock import patch
+  with patch.object(self.publisher.engine,'load',return_value={'fixture':{'phase':'unconfirmed','feedback':{'success':False,'message':'unknown'}}}),patch.object(self.publisher.engine,'save')as save:
+   with self.assertRaises(RuntimeError):self.publisher.begin_submission({'key':'fixture'},'عنوان',live_missing=True)
+   save.assert_not_called()
+ def test_post_request_summary_reports_lengths_not_values(self):
+  request=Mock(method='POST',headers={'content-type':'application/x-www-form-urlencoded'},post_data_buffer=b'mtitle=hello&mtex=%3Cp%3Ebody%3C%2Fp%3E&secret=never')
+  result=self.publisher.native_request_summary(request)
+  self.assertEqual(result['title_length'],5);self.assertEqual(result['body_length'],11)
+  self.assertNotIn('never',str(result));self.assertNotIn('hello',str(result))
+ def test_form_waits_for_initialized_editors_and_checks_serialization(self):
+  import inspect
+  source=inspect.getsource(self.publisher.prepare_native_form)
+  for required in ('.initialized','new FormData(form)','editor.save()','title_matches','auto_send_post'):
+   self.assertIn(required,source)
  def test_login_waits_for_authenticated_menu_before_reading_links(self):
   import inspect
   source=inspect.getsource(self.publisher.wait_for_native_menu)
