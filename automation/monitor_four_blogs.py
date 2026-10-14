@@ -98,7 +98,7 @@ def recovery_plan(blog,row,now,last_recovery,enabled):
  return {'workflow':workflow,'inputs':inputs},'recover failed/stalled pipeline within normal safeguards'
 
 def snapshot(last_recovery,article_cache,allow_recovery):
- now=stamp();ref=api('/commits/main')['sha'];variables={x['name']:x['value']for x in api('/actions/variables?per_page=100').get('variables',[])if x['name'].endswith('_AUTOMATION_ENABLED')}
+ now=stamp();ref=api('/commits/main')['sha'];variables={cfg['optin']:os.getenv(cfg['optin'],'')for cfg in BLOGS.values()if cfg['optin']}
  out={'at':iso(now),'repository_ref':ref,'blogs':[]}
  for blog,cfg in BLOGS.items():
   row={'blog':blog,'url':cfg['url'],'workflows':[],'recoveries':[]}

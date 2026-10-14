@@ -23,6 +23,9 @@ jobs:
           MONITOR_MINUTES: ${{ inputs.minutes }}
           MONITOR_RECOVER: ${{ inputs.recover }}
           MONITOR_INTERVAL_SECONDS: '300'
+          FARSIBLOG_AUTOMATION_ENABLED: ${{ vars.FARSIBLOG_AUTOMATION_ENABLED }}
+          ROZBLOG_AUTOMATION_ENABLED: ${{ vars.ROZBLOG_AUTOMATION_ENABLED }}
+          BLOGFA_AUTOMATION_ENABLED: ${{ vars.BLOGFA_AUTOMATION_ENABLED }}
         run: python automation/monitor_four_blogs.py
       - name: Preserve four-blog window report
         if: always()
