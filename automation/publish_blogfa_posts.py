@@ -53,7 +53,9 @@ def assert_no_native_match(page,archive,title):
   if 'موردی یافت نشد' not in body:raise RuntimeError('Native archive found a possible published/draft match; reconcile before creation')
 
 def prepare(page,post):
- short,full=native_split(post['html'])
+ short,_continuation=native_split(post['html'])
+ # Blogfa replaces the intro with the extended field on permalinks, unlike Roya.
+ full=post['html']
  page.wait_for_function('()=>window.CKEDITOR&&CKEDITOR.instances.txtPostContent?.status==="ready"',timeout=60000)
  toggle=page.get_by_text('[ادامه نوشته (متن تکمیلی برای نوشته های طولانی)]',exact=True)
  if toggle.count()!=1:raise RuntimeError('Native continuation toggle not found')

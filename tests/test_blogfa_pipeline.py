@@ -8,6 +8,8 @@ class BlogfaContracts(unittest.TestCase):
  def test_native_excerpt_preserves_full(self):
   body='<p><img src="x" alt="محصول"></p><p>'+('مقدمه واقعی برای مخاطب مزرعه ' * 8)+'</p><h2>راهنما</h2><p>'+('متن کامل درباره بررسی مسیر آب ' * 40)+'</p><details><summary>پرسش</summary><p>پاسخ</p></details>'
   a,b=native_split(body);self.assertEqual(a+b,body);self.assertNotIn('<details',a);self.assertNotIn('<img',b)
+ def test_blogfa_extended_replaces_summary(self):
+  s=(ROOT/'automation/publish_blogfa_posts.py').read_text();self.assertIn("full=post['html']",s)
  def test_independent_titles(self):
   m=json.loads((ROOT/'data/blog-city-title-matrix.json').read_text())
   for table in ('templates','article_templates'):
