@@ -99,9 +99,9 @@ def parse_object(raw):
     return json.loads(text[start:end + 1])
 
 
-def agnes(prompt):
+def agnes(prompt,temperature=None):
     if agnes_client:
-        return agnes_client.call(BASE, prompt)
+        return agnes_client.call(BASE, prompt, temperature=temperature)
     if not BASE.AGNES_KEY:
         raise RuntimeError('AGNES_API_KEY is missing')
     last = None
@@ -109,7 +109,7 @@ def agnes(prompt):
         payload = {'model': BASE.AGNES_MODEL,
                    'messages': [{'role': 'system', 'content': 'شما نویسنده و سئوکار ارشد فارسی در حوزه آبیاری کشاورزی هستید. فقط یک شیء JSON معتبر برگردانید؛ هیچ متن یا Markdown اضافه‌ای ننویسید.'},
                                 {'role': 'user', 'content': prompt}],
-                   'temperature': 0.45, 'max_tokens': 8000}
+                   'temperature': 0.45 if temperature is None else temperature, 'max_tokens': 8000}
         try:
             data = BASE.fetch_json(BASE.AGNES_BASE + '/chat/completions',
                                    {'Authorization': 'Bearer ' + (BASE.key_for_call() or BASE.AGNES_KEY),
@@ -203,6 +203,7 @@ def assign_roya_titles(queue, root=None):
 def build_prompt(item, links):
     fam = item.get('family', 'tape20')
     product = 'نوار تیپ ۲۰ سانتی‌متری (قطره‌چکان ۲۰ سانتی)' if fam != 'hose' else 'لوله نخی و لوله تاشو'
+    technical = ('لوله نخی و تاشو مسیر انتقال آب هستند؛ لوله نخی را نوار تیپ یا لوله دارای قطره‌چکان معرفی نکن. مشخصات قطر، فشار و اتصالات را فقط با برگه فنی همان مدل مطرح کن؛ ضخامت یا فاصله قطره‌چکان نوار تیپ را به لوله انتقال آب نسبت نده.' if fam == 'hose' else 'مشخصات فاصله خروجی، دبی، ضخامت و فشار را برای همان مدل از برگه فنی بخواه؛ بدون مرجع، مقدار عددی تجویز نکن و قابلیت جبران فشار را به همه نوارها نسبت نده.')
     link_lines = '\n'.join(
         f"- href=\"AFP_LINK_{index}\"\n  عنوان پست مقصد در سایت: {x.get('title', '')}\n  لنگر پیشنهادی: {x['anchor']} ({x['role']})"
         for index, x in enumerate(links, 1))
@@ -217,7 +218,7 @@ def build_prompt(item, links):
 2. ساختار: یک پاراگراف مقدمه، سپس حداقل ۳ بخش با تگ h2 (و در صورت نیاز h3)، یک لیست ul یا ol برای نکات فنی، و در پایان بخش «سوالات متداول» با دقیقاً ۳ سوال که هر کدام در ساختار <details><summary>پرسش</summary>پاسخ</details> نوشته شود. بعد از بخش سوالات متداول هیچ بخش h2 یا h3 جدیدی نساز.
 3. هر لینک بالا را با لنگر طبیعی در متن پخش کن؛ لنگر لینک صفحه شهری باید همان «عنوان پست مقصد» یا نزدیک‌ترین عبارت طبیعی به آن باشد (مثلاً «خرید نوار تیپ ۲۰ سانتی در قندمان») تا بک‌لینک معنادار شود. لنگر باید شامل نام شهر باشد، معنادار باشد (نه «اینجا کلیک کنید») و برای هر URL حداکثر یک بار بیاید. در متن به موضوع همان پست مقصد اشاره کن تا لینک زمینه‌دار شود.
 4. هیچ قیمت، عدد ریالی/تومانی، تخفیف، موجودی، نمایندگی، زمان قطعی ارسال یا ادعای محلی درباره خاک، آب، شوری، اقلیم و فصل کشت شهر را ننویس؛ به جای آن بنویس که کارشناس AFP شرایط زمین را بررسی می‌کند و قیمت روز را استعلام بگیرد.
-5. مشخصات فنی را فقط در حد عمومی بنویس: ضخامت ۱۷۵ تا ۲۰۰ میکرون، قطر لوله‌های آبیاری، فاصله قطره‌چکان، فشار کار، مقاومت در برابر UV. از ادعای عددی جدید و نادرست پرهیز کن.
+5. {technical}
 6. متن فقط فارسی باشد؛ تنها واژه‌های لاتین مجاز: AFP، navar، cm، mm، PE، UV، ISO.
 7. فقط HTML ساده: p، h2، h3، ul، ol، li، strong، a، details، summary، table. هیچ script، style، iframe، تصویر یا Markdown (بدون ``` و بدون **) استفاده نکن.
 8. اگر لینک با نقش home در فهرست مجاز هست، آن را فقط یک بار در یک پاراگراف توضیحی مرتبط با انتخاب تجهیزات نوار تیپ بیاور؛ متن لنگر همین لینک را دقیقاً همان «لنگر پیشنهادی» آن بنویس. عبارت مستقل «نوار تیپ» یا «نوار آبیاری» فقط به صفحه نخست اشاره کند؛ لینک شهر و استان همچنان نام شهر/استان و زمینه محصول خود را داشته باشند. دو کلیدواژه اصلی را کنار هم به شکل دو لینک تکراری به صفحه نخست نچین. لینک صفحه نخست را در سوالات متداول یا یک پاراگراف صرفاً تبلیغاتی قرار نده. اگر لینک home در فهرست نیست، آن را اضافه نکن و کلمات نوار تیپ را به متن مربوط به لوله تحمیل نکن.
@@ -226,6 +227,7 @@ def build_prompt(item, links):
 11. اگر عنوان نام محصول کشت ردیفی دارد، متن، چک‌لیست و FAQ به کاربرد آبیاری همان محصول پاسخ دهند. مثال‌ها مشروط باشند؛ رایج بودن کشت آن در شهر یا تناسب قطعی با خاک و اقلیم را ادعا نکن. فاصله، فشار، دبی و نیاز آبی را بدون مرجع معتبر به محصول نسبت نده.
 12. زاویه اختصاصی رویا: برنامه‌ریزی آبیاری، نیازسنجی مزرعه، تناسب تجهیزات و تصمیم‌های پیش از اجرا. مقدمه، مثال، چک‌لیست و FAQ را از صفر و با همین زاویه بنویس؛ متن فارسی‌بلاگ، رز‌بلاگ و سایت اصلی را کپی یا بازنویسی سطحی نکن. نام شهر فقط زمینه مخاطب است، نه شاهد ویژگی‌های اقلیم یا خاک.
 
+نام شهر «{item['city_fa']}»، نام استان «{item['province_fa']}» و واژه‌های عنوان را عیناً با حروف فارسی کپی کن؛ بخشی از کلمه فارسی را با حرف لاتین جایگزین نکن.
 پیش از خروجی، همه hrefها را بررسی کن: هر شناسه بالا دقیقاً یک بار در متن و به همان شکل AFP_LINK_عدد بیاید؛ شناسه نباید متن قابل‌نمایش مقاله باشد. links_used هم همین شناسه‌ها را داشته باشد.
 این عبارت‌ها حتی در جمله منفی یا توصیه به بررسی هم در خروجی نیایند: {"، ".join(BANNED)}. از عبارت‌های خنثی مثل «شرایط زمین» استفاده کن. هیچ کلمه انگلیسی خارج از فهرست مجاز ننویس.
 خروجی را فقط به شکل این شیء JSON برگردان:
@@ -336,6 +338,13 @@ def has_numeric_price(markup):
     text = re.sub(quantity + r'\s*' + units, ' ', text, flags=re.I)
     return bool(re.search(r'(?:قیمت|نرخ)[^.!؟<]{0,25}' + amount, text))
 
+def product_semantics_errors(item,markup):
+    plain = html_lib.unescape(re.sub(r'<[^>]+>', ' ', markup or ''))
+    if item.get('family') == 'hose' and re.search(r'لوله[\s‌]+نخی[\s‌]*[（(][\s‌]*نوار[\s‌]+تیپ', plain):
+        return ['Layflat transfer hose must not be defined as drip tape']
+    return []
+
+
 def qa(item, obj, links):
     errors = []
     # Encoding differences are not invalid destinations. Normalize only approved equivalents.
@@ -431,6 +440,7 @@ def qa(item, obj, links):
         errors.append('slug must be latin lowercase hyphenated (max 60)')
     if not (obj.get('meta_description') or '').strip():
         errors.append('meta_description is required')
+    errors.extend(product_semantics_errors(item, html))
     errors.extend(check_corpus(ROOT, 'roya', item['key'], html))
     return errors, {'words': n, 'links': found, 'title': title, 'slug': slug,
                     'city_anchor': city_anchor, 'key_index': BASE._i, 'agnes_calls': BASE.calls}
@@ -548,11 +558,13 @@ def main():
                 elif attempt == 1:
                     obj = agnes(build_prompt(item, links))
                 else:
-                    obj = agnes(repair_prompt(item, links, obj, errors))
+                    obj = agnes(repair_prompt(item, links, obj, errors),temperature=0.1)
             except Exception as exc:
                 errors = ['agnes error: ' + str(exc)[:200]]
                 print(f'{item["key"]} attempt={attempt} {errors[0]}', flush=True)
                 continue
+            # Titles are owned by the approved matrix, not an AI spelling choice.
+            obj['title'] = item['assigned_title']
             obj = resolve_link_tokens(obj, links)
             obj = inject_image(item, obj, image_url)
             errors, info = qa(item, obj, links)

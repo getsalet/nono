@@ -27,7 +27,7 @@ def parse_object(raw):
  raise ValueError('no valid JSON object found: '+'; '.join(errors[-3:]))
 
 
-def call(base,prompt,attempts=None):
+def call(base,prompt,attempts=None,temperature=None):
  if not getattr(base,'AGNES_KEYS',None) and not base.AGNES_KEY:raise RuntimeError('AGNES_API_KEY is missing')
  if attempts is None:attempts=max(4,int(os.getenv('AGNES_JSON_ATTEMPTS','5')))
  last=None
@@ -44,7 +44,7 @@ def call(base,prompt,attempts=None):
     {'role':'system','content':'شما نویسنده و بازبین ارشد فارسی در حوزه آبیاری کشاورزی هستید. فقط یک شیء JSON کامل و معتبر برگردانید؛ هیچ متن دیگری ننویسید.'},
     {'role':'user','content':prompt+retry_note},
    ],
-   'temperature':0.25 if attempt>1 else 0.45,
+   'temperature':min(0.25,temperature)if attempt>1 and temperature is not None else temperature if temperature is not None else 0.25 if attempt>1 else 0.45,
    'max_tokens':20000,
   }
   try:

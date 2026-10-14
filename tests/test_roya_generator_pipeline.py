@@ -26,7 +26,7 @@ class RoyaGenerationTests(unittest.TestCase):
   import inspect
   s=inspect.getsource(r.main)
   self.assertLess(s.index('resolve_link_tokens(obj, links)'),s.index('errors, info = qa'))
-  self.assertIn('repair_prompt(item, links, obj, errors)',s)
+  self.assertIn('repair_prompt(item, links, obj, errors),temperature=0.1',s)
 if __name__=='__main__':unittest.main()
 
 class CheckpointRegressionTests(unittest.TestCase):
@@ -38,3 +38,16 @@ class CheckpointRegressionTests(unittest.TestCase):
   s=(ROOT/'.github/workflows/roya-backlink-queue.yml').read_text()
   self.assertLess(s.index('actions/upload-artifact@v4'),s.index('- name: Commit queue'))
   self.assertIn('no overwrite',s)
+
+class ProductSemanticTests(unittest.TestCase):
+ def test_hose_prompt_does_not_assign_tape_dimensions(self):
+  item={'family':'hose','city_fa':'چوبر','province_fa':'گیلان','assigned_title':'لوله نخی برای سویا در چوبر؛ طراحی مسیر آب'}
+  prompt=r.build_prompt(item,[])
+  self.assertIn('مسیر انتقال آب',prompt);self.assertNotIn('۱۷۵',prompt)
+ def test_hose_cannot_be_defined_as_tape_but_connections_are_allowed(self):
+  self.assertTrue(r.product_semantics_errors({'family':'hose'},'<p>لوله نخی (نوار تیپ) را بررسی کنید.</p>'))
+  self.assertEqual(r.product_semantics_errors({'family':'hose'},'<p>لوله نخی آب را به شبکه نوار تیپ انتقال می‌دهد.</p>'),[])
+ def test_assigned_title_is_owned_before_validation(self):
+  import inspect
+  s=inspect.getsource(r.main)
+  self.assertLess(s.index("obj['title'] = item['assigned_title']"),s.index('errors, info = qa'))

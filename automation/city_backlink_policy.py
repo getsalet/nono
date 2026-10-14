@@ -168,5 +168,6 @@ def qa(item,obj,links,blog,root=None):
  if re.search(r'```|\*\*',obj.get('html','')):e.append('No Markdown')
  from blog_image_gate import validate_record
  e+=validate_record(item)
+ e+=roya.product_semantics_errors(item,obj.get('html',''))
  e+=check_corpus(root or ROOT,blog,item['key'],obj.get('html',''))
  return e,{'words':n,'links':p.links,'checked_against':'Roya + FarsiBlog + RozBlog corpus','title_matrix':item.get('matrix_title')or obj.get('title')}
