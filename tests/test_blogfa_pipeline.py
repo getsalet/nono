@@ -22,6 +22,10 @@ class BlogfaContracts(unittest.TestCase):
   w=(ROOT/'.github/workflows/blogfa-content.yml').read_text();self.assertIn("vars.BLOGFA_AUTOMATION_ENABLED == '1'",w);self.assertIn('cancel-in-progress: false',w);self.assertIn('always()',w)
  def test_uncertain_submit_blocks(self):
   s=(ROOT/'automation/publish_blogfa_posts.py').read_text();self.assertIn("('submitting','unconfirmed')",s);self.assertEqual(s.count("page.locator('#btnPublish').click()"),1);self.assertIn('assert_no_native_match(page',s)
+ def test_native_settings_tabs_open_before_controls(self):
+  s=(ROOT/'automation/publish_blogfa_posts.py').read_text()
+  self.assertLess(s.index("page.locator('#tab3').click()"),s.index("page.locator('#cmbCommentType').select_option"))
+  self.assertLess(s.index("page.locator('#tab4').click()"),s.index("page.locator('#chkSticky').uncheck"))
  def test_native_login_wrong_destination(self):
   class Loc:
    def evaluate_all(self,js):return ['https://another.blogfa.com/']

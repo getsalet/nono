@@ -56,8 +56,11 @@ def prepare(page,post):
  if toggle.count()!=1:raise RuntimeError('Native continuation toggle not found')
  toggle.click()
  page.wait_for_function('()=>CKEDITOR.instances.txtPostExtended?.status==="ready"',timeout=60000)
- page.locator('#txtPostTitle').fill(post['title']);page.locator('#cmbCommentType').select_option('2')
- page.locator('#chkDraft').uncheck();page.locator('#chkSticky').uncheck();page.locator('#chkAutomateTime').check()
+ page.locator('#txtPostTitle').fill(post['title'])
+ page.locator('#tab3').click();page.locator('#cmbCommentType').select_option('2')
+ page.locator('#chkDraft').uncheck()
+ page.locator('#tab4').click();page.locator('#chkSticky').uncheck();page.locator('#chkAutomateTime').check()
+ page.locator('#tab1').click()
  tags=[re.sub(r'[,+،]',' ',x).strip() for x in post.get('tags',[])[:4]]
  page.locator('#txtTags').fill('+'.join(tags))
  result=page.evaluate("""async data=>{
