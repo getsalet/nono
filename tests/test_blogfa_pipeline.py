@@ -19,7 +19,9 @@ class BlogfaContracts(unittest.TestCase):
  def test_template_native_summary_and_pager(self):
   t=(ROOT/'templates/blogfa/afp-professional.html').read_text()
   for s in ('<-PostContent->','<BlogExtendedPost>','<BlogNextAndPreviousBlock>','google-site-verification','prefers-reduced-motion', 'lang="fa"'):self.assertIn(s,t)
-  for s in ('<BlogComment>','line-clamp','max-height:'):self.assertNotIn(s,t)
+  for s in ('<BlogComment>','line-clamp'):self.assertNotIn(s,t)
+  # Image sizing is allowed; article text itself must never be clipped.
+  self.assertNotRegex(t,r'(?:\.post-content|\.post-card)\s*\{[^}]*max-height:')
  def test_schedule_requires_opt_in(self):
   w=(ROOT/'.github/workflows/blogfa-content.yml').read_text();self.assertIn("vars.BLOGFA_AUTOMATION_ENABLED == '1'",w);self.assertIn('cancel-in-progress: false',w);self.assertIn('always()',w)
  def test_uncertain_submit_blocks(self):
@@ -56,4 +58,17 @@ class BlogfaContracts(unittest.TestCase):
  def test_editor_waits_for_initial_server_session_refresh(self):
   s=(ROOT/'automation/blogfa_native.py').read_text();self.assertIn('httpreq.readyState===4&&httpreq.status===200',s)
   s=(ROOT/'automation/publish_blogfa_posts.py').read_text();self.assertLess(s.index('wait_editor_ready(page)'),s.index("page.locator('#txtPostTitle').fill"))
+class DuplicateDashboardRoutes(unittest.TestCase):
+ def test_unique_sidebar_beats_shortcut_with_different_nonce(self):
+  links=[('❯نوشته جدید','https://www.blogfa.com/Desktop/Post.aspx?action=new&r=sidebar'),('نوشته جدید','https://www.blogfa.com/Desktop/Post.aspx?action=new&r=shortcut'),('❯نوشته‌های پیشین','https://www.blogfa.com/Desktop/Archive.aspx?t=sidebar'),('نوشته های پیشین','https://www.blogfa.com/Desktop/Archive.aspx?t=shortcut'),('❯تنظیمات و دیگر امکانات','https://www.blogfa.com/Desktop/Options.aspx'),('مشاهده وبلاگ','https://afp-pipe.blogfa.com/')]
+  class Loc:
+   def __init__(self,rows):self.rows=rows
+   def evaluate_all(self,js):return [u for _,u in self.rows]
+   def count(self):return len(self.rows)
+   def get_attribute(self,k):return self.rows[0][1]
+  class Page:
+   url='https://www.blogfa.com/Desktop/Home.aspx'
+   def locator(self,s):return Loc(links)
+   def get_by_role(self,role,name):return Loc([(l,u)for l,u in links if name.search(l)])
+  result=active(Page());self.assertTrue(result['new'].endswith('r=sidebar'));self.assertTrue(result['archive'].endswith('t=sidebar'))
 if __name__=='__main__':unittest.main()

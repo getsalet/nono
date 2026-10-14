@@ -13,7 +13,11 @@ def active(page):
   candidates={u for u in urls if urlsplit(u).hostname=='www.blogfa.com' and urlsplit(u).path.lower()==path and (key!='new' or parse_qs(urlsplit(u).query).get('action',[''])[0].lower()=='new')}
   if len(candidates)>1:
    labels={'new':'نوشته جدید','archive':'نوشته‌های پیشین','options':'تنظیمات و دیگر امکانات'}
-   nav=page.get_by_role('link',name=re.compile(r'^(?:❯\s*)?'+re.escape(labels[key])+r'\s*$'))
+   # Dashboard shortcuts can have a different per-render nonce from the sidebar.
+   # Follow the actual unique sidebar link, not the ambiguous combined label set.
+   nav=page.get_by_role('link',name=re.compile(r'^❯\s*'+re.escape(labels[key])+r'\s*$'))
+   if nav.count()!=1:
+    nav=page.get_by_role('link',name=re.compile(r'^'+re.escape(labels[key])+r'\s*$'))
    if nav.count()==1:
     chosen=urljoin(page.url,nav.get_attribute('href') or '')
     if chosen in candidates:candidates={chosen}
