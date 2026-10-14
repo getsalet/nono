@@ -143,7 +143,7 @@ def prepare_native_form(page,post):
  page.locator('#auto_send_post').uncheck()
  page.locator('#mtitle').fill(post['title']);page.locator('#input_url_seo').fill(post['slug'])
  page.locator('input[name=pimg]').fill('')
- page.locator('select[name=status]').select_option('1');page.locator('select[name=member]').select_option('0');page.locator('select[name=pcm]').select_option('7')
+ page.locator('select[name=status]').select_option('1');page.locator('select[name=member]').select_option('0');page.locator('select[name=pcm]').select_option('2')
  result=page.evaluate('''post=>{
   const editor=tinymce.get("mtex"),more=tinymce.get("mtex2");
   editor.setContent(post.html);more.setContent("");editor.save();more.save();

@@ -148,6 +148,7 @@ def publish(todo):
                     page.evaluate("""post=>{
                       const tags=(post.tags||[]).join(',');for(const id of ['keyword','kw']){const e=document.getElementById(id);if(e)e.value=tags;}
                       const pub=document.querySelector('input[name=ppublic][value="1"]');if(!pub)throw Error('Publish option missing');pub.checked=true;
+                      const comments=document.querySelector('input[name=pcomment]');if(!comments)throw Error('Comment control missing');comments.checked=false;
                       if(window.tinymce&&tinymce.get('pshort')){tinymce.get('pshort').setContent(post.html);tinymce.triggerSave();}
                       else document.querySelector('#pshort').value=post.html;
                     }""",post)
