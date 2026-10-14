@@ -1,17 +1,28 @@
-# AFP city-image backlink pipelines
+# AFP رزبلاگ
 
-FarsiBlog: afp.farsiblog.com. RozBlog: afp-pipe.rozblog.com (not spadan1 or drip-irrigation).
+وبلاگ: https://afp-pipe.rozblog.com/
 
-Only target metadata is shared; each blog has a separate angle, AI call, artifact, queue and checkpoint. Matrix titles are authored separately for each blog and are not claimed to be the exact prior matrix. data/blog-city-title-matrix.json now contains newly authored independent city and article title matrices, approved under the user request to construct these matrices. This gate prevents new AI calls and publication, preserving all legacy records.
+صف، مقاله، زاویه نگارش و سابقه انتشار مستقل از فارسی‌بلاگ است؛ فقط موتور کنترل کیفیت مشترک است. عنوان‌های مصوب ماتریس، ۵۰۰–۱۰۰۰ کلمه فارسی، سه FAQ و ارجاعات مرتبط کنترل می‌شوند. سابقه ناقص، محصول اشتباه، ادعای نامستند یا متن ردشده منتشر نمی‌شود.
 
-After approval, each queue is built from verified city/product targets in data/roya/backlink-queue.json; province hubs are not emitted as city articles. Exactly one actual image from the city destination is reused, with measured dimensions and descriptive alt. No invented local scene or missing-image fallback.
+## اجرای خودکار
 
-500–1000 Persian words, assigned matrix title, three FAQs and contextual city/province plus one homepage link (tape) or product shop reference (hose). No forced tape keyword in hose articles, numerical prices, local claims, keyword stuffing or replicated paragraphs. Originality checks cover Roya, FarsiBlog and RozBlog; incomplete history fails closed.
+Workflow: **RozBlog original content pipeline**. با `ROZBLOG_AUTOMATION_ENABLED=1` صف در دقیقه‌های `5,20,35,50` هر ساعت بررسی می‌شود. Secrets لازم: `AGNES_API_KEY`, `ROZBLOG_USERNAME`, `ROZBLOG_PASSWORD`. هیچ رمز یا پشتیبان خصوصی پنل وارد مخزن عمومی نشود.
 
-Maximum three verified posts per rolling 60 minutes per blog, shared by manual and scheduled runs. Native protected forms only, active-blog verification, title scan, per-post checkpoints and public article/image/link verification. No blind retry after uncertain submit.
+ورود خودکار و انتشار قبلاً اجرا شده است؛ آخرین مطلب بررسی‌شده عمومی: [مراحل نصب نوار تیپ؛ نکات نصب و بازبینی](https://afp-pipe.rozblog.com/marahel-nasb-navar-tip-mmhux). پایان موضوعات یا پرشدن سقف انتشار موجب توقف عادی است، نه تولید محتوای بی‌هدف.
 
-RozBlog schedule: hourly at minute 35 only when repository variable ROZBLOG_AUTOMATION_ENABLED=1. Required repository secrets: AGNES_API_KEY and ROZBLOG_USERNAME, ROZBLOG_PASSWORD. Interactive email OTP cannot authenticate unattended GitHub runners. Nothing secret or private template backup belongs in this public repository.
+## کنترل کیفیت و بازیابی صف
 
-Status: newly authored matrices configured; RozBlog unattended credentials and live-publication test are still required. Public access from the current computer returned HTTP403/timeouts, so public verification must be tested from the real runner before enabling schedules.
+- عنوان دقیق از ماتریس مصوب تنظیم می‌شود؛ بازنویسی خطاهای QA همراه با پیش‌نویس قبلی انجام می‌شود.
+- تصاویر با مرجع فیزیکی محصول مقایسه می‌شوند، نه صرفاً نوشته عمومی روی بسته. برای لوله، مرجع بسته‌بندی و کلاف بدون بسته هر دو معتبرند؛ محصول نامرتبط، تصویر ساختگی یا تأییدنشده همچنان رد می‌شود.
+- ابتدا تصویر واقعی صفحه مقصد بررسی می‌شود؛ در صورت نامناسب‌بودن، فقط عکس مرجع واقعی همان خانواده پس از تأیید بینایی قابل استفاده است. عکس بررسی‌نشده جایگزین نمی‌شود.
+- فقط خطاهای قدیمی مشخص‌شده با تصویر بررسی‌نشده و بدون پیش‌نویس، یک بار اجازه بازیابی دارند؛ رکوردهای منتشرشده دست‌نخورده می‌مانند.
+- ردشدن همه تلاش‌های یک نوبت تولید، خطا گزارش می‌شود؛ توقف عادی به‌علت سقف انتشار خطا نیست.
+- بررسی اولیه سهمیه پیش از نصب وابستگی‌ها و درخواست AI انجام می‌شود. سقف مشترک اجرای دستی و خودکار: ۳ انتشار تأییدشده در هر ۶۰ دقیقه متحرک، مستقل برای فارسی‌بلاگ و رزبلاگ.
 
-Product-family image gate: every candidate image is inspected against the corresponding approved AFP reference with a mandatory vision response and score >=70. A wrong, mixed, unknown, invisible or unreviewed product is rejected. Cache binds policy + expected family + SHA-256 of actual pixels. Image bytes are fetched/reviewed again before publication; a changed URL/hash cannot reuse old approval. This adapts reference-family routing from kikibox/maghala2 and strict visual checks from getsalet/nono; it does not enable their permissive fast-mode bypasses.
+## شواهد عملی
+
+اجرای زمان‌بندی‌شده فارسی‌بلاگ [38566744748](https://github.com/getsalet/nono/actions/runs/38566744748) سه مطلب جدید منتشر و در سایت زنده تأیید کرد. این اجرا پیش از اصلاحات اخیر بود و اثبات انتشار مسیر اصلاح‌شده لوله نیست.
+
+آزمون تصویر بدون تولید متن یا انتشار [38568572464](https://github.com/getsalet/nono/actions/runs/38568572464) تصویر لوله صف فارسی‌بلاگ را با امتیاز ۸۰ تأیید کرد. آزمون خط لوله [38567344413](https://github.com/getsalet/nono/actions/runs/38567344413) به‌درستی در سقف انتشار متوقف شد؛ بنابراین تولید و انتشار کامل مطلب لوله بعد از اصلاحات هنوز با اجرای بعدی باید تأیید شود.
+
+خطای محافظت پنل/HTTP403 نباید دور زده شود؛ پس از ارسال نامطمئن، انتشار کورکورانه تکرار نمی‌شود.
