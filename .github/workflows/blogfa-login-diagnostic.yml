@@ -1,0 +1,19 @@
+name: Blogfa native login diagnostic
+on: workflow_dispatch
+permissions: {contents: read}
+concurrency: {group: blogfa-content-pipeline, cancel-in-progress: false}
+jobs:
+  login:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BLOGFA_USERNAME: ${{ secrets.BLOGFA_USERNAME }}
+      BLOGFA_PASSWORD: ${{ secrets.BLOGFA_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - run: python automation/blogfa_native.py
