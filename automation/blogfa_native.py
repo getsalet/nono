@@ -63,7 +63,6 @@ def main():
    routes=login(page,trace=trace)
    target=os.getenv('BLOGFA_TARGET','').strip();draft=None
    if target:
-    import json
     from pathlib import Path
     if not all(c.isalnum() or c in '-_' for c in target):raise RuntimeError('Invalid diagnostic key')
     draft=json.loads((Path('artifacts/blogfa-backlink-queue/items')/(target+'.json')).read_text())

@@ -51,3 +51,8 @@ class SessionTraceTests(unittest.TestCase):
             continue_=lambda: calls.append("forward"))
         trace._route(route)
         self.assertEqual(calls, ["forward"])
+    def test_final_audit_also_works_when_login_fails_early(self):
+        import ast
+        source=(Path(__file__).resolve().parents[1]/"automation/blogfa_native.py").read_text()
+        main=next(n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef) and n.name=="main")
+        self.assertFalse(any(isinstance(n,ast.Import) and any(x.name=="json" for x in n.names) for n in ast.walk(main)))
