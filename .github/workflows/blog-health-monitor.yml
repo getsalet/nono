@@ -1,0 +1,37 @@
+name: AFP three-blog 3-hour health monitor
+on:
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: 'Read-only monitoring duration, 1-180 minutes'
+        required: true
+        default: '180'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: afp-three-blog-health-monitor
+  cancel-in-progress: false
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 190
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Monitor generators and public blogs for the requested window
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MONITOR_MINUTES: ${{ inputs.minutes }}
+          MONITOR_INTERVAL_SECONDS: '300'
+        run: python automation/monitor_blog_health.py
+      - name: Preserve read-only monitoring report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: afp-three-blog-health-${{ github.run_id }}
+          path: artifacts/blog-health-monitor
+          retention-days: 14
+          if-no-files-found: warn
