@@ -19,8 +19,7 @@ jobs:
         with: {python-version: '3.12'}
       - name: Install public-browser fallback for HTTP blocks
         run: |
-          python -m pip install --quiet playwright
-          python -m playwright install --with-deps chromium
+          bash automation/install_blog_browser.sh
       - name: Observe all four queues, native public posts and guarded recovery
         env:
           GH_TOKEN: ${{ github.token }}

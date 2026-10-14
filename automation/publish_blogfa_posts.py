@@ -102,11 +102,13 @@ def verify(page,item,record):
  if imgs!=[item['image_url']]:raise RuntimeError('Approved image missing or duplicated')
  from content_originality import text
  if len(text(body.inner_html()).split())<450:raise RuntimeError('Native continuation missing')
+ if text(body.inner_html())!=text(item['post']['html']):raise RuntimeError('Native full article lost or changed approved text')
  page.goto(BLOG,wait_until='domcontentloaded',timeout=60000)
  card=page.locator('article.post-card').filter(has=page.get_by_text(item['post']['title'],exact=True))
  if card.count():
   excerpt=card.locator('.post-content');full=native_split(item['post']['html'])[1]
-  if excerpt.locator('details,h2,ul,ol').count() or len(text(excerpt.inner_html()).split())>=250:raise RuntimeError('Homepage contains full article, not native summary')
+  if excerpt.locator('details,ul,ol').count() or excerpt.locator('h2').count()>1 or len(text(excerpt.inner_html()).split())>=250:raise RuntimeError('Homepage contains full article, not native summary')
+  if text(excerpt.inner_html())!=text(native_split(item['post']['html'])[0]):raise RuntimeError('Native introduction differs from approved excerpt')
   if card.locator('a.readmore').count()!=1:raise RuntimeError('Native read-more missing')
  return url
 
