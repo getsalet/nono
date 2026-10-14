@@ -28,8 +28,8 @@ jobs:
       - run: python -m unittest discover -s tests -p 'test_*pipeline.py' -v
   pipeline:
     needs: tests
-    # Scheduled publishing is paused during hosted-login diagnosis; manual read-only checks remain available.
-    if: github.event_name == 'workflow_dispatch'
+    # Hosted native publication verified end-to-end; repository opt-in still gates scheduled runs.
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && vars.ROZBLOG_AUTOMATION_ENABLED == '1')
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
