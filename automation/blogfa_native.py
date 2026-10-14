@@ -1,5 +1,5 @@
 """Native Blogfa login; discovers nonce-bearing links, never persists cookies."""
-import os,sys
+import os,sys,re,json
 from urllib.parse import urlsplit,parse_qs
 BLOG='https://afp-pipe.blogfa.com/'
 PANEL='https://www.blogfa.com'
@@ -53,9 +53,20 @@ def main():
    if draft:
     from publish_blogfa_posts import prepare
     prepare(page,draft['post'])
-   meta=page.locator('#btnPublish').evaluate('e=>({tag:e.tagName,type:e.type,name:e.name,onclick:e.getAttribute("onclick"),onsubmit:e.form.getAttribute("onsubmit"),formPath:new URL(e.form.action).pathname,fields:Array.from(new FormData(e.form)).map(([k,v])=>[k,String(v).length])})')
+   meta=page.locator('#btnPublish').evaluate('e=>({tag:e.tagName,type:e.type,name:e.name,onclick:e.getAttribute("onclick"),onsubmit:e.form.getAttribute("onsubmit"),readyState:document.readyState,formPath:new URL(e.form.action).pathname,formQueryKeys:Array.from(new URL(e.form.action).searchParams.keys()),pageQueryKeys:Array.from(new URL(location.href).searchParams.keys()),formQueryEqualsPage:new URL(e.form.action).search===location.search,fields:Array.from(new FormData(e.form)).map(([k,v])=>[k,String(v).length])})')
    print('Native editor nonsecret contract: '+str(meta),flush=True)
    print('Native script paths: '+str(page.locator('script[src]').evaluate_all('a=>a.map(x=>new URL(x.src).origin+new URL(x.src).pathname)')),flush=True)
+   # Structure only: strip inline literal values, including CSRF/random/auth tokens.
+   source='\n'.join(page.locator('script:not([src])').all_text_contents())
+   allowed={x[0] for x in meta['fields']}|{'submit','load','click','change','DOMContentLoaded','Form1','true','false'}
+   def hide(m):
+    token=m[0]
+    return token if token[1:-1] in allowed else '"<literal length='+str(len(token)-2)+'>"'
+   sanitized=re.sub(r"\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`",hide,source)
+   sanitized=re.sub(r'/\*.*?\*/|//[^\n]*','',sanitized,flags=re.S)
+   sanitized=re.sub(r'\b(?:\d{8,}|[0-9a-fA-F]{24,})\b','0',sanitized)
+   print('Native inline structure (all non-control literals removed): '+json.dumps(sanitized[:16000]),flush=True)
+
    print('Blogfa hosted login and native CKEditor contract verified; no post submitted.',flush=True)
   finally:browser.close()
  return 0
