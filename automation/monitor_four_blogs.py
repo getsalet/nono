@@ -149,7 +149,8 @@ def snapshot(last_recovery,article_cache,allow_recovery):
     row['public']=public_snapshot(cfg['url']);latest=row['public'].get('latest')
     if latest:
      u=latest['url']
-     if u not in article_cache:article_cache[u]=latest_article(u,urlsplit(cfg['url']).hostname)
+     # Re-read even an unchanged URL: native edits must not remain hidden behind an old cache.
+     article_cache[u]=latest_article(u,urlsplit(cfg['url']).hostname)
      row['latest_article']=article_cache[u]
    except urllib.error.HTTPError as exc:row['public']={'http_status':exc.code,'unverified':'remote HTTP response; not proof of outage'}
    except Exception as exc:row['public']={'unverified':type(exc).__name__}

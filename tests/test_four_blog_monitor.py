@@ -25,6 +25,8 @@ class MonitorGuards(unittest.TestCase):
   with self.assertRaises(ValueError):m.instant('2026-10-14T16:00:00')
  def test_native_div_cards_and_custom_post_urls(self):
   p=m.Titles();p.feed('<div class="post-card"><div><img src="x"></div><h2><a href="/p/21/test.html">عنوان</a></h2></div>');self.assertEqual(p.posts[0]['url'],'/p/21/test.html')
+ def test_rechecks_edited_latest_article(self):
+  source=(Path(__file__).resolve().parents[1]/'automation/monitor_four_blogs.py').read_text();self.assertNotIn('if u not in article_cache:',source)
  def test_parser_ignores_faq_heading(self):
   p=m.Titles();p.feed('<article class="post-card"><h2><a href="https://afp-pipe.blogfa.com/post/1">عنوان</a></h2><h2><a href="/post/2">نباید عنوان دوم بشود</a></h2></article>')
   self.assertEqual(len(p.posts),1)
