@@ -4,7 +4,7 @@ from pathlib import Path
 from collections import Counter
 from html.parser import HTMLParser
 from html import unescape
-from urllib.parse import urlsplit,urlunsplit,unquote
+from urllib.parse import urlsplit,urlunsplit,unquote,urljoin,quote
 from content_originality import PublishedBody,text
 REPO=os.getenv('GITHUB_REPOSITORY','getsalet/nono');API='https://api.github.com/repos/'+REPO
 BLOGS={
@@ -44,11 +44,13 @@ def recent_budget(blog,rows,now):
   'remaining_hourly_budget':None if blog=='roya'else max(0,3-len(recent)),
   'next_eligible_at':iso(min(recent)+dt.timedelta(hours=1))if blog!='roya'and len(recent)>=3 else None}
 class Titles(HTMLParser):
- def __init__(self):super().__init__();self.card=0;self.card_title=False;self.heading=False;self.anchor=None;self.parts=[];self.posts=[]
+ VOID={'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}
+ def __init__(self):super().__init__();self.depth=0;self.card_depth=None;self.card_title=False;self.heading=False;self.anchor=None;self.parts=[];self.posts=[]
  def handle_starttag(self,t,a):
   a=dict(a)
-  if t=='article'and 'post-card'in a.get('class','').split():self.card+=1;self.card_title=False
-  if t in ('h1','h2')and ('post-title'in a.get('class','').split()or self.card and not self.card_title):self.heading=True
+  if t not in self.VOID:self.depth+=1
+  if 'post-card'in a.get('class','').split():self.card_depth=self.depth;self.card_title=False
+  if t in ('h1','h2')and ('post-title'in a.get('class','').split()or self.card_depth is not None and not self.card_title):self.heading=True
   if t=='a'and self.heading:self.anchor=a.get('href');self.parts=[]
  def handle_data(self,s):
   if self.anchor:self.parts.append(s)
@@ -58,11 +60,37 @@ class Titles(HTMLParser):
    if title:self.posts.append({'url':self.anchor,'title':title});self.card_title=True
    self.anchor=None
   if t in ('h1','h2'):self.heading=False
-  if t=='article'and self.card:self.card-=1
+  if t not in self.VOID:
+   if self.depth==self.card_depth:self.card_depth=None
+   self.depth=max(0,self.depth-1)
+PUBLIC_BROWSER=None
+PUBLIC_CONTEXT=None
+PUBLIC_PW=None
+PUBLIC_ATTACHED=False
+def public_read(url):
+ try:return request(url)
+ except urllib.error.HTTPError as exc:
+  if exc.code not in (403,429):raise
+ # Website HTTP blocking alone is not a downtime finding. Use a real public browser.
+ global PUBLIC_BROWSER,PUBLIC_CONTEXT,PUBLIC_PW,PUBLIC_ATTACHED
+ if PUBLIC_BROWSER is None:
+  from playwright.sync_api import sync_playwright
+  PUBLIC_PW=sync_playwright().start();PUBLIC_ATTACHED=bool(os.getenv('AGENT_BROWSER_CDP'))
+  if PUBLIC_ATTACHED:
+   PUBLIC_BROWSER=PUBLIC_PW.chromium.connect_over_cdp(os.environ['AGENT_BROWSER_CDP']);PUBLIC_CONTEXT=PUBLIC_BROWSER.contexts[0]
+  elif os.getenv('GITHUB_ACTIONS')=='true':
+   PUBLIC_BROWSER=PUBLIC_PW.chromium.launch(args=['--no-sandbox']);PUBLIC_CONTEXT=PUBLIC_BROWSER.new_context(locale='fa-IR')
+  else:raise RuntimeError('Public browser fallback requires attached browser or Actions runner')
+ page=PUBLIC_CONTEXT.new_page()
+ try:
+  response=page.goto(url,wait_until='domcontentloaded',timeout=60000)
+  page.wait_for_selector('.posts,.post-card,.post-title,.post-content',state='attached',timeout=20000)
+  return response.status,page.content()
+ finally:page.close()
 
 def public_snapshot(url):
- status,body=request(url);p=Titles();p.feed(body);host=urlsplit(url).hostname
- posts=[x for x in p.posts if urlsplit(x['url']).hostname in (host,None) and '/post/'in x['url']]
+ status,body=public_read(url);p=Titles();p.feed(body);host=urlsplit(url).hostname
+ posts=[{'url':urljoin(url,x['url']),'title':x['title']}for x in p.posts if urlsplit(urljoin(url,x['url'])).hostname==host and urlsplit(urljoin(url,x['url'])).path not in ('','/')]
  head=re.search(r'<head\b[^>]*>(.*?)</head>',body,re.I|re.S)
  tags=re.findall(r'<meta\b[^>]*name=["\']google-site-verification["\'][^>]*>',head[1]if head else '',re.I)
  return {'http_status':status,'server_post_titles':len(posts),'duplicate_post_urls':len(posts)-len({x['url']for x in posts}),
@@ -70,8 +98,8 @@ def public_snapshot(url):
   'latest':posts[0]if posts else None,'parser_unverified':not bool(posts)}
 def latest_article(url,host):
  parts=urlsplit(url)
- if parts.hostname!=host or not parts.path.startswith('/post/'):raise ValueError('Wrong latest article destination')
- secure=urlunsplit(('https',parts.netloc,parts.path,parts.query,''));status,body=request(secure)
+ if parts.hostname!=host or parts.path in ('','/'):raise ValueError('Wrong latest article destination')
+ secure=urlunsplit(('https',parts.netloc,quote(parts.path,safe='/%'),parts.query,''));status,body=public_read(secure)
  parser=PublishedBody();parser.feed(body);fragment=''.join(parser.parts)
  return {'url':secure,'http_status':status,'body_extracted':parser.done,'body_words':len(text(fragment).split()),
   'images':len(re.findall(r'<img\b',fragment,re.I)),'faqs':len(re.findall(r'<details\b',fragment,re.I))}
@@ -159,4 +187,6 @@ def main():
  summary=os.getenv('GITHUB_STEP_SUMMARY')
  if summary:Path(summary).write_text((root/'summary.md').read_text())
  print('Monitoring completed UTC '+iso(stamp()),flush=True)
+ if PUBLIC_BROWSER and not PUBLIC_ATTACHED:PUBLIC_BROWSER.close()
+ if PUBLIC_PW:PUBLIC_PW.stop()
 if __name__=='__main__':main()
