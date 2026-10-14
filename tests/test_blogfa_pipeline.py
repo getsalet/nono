@@ -24,6 +24,14 @@ class BlogfaContracts(unittest.TestCase):
   self.assertNotRegex(t,r'(?:\.post-content|\.post-card)\s*\{[^}]*max-height:')
  def test_schedule_requires_opt_in(self):
   w=(ROOT/'.github/workflows/blogfa-content.yml').read_text();self.assertIn("vars.BLOGFA_AUTOMATION_ENABLED == '1'",w);self.assertIn('cancel-in-progress: false',w);self.assertIn('always()',w)
+ def test_readonly_diagnosis_uses_bounded_inputs_not_cross_blog_images(self):
+  w=(ROOT/'.github/workflows/blogfa-content.yml').read_text()
+  d=w.split('- name: Checkout read-only Blogfa diagnostic inputs',1)[1].split('- uses: actions/checkout@v4',1)[0]
+  self.assertIn("env.BLOGFA_LOGIN_DIAGNOSTIC == '1'",d)
+  self.assertIn('fetch-depth: 1',d);self.assertIn('sparse-checkout-cone-mode: false',d)
+  for path in ('/automation/','/data/','/state/blogfa-backlink-progress.json','/artifacts/blogfa-backlink-queue/'):self.assertIn(path,d)
+  self.assertNotIn('/artifacts/\n',d)
+  self.assertIn("if: env.BLOGFA_LOGIN_DIAGNOSTIC != '1'\n        with: {fetch-depth: 0, ref: main}",w)
  def test_uncertain_submit_blocks(self):
   s=(ROOT/'automation/publish_blogfa_posts.py').read_text();self.assertIn("('submitting','unconfirmed')",s);self.assertEqual(s.count("page.locator('#btnPublish').click()"),1);self.assertIn('assert_no_native_match(page',s)
  def test_serialization_js_preserves_regex_boundary(self):

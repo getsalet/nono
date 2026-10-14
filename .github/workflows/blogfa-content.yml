@@ -47,7 +47,22 @@ jobs:
       BLOGFA_TARGET: ${{ github.event.inputs.target || '' }}
       BLOGFA_LOGIN_DIAGNOSTIC: ${{ github.event.inputs.diagnose_login || '0' }}
     steps:
+      # Read-only native diagnosis does not use the 1GB cross-blog image archive.
+      # Keep production checkout/history unchanged for checkpoint rebases.
+      - name: Checkout read-only Blogfa diagnostic inputs
+        if: env.BLOGFA_LOGIN_DIAGNOSTIC == '1'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /automation/
+            /data/
+            /state/blogfa-backlink-progress.json
+            /artifacts/blogfa-backlink-queue/
       - uses: actions/checkout@v4
+        if: env.BLOGFA_LOGIN_DIAGNOSTIC != '1'
         with: {fetch-depth: 0, ref: main}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
