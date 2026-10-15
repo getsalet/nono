@@ -27,6 +27,12 @@ class ImageRolloutTests(unittest.TestCase):
   self.assertNotEqual(topic_hash(self.item),topic_hash(changed))
   feedback={**self.item,'_image_qa_feedback':'retry: shadow'}
   self.assertEqual(topic_hash(self.item),topic_hash(feedback))
+ def test_generic_body_terms_do_not_force_every_article_into_hardware_scene(self):
+  from blog_reference_scene import role
+  item=copy.deepcopy(self.item);item['_image_article_context']['summary']+=' فیلتر و فشار و نگهداری'
+  self.assertEqual(role(item),1)
+  item['_image_article_context']['title']='رفع گرفتگی نوار تیپ گوجه فرنگی'
+  self.assertEqual(role(item),3)
  def test_actual_article_body_is_required(self):
   from blog_reference_scene import prompt
   with self.assertRaisesRegex(RuntimeError,'Actual post title and body'):

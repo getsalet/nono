@@ -16,8 +16,9 @@ def article(item):
  identity=str(item.get('key',''))
  return {'source_id':hashlib.sha256(identity.encode()).hexdigest()[:16]+('-layflat'if expected=='hose'else'-tape20'),'slug':identity,'title':context['title'],'focus':item.get('angle')or item.get('topic')or item.get('site_title',''),'meta_description':context.get('meta_description',''),'summary':context['summary'],'_image_qa_feedback':item.get('_image_qa_feedback','')}
 def role(item):
- a=article(item);text=reference.visual_brief(a)
- if any(k in text for k in ('فیلتر','فشار','گرفتگی','نگهداری','اتصالات','تخلیه')):return 3
+ a=article(item);text=' '.join((a['title'],a['focus'])).replace('‌',' ')
+ # Body boilerplate often mentions pressure/filters: it must not turn every topic into the same hardware scene.
+ if any(k in text for k in ('فیلتر','افت فشار','گرفتگی','نگهداری','اتصالات','اتصال','تخلیه')):return 3
  if any(crop in text for crop in reference.CROPS):return 1
  return 2
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Controlled acceptance: two product families, zero post submissions."""
-import copy,json,time,sys,re
+import copy,json,time,sys,re,shutil,hashlib
 from pathlib import Path
-from blog_generated_image import prepare,POLICY,capability_slots
+from blog_generated_image import prepare,POLICY,capability_slots,identity
 import roya_backlink_queue as roya
 ROOT=Path(__file__).resolve().parent.parent
 
@@ -26,6 +26,16 @@ def main():
    row['error_type']=type(exc).__name__;row['stage']=item.get('_generation_stage')if item else None
    if isinstance(getattr(exc,'code',None),int):row['http_status']=exc.code
    if str(exc).startswith(('Image provider HTTP ','Asset-only repository operation failed','Image checkpoint push failed','Product image rejected:','Immutable asset commit not available')):row['reason']=str(exc)[:300]
+  if item is not None:
+   row['article_context']=item.get('_image_article_context',{})
+   row['rejections']=item.get('_image_rejections',[])
+   asset_id=identity(item,'loxblog');cache=ROOT/'artifacts/loxblog-backlink-queue/generated-images'
+   candidates=list(cache.glob(asset_id+'.webp'))+list((cache/'rejected').glob(asset_id+'-*.webp'))
+   destination=ROOT/'artifacts/blog-image-acceptance'/POLICY;destination.mkdir(parents=True,exist_ok=True)
+   row['candidate_paths']=[]
+   for candidate in candidates:
+    raw=candidate.read_bytes();name=family+'-'+hashlib.sha256(raw).hexdigest()[:20]+'.webp'
+    target=destination/name;target.write_bytes(raw);row['candidate_paths'].append(str(target.relative_to(ROOT)))
   row['provider_attempts']=item.get('_image_provider_attempts',[])if item else []
   report['families'].append(row)
   report['passed']=len(report['families'])==2 and all(x['passed']for x in report['families'])

@@ -40,6 +40,7 @@ ROLE_STORIES={
  3:['make filtration, pressure and connection hardware the visual story','make water-distribution control and clean system layout the visual story','make the unattended irrigation headworks the visual story'],
 }
 CROPS={
+ 'بامیه':'okra','پیاز':'onion','گوجه فرنگی':'tomato','گوجه‌فرنگی':'tomato','هندوانه':'watermelon','سیب زمینی':'potato','سیب‌زمینی':'potato',
  'اسفناج':'spinach','عدس':'lentil','کنجد':'sesame','طالبی':'cantaloupe','اسپرس':'sainfoin',
  'کلزا':'canola (rapeseed)',
  'خیار':'cucumber','سیر':'garlic','باقلا':'fava bean','ذرت':'maize','یونجه':'alfalfa',
@@ -51,6 +52,13 @@ CROPS={
  'چاودار':'rye',
 }
 CROP_VISUALS={
+ 'بامیه':'okra as upright branching plants with palmately lobed leaves, pale hibiscus-like flowers and upright ridged green pods; never maize, cucumbers or beans',
+ 'پیاز':'onion rows with upright tubular hollow blue-green leaves and restrained bulb necks; no broad maize leaves',
+ 'گوجه فرنگی':'tomato plants with compound serrated leaves and small attached clusters of tomatoes; no corn blades or cucumber vines',
+ 'گوجه‌فرنگی':'tomato plants with compound serrated leaves and small attached clusters of tomatoes; no corn blades or cucumber vines',
+ 'هندوانه':'watermelon vines with deeply lobed leaves and restrained attached striped watermelon fruit',
+ 'سیب زمینی':'potato rows with compound oval leaflets and low bushy green canopies, no exposed decorative tubers',
+ 'سیب‌زمینی':'potato rows with compound oval leaflets and low bushy green canopies, no exposed decorative tubers',
  'اسفناج':'spinach with dense low rosettes of smooth dark-green oval to arrow-shaped leaves; no flowers, pods, tall stalks or broad bean-like foliage',
  'عدس':'lentil plants as low fine-textured bushy legumes with many thin branching stems, small paired pinnate oval leaflets and small flat pods; absolutely no corn blades, sunflower heads, brassica flowers or large bean leaves',
  'کنجد':'upright sesame stems with narrow lance-shaped leaves and elongated seed capsules',
@@ -102,17 +110,21 @@ def topic_visual_anchor(item):
   if any(key in text for key in keys):return anchor
  return 'derive one unmistakable visual anchor from the article title and summary; a generic empty field is not sufficient'
 
+def matched_crop(item):
+ # The post title owns crop identity; a crop mentioned later as comparison must not override it.
+ for field in ('title','focus','meta_description','excerpt','summary'):
+  text=str((item or {}).get(field)or'').replace('‌',' ').replace('ي','ی').replace('ك','ک')
+  matches=[(text.index(fa.replace('‌',' ')),-len(fa),fa)for fa in CROPS if fa.replace('‌',' ')in text]
+  if matches:return sorted(matches)[0][2]
+ return None
+
 def named_crop(item):
- text=visual_brief(item)
- for fa,en in CROPS.items():
-  if fa in text:return f'{fa} ({en})'
- return 'the exact named crop from the article title'
+ crop=matched_crop(item)
+ return f'{crop} ({CROPS[crop]})'if crop else 'the exact named crop from the article title'
 
 def crop_identity_spec(item):
- text=visual_brief(item)
- for fa,en in CROPS.items():
-  if fa in text:
-   return CROP_VISUALS.get(fa,f'{fa} ({en}) with botanically accurate leaves, stems, growth habit and harvest stage')
+ crop=matched_crop(item)
+ if crop:return CROP_VISUALS.get(crop,f'{crop} ({CROPS[crop]}) with botanically accurate leaves, stems, growth habit and harvest stage')
  return 'the exact named crop from the article title with botanically accurate, unmistakable morphology'
 
 def role_directive(item,kind):
