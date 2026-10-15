@@ -17,6 +17,7 @@ def rollout_enabled(blog,root=None):
  if not path.exists():return False
  try:control=json.loads(path.read_text())
  except (OSError,ValueError):raise RuntimeError('Image rollout control unreadable; refusing unchecked images')from None
+ if control.get('pause_image_production')is True:raise RuntimeError('Image production explicitly paused: user rejected the current method; no fallback or submission')
  if control.get('enabled')is not True:return False
  if control.get('policy')!=POLICY or control.get('direct_visual_approval')is not True:raise RuntimeError('Current direct visual acceptance required for generated images')
  report=json.loads((root/'data/blog-generated-image-acceptance.json').read_text())
