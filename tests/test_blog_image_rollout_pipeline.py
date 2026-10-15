@@ -82,6 +82,14 @@ class ImageRolloutTests(unittest.TestCase):
    with tempfile.TemporaryDirectory()as d,patch.object(gate,'fetch',return_value=(self.raw,(1200,675),'WEBP')),patch.object(roya.BASE,'next_agnes_key',return_value='test-key'),patch.object(roya.BASE,'fetch_json',return_value=reply):
     with self.assertRaisesRegex(RuntimeError,'Integrated/topic'):
      gate.review(copy.deepcopy(self.item),'generated://roya/'+'a'*32,Path(d),_candidate=self.raw)
+ def test_identical_image_bytes_cannot_belong_to_two_posts(self):
+  import hashlib
+  with tempfile.TemporaryDirectory()as d:
+   root=Path(d);folder=root/'artifacts/blog-image-reviews';folder.mkdir(parents=True)
+   digest=hashlib.sha256(self.raw).hexdigest()
+   (folder/('tape20-'+digest+'.json')).write_text(json.dumps({'article_owner':'roya|different-post'}))
+   with self.assertRaisesRegex(RuntimeError,'identical image bytes'):
+    gate.review(copy.deepcopy(self.item),'generated://roya/'+'a'*32,root,_candidate=self.raw)
  def test_four_blog_engine_and_roya_use_enabled_generated_route(self):
   for blog in ('farsiblog','rozblog','blogfa','loxblog'):
    item={**self.item,'_image_blog':blog}

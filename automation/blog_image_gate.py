@@ -84,6 +84,13 @@ def review(item,url,root=None,_candidate=None):
  path=root/'artifacts/blog-image-reviews'/(expected+'-'+digest+'.json')
  if path.exists():record=json.loads(path.read_text())
  else:record={}
+ owner=None
+ if generated:
+  parts=url.split('/')
+  blog=parts[2]if url.startswith('generated://')else parts[-2]
+  owner=blog+'|'+str(item.get('key',''))
+  if record.get('article_owner')and record['article_owner']!=owner:
+   raise RuntimeError('Product image rejected: identical image bytes already belong to another blog/article')
  topic_sha=__import__('blog_reference_scene').topic_hash(item)if generated else None
  if record.get('policy')!=POLICY or record.get('sha256')!=digest or record.get('family')!=expected or(generated and record.get('topic_sha256')!=topic_sha):
   ref,_,ref_fmt=fetch(REFERENCES[expected]);mime={'PNG':'image/png','JPEG':'image/jpeg','WEBP':'image/webp'}
@@ -113,7 +120,7 @@ def review(item,url,root=None,_candidate=None):
   value=response['choices'][0]['message']['content']
   if isinstance(value,list):value=''.join(x.get('text','')for x in value if isinstance(x,dict))
   verdict=json.loads(re.sub(r'^```(?:json)?\s*|\s*```$','',value.strip(),flags=re.I))
-  record={'policy':POLICY,'sha256':digest,'family':expected,'source_url':url,'reference_url':REFERENCES[expected],'width':w,'height':h,'verdict':verdict,'reviewed_at':roya.now(),'topic_sha256':topic_sha}
+  record={'policy':POLICY,'sha256':digest,'family':expected,'source_url':url,'reference_url':REFERENCES[expected],'width':w,'height':h,'verdict':verdict,'reviewed_at':roya.now(),'topic_sha256':topic_sha,'article_owner':owner}
   path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(record,ensure_ascii=False,indent=2))
  record['watermark']=watermark
  record['source_url']=url  # Identical digest/policy/family may have another immutable URL.
