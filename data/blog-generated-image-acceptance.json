@@ -14,7 +14,7 @@
   ],
   "healthy_only": true,
   "policy": "afp-one-generated-blog-image-v2",
-  "at": "2026-10-15T18:18:45Z",
+  "at": "2026-10-15T18:35:01Z",
   "post_submissions": 0,
   "families": [
     {
@@ -22,14 +22,55 @@
       "passed": false,
       "error_type": "RuntimeError",
       "stage": "local_vision_qa",
-      "reason": "Product image rejected: Visual approval required; Image score below 70; Vision flag not cleared: fake_text_or_logo"
+      "reason": "Product image rejected: Visual approval required; Image score below 70; Vision flag not cleared: fake_text_or_logo",
+      "provider_attempts": []
     },
     {
       "family": "hose",
-      "passed": false,
-      "error_type": "RuntimeError",
-      "stage": "generation_api",
-      "reason": "Image provider HTTP 503; raw response withheld"
+      "passed": true,
+      "url": "https://raw.githubusercontent.com/getsalet/nono/225ab72ab7c97b8ac515450f65aaf746d4fad2b8/assets/blog-generated/loxblog/47bbc37d191d70751a5abea38704c365.webp",
+      "key": "city-5abe3574ec79632e",
+      "review": {
+        "policy": "blog-product-family-reference-vision-v2-physical-identity",
+        "sha256": "3ac160cc987e5e034d49c09ddfbb2ae3260557765f3b33b026fd39e0d13627fc",
+        "family": "hose",
+        "width": 1200,
+        "height": 675,
+        "source_url": "https://raw.githubusercontent.com/getsalet/nono/225ab72ab7c97b8ac515450f65aaf746d4fad2b8/assets/blog-generated/loxblog/47bbc37d191d70751a5abea38704c365.webp",
+        "verdict": {
+          "pass": true,
+          "score": 75,
+          "observed_family": "hose",
+          "expected_product_visible": true,
+          "wrong_product_present": false,
+          "fake_text_or_logo": false,
+          "implausible_geometry": false,
+          "people_present": false,
+          "reasons": [
+            "Candidate image shows a packaged black woven hose coil with blue/white folded polygonal panels and straps matching the hose-family reference (Image 2), alongside a bare black woven flat-coil variant consistent with Image 3 reference. Packaging shows generic agricultural product styling without fabricated AFP-specific branding. Scene is physically plausible with tractor and farm buildings in background. No wrong product, people, or impossible geometry detected."
+          ]
+        }
+      },
+      "provider_attempts": [
+        {
+          "requested_secret_slot": "AGNES_API_KEY14",
+          "attempt": 1,
+          "http_status": 503,
+          "status": "provider_error"
+        },
+        {
+          "requested_secret_slot": "AGNES_API_KEY14",
+          "attempt": 2,
+          "http_status": 503,
+          "status": "provider_error"
+        },
+        {
+          "requested_secret_slot": "AGNES_API_KEY14",
+          "attempt": 3,
+          "http_status": 200,
+          "status": "generation_response_received"
+        }
+      ]
     }
   ],
   "passed": false
