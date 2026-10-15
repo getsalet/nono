@@ -8,8 +8,8 @@ import roya_backlink_queue as roya
 from content_originality import check_corpus
 ROOT=Path(__file__).resolve().parent.parent
 MATRIX=ROOT/'data/blog-city-title-matrix.json'
-BLOGS={'farsiblog':'https://afp.farsiblog.com','rozblog':'https://afp-pipe.rozblog.com','blogfa':'https://afp-pipe.blogfa.com'}
-ANGLES={'blogfa':['ثبت اطلاعات و مستندسازی سامانه آبیاری','عیب‌یابی مرحله‌ای بدون حدس مشخصات','ارزیابی سازگاری اجزای مسیر آب','بازبینی تصمیم‌های فنی در مزرعه'], 'farsiblog':['چک‌لیست پیش از سفارش','مقایسه مشخصات و هزینه واقعی','خطاهای انتخاب و نصب','پرسش‌های مشاوره فنی'], 'rozblog':['آماده‌سازی مسیر آبیاری و نصب','بازرسی و نگهداری پس از نصب','اطلاعات لازم برای طراحی مسیر','مقایسه پیشنهادهای فنی فروشندگان']}
+BLOGS={'loxblog':'https://afp.lxb.ir','farsiblog':'https://afp.farsiblog.com','rozblog':'https://afp-pipe.rozblog.com','blogfa':'https://afp-pipe.blogfa.com'}
+ANGLES={'loxblog':['پایش بهره‌برداری و مشاهده نشانه‌های تغییر','تنظیم برگه بازدید دوره‌ای تجهیزات','تفکیک نشانه قابل مشاهده از حدس فنی','تحویل اطلاعات واقعی مزرعه به کارشناس'], 'blogfa':['ثبت اطلاعات و مستندسازی سامانه آبیاری','عیب‌یابی مرحله‌ای بدون حدس مشخصات','ارزیابی سازگاری اجزای مسیر آب','بازبینی تصمیم‌های فنی در مزرعه'], 'farsiblog':['چک‌لیست پیش از سفارش','مقایسه مشخصات و هزینه واقعی','خطاهای انتخاب و نصب','پرسش‌های مشاوره فنی'], 'rozblog':['آماده‌سازی مسیر آبیاری و نصب','بازرسی و نگهداری پس از نصب','اطلاعات لازم برای طراحی مسیر','مقایسه پیشنهادهای فنی فروشندگان']}
 def read(p,default):return json.loads(Path(p).read_text())if Path(p).exists()else copy.deepcopy(default)
 def write(p,obj):
  p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);tmp=p.with_suffix('.tmp');tmp.write_text(json.dumps(obj,ensure_ascii=False,indent=2));tmp.replace(p)
@@ -170,4 +170,4 @@ def qa(item,obj,links,blog,root=None):
  e+=validate_record(item)
  e+=roya.product_semantics_errors(item,obj.get('html',''))
  e+=check_corpus(root or ROOT,blog,item['key'],obj.get('html',''))
- return e,{'words':n,'links':p.links,'checked_against':'Roya + FarsiBlog + RozBlog + Blogfa corpus','title_matrix':item.get('matrix_title')or obj.get('title')}
+ return e,{'words':n,'links':p.links,'checked_against':'Roya + FarsiBlog + RozBlog + Blogfa + LoxBlog corpus','title_matrix':item.get('matrix_title')or obj.get('title')}

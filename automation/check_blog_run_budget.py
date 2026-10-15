@@ -5,7 +5,7 @@ from pathlib import Path
 from farsiblog_backlink_queue import remaining_publication_budget
 ROOT=Path(__file__).resolve().parents[1]
 def decision(blog,root=ROOT,current=None,force=False,target=""):
- if blog not in ('farsiblog','rozblog','blogfa'):raise ValueError('Unsupported blog')
+ if blog not in ('farsiblog','rozblog','blogfa','loxblog'):raise ValueError('Unsupported blog')
  current=current or dt.datetime.now(dt.timezone.utc);state=Path(root)/'state'/(blog+'-backlink-progress.json')
  remaining=remaining_publication_budget(state,current)
  recent=[]
@@ -14,8 +14,8 @@ def decision(blog,root=ROOT,current=None,force=False,target=""):
    at=dt.datetime.fromisoformat(row['at'].replace('Z','+00:00'))
    if at>=current-dt.timedelta(hours=1):recent.append(at)
  result={'proceed':force or remaining>0,'remaining':remaining,'next_eligible_at':(min(recent)+dt.timedelta(hours=1)).isoformat() if remaining==0 and recent else None}
- if blog=='blogfa':
-  journal=Path(root)/'artifacts/blogfa-backlink-queue/submission-attempts.json'
+ if blog in ('blogfa','loxblog'):
+  journal=Path(root)/('artifacts/'+blog+'-backlink-queue/submission-attempts.json')
   rows=json.loads(journal.read_text())if journal.exists()else{}
   blocked=[key for key,row in rows.items()if row.get('phase')in ('submitting','unconfirmed','reconciled_absent')]
   # Reconciliation permits only a named controlled test, not automatic release.
@@ -35,6 +35,6 @@ def main():
  if summary and not d['proceed']:
   with open(summary,'a')as f:
    if d.get('reason')=='native_reconciliation_required':
-    f.write('## Native publication blocked — manual reconciliation required\n\nBlogfa returned no verified publication for a prior native POST. This is NOT healthy publication or normal hourly budget idle. Approved drafts and the original journal remain intact; no AI generation, browser installation or native resubmission was attempted. A named manual recovery retains the publisher duplicate guard.\n')
+    f.write('## Native publication blocked — manual reconciliation required\n\n'+blog+' returned no verified publication for a prior native POST. This is NOT healthy publication or normal hourly budget idle. Approved drafts and the original journal remain intact; no AI generation, browser installation or native resubmission was attempted. A named manual recovery retains the publisher duplicate guard.\n')
    else:f.write('## Normal budget idle\n\nRolling 60-minute publication budget is exhausted. No AI generation, browser installation or publication attempted. Next eligibility: '+str(d['next_eligible_at'])+'. The scheduled queue check remains enabled.\n')
 if __name__=='__main__':main()
