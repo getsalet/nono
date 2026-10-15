@@ -42,7 +42,7 @@ def run(key):
    if key!='loxblog':
     options=page.locator('a[href]').evaluate_all("es=>es.map(e=>({text:(e.innerText||'').trim(),href:e.href}))")
     def norm(s):return re.sub(r'\s+',' ',s.replace('ي','ی').replace('ك','ک')).strip()
-    candidates=[x for x in options if 'ویرایش قالب'in norm(x['text']) and urlsplit(x['href']).hostname==urlsplit(page.url).hostname]
+    candidates=[x for x in options if ('ویرایش قالب'in norm(x['text']) or 'ویرایش ساختار قالب فعلی'==norm(x['text'])) and urlsplit(x['href']).hostname==urlsplit(page.url).hostname]
     urls=list(dict.fromkeys(x['href']for x in candidates))
     if len(urls)!=1:
      result['editor_candidates']=[{'label':norm(x['text'])[:80],'path':urlsplit(x['href']).path}for x in options if 'قالب'in norm(x['text'])][:20]
