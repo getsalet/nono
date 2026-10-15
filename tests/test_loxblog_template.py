@@ -9,7 +9,9 @@ class NativeLoxBlogThemeTests(unittest.TestCase):
  def test_native_metadata_only(self):
   h=self.read('header')
   self.assertEqual(h.count('[LX:Head]'),1)
-  self.assertEqual(h.count('name="google-site-verification"'),1)
+  tags=re.findall(r'<meta\s+name="google-site-verification"\s+content="([^"]+)"',h)
+  self.assertEqual(set(tags),{'-BhLoljNdO2asCo1OjpTRZDWkhzl0RbWJCgrz-lCDqc','eA1pNGMD3C_odFB00bTqnmOZD9y2qY83hOGrfN2BVuI'})
+  self.assertEqual(len(tags),len(set(tags)))
   self.assertIn('-BhLoljNdO2asCo1OjpTRZDWkhzl0RbWJCgrz-lCDqc',h)
   self.assertNotIn('canonical',h) # owned by LX:Head, not duplicated client-side
  def test_no_legacy_syntax(self):

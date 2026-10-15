@@ -95,16 +95,21 @@ def generate(item,blog):
 def prepare(item,blog,root=None):
  from blog_image_gate import review
  root=Path(root or roya.ROOT);asset_id=identity(item,blog);path=f'assets/blog-generated/{blog}/{asset_id}.webp'
+ item['_generation_stage']='remote_cache'
  url=existing_asset(path,root)
  if url:
   review(item,url,root=root)
  else:
   cache=root/f'artifacts/{blog}-backlink-queue/generated-images'/f'{asset_id}.webp';cache.parent.mkdir(parents=True,exist_ok=True)
   if not cache.exists():
+   item['_generation_stage']='generation_api'
    raw=generate(item,blog);tmp=cache.with_suffix('.tmp');tmp.write_bytes(raw);tmp.replace(cache)
   raw=cache.read_bytes()
+  item['_generation_stage']='local_vision_qa'
   review(item,'generated://'+blog+'/'+asset_id,root=root,_candidate=raw)
+  item['_generation_stage']='asset_checkpoint'
   url=checkpoint_asset(path,raw,root)
+  item['_generation_stage']='public_vision_qa'
   review(item,url,root=root) # Fetch immutable public bytes, not just local success.
  item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر راهنمای محصول')
  return url
