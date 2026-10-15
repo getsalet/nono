@@ -17,7 +17,8 @@ def decision(blog,root=ROOT,current=None,force=False,target=""):
  if blog=='blogfa':
   journal=Path(root)/'artifacts/blogfa-backlink-queue/submission-attempts.json'
   rows=json.loads(journal.read_text())if journal.exists()else{}
-  blocked=[key for key,row in rows.items()if row.get('phase')in ('submitting','unconfirmed')]
+  blocked=[key for key,row in rows.items()if row.get('phase')in ('submitting','unconfirmed','reconciled_absent')]
+  # Reconciliation permits only a named controlled test, not automatic release.
   # A named manual recovery can still discover an already-public article, but
   # the publisher journal guard remains authoritative before ANY new POST.
   if blocked and not force and not target:

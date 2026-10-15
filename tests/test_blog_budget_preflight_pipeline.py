@@ -29,3 +29,8 @@ class NativeSubmissionPreflightTests(unittest.TestCase):
  def test_readonly_login_diagnostic_still_allowed(self):self.assertTrue(decision('blogfa',self.root,force=True)['proceed'])
  def test_other_blogs_are_not_paused(self):
   for blog in ('farsiblog','rozblog'):self.assertTrue(decision(blog,self.root)['proceed'])
+
+ def test_reconciled_absence_does_not_release_automatic_publication(self):
+  p=self.root/'artifacts/blogfa-backlink-queue/submission-attempts.json';p.write_text(json.dumps({'draft-key':{'phase':'reconciled_absent'}}))
+  self.assertFalse(decision('blogfa',self.root)['proceed'])
+  self.assertTrue(decision('blogfa',self.root,target='draft-key')['proceed'])
