@@ -35,3 +35,15 @@ class PreferredImagePoolTests(unittest.TestCase):
   with patch.dict('os.environ',{'AGNES_IMAGE_PREFERRED_KEY_SLOTS':'AGNES_API_KEY14,AGNES_API_KEY15'}),patch.object(g,'capability_slots',return_value=['AGNES_API_KEY3','AGNES_API_KEY14','AGNES_API_KEY15']),patch.object(pool,'keys',['k3','k14','k15']),patch.object(pool,'slots',{'k3':'AGNES_API_KEY3','k14':'AGNES_API_KEY14','k15':'AGNES_API_KEY15'}),patch.object(pool,'fetch_json',return_value=reply)as fetch:
    g.generate(item,'roya')
    self.assertEqual(set(fetch.call_args.kwargs['allowed_keys']),{'k14','k15'})
+
+class SafeProviderDiagnosticsTests(unittest.TestCase):
+ def test_only_known_nonsecret_error_codes_are_exposed(self):
+  import json
+  from agnes_key_pool import AgnesProviderError
+  error=AgnesProviderError(503,json.dumps({'error':{'code':'service_unavailable','type':'server_error','message':'private response body'}}).encode())
+  self.assertEqual(error.provider_code,'service_unavailable');self.assertEqual(error.provider_type,'server_error')
+  self.assertNotIn('private',str(error));self.assertIn('503',str(error))
+ def test_unknown_codes_and_messages_never_escape(self):
+  from agnes_key_pool import AgnesProviderError
+  error=AgnesProviderError(503,b'{"error":{"code":"secret-shaped-value","type":"untrusted-type","message":"private"}}')
+  self.assertIsNone(error.provider_code);self.assertIsNone(error.provider_type)

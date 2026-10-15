@@ -4,7 +4,7 @@ import copy,json,time,sys,re,shutil,hashlib,os
 from pathlib import Path
 from blog_generated_image import prepare,POLICY,capability_slots,identity
 # Snapshot-only diagnostics never constitute acceptance or production approval.
-# Full-frame rendering and exact technical evidence require fresh candidates.
+# Preserve native provider aspect; acceptance is still separate from production approval.
 import roya_backlink_queue as roya
 ROOT=Path(__file__).resolve().parent.parent
 
@@ -26,6 +26,7 @@ def main():
    if os.getenv('BLOG_IMAGE_CACHE_SNAPSHOT_ONLY')=='1':raise RuntimeError('Cached candidates snapshot only; no generation or publication')
    from blog_reference_scene import scene_plan
    row['scene_plan']=scene_plan(item,'loxblog')
+   row['requested_size']='1024x768'
    row['url']=prepare(item,'loxblog',root=ROOT);row['passed']=True;row['key']=item['key'];row['review']=item['image_review']
   except Exception as exc:
    row['error_type']=type(exc).__name__;row['stage']=item.get('_generation_stage')if item else None

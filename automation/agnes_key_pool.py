@@ -4,6 +4,19 @@ from pathlib import Path
 NAMES=('AGNES_API_KEY',*(f'AGNES_API_KEY{i}' for i in range(2,26)))
 DEFAULT_BASE='https://apihub.agnes-ai.com/v1'
 
+SAFE_PROVIDER_CODES={'invalid_request_error','invalid_parameter','invalid_size','invalid_image_size','unsupported_size','unsupported_parameter','invalid_value','rate_limit_exceeded','rate_limit_error','model_not_found','insufficient_quota','permission_denied','authentication_error','overloaded','server_error','internal_error','service_unavailable','upstream_error','timeout','content_policy_violation'}
+class AgnesProviderError(RuntimeError):
+ def __init__(self,status,body=b''):
+  super().__init__(f'Agnes/provider HTTP {status}; raw response withheld')
+  self.http_status=status;self.provider_code=None;self.provider_type=None
+  try:
+   value=json.loads(body);error=value.get('error',{})
+   if isinstance(error,dict):
+    for key in ('code','type'):
+     candidate=error.get(key)
+     if isinstance(candidate,str)and candidate in SAFE_PROVIDER_CODES:setattr(self,'provider_'+key,candidate)
+  except (ValueError,TypeError,AttributeError):pass
+
 class AgnesKeyPool:
  def __init__(self,environ=None,report_path=None,now=None,base=None):
   env=os.environ if environ is None else environ
@@ -54,13 +67,16 @@ class AgnesKeyPool:
    try:
     with urllib.request.urlopen(req,timeout=timeout)as response:return json.load(response)
    except urllib.error.HTTPError as exc:
-    status=exc.code;exc.close()
+    status=exc.code
+    try:body=exc.read(8192)
+    except Exception:body=b''
+    exc.close()
     if managed and status==401:
      self.disable(key,status)
      active=[k for k in candidates if k not in self._disabled]
      if not active:raise RuntimeError('No active credentials in the requested Agnes capability pool')from None
      key=active[0];headers={n:v for n,v in headers.items()if n.lower()!='authorization'};headers['Authorization']='Bearer '+key;continue
-    raise RuntimeError(f'Agnes/provider HTTP {status}; raw response withheld')from None
+    raise AgnesProviderError(status,body)from None
    except urllib.error.URLError:
     raise RuntimeError('Agnes/provider transport failure; private details withheld')from None
   raise RuntimeError('Agnes authentication fallback exhausted')

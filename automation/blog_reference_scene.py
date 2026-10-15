@@ -5,7 +5,7 @@ Agnes payload/reference/watermark order follows nono's exact-product rebuild.
 import hashlib,json,re
 import blog_reference_image_policy as reference
 POLICY='afp-one-generated-blog-image-v6-reference-integrated-topic-scene'
-RECIPE_VERSION='two-repo-positive-scene-20261016-r5-full-frame-count-evidence'
+RECIPE_VERSION='two-repo-positive-scene-20261016-r6-native-aspect'
 SOURCES=['https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py','https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py']
 def context_from_post(post):
  text=re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',post.get('html',''))).strip()
@@ -57,7 +57,7 @@ def prompt(item,blog):
   'Exactly one AFP drip-tape carton roll: low wide white-and-blue cylindrical sleeve, circular top, central hole, straight walls, authentic AFP print and blue lower band. Its diameter is about 1.7 times its height. The product occupies about 23 percent of frame width.'
  )
  return (
-  'Create one photorealistic 16:9 editorial still-life photograph. The photographed setting is vacant and motionless. '
+  'Create one photorealistic 4:3 editorial still-life photograph. The photographed setting is vacant and motionless. '
   +'The main subject is '+plan['topic']+' in '+plan['crop']+' irrigation. Visible technical evidence: '+plan['evidence']+'. '
   +'Botanical identity: '+plan['botany']+'. '
   +'VISIBLE CONTENT WHITELIST: accurate crop plants, natural soil, installed irrigation lines, the fixed hardware specified above, and the approved AFP product only. '
