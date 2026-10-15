@@ -7,7 +7,7 @@ import base64,hashlib,io,json,os,re,subprocess,tempfile,time,urllib.request,urll
 from pathlib import Path
 from PIL import Image,ImageOps
 import roya_backlink_queue as roya
-POLICY='afp-one-generated-blog-image-v2'
+POLICY='afp-one-generated-blog-image-v3-authentic-photo-composite'
 BLOGS={'roya','farsiblog','rozblog','blogfa','loxblog'}
 RAW='https://raw.githubusercontent.com/getsalet/nono/'
 
@@ -30,6 +30,16 @@ def brief(item,blog):
   +'Do not claim a real city, actual farm, crop suitability, pressure rating or local climate. No inset collage, fake watermark, dramatic effects or glossy 3D. '
   +f'Art direction: {cameras[int(seed[:6],16)%len(cameras)]}; {lighting[int(seed[6:12],16)%len(lighting)]}; asymmetric layout with product and essential details inside a safe central 85% region, generous environmental context, no clutter. '
   +'Landscape 16:9, sharp product identity and believable ground contact, shadows and proportions.')
+
+def background_brief(item,blog):
+ seed=identity(item,blog)
+ views=['a gently elevated oblique view along parallel prepared irrigation beds','an oblique side view of prepared irrigation rows receding diagonally','a field-edge view with a distant irrigation junction and long prepared beds']
+ return ('Generate ONLY a photorealistic neutral educational irrigation BACKGROUND. Commercial product photographs will be composited afterwards; do not generate any product or packaging. '
+  +'Bright overcast soft neutral daylight, believable brown soil, distant thin irrigation lines, no identifiable crop species, no claim of a real city or actual farm. '
+  +'No people, hands, animals, vehicles, tractors, buildings, signs, text, letters, logos, cartons, rolls, reels, coils or packaged goods. '
+  +'Keep the lower half as open level fine soil with room for real objects; no foreground obstruction, no deep furrows or crossing pipes there. Horizon in the upper third. '
+  +'Landscape 16:9 editorial agricultural photography; natural, restrained, uncluttered and sharply detailed foreground. '
+  +'Camera: '+views[int(seed[:6],16)%len(views)]+'.')
 
 def git(args,root,input=None,env=None,check=True):
  r=subprocess.run(['git',*args],cwd=root,input=input,stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env)
@@ -79,13 +89,13 @@ def conditioning_image(expected):
  out=io.BytesIO();canvas.save(out,'WEBP',quality=90,method=6)
  return ['data:image/webp;base64,'+base64.b64encode(out.getvalue()).decode('ascii')]
 
-def generate(item,blog):
+def generate(item,blog,slots=None,max_attempts=3):
  from blog_image_gate import family
  expected=family(item)
  endpoint=os.getenv('IMAGE_ENDPOINT')or roya.BASE.AGNES_BASE+'/images/generations'
  if not endpoint.startswith('https://'):raise RuntimeError('Image endpoint requires HTTPS')
- payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':brief(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':conditioning_image(expected)}}
- names=[n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_KEY_SLOTS',''))if n]
+ payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':background_brief(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}}
+ names=slots if slots is not None else [n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_KEY_SLOTS',''))if n]
  if names:
   from agnes_key_pool import NAMES
   if any(n not in NAMES for n in names):raise RuntimeError('Unknown image credential slot name')
@@ -93,8 +103,11 @@ def generate(item,blog):
   selected=list(dict.fromkeys(selected))
   if not selected:raise RuntimeError('No audited healthy credential in the requested image pool')
  else:selected=None
+ if selected:
+  offset=int(identity(item,blog)[:8],16)%len(selected)
+  selected=selected[offset:]+selected[:offset]
  attempts=item.setdefault('_image_provider_attempts',[])
- for attempt in range(3):
+ for attempt in range(max_attempts):
   key=os.getenv('IMAGE_API_KEY','').strip()or(selected[attempt%len(selected)]if selected else roya.BASE._key_pool.next())
   row={'requested_secret_slot':roya.BASE._key_pool.slots.get(key,'IMAGE_API_KEY'),'attempt':attempt+1}
   attempts.append(row)
@@ -106,7 +119,7 @@ def generate(item,blog):
   except RuntimeError as exc:
    match=re.fullmatch(r'Agnes/provider HTTP (\d+); raw response withheld',str(exc));code=int(match[1])if match else None
    row.update(http_status=code,status='provider_error')
-   if attempt<2 and(code in(429,500,502,503,504)or str(exc)=='Agnes/provider transport failure; private details withheld'):
+   if attempt<max_attempts-1 and((code in(429,500,502,503,504)or(code==403 and selected and len(selected)>1))or str(exc)=='Agnes/provider transport failure; private details withheld'):
     time.sleep(5*(attempt+1));continue
    if code:raise RuntimeError(f'Image provider HTTP {code}; raw response withheld')from None
    raise RuntimeError('Image provider transport/format failure; private details withheld')from None
@@ -125,7 +138,10 @@ def generate(item,blog):
  if len(raw)>12*1024*1024:raise RuntimeError('Generated image too large')
  image=Image.open(io.BytesIO(raw));image.verify();image=Image.open(io.BytesIO(raw)).convert('RGB')
  if min(image.size)<512 or max(image.size)>10000:raise RuntimeError('Generated image dimensions unacceptable')
- image=ImageOps.fit(image,(1200,675),Image.Resampling.LANCZOS);out=io.BytesIO();image.save(out,'WEBP',quality=82,method=6)
+ image=ImageOps.fit(image,(1200,675),Image.Resampling.LANCZOS)
+ from blog_product_composite import compose
+ image=compose(image,expected,identity(item,blog))
+ out=io.BytesIO();image.save(out,'WEBP',quality=88,method=6)
  return out.getvalue()
 
 def prepare(item,blog,root=None):
@@ -147,5 +163,5 @@ def prepare(item,blog,root=None):
   url=checkpoint_asset(path,raw,root)
   item['_generation_stage']='public_vision_qa'
   review(item,url,root=root) # Fetch immutable public bytes, not just local success.
- item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر راهنمای محصول')
+ item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'generated-background-authentic-product-composite','product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر آموزشی ترکیبی با عکس واقعی محصول')
  return url
