@@ -3,11 +3,14 @@
 import copy,json,time,sys
 from pathlib import Path
 from blog_generated_image import prepare,POLICY
+import roya_backlink_queue as roya
 ROOT=Path(__file__).resolve().parent.parent
 
 def main():
  queue=json.loads((ROOT/'data/loxblog/backlink-queue.json').read_text())
- report={'policy':POLICY,'at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'post_submissions':0,'families':[],'passed':False}
+ pool=roya.BASE._key_pool
+ active_slots=[pool.slots[k]for k in pool.keys]
+ report={'active_secret_slots':active_slots,'healthy_only':True,'policy':POLICY,'at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'post_submissions':0,'families':[],'passed':False}
  for family in ['tape20','hose']:
   item=next((copy.deepcopy(x)for x in queue['items']if x.get('family')==family and x.get('kind')in('city','article')),None)
   row={'family':family,'passed':False}

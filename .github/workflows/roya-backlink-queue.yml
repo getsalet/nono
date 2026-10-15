@@ -31,6 +31,8 @@ jobs:
     timeout-minutes: 90
     env:
       AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+      AGNES_HEALTHY_SLOTS_ONLY: '1'
+      AGNES_PREFERRED_KEY_SLOTS: 'AGNES_API_KEY14,AGNES_API_KEY15'
       AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
       AGNES_API_KEY2: ${{ secrets.AGNES_API_KEY2 }}
       AGNES_API_KEY3: ${{ secrets.AGNES_API_KEY3 }}
@@ -57,7 +59,7 @@ jobs:
       AGNES_API_KEY24: ${{ secrets.AGNES_API_KEY24 }}
       AGNES_API_KEY25: ${{ secrets.AGNES_API_KEY25 }}
       AGNES_API_KEYS: ${{ secrets.AGNES_API_KEYS }}
-      AGNES_KEY_ROTATE_EVERY: '25'
+      AGNES_KEY_ROTATE_EVERY: '1'
       AGNES_MODEL: agnes-2.5-flash
       ROYA_COUNT: ${{ github.event.inputs.count || '3' }}
       ROYA_DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}

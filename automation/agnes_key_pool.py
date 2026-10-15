@@ -15,15 +15,25 @@ class AgnesKeyPool:
    if value and not re.search(r'[,\s]',value):entries.append((name,value));self.slots.setdefault(value,name)
   for i,value in enumerate(re.split(r'[,\s]+',env.get('AGNES_API_KEYS',''))):
    if value:entries.append((f'AGNES_API_KEYS[{i+1}]',value));self.slots.setdefault(value,f'AGNES_API_KEYS[{i+1}]')
-  blocked=set()
+  blocked=set();healthy_names=None
   try:
    path=Path(report_path)if report_path else Path(__file__).resolve().parents[1]/'data/agnes-key-health/latest.json'
    report=json.loads(path.read_text());tested=dt.datetime.fromisoformat(report['tested_at']);age=((now or dt.datetime.now(dt.timezone.utc))-tested).total_seconds()
-   if report.get('complete')and report.get('endpoint')==self.base+'/chat/completions'and 0<=age<=21600:
+   if report.get('complete') is True and report.get('endpoint')==self.base+'/chat/completions':
+    healthy_names={r['secret_name']for r in report.get('keys',[])if r.get('status')=='healthy'and r.get('http_status')==200}
+   if healthy_names is not None and 0<=age<=21600:
     names={r['secret_name']for r in report.get('keys',[])if r.get('status')=='authentication_rejected'and r.get('http_status')==401}
     blocked={v for n,v in entries if n in names}
   except (OSError,ValueError,TypeError,KeyError):pass
-  self.keys=list(dict.fromkeys(v for _,v in entries if v not in blocked))
+  if env.get('AGNES_HEALTHY_SLOTS_ONLY')=='1':
+   if healthy_names is None:raise RuntimeError('Complete matching Agnes health audit required before healthy-only routing')
+   allowed={v for n,v in entries if n in healthy_names}
+   entries=[(n,v)for n,v in entries if v in allowed]
+  preferred=[n for n in re.split(r'[,\s]+',env.get('AGNES_PREFERRED_KEY_SLOTS',''))if n]
+  if any(n not in NAMES for n in preferred):raise RuntimeError('Unknown preferred Agnes secret slot name')
+  entries=sorted(enumerate(entries),key=lambda row:(preferred.index(row[1][0])if row[1][0]in preferred else len(preferred),row[0]))
+  self.keys=list(dict.fromkeys(v for _,(_,v)in entries if v not in blocked))
+  if env.get('AGNES_HEALTHY_SLOTS_ONLY')=='1'and not self.keys:raise RuntimeError('No configured credential passed the latest Agnes text audit')
  def next(self):
   with self._lock:
    active=[k for k in self.keys if k not in self._disabled]

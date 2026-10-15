@@ -24,3 +24,24 @@ class KeyPoolTests(unittest.TestCase):
   with patch('urllib.request.urlopen',side_effect=error),self.assertRaises(RuntimeError)as caught:p.fetch_json(DEFAULT_BASE+'/chat/completions',{'Authorization':'Bearer fake-b'}, {})
   self.assertNotIn('PRIVATE_SENTINEL',str(caught.exception));self.assertIn('503',str(caught.exception));self.assertEqual(p.next(),'fake-b')
 if __name__=='__main__':unittest.main()
+
+class HealthyOnlyRoutingTests(unittest.TestCase):
+ def make_report(self,path,now):
+  path.write_text(json.dumps({'complete':True,'tested_at':(now-dt.timedelta(days=2)).isoformat(),'endpoint':DEFAULT_BASE+'/chat/completions','keys':[{'secret_name':'AGNES_API_KEY','status':'healthy','http_status':200},{'secret_name':'AGNES_API_KEY14','status':'healthy','http_status':200},{'secret_name':'AGNES_API_KEY15','status':'healthy','http_status':200},{'secret_name':'AGNES_API_KEY16','status':'authentication_rejected','http_status':401},{'secret_name':'AGNES_API_KEY2','status':'nonconforming_response','http_status':200}]}))
+ def test_stale_audit_never_reenables_broken_or_unknown_values(self):
+  now=dt.datetime.now(dt.timezone.utc)
+  with tempfile.TemporaryDirectory()as d:
+   path=Path(d)/'health.json';self.make_report(path,now)
+   env={'AGNES_HEALTHY_SLOTS_ONLY':'1','AGNES_PREFERRED_KEY_SLOTS':'AGNES_API_KEY14,AGNES_API_KEY15','AGNES_API_KEY':'fake-main','AGNES_API_KEY14':'fake-14','AGNES_API_KEY15':'fake-15','AGNES_API_KEY16':'fake-rejected','AGNES_API_KEY2':'fake-uncertain','AGNES_API_KEYS':'fake-rejected,fake-main,fake-unknown'}
+   pool=AgnesKeyPool(env,path,now);self.assertEqual(pool.keys,['fake-14','fake-15','fake-main']);self.assertEqual([pool.next()for _ in range(4)],['fake-14','fake-15','fake-main','fake-14'])
+ def test_missing_or_wrong_endpoint_report_cannot_bypass_strict_mode(self):
+  with self.assertRaisesRegex(RuntimeError,'audit required'):AgnesKeyPool({'AGNES_HEALTHY_SLOTS_ONLY':'1','AGNES_API_KEY':'fake'},report_path='/absent')
+  now=dt.datetime.now(dt.timezone.utc)
+  with tempfile.TemporaryDirectory()as d:
+   path=Path(d)/'health.json';self.make_report(path,now)
+   with self.assertRaises(RuntimeError):AgnesKeyPool({'AGNES_HEALTHY_SLOTS_ONLY':'1','AGNES_API_KEY':'fake'},path,now,base='https://other.example/v1')
+ def test_unconfigured_confirmed_slots_do_not_allow_aggregate_smuggling(self):
+  now=dt.datetime.now(dt.timezone.utc)
+  with tempfile.TemporaryDirectory()as d:
+   path=Path(d)/'health.json';self.make_report(path,now)
+   with self.assertRaisesRegex(RuntimeError,'No configured credential'):AgnesKeyPool({'AGNES_HEALTHY_SLOTS_ONLY':'1','AGNES_API_KEYS':'fake-unknown'},path,now)
