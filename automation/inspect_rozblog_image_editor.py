@@ -57,7 +57,7 @@ def main():
      if not report['title_matches']:raise RuntimeError('Native edit title changed; no writes allowed')
      report['stage']='wait_for_editors'
      page.wait_for_function('()=>window.tinymce&&tinymce.get("mtex")?.initialized',timeout=20000)
-     report['editor_contract']['editor_ids']=page.evaluate('()=>tinymce.editors.map(x=>x.id)')
+     report['editor_contract']['editor_ids']=page.evaluate('()=>["mtex","mtex2"].filter(id=>!!tinymce.get(id))')
      report['editor_contract']['body_image_counts']=page.evaluate('()=>["mtex","mtex2"].map(id=>({id,count:(tinymce.get(id)?.getContent()||"").match(/<img\\b/gi)?.length||0}))')
      report['stage']='editor_observed'
 
