@@ -75,7 +75,7 @@ jobs:
           key: blog-generated-image-v1-${{ github.run_id }}
           restore-keys: blog-generated-image-v1-
       - name: Generate and visually validate both genuine product families
-        run: BLOG_IMAGE_CACHE_SNAPSHOT_ONLY=1 python automation/verify_generated_blog_images.py
+        run: python automation/verify_generated_blog_images.py
       - uses: actions/cache/save@v4
         if: always()
         with:

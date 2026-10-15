@@ -25,6 +25,7 @@ class ImageRolloutTests(unittest.TestCase):
   self.assertEqual(len(references(self.item)),1)
   changed=copy.deepcopy(self.item);changed['_image_article_context']['summary']+=' بررسی فشار'
   self.assertNotEqual(topic_hash(self.item),topic_hash(changed))
+  self.assertNotEqual(generated.identity(self.item,'roya'),generated.identity(changed,'roya'))
   feedback={**self.item,'_image_qa_feedback':'retry: shadow'}
   self.assertEqual(topic_hash(self.item),topic_hash(feedback))
  def test_generic_body_terms_do_not_force_every_article_into_hardware_scene(self):

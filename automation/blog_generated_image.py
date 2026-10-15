@@ -43,7 +43,9 @@ def identity(item,blog):
  from blog_image_gate import family
  expected=family(item)
  from blog_image_watermark import POLICY as watermark_policy
- return hashlib.sha256((POLICY+'|'+watermark_policy+'|'+blog+'|'+str(item['key'])+'|'+expected).encode()).hexdigest()[:32]
+ from blog_reference_scene import RECIPE_VERSION,topic_hash
+ context_hash=topic_hash(item)if item.get('_image_article_context')or item.get('post')else'no-final-draft'
+ return hashlib.sha256((POLICY+'|'+RECIPE_VERSION+'|'+watermark_policy+'|'+blog+'|'+str(item['key'])+'|'+expected+'|'+context_hash).encode()).hexdigest()[:32]
 
 def brief(item,blog):
  from blog_image_gate import family,reference_identity_instruction
@@ -142,7 +144,7 @@ def generate(item,blog,slots=None,max_attempts=3):
   attempts.append(row)
   if not key:raise RuntimeError('Existing image API credential required')
   try:
-   data=roya.BASE._key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+identity(item,blog)+'-r'+str(item.get('_image_generation_round',0))},payload,timeout=180,allowed_keys=selected)
+   data=roya.BASE._key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+hashlib.sha256(json.dumps(payload,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:32]+'-r'+str(item.get('_image_generation_round',0))},payload,timeout=180,allowed_keys=selected)
    row.update(http_status=200,status='generation_response_received')
    break
   except RuntimeError as exc:
