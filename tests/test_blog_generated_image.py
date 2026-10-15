@@ -33,7 +33,7 @@ class ConditioningTests(unittest.TestCase):
   image=Image.new('RGB',(1024,768),'green');buf=io.BytesIO();image.save(buf,'PNG')
   import base64
   data={'data':[{'b64_json':base64.b64encode(buf.getvalue()).decode()}]}
-  item={'key':'fake','family':'tape20','site_title':'نوار تیپ'}
+  item={'key':'fake','family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'فاصله نوار تیپ در کشت گوجه فرنگی','summary':'فاصله خطوط تیپ و آرایش بوته‌های گوجه فرنگی در آبیاری قطره‌ای و توزیع یکنواخت رطوبت'}}
   with patch.object(m,'capability_slots',return_value=['AGNES_API_KEY14']),patch.object(m.roya.BASE._key_pool,'keys',['fake-key']),patch.object(m.roya.BASE._key_pool,'slots',{'fake-key':'AGNES_API_KEY14'}),patch.object(m.roya.BASE._key_pool,'fetch_json',side_effect=[RuntimeError('Agnes/provider HTTP 503; raw response withheld'),data])as fetch,patch.object(m.time,'sleep'):
    result=m.generate(item,'roya');self.assertEqual(fetch.call_count,2);self.assertEqual(Image.open(io.BytesIO(result)).size,(1200,675))
   with patch.object(m,'capability_slots',return_value=['AGNES_API_KEY14']),patch.object(m.roya.BASE._key_pool,'keys',['fake-key']),patch.object(m.roya.BASE._key_pool,'slots',{'fake-key':'AGNES_API_KEY14'}),patch.object(m.roya.BASE._key_pool,'fetch_json',side_effect=RuntimeError('Agnes/provider HTTP 403; raw response withheld'))as fetch,self.assertRaisesRegex(RuntimeError,'HTTP 403'):

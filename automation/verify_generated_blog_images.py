@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Controlled acceptance: two product families, zero post submissions."""
-import copy,json,time,sys
+import copy,json,time,sys,re
 from pathlib import Path
 from blog_generated_image import prepare,POLICY,capability_slots
 import roya_backlink_queue as roya
@@ -13,8 +13,12 @@ def main():
  active_slots=[pool.slots[k]for k in pool.keys if pool.slots[k]in audited]
  report={'active_secret_slots':active_slots,'healthy_only':True,'policy':POLICY,'at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'post_submissions':0,'families':[],'passed':False}
  for family in ['tape20','hose']:
-  item=next((copy.deepcopy(x)for x in queue['items']if x.get('family')==family and x.get('kind')in('city','article')),None)
+  item=next((copy.deepcopy(x)for x in queue['items']if x.get('family')==family and x.get('published')and x.get('kind')in('city','article')),None)
   row={'family':family,'passed':False}
+  if item is not None:
+   from blog_reference_scene import context_from_post
+   path=ROOT/'artifacts/loxblog-backlink-queue/items'/(re.sub(r'[^A-Za-z0-9._-]+','_',item['key'])+'.json')
+   if path.exists():item['_image_article_context']=context_from_post(json.loads(path.read_text()).get('post')or{})
   try:
    if item is None:raise ValueError('Matching real source topic missing')
    row['url']=prepare(item,'loxblog',root=ROOT);row['passed']=True;row['key']=item['key'];row['review']=item['image_review']

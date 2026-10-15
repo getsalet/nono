@@ -7,7 +7,7 @@ import base64,hashlib,io,json,os,re,subprocess,tempfile,time,urllib.request,urll
 from pathlib import Path
 from PIL import Image,ImageOps
 import roya_backlink_queue as roya
-POLICY='afp-one-generated-blog-image-v5-product-dominant-panels'
+from blog_reference_scene import POLICY
 BLOGS={'roya','farsiblog','rozblog','blogfa','loxblog'}
 RAW='https://raw.githubusercontent.com/getsalet/nono/'
 
@@ -17,7 +17,8 @@ def rollout_enabled(blog,root=None):
  if not path.exists():return False
  try:control=json.loads(path.read_text())
  except (OSError,ValueError):raise RuntimeError('Image rollout control unreadable; refusing unchecked images')from None
- if control.get('pause_image_production')is True:raise RuntimeError('Image production explicitly paused: user rejected the current method; no fallback or submission')
+ if control.get('pause_image_production')is True:
+  raise RuntimeError('Image production explicitly paused: user rejected the current method; no fallback or submission')
  if control.get('enabled')is not True:return False
  if control.get('policy')!=POLICY or control.get('direct_visual_approval')is not True:raise RuntimeError('Current direct visual acceptance required for generated images')
  report=json.loads((root/'data/blog-generated-image-acceptance.json').read_text())
@@ -121,7 +122,7 @@ def generate(item,blog,slots=None,max_attempts=3):
  expected=family(item)
  endpoint=os.getenv('IMAGE_ENDPOINT')or roya.BASE.AGNES_BASE+'/images/generations'
  if not endpoint.startswith('https://'):raise RuntimeError('Image endpoint requires HTTPS')
- payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':background_brief(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}}
+ payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':__import__('blog_reference_scene').prompt(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':__import__('blog_reference_scene').references(item)}}
  names=slots if slots is not None else capability_slots()
  if not names:raise RuntimeError('At least one audited image-capable credential required')
  if names:
@@ -167,8 +168,8 @@ def generate(item,blog,slots=None,max_attempts=3):
  image=Image.open(io.BytesIO(raw));image.verify();image=Image.open(io.BytesIO(raw)).convert('RGB')
  if min(image.size)<512 or max(image.size)>10000:raise RuntimeError('Generated image dimensions unacceptable')
  image=ImageOps.fit(image,(1200,675),Image.Resampling.LANCZOS)
- from blog_product_composite import compose
- image=compose(image,expected,identity(item,blog))
+ from blog_image_watermark import apply
+ image=apply(image)
  out=io.BytesIO();image.save(out,'WEBP',quality=88,method=6)
  return out.getvalue()
 
@@ -197,10 +198,11 @@ def prepare(item,blog,root=None):
     rejected=cache.parent/'rejected';rejected.mkdir(exist_ok=True)
     cache.replace(rejected/(asset_id+'-'+digest[:12]+'.webp'))
     item.setdefault('_image_rejections',[]).append({'sha256':digest,'reason':str(exc)[:400]})
+    item['_image_qa_feedback']=str(exc)[-700:]
     if round_index==2:raise
   item['_generation_stage']='asset_checkpoint'
   url=checkpoint_asset(path,raw,root)
   item['_generation_stage']='public_vision_qa'
   review(item,url,root=root) # Fetch immutable public bytes, not just local success.
- item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'editorial-generated-field-and-authentic-product-photo-panels','watermark':__import__('blog_image_watermark').TEXT,'watermark_policy':__import__('blog_image_watermark').POLICY,'product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر آموزشی ترکیبی با عکس واقعی محصول')
+ item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'reference-conditioned-single-pass-topic-scene','topic_sha256':__import__('blog_reference_scene').topic_hash(item),'reference_sources':__import__('blog_reference_scene').SOURCES,'watermark':__import__('blog_image_watermark').TEXT,'watermark_policy':__import__('blog_image_watermark').POLICY,'product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP')
  return url

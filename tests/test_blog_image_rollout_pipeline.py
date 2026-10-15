@@ -12,17 +12,30 @@ import roya_backlink_queue as roya
 
 class ImageRolloutTests(unittest.TestCase):
  def setUp(self):
-  self.item={'key':'image-fixture','family':'tape20','site_title':'نوار تیپ'}
+  self.item={'key':'image-fixture','family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'فاصله نوار تیپ در کشت گوجه فرنگی','summary':'فاصله خطوط تیپ و آرایش بوته‌های گوجه فرنگی در آبیاری قطره‌ای و توزیع یکنواخت رطوبت'}}
   buf=io.BytesIO();__import__('blog_image_watermark').apply(Image.new('RGB',(1200,675),(190,170,140))).save(buf,'WEBP');self.raw=buf.getvalue()
- def test_product_panels_are_large_nonoverlapping_and_inside_frame(self):
-  for seed in ('000000'+'a'*26,'ffffff'+'a'*26):
-   box=composite.product_panel_box(seed)
-   self.assertEqual(box[2]-box[0],740)
-   for family in ('tape20','hose'):
-    output=composite.compose(Image.new('RGB',(1200,675),(190,170,140)),family,seed)
-    self.assertEqual(output.size,(1200,675))
-    panel=output.crop(box)
-    self.assertGreater(sum(1 for r,g,b in panel.getdata()if b>r+10),10000)
+ def test_generation_never_calls_rejected_compositor(self):
+  source=__import__('inspect').getsource(generated.generate)
+  self.assertNotIn('compose(',source)
+  self.assertIn('blog_reference_scene',source)
+  from blog_reference_scene import prompt,references,topic_hash
+  text=prompt(self.item,'roya')
+  self.assertIn(self.item['_image_article_context']['title'],text)
+  self.assertIn('Never create panels',text)
+  self.assertEqual(len(references(self.item)),1)
+  changed=copy.deepcopy(self.item);changed['_image_article_context']['summary']+=' بررسی فشار'
+  self.assertNotEqual(topic_hash(self.item),topic_hash(changed))
+  feedback={**self.item,'_image_qa_feedback':'retry: shadow'}
+  self.assertEqual(topic_hash(self.item),topic_hash(feedback))
+ def test_actual_article_body_is_required(self):
+  from blog_reference_scene import prompt
+  with self.assertRaisesRegex(RuntimeError,'Actual post title and body'):
+   prompt({'key':'x','family':'tape20','site_title':'نوار تیپ'},'roya')
+ def test_explicit_pause_cannot_fall_back_to_rejected_source_images(self):
+  with tempfile.TemporaryDirectory()as d:
+   root=Path(d);(root/'data').mkdir()
+   (root/'data/blog-generated-image-control.json').write_text(json.dumps({'enabled':False,'pause_image_production':True}))
+   with self.assertRaisesRegex(RuntimeError,'explicitly paused'):generated.rollout_enabled('roya',root)
  def test_audited_image_pool_is_required_even_with_override_key(self):
   with patch.object(generated,'capability_slots',side_effect=RuntimeError('audit missing')),patch.dict('os.environ',{'IMAGE_API_KEY':'not-a-real-key'}):
    with self.assertRaisesRegex(RuntimeError,'audit missing'):generated.generate(self.item,'roya')
@@ -51,17 +64,24 @@ class ImageRolloutTests(unittest.TestCase):
    with patch.object(generated,'existing_asset',return_value=None),patch.object(generated,'generate',return_value=self.raw)as gen,patch.object(gate,'review',side_effect=RuntimeError('Vision credential required')):
     with self.assertRaisesRegex(RuntimeError,'Vision credential required'):generated.prepare(copy.deepcopy(self.item),'roya',Path(d))
     self.assertEqual(gen.call_count,1)
- def test_qa_receives_labeled_full_frame_detail_and_actual_references(self):
-  verdict={'pass':True,'score':90,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False}
+ def test_qa_receives_whole_scene_actual_article_and_identity_reference(self):
+  verdict={'pass':True,'score':90,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'collage_or_split_layout':False,'crop_contradiction':False}
   reply={'choices':[{'message':{'content':json.dumps(verdict)}}]}
   with tempfile.TemporaryDirectory()as d:
    with patch.object(gate,'fetch',return_value=(self.raw,(1200,675),'WEBP')),patch.object(roya.BASE,'next_agnes_key',return_value='test-key'),patch.object(roya.BASE,'fetch_json',return_value=reply)as call:
     gate.review(copy.deepcopy(self.item),'generated://roya/'+'a'*32,Path(d),_candidate=self.raw)
    content=call.call_args.args[2]['messages'][0]['content']
-   self.assertEqual(len([x for x in content if x['type']=='image_url']),3)
+   self.assertEqual(len([x for x in content if x['type']=='image_url']),2)
    text=' '.join(x['text']for x in content if x['type']=='text')
-   for label in ('CANDIDATE FULL FRAME','CANDIDATE PRODUCT DETAIL','APPROVED PRODUCT REFERENCE'):self.assertIn(label,text)
-   self.assertIn('not an additional reference',text)
+   for label in ('CANDIDATE FULL FRAME','APPROVED PRODUCT REFERENCE',self.item['_image_article_context']['title']):self.assertIn(label,text)
+   self.assertIn('topic_match',text);self.assertIn('collage_or_split_layout',text)
+ def test_split_layout_and_topic_mismatch_are_rejected(self):
+  base={'pass':True,'score':90,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'collage_or_split_layout':False,'crop_contradiction':False}
+  for change in ({'topic_match':False},{'product_integrated':False},{'collage_or_split_layout':True},{'crop_contradiction':True}):
+   reply={'choices':[{'message':{'content':json.dumps({**base,**change})}}]}
+   with tempfile.TemporaryDirectory()as d,patch.object(gate,'fetch',return_value=(self.raw,(1200,675),'WEBP')),patch.object(roya.BASE,'next_agnes_key',return_value='test-key'),patch.object(roya.BASE,'fetch_json',return_value=reply):
+    with self.assertRaisesRegex(RuntimeError,'Integrated/topic'):
+     gate.review(copy.deepcopy(self.item),'generated://roya/'+'a'*32,Path(d),_candidate=self.raw)
  def test_four_blog_engine_and_roya_use_enabled_generated_route(self):
   for blog in ('farsiblog','rozblog','blogfa','loxblog'):
    item={**self.item,'_image_blog':blog}
@@ -81,7 +101,7 @@ class ImageRolloutTests(unittest.TestCase):
  def test_generated_record_is_bound_to_blog_key_policy_and_real_photos(self):
   item=copy.deepcopy(self.item);asset=generated.identity(item,'roya')
   url='https://raw.githubusercontent.com/getsalet/nono/'+'a'*40+'/assets/blog-generated/roya/'+asset+'.webp'
-  item.update(image_review={'watermark':__import__('blog_image_watermark').TEXT},image_url=url,image_generation={'policy':generated.POLICY,'blog':'roya','asset_id':asset,'url':url,'watermark':__import__('blog_image_watermark').TEXT,'watermark_policy':__import__('blog_image_watermark').POLICY,'product_photos':composite.provenance('tape20')})
+  item.update(image_review={'watermark':__import__('blog_image_watermark').TEXT,'topic_sha256':__import__('blog_reference_scene').topic_hash(item)},image_url=url,image_generation={'policy':generated.POLICY,'topic_sha256':__import__('blog_reference_scene').topic_hash(item),'blog':'roya','asset_id':asset,'url':url,'watermark':__import__('blog_image_watermark').TEXT,'watermark_policy':__import__('blog_image_watermark').POLICY,'product_photos':composite.provenance('tape20')})
   self.assertEqual(gate.generated_record_errors(item,'roya'),[])
   for changed in ({**item,'key':'other'}, {**item,'image_url':url.replace('a'*40,'main')}, {**item,'image_generation':{**item['image_generation'],'product_photos':[]}}):
    self.assertTrue(gate.generated_record_errors(changed,'roya'))
@@ -90,7 +110,7 @@ class ImageRolloutTests(unittest.TestCase):
   with patch.object(generated,'rollout_enabled',return_value=True):
    self.assertTrue(gate.generated_record_errors(self.item,'roya'))
  def test_nonfinite_scores_never_pass_visual_gate(self):
-  verdict={'pass':True,'score':'NaN','observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False}
+  verdict={'pass':True,'score':'NaN','observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'collage_or_split_layout':False,'crop_contradiction':False}
   self.assertIn('Image score below 70',gate.verdict_errors(verdict,'tape20'))
 
 if __name__=='__main__':unittest.main()

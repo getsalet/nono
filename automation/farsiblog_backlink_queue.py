@@ -178,6 +178,7 @@ def main():
     completed=[];failed=[]
     for item in candidates[:min(9,max(3,count*3))]:
         if len(completed)>=count:break
+        item.pop('_image_prepared_this_run',None)
         links=links_for(item);obj=None;errors=[];info={};stage='recovery'
         try:
             previous=load(item_path(item['key']),{})
@@ -189,7 +190,6 @@ def main():
             if obj is None:
                 stage='image'
                 item['_image_blog']=CITY_BLOG
-                if item.get("kind")in("city","article"):retry_transient(lambda:prepare_image(item))
                 stage='source'
                 source=retry_transient(lambda:source_text(item))
                 for attempt in range(3):
@@ -200,6 +200,10 @@ def main():
                         from city_backlink_policy import matrix_title,resolve_editorial_link_tokens
                         resolve_editorial_link_tokens(obj,links)
                         obj['title']=matrix_title(item,CITY_BLOG)
+                    if item.get('kind')in('city','article')and not item.get('_image_prepared_this_run'):
+                        from blog_reference_scene import context_from_post
+                        item['_image_article_context']=context_from_post(obj);stage='image'
+                        retry_transient(lambda:prepare_image(item));item['_image_prepared_this_run']=True
                     stage='validation'
                     obj['html']='<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+html.escape(item['image_alt'],quote=True)+'" width="'+str(item['image_width'])+'" height="'+str(item['image_height'])+'" loading="lazy"></p>'+obj.get('html','');obj['image_url']=item['image_url']
                     errors,info=qa(item,obj,links);print(f'{item["key"]}: attempt={attempt+1}, words={info.get("words")}, errors={len(errors)}',flush=True)

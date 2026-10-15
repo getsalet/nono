@@ -558,14 +558,17 @@ def main():
         errors, obj = ['not generated'], None
         for attempt in range(1, ATTEMPTS + 1):
             try:
-                if image_url is None:
-                    image_url = prepare_roya_image(item)
                 if DRY_RUN or not (BASE.AGNES_KEY or BASE.AGNES_KEYS):
                     obj = offline_sample(item, links)
                 elif attempt == 1:
                     obj = agnes(build_prompt(item, links))
                 else:
                     obj = agnes(repair_prompt(item, links, obj, errors),temperature=0.1)
+                obj['title'] = item['assigned_title']
+                if image_url is None:
+                    from blog_reference_scene import context_from_post
+                    item['_image_article_context'] = context_from_post(obj)
+                    image_url = prepare_roya_image(item)
             except Exception as exc:
                 errors = ['agnes error: ' + str(exc)[:200]]
                 print(f'{item["key"]} attempt={attempt} {errors[0]}', flush=True)
