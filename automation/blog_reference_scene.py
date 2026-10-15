@@ -5,7 +5,7 @@ Agnes payload/reference/watermark order follows nono's exact-product rebuild.
 import hashlib,json,re
 import blog_reference_image_policy as reference
 POLICY='afp-one-generated-blog-image-v6-reference-integrated-topic-scene'
-RECIPE_VERSION='two-repo-positive-scene-20261016-r4-safe-frame'
+RECIPE_VERSION='two-repo-positive-scene-20261016-r5-full-frame-count-evidence'
 SOURCES=['https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py','https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py']
 def context_from_post(post):
  text=re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',post.get('html',''))).strip()
@@ -52,7 +52,7 @@ def prompt(item,blog):
  # Positive whitelist follows nono/image_prompt_policy.py; botanical lock follows maghala2.
  # A long list of forbidden scene subjects was repeatedly reproduced by the model.
  product=(
-  'Exactly two related AFP layflat objects: one low wide packaged black woven coil with the reference folded printed cardboard panels, crossing straps and central opening; one separate bare flat black woven coil with concentric fabric layers, small brown cardboard center and one short flat end. Both rest horizontally. The pair occupies about 25 percent of frame width.'
+  'Visible commercial product inventory is exactly TWO objects total, one packaged and one bare: one low wide packaged black woven coil with the reference folded printed cardboard panels, crossing straps and central opening; one separate bare flat black woven coil with concentric fabric layers, small brown cardboard center and one short flat end. The packaged coil and the single bare coil rest horizontally. The pair occupies about 25 percent of frame width. The installed coupling is a distinct fixed detail beside them and must be clearly visible.'
   if expected=='hose'else
   'Exactly one AFP drip-tape carton roll: low wide white-and-blue cylindrical sleeve, circular top, central hole, straight walls, authentic AFP print and blue lower band. Its diameter is about 1.7 times its height. The product occupies about 23 percent of frame width.'
  )

@@ -72,7 +72,7 @@ class ImageRolloutTests(unittest.TestCase):
     with self.assertRaisesRegex(RuntimeError,'Vision credential required'):generated.prepare(copy.deepcopy(self.item),'roya',Path(d))
     self.assertEqual(gen.call_count,1)
  def test_qa_receives_whole_scene_actual_article_and_identity_reference(self):
-  verdict={'pass':True,'score':90,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'product_fully_in_frame':True,'collage_or_split_layout':False,'crop_contradiction':False}
+  verdict={'pass':True,'score':90,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'product_fully_in_frame':True,'product_count_match':True,'technical_evidence_match':True,'observed_product_count':1,'collage_or_split_layout':False,'crop_contradiction':False}
   reply={'choices':[{'message':{'content':json.dumps(verdict)}}]}
   with tempfile.TemporaryDirectory()as d:
    with patch.object(gate,'fetch',return_value=(self.raw,(1200,675),'WEBP')),patch.object(roya.BASE,'next_agnes_key',return_value='test-key'),patch.object(roya.BASE,'fetch_json',return_value=reply)as call:
@@ -83,8 +83,8 @@ class ImageRolloutTests(unittest.TestCase):
    for label in ('CANDIDATE FULL FRAME','APPROVED PRODUCT REFERENCE',self.item['_image_article_context']['title']):self.assertIn(label,text)
    self.assertIn('topic_match',text);self.assertIn('collage_or_split_layout',text)
  def test_split_layout_and_topic_mismatch_are_rejected(self):
-  base={'pass':True,'score':90,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'product_fully_in_frame':True,'collage_or_split_layout':False,'crop_contradiction':False}
-  for change in ({'topic_match':False},{'product_integrated':False},{'product_fully_in_frame':False},{'collage_or_split_layout':True},{'crop_contradiction':True}):
+  base={'pass':True,'score':90,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'product_fully_in_frame':True,'product_count_match':True,'technical_evidence_match':True,'observed_product_count':1,'collage_or_split_layout':False,'crop_contradiction':False}
+  for change in ({'topic_match':False},{'product_integrated':False},{'product_fully_in_frame':False},{'product_count_match':False},{'technical_evidence_match':False},{'observed_product_count':3},{'collage_or_split_layout':True},{'crop_contradiction':True}):
    reply={'choices':[{'message':{'content':json.dumps({**base,**change})}}]}
    with tempfile.TemporaryDirectory()as d,patch.object(gate,'fetch',return_value=(self.raw,(1200,675),'WEBP')),patch.object(roya.BASE,'next_agnes_key',return_value='test-key'),patch.object(roya.BASE,'fetch_json',return_value=reply):
     with self.assertRaisesRegex(RuntimeError,'Integrated/topic'):
@@ -125,7 +125,7 @@ class ImageRolloutTests(unittest.TestCase):
   with patch.object(generated,'rollout_enabled',return_value=True):
    self.assertTrue(gate.generated_record_errors(self.item,'roya'))
  def test_nonfinite_scores_never_pass_visual_gate(self):
-  verdict={'pass':True,'score':'NaN','observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'product_fully_in_frame':True,'collage_or_split_layout':False,'crop_contradiction':False}
+  verdict={'pass':True,'score':'NaN','observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'product_fully_in_frame':True,'product_count_match':True,'technical_evidence_match':True,'observed_product_count':1,'collage_or_split_layout':False,'crop_contradiction':False}
   self.assertIn('Image score below 70',gate.verdict_errors(verdict,'tape20'))
 
 if __name__=='__main__':unittest.main()

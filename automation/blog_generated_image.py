@@ -124,7 +124,7 @@ def generate(item,blog,slots=None,max_attempts=3):
  expected=family(item)
  endpoint=os.getenv('IMAGE_ENDPOINT')or roya.BASE.AGNES_BASE+'/images/generations'
  if not endpoint.startswith('https://'):raise RuntimeError('Image endpoint requires HTTPS')
- payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':__import__('blog_reference_scene').prompt(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':__import__('blog_reference_scene').references(item)}}
+ payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':__import__('blog_reference_scene').prompt(item,blog),'size':'1024x576','return_base64':True,'extra_body':{'response_format':'b64_json','image':__import__('blog_reference_scene').references(item)}}
  names=slots if slots is not None else capability_slots()
  if slots is None:
   preferred=[n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_PREFERRED_KEY_SLOTS')or os.getenv('AGNES_PREFERRED_KEY_SLOTS',''))if n]
@@ -174,7 +174,10 @@ def generate(item,blog,slots=None,max_attempts=3):
  if len(raw)>12*1024*1024:raise RuntimeError('Generated image too large')
  image=Image.open(io.BytesIO(raw));image.verify();image=Image.open(io.BytesIO(raw)).convert('RGB')
  if min(image.size)<512 or max(image.size)>10000:raise RuntimeError('Generated image dimensions unacceptable')
- image=ImageOps.fit(image,(1200,675),Image.Resampling.LANCZOS)
+ if image.width<=image.height:raise RuntimeError('Generated image must be landscape; no destructive crop fallback')
+ original_size=image.size
+ image=image.resize((1200,round(1200*image.height/image.width)),Image.Resampling.LANCZOS)
+ item['_image_render']={'requested_size':payload['size'],'provider_size':list(original_size),'output_size':list(image.size),'cropped':False}
  from blog_image_watermark import apply
  image=apply(image)
  out=io.BytesIO();image.save(out,'WEBP',quality=88,method=6)
@@ -211,5 +214,5 @@ def prepare(item,blog,root=None):
   url=checkpoint_asset(path,raw,root)
   item['_generation_stage']='public_vision_qa'
   review(item,url,root=root) # Fetch immutable public bytes, not just local success.
- item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'reference-conditioned-single-pass-topic-scene','topic_sha256':__import__('blog_reference_scene').topic_hash(item),'reference_sources':__import__('blog_reference_scene').SOURCES,'watermark':__import__('blog_image_watermark').TEXT,'watermark_policy':__import__('blog_image_watermark').POLICY,'product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP')
+ item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'reference-conditioned-single-pass-topic-scene','topic_sha256':__import__('blog_reference_scene').topic_hash(item),'reference_sources':__import__('blog_reference_scene').SOURCES,'rendering':item.get('_image_render',{}),'watermark':__import__('blog_image_watermark').TEXT,'watermark_policy':__import__('blog_image_watermark').POLICY,'product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP')
  return url
