@@ -188,6 +188,7 @@ def main():
                     print(item['key']+': recovered existing draft after complete cross-blog validation; no new AI charge',flush=True)
             if obj is None:
                 stage='image'
+                item['_image_blog']=CITY_BLOG
                 if item.get("kind")in("city","article"):retry_transient(lambda:prepare_image(item))
                 stage='source'
                 source=retry_transient(lambda:source_text(item))

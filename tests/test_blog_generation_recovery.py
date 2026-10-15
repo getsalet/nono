@@ -7,7 +7,7 @@ import farsiblog_backlink_queue as f
 class GenerationRecoveryTests(unittest.TestCase):
  def test_reference_identity_uses_physical_references_not_package_words(self):
   text=g.reference_identity_instruction('hose')
-  self.assertIn('Image 3',text);self.assertIn('printed words alone must not override',text)
+  self.assertIn('labeled bare reference',text);self.assertIn('printed words alone must not override',text)
   self.assertIn('separate true',text);self.assertNotEqual(g.POLICY,'blog-product-family-reference-vision-v1')
  def test_wrong_family_still_fails(self):
   v={'pass':True,'score':95,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False}

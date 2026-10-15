@@ -275,6 +275,13 @@ def target_image(item):
     return found
 
 
+def prepare_roya_image(item):
+    from blog_generated_image import rollout_enabled, prepare
+    if item.get('family') in ('tape20', 'hose') and rollout_enabled('roya'):
+        return prepare(item, 'roya')
+    return target_image(item)
+
+
 def inject_image(item, obj, image_url):
     """Put the city image first in the article; Roya uses the first body image as the post image."""
     html = (obj.get('html') or '')
@@ -419,8 +426,13 @@ def qa(item, obj, links):
     else:
         src = re.search(r'src=["\']([^"\']+)["\']', imgs[0], flags=re.I)
         alt = re.search(r'alt=["\']([^"\']+)["\']', imgs[0], flags=re.I)
-        if not src or not src.group(1).startswith('https://navar-abyari.ir/wp-content/uploads/'):
-            errors.append('post image must be hosted on navar-abyari.ir/wp-content/uploads')
+        from blog_image_gate import approved_url, validate_record
+        if not src or not approved_url(src.group(1)):
+            errors.append('post image must use an approved source or immutable generated asset URL')
+        if item.get('image_generation'):
+            errors.extend(validate_record(item))
+            if src and src.group(1) != item.get('image_url'):
+                errors.append('generated post image differs from reviewed image')
         if not alt or len(alt.group(1).strip()) < 4:
             errors.append('post image needs a descriptive alt text')
         if html.strip().find(imgs[0]) > 30:
@@ -537,10 +549,12 @@ def main():
         item['attempts'] = int(item.get('attempts', 0)) + 1
         state['in_progress'] = item['key']
         links = approved_links(item, lib)
-        image_url = target_image(item)
+        image_url = None
         errors, obj = ['not generated'], None
         for attempt in range(1, ATTEMPTS + 1):
             try:
+                if image_url is None:
+                    image_url = prepare_roya_image(item)
                 if DRY_RUN or not (BASE.AGNES_KEY or BASE.AGNES_KEYS):
                     obj = offline_sample(item, links)
                 elif attempt == 1:

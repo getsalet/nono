@@ -93,6 +93,9 @@ def links_for(item):
  return links
 
 def prepare_image(item):
+ from blog_generated_image import rollout_enabled,prepare
+ blog=item.get("_image_blog")
+ if blog and rollout_enabled(blog):return prepare(item,blog)
  from blog_image_gate import review, family, REFERENCES
  expected=family(item)  # Reject unknown/mismatched products before choosing a photo.
  image=roya.target_image(item)

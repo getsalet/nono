@@ -7,7 +7,7 @@ import base64,hashlib,io,json,os,re,subprocess,tempfile,time,urllib.request,urll
 from pathlib import Path
 from PIL import Image,ImageOps
 import roya_backlink_queue as roya
-POLICY='afp-one-generated-blog-image-v4-editorial-photo-panels'
+POLICY='afp-one-generated-blog-image-v5-product-dominant-panels'
 BLOGS={'roya','farsiblog','rozblog','blogfa','loxblog'}
 RAW='https://raw.githubusercontent.com/getsalet/nono/'
 
@@ -60,9 +60,9 @@ def background_brief(item,blog):
  seed=identity(item,blog)
  views=['a gently elevated oblique view along parallel prepared irrigation beds','an oblique side view of prepared irrigation rows receding diagonally','a field-edge view with a distant irrigation junction and long prepared beds']
  return ('Generate ONLY a photorealistic neutral educational irrigation BACKGROUND. Commercial product photographs will be composited afterwards; do not generate any product or packaging. '
-  +'Bright overcast soft neutral daylight, believable brown soil, distant thin irrigation lines, no identifiable crop species, no claim of a real city or actual farm. '
+  +'Bright overcast soft neutral daylight, believable brown soil, empty prepared agricultural rows, no identifiable crop species, no claim of a real city or actual farm. '
   +'No people, hands, animals, vehicles, tractors, buildings, signs, text, letters, logos, cartons, rolls, reels, coils or packaged goods. '
-  +'Keep the lower half as open level fine soil with room for real objects; no foreground obstruction, no deep furrows or crossing pipes there. Horizon in the upper third. '
+  +'Keep the lower half as open level fine soil with room for real objects; no foreground obstruction, no deep furrows. No pipes, hose, tape, tubes, fittings or other commercial irrigation products anywhere in the background. Horizon in the upper third. '
   +'Landscape 16:9 editorial agricultural photography; natural, restrained, uncluttered and sharply detailed foreground. '
   +'Camera: '+views[int(seed[:6],16)%len(views)]+'.')
 
@@ -120,7 +120,8 @@ def generate(item,blog,slots=None,max_attempts=3):
  endpoint=os.getenv('IMAGE_ENDPOINT')or roya.BASE.AGNES_BASE+'/images/generations'
  if not endpoint.startswith('https://'):raise RuntimeError('Image endpoint requires HTTPS')
  payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':background_brief(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}}
- names=slots if slots is not None else (capability_slots()if os.getenv('AGNES_IMAGE_REQUIRE_CAPABILITY_AUDIT')=='1'else [n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_KEY_SLOTS',''))if n])
+ names=slots if slots is not None else capability_slots()
+ if not names:raise RuntimeError('At least one audited image-capable credential required')
  if names:
   from agnes_key_pool import NAMES
   if any(n not in NAMES for n in names):raise RuntimeError('Unknown image credential slot name')
@@ -133,12 +134,12 @@ def generate(item,blog,slots=None,max_attempts=3):
   selected=selected[offset:]+selected[:offset]
  attempts=item.setdefault('_image_provider_attempts',[])
  for attempt in range(max_attempts):
-  key=os.getenv('IMAGE_API_KEY','').strip()or(selected[attempt%len(selected)]if selected else roya.BASE._key_pool.next())
+  key=selected[attempt%len(selected)]
   row={'requested_secret_slot':roya.BASE._key_pool.slots.get(key,'IMAGE_API_KEY'),'attempt':attempt+1}
   attempts.append(row)
   if not key:raise RuntimeError('Existing image API credential required')
   try:
-   data=roya.BASE._key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+identity(item,blog)},payload,timeout=180,allowed_keys=selected)
+   data=roya.BASE._key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+identity(item,blog)+'-r'+str(item.get('_image_generation_round',0))},payload,timeout=180,allowed_keys=selected)
    row.update(http_status=200,status='generation_response_received')
    break
   except RuntimeError as exc:
@@ -178,12 +179,23 @@ def prepare(item,blog,root=None):
   review(item,url,root=root)
  else:
   cache=root/f'artifacts/{blog}-backlink-queue/generated-images'/f'{asset_id}.webp';cache.parent.mkdir(parents=True,exist_ok=True)
-  if not cache.exists():
-   item['_generation_stage']='generation_api'
-   raw=generate(item,blog);tmp=cache.with_suffix('.tmp');tmp.write_bytes(raw);tmp.replace(cache)
-  raw=cache.read_bytes()
-  item['_generation_stage']='local_vision_qa'
-  review(item,'generated://'+blog+'/'+asset_id,root=root,_candidate=raw)
+  # Definitive visual rejection invalidates a candidate, never the entire queue.
+  # Bound regeneration to three candidates; auth/transport errors are NOT QA.
+  for round_index in range(3):
+   if not cache.exists():
+    item['_generation_stage']='generation_api';item['_image_generation_round']=round_index
+    raw=generate(item,blog);tmp=cache.with_suffix('.tmp');tmp.write_bytes(raw);tmp.replace(cache)
+   raw=cache.read_bytes();item['_generation_stage']='local_vision_qa'
+   try:
+    review(item,'generated://'+blog+'/'+asset_id,root=root,_candidate=raw)
+    break
+   except RuntimeError as exc:
+    if not str(exc).startswith('Product image rejected:'):raise
+    digest=hashlib.sha256(raw).hexdigest()
+    rejected=cache.parent/'rejected';rejected.mkdir(exist_ok=True)
+    cache.replace(rejected/(asset_id+'-'+digest[:12]+'.webp'))
+    item.setdefault('_image_rejections',[]).append({'sha256':digest,'reason':str(exc)[:400]})
+    if round_index==2:raise
   item['_generation_stage']='asset_checkpoint'
   url=checkpoint_asset(path,raw,root)
   item['_generation_stage']='public_vision_qa'

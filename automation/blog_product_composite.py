@@ -33,24 +33,28 @@ def product_sources(family):
  if family not in PHOTOS:raise RuntimeError('Unknown product family: real-photo composition refused')
  return [(name,base64.b64decode((ASSETS/name).read_text().strip()))for name in PHOTOS[family]]
 
+def product_panel_box(variation):
+ # Stable panel identity, also used to make a zoomed QA view of the SAME pixels.
+ return (0,0,740,675) if int(variation[:6],16)%2==0 else (460,0,1200,675)
+
 def compose(background,family,variation):
- # Editorial split panel makes the illustration explicit: products are NOT
- # presented as real objects photographed in the generated farm scene.
+ # Explicit editorial diptych, not a pretend photograph of pasted products.
  if background.size!=(1200,675):raise RuntimeError('Product composition requires 1200x675 background')
  sources=product_sources(family)
  from PIL import ImageOps
  canvas=Image.new('RGB',(1200,675),'white')
- panel_right=int(variation[:6],16)%2==0
- field_x=0 if panel_right else 520
- canvas.paste(ImageOps.fit(background.convert('RGB'),(680,675),Image.Resampling.LANCZOS),(field_x,0))
- product_x=680 if panel_right else 0
- draw=ImageDraw.Draw(canvas);divider=680 if panel_right else 516
+ box=product_panel_box(variation);product_x=box[0]
+ field_x=740 if product_x==0 else 0
+ canvas.paste(ImageOps.fit(background.convert('RGB'),(460,675),Image.Resampling.LANCZOS),(field_x,0))
+ draw=ImageDraw.Draw(canvas);divider=738 if product_x==0 else 458
  draw.rectangle((divider,0,divider+3,674),fill=(13,108,124))
- frames=[(product_x+70,147,380,380)]if family=='tape20'else[(product_x+90,40,340,280),(product_x+90,355,340,280)]
- for (name,raw),(x,y,w,h)in zip(sources,frames):
-  # Retain the entire authentic photo, including its original white background.
-  product=Image.open(io.BytesIO(raw)).convert('RGB');product.thumbnail((w,h),Image.Resampling.LANCZOS)
-  canvas.paste(product,(x+(w-product.width)//2,y+(h-product.height)//2))
+ # Full, correctly proportioned source photographs. No redraw, stretching, text
+ # synthesis or white-background removal. Product identity dominates the image.
+ frames=[(80,55,580,565)] if family=='tape20' else [(55,35,620,450),(465,500,220,150)]
+ for (name,raw),(x,y,w,h) in zip(sources,frames):
+  product=Image.open(io.BytesIO(raw)).convert('RGB')
+  product=ImageOps.contain(product,(w,h),Image.Resampling.LANCZOS)
+  canvas.paste(product,(product_x+x+(w-product.width)//2,y+(h-product.height)//2))
  return canvas
 
 def provenance(family):
