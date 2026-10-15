@@ -49,6 +49,10 @@ class LoxBlogIndependentPipelineTests(unittest.TestCase):
   s=(ROOT/'automation/loxblog_native.py').read_text()
   self.assertNotIn('storage_state',s);self.assertNotIn('post_data',s);self.assertNotIn('print(feedback',s)
   self.assertIn('no automatic credential retry',s)
+ def test_image_iri_fits_native_field_without_changing_reserved_escapes(self):
+  script='from publish_loxblog_posts import native_image_value;from urllib.parse import quote;u="https://navar-abyari.ir/wp-content/uploads/"+quote("نوار آبیاری"*10)+"%2Fphoto.jpg";v=native_image_value(u);assert len(v)<240;assert "%2Fphoto.jpg" in v;assert quote(v,safe=":/%")==u;print("PASS")'
+  out=subprocess.check_output([sys.executable,'-c',script],env={**os.environ,'PYTHONPATH':str(ROOT/'automation')},text=True)
+  self.assertIn('PASS',out)
  def test_native_form_identity_and_server_date_are_preserved(self):
   s=(ROOT/'automation/publish_loxblog_posts.py').read_text()
   self.assertIn("form.id=form.id||'afp-native-post'",s)

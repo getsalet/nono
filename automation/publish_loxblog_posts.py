@@ -61,12 +61,19 @@ def assert_no_native_match(page,title):
  table=page.locator('table')
  if table.count()!=1 or 'هیچ مطلبی با این مشخصات پیدا نشد' not in table.inner_text():raise RuntimeError('Possible published/draft/sticky match; reconcile before creation')
 
+def native_image_value(url):
+ # Decode only UTF-8 non-ASCII escapes into an equivalent IRI. Keep encoded
+ # ASCII delimiters untouched; never shorten through a third-party redirect.
+ value=re.sub(r'(?:%[89a-fA-F][0-9a-fA-F])+',lambda m:unquote(m.group(),errors='strict'),url)
+ if len(value)>240:raise RuntimeError('Approved image metadata URL exceeds native safe column limit')
+ return value
+
 def prepare(page,item):
  post=item['post'];short,more=native_split(post['html'])
  page.locator('#ptitle').wait_for(timeout=30000)
  page.wait_for_function('()=>window.tinymce?.get("editor1")?.initialized && window.tinymce?.get("editor2")?.initialized',timeout=60000)
  page.locator('#ptitle').fill(post['title']);page.locator('#pslug-input').fill(post['slug'])
- page.locator('input[name=pimage]').fill(item['image_url'])
+ page.locator('input[name=pimage]').fill(native_image_value(item['image_url']))
  page.evaluate('tags=>{const e=document.querySelector("#keywords"),t=e.__tagify;if(!t)throw new Error("Native tag control unavailable");t.removeAllTags();t.addTags(tags);}',post.get('tags',[])[:4])
  page.locator('textarea[name=meta_description]').fill(post['meta_description'])
  # Preserve the server-selected current Jalali timestamp instead of erasing it.
@@ -160,6 +167,12 @@ def main():
      # Read only visible native validation feedback; never request payloads or tokens.
      feedback=page.locator('.alert-danger,.alert-warning,.invalid-feedback-custom').all_inner_texts()
      feedback=' | '.join(x.strip()for x in feedback if x.strip())[:600]
+     # Some native database errors are unstyled and return HTTP 200.
+     # Store only a category; never log the page's account details or stack trace.
+     visible=page.locator('body').inner_text()
+     if 'Data too long for column' in visible:feedback='Native database rejected an oversized field'
+     elif 'Fatal error:' in visible:feedback='Native server fatal error'
+     elif page.locator('#loginForm').count():feedback='Native session lost after submission'
      for attempt in range(12):
       existing=scan_public(public);record=existing.get(title)
       if record:break
