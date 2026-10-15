@@ -92,6 +92,9 @@ def repair_request(item,links,source,previous,errors):
     previous=copy.deepcopy(previous or {})
     previous['html']=re.sub(r'<p>\s*<img\b[^>]*>\s*</p>', '', previous.get('html',''), flags=re.I)
     previous.pop('image_url',None)
+    if item.get('kind') in ('city','article'):
+        for i,link in enumerate(links,1):
+            previous['html']=previous['html'].replace(link['url'],f'AFP_LINK_{i}')
     return (prompt(item,links,source)+'\nمقاله قبلی رد شده است؛ همین متن را با حفظ موضوع و استقلال اصلاح کن. '
             'خطاها دقیقاً برطرف شوند، نه اینکه صرفاً متن دیگری بدون بررسی بسازی. تصویر را تولید نکن. '
             'خروجی فقط JSON کامل، بدون span یا واژه لاتین غیرمجاز باشد.\nخطاها: '+json.dumps(errors,ensure_ascii=False)+
@@ -132,7 +135,8 @@ def defer_item(item,current=None):
 def retry_transient(operation):
     for attempt in range(3):
         try:return operation()
-        except (TimeoutError,urllib.error.URLError) as exc:
+        except (TimeoutError,urllib.error.URLError,RuntimeError) as exc:
+            if isinstance(exc,RuntimeError) and not (re.fullmatch(r'Agnes/provider HTTP (?:408|429|500|502|503|504); raw response withheld',str(exc)) or str(exc)=='Agnes/provider transport failure; private details withheld'):raise
             if isinstance(exc,urllib.error.HTTPError) and exc.code not in (408,429,500,502,503,504):raise
             if attempt==2:raise
             time.sleep(2**(attempt+1))
@@ -192,7 +196,8 @@ def main():
                     request=repair_request(item,links,source,obj,errors) if obj is not None and errors else prompt(item,links,source)
                     obj=retry_transient(lambda:agnes(request,temperature=0.1 if attempt>0 else None))
                     if item.get('kind')in ('city','article'):
-                        from city_backlink_policy import matrix_title
+                        from city_backlink_policy import matrix_title,resolve_editorial_link_tokens
+                        resolve_editorial_link_tokens(obj,links)
                         obj['title']=matrix_title(item,CITY_BLOG)
                     stage='validation'
                     obj['html']='<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+html.escape(item['image_alt'],quote=True)+'" width="'+str(item['image_width'])+'" height="'+str(item['image_height'])+'" loading="lazy"></p>'+obj.get('html','');obj['image_url']=item['image_url']
