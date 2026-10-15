@@ -46,12 +46,24 @@ def main():
     if not edit:raise RuntimeError('Selected native post row not found')
     report['items'].append({'key':selection['key'],'pid':pid,'edit_url':edit})
     if report['editor_contract']is None:
-     page.goto(edit,wait_until='domcontentloaded');page.wait_for_selector('#mtitle')
-     if page.locator('#mtitle').input_value()!=title:raise RuntimeError('Native edit title changed; no writes allowed')
-     page.wait_for_function('()=>window.tinymce&&tinymce.get("mtex")?.initialized',timeout=60000)
-     report['editor_contract']={'editor_ids':page.evaluate('()=>tinymce.editors.map(x=>x.id)'),
+     report['stage']='open_observed_edit_route'
+     page.goto(edit,wait_until='domcontentloaded')
+     report['editor_contract']={'page_path':urlsplit(page.url).path,'title':page.title(),
        'controls':page.locator('input,textarea,select,button').evaluate_all("a=>a.filter(x=>x.type!=='hidden'&&x.type!=='password').map(x=>({tag:x.tagName,id:x.id,name:x.name,type:x.type,button_text:x.tagName==='BUTTON'?x.innerText:((x.type==='submit'||x.type==='button')?x.value:'')}))"),
-       'body_image_counts':page.evaluate('()=>["mtex","mtex2"].map(id=>({id,count:(tinymce.get(id)?.getContent()||"").match(/<img\\b/gi)?.length||0}))')}
+       'frames':[{'path':urlsplit(f.url).path,'host':urlsplit(f.url).hostname}for f in page.frames]}
+     report['stage']='wait_for_native_title'
+     page.wait_for_selector('#mtitle',timeout=20000)
+     report['title_matches']=page.locator('#mtitle').input_value()==title
+     if not report['title_matches']:raise RuntimeError('Native edit title changed; no writes allowed')
+     report['stage']='wait_for_editors'
+     page.wait_for_function('()=>window.tinymce&&tinymce.get("mtex")?.initialized',timeout=20000)
+     report['editor_contract']['editor_ids']=page.evaluate('()=>tinymce.editors.map(x=>x.id)')
+     report['editor_contract']['body_image_counts']=page.evaluate('()=>["mtex","mtex2"].map(id=>({id,count:(tinymce.get(id)?.getContent()||"").match(/<img\\b/gi)?.length||0}))')
+     report['stage']='editor_observed'
+
+  except Exception as exc:
+   report['error_type']=type(exc).__name__
+   raise
   finally:
    (OUT/'editor-discovery.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));browser.close()
  print('Read-only image editor discovery completed; inspected existing posts:',len(report['items']))
