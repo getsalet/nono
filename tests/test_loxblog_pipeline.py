@@ -49,6 +49,21 @@ class LoxBlogIndependentPipelineTests(unittest.TestCase):
   s=(ROOT/'automation/loxblog_native.py').read_text()
   self.assertNotIn('storage_state',s);self.assertNotIn('post_data',s);self.assertNotIn('print(feedback',s)
   self.assertIn('no automatic credential retry',s)
+ def test_controlled_acceptance_recovers_before_one_fresh_article(self):
+  s=(ROOT/'.github/workflows/loxblog-deployment-acceptance.yml').read_text()
+  self.assertIn('publisher.begin = refuse_new_submission',s)
+  self.assertIn('needs: reconcile-existing',s)
+  self.assertIn("LOXBLOG_COUNT: '1'",s)
+  self.assertIn('if: success() &&',s)
+ def test_custom_native_public_slugs_are_not_discarded(self):
+  script='from publish_loxblog_posts import public_records;r=public_records([{"url":"https://afp.lxb.ir/native-slug","title":"Exact title"},{"url":"https://afp.lxb.ir/post/7","title":"Alias title"}]);assert r["Exact title"]["pid"]is None;assert r["Alias title"]["pid"]==7;print("PASS")'
+  out=subprocess.check_output([sys.executable,'-c',script],env={**os.environ,'PYTHONPATH':str(ROOT/'automation')},text=True)
+  self.assertIn('PASS',out)
+ def test_existing_native_identity_is_checked_before_any_submit(self):
+  s=(ROOT/'automation/publish_loxblog_posts.py').read_text()
+  self.assertIn('native=find_native_record(page,title)',s)
+  self.assertIn("q.get('editpid'",s)
+  self.assertIn("page.locator('#ptitle').input_value()!=title",s)
  def test_image_iri_fits_native_field_without_changing_reserved_escapes(self):
   script='from publish_loxblog_posts import native_image_value;from urllib.parse import quote;u="https://navar-abyari.ir/wp-content/uploads/"+quote("نوار آبیاری"*10)+"%2Fphoto.jpg";v=native_image_value(u);assert len(v)<240;assert "%2Fphoto.jpg" in v;assert quote(v,safe=":/%")==u;print("PASS")'
   out=subprocess.check_output([sys.executable,'-c',script],env={**os.environ,'PYTHONPATH':str(ROOT/'automation')},text=True)

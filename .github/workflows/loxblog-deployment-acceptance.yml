@@ -1,0 +1,236 @@
+name: LoxBlog controlled deployment acceptance
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/loxblog-deployment-acceptance.yml]
+permissions:
+  contents: write
+concurrency:
+  group: loxblog-content-pipeline
+  cancel-in-progress: false
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+  reconcile-existing:
+    needs: tests
+    # Scheduled runs remain gated until a real hosted native publication is verified.
+    if: success() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+      AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+      AGNES_API_KEYS: ${{ secrets.AGNES_API_KEYS }}
+      AGNES_MODEL: agnes-2.5-flash
+      LOXBLOG_BROWSER: chromium
+      LOXBLOG_USERNAME: ${{ secrets.LOXBLOG_USERNAME }}
+      LOXBLOG_PASSWORD: ${{ secrets.LOXBLOG_PASSWORD }}
+      LOXBLOG_COUNT: '0'
+      LOXBLOG_PUBLISH: ${{ github.event.inputs.publish || '1' }}
+      LOXBLOG_PUBLISH_LIMIT: '3'
+      LOXBLOG_DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
+      LOXBLOG_TARGET: article-dcb8395cb830ce9d
+      LOXBLOG_LOGIN_DIAGNOSTIC: ${{ github.event.inputs.diagnose_login || '0' }}
+    steps:
+      # Read-only native diagnosis does not use the 1GB cross-blog image archive.
+      # Keep production checkout/history unchanged for checkpoint rebases.
+      - name: Checkout read-only LoxBlog diagnostic inputs
+        if: env.LOXBLOG_LOGIN_DIAGNOSTIC == '1'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /automation/
+            /data/
+            /state/loxblog-backlink-progress.json
+            /artifacts/loxblog-backlink-queue/
+      - uses: actions/checkout@v4
+        if: env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        with: {fetch-depth: 0, ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Check rolling publication budget before costly steps
+        id: budget
+        run: python automation/check_blog_run_budget.py loxblog
+      - name: Validate unattended credentials
+        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_PUBLISH == '1' && env.LOXBLOG_DRY_RUN != '1'
+        run: |
+          if [ -z "$LOXBLOG_USERNAME" ] || [ -z "$LOXBLOG_PASSWORD" ]; then
+            echo '::error::Set LOXBLOG_USERNAME and LOXBLOG_PASSWORD repository secrets.'
+            exit 1
+          fi
+      - run: python -m pip install --quiet Pillow
+        if: steps.budget.outputs.proceed == '1'
+      - name: Generate independent city article with approved image
+        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        run: python automation/loxblog_backlink_queue.py
+      - name: Install Playwright
+        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_PUBLISH == '1' && env.LOXBLOG_DRY_RUN != '1'
+        run: |
+          bash automation/install_blog_browser.sh "$LOXBLOG_BROWSER"
+      - name: Read-only reconcile and checkpoint existing LoxBlog post
+        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1'
+        run: |
+          PYTHONPATH=automation python - <<'PYREADONLY'
+          import publish_loxblog_posts as publisher
+          def refuse_new_submission(entry):
+              raise RuntimeError('Read-only recovery cannot submit a new native post')
+          publisher.begin = refuse_new_submission
+          import json
+          try:
+              code = publisher.main()
+          except Exception as exc:
+              reason = next((label for fragment,label in [('full title differs','native_title_mismatch'),('not unique','ambiguous_native_match'),('full article differs','body_mismatch'),('summary','summary_mismatch'),('FAQ','faq_mismatch'),('image','image_gate'),('login','login_failure'),('fingerprint','archive_layout')] if fragment in str(exc)), 'verification_failed')
+              publisher.engine.save(publisher.engine.ART/'acceptance-status.json', {'stage':'read_only_recovery','passed':False,'error_class':type(exc).__name__,'reason':reason})
+              raise
+          publisher.engine.save(publisher.engine.ART/'acceptance-status.json', {'stage':'read_only_recovery','passed':code == 0})
+          raise SystemExit(code)
+          PYREADONLY
+      - name: Preserve loxblog recovery checkpoints
+        if: always() && steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: loxblog-reconcile-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: ignore
+          path: |
+            data/loxblog/backlink-queue.json
+            state/loxblog-backlink-progress.json
+            artifacts/loxblog-backlink-queue
+            artifacts/content-originality
+            artifacts/blog-image-reviews
+      - name: Commit generation and per-post checkpoints
+        if: always() && steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for path in data/loxblog/backlink-queue.json state/loxblog-backlink-progress.json artifacts/loxblog-backlink-queue artifacts/content-originality artifacts/blog-image-reviews; do
+            if [ -e "$path" ]; then git add -f "$path"; fi
+          done
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Reconcile existing native LoxBlog publication without new submission'
+          # Print paths only, never contents or secrets, if an unknown write appears.
+          if ! git diff --quiet; then
+            git diff --name-only
+            echo '::error::Unexpected unstaged tracked changes; recovery artifact retained.'
+            exit 1
+          fi
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          echo '::error::Checkpoint push failed after three attempts; recovery artifact retained.'
+          exit 1
+  production-smoke:
+    needs: reconcile-existing
+    # Scheduled runs remain gated until a real hosted native publication is verified.
+    if: success() && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+      AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+      AGNES_API_KEYS: ${{ secrets.AGNES_API_KEYS }}
+      AGNES_MODEL: agnes-2.5-flash
+      LOXBLOG_BROWSER: chromium
+      LOXBLOG_USERNAME: ${{ secrets.LOXBLOG_USERNAME }}
+      LOXBLOG_PASSWORD: ${{ secrets.LOXBLOG_PASSWORD }}
+      LOXBLOG_COUNT: '1'
+      LOXBLOG_PUBLISH: ${{ github.event.inputs.publish || '1' }}
+      LOXBLOG_PUBLISH_LIMIT: '3'
+      LOXBLOG_DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
+      LOXBLOG_TARGET: ''
+      LOXBLOG_LOGIN_DIAGNOSTIC: ${{ github.event.inputs.diagnose_login || '0' }}
+    steps:
+      # Read-only native diagnosis does not use the 1GB cross-blog image archive.
+      # Keep production checkout/history unchanged for checkpoint rebases.
+      - name: Checkout read-only LoxBlog diagnostic inputs
+        if: env.LOXBLOG_LOGIN_DIAGNOSTIC == '1'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /automation/
+            /data/
+            /state/loxblog-backlink-progress.json
+            /artifacts/loxblog-backlink-queue/
+      - uses: actions/checkout@v4
+        if: env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        with: {fetch-depth: 0, ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Check rolling publication budget before costly steps
+        id: budget
+        run: python automation/check_blog_run_budget.py loxblog
+      - name: Validate unattended credentials
+        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_PUBLISH == '1' && env.LOXBLOG_DRY_RUN != '1'
+        run: |
+          if [ -z "$LOXBLOG_USERNAME" ] || [ -z "$LOXBLOG_PASSWORD" ]; then
+            echo '::error::Set LOXBLOG_USERNAME and LOXBLOG_PASSWORD repository secrets.'
+            exit 1
+          fi
+      - run: python -m pip install --quiet Pillow
+        if: steps.budget.outputs.proceed == '1'
+      - name: Generate independent city article with approved image
+        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        run: python automation/loxblog_backlink_queue.py
+      - name: Install Playwright
+        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_PUBLISH == '1' && env.LOXBLOG_DRY_RUN != '1'
+        run: |
+          bash automation/install_blog_browser.sh "$LOXBLOG_BROWSER"
+      - name: Publish and verify native LoxBlog post
+        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1'
+        run: |
+          if [ "$LOXBLOG_LOGIN_DIAGNOSTIC" = '1' ]; then
+            python automation/loxblog_native.py
+          else
+            python automation/publish_loxblog_posts.py
+          fi
+      - name: Preserve loxblog recovery checkpoints
+        if: always() && steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: loxblog-smoke-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: ignore
+          path: |
+            data/loxblog/backlink-queue.json
+            state/loxblog-backlink-progress.json
+            artifacts/loxblog-backlink-queue
+            artifacts/content-originality
+            artifacts/blog-image-reviews
+      - name: Commit generation and per-post checkpoints
+        if: always() && steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for path in data/loxblog/backlink-queue.json state/loxblog-backlink-progress.json artifacts/loxblog-backlink-queue artifacts/content-originality artifacts/blog-image-reviews; do
+            if [ -e "$path" ]; then git add -f "$path"; fi
+          done
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record original LoxBlog content and verified publication'
+          # Print paths only, never contents or secrets, if an unknown write appears.
+          if ! git diff --quiet; then
+            git diff --name-only
+            echo '::error::Unexpected unstaged tracked changes; recovery artifact retained.'
+            exit 1
+          fi
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          echo '::error::Checkpoint push failed after three attempts; recovery artifact retained.'
+          exit 1

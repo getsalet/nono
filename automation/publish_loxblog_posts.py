@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One native LoxBlog submit per item; uncertainty blocks unattended retries."""
 import os,re,sys,time
-from urllib.parse import urlsplit,unquote,urlencode
+from urllib.parse import urlsplit,unquote,urlencode,parse_qs
 import loxblog_backlink_queue as wrapper
 import publish_roya_posts as state
 from loxblog_native import login,launch_browser,assert_management,BLOG,NEW,ARCHIVE
@@ -17,11 +17,11 @@ def public_records(rows):
  found={}
  for r in rows:
   parts=urlsplit(r['url']);match=re.match(r'^/post/(\d+)(?:[/.]|$)',parts.path)
-  if parts.hostname!=HOST or not match:continue
+  if parts.scheme!='https' or parts.hostname!=HOST or parts.path.rstrip('/')in ('','/posts','/rss.xml'):continue
   title=r['title'].strip()
   if not title:raise RuntimeError('Empty public post title; incomplete dedup')
-  record={'pid':int(match[1]),'url':r['url']}
-  if title in found and found[title]['pid']!=record['pid']:raise RuntimeError('Duplicate public title')
+  record={'pid':int(match[1])if match else None,'url':r['url']}
+  if title in found and found[title]['pid']and record['pid']and found[title]['pid']!=record['pid']:raise RuntimeError('Duplicate public title')
   found[title]=record
  return found
 
@@ -45,7 +45,7 @@ def scan_public(page):
    selectors='article.post-card h2 a[href]' 
   rows=page.locator(selectors).evaluate_all('es=>es.map(e=>({url:e.href,title:e.textContent.trim()}))')
   for title,record in public_records(rows).items():
-   if title in found and found[title]['pid']!=record['pid']:raise RuntimeError('Ambiguous public title')
+   if title in found and found[title]['pid']and record['pid']and found[title]['pid']!=record['pid']:raise RuntimeError('Ambiguous public title')
    found[title]=record
   for link in page.locator('#navbar a[href]' if native_archive else '.pagination a[href]').evaluate_all('es=>es.map(e=>e.href)'):
    parts=urlsplit(link)
@@ -60,6 +60,28 @@ def assert_no_native_match(page,title):
  if page.locator('input[name=search]').input_value()!=title or page.locator('select[name=status]').input_value()!='':raise RuntimeError('Native all-status search was not applied')
  table=page.locator('table')
  if table.count()!=1 or 'هیچ مطلبی با این مشخصات پیدا نشد' not in table.inner_text():raise RuntimeError('Possible published/draft/sticky match; reconcile before creation')
+
+def find_native_record(page,title):
+ # All-status native search also covers posts outside the six-card homepage.
+ url=ARCHIVE+'&'+urlencode({'search':title,'cat':'0','status':'','sort':'newest'})
+ r=page.goto(url,wait_until='domcontentloaded',timeout=60000);assert_management(page)
+ if not r or r.status>=400:raise RuntimeError('Native lookup unavailable')
+ page.locator('input[name=search]').wait_for(timeout=30000)
+ if page.locator('input[name=search]').input_value()!=title or page.locator('select[name=status]').input_value()!='':raise RuntimeError('Native all-status lookup did not apply')
+ table=page.locator('table')
+ if table.count()!=1:raise RuntimeError('Native archive layout is ambiguous')
+ if 'هیچ مطلبی با این مشخصات پیدا نشد' in table.inner_text():return None
+ links=table.locator('a[href]').evaluate_all('es=>es.map(e=>e.href)');edits={}
+ for link in links:
+  part=urlsplit(link);q=parse_qs(part.query);pid=q.get('editpid',[''])[0]
+  if part.hostname=='loxblog.com'and part.path=='/adminnew.php'and q.get('page')==['sendpost']and pid.isdigit():edits[int(pid)]=link
+ if len(edits)!=1:raise RuntimeError('Native exact-title match is not unique; manual reconciliation required')
+ pid,edit=next(iter(edits.items()));aliases=[x for x in links if urlsplit(x).hostname==HOST and re.fullmatch(r'/post/'+str(pid)+r'/?',urlsplit(x).path)]
+ if len(aliases)!=1:raise RuntimeError('Observed native public alias missing')
+ page.goto(edit,wait_until='domcontentloaded',timeout=60000);assert_management(page);page.locator('#ptitle').wait_for(timeout=30000)
+ if page.locator('#ptitle').input_value()!=title:raise RuntimeError('Native full title differs; refuse ambiguous lookup')
+ if page.locator('select[name=status]').input_value()!='1':raise RuntimeError('Existing native draft/hidden post requires reconciliation; no new submit')
+ return {'pid':pid,'url':aliases[0]}
 
 def native_image_value(url):
  # Decode only UTF-8 non-ASCII escapes into an equivalent IRI. Keep encoded
@@ -152,9 +174,12 @@ def main():
   try:
    login(page);existing=scan_public(public)
    for e,item in approved:
-    title=item['post']['title'];record=existing.get(title);recovered=bool(record)
-    if not record:
-     assert_no_native_match(page,title)
+    title=item['post']['title'];record=existing.get(title);native=find_native_record(page,title);recovered=bool(native)
+    if native:
+     if record and record['pid']and record['pid']!=native['pid']:raise RuntimeError('Native/public post IDs disagree')
+     record={**native,'url':record['url']if record else native['url']}
+    elif record:raise RuntimeError('Public title exists without a unique native match; no new submit')
+    else:
      page.goto(NEW,wait_until='domcontentloaded',timeout=60000);assert_management(page);prepare(page,item)
      button=page.get_by_role('button',name='ارسال مطلب',exact=True)
      if button.count()!=1:raise RuntimeError('Native submit control not unique')
@@ -178,6 +203,10 @@ def main():
       if record:break
       time.sleep(5)
      if not record:raise RuntimeError('Single native submission not confirmed; no resubmission'+('; native feedback: '+feedback if feedback else ''))
+    native=find_native_record(page,title)
+    if not native:raise RuntimeError('Public post lacks a unique native checkpoint identity')
+    if record.get('pid')and record['pid']!=native['pid']:raise RuntimeError('Native/public identity mismatch')
+    record['pid']=native['pid']
     url=verify(public,item,record)
     row={'key':e['key'],'title':title,'pid':record['pid'],'url':url,'at':state.now(),'verified':True,'recovered_existing':recovered}
     state.checkpoint(e,item,row);journal(e,'verified');existing[title]=record
