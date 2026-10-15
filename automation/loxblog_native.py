@@ -12,11 +12,13 @@ def read_captcha(raw):
  from agnes_json_client import parse_object
  key=roya.BASE.next_agnes_key() if hasattr(roya.BASE,'next_agnes_key') else roya.BASE.AGNES_KEY
  if not key:raise RuntimeError('Vision credential required for native visual challenge')
- payload={'model':roya.BASE.AGNES_MODEL,'messages':[{'role':'user','content':[{'type':'text','text':'Read the five decimal digits in this ordinary login verification image, left to right. Return only JSON {"digits":"12345"}. Do not infer unseen digits.'},{'type':'image_url','image_url':{'url':'data:image/png;base64,'+base64.b64encode(raw).decode()}}]}],'temperature':0,'max_tokens':100}
+ payload={'model':roya.BASE.AGNES_MODEL,'messages':[{'role':'user','content':[{'type':'text','text':'Read the five decimal digits in this ordinary login verification image, left to right. Return only JSON {"digits":"12345"}. Do not infer unseen digits.'},{'type':'image_url','image_url':{'url':'data:image/png;base64,'+base64.b64encode(raw).decode()}}]}],'temperature':0,'max_tokens':1024,'response_format':{'type':'json_object'}}
  req=urllib.request.Request(roya.BASE.AGNES_BASE+'/chat/completions',data=json.dumps(payload).encode(),headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'})
  try:
   with urllib.request.urlopen(req,timeout=90)as r:obj=json.loads(r.read())
-  value=parse_object(obj['choices'][0]['message']['content']).get('digits','')
+  raw_value=obj['choices'][0]['message'].get('content','')
+  if isinstance(raw_value,list):raw_value=''.join(x.get('text','')for x in raw_value if isinstance(x,dict))
+  value=parse_object(raw_value).get('digits','')
  except Exception as exc:raise RuntimeError('Native visual challenge transcription unavailable: '+type(exc).__name__)from None
  if not re.fullmatch(r'[0-9]{5}',str(value)):raise RuntimeError('Visual challenge ambiguous; no credential submission')
  return str(value)
