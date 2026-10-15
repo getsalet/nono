@@ -1,0 +1,65 @@
+name: Add observed Google verification tags to native AFP themes
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [automation/blog_gsc_verification.py, data/gsc/verification-tags.json, .github/workflows/blog-gsc-verification.yml]
+permissions:
+  contents: write
+concurrency:
+  group: blog-gsc-verification
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        blog: [roya, farsiblog, rozblog, loxblog]
+    env:
+      AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+      AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+      AGNES_API_KEYS: ${{ secrets.AGNES_API_KEYS }}
+      AGNES_MODEL: agnes-2.5-flash
+      ROYA_USERNAME: ${{ secrets.ROYA_USERNAME }}
+      ROYA_PASSWORD: ${{ secrets.ROYA_PASSWORD }}
+      FARSIBLOG_USERNAME: ${{ secrets.FARSIBLOG_USERNAME }}
+      FARSIBLOG_PASSWORD: ${{ secrets.FARSIBLOG_PASSWORD }}
+      ROZBLOG_USERNAME: ${{ secrets.ROZBLOG_USERNAME }}
+      ROZBLOG_PASSWORD: ${{ secrets.ROZBLOG_PASSWORD }}
+      LOXBLOG_USERNAME: ${{ secrets.LOXBLOG_USERNAME }}
+      LOXBLOG_PASSWORD: ${{ secrets.LOXBLOG_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /automation/
+            /data/
+            /state/
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow playwright
+      - run: python -m playwright install --with-deps chromium
+      - name: Add only property-specific tag; verify public head
+        run: python automation/blog_gsc_verification.py '${{ matrix.blog }}'
+      - name: Record sanitized verification result, no sessions or native HTML
+        if: always()
+        run: |
+          path='data/gsc/results/${{ matrix.blog }}.json'
+          if [ ! -f "$path" ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$path"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record sanitized ${{ matrix.blog }} Google tag verification'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 4))
+          done
+          exit 1
