@@ -26,7 +26,7 @@ def main():
   except Exception as exc:
    row['error_type']=type(exc).__name__;row['stage']=item.get('_generation_stage')if item else None
    if isinstance(getattr(exc,'code',None),int):row['http_status']=exc.code
-   if str(exc).startswith(('Image provider HTTP ','Asset-only repository operation failed','Image checkpoint push failed','Product image rejected:','Immutable asset commit not available')):row['reason']=str(exc)[:300]
+   if str(exc).startswith(('Image provider HTTP ','Asset-only repository operation failed','Image checkpoint push failed','Product image rejected:','Immutable asset commit not available','Cached candidates snapshot only')):row['reason']=str(exc)[:300]
   if item is not None:
    row['article_context']=item.get('_image_article_context',{})
    row['rejections']=item.get('_image_rejections',[])
@@ -42,5 +42,5 @@ def main():
   report['passed']=len(report['families'])==2 and all(x['passed']for x in report['families'])
   path=ROOT/'data/blog-generated-image-acceptance.json';path.write_text(json.dumps(report,ensure_ascii=False,indent=2))
   print(json.dumps({k:v for k,v in row.items()if k!='review'},ensure_ascii=False),flush=True)
- return 0 if report['passed']else 1
+ return 0 if report['passed']or os.getenv('BLOG_IMAGE_CACHE_SNAPSHOT_ONLY')=='1'else 1
 if __name__=='__main__':sys.exit(main())

@@ -25,11 +25,14 @@ def checkpoint():
   env=dict(os.environ,GIT_INDEX_FILE=str(Path(tmp)/'index'),GIT_AUTHOR_NAME='github-actions[bot]',GIT_AUTHOR_EMAIL='41898282+github-actions[bot]@users.noreply.github.com',GIT_COMMITTER_NAME='github-actions[bot]',GIT_COMMITTER_EMAIL='41898282+github-actions[bot]@users.noreply.github.com')
   for attempt in range(3):
    git(['fetch','--quiet','origin','main']);parent=git(['rev-parse','origin/main']).stdout.decode().strip()
-   git(['read-tree',parent],env);git(['add','-f','--',*sorted(files)],env)
+   git(['read-tree',parent],env);git(['add','--sparse','-f','--',*sorted(files)],env)
    tree=git(['write-tree'],env).stdout.decode().strip()
    if tree==git(['rev-parse',parent+'^{tree}']).stdout.decode().strip():return 0
    commit=git(['commit-tree',tree,'-p',parent],env,b'Preserve bounded image QA diagnostics without post publication\n').stdout.decode().strip()
    if git(['push','--quiet','origin',commit+':refs/heads/main'],check=False).returncode==0:
     print('Safe image diagnostics checkpointed:',len(files));return 0
  raise RuntimeError('Diagnostic checkpoint push failed')
-if __name__=='__main__':raise SystemExit(checkpoint())
+if __name__=='__main__':
+ try:raise SystemExit(checkpoint())
+ except RuntimeError as exc:
+  print('::error::'+str(exc));raise SystemExit(1)
