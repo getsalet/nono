@@ -32,11 +32,14 @@ def family(item):
  if f=='tape20'and hose or f=='hose'and tape:raise RuntimeError('Product title/family conflict: stop instead of guessing')
  return f
 
+def approved_url(url):
+ return isinstance(url,str)and (url.startswith('https://navar-abyari.ir/wp-content/uploads/')or bool(re.fullmatch(r'https://raw\.githubusercontent\.com/getsalet/nono/[a-f0-9]{40}/assets/blog-generated/(?:roya|farsiblog|rozblog|blogfa|loxblog)/[a-f0-9]{32}\.webp',url)))
+
 def fetch(url):
- if not url.startswith('https://navar-abyari.ir/wp-content/uploads/'):raise RuntimeError('Image URL outside approved uploads')
+ if not approved_url(url):raise RuntimeError('Image URL outside approved uploads')
  req=urllib.request.Request(roya.encode_url(url),headers={'User-Agent':'AFP-blog-product-image-gate/1.0'})
  with urllib.request.urlopen(req,timeout=45)as r:
-  if not r.geturl().startswith('https://navar-abyari.ir/wp-content/uploads/'):raise RuntimeError('Image redirected outside approved uploads')
+  if not approved_url(r.geturl()):raise RuntimeError('Image redirected outside approved uploads')
   raw=r.read(8*1024*1024+1)
  if len(raw)>8*1024*1024:raise RuntimeError('Image download too large')
  image=Image.open(io.BytesIO(raw));image.verify();image=Image.open(io.BytesIO(raw));w,h=image.size
@@ -56,8 +59,14 @@ def verdict_errors(v,expected):
   if v.get(flag) is not False:e.append('Vision flag not cleared: '+flag)
  return e
 
-def review(item,url,root=None):
- expected=family(item);raw,(w,h),fmt=fetch(url);digest=hashlib.sha256(raw).hexdigest();root=Path(root or roya.ROOT)
+def review(item,url,root=None,_candidate=None):
+ expected=family(item)
+ if _candidate is None:raw,(w,h),fmt=fetch(url)
+ else:
+  if not url.startswith('generated://')or not isinstance(_candidate,bytes)or len(_candidate)>8*1024*1024:raise RuntimeError('Invalid local generation candidate')
+  raw=_candidate;image=Image.open(io.BytesIO(raw));image.verify();image=Image.open(io.BytesIO(raw));w,h=image.size;fmt=image.format
+  if min(w,h)<180 or max(w,h)>10000:raise RuntimeError('Image dimensions unacceptable')
+ digest=hashlib.sha256(raw).hexdigest();root=Path(root or roya.ROOT)
  path=root/'artifacts/blog-image-reviews'/(expected+'-'+digest+'.json')
  if path.exists():record=json.loads(path.read_text())
  else:record={}
@@ -80,6 +89,7 @@ def review(item,url,root=None):
   verdict=json.loads(re.sub(r'^```(?:json)?\s*|\s*```$','',value.strip(),flags=re.I))
   record={'policy':POLICY,'sha256':digest,'family':expected,'source_url':url,'reference_url':REFERENCES[expected],'width':w,'height':h,'verdict':verdict,'reviewed_at':roya.now()}
   path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(record,ensure_ascii=False,indent=2))
+ record['source_url']=url  # Identical digest/policy/family may have another immutable URL.
  errors=verdict_errors(record.get('verdict'),expected)
  if errors:raise RuntimeError('Product image rejected: '+'; '.join(errors))
  item.update(image_url=url,image_width=w,image_height=h,image_review={k:record[k]for k in ('policy','sha256','family','width','height','source_url','verdict')})
