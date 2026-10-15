@@ -257,21 +257,23 @@ def target_image(item):
     url = item.get('target_url') or ''
     if not url:
         return ''
+    from source_page_image import primary_image,POLICY as source_policy
     cache = load_json(IMAGE_CACHE, {})
-    if url in cache:
-        return cache[url]
+    if cache.get('_policy') != source_policy:
+        cache = {'_policy': source_policy, 'images': {}}
+    images = cache.setdefault('images', {})
+    if url in images:
+        return images[url]
     found = ''
     try:
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         page = urllib.request.urlopen(req, timeout=60).read().decode('utf-8', 'ignore')
-        imgs = re.findall(r'https://navar-abyari\.ir/wp-content/uploads/[^"\' ]+?\.(?:webp|jpe?g|png)', page)
-        city = [u for u in imgs if 'navar-city-generated' in u]
-        article = [u for u in imgs if 'navar-article-generated' in u]
-        found = encode_url((city or article or imgs or [''])[0])
+        found = encode_url(primary_image(page, url))
     except Exception as exc:
-        print(f'image lookup failed for {url}: {str(exc)[:140]}', flush=True)
-    cache[url] = found
-    save_json(IMAGE_CACHE, cache)
+        print('source primary image unavailable: '+type(exc).__name__, flush=True)
+    if found:
+        images[url] = found  # A transport failure must not poison the durable cache.
+        save_json(IMAGE_CACHE, cache)
     return found
 
 
