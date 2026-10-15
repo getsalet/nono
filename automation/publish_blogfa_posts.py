@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.parse import urlsplit,unquote,parse_qs
 import blogfa_backlink_queue as wrapper
 import publish_roya_posts as state
-from blogfa_native import login,active,wait_editor_ready,launch_browser,BLOG,PANEL
+from blogfa_native import login,active,wait_editor_ready,launch_browser,wait_submit_ready,BLOG,PANEL
 from blog_post_excerpt import native_split
 from city_backlink_policy import qa,links_for,matrix_ready
 engine=wrapper.engine
@@ -145,7 +145,7 @@ def main():
      assert_no_native_match(page,routes['archive'],title)
      # Archive postbacks may rotate native create-form nonces: follow the latest actual link.
      fresh=active(page)
-     page.goto(fresh['new'],wait_until='domcontentloaded',timeout=60000);prepare(page,item['post']);begin(e)
+     page.goto(fresh['new'],wait_until='domcontentloaded',timeout=60000);prepare(page,item['post']);wait_submit_ready(page);begin(e)
      with page.expect_navigation(wait_until='domcontentloaded',timeout=60000)as response:page.locator('#btnPublish').click()
      journal(e,'unconfirmed')
      feedback={'key':e['key'],'at':state.now(),'http_status':response.value.status if response.value else None,'path':urlsplit(page.url).path,'native_message':page.locator('body').inner_text()[-2500:],'posted_field_lengths':{k:[len(v)for v in values]for k,values in parse_qs(response.value.request.post_data or '',keep_blank_values=True).items()}if response.value else {}}

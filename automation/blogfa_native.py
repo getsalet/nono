@@ -53,6 +53,25 @@ def wait_editor_ready(page):
  page.wait_for_function('()=>window.CKEDITOR&&CKEDITOR.instances.txtPostContent?.status==="ready"',timeout=60000)
  page.wait_for_function('()=>typeof httpreq!=="undefined"&&httpreq.readyState===4&&httpreq.status===200',timeout=60000)
  print('Blogfa native editor and initial session refresh complete.',flush=True)
+def wait_submit_ready(page):
+ # Controlled timing comparison: keep the native form/session stable for 30s.
+ # No user-agent changes, cookie copying, fabricated tokens, or submit retries.
+ identity=page.url
+ def validate():
+  if page.url!=identity or urlsplit(page.url).hostname!='www.blogfa.com':raise RuntimeError('Native page changed before submit; not sent')
+  button=page.locator('#btnPublish')
+  if button.count()!=1 or not button.is_enabled():raise RuntimeError('Native submit unavailable; not sent')
+  action=button.evaluate('e=>e.form.action')
+  if action!=identity:raise RuntimeError('Native form action changed; not sent')
+  token=parse_qs(urlsplit(action).query).get('t',[None])[0]
+  cookies={c['name']:c['value']for c in page.context.cookies('https://www.blogfa.com/')}
+  if not token or cookies.get('ten')!=token:raise RuntimeError('Native session/form mismatch; not sent')
+ validate()
+ print('Native stabilization experiment: wait 30 seconds with unchanged native form/session before the single submit.',flush=True)
+ page.wait_for_timeout(30000)
+ validate()
+ print('Native stabilization complete; form/session still consistent.',flush=True)
+
 def main():
  from playwright.sync_api import sync_playwright
  with sync_playwright() as pw:

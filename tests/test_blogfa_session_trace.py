@@ -56,3 +56,28 @@ class SessionTraceTests(unittest.TestCase):
         source=(Path(__file__).resolve().parents[1]/"automation/blogfa_native.py").read_text()
         main=next(n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef) and n.name=="main")
         self.assertFalse(any(isinstance(n,ast.Import) and any(x.name=="json" for x in n.names) for n in ast.walk(main)))
+
+    def test_stabilization_is_single_bounded_wait_and_no_submission(self):
+        from blogfa_native import wait_submit_ready
+        calls=[]
+        url="https://www.blogfa.com/Desktop/Post.aspx?action=new&t=PRIVATE_TOKEN"
+        button=SimpleNamespace(count=lambda:1,is_enabled=lambda:True,evaluate=lambda js:url)
+        page=SimpleNamespace(url=url,locator=lambda selector:button,
+          context=SimpleNamespace(cookies=lambda origin:[{"name":"ten","value":"PRIVATE_TOKEN"}]),
+          wait_for_timeout=lambda ms:calls.append(ms))
+        wait_submit_ready(page)
+        self.assertEqual(calls,[30000])
+
+    def test_stabilization_refuses_changed_session_before_wait(self):
+        from blogfa_native import wait_submit_ready
+        url="https://www.blogfa.com/Desktop/Post.aspx?action=new&t=PRIVATE_TOKEN"
+        button=SimpleNamespace(count=lambda:1,is_enabled=lambda:True,evaluate=lambda js:url)
+        page=SimpleNamespace(url=url,locator=lambda selector:button,
+          context=SimpleNamespace(cookies=lambda origin:[{"name":"ten","value":"OTHER_TOKEN"}]),
+          wait_for_timeout=lambda ms:self.fail("Must not wait or send with a mismatched session"))
+        with self.assertRaisesRegex(RuntimeError,"mismatch"):wait_submit_ready(page)
+
+    def test_stabilization_precedes_journal_and_single_real_submit(self):
+        source=(Path(__file__).resolve().parents[1]/"automation/publish_blogfa_posts.py").read_text()
+        self.assertIn("wait_submit_ready(page);begin(e)",source)
+        self.assertEqual(source.count("page.locator('#btnPublish').click()"),1)
