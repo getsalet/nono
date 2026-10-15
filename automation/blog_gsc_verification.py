@@ -67,7 +67,8 @@ def run(key):
      text=(el.get_attribute('value')or el.inner_text()).strip()
      if re.search(r'ذخیره|ثبت|save|update',text,re.I)and el.is_visible()and el.is_enabled():actions.append(el)
     if len(actions)!=1:
-     result['save_actions']=[{'tag':x.evaluate('e=>e.tagName'),'label':(x.get_attribute('value')or x.inner_text())[:90]}for x in form.locator('button,input[type=submit],input[type=button]').all()if x.is_visible()]
+     result['save_actions']=[{'tag':x.evaluate('e=>e.tagName'),'label':(x.get_attribute('value')or x.inner_text())[:90],'id':x.get_attribute('id'),'type':x.get_attribute('type'),'in_form':x.evaluate('(e)=>Boolean(e.closest("form"))')}for x in page.locator('button,input[type=submit],input[type=button],a[onclick],span[onclick],div[role=button]').all()if x.is_visible() and re.search(r'ذخیره|ثبت|save|update',x.get_attribute('value')or x.inner_text(),re.I)]
+     result['native_fields']=[{'name':x.get_attribute('name'),'type':x.get_attribute('type'),'tag':x.evaluate('e=>e.tagName')}for x in form.locator('input,textarea,button').all()]
      raise ValueError('Unique observed native save action required')
     # One save only. If acknowledgement is uncertain, verify without resubmitting.
     actions[0].click(timeout=30000);result['changed']=True
