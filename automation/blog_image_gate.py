@@ -82,8 +82,7 @@ def review(item,url,root=None,_candidate=None):
   payload={'model':roya.BASE.AGNES_MODEL,'messages':[{'role':'user','content':content}],'temperature':0,'response_format':{'type':'json_object'}}
   key=roya.BASE.next_agnes_key()if hasattr(roya.BASE,'next_agnes_key')else roya.BASE.AGNES_KEY
   if not key:raise RuntimeError('Vision credential required; never approve by prompt or filename alone')
-  req=urllib.request.Request(roya.BASE.AGNES_BASE+'/chat/completions',data=json.dumps(payload).encode(),headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'})
-  with urllib.request.urlopen(req,timeout=90)as r:response=json.loads(r.read())
+  response=roya.BASE.fetch_json(roya.BASE.AGNES_BASE+'/chat/completions',{'Authorization':'Bearer '+key,'Content-Type':'application/json'},payload,timeout=90)
   value=response['choices'][0]['message']['content']
   if isinstance(value,list):value=''.join(x.get('text','')for x in value if isinstance(x,dict))
   verdict=json.loads(re.sub(r'^```(?:json)?\s*|\s*```$','',value.strip(),flags=re.I))

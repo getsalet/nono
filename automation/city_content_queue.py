@@ -47,22 +47,12 @@ if not re.fullmatch(r'[A-Za-z0-9_]+',DB_NAME):raise RuntimeError('WORDPRESS_DB_N
 
 
 AGNES_BASE=os.getenv('AGNES_API_BASE','https://apihub.agnes-ai.com/v1').rstrip('/')
-AGNES_KEYS=[]
-# AGNES_API_KEYS may hold a comma/whitespace separated pool and is preferred:
-# the numbered single-key secrets can expire independently of it.
-for _value in re.split(r'[,\s]+',os.getenv('AGNES_API_KEYS','')):
- _value=_value.strip()
- if _value and _value not in AGNES_KEYS:AGNES_KEYS.append(_value)
-for _name in ['AGNES_API_KEY',*[f'AGNES_API_KEY{i}' for i in range(2,15)]]:
- _value=os.getenv(_name,'').strip()
- # a pooled value (list) was already expanded above; never add it as one key
- if not _value or re.search(r'[,\s]',_value):continue
- if _value not in AGNES_KEYS:AGNES_KEYS.append(_value)
+from agnes_key_pool import AgnesKeyPool
+_KEY_POOL=AgnesKeyPool(base=AGNES_BASE)
+AGNES_KEYS=_KEY_POOL.keys
 AGNES_KEY=AGNES_KEYS[0] if AGNES_KEYS else ''
-_KEY_COUNTER=itertools.count();_KEY_LOCK=threading.Lock()
 def next_agnes_key():
- if not AGNES_KEYS:raise RuntimeError('No Agnes API key is configured')
- with _KEY_LOCK:return AGNES_KEYS[next(_KEY_COUNTER)%len(AGNES_KEYS)]
+ return _KEY_POOL.next()
 AGNES_MODEL=os.getenv('AGNES_MODEL','agnes-2.5-flash')
 
 
@@ -90,23 +80,7 @@ def sql_preamble():return f"SET NAMES utf8mb4;\nUSE `{DB_NAME}`;"
 
 
 def fetch_json(url,headers=None,payload=None,timeout=420):
-
-
-
- req=urllib.request.Request(url,data=(json.dumps(payload,ensure_ascii=False).encode() if payload is not None else None),headers=headers or {})
-
-
-
- try:
-
-
-
-  with urllib.request.urlopen(req,timeout=timeout) as r:return json.load(r)
-
-
-
- except urllib.error.HTTPError as e:raise RuntimeError(f'HTTP {e.code} {url}: {e.read().decode("utf-8","replace")[:800]}')
-
+ return _KEY_POOL.fetch_json(url,headers,payload,timeout)
 
 
 def normalize(s):

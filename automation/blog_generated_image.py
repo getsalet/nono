@@ -3,7 +3,7 @@
 Uses the existing configured Agnes connection, never embeds stock fallback images.
 No article publication here. An asset-only Git commit precedes public verification.
 """
-import base64,hashlib,io,json,os,re,subprocess,tempfile,urllib.request,urllib.error
+import base64,hashlib,io,json,os,re,subprocess,tempfile,time,urllib.request,urllib.error
 from pathlib import Path
 from PIL import Image,ImageOps
 import roya_backlink_queue as roya
@@ -65,18 +65,39 @@ def checkpoint_asset(path,raw,root):
    try:os.unlink(p)
    except FileNotFoundError:pass
 
-def generate(item,blog):
+def conditioning_image(expected):
+ # Proven maghala2 recipe: ONE combined canvas, not multiple competing inputs.
  import image_prompt_policy
+ canvas=Image.new('RGB',(1200,675),(238,238,235));x=72
+ names=('afp-layflat.webp.b64','afp-layflat-bare.jpg.b64')if expected=='hose'else('afp-tape.webp.b64',)
+ for name in names:
+  raw=base64.b64decode((image_prompt_policy.ASSET_DIR/name).read_text().strip())
+  product=Image.open(io.BytesIO(raw)).convert('RGB')
+  if expected=='hose':product.thumbnail((112,84),Image.Resampling.LANCZOS)
+  else:product=product.resize((280,170),Image.Resampling.LANCZOS);x=90
+  canvas.paste(product,(x,675-product.height-55));x+=product.width+24
+ out=io.BytesIO();canvas.save(out,'WEBP',quality=90,method=6)
+ return ['data:image/webp;base64,'+base64.b64encode(out.getvalue()).decode('ascii')]
+
+def generate(item,blog):
  from blog_image_gate import family
- expected=family(item);ref_item={'source_id':blog+'-'+str(item['key'])+('-layflat'if expected=='hose'else''),'topic':'لوله نخی'if expected=='hose'else'نوار تیپ'}
- key=roya.BASE.next_agnes_key()if hasattr(roya.BASE,'next_agnes_key')else roya.BASE.AGNES_KEY
- if not key:raise RuntimeError('Existing image API credential required')
- payload={'model':os.getenv('AGNES_IMAGE_MODEL','agnes-image-2.5-flash'),'prompt':brief(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':image_prompt_policy.reference_images(1,ref_item)}}
- req=urllib.request.Request(roya.BASE.AGNES_BASE+'/images/generations',data=json.dumps(payload).encode(),headers={'Authorization':'Bearer '+key,'Content-Type':'application/json','Idempotency-Key':POLICY+'-'+identity(item,blog)})
- try:
-  with urllib.request.urlopen(req,timeout=600)as r:data=json.loads(r.read(25*1024*1024))
- except urllib.error.HTTPError as e:raise RuntimeError('Image provider HTTP '+str(e.code)+'; raw response withheld')from None
- except Exception as e:raise RuntimeError('Image provider transport/format failure: '+type(e).__name__)from None
+ expected=family(item)
+ endpoint=os.getenv('IMAGE_ENDPOINT')or roya.BASE.AGNES_BASE+'/images/generations'
+ if not endpoint.startswith('https://'):raise RuntimeError('Image endpoint requires HTTPS')
+ payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':brief(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':conditioning_image(expected)}}
+ for attempt in range(3):
+  key=os.getenv('IMAGE_API_KEY','').strip()or roya.BASE.next_agnes_key()
+  if not key:raise RuntimeError('Existing image API credential required')
+  try:
+   data=roya.BASE.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+identity(item,blog)},payload,timeout=180)
+   break
+  except RuntimeError as exc:
+   match=re.fullmatch(r'Agnes/provider HTTP (\d+); raw response withheld',str(exc));code=int(match[1])if match else None
+   if attempt<2 and(code in(429,500,502,503,504)or str(exc)=='Agnes/provider transport failure; private details withheld'):
+    time.sleep(5*(attempt+1));continue
+   if code:raise RuntimeError(f'Image provider HTTP {code}; raw response withheld')from None
+   raise RuntimeError('Image provider transport/format failure; private details withheld')from None
+  except Exception as exc:raise RuntimeError('Image provider transport/format failure: '+type(exc).__name__)from None
  row=(data.get('data')or[{}])[0]
  if row.get('b64_json'):
   try:raw=base64.b64decode(row['b64_json'],validate=True)

@@ -15,3 +15,27 @@ class GeneratedImageTests(unittest.TestCase):
   good='https://raw.githubusercontent.com/getsalet/nono/'+'a'*40+'/assets/blog-generated/roya/'+'b'*32+'.webp'
   self.assertTrue(approved_url(good));self.assertFalse(approved_url(good.replace('/nono/','/evil/')));self.assertFalse(approved_url(good.replace('a'*40,'main')));self.assertFalse(approved_url(good+'?token=bad'))
 if __name__=='__main__':unittest.main()
+
+class ConditioningTests(unittest.TestCase):
+ def test_single_combined_reference_both_families(self):
+  import base64,io
+  from PIL import Image
+  from blog_generated_image import conditioning_image
+  for family in ('hose','tape20'):
+   refs=conditioning_image(family);self.assertEqual(len(refs),1)
+   image=Image.open(io.BytesIO(base64.b64decode(refs[0].split(',',1)[1])))
+   self.assertEqual(image.size,(1200,675))
+ def test_generation_retries_only_transient(self):
+  import io
+  from PIL import Image
+  from unittest.mock import patch
+  import blog_generated_image as m
+  image=Image.new('RGB',(1024,768),'green');buf=io.BytesIO();image.save(buf,'PNG')
+  import base64
+  data={'data':[{'b64_json':base64.b64encode(buf.getvalue()).decode()}]}
+  item={'key':'fake','family':'tape20','site_title':'نوار تیپ'}
+  with patch.object(m.roya.BASE,'next_agnes_key',return_value='fake-key'),patch.object(m.roya.BASE,'fetch_json',side_effect=[RuntimeError('Agnes/provider HTTP 503; raw response withheld'),data])as fetch,patch.object(m.time,'sleep'):
+   result=m.generate(item,'roya');self.assertEqual(fetch.call_count,2);self.assertEqual(Image.open(io.BytesIO(result)).size,(1200,675))
+  with patch.object(m.roya.BASE,'next_agnes_key',return_value='fake-key'),patch.object(m.roya.BASE,'fetch_json',side_effect=RuntimeError('Agnes/provider HTTP 403; raw response withheld'))as fetch,self.assertRaisesRegex(RuntimeError,'HTTP 403'):
+   m.generate(item,'roya')
+  self.assertEqual(fetch.call_count,1)

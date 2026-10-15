@@ -46,8 +46,9 @@ now = lambda: datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H
 
 class Agnes:
     def __init__(self):
-        raw = os.getenv('AGNES_API_KEYS') or os.getenv('AGNES_API_KEY') or ''
-        self.AGNES_KEYS = [k.strip() for k in re.split(r'[,\s]+', raw) if k.strip()]
+        from agnes_key_pool import AgnesKeyPool
+        self._key_pool = AgnesKeyPool()
+        self.AGNES_KEYS = self._key_pool.keys
         self.AGNES_KEY = self.AGNES_KEYS[0] if self.AGNES_KEYS else ''
         self.AGNES_BASE = (os.getenv('AGNES_API_BASE') or os.getenv('AGNES_BASE')
                            or 'https://apihub.agnes-ai.com/v1').rstrip('/')
@@ -56,17 +57,15 @@ class Agnes:
         self.calls = 0
 
     def current_key(self):
-        return self.AGNES_KEYS[self._i] if self.AGNES_KEYS else self.AGNES_KEY
+        active=[k for k in self.AGNES_KEYS if k not in self._key_pool._disabled]
+        return active[self._i % len(active)] if active else self._key_pool.next()
 
     def rotate_key(self):
-        if len(self.AGNES_KEYS) > 1:
-            self._i = (self._i + 1) % len(self.AGNES_KEYS)
-            print(f'agnes key rotated -> #{self._i + 1}/{len(self.AGNES_KEYS)} after {self.calls} call(s)', flush=True)
+        self._i += 1
         return self.current_key()
 
     def key_for_call(self):
-        """One API key per {ROTATE_EVERY} calls, then the next key in the pool."""
-        if self.AGNES_KEYS and self.calls and self.calls % ROTATE_EVERY == 0:
+        if self.calls and self.calls % ROTATE_EVERY == 0:
             self.rotate_key()
         self.calls += 1
         return self.current_key()
@@ -75,10 +74,7 @@ class Agnes:
         return self.key_for_call()
 
     def fetch_json(self, url, headers, payload, timeout=180):
-        req = urllib.request.Request(url, data=json.dumps(payload).encode('utf-8'),
-                                     headers=headers, method='POST')
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return json.loads(resp.read().decode('utf-8', 'replace'))
+        return self._key_pool.fetch_json(url, headers, payload, timeout)
 
 
 BASE = Agnes()
