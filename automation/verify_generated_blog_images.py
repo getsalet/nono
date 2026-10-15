@@ -23,6 +23,8 @@ def main():
   try:
    if item is None:raise ValueError('Matching real source topic missing')
    if os.getenv('BLOG_IMAGE_CACHE_SNAPSHOT_ONLY')=='1':raise RuntimeError('Cached candidates snapshot only; no generation or publication')
+   from blog_reference_scene import scene_plan
+   row['scene_plan']=scene_plan(item,'loxblog')
    row['url']=prepare(item,'loxblog',root=ROOT);row['passed']=True;row['key']=item['key'];row['review']=item['image_review']
   except Exception as exc:
    row['error_type']=type(exc).__name__;row['stage']=item.get('_generation_stage')if item else None

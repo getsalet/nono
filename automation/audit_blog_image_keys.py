@@ -6,7 +6,7 @@ from PIL import Image
 import blog_generated_image as images
 ROOT=Path(__file__).resolve().parents[1]
 def probe(name):
- item={'key':'image-capability-'+name,'family':'tape20','site_title':'نوار تیپ'}
+ item={'key':'image-capability-'+name,'family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'آزمون کنترل‌شده فاصله خطوط نوار تیپ پیاز','summary':'این نمونه فقط برای بررسی قابلیت واقعی سرویس تصویر است و ردیف پیاز، خطوط نصب‌شده آبیاری و محصول مرجع AFP را نشان می‌دهد؛ هیچ پستی منتشر نمی‌شود.'}}
  row={'secret_name':name,'status':'unknown','http_status':None}
  try:
   raw=images.generate(item,'loxblog',slots=[name],max_attempts=1)

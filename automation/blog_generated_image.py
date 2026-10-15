@@ -126,6 +126,11 @@ def generate(item,blog,slots=None,max_attempts=3):
  if not endpoint.startswith('https://'):raise RuntimeError('Image endpoint requires HTTPS')
  payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':__import__('blog_reference_scene').prompt(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':__import__('blog_reference_scene').references(item)}}
  names=slots if slots is not None else capability_slots()
+ if slots is None:
+  preferred=[n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_PREFERRED_KEY_SLOTS')or os.getenv('AGNES_PREFERRED_KEY_SLOTS',''))if n]
+  # Explicit preference must stay inside the audited image-capable set.
+  preferred_healthy=[n for n in preferred if n in names]
+  if preferred_healthy:names=preferred_healthy
  if not names:raise RuntimeError('At least one audited image-capable credential required')
  if names:
   from agnes_key_pool import NAMES
@@ -151,7 +156,7 @@ def generate(item,blog,slots=None,max_attempts=3):
    match=re.fullmatch(r'Agnes/provider HTTP (\d+); raw response withheld',str(exc));code=int(match[1])if match else None
    row.update(http_status=code,status='provider_error')
    if attempt<max_attempts-1 and((code in(429,500,502,503,504)or(code==403 and selected and len(selected)>1))or str(exc)=='Agnes/provider transport failure; private details withheld'):
-    time.sleep(5*(attempt+1));continue
+    time.sleep(min(60,15*(2**attempt)));continue
    if code:raise RuntimeError(f'Image provider HTTP {code}; raw response withheld')from None
    raise RuntimeError('Image provider transport/format failure; private details withheld')from None
   except Exception as exc:
