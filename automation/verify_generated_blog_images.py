@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Controlled acceptance: two product families, zero post submissions."""
-import copy,json,time,sys,re,shutil,hashlib
+import copy,json,time,sys,re,shutil,hashlib,os
 from pathlib import Path
 from blog_generated_image import prepare,POLICY,capability_slots,identity
 import roya_backlink_queue as roya
@@ -21,6 +21,7 @@ def main():
    if path.exists():item['_image_article_context']=context_from_post(json.loads(path.read_text()).get('post')or{})
   try:
    if item is None:raise ValueError('Matching real source topic missing')
+   if os.getenv('BLOG_IMAGE_CACHE_SNAPSHOT_ONLY')=='1':raise RuntimeError('Cached candidates snapshot only; no generation or publication')
    row['url']=prepare(item,'loxblog',root=ROOT);row['passed']=True;row['key']=item['key'];row['review']=item['image_review']
   except Exception as exc:
    row['error_type']=type(exc).__name__;row['stage']=item.get('_generation_stage')if item else None
