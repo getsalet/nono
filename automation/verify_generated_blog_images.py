@@ -10,7 +10,7 @@ from blog_image_connection import settings
 import roya_backlink_queue as roya
 ROOT=Path(__file__).resolve().parent.parent
 
-def main():
+def main(initialize_only=False):
  path=ROOT/'data/blog-generated-image-acceptance.json';path.parent.mkdir(parents=True,exist_ok=True)
  def save_report():
   tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(report,ensure_ascii=False,indent=2));tmp.replace(path)
@@ -18,6 +18,7 @@ def main():
  except Exception:source_commit=None
  report={'recipe_version':RECIPE_VERSION,'connection':None,'source_commit':source_commit,'workflow_run_id':os.getenv('GITHUB_RUN_ID'),'active_secret_slots':[],'policy':POLICY,'at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'post_submissions':0,'families':[],'passed':False}
  save_report() # Invalidate stale success before configuration, audit or queue loading can fail.
+ if initialize_only:return 0
  try:
   report['connection']=settings(roya.BASE.AGNES_BASE)
   pool=roya.BASE._key_pool
@@ -63,4 +64,4 @@ def main():
   save_report()
   print(json.dumps({k:v for k,v in row.items()if k!='review'},ensure_ascii=False),flush=True)
  return 0 if report['passed']or os.getenv('BLOG_IMAGE_CACHE_SNAPSHOT_ONLY')=='1'else 1
-if __name__=='__main__':sys.exit(main())
+if __name__=='__main__':sys.exit(main(initialize_only='--initialize-only'in sys.argv))

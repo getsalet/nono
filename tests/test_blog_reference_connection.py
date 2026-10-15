@@ -42,3 +42,13 @@ class ReferenceConnectionTests(unittest.TestCase):
     self.assertEqual(verify.main(),1)
    result=json.loads(path.read_text());self.assertFalse(result['passed']);self.assertEqual(result['preflight_error']['type'],'RuntimeError')
    self.assertNotIn('private-password',path.read_text())
+
+ def test_initialize_only_invalidates_report_without_api_or_queue(self):
+  import tempfile
+  import verify_generated_blog_images as verify
+  with tempfile.TemporaryDirectory()as d:
+   root=Path(d)
+   with patch.object(verify,'ROOT',root),patch.object(verify,'settings',side_effect=AssertionError('no API configuration during initialization')):
+    self.assertEqual(verify.main(initialize_only=True),0)
+   result=json.loads((root/'data/blog-generated-image-acceptance.json').read_text())
+   self.assertFalse(result['passed']);self.assertEqual(result['families'],[])
