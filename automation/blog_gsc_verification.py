@@ -30,6 +30,7 @@ def run(key):
     if key=='loxblog':
      import loxblog_native as native
      native.login(page);page.goto(native.PANEL+'/adminnew.php?page=themeedit',wait_until='domcontentloaded',timeout=60000);native.assert_management(page)
+     page.get_by_role('tab',name=re.compile('قالب هدر')).click()
     elif key=='roya':
      import publish_roya_posts as native
      native.login(page)
@@ -42,7 +43,7 @@ def run(key):
    if key!='loxblog':
     options=page.locator('a[href]').evaluate_all("es=>es.map(e=>({text:(e.innerText||'').trim(),href:e.href}))")
     def norm(s):return re.sub(r'\s+',' ',s.replace('ي','ی').replace('ك','ک')).strip()
-    candidates=[x for x in options if ('ویرایش قالب'in norm(x['text']) or 'ویرایش ساختار قالب فعلی'==norm(x['text'])) and urlsplit(x['href']).hostname==urlsplit(page.url).hostname]
+    candidates=[x for x in options if norm(x['text'])==('ویرایش قالب سایت'if key=='rozblog'else'ویرایش ساختار قالب فعلی') and urlsplit(x['href']).hostname==urlsplit(page.url).hostname]
     urls=list(dict.fromkeys(x['href']for x in candidates))
     if len(urls)!=1:
      result['editor_candidates']=[{'label':norm(x['text'])[:80],'path':urlsplit(x['href']).path}for x in options if 'قالب'in norm(x['text'])][:20]
