@@ -52,3 +52,19 @@ class ReferenceConnectionTests(unittest.TestCase):
     self.assertEqual(verify.main(initialize_only=True),0)
    result=json.loads((root/'data/blog-generated-image-acceptance.json').read_text())
    self.assertFalse(result['passed']);self.assertEqual(result['families'],[])
+
+ def test_real_post_context_does_not_redirect_acceptance_report(self):
+  import tempfile,copy
+  import verify_generated_blog_images as verify
+  with tempfile.TemporaryDirectory()as d:
+   root=Path(d);(root/'data/loxblog').mkdir(parents=True)
+   posts=root/'artifacts/loxblog-backlink-queue/items';posts.mkdir(parents=True)
+   items=[dict(key=f,family=f,published=True,kind='city')for f in ('tape20','hose')]
+   (root/'data/loxblog/backlink-queue.json').write_text(json.dumps({'items':items}))
+   original=json.dumps({'post':{'title':'موضوع واقعی','html':'متن مقاله واقعی برای بررسی مسیر ذخیره گزارش و تصویر موضوعی است.'}})
+   for item in items:(posts/(item['key']+'.json')).write_text(original)
+   with patch.object(verify,'ROOT',root),patch.dict(os.environ,{'IMAGE_API_KEY':'fake-test-only'}),patch.object(verify,'prepare',side_effect=RuntimeError('test controlled rejection')),patch.object(verify,'identity',return_value='test'),patch('blog_reference_scene.scene_plan',return_value={}):
+    self.assertEqual(verify.main(),1)
+   result=json.loads((root/'data/blog-generated-image-acceptance.json').read_text())
+   self.assertEqual(len(result['families']),2)
+   for item in items:self.assertEqual((posts/(item['key']+'.json')).read_text(),original)

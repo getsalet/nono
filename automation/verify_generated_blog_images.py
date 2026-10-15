@@ -35,8 +35,8 @@ def main(initialize_only=False):
   row={'family':family,'passed':False}
   if item is not None:
    from blog_reference_scene import context_from_post
-   path=ROOT/'artifacts/loxblog-backlink-queue/items'/(re.sub(r'[^A-Za-z0-9._-]+','_',item['key'])+'.json')
-   if path.exists():item['_image_article_context']=context_from_post(json.loads(path.read_text()).get('post')or{})
+   post_path=ROOT/'artifacts/loxblog-backlink-queue/items'/(re.sub(r'[^A-Za-z0-9._-]+','_',item['key'])+'.json')
+   if post_path.exists():item['_image_article_context']=context_from_post(json.loads(post_path.read_text()).get('post')or{})
   try:
    if item is None:raise ValueError('Matching real source topic missing')
    if os.getenv('BLOG_IMAGE_CACHE_SNAPSHOT_ONLY')=='1':raise RuntimeError('Cached candidates snapshot only; no generation or publication')
