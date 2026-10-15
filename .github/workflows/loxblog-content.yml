@@ -11,7 +11,7 @@ on:
     - cron: '11,26,41,56 * * * *'
   push:
     branches: [main]
-    paths: [tests/test_loxblog_template.py, tests/test_blog_gsc_verification.py, tests/test_blog_generated_image.py, automation/blog_generated_image.py, automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, tests/test_blog_retry_pipeline.py, automation/loxblog_native.py, tests/test_loxblog_pipeline.py, automation/loxblog_backlink_queue.py, automation/publish_loxblog_posts.py, automation/content_originality.py, tests/test_city_blog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, data/loxblog/deployment-control.json, .github/workflows/loxblog-content.yml]
+    paths: [tests/test_loxblog_template.py, tests/test_blog_gsc_verification.py, tests/test_blog_generated_image.py, automation/blog_generated_image.py, automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, tests/test_blog_retry_pipeline.py, automation/loxblog_native.py, automation/check_loxblog_release.py, tests/test_loxblog_release.py, tests/test_loxblog_pipeline.py, automation/loxblog_backlink_queue.py, automation/publish_loxblog_posts.py, automation/content_originality.py, tests/test_city_blog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, data/loxblog/deployment-control.json, .github/workflows/loxblog-content.yml]
 permissions:
   contents: write
 concurrency:
@@ -57,7 +57,9 @@ jobs:
     needs: [tests, deployment-gate]
     # Released only after persisted hosted native/public acceptance evidence.
     # The versioned flag and optional repository variable 0 both pause scheduling.
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && needs.deployment-gate.outputs.enabled == '1' && vars.LOXBLOG_AUTOMATION_ENABLED != '0')
+    # Evaluate release approval and the optional pause again INSIDE this job.
+    # Cross-job output transport must not silently suppress an approved schedule.
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
@@ -121,27 +123,34 @@ jobs:
         with: {fetch-depth: 0, ref: main}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
+      - name: Recheck approved release and pause before any work
+        id: release
+        env:
+          RELEASE_EVENT_NAME: ${{ github.event_name }}
+          RELEASE_REPOSITORY_SWITCH: ${{ vars.LOXBLOG_AUTOMATION_ENABLED }}
+        run: python automation/check_loxblog_release.py
       - name: Check rolling publication budget before costly steps
+        if: steps.release.outputs.proceed == '1'
         id: budget
         run: python automation/check_blog_run_budget.py loxblog
       - name: Validate unattended credentials
-        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_PUBLISH == '1' && env.LOXBLOG_DRY_RUN != '1'
+        if: steps.release.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.LOXBLOG_PUBLISH == '1' && env.LOXBLOG_DRY_RUN != '1')
         run: |
           if [ -z "$LOXBLOG_USERNAME" ] || [ -z "$LOXBLOG_PASSWORD" ]; then
             echo '::error::Set LOXBLOG_USERNAME and LOXBLOG_PASSWORD repository secrets.'
             exit 1
           fi
       - run: python -m pip install --quiet Pillow
-        if: steps.budget.outputs.proceed == '1'
+        if: steps.release.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1')
       - name: Generate independent city article with approved image
-        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        if: steps.release.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1')
         run: python automation/loxblog_backlink_queue.py
       - name: Install Playwright
-        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_PUBLISH == '1' && env.LOXBLOG_DRY_RUN != '1'
+        if: steps.release.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.LOXBLOG_PUBLISH == '1' && env.LOXBLOG_DRY_RUN != '1')
         run: |
           bash automation/install_blog_browser.sh "$LOXBLOG_BROWSER"
       - name: Publish and verify native LoxBlog post
-        if: steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1'
+        if: steps.release.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1')
         run: |
           if [ "$LOXBLOG_LOGIN_DIAGNOSTIC" = '1' ]; then
             python automation/loxblog_native.py
@@ -149,7 +158,7 @@ jobs:
             python automation/publish_loxblog_posts.py
           fi
       - name: Preserve loxblog recovery checkpoints
-        if: always() && steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        if: steps.release.outputs.proceed == '1' && (always() && steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1')
         uses: actions/upload-artifact@v4
         with:
           name: loxblog-recovery-${{ github.run_id }}-${{ github.run_attempt }}
@@ -162,7 +171,7 @@ jobs:
             artifacts/content-originality
             artifacts/blog-image-reviews
       - name: Commit generation and per-post checkpoints
-        if: always() && steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'
+        if: steps.release.outputs.proceed == '1' && (always() && steps.budget.outputs.proceed == '1' && env.LOXBLOG_DRY_RUN != '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1')
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

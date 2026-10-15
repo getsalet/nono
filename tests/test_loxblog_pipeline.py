@@ -90,8 +90,9 @@ class LoxBlogIndependentPipelineTests(unittest.TestCase):
   self.assertIn("release.get('enabled') is True",s)
  def test_schedule_is_gated_and_checkpoint_is_independent(self):
   s=(ROOT/'.github/workflows/loxblog-content.yml').read_text()
-  self.assertIn("needs.deployment-gate.outputs.enabled == '1'",s)
-  self.assertIn("vars.LOXBLOG_AUTOMATION_ENABLED != '0'",s)
+  self.assertIn("steps.release.outputs.proceed == '1'",s)
+  self.assertIn("python automation/check_loxblog_release.py",s)
+  self.assertIn("RELEASE_REPOSITORY_SWITCH: ${{ vars.LOXBLOG_AUTOMATION_ENABLED }}",s)
   self.assertIn('python automation/check_blog_run_budget.py loxblog',s)
   self.assertIn('data/loxblog/backlink-queue.json',s)
   self.assertIn('state/loxblog-backlink-progress.json',s)
