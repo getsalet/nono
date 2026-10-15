@@ -34,21 +34,24 @@ def product_sources(family):
  return [(name,base64.b64decode((ASSETS/name).read_text().strip()))for name in PHOTOS[family]]
 
 def compose(background,family,variation):
- canvas=background.convert('RGBA');w,h=canvas.size
- if(w,h)!=(1200,675):raise RuntimeError('Product composition requires 1200x675 background')
- start=([160,310,460]if family=='hose'else[190,460,740])[int(variation[:6],16)%3]
- base_y=590;x=start
- for name,raw in product_sources(family):
-  product=remove_edge_background(Image.open(io.BytesIO(raw)))
-  width=260 if family=='hose' else 248
-  product=product.resize((width,round(product.height*width/product.width)),Image.Resampling.LANCZOS)
-  y=base_y-product.height
-  if x<64 or y<220 or x+product.width>1136 or base_y>625:raise RuntimeError('Product composition would exceed safe frame')
-  shadow=Image.new('RGBA',canvas.size,(0,0,0,0));draw=ImageDraw.Draw(shadow)
-  draw.ellipse((x+8,base_y-15,x+product.width-8,base_y+12),fill=(30,26,20,95))
-  canvas=Image.alpha_composite(canvas,shadow.filter(ImageFilter.GaussianBlur(8)))
-  canvas.alpha_composite(product,(x,y));x+=product.width+42
- return canvas.convert('RGB')
+ # Editorial split panel makes the illustration explicit: products are NOT
+ # presented as real objects photographed in the generated farm scene.
+ if background.size!=(1200,675):raise RuntimeError('Product composition requires 1200x675 background')
+ sources=product_sources(family)
+ from PIL import ImageOps
+ canvas=Image.new('RGB',(1200,675),'white')
+ panel_right=int(variation[:6],16)%2==0
+ field_x=0 if panel_right else 520
+ canvas.paste(ImageOps.fit(background.convert('RGB'),(680,675),Image.Resampling.LANCZOS),(field_x,0))
+ product_x=680 if panel_right else 0
+ draw=ImageDraw.Draw(canvas);divider=680 if panel_right else 516
+ draw.rectangle((divider,0,divider+3,674),fill=(13,108,124))
+ frames=[(product_x+70,147,380,380)]if family=='tape20'else[(product_x+90,40,340,280),(product_x+90,355,340,280)]
+ for (name,raw),(x,y,w,h)in zip(sources,frames):
+  # Retain the entire authentic photo, including its original white background.
+  product=Image.open(io.BytesIO(raw)).convert('RGB');product.thumbnail((w,h),Image.Resampling.LANCZOS)
+  canvas.paste(product,(x+(w-product.width)//2,y+(h-product.height)//2))
+ return canvas
 
 def provenance(family):
  return [{'asset':name,'sha256':hashlib.sha256(raw).hexdigest()}for name,raw in product_sources(family)]

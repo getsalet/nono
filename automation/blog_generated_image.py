@@ -7,9 +7,34 @@ import base64,hashlib,io,json,os,re,subprocess,tempfile,time,urllib.request,urll
 from pathlib import Path
 from PIL import Image,ImageOps
 import roya_backlink_queue as roya
-POLICY='afp-one-generated-blog-image-v3-authentic-photo-composite'
+POLICY='afp-one-generated-blog-image-v4-editorial-photo-panels'
 BLOGS={'roya','farsiblog','rozblog','blogfa','loxblog'}
 RAW='https://raw.githubusercontent.com/getsalet/nono/'
+
+def rollout_enabled(blog,root=None):
+ if blog not in BLOGS:raise RuntimeError('Explicit supported blog required')
+ root=Path(root or roya.ROOT);path=root/'data/blog-generated-image-control.json'
+ if not path.exists():return False
+ try:control=json.loads(path.read_text())
+ except (OSError,ValueError):raise RuntimeError('Image rollout control unreadable; refusing unchecked images')from None
+ if control.get('enabled')is not True:return False
+ if control.get('policy')!=POLICY or control.get('direct_visual_approval')is not True:raise RuntimeError('Current direct visual acceptance required for generated images')
+ report=json.loads((root/'data/blog-generated-image-acceptance.json').read_text())
+ rows=report.get('families',[])
+ if report.get('policy')!=POLICY or report.get('passed')is not True or {r.get('family')for r in rows if r.get('passed')is True}!={'tape20','hose'}:raise RuntimeError('Both genuine product families must pass image acceptance')
+ approved=control.get('approved_samples',{})
+ for row in rows:
+  if approved.get(row['family'])!=row.get('review',{}).get('sha256'):raise RuntimeError('Direct image approval must match the tested image bytes')
+ return blog in control.get('blogs',[])
+
+def capability_slots(root=None):
+ root=Path(root or roya.ROOT)
+ try:report=json.loads((root/'data/agnes-image-key-health/latest.json').read_text())
+ except (OSError,ValueError):raise RuntimeError('Actual image capability audit required')from None
+ if report.get('complete')is not True or report.get('endpoint')!=roya.BASE.AGNES_BASE+'/images/generations' or report.get('model')!=(os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash'):raise RuntimeError('Matching complete image capability audit required')
+ names=[r['secret_name']for r in report.get('keys',[])if r.get('status')=='image_healthy'and r.get('http_status')==200]
+ if not names:raise RuntimeError('No credential passed actual image capability probes')
+ return names
 
 def identity(item,blog):
  if blog not in BLOGS or not item.get('key'):raise ValueError('Explicit supported blog and article key required')
@@ -95,7 +120,7 @@ def generate(item,blog,slots=None,max_attempts=3):
  endpoint=os.getenv('IMAGE_ENDPOINT')or roya.BASE.AGNES_BASE+'/images/generations'
  if not endpoint.startswith('https://'):raise RuntimeError('Image endpoint requires HTTPS')
  payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':background_brief(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}}
- names=slots if slots is not None else [n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_KEY_SLOTS',''))if n]
+ names=slots if slots is not None else (capability_slots()if os.getenv('AGNES_IMAGE_REQUIRE_CAPABILITY_AUDIT')=='1'else [n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_KEY_SLOTS',''))if n])
  if names:
   from agnes_key_pool import NAMES
   if any(n not in NAMES for n in names):raise RuntimeError('Unknown image credential slot name')
@@ -163,5 +188,5 @@ def prepare(item,blog,root=None):
   url=checkpoint_asset(path,raw,root)
   item['_generation_stage']='public_vision_qa'
   review(item,url,root=root) # Fetch immutable public bytes, not just local success.
- item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'generated-background-authentic-product-composite','product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر آموزشی ترکیبی با عکس واقعی محصول')
+ item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'editorial-generated-field-and-authentic-product-photo-panels','product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر آموزشی ترکیبی با عکس واقعی محصول')
  return url
