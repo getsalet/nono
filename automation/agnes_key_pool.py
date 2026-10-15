@@ -44,17 +44,22 @@ class AgnesKeyPool:
   if status!=401 or key not in self.keys:return False
   with self._lock:self._disabled.add(key)
   return True
- def fetch_json(self,url,headers=None,payload=None,timeout=180):
+ def fetch_json(self,url,headers=None,payload=None,timeout=180,allowed_keys=None):
   headers=dict(headers or {});key=next((v[7:]for n,v in headers.items()if n.lower()=='authorization'and v.startswith('Bearer ')),None)
+  candidates=self.keys if allowed_keys is None else [k for k in self.keys if k in allowed_keys]
   managed=url.startswith(self.base+'/')and key in self.keys
-  for _ in range(len(self.keys)+1 if managed else 1):
+  if managed and key not in candidates:raise RuntimeError('Credential outside requested Agnes capability pool')
+  for _ in range(len(candidates)+1 if managed else 1):
    req=urllib.request.Request(url,data=json.dumps(payload,ensure_ascii=False).encode()if payload is not None else None,headers=headers)
    try:
     with urllib.request.urlopen(req,timeout=timeout)as response:return json.load(response)
    except urllib.error.HTTPError as exc:
     status=exc.code;exc.close()
     if managed and status==401:
-     self.disable(key,status);key=self.next();headers={n:v for n,v in headers.items()if n.lower()!='authorization'};headers['Authorization']='Bearer '+key;continue
+     self.disable(key,status)
+     active=[k for k in candidates if k not in self._disabled]
+     if not active:raise RuntimeError('No active credentials in the requested Agnes capability pool')from None
+     key=active[0];headers={n:v for n,v in headers.items()if n.lower()!='authorization'};headers['Authorization']='Bearer '+key;continue
     raise RuntimeError(f'Agnes/provider HTTP {status}; raw response withheld')from None
    except urllib.error.URLError:
     raise RuntimeError('Agnes/provider transport failure; private details withheld')from None

@@ -45,3 +45,16 @@ class HealthyOnlyRoutingTests(unittest.TestCase):
   with tempfile.TemporaryDirectory()as d:
    path=Path(d)/'health.json';self.make_report(path,now)
    with self.assertRaisesRegex(RuntimeError,'No configured credential'):AgnesKeyPool({'AGNES_HEALTHY_SLOTS_ONLY':'1','AGNES_API_KEYS':'fake-unknown'},path,now)
+
+class CapabilitySubsetTests(unittest.TestCase):
+ def test_image_auth_fallback_cannot_use_text_only_slots(self):
+  p=AgnesKeyPool({'AGNES_API_KEY':'fake-text','AGNES_API_KEY14':'fake-image'},report_path='/absent')
+  error=urllib.error.HTTPError(DEFAULT_BASE,401,'no',{},io.BytesIO(b'PRIVATE_SENTINEL'))
+  with patch('urllib.request.urlopen',side_effect=error)as request,self.assertRaisesRegex(RuntimeError,'requested Agnes capability pool'):
+   p.fetch_json(DEFAULT_BASE+'/images/generations',{'Authorization':'Bearer fake-image'},{},allowed_keys=['fake-image'])
+  self.assertEqual(request.call_count,1);self.assertEqual(p.next(),'fake-text')
+ def test_capability_pool_refuses_outside_key(self):
+  p=AgnesKeyPool({'AGNES_API_KEY':'fake-text','AGNES_API_KEY14':'fake-image'},report_path='/absent')
+  with patch('urllib.request.urlopen')as request,self.assertRaisesRegex(RuntimeError,'outside requested'):
+   p.fetch_json(DEFAULT_BASE+'/images/generations',{'Authorization':'Bearer fake-text'},{},allowed_keys=['fake-image'])
+  request.assert_not_called()

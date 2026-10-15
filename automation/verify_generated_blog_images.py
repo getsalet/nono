@@ -21,6 +21,7 @@ def main():
    row['error_type']=type(exc).__name__;row['stage']=item.get('_generation_stage')if item else None
    if isinstance(getattr(exc,'code',None),int):row['http_status']=exc.code
    if str(exc).startswith(('Image provider HTTP ','Asset-only repository operation failed','Image checkpoint push failed','Product image rejected:','Immutable asset commit not available')):row['reason']=str(exc)[:300]
+  row['provider_attempts']=item.get('_image_provider_attempts',[])if item else []
   report['families'].append(row)
   report['passed']=len(report['families'])==2 and all(x['passed']for x in report['families'])
   path=ROOT/'data/blog-generated-image-acceptance.json';path.write_text(json.dumps(report,ensure_ascii=False,indent=2))

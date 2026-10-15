@@ -85,19 +85,34 @@ def generate(item,blog):
  endpoint=os.getenv('IMAGE_ENDPOINT')or roya.BASE.AGNES_BASE+'/images/generations'
  if not endpoint.startswith('https://'):raise RuntimeError('Image endpoint requires HTTPS')
  payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':brief(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':conditioning_image(expected)}}
+ names=[n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_KEY_SLOTS',''))if n]
+ if names:
+  from agnes_key_pool import NAMES
+  if any(n not in NAMES for n in names):raise RuntimeError('Unknown image credential slot name')
+  selected=[k for name in names for k in roya.BASE._key_pool.keys if roya.BASE._key_pool.slots.get(k)==name]
+  selected=list(dict.fromkeys(selected))
+  if not selected:raise RuntimeError('No audited healthy credential in the requested image pool')
+ else:selected=None
+ attempts=item.setdefault('_image_provider_attempts',[])
  for attempt in range(3):
-  key=os.getenv('IMAGE_API_KEY','').strip()or roya.BASE._key_pool.next()
+  key=os.getenv('IMAGE_API_KEY','').strip()or(selected[attempt%len(selected)]if selected else roya.BASE._key_pool.next())
+  row={'requested_secret_slot':roya.BASE._key_pool.slots.get(key,'IMAGE_API_KEY'),'attempt':attempt+1}
+  attempts.append(row)
   if not key:raise RuntimeError('Existing image API credential required')
   try:
-   data=roya.BASE.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+identity(item,blog)},payload,timeout=180)
+   data=roya.BASE._key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+identity(item,blog)},payload,timeout=180,allowed_keys=selected)
+   row.update(http_status=200,status='generation_response_received')
    break
   except RuntimeError as exc:
    match=re.fullmatch(r'Agnes/provider HTTP (\d+); raw response withheld',str(exc));code=int(match[1])if match else None
+   row.update(http_status=code,status='provider_error')
    if attempt<2 and(code in(429,500,502,503,504)or str(exc)=='Agnes/provider transport failure; private details withheld'):
     time.sleep(5*(attempt+1));continue
    if code:raise RuntimeError(f'Image provider HTTP {code}; raw response withheld')from None
    raise RuntimeError('Image provider transport/format failure; private details withheld')from None
-  except Exception as exc:raise RuntimeError('Image provider transport/format failure: '+type(exc).__name__)from None
+  except Exception as exc:
+   row.update(status='transport_or_format_error')
+   raise RuntimeError('Image provider transport/format failure: '+type(exc).__name__)from None
  row=(data.get('data')or[{}])[0]
  if row.get('b64_json'):
   try:raw=base64.b64decode(row['b64_json'],validate=True)
