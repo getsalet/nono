@@ -39,3 +39,20 @@ class ConditioningTests(unittest.TestCase):
   with patch.object(m.roya.BASE._key_pool,'next',return_value='fake-key'),patch.object(m.roya.BASE,'fetch_json',side_effect=RuntimeError('Agnes/provider HTTP 403; raw response withheld'))as fetch,self.assertRaisesRegex(RuntimeError,'HTTP 403'):
    m.generate(item,'roya')
   self.assertEqual(fetch.call_count,1)
+
+
+class DirectVisualReviewTests(unittest.TestCase):
+ def test_rejected_image_cannot_reuse_positive_ai_cache(self):
+  import tempfile,json
+  from blog_image_gate import visual_override_rejected
+  with tempfile.TemporaryDirectory()as d:
+   root=Path(d);(root/'data').mkdir()
+   self.assertFalse(visual_override_rejected('a'*64,root))
+   (root/'data/blog-generated-image-visual-review.json').write_text(json.dumps({'rejected_sha256':['a'*64]}))
+   self.assertTrue(visual_override_rejected('a'*64,root));self.assertFalse(visual_override_rejected('b'*64,root))
+ def test_broken_visual_decision_file_is_fail_closed(self):
+  import tempfile
+  from blog_image_gate import visual_override_rejected
+  with tempfile.TemporaryDirectory()as d:
+   root=Path(d);(root/'data').mkdir();(root/'data/blog-generated-image-visual-review.json').write_text('broken')
+   with self.assertRaises(RuntimeError):visual_override_rejected('a'*64,root)

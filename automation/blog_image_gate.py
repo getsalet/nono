@@ -59,6 +59,13 @@ def verdict_errors(v,expected):
   if v.get(flag) is not False:e.append('Vision flag not cleared: '+flag)
  return e
 
+def visual_override_rejected(digest,root):
+ path=Path(root)/'data/blog-generated-image-visual-review.json'
+ if not path.exists():return False
+ try:record=json.loads(path.read_text())
+ except (OSError,ValueError):raise RuntimeError('Product image rejected: visual review decisions unreadable')from None
+ return digest in record.get('rejected_sha256',[])
+
 def review(item,url,root=None,_candidate=None):
  expected=family(item)
  if _candidate is None:raw,(w,h),fmt=fetch(url)
@@ -67,6 +74,7 @@ def review(item,url,root=None,_candidate=None):
   raw=_candidate;image=Image.open(io.BytesIO(raw));image.verify();image=Image.open(io.BytesIO(raw));w,h=image.size;fmt=image.format
   if min(w,h)<180 or max(w,h)>10000:raise RuntimeError('Image dimensions unacceptable')
  digest=hashlib.sha256(raw).hexdigest();root=Path(root or roya.ROOT)
+ if visual_override_rejected(digest,root):raise RuntimeError('Product image rejected: direct visual inspection rejected this candidate; do not reuse cached AI approval')
  path=root/'artifacts/blog-image-reviews'/(expected+'-'+digest+'.json')
  if path.exists():record=json.loads(path.read_text())
  else:record={}
