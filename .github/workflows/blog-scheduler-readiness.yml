@@ -1,0 +1,47 @@
+name: Read-only LoxBlog scheduler readiness evidence
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/blog-scheduler-readiness.yml]
+permissions:
+  contents: write
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /data/loxblog/deployment-control.json
+      - name: Record non-secret deployment switches only
+        env:
+          LEGACY_SWITCH: ${{ vars.LOXBLOG_AUTOMATION_ENABLED }}
+        run: |
+          python - <<'PY'
+          import json,os,datetime
+          from pathlib import Path
+          release=json.loads(Path('data/loxblog/deployment-control.json').read_text())
+          ids=release.get('verified_post_ids',[])
+          approved=release.get('enabled') is True and len(set(ids))>=2 and all(isinstance(x,int)and x>0 for x in ids)and str(release.get('acceptance_run','')).startswith('https://github.com/getsalet/nono/actions/runs/')
+          value=os.getenv('LEGACY_SWITCH','')
+          report={'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'versioned_approval':approved,'repository_pause_active':value=='0','schedule_condition_enabled':approved and value!='0','repository_switch':value if value in ('','0','1')else'other_non_boolean_value','article_generation':False,'post_submissions':0}
+          Path('data/loxblog/scheduler-readiness.json').write_text(json.dumps(report,indent=2))
+          print(json.dumps(report))
+          PY
+      - name: Persist read-only diagnosis
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/loxblog/scheduler-readiness.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record non-secret LoxBlog scheduling switch evidence'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 4))
+          done
+          exit 1
