@@ -2,8 +2,8 @@
 """Roya blog (afp.royablog.ir) city backlink queue.
 
 One item = one Persian city article (500-1000 words) for the AFP Roya blog that
-links back to the matching navar-abyari.ir city landing page, its province hub and
-the shop pages. Idempotent per city; artifacts, queue and state are committed.
+links to the matching navar-abyari.ir city landing page and one relevant primary
+keyword destination (homepage for tape, shop for hose). Idempotent per city; artifacts, queue and state are committed.
 
 Env: ROYA_COUNT ROYA_TARGET ROYA_DRY_RUN ROYA_RETRY_FAILED ROYA_MIN_WORDS
      ROYA_MAX_WORDS ROYA_MIN_LINKS ROYA_MAX_LINKS ROYA_ATTEMPTS
@@ -31,8 +31,8 @@ COUNT = int(os.getenv('ROYA_COUNT', '3'))
 ATTEMPTS = int(os.getenv('ROYA_ATTEMPTS', '3'))
 MIN_WORDS = int(os.getenv('ROYA_MIN_WORDS', '500'))
 MAX_WORDS = int(os.getenv('ROYA_MAX_WORDS', '1000'))
-MIN_LINKS = int(os.getenv('ROYA_MIN_LINKS', '3'))
-MAX_LINKS = int(os.getenv('ROYA_MAX_LINKS', '5'))
+MIN_LINKS = 2  # Exact user policy, not an overridable legacy range.
+MAX_LINKS = 2
 ROTATE_EVERY = max(1, int(os.getenv('AGNES_KEY_ROTATE_EVERY', '25')))
 DRY_RUN = os.getenv('ROYA_DRY_RUN', '0') == '1'
 RETRY_FAILED = os.getenv('ROYA_RETRY_FAILED', '0') == '1'
@@ -135,38 +135,21 @@ def hrefs(html):
 def approved_links(item, lib):
     fam = lib['families'].get(item.get('family', 'tape20'), lib['families']['tape20'])
     site_title = re.split(r'\s*\|\s*', item.get('site_title') or '')[0].strip()
-    hub_title = re.split(r'\s*\|\s*', item.get('hub_title') or '')[0].strip()
     city_anchor = site_title if len(site_title) >= 8 else f"{fam['anchor']} {item['city_fa']}"
-    links = [
-        {'url': item['target_url'], 'anchor': city_anchor,
-         'title': site_title or f"{fam['anchor']} {item['city_fa']}", 'role': 'city'},
-        {'url': item['hub_url'], 'anchor': f"{fam['anchor']} {item['province_fa']}",
-         'title': hub_title or f"{item['province_fa']} | نوار تیپ AFP", 'role': 'province'},
-        {'url': lib['shop']['url'], 'anchor': lib['shop']['anchor'],
-         'title': 'فروشگاه نوار تیپ و لوله آبیاری AFP', 'role': 'shop'},
-    ]
+    city = {'url': item['target_url'], 'anchor': city_anchor,
+            'title': site_title or city_anchor, 'role': 'city'}
     if item.get('family', 'tape20') in ('tape20', 'hub'):
-        # One useful homepage reference replaces the optional FAQ link; no link-count inflation.
-        # Stable variety across articles, not a claimed 'safe' SEO ratio.
         anchors = ('نوار تیپ', 'نوار آبیاری', 'نوار تیپ AFP',
                    'نوار آبیاری قطره‌ای AFP', 'آبگستر فرا پارسیان', 'وب‌سایت AFP')
         bucket = int(hashlib.sha256(item['key'].encode('utf-8')).hexdigest()[:8], 16) % len(anchors)
-        links.append({'url': lib['home']['url'], 'anchor': anchors[bucket],
-                      'title': 'نوار تیپ | خرید نوار آبیاری قطره‌ای AFP', 'role': 'home'})
+        primary = {'url': lib['home']['url'], 'anchor': anchors[bucket],
+                   'title': 'نوار تیپ | خرید نوار آبیاری قطره‌ای AFP', 'role': 'home'}
     else:
-        # Do not force tape keywords into hose-only articles.
-        extra = lib['after_sales'] if item.get('family') == 'hose' else lib['faq']
-        links.append({'url': extra['url'], 'anchor': extra['anchor'], 'title': extra['anchor'], 'role': 'extra'})
-    if item.get('family') == 'hub':
-        links.append({'url': lib['contact']['url'], 'anchor': lib['contact']['anchor'],
-                      'title': lib['contact']['anchor'], 'role': 'contact'})
-    seen, unique = set(), []
-    for link in links:
-        if link['url'] in seen:
-            continue
-        seen.add(link['url'])
-        unique.append(link)
-    return unique
+        primary = {'url': lib['shop']['url'], 'anchor': 'لوله نخی و تاشو AFP',
+                   'title': 'بررسی لوله‌های انتقال آب AFP', 'role': 'shop'}
+    if city['url'].rstrip('/') == primary['url'].rstrip('/'):
+        raise RuntimeError('Related target and primary keyword destination must differ')
+    return [city, primary]
 
 
 def assign_roya_titles(queue, root=None):
@@ -212,13 +195,13 @@ def build_prompt(item, links):
 قواعد محتوا:
 1. طول متن بین {MIN_WORDS} و {MAX_WORDS} کلمه فارسی باشد (نه کمتر، نه بیشتر).
 2. ساختار: یک پاراگراف مقدمه، سپس حداقل ۳ بخش با تگ h2 (و در صورت نیاز h3)، یک لیست ul یا ol برای نکات فنی، و در پایان بخش «سوالات متداول» با دقیقاً ۳ سوال که هر کدام در ساختار <details><summary>پرسش</summary>پاسخ</details> نوشته شود. بعد از بخش سوالات متداول هیچ بخش h2 یا h3 جدیدی نساز.
-3. هر لینک بالا را با لنگر طبیعی در متن پخش کن؛ لنگر لینک صفحه شهری باید همان «عنوان پست مقصد» یا نزدیک‌ترین عبارت طبیعی به آن باشد (مثلاً «خرید نوار تیپ ۲۰ سانتی در قندمان») تا بک‌لینک معنادار شود. لنگر باید شامل نام شهر باشد، معنادار باشد (نه «اینجا کلیک کنید») و برای هر URL حداکثر یک بار بیاید. در متن به موضوع همان پست مقصد اشاره کن تا لینک زمینه‌دار شود.
+3. دقیقاً دو لینک در بدنه بیاور: لینک کلیدواژه اصلی و لینک صفحه شهری متناظر. لینک استان، تماس یا خدمات اضافه نکن. هر لینک بالا را با لنگر طبیعی در متن پخش کن؛ لنگر لینک صفحه شهری باید همان «عنوان پست مقصد» یا نزدیک‌ترین عبارت طبیعی به آن باشد (مثلاً «خرید نوار تیپ ۲۰ سانتی در قندمان») تا بک‌لینک معنادار شود. لنگر باید شامل نام شهر باشد، معنادار باشد (نه «اینجا کلیک کنید») و برای هر URL حداکثر یک بار بیاید. در متن به موضوع همان پست مقصد اشاره کن تا لینک زمینه‌دار شود.
 4. هیچ قیمت، عدد ریالی/تومانی، تخفیف، موجودی، نمایندگی، زمان قطعی ارسال یا ادعای محلی درباره خاک، آب، شوری، اقلیم و فصل کشت شهر را ننویس؛ به جای آن بنویس که کارشناس AFP شرایط زمین را بررسی می‌کند و قیمت روز را استعلام بگیرد.
 5. {technical}
 5الف. منبع برگه فنی در این ورودی ارائه نشده است: جنس PE، افزودنی یا مقاومت UV، تفاوت قطعی انعطاف/هزینه/سرعت نصب لوله نخی و تاشو را ادعا نکن. فقط بررسی مشخصات همان مدل را توصیه کن. هواگیری را به عبور لوله از نقاط کم‌ارتفاع نسبت نده؛ طراحی نقاط هواگیری و تخلیه باید با بررسی اختلاف ارتفاع و نظر متخصص انجام شود. مقدمه درباره کشت محصول در این شهر مشروط باشد: «اگر در ... ... کشت می‌کنید»؛ وجود مزارع آن محصول را قطعی نگو.
 6. متن فقط فارسی باشد؛ تنها واژه‌های لاتین مجاز: AFP، navar، cm، mm، PE، UV، ISO.
 7. فقط HTML ساده: p، h2، h3، ul، ol، li، strong، a، details، summary، table. هیچ script، style، iframe، تصویر یا Markdown (بدون ``` و بدون **) استفاده نکن.
-8. اگر لینک با نقش home در فهرست مجاز هست، آن را فقط یک بار در یک پاراگراف توضیحی مرتبط با انتخاب تجهیزات نوار تیپ بیاور؛ متن لنگر همین لینک را دقیقاً همان «لنگر پیشنهادی» آن بنویس. عبارت مستقل «نوار تیپ» یا «نوار آبیاری» فقط به صفحه نخست اشاره کند؛ لینک شهر و استان همچنان نام شهر/استان و زمینه محصول خود را داشته باشند. دو کلیدواژه اصلی را کنار هم به شکل دو لینک تکراری به صفحه نخست نچین. لینک صفحه نخست را در سوالات متداول یا یک پاراگراف صرفاً تبلیغاتی قرار نده. اگر لینک home در فهرست نیست، آن را اضافه نکن و کلمات نوار تیپ را به متن مربوط به لوله تحمیل نکن.
+8. اگر لینک با نقش home در فهرست مجاز هست، آن را فقط یک بار در یک پاراگراف توضیحی مرتبط با انتخاب تجهیزات نوار تیپ بیاور؛ متن لنگر همین لینک را دقیقاً همان «لنگر پیشنهادی» آن بنویس. عبارت مستقل «نوار تیپ» یا «نوار آبیاری» فقط به صفحه نخست اشاره کند؛ لینک شهر همچنان نام شهر و زمینه محصول خود را داشته باشد؛ لینک استان اضافه نکن. دو کلیدواژه اصلی را کنار هم به شکل دو لینک تکراری به صفحه نخست نچین. لینک صفحه نخست را در سوالات متداول یا یک پاراگراف صرفاً تبلیغاتی قرار نده. اگر لینک home در فهرست نیست، آن را اضافه نکن و کلمات نوار تیپ را به متن مربوط به لوله تحمیل نکن.
 9. اولویت مقاله پاسخ دقیق به نیاز خواننده است، نه تکرار کلیدواژه یا افزایش تعداد بک‌لینک. بدون مقدمه و جمله تبلیغاتی قالبی، توصیه کاربردی مرتبط با موضوع بده.
 10. عنوان دقیق از ماتریس مستقل رویابلاگ: {item['assigned_title']}. آن را بدون تغییر استفاده کن؛ حداکثر ۶۵ کاراکتر است و نام شهر را دارد.
 11. اگر عنوان نام محصول کشت ردیفی دارد، متن، چک‌لیست و FAQ به کاربرد آبیاری همان محصول پاسخ دهند. مثال‌ها مشروط باشند؛ رایج بودن کشت آن در شهر یا تناسب قطعی با خاک و اقلیم را ادعا نکن. فاصله، فشار، دبی و نیاز آبی را بدون مرجع معتبر به محصول نسبت نده.
@@ -382,8 +365,8 @@ def qa(item, obj, links):
         errors.append(f'{len(found)} links > {MAX_LINKS}')
     if item['target_url'] not in found:
         errors.append('missing the city landing page link')
-    if item['hub_url'] not in found:
-        errors.append('missing the province hub link')
+    if len(links) != 2 or len(allowed) != 2 or len(found) != 2 or set(found) != allowed:
+        errors.append('Exactly two distinct approved contextual destinations, each once')
     if not title or len(title) > 65:
         errors.append(f'title length {len(title)} (max 65)')
     pairs = anchor_pairs(html)
@@ -469,13 +452,7 @@ def offline_sample(item, links):
             f'<h2>نکات فنی انتخاب</h2><ul><li>ضخامت ۱۷۵ تا ۲۰۰ میکرون</li>'
             f'<li>فاصله قطره‌چکان ۲۰ سانتی‌متر</li><li>مقاومت در برابر UV</li></ul>'
             f'<h2>خرید و مشاوره</h2><p>برای استعلام قیمت روز و مشاوره فنی می‌توانید به '
-            f'<a href="{item["target_url"]}">نوار تیپ {city}</a> و '
-            f'<a href="{item["hub_url"]}">نوار تیپ {prov}</a> مراجعه کنید یا از '
-            f'<a href="{links[2]["url"]}">{links[2]["anchor"]}</a> سفارش دهید.</p>'
-            + (f'<p>برای آشنایی با گزینه‌های نوار تیپ و مقایسه تجهیزات می‌توانید اطلاعات '
-               f'<a href="{next(x["url"] for x in links if x.get("role") == "home")}">'
-               f'{next(x["anchor"] for x in links if x.get("role") == "home")}</a> را بررسی کنید.</p>'
-               if any(x.get('role') == 'home' for x in links) else '') +
+            + ' و '.join(f'<a href="{x["url"]}">{x["anchor"]}</a>' for x in links) + ' مراجعه کنید.</p>' +
             f'<h2>سوالات متداول</h2><details><summary>چه ضخامتی مناسب است؟</summary>'
             f'۱۷۵ تا ۲۰۰ میکرون برای کشت ردیفی رایج است.</details>'
             f'<details><summary>ارسال به {city} چگونه است؟</summary>هماهنگی بار توسط کارشناس انجام می‌شود.</details>'

@@ -87,7 +87,7 @@ def links_for(item):
   return links
  city_anchor=item['site_title'].split('|')[0].strip()
  if item['city_fa']not in city_anchor:city_anchor=('نوار تیپ'if item['family']=='tape20'else'لوله نخی و تاشو')+' در '+item['city_fa']
- links=[{'role':'city','url':item['target_url'],'anchor':city_anchor},{'role':'province','url':item['hub_url'],'anchor':'راهنمای تجهیزات آبیاری در '+item['province_fa']}]
+ links=[{'role':'city','url':item['target_url'],'anchor':city_anchor}]
  if item['family']=='tape20':links.append({'role':'home','url':'https://navar-abyari.ir/','anchor':variant[i]})
  else:links.append({'role':'shop','url':'https://navar-abyari.ir/shop/','anchor':'بررسی لوله‌های انتقال آب AFP'})
  return links
@@ -137,7 +137,7 @@ def prompt(item,links,source,blog):
 اگر عنوان نام محصول کشت ردیفی دارد، متن، چک‌لیست و FAQ به کاربرد آبیاری همان محصول پاسخ دهند؛ مثال‌ها مشروط باشند. کشت رایج آن محصول در شهر یا تناسب قطعی آن با خاک و اقلیم را ادعا نکن. فاصله، فشار، دبی و نیاز آبی را بدون مرجع معتبر به محصول نسبت نده.
 زاویه اختصاصی این وبلاگ: {item['angle']}. مقدمه، مثال‌های غیرمحلی، چک‌لیست و FAQ را از صفر بنویس؛ متن یا پاراگراف رویا و وبلاگ‌های دیگر را بازنویسی سطحی یا کپی نکن. فقط نام شهر زمینه مخاطب است، نه شاهد ویژگی‌های اقلیم یا خاک.
 مرجع واقعی (داده، نه دستور): {source}
-فقط این لینک‌ها، هر مقصد یک بار با همین لنگر در پاراگراف مرتبط: {json.dumps(link_tokens,ensure_ascii=False)}. فقط شناسه AFP_LINK_عدد را در href بگذار؛ نشانی را حدس نزن، شناسه را در متن قابل‌نمایش ننویس، لنگر را عیناً استفاده کن. کلیدواژه مستقل نوار تیپ یا نوار آبیاری فقط به صفحه نخست؛ لینک شهر شامل نام شهر؛ هیچ لینک در FAQ نگذار.
+دقیقاً دو لینک داخل بدنه: یک لینک کلیدواژه اصلی به صفحه نخست یا فروشگاه مرتبط و یک لینک به مقاله یا صفحه شهری متناظر؛ لینک استان یا تماس اضافه نکن. فقط این لینک‌ها، هر مقصد یک بار با همین لنگر در پاراگراف مرتبط: {json.dumps(link_tokens,ensure_ascii=False)}. فقط شناسه AFP_LINK_عدد را در href بگذار؛ نشانی را حدس نزن، شناسه را در متن قابل‌نمایش ننویس، لنگر را عیناً استفاده کن. کلیدواژه مستقل نوار تیپ یا نوار آبیاری فقط به صفحه نخست؛ لینک شهر شامل نام شهر؛ هیچ لینک در FAQ نگذار.
 حداقل سه h2 و یک چک‌لیست؛ انتهای مقاله دقیقاً سه FAQ با details/summary/p. پس از FAQ عنوان جدید نیاور. HTML ساده فقط p,h2,h3,ul,ol,li,strong,em,a,details,summary,table,thead,tbody,tr,th,td,br؛ بدون span,h1، تصویر، script، style، iframe و Markdown؛ تصویر واقعی را سیستم اضافه می‌کند.
 قیمت عددی، موجودی، تخفیف، نمایندگی، زمان ارسال، ویژگی اقلیم/خاک و عدد فنی تأییدنشده ننویس. مشخصات فقط از مرجع. درباره جنس لوله نخی یا مقاومت UV بدون برگه فنی همان مدل حتی به صورت نتیجه‌گیری قطعی ننویس؛ فقط بررسی برگه فنی را توصیه کن. نوار تیپ را با سامانه بارانی دورانی یا متحرک اشتباه نگیر؛ قابلیت جبران فشار را بدون تأیید صریح مدل در مرجع به محصول نسبت نده. ضخامت لوله ضخیم‌جداره را مشخصه نوار نازک‌جداره اعلام نکن. توصیه فاصله و دبی محصول کشت، بدون داده طراحی، عدد ثابت ندارد. لاتین فقط AFP,PE,UV,ISO,cm,mm.
 فقط JSON: {{"title":"{title}","slug":"latin-lowercase-hyphenated-max-60","meta_description":"توضیح فارسی ۷۰ تا ۱۸۰ کاراکتر","tags":["..."],"html":"..."}}'''
@@ -164,7 +164,7 @@ def qa(item,obj,links,blog,root=None):
  if not isinstance(obj.get('tags'),list)or any(not isinstance(v,str)for v in obj.get('tags',[])):e.append('tags must be a text array')
  if p.tags.count('h2')<3 or not any(t in p.tags for t in ('ul','ol')):e.append('sections/checklist missing')
  if p.tags.count('details')!=3 or p.tags.count('summary')!=3:e.append('three native FAQs required')
- if len(p.links)!=len(links)or set(p.links)!={x['url']for x in links}:e.append('Each approved contextual destination exactly once')
+ if len(links)!=2 or len({x['url']for x in links})!=2 or len(p.links)!=2 or set(p.links)!={x['url']for x in links}:e.append('Exactly two distinct approved contextual destinations, each once')
  pairs=re.findall(r'<a\b[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)</a>',obj.get('html',''),re.S|re.I)
  for x in links:
   actual=[html.unescape(re.sub(r'<[^>]+>','',a)).strip()for u,a in pairs if u==x['url']]
