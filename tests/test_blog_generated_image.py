@@ -34,8 +34,8 @@ class ConditioningTests(unittest.TestCase):
   import base64
   data={'data':[{'b64_json':base64.b64encode(buf.getvalue()).decode()}]}
   item={'key':'fake','family':'tape20','site_title':'نوار تیپ'}
-  with patch.object(m.roya.BASE,'next_agnes_key',return_value='fake-key'),patch.object(m.roya.BASE,'fetch_json',side_effect=[RuntimeError('Agnes/provider HTTP 503; raw response withheld'),data])as fetch,patch.object(m.time,'sleep'):
+  with patch.object(m.roya.BASE._key_pool,'next',return_value='fake-key'),patch.object(m.roya.BASE,'fetch_json',side_effect=[RuntimeError('Agnes/provider HTTP 503; raw response withheld'),data])as fetch,patch.object(m.time,'sleep'):
    result=m.generate(item,'roya');self.assertEqual(fetch.call_count,2);self.assertEqual(Image.open(io.BytesIO(result)).size,(1200,675))
-  with patch.object(m.roya.BASE,'next_agnes_key',return_value='fake-key'),patch.object(m.roya.BASE,'fetch_json',side_effect=RuntimeError('Agnes/provider HTTP 403; raw response withheld'))as fetch,self.assertRaisesRegex(RuntimeError,'HTTP 403'):
+  with patch.object(m.roya.BASE._key_pool,'next',return_value='fake-key'),patch.object(m.roya.BASE,'fetch_json',side_effect=RuntimeError('Agnes/provider HTTP 403; raw response withheld'))as fetch,self.assertRaisesRegex(RuntimeError,'HTTP 403'):
    m.generate(item,'roya')
   self.assertEqual(fetch.call_count,1)

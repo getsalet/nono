@@ -2,7 +2,7 @@
 Inspired by nono image_quality_gate and maghala2 family-aware reference rebuild.
 The source website or filename alone is never treated as visual approval.
 """
-import base64,hashlib,io,json,re,urllib.request
+import base64,hashlib,io,json,re,time,urllib.request
 from pathlib import Path
 from PIL import Image
 import roya_backlink_queue as roya
@@ -82,7 +82,15 @@ def review(item,url,root=None,_candidate=None):
   payload={'model':roya.BASE.AGNES_MODEL,'messages':[{'role':'user','content':content}],'temperature':0,'response_format':{'type':'json_object'}}
   key=roya.BASE.next_agnes_key()if hasattr(roya.BASE,'next_agnes_key')else roya.BASE.AGNES_KEY
   if not key:raise RuntimeError('Vision credential required; never approve by prompt or filename alone')
-  response=roya.BASE.fetch_json(roya.BASE.AGNES_BASE+'/chat/completions',{'Authorization':'Bearer '+key,'Content-Type':'application/json'},payload,timeout=90)
+  for attempt in range(2):
+   try:
+    response=roya.BASE.fetch_json(roya.BASE.AGNES_BASE+'/chat/completions',{'Authorization':'Bearer '+key,'Content-Type':'application/json'},payload,timeout=180)
+    break
+   except (TimeoutError,RuntimeError)as exc:
+    transient=isinstance(exc,TimeoutError)or bool(re.fullmatch(r'Agnes/provider HTTP (?:429|500|502|503|504); raw response withheld',str(exc)))or str(exc)=='Agnes/provider transport failure; private details withheld'
+    if not transient or attempt==1:raise
+    time.sleep(5)
+    key=roya.BASE.next_agnes_key()
   value=response['choices'][0]['message']['content']
   if isinstance(value,list):value=''.join(x.get('text','')for x in value if isinstance(x,dict))
   verdict=json.loads(re.sub(r'^```(?:json)?\s*|\s*```$','',value.strip(),flags=re.I))

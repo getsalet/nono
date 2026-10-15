@@ -60,8 +60,32 @@ jobs:
       - run: python -m pip install --quiet Pillow
       - run: python -m unittest discover -s tests -p 'test_blog_generated_image.py' -v
       - run: python -m unittest discover -s tests -p 'test_agnes_key_pool.py' -v
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            artifacts/loxblog-backlink-queue/generated-images
+            artifacts/blog-image-reviews
+          key: blog-generated-image-v1-${{ github.run_id }}
+          restore-keys: blog-generated-image-v1-
       - name: Generate and visually validate both genuine product families
         run: python automation/verify_generated_blog_images.py
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: |
+            artifacts/loxblog-backlink-queue/generated-images
+            artifacts/blog-image-reviews
+          key: blog-generated-image-v1-${{ github.run_id }}
+      - name: Preserve non-secret image candidates for diagnosis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blog-generated-image-candidates-${{ github.run_id }}
+          path: |
+            artifacts/loxblog-backlink-queue/generated-images/*.webp
+            data/blog-generated-image-acceptance.json
+          retention-days: 7
+          if-no-files-found: ignore
       - name: Persist acceptance without credentials, native sessions or API bodies
         if: always()
         run: |

@@ -86,7 +86,7 @@ def generate(item,blog):
  if not endpoint.startswith('https://'):raise RuntimeError('Image endpoint requires HTTPS')
  payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':brief(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':conditioning_image(expected)}}
  for attempt in range(3):
-  key=os.getenv('IMAGE_API_KEY','').strip()or roya.BASE.next_agnes_key()
+  key=os.getenv('IMAGE_API_KEY','').strip()or roya.BASE._key_pool.next()
   if not key:raise RuntimeError('Existing image API credential required')
   try:
    data=roya.BASE.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+identity(item,blog)},payload,timeout=180)
