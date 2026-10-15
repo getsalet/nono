@@ -69,11 +69,12 @@ def prepare(page,item):
  page.locator('input[name=pimage]').fill(item['image_url'])
  page.evaluate('tags=>{const e=document.querySelector("#keywords"),t=e.__tagify;if(!t)throw new Error("Native tag control unavailable");t.removeAllTags();t.addTags(tags);}',post.get('tags',[])[:4])
  page.locator('textarea[name=meta_description]').fill(post['meta_description'])
- # Native default is "now". Blank publish_at explicitly avoids accidental future scheduling.
- page.locator('input[name=publish_at]').fill('')
+ # Preserve the server-selected current Jalali timestamp instead of erasing it.
+ native_date=page.locator('input[name=publish_at]').input_value()
+ if not re.fullmatch(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}',native_date):raise RuntimeError('Native current publication date unavailable')
  page.locator('input[name=is_pinned]').uncheck()
  result=page.evaluate('''data=>{
- const title=document.querySelector('#ptitle'),form=title.form;form.id='afp-native-post';
+ const title=document.querySelector('#ptitle'),form=title.form;form.id=form.id||'afp-native-post';
  for(const [n,v]of Object.entries({status:'1',show_to:'1',comment_status:'0'})){
   const s=document.querySelector('select[name="'+n+'"]');s.setAttribute('form',form.id);s.value=v;s.dispatchEvent(new Event('change',{bubbles:true}));
  }
@@ -85,7 +86,7 @@ def prepare(page,item):
 }''',{'title':post['title'],'short':short,'more':more})
  # TinyMCE may normalize harmless markup; compare approved text and validate actual serialized FAQ.
  actual=page.evaluate('()=>({short:document.querySelector("#editor1").value,more:document.querySelector("#editor2").value})')
- if not(result['title'] and result['comments']=='0' and result['status']=='1' and result['show']=='1' and not result['future'] and result['faqs']==3):raise RuntimeError('Native publication controls/FAQ did not serialize correctly')
+ if not(result['title'] and result['comments']=='0' and result['status']=='1' and result['show']=='1' and result['future']==native_date and result['faqs']==3):raise RuntimeError('Native publication controls/FAQ did not serialize correctly')
  if text(actual['short'])!=text(short) or text(actual['more'])!=text(more):raise RuntimeError('Native editor changed approved article text')
  if '<details' not in actual['more']:raise RuntimeError('Native editor removed expandable FAQs')
  print('Native form verified: real summary/continuation, three FAQs, public immediate publication, comments off.',flush=True)
@@ -156,11 +157,14 @@ def main():
       with page.expect_navigation(wait_until='domcontentloaded',timeout=60000)as result:button.click()
       print('Native LoxBlog response status: '+str(result.value.status if result.value else None),flush=True)
      finally:journal(e,'unconfirmed')
+     # Read only visible native validation feedback; never request payloads or tokens.
+     feedback=page.locator('.alert-danger,.alert-warning,.invalid-feedback-custom').all_inner_texts()
+     feedback=' | '.join(x.strip()for x in feedback if x.strip())[:600]
      for attempt in range(12):
       existing=scan_public(public);record=existing.get(title)
       if record:break
       time.sleep(5)
-     if not record:raise RuntimeError('Single native submission not confirmed; no resubmission')
+     if not record:raise RuntimeError('Single native submission not confirmed; no resubmission'+('; native feedback: '+feedback if feedback else ''))
     url=verify(public,item,record)
     row={'key':e['key'],'title':title,'pid':record['pid'],'url':url,'at':state.now(),'verified':True,'recovered_existing':recovered}
     state.checkpoint(e,item,row);journal(e,'verified');existing[title]=record

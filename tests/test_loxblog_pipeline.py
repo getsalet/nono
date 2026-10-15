@@ -49,6 +49,11 @@ class LoxBlogIndependentPipelineTests(unittest.TestCase):
   s=(ROOT/'automation/loxblog_native.py').read_text()
   self.assertNotIn('storage_state',s);self.assertNotIn('post_data',s);self.assertNotIn('print(feedback',s)
   self.assertIn('no automatic credential retry',s)
+ def test_native_form_identity_and_server_date_are_preserved(self):
+  s=(ROOT/'automation/publish_loxblog_posts.py').read_text()
+  self.assertIn("form.id=form.id||'afp-native-post'",s)
+  self.assertIn("result['future']==native_date",s)
+  self.assertNotIn("locator('input[name=publish_at]').fill('')",s)
  def test_native_archive_has_its_own_verified_layout(self):
   s=(ROOT/'automation/publish_loxblog_posts.py').read_text()
   self.assertIn("#content #title a[href]",s)
