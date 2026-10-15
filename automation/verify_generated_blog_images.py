@@ -4,6 +4,7 @@ import copy,json,time,sys,re,shutil,hashlib,os
 from pathlib import Path
 from blog_generated_image import prepare,POLICY,capability_slots,identity
 # Snapshot-only diagnostics never constitute acceptance or production approval.
+# Safe-frame/crop revision requires fresh candidates under the new recipe identity.
 import roya_backlink_queue as roya
 ROOT=Path(__file__).resolve().parent.parent
 

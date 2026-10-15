@@ -10,7 +10,9 @@ class TopicSceneContractTests(unittest.TestCase):
   self.assertIn('okra',text);self.assertIn('in-service monitoring',text)
   for word in ('farmer','worker','people','hands','body parts','engineer'):
    self.assertNotIn(word,text.lower())
-  self.assertIn('vacant and motionless',text);self.assertLess(len(text),3200)
+  self.assertIn('vacant and motionless',text);self.assertLess(len(text),3400)
+  self.assertIn('45 to 82 percent',text);self.assertIn('creamy-yellow',text)
+  self.assertNotIn('never maize',text)
  def test_title_crop_and_connection_topic_win_over_generic_body(self):
   plan=scene_plan(self.item('لوله نخی ذرت؛ پایش اتصال‌ها','hose'),'roya')
   self.assertEqual(plan['crop'],'maize');self.assertEqual(plan['topic'],'connection inspection')

@@ -5,7 +5,7 @@ Agnes payload/reference/watermark order follows nono's exact-product rebuild.
 import hashlib,json,re
 import blog_reference_image_policy as reference
 POLICY='afp-one-generated-blog-image-v6-reference-integrated-topic-scene'
-RECIPE_VERSION='two-repo-positive-scene-20261016-r3'
+RECIPE_VERSION='two-repo-positive-scene-20261016-r4-safe-frame'
 SOURCES=['https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py','https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py']
 def context_from_post(post):
  text=re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',post.get('html',''))).strip()
@@ -29,6 +29,8 @@ def scene_plan(item,blog):
  text=title+' '+a['focus'];crop=reference.matched_crop({'title':title})
  crop_en=reference.CROPS.get(crop,'botanically neutral seedlings')
  crop_spec=reference.CROP_VISUALS.get(crop,'neutral prepared beds with tiny seedlings')
+ crop_spec=re.split(r';|\babsolutely no\b|\bnever\b',crop_spec)[0].strip()
+ if crop=='بامیه':crop_spec='okra with broad connected palmately lobed leaves, upright ridged tapered green pods, and pale creamy-yellow flowers with a dark maroon throat'
  rules=[
   (('فشار','مانومتر'),'pressure distribution','one installed pressure gauge, a fixed header and connected irrigation rows; a localized wetting band beside the lines'),
   (('اتصال','نشتی'),'connection inspection','one installed coupling joining the header and field line, with the seal and ground-contact detail sharply visible'),
@@ -60,7 +62,7 @@ def prompt(item,blog):
   +'Botanical identity: '+plan['botany']+'. '
   +'VISIBLE CONTENT WHITELIST: accurate crop plants, natural soil, installed irrigation lines, the fixed hardware specified above, and the approved AFP product only. '
   +'Generate the whole photograph in one coherent pass. The supplied reference establishes product geometry, material and authentic package identity. Reconstruct the product inside the same physical scene, with one camera, shared daylight, continuous perspective, believable proportions, soil occlusion and contact shadows. '
-  +product+' Keep the product complete near one lower corner, as a secondary prop beside the installed evidence. '
+  +product+' Keep the entire product within the safe rectangle from 8 to 88 percent of frame width and 45 to 82 percent of frame height. A generous strip of visible soil separates the complete product bottom from the bottom image edge. Place it as a secondary prop beside the installed evidence. '
   +'Use '+plan['camera']+', asymmetric geometry and soft natural light. Visible package lettering is limited to the authentic supplied reference. The phone watermark is applied separately after rendering. '
   +'Never create panels. The output is a single continuous photograph. Article title (source data): '+json.dumps(plan['article_title'],ensure_ascii=False)+'. Variation identity '+plan['seed']+'.'
  )
