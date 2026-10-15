@@ -13,7 +13,7 @@ import roya_backlink_queue as roya
 class ImageRolloutTests(unittest.TestCase):
  def setUp(self):
   self.item={'key':'image-fixture','family':'tape20','site_title':'نوار تیپ'}
-  buf=io.BytesIO();Image.new('RGB',(1200,675),(190,170,140)).save(buf,'WEBP');self.raw=buf.getvalue()
+  buf=io.BytesIO();__import__('blog_image_watermark').apply(Image.new('RGB',(1200,675),(190,170,140))).save(buf,'WEBP');self.raw=buf.getvalue()
  def test_product_panels_are_large_nonoverlapping_and_inside_frame(self):
   for seed in ('000000'+'a'*26,'ffffff'+'a'*26):
    box=composite.product_panel_box(seed)
@@ -81,7 +81,7 @@ class ImageRolloutTests(unittest.TestCase):
  def test_generated_record_is_bound_to_blog_key_policy_and_real_photos(self):
   item=copy.deepcopy(self.item);asset=generated.identity(item,'roya')
   url='https://raw.githubusercontent.com/getsalet/nono/'+'a'*40+'/assets/blog-generated/roya/'+asset+'.webp'
-  item.update(image_url=url,image_generation={'policy':generated.POLICY,'blog':'roya','asset_id':asset,'url':url,'product_photos':composite.provenance('tape20')})
+  item.update(image_review={'watermark':__import__('blog_image_watermark').TEXT},image_url=url,image_generation={'policy':generated.POLICY,'blog':'roya','asset_id':asset,'url':url,'watermark':__import__('blog_image_watermark').TEXT,'watermark_policy':__import__('blog_image_watermark').POLICY,'product_photos':composite.provenance('tape20')})
   self.assertEqual(gate.generated_record_errors(item,'roya'),[])
   for changed in ({**item,'key':'other'}, {**item,'image_url':url.replace('a'*40,'main')}, {**item,'image_generation':{**item['image_generation'],'product_photos':[]}}):
    self.assertTrue(gate.generated_record_errors(changed,'roya'))

@@ -73,6 +73,12 @@ def review(item,url,root=None,_candidate=None):
   if not url.startswith('generated://')or not isinstance(_candidate,bytes)or len(_candidate)>8*1024*1024:raise RuntimeError('Invalid local generation candidate')
   raw=_candidate;image=Image.open(io.BytesIO(raw));image.verify();image=Image.open(io.BytesIO(raw));w,h=image.size;fmt=image.format
   if min(w,h)<180 or max(w,h)>10000:raise RuntimeError('Image dimensions unacceptable')
+ generated=url.startswith('generated://')or'/assets/blog-generated/'in url
+ watermark=None
+ if generated:
+  from blog_image_watermark import present,TEXT
+  if not present(Image.open(io.BytesIO(raw))):raise RuntimeError('Product image rejected: exact phone watermark missing or unreadable')
+  watermark=TEXT
  digest=hashlib.sha256(raw).hexdigest();root=Path(root or roya.ROOT)
  if visual_override_rejected(digest,root):raise RuntimeError('Product image rejected: direct visual inspection rejected this candidate; do not reuse cached AI approval')
  path=root/'artifacts/blog-image-reviews'/(expected+'-'+digest+'.json')
@@ -113,10 +119,11 @@ def review(item,url,root=None,_candidate=None):
   verdict=json.loads(re.sub(r'^```(?:json)?\s*|\s*```$','',value.strip(),flags=re.I))
   record={'policy':POLICY,'sha256':digest,'family':expected,'source_url':url,'reference_url':REFERENCES[expected],'width':w,'height':h,'verdict':verdict,'reviewed_at':roya.now()}
   path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(record,ensure_ascii=False,indent=2))
+ record['watermark']=watermark
  record['source_url']=url  # Identical digest/policy/family may have another immutable URL.
  errors=verdict_errors(record.get('verdict'),expected)
  if errors:raise RuntimeError('Product image rejected: '+'; '.join(errors))
- item.update(image_url=url,image_width=w,image_height=h,image_review={k:record[k]for k in ('policy','sha256','family','width','height','source_url','verdict')})
+ item.update(image_url=url,image_width=w,image_height=h,image_review={k:record[k]for k in ('policy','sha256','family','width','height','source_url','verdict','watermark')})
  return record
 
 def validate_record(item):
@@ -133,6 +140,8 @@ def generated_record_errors(item,blog,root=None):
  generation=item.get('image_generation',{})
  if not generation and not rollout_enabled(blog,root):return []
  errors=[];asset_id=identity(item,blog)
+ from blog_image_watermark import TEXT as watermark_text,POLICY as watermark_policy
+ if generation.get('watermark')!=watermark_text or generation.get('watermark_policy')!=watermark_policy or item.get('image_review',{}).get('watermark')!=watermark_text:errors.append('Verified exact phone watermark required')
  if generation.get('policy')!=generation_policy:errors.append('Current generated image required for this post')
  if generation.get('blog')!=blog or generation.get('asset_id')!=asset_id:errors.append('Generated image belongs to another blog or article')
  url=item.get('image_url','')

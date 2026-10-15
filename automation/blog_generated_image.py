@@ -40,7 +40,8 @@ def identity(item,blog):
  if blog not in BLOGS or not item.get('key'):raise ValueError('Explicit supported blog and article key required')
  from blog_image_gate import family
  expected=family(item)
- return hashlib.sha256((POLICY+'|'+blog+'|'+str(item['key'])+'|'+expected).encode()).hexdigest()[:32]
+ from blog_image_watermark import POLICY as watermark_policy
+ return hashlib.sha256((POLICY+'|'+watermark_policy+'|'+blog+'|'+str(item['key'])+'|'+expected).encode()).hexdigest()[:32]
 
 def brief(item,blog):
  from blog_image_gate import family,reference_identity_instruction
@@ -200,5 +201,5 @@ def prepare(item,blog,root=None):
   url=checkpoint_asset(path,raw,root)
   item['_generation_stage']='public_vision_qa'
   review(item,url,root=root) # Fetch immutable public bytes, not just local success.
- item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'editorial-generated-field-and-authentic-product-photo-panels','product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر آموزشی ترکیبی با عکس واقعی محصول')
+ item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'editorial-generated-field-and-authentic-product-photo-panels','watermark':__import__('blog_image_watermark').TEXT,'watermark_policy':__import__('blog_image_watermark').POLICY,'product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر آموزشی ترکیبی با عکس واقعی محصول')
  return url

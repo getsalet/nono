@@ -50,12 +50,13 @@ def compose(background,family,variation):
  draw.rectangle((divider,0,divider+3,674),fill=(13,108,124))
  # Full, correctly proportioned source photographs. No redraw, stretching, text
  # synthesis or white-background removal. Product identity dominates the image.
- frames=[(80,55,580,565)] if family=='tape20' else [(55,35,620,450),(465,500,220,150)]
+ frames=[(80,45,580,535)] if family=='tape20' else [(55,25,620,430),(465,465,220,130)]
  for (name,raw),(x,y,w,h) in zip(sources,frames):
   product=Image.open(io.BytesIO(raw)).convert('RGB')
   product=ImageOps.contain(product,(w,h),Image.Resampling.LANCZOS)
   canvas.paste(product,(product_x+x+(w-product.width)//2,y+(h-product.height)//2))
- return canvas
+ from blog_image_watermark import apply
+ return apply(canvas)
 
 def provenance(family):
  return [{'asset':name,'sha256':hashlib.sha256(raw).hexdigest()}for name,raw in product_sources(family)]
