@@ -174,19 +174,43 @@ def publish(todo):
             if not attached:browser.close()
     return completed
 
+def generated_image_preflight(item):
+    # Other platforms use this module too and own their separate strict preflight.
+    if BLOG != 'https://afp.royablog.ir' or item.get('family') not in ('tape20','hose'):return []
+    from blog_generated_image import rollout_enabled
+    if not rollout_enabled('roya'):return []
+    from blog_image_gate import generated_record_errors,validate_record,review
+    errors=generated_record_errors(item,'roya')+validate_record(item)
+    if errors:return errors
+    try:review(item,item['image_url'])
+    except Exception:return ['Generated image public-byte review failed; defer without submission']
+    return []
+
+
 def main():
     if os.getenv('ROYA_DRAFT','0')=='1':raise RuntimeError('This queue publisher is configured for public publication, not drafts')
     pq=load(PUBLISH_QUEUE,{'items':[]});queue=load(QUEUE,{'items':[]});state=load(STATE,{})
     known={i['key'] for i in queue['items'] if i.get('published')}
     known.update(r['key'] for r in state.get('published',[]))
     todo=[]
-    for e in pq['items']:
+    for e in list(pq['items']):
         if e['key'] in known:continue
         p=resolve_item(e)
         if not p.exists():raise RuntimeError('Ready artifact missing: '+p.name)
         i=load(p,{});post=i.get('post',{})
         if i.get('key')!=e['key'] or not post.get('title') or not post.get('html'):raise RuntimeError('Ready artifact is incomplete')
         if not i.get('qa',{}).get('passed',False):raise RuntimeError('Ready artifact has not passed QA: '+e['key'])
+        image_errors=generated_image_preflight(i)
+        if image_errors:
+            # Not previously published: keep the topic pending for regeneration.
+            i['qa']={'passed':False,'errors':image_errors};i['status']='failed'
+            i['last_error']='; '.join(image_errors);save(p,i)
+            for row in queue['items']:
+                if row['key']==e['key']:row.update(status='pending',last_error=i['last_error'])
+            pq['items']=[row for row in pq['items'] if row['key']!=e['key']]
+            pq['count']=len(pq['items']);save(PUBLISH_QUEUE,pq);save(QUEUE,queue)
+            print(e['key']+': image preflight deferred; continuing other ready posts',flush=True)
+            continue
         todo.append(e)
     todo=todo[:LIMIT]
     if not todo:

@@ -78,4 +78,19 @@ class ImageRolloutTests(unittest.TestCase):
    path.write_text(json.dumps({'enabled':True,'policy':generated.POLICY,'direct_visual_approval':False}))
    with self.assertRaisesRegex(RuntimeError,'direct visual acceptance'):generated.rollout_enabled('roya',root)
 
+ def test_generated_record_is_bound_to_blog_key_policy_and_real_photos(self):
+  item=copy.deepcopy(self.item);asset=generated.identity(item,'roya')
+  url='https://raw.githubusercontent.com/getsalet/nono/'+'a'*40+'/assets/blog-generated/roya/'+asset+'.webp'
+  item.update(image_url=url,image_generation={'policy':generated.POLICY,'blog':'roya','asset_id':asset,'url':url,'product_photos':composite.provenance('tape20')})
+  self.assertEqual(gate.generated_record_errors(item,'roya'),[])
+  for changed in ({**item,'key':'other'}, {**item,'image_url':url.replace('a'*40,'main')}, {**item,'image_generation':{**item['image_generation'],'product_photos':[]}}):
+   self.assertTrue(gate.generated_record_errors(changed,'roya'))
+  self.assertTrue(gate.generated_record_errors(item,'farsiblog'))
+ def test_active_rollout_rejects_legacy_draft_without_generated_image(self):
+  with patch.object(generated,'rollout_enabled',return_value=True):
+   self.assertTrue(gate.generated_record_errors(self.item,'roya'))
+ def test_nonfinite_scores_never_pass_visual_gate(self):
+  verdict={'pass':True,'score':'NaN','observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False}
+  self.assertIn('Image score below 70',gate.verdict_errors(verdict,'tape20'))
+
 if __name__=='__main__':unittest.main()

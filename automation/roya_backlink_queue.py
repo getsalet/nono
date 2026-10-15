@@ -446,6 +446,9 @@ def qa(item, obj, links):
         errors.append('slug must be latin lowercase hyphenated (max 60)')
     if not (obj.get('meta_description') or '').strip():
         errors.append('meta_description is required')
+    if item.get('family') in ('tape20', 'hose'):
+        from blog_image_gate import generated_record_errors
+        errors.extend(generated_record_errors(item, 'roya'))
     errors.extend(product_semantics_errors(item, html))
     errors.extend(check_corpus(ROOT, 'roya', item['key'], html))
     return errors, {'words': n, 'links': found, 'title': title, 'slug': slug,

@@ -181,8 +181,9 @@ def qa(item,obj,links,blog,root=None):
   if c in plain:e.append('unsupported claim '+c)
  if {x.lower()for x in re.findall(r'[A-Za-z]+',plain)}-{'afp','pe','uv','iso','cm','mm'}:e.append('unapproved Latin words')
  if re.search(r'```|\*\*',obj.get('html','')):e.append('No Markdown')
- from blog_image_gate import validate_record
+ from blog_image_gate import validate_record,generated_record_errors
  e+=validate_record(item)
+ e+=generated_record_errors(item,blog,root)
  e+=roya.product_semantics_errors(item,obj.get('html',''))
  e+=check_corpus(root or ROOT,blog,item['key'],obj.get('html',''))
  return e,{'words':n,'links':p.links,'checked_against':'Roya + FarsiBlog + RozBlog + Blogfa + LoxBlog corpus','title_matrix':item.get('matrix_title')or obj.get('title')}

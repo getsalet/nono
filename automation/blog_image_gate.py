@@ -2,7 +2,7 @@
 Inspired by nono image_quality_gate and maghala2 family-aware reference rebuild.
 The source website or filename alone is never treated as visual approval.
 """
-import base64,hashlib,io,json,re,time,urllib.request
+import base64,hashlib,io,json,math,re,time,urllib.request
 from pathlib import Path
 from PIL import Image
 import roya_backlink_queue as roya
@@ -52,7 +52,7 @@ def verdict_errors(v,expected):
  if v.get('pass') is not True:e.append('Visual approval required')
  try:score=float(v.get('score',0))
  except (ValueError,TypeError):score=0
- if score<70:e.append('Image score below 70')
+ if not math.isfinite(score)or score<70:e.append('Image score below 70')
  if v.get('observed_family')!=expected:e.append('Image product family mismatch')
  if v.get('expected_product_visible') is not True:e.append('Expected product not recognizable')
  for flag in ('wrong_product_present','fake_text_or_logo','implausible_geometry','people_present'):
@@ -126,3 +126,17 @@ def validate_record(item):
  if not re.fullmatch('[a-f0-9]{64}',str(record.get('sha256',''))):e.append('Reviewed image digest missing')
  e+=verdict_errors(record.get('verdict'),expected)
  return e
+
+def generated_record_errors(item,blog,root=None):
+ """Bind generated image to THIS blog/article; never accept another post's asset."""
+ from blog_generated_image import POLICY as generation_policy,identity,rollout_enabled
+ generation=item.get('image_generation',{})
+ if not generation and not rollout_enabled(blog,root):return []
+ errors=[];asset_id=identity(item,blog)
+ if generation.get('policy')!=generation_policy:errors.append('Current generated image required for this post')
+ if generation.get('blog')!=blog or generation.get('asset_id')!=asset_id:errors.append('Generated image belongs to another blog or article')
+ url=item.get('image_url','')
+ if not approved_url(url)or not url.endswith('/assets/blog-generated/'+blog+'/'+asset_id+'.webp')or generation.get('url')!=url:errors.append('Generated image must use this article immutable asset URL')
+ from blog_product_composite import provenance
+ if generation.get('product_photos')!=provenance(family(item)):errors.append('Authentic source photo provenance missing or changed')
+ return errors
