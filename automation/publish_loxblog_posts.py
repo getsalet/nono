@@ -33,13 +33,21 @@ def scan_public(page):
   if len(seen)>=150:raise RuntimeError('Public archive pagination incomplete')
   seen.add(url);r=page.goto(url,wait_until='domcontentloaded',timeout=60000)
   if not r or r.status>=400 or urlsplit(page.url).hostname!=HOST:raise RuntimeError('Public archive unavailable; refuse partial dedup')
-  if page.locator('.header,.footer').count()<2:raise RuntimeError('Public archive is not the expected native AFP template')
-  selectors='article.post-card h2 a[href]' if urlsplit(page.url).path.rstrip('/')!='/posts' else 'main a[href]'
+  native_archive=urlsplit(page.url).path.rstrip('/')=='/posts'
+  if native_archive:
+   # /posts/ is LoxBlog's own archive, not the user's header/footer template.
+   homes=page.locator('#content #title a[href]').evaluate_all('es=>es.map(e=>e.href)')
+   credits=page.locator('#copyright a[href]').evaluate_all('es=>es.map(e=>e.href)')
+   if page.locator('#content #result').count()!=1 or page.locator('#navbar').count()!=1 or not any(urlsplit(x).hostname==HOST for x in homes) or not any((urlsplit(x).hostname or '').lower()in ('loxblog.com','www.loxblog.com')for x in credits):raise RuntimeError('Native public archive fingerprint missing; refuse partial dedup')
+   selectors='#result a[href]'
+  else:
+   if page.locator('.header,.footer').count()<2:raise RuntimeError('Public archive is not the expected native AFP template')
+   selectors='article.post-card h2 a[href]' 
   rows=page.locator(selectors).evaluate_all('es=>es.map(e=>({url:e.href,title:e.textContent.trim()}))')
   for title,record in public_records(rows).items():
    if title in found and found[title]['pid']!=record['pid']:raise RuntimeError('Ambiguous public title')
    found[title]=record
-  for link in page.locator('.pagination a[href]').evaluate_all('es=>es.map(e=>e.href)'):
+  for link in page.locator('#navbar a[href]' if native_archive else '.pagination a[href]').evaluate_all('es=>es.map(e=>e.href)'):
    parts=urlsplit(link)
    if parts.hostname==HOST and not parts.path.startswith('/post/') and link not in seen and link not in pending:pending.append(link)
  return found

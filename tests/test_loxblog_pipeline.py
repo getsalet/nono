@@ -49,6 +49,13 @@ class LoxBlogIndependentPipelineTests(unittest.TestCase):
   s=(ROOT/'automation/loxblog_native.py').read_text()
   self.assertNotIn('storage_state',s);self.assertNotIn('post_data',s);self.assertNotIn('print(feedback',s)
   self.assertIn('no automatic credential retry',s)
+ def test_native_archive_has_its_own_verified_layout(self):
+  s=(ROOT/'automation/publish_loxblog_posts.py').read_text()
+  self.assertIn("#content #title a[href]",s)
+  self.assertIn("#content #result",s)
+  self.assertIn("#navbar a[href]",s)
+  self.assertIn("#result a[href]",s)
+  self.assertIn("Native public archive fingerprint missing",s)
  def test_schedule_is_gated_and_checkpoint_is_independent(self):
   s=(ROOT/'.github/workflows/loxblog-content.yml').read_text()
   self.assertIn("vars.LOXBLOG_AUTOMATION_ENABLED == '1'",s)
