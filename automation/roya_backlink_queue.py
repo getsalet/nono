@@ -523,6 +523,9 @@ def pick(queue, state, count):
 
 
 def main():
+    from blog_image_runtime_control import generation_paused
+    if generation_paused(ROOT):
+        print('Generation intentionally paused by user control; no text API, image API or new ready item.');return 0
     if DRY_RUN:
         print('Configuration check only; offline samples are not queued for publication.')
         return 0

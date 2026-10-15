@@ -149,6 +149,9 @@ def generation_exit_code(completed,failed):
     return 2 if failed and not completed else 0
 
 def main():
+    from blog_image_runtime_control import generation_paused
+    if generation_paused(ROOT):
+        print('Generation intentionally paused by user control; no text API, image API or new ready item.');return 0
     from city_backlink_policy import build_queue,matrix_ready,prepare_image
     if not matrix_ready():
         print("City/article mode prepared; independent matrix awaits approval. No AI or publication.");return 0

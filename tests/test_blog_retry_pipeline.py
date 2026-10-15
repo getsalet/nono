@@ -28,7 +28,7 @@ class RetryTests(unittest.TestCase):
    def image(row):
     if row['key']=='bad':raise RuntimeError('Product image rejected: wrong family')
    post={'title':'راهنمای انتخاب نوار تیپ','slug':'test-good','html':'<p>متن آزمایشی</p>'}
-   with patch.multiple(e,QUEUE=queue,ART=art,STATE=state),patch.dict(os.environ,{'FARSIBLOG_COUNT':'1','FARSIBLOG_DRY_RUN':'0','FARSIBLOG_TARGET':''}),patch.object(e.BASE,'AGNES_KEY','test-only-not-a-secret'),patch.object(c,'matrix_ready',return_value=True),patch.object(c,'build_queue'),patch.object(c,'prepare_image',side_effect=image),patch.object(e,'source_text',return_value='fixture'),patch.object(e,'links_for',return_value=[]),patch.object(e,'prompt',return_value='fixture'),patch.object(e,'agnes',return_value=post),patch.object(e,'qa',return_value=([],{'words':600})):
+   with patch('blog_image_runtime_control.generation_paused',return_value=False),patch.multiple(e,QUEUE=queue,ART=art,STATE=state),patch.dict(os.environ,{'FARSIBLOG_COUNT':'1','FARSIBLOG_DRY_RUN':'0','FARSIBLOG_TARGET':''}),patch.object(e.BASE,'AGNES_KEY','test-only-not-a-secret'),patch.object(c,'matrix_ready',return_value=True),patch.object(c,'build_queue'),patch.object(c,'prepare_image',side_effect=image),patch.object(e,'source_text',return_value='fixture'),patch.object(e,'links_for',return_value=[]),patch.object(e,'prompt',return_value='fixture'),patch.object(e,'agnes',return_value=post),patch.object(e,'qa',return_value=([],{'words':600})):
     self.assertEqual(e.main(),0)
    result=e.load(queue,{})['items'];self.assertEqual(result[0]['status'],'failed');self.assertIn('next_retry_at',result[0]);self.assertEqual(result[1]['status'],'completed')
 if __name__=='__main__':unittest.main()

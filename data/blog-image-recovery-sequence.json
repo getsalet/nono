@@ -1,13 +1,25 @@
 {
-  "updated_at": "2026-10-15T22:38:48.040354+00:00",
+  "updated_at": "2026-10-15T23:00:01.375256+00:00",
   "post_publication_enabled": false,
   "order": [
     {
       "step": 1,
       "name": "Repair topic-specific single-pass image production and validate two real product-family samples",
-      "status": "testing",
-      "code_tests": 281,
-      "production_paused": true
+      "status": "code_applied_live_acceptance_blocked",
+      "code_tests": 286,
+      "production_paused": true,
+      "blockers": [
+        "Provider repeatedly returns HTTP 503 on audited image-capable slots.",
+        "Latest generated hose candidate failed the mandatory technical-evidence check."
+      ],
+      "applied": [
+        "Positive topic-specific still-life prompt using actual article title, crop and physical technical evidence",
+        "Preserve full native landscape frame, with no destructive 16:9 crop",
+        "Exact packaged/bare product counts and mandatory topic-evidence QA",
+        "Deterministic readable AFP | 09134922013 watermark retained",
+        "Prefer image-audited slots only; bounded exponential retries; strictly redacted structured error diagnostics",
+        "Stop scheduled generators before text/image API work while explicit user pause is set"
+      ]
     },
     {
       "step": 2,
@@ -19,5 +31,10 @@
       "name": "Canary rollout and verify all five blog publishers, including public Blogfa access",
       "status": "blocked_by_steps_1_and_2"
     }
-  ]
+  ],
+  "code_tests_passed": 286,
+  "current_recipe": "two-repo-positive-scene-20261016-r6-native-aspect",
+  "current_visual_policy": "blog-product-family-reference-vision-v6-full-frame-count-evidence",
+  "last_acceptance_run": "https://github.com/getsalet/nono/actions/runs/38820195630",
+  "last_acceptance_passed": false
 }

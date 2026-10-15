@@ -37,7 +37,7 @@ class PipelineTests(unittest.TestCase):
         try:
             f.QUEUE=self.root/'q.json';f.ART=self.root/'artifacts';f.STATE=self.root/'state.json';f.QUEUE.write_text(json.dumps({'items':[{**self.item,'kind':'city'}]}));f.BASE.AGNES_KEY='';f.BASE.AGNES_KEYS=[]
             from unittest.mock import patch
-            with patch('city_backlink_policy.matrix_ready',return_value=True),patch('city_backlink_policy.build_queue'),patch.dict(os.environ,{'FARSIBLOG_DRY_RUN':'0','FARSIBLOG_COUNT':'1'}):
+            with patch('blog_image_runtime_control.generation_paused',return_value=False),patch('city_backlink_policy.matrix_ready',return_value=True),patch('city_backlink_policy.build_queue'),patch.dict(os.environ,{'FARSIBLOG_DRY_RUN':'0','FARSIBLOG_COUNT':'1'}):
                 with self.assertRaises(RuntimeError):f.main()
             self.assertFalse((f.ART/'publish-queue.json').exists())
         finally:f.QUEUE,f.ART,f.STATE,f.BASE.AGNES_KEY,f.BASE.AGNES_KEYS=original
