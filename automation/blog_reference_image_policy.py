@@ -40,7 +40,6 @@ ROLE_STORIES={
  3:['make filtration, pressure and connection hardware the visual story','make water-distribution control and clean system layout the visual story','make the unattended irrigation headworks the visual story'],
 }
 CROPS={
- 'بامیه':'okra','پیاز':'onion','گوجه فرنگی':'tomato','گوجه‌فرنگی':'tomato','هندوانه':'watermelon','سیب زمینی':'potato','سیب‌زمینی':'potato',
  'اسفناج':'spinach','عدس':'lentil','کنجد':'sesame','طالبی':'cantaloupe','اسپرس':'sainfoin',
  'کلزا':'canola (rapeseed)',
  'خیار':'cucumber','سیر':'garlic','باقلا':'fava bean','ذرت':'maize','یونجه':'alfalfa',
@@ -52,13 +51,6 @@ CROPS={
  'چاودار':'rye',
 }
 CROP_VISUALS={
- 'بامیه':'okra as upright branching plants with palmately lobed leaves, pale hibiscus-like flowers and upright ridged green pods; never maize, cucumbers or beans',
- 'پیاز':'onion rows with upright tubular hollow blue-green leaves and restrained bulb necks; no broad maize leaves',
- 'گوجه فرنگی':'tomato plants with compound serrated leaves and small attached clusters of tomatoes; no corn blades or cucumber vines',
- 'گوجه‌فرنگی':'tomato plants with compound serrated leaves and small attached clusters of tomatoes; no corn blades or cucumber vines',
- 'هندوانه':'watermelon vines with deeply lobed leaves and restrained attached striped watermelon fruit',
- 'سیب زمینی':'potato rows with compound oval leaflets and low bushy green canopies, no exposed decorative tubers',
- 'سیب‌زمینی':'potato rows with compound oval leaflets and low bushy green canopies, no exposed decorative tubers',
  'اسفناج':'spinach with dense low rosettes of smooth dark-green oval to arrow-shaped leaves; no flowers, pods, tall stalks or broad bean-like foliage',
  'عدس':'lentil plants as low fine-textured bushy legumes with many thin branching stems, small paired pinnate oval leaflets and small flat pods; absolutely no corn blades, sunflower heads, brassica flowers or large bean leaves',
  'کنجد':'upright sesame stems with narrow lance-shaped leaves and elongated seed capsules',
@@ -110,21 +102,17 @@ def topic_visual_anchor(item):
   if any(key in text for key in keys):return anchor
  return 'derive one unmistakable visual anchor from the article title and summary; a generic empty field is not sufficient'
 
-def matched_crop(item):
- # The post title owns crop identity; a crop mentioned later as comparison must not override it.
- for field in ('title','focus','meta_description','excerpt','summary'):
-  text=str((item or {}).get(field)or'').replace('‌',' ').replace('ي','ی').replace('ك','ک')
-  matches=[(text.index(fa.replace('‌',' ')),-len(fa),fa)for fa in CROPS if fa.replace('‌',' ')in text]
-  if matches:return sorted(matches)[0][2]
- return None
-
 def named_crop(item):
- crop=matched_crop(item)
- return f'{crop} ({CROPS[crop]})'if crop else 'the exact named crop from the article title'
+ text=visual_brief(item)
+ for fa,en in CROPS.items():
+  if fa in text:return f'{fa} ({en})'
+ return 'the exact named crop from the article title'
 
 def crop_identity_spec(item):
- crop=matched_crop(item)
- if crop:return CROP_VISUALS.get(crop,f'{crop} ({CROPS[crop]}) with botanically accurate leaves, stems, growth habit and harvest stage')
+ text=visual_brief(item)
+ for fa,en in CROPS.items():
+  if fa in text:
+   return CROP_VISUALS.get(fa,f'{fa} ({en}) with botanically accurate leaves, stems, growth habit and harvest stage')
  return 'the exact named crop from the article title with botanically accurate, unmistakable morphology'
 
 def role_directive(item,kind):
@@ -203,7 +191,7 @@ def image_prompt(item,kind):
  }.get(int(kind),'')
  if family=='layflat':
   shape=('exactly two separate related layflat-hose objects placed naturally beside each other: first, the packaged low wide black woven hose coil with the same folded printed cardboard pieces, crossing straps, center opening and package proportions; second, the unboxed black woven layflat hose coil exactly like its reference, as a low flat horizontal coil made of many tight concentric layers with a short hollow brown cardboard center, visible diagonal woven fabric texture, realistic compressed thickness and one short loose hose end')
-  exact=('Preserve the packaged object AFP mark and only lettering actually visible on its supplied reference; do not add the word layflat if absent from that reference. The bare black coil has no carton, logo or writing. The two references are two separate objects in the same final scene, never alternatives and never fused into one object. Both coils must rest flat, horizontal and parallel to the soil. Never turn the bare coil into smooth round tubing, a tall cable spool, an upright wheel, a solid tire or a plastic pipe coil.')
+  exact=('Keep the packaged object marks "AFP" and "layflat" readable. The bare black coil has no carton, logo or writing. The two references are two separate objects in the same final scene, never alternatives and never fused into one object. Both coils must rest flat, horizontal and parallel to the soil. Never turn the bare coil into smooth round tubing, a tall cable spool, an upright wheel, a solid tire or a plastic pipe coil.')
   scale=('Use the approved 05-pair-far scale: the complete two-object group occupies approximately 12 to 15 percent of frame width, stays low on the soil and appears about four metres from the camera. Keep the pair off-center on the lower third.')
   people_rule=('NO PEOPLE in any image: no farmer, worker, person, face, hand, arm, leg, body part, human silhouette or distant human figure. Do not show a tractor, harvester, vehicle cabin, hand-held tool or human-associated activity unless machinery is essential to the article itself; default to an empty equipment-free scene. Show the article-specific field, crop, irrigation system and unattended equipment without any human presence.')
  else:

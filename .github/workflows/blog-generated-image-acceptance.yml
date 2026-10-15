@@ -16,6 +16,10 @@ jobs:
     timeout-minutes: 30
     env:
       AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+      IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY }}
+      IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
+      IMAGE_MODEL: ${{ vars.IMAGE_MODEL || 'agnes-image-2.5-flash' }}
+      IMAGE_REVIEW_MODEL: ${{ vars.AGNES_MODEL || 'agnes-3.0-flash' }}
       AGNES_IMAGE_REQUIRE_CAPABILITY_AUDIT: '1'
       AGNES_HEALTHY_SLOTS_ONLY: '1'
       AGNES_PREFERRED_KEY_SLOTS: 'AGNES_API_KEY14,AGNES_API_KEY15'
@@ -67,6 +71,8 @@ jobs:
       - run: python -m unittest discover -s tests -p 'test_blog_generated_image.py' -v
       - run: python -m unittest discover -s tests -p 'test_agnes_key_pool.py' -v
       - run: python -m unittest discover -s tests -p 'test_blog_image_rollout_pipeline.py' -v
+      - run: python -m unittest discover -s tests -p 'test_blog_reference_connection.py' -v
+      - run: python -m unittest discover -s tests -p 'test_blog_topic_scene_contract.py' -v
       - uses: actions/cache/restore@v4
         with:
           path: |

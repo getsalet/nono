@@ -22,7 +22,12 @@ def rollout_enabled(blog,root=None):
  if control.get('enabled')is not True:return False
  if control.get('policy')!=POLICY or control.get('direct_visual_approval')is not True:raise RuntimeError('Current direct visual acceptance required for generated images')
  report=json.loads((root/'data/blog-generated-image-acceptance.json').read_text())
+ from blog_reference_scene import RECIPE_VERSION
+ from blog_image_gate import POLICY as review_policy,visual_override_rejected
+ from blog_image_connection import settings
+ if control.get('recipe_version')!=RECIPE_VERSION or report.get('recipe_version')!=RECIPE_VERSION or report.get('connection')!=settings(roya.BASE.AGNES_BASE):raise RuntimeError('Current reference recipe and image connection acceptance required')
  rows=report.get('families',[])
+ if any(r.get('review',{}).get('policy')!=review_policy or visual_override_rejected(r.get('review',{}).get('sha256'),root)for r in rows):raise RuntimeError('Current non-rejected visual review required for both reference samples')
  if report.get('policy')!=POLICY or report.get('passed')is not True or {r.get('family')for r in rows if r.get('passed')is True}!={'tape20','hose'}:raise RuntimeError('Both genuine product families must pass image acceptance')
  approved=control.get('approved_samples',{})
  for row in rows:
@@ -45,7 +50,8 @@ def identity(item,blog):
  from blog_image_watermark import POLICY as watermark_policy
  from blog_reference_scene import RECIPE_VERSION,topic_hash
  context_hash=topic_hash(item)if item.get('_image_article_context')or item.get('post')else'no-final-draft'
- return hashlib.sha256((POLICY+'|'+RECIPE_VERSION+'|'+watermark_policy+'|'+blog+'|'+str(item['key'])+'|'+expected+'|'+context_hash).encode()).hexdigest()[:32]
+ from blog_image_connection import fingerprint
+ return hashlib.sha256((POLICY+'|'+RECIPE_VERSION+'|'+fingerprint(roya.BASE.AGNES_BASE)+'|'+watermark_policy+'|'+blog+'|'+str(item['key'])+'|'+expected+'|'+context_hash).encode()).hexdigest()[:32]
 
 def brief(item,blog):
  from blog_image_gate import family,reference_identity_instruction
@@ -122,34 +128,36 @@ def conditioning_image(expected):
 def generate(item,blog,slots=None,max_attempts=3):
  from blog_image_gate import family
  expected=family(item)
- endpoint=os.getenv('IMAGE_ENDPOINT')or roya.BASE.AGNES_BASE+'/images/generations'
- if not endpoint.startswith('https://'):raise RuntimeError('Image endpoint requires HTTPS')
- payload={'model':os.getenv('IMAGE_MODEL')or os.getenv('AGNES_IMAGE_MODEL')or'agnes-image-2.5-flash','prompt':__import__('blog_reference_scene').prompt(item,blog),'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':__import__('blog_reference_scene').references(item)}}
- names=slots if slots is not None else capability_slots()
- if slots is None:
-  preferred=[n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_PREFERRED_KEY_SLOTS')or os.getenv('AGNES_PREFERRED_KEY_SLOTS',''))if n]
-  # Explicit preference must stay inside the audited image-capable set.
-  preferred_healthy=[n for n in preferred if n in names]
-  if preferred_healthy:names=preferred_healthy
- if not names:raise RuntimeError('At least one audited image-capable credential required')
+ from blog_image_connection import settings
+ connection=settings(roya.BASE.AGNES_BASE);endpoint=connection['endpoint']
+ payload={'model':connection['model'],'prompt':__import__('blog_reference_scene').prompt(item,blog),'size':connection['size'],'return_base64':True,'extra_body':{'response_format':'b64_json','image':__import__('blog_reference_scene').references(item)}}
+ dedicated_key=os.getenv('IMAGE_API_KEY','').strip()if slots is None else ''
+ names=[]
+ if not dedicated_key:
+  names=slots if slots is not None else capability_slots()
+  if slots is None:
+   preferred=[n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_PREFERRED_KEY_SLOTS')or os.getenv('AGNES_PREFERRED_KEY_SLOTS',''))if n]
+   preferred_healthy=[n for n in preferred if n in names]
+   if preferred_healthy:names=preferred_healthy
+ if not dedicated_key and not names:raise RuntimeError('At least one audited image-capable credential required')
  if names:
   from agnes_key_pool import NAMES
   if any(n not in NAMES for n in names):raise RuntimeError('Unknown image credential slot name')
   selected=[k for name in names for k in roya.BASE._key_pool.keys if roya.BASE._key_pool.slots.get(k)==name]
   selected=list(dict.fromkeys(selected))
   if not selected:raise RuntimeError('No audited healthy credential in the requested image pool')
- else:selected=None
+ else:selected=[dedicated_key]if dedicated_key else None
  if selected:
   offset=int(identity(item,blog)[:8],16)%len(selected)
   selected=selected[offset:]+selected[:offset]
  attempts=item.setdefault('_image_provider_attempts',[])
  for attempt in range(max_attempts):
   key=selected[attempt%len(selected)]
-  row={'requested_secret_slot':roya.BASE._key_pool.slots.get(key,'IMAGE_API_KEY'),'attempt':attempt+1}
+  row={'requested_secret_slot':'IMAGE_API_KEY'if dedicated_key else roya.BASE._key_pool.slots.get(key,'unknown'),'attempt':attempt+1,'route':'configured_image_connection'if dedicated_key else'audited_image_pool','timeout_seconds':connection['timeout_seconds']}
   attempts.append(row)
   if not key:raise RuntimeError('Existing image API credential required')
   try:
-   data=roya.BASE._key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+hashlib.sha256(json.dumps(payload,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:32]+'-r'+str(item.get('_image_generation_round',0))},payload,timeout=180,allowed_keys=selected)
+   data=roya.BASE._key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+hashlib.sha256(json.dumps(payload,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:32]+'-r'+str(item.get('_image_generation_round',0))},payload,timeout=connection['timeout_seconds'],allowed_keys=selected)
    row.update(http_status=200,status='generation_response_received')
    break
   except RuntimeError as exc:
@@ -171,7 +179,7 @@ def generate(item,blog,slots=None,max_attempts=3):
  elif row.get('url'):
   url=row['url']
   if not isinstance(url,str)or not url.startswith('https://'):raise RuntimeError('Image result requires HTTPS')
-  with urllib.request.urlopen(url,timeout=90)as r:raw=r.read(12*1024*1024+1)
+  with urllib.request.urlopen(url,timeout=300)as r:raw=r.read(12*1024*1024+1)
  else:raise RuntimeError('Image provider returned no usable image')
  if len(raw)>12*1024*1024:raise RuntimeError('Generated image too large')
  image=Image.open(io.BytesIO(raw));image.verify();image=Image.open(io.BytesIO(raw)).convert('RGB')
@@ -179,7 +187,7 @@ def generate(item,blog,slots=None,max_attempts=3):
  if image.width<=image.height:raise RuntimeError('Generated image must be landscape; no destructive crop fallback')
  original_size=image.size
  image=image.resize((1200,round(1200*image.height/image.width)),Image.Resampling.LANCZOS)
- item['_image_render']={'requested_size':payload['size'],'provider_size':list(original_size),'output_size':list(image.size),'cropped':False}
+ item['_image_render']={'connection':connection,'requested_size':payload['size'],'provider_size':list(original_size),'output_size':list(image.size),'cropped':False}
  from blog_image_watermark import apply
  image=apply(image)
  out=io.BytesIO();image.save(out,'WEBP',quality=88,method=6)

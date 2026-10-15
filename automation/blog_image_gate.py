@@ -2,11 +2,11 @@
 Inspired by nono image_quality_gate and maghala2 family-aware reference rebuild.
 The source website or filename alone is never treated as visual approval.
 """
-import base64,hashlib,io,json,math,re,time,urllib.request
+import base64,hashlib,io,json,math,re,time,urllib.request,os
 from pathlib import Path
 from PIL import Image
 import roya_backlink_queue as roya
-POLICY='blog-product-family-reference-vision-v6-full-frame-count-evidence'
+POLICY='blog-product-family-reference-vision-v7-reference-parity'
 REFERENCES={
  'tape20':'https://navar-abyari.ir/wp-content/uploads/%D9%86%D9%88%D8%A7%D8%B1-%D8%A2%D8%A8%DB%8C%D8%A7%D8%B1%DB%8C-1.webp',
  'hose':'https://navar-abyari.ir/wp-content/uploads/%D9%84%D9%88%D9%84%D9%87-%D9%86%D8%AE%DB%8C-2-%D8%A7%DB%8C%D9%86%DA%86-1.webp'}
@@ -91,8 +91,9 @@ def review(item,url,root=None,_candidate=None):
   owner=blog+'|'+str(item.get('key',''))
   if record.get('article_owner')and record['article_owner']!=owner:
    raise RuntimeError('Product image rejected: identical image bytes already belong to another blog/article')
+ review_model=os.getenv('IMAGE_REVIEW_MODEL')or roya.BASE.AGNES_MODEL
  topic_sha=__import__('blog_reference_scene').topic_hash(item)if generated else None
- if record.get('policy')!=POLICY or record.get('sha256')!=digest or record.get('family')!=expected or(generated and record.get('topic_sha256')!=topic_sha):
+ if record.get('policy')!=POLICY or record.get('review_model')!=review_model or record.get('sha256')!=digest or record.get('family')!=expected or(generated and record.get('topic_sha256')!=topic_sha):
   ref,_,ref_fmt=fetch(REFERENCES[expected]);mime={'PNG':'image/png','JPEG':'image/jpeg','WEBP':'image/webp'}
   if fmt not in mime or ref_fmt not in mime:raise RuntimeError('Unsupported review image format')
   context=__import__('blog_reference_scene').article(item)if generated else {}
@@ -107,7 +108,7 @@ def review(item,url,root=None,_candidate=None):
    bare=Path(__file__).resolve().parent/'assets/afp-layflat-bare.jpg.b64'
    if not bare.exists():raise RuntimeError('Approved bare hose identity reference missing')
    content+=photo('APPROVED BARE HOSE REFERENCE: same hose family, not tape.',base64.b64decode(bare.read_text().strip()),'JPEG')
-  payload={'model':roya.BASE.AGNES_MODEL,'messages':[{'role':'user','content':content}],'temperature':0,'response_format':{'type':'json_object'}}
+  payload={'model':review_model,'messages':[{'role':'user','content':content}],'temperature':0,'response_format':{'type':'json_object'}}
   key=roya.BASE.next_agnes_key()if hasattr(roya.BASE,'next_agnes_key')else roya.BASE.AGNES_KEY
   if not key:raise RuntimeError('Vision credential required; never approve by prompt or filename alone')
   for attempt in range(2):
@@ -122,7 +123,7 @@ def review(item,url,root=None,_candidate=None):
   value=response['choices'][0]['message']['content']
   if isinstance(value,list):value=''.join(x.get('text','')for x in value if isinstance(x,dict))
   verdict=json.loads(re.sub(r'^```(?:json)?\s*|\s*```$','',value.strip(),flags=re.I))
-  record={'policy':POLICY,'sha256':digest,'family':expected,'source_url':url,'reference_url':REFERENCES[expected],'width':w,'height':h,'verdict':verdict,'reviewed_at':roya.now(),'topic_sha256':topic_sha,'article_owner':owner}
+  record={'policy':POLICY,'review_model':review_model,'sha256':digest,'family':expected,'source_url':url,'reference_url':REFERENCES[expected],'width':w,'height':h,'verdict':verdict,'reviewed_at':roya.now(),'topic_sha256':topic_sha,'article_owner':owner}
   path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(record,ensure_ascii=False,indent=2))
  record['watermark']=watermark
  record['source_url']=url  # Identical digest/policy/family may have another immutable URL.

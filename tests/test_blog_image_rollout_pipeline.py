@@ -12,6 +12,7 @@ import roya_backlink_queue as roya
 
 class ImageRolloutTests(unittest.TestCase):
  def setUp(self):
+  self.image_env=patch.dict('os.environ',{'IMAGE_API_KEY':''});self.image_env.start();self.addCleanup(self.image_env.stop)
   self.item={'key':'image-fixture','family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'فاصله نوار تیپ در کشت گوجه فرنگی','summary':'فاصله خطوط تیپ و آرایش بوته‌های گوجه فرنگی در آبیاری قطره‌ای و توزیع یکنواخت رطوبت'}}
   buf=io.BytesIO();__import__('blog_image_watermark').apply(Image.new('RGB',(1200,675),(190,170,140))).save(buf,'WEBP');self.raw=buf.getvalue()
  def test_generation_never_calls_rejected_compositor(self):
@@ -21,7 +22,7 @@ class ImageRolloutTests(unittest.TestCase):
   from blog_reference_scene import prompt,references,topic_hash
   text=prompt(self.item,'roya')
   self.assertIn(self.item['_image_article_context']['title'],text)
-  self.assertIn('Never create panels',text)
+  self.assertIn('not a flat layer to paste',text)
   self.assertEqual(len(references(self.item)),1)
   changed=copy.deepcopy(self.item);changed['_image_article_context']['summary']+=' بررسی فشار'
   self.assertNotEqual(topic_hash(self.item),topic_hash(changed))
@@ -43,8 +44,8 @@ class ImageRolloutTests(unittest.TestCase):
    root=Path(d);(root/'data').mkdir()
    (root/'data/blog-generated-image-control.json').write_text(json.dumps({'enabled':False,'pause_image_production':True}))
    with self.assertRaisesRegex(RuntimeError,'explicitly paused'):generated.rollout_enabled('roya',root)
- def test_audited_image_pool_is_required_even_with_override_key(self):
-  with patch.object(generated,'capability_slots',side_effect=RuntimeError('audit missing')),patch.dict('os.environ',{'IMAGE_API_KEY':'not-a-real-key'}):
+ def test_legacy_pool_requires_its_image_audit(self):
+  with patch.object(generated,'capability_slots',side_effect=RuntimeError('audit missing')),patch.dict('os.environ',{'IMAGE_API_KEY':''}):
    with self.assertRaisesRegex(RuntimeError,'audit missing'):generated.generate(self.item,'roya')
  def test_requested_pool_does_not_fall_back_to_text_only_keys(self):
   pool=roya.BASE._key_pool

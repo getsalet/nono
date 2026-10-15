@@ -5,23 +5,23 @@ from blog_reference_scene import prompt,scene_plan
 class TopicSceneContractTests(unittest.TestCase):
  def item(self,title,family='tape20'):
   return {'key':'actual-topic-fixture','family':family,'site_title':'لوله نخی'if family=='hose'else'نوار تیپ','_image_article_context':{'title':title,'summary':'این متن واقعی مقاله درباره آبیاری و تجهیزات است. کارشناس باید فشار و فیلتر را هم بررسی کند و در بازدید دوره‌ای نشانه‌های مشکل را ثبت کند.'}}
- def test_positive_whitelist_does_not_prime_human_subject(self):
-  text=prompt(self.item('نوار تیپ بامیه؛ مراقبت حین بهره‌برداری'),'loxblog')
-  self.assertIn('okra',text);self.assertIn('in-service monitoring',text)
-  for word in ('farmer','worker','people','hands','body parts','engineer'):
-   self.assertNotIn(word,text.lower())
-  self.assertIn('vacant and motionless',text);self.assertLess(len(text),3400)
-  self.assertIn('45 to 82 percent',text);self.assertIn('creamy-yellow',text)
-  self.assertNotIn('never maize',text)
- def test_title_crop_and_connection_topic_win_over_generic_body(self):
-  plan=scene_plan(self.item('لوله نخی ذرت؛ پایش اتصال‌ها','hose'),'roya')
-  self.assertEqual(plan['crop'],'maize');self.assertEqual(plan['topic'],'connection inspection')
- def test_spacing_and_pressure_have_distinct_physical_evidence(self):
-  a=scene_plan(self.item('نوار تیپ پیاز؛ فاصله خطوط'),'roya');b=scene_plan(self.item('نوار تیپ پیاز؛ کنترل فشار'),'roya')
-  self.assertNotEqual(a['evidence'],b['evidence']);self.assertIn('gauge',b['evidence'])
- def test_rejection_text_cannot_seed_wrong_crop_or_person(self):
-  item=self.item('نوار تیپ بامیه؛ مراقبت');a=prompt(item,'roya');item['_image_qa_feedback']='wrong sunflower with farmer'
-  self.assertEqual(a,prompt(item,'roya'))
+ def test_exact_upstream_function_is_the_generator_not_a_replacement(self):
+  import blog_reference_scene as scene
+  item=self.item('نوار تیپ بامیه؛ مراقبت حین بهره‌برداری')
+  data=scene.article(item);data['slug']+='-loxblog'
+  self.assertEqual(prompt(item,'loxblog'),scene.reference.image_prompt(data,scene.role(item)))
+ def test_actual_summary_is_present_and_changes_the_prompt(self):
+  item=self.item('نوار تیپ بامیه؛ مراقبت حین بهره‌برداری');a=prompt(item,'roya')
+  self.assertIn(item['_image_article_context']['summary'],a)
+  item['_image_article_context']['summary']='موضوع این مقاله بررسی یکنواختی رطوبت در ناحیه ریشه و فاصله خطوط کشت است و به شرایط دیگری نمی‌پردازد.'
+  self.assertNotEqual(a,prompt(item,'roya'))
+ def test_reference_scale_and_no_unconditional_hose_coupling(self):
+  item=self.item('لوله نخی ذرت؛ عملکرد آبیاری','hose');text=prompt(item,'roya')
+  self.assertIn('12 to 15 percent',text)
+  self.assertNotIn('The installed coupling is a distinct fixed detail',text)
+ def test_reference_qa_correction_is_not_discarded(self):
+  item=self.item('نوار تیپ پیاز؛ انتخاب');a=prompt(item,'roya');item['_image_qa_feedback']='Place the complete product farther inside the frame.'
+  self.assertNotEqual(a,prompt(item,'roya'));self.assertIn(item['_image_qa_feedback'],prompt(item,'roya'))
 
 class PreferredImagePoolTests(unittest.TestCase):
  def test_preferred_audited_image_slots_are_not_rotated_into_unrelated_slots(self):
@@ -32,7 +32,7 @@ class PreferredImagePoolTests(unittest.TestCase):
   item=TopicSceneContractTests().item('نوار تیپ پیاز؛ فاصله خطوط')
   buf=io.BytesIO();Image.new('RGB',(1024,768),'green').save(buf,'PNG');reply={'data':[{'b64_json':base64.b64encode(buf.getvalue()).decode()}]}
   pool=g.roya.BASE._key_pool
-  with patch.dict('os.environ',{'AGNES_IMAGE_PREFERRED_KEY_SLOTS':'AGNES_API_KEY14,AGNES_API_KEY15'}),patch.object(g,'capability_slots',return_value=['AGNES_API_KEY3','AGNES_API_KEY14','AGNES_API_KEY15']),patch.object(pool,'keys',['k3','k14','k15']),patch.object(pool,'slots',{'k3':'AGNES_API_KEY3','k14':'AGNES_API_KEY14','k15':'AGNES_API_KEY15'}),patch.object(pool,'fetch_json',return_value=reply)as fetch:
+  with patch.dict('os.environ',{'IMAGE_API_KEY':'','AGNES_IMAGE_PREFERRED_KEY_SLOTS':'AGNES_API_KEY14,AGNES_API_KEY15'}),patch.object(g,'capability_slots',return_value=['AGNES_API_KEY3','AGNES_API_KEY14','AGNES_API_KEY15']),patch.object(pool,'keys',['k3','k14','k15']),patch.object(pool,'slots',{'k3':'AGNES_API_KEY3','k14':'AGNES_API_KEY14','k15':'AGNES_API_KEY15'}),patch.object(pool,'fetch_json',return_value=reply)as fetch:
    g.generate(item,'roya')
    self.assertEqual(set(fetch.call_args.kwargs['allowed_keys']),{'k14','k15'})
 

@@ -17,6 +17,9 @@ class GeneratedImageTests(unittest.TestCase):
 if __name__=='__main__':unittest.main()
 
 class ConditioningTests(unittest.TestCase):
+ def setUp(self):
+  from unittest.mock import patch
+  self.image_env=patch.dict('os.environ',{'IMAGE_API_KEY':''});self.image_env.start();self.addCleanup(self.image_env.stop)
  def test_single_combined_reference_both_families(self):
   import base64,io
   from PIL import Image

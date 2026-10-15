@@ -35,7 +35,8 @@ class TwoLinkPolicyTests(unittest.TestCase):
  def test_legacy_range_cannot_require_three_links(self):
   self.assertEqual((roya.MIN_LINKS,roya.MAX_LINKS),(2,2))
  @patch('blog_generated_image.rollout_enabled',return_value=False)
- def test_roya_no_longer_requires_province_and_rejects_extra_link(self,_rollout):
+ @patch.object(roya,'check_corpus',return_value=[])
+ def test_roya_no_longer_requires_province_and_rejects_extra_link(self,_corpus,_rollout):
   links=roya.approved_links(self.item,self.lib)
   body=''.join('<p><a href="'+x['url']+'">'+x['anchor']+'</a></p>'for x in links)
   errors=roya.qa(self.item,{'title':self.item['site_title'],'html':body},links)[0]
