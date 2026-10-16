@@ -1,24 +1,26 @@
 {
-  "updated_at": "2026-10-15T23:48:41.120951+00:00",
+  "updated_at": "2026-10-16T00:03:58.798487+00:00",
   "post_publication_enabled": false,
   "order": [
     {
       "step": 1,
       "name": "Repair topic-specific single-pass image production and validate two real product-family samples",
-      "status": "reference_parity_applied_awaiting_live_test",
+      "status": "reference_parity_applied_live_samples_rejected_crop_detection_fixed",
       "code_tests": 292,
       "production_paused": true,
       "blockers": [
-        "Provider repeatedly returns HTTP 503 on audited image-capable slots.",
-        "Latest generated hose candidate failed the mandatory technical-evidence check."
+        "Current connection returned repeated HTTP 503 for tape and hose requests; root provider cause not established.",
+        "One hose generation returned HTTP 200 but directly inspected image failed article/topic/integration criteria.",
+        "Whole-word title-first crop correction is unit-tested, not yet proven by an accepted live image."
       ],
       "applied": [
-        "Positive topic-specific still-life prompt using actual article title, crop and physical technical evidence",
-        "Preserve full native landscape frame, with no destructive 16:9 crop",
-        "Exact packaged/bare product counts and mandatory topic-evidence QA",
-        "Deterministic readable AFP | 09134922013 watermark retained",
-        "Prefer image-audited slots only; bounded exponential retries; strictly redacted structured error diagnostics",
-        "Stop scheduled generators before text/image API work while explicit user pause is set"
+        "Pinned maghala2 image_prompt_policy.py reused byte-for-byte; actual title and summary reach prompt",
+        "Reference IMAGE_API_KEY/ENDPOINT/MODEL settings and 600s timeout wired into blog workflows",
+        "Separate 3.0 image review model; deterministic AFP | 09134922013 watermark retained",
+        "Whole-word title-first crop correction prevents garlic false match inside Persian مسیر",
+        "Full native frame, exact product counts and topic-specific visual rejection remain mandatory",
+        "Acceptance initializes before tests and never overwrites real post artifact paths",
+        "All five blog publishers and old image repair remain paused"
       ],
       "reference_contract": "data/blog-image-reference-contract.json"
     },
@@ -34,8 +36,9 @@
     }
   ],
   "code_tests_passed": 292,
-  "current_recipe": "maghala2-exact-recipe-image-connection-parity-v1",
+  "current_recipe": "maghala2-reference-parity-v2-whole-word-crops",
   "current_visual_policy": "blog-product-family-reference-vision-v7-reference-parity",
-  "last_acceptance_run": "https://github.com/getsalet/nono/actions/runs/38820195630",
-  "last_acceptance_passed": false
+  "last_acceptance_run": "https://github.com/getsalet/nono/actions/runs/38826674330",
+  "last_acceptance_passed": false,
+  "latest_focused_tests_passed": 113
 }

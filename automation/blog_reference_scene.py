@@ -5,7 +5,7 @@ Agnes payload/reference/watermark order follows nono's exact-product rebuild.
 import hashlib,json,re
 import blog_reference_image_policy as reference
 POLICY='afp-one-generated-blog-image-v6-reference-integrated-topic-scene'
-RECIPE_VERSION='maghala2-exact-recipe-image-connection-parity-v1'
+RECIPE_VERSION='maghala2-reference-parity-v2-whole-word-crops'
 SOURCES=['https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py','https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py','https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml']
 # Add missing crop identities as data, without rewriting the upstream generation recipe.
 reference.CROPS.update({'بامیه':'okra','پیاز':'onion','گوجه فرنگی':'tomato','گوجه‌فرنگی':'tomato','هندوانه':'watermelon','سیب زمینی':'potato','سیب‌زمینی':'potato'})
@@ -39,3 +39,22 @@ def references(item):return reference.reference_images(role(item),article(item))
 def topic_hash(item):
  data=article(item);data.pop('_image_qa_feedback',None)
  return hashlib.sha256(json.dumps(data,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
+
+# Targeted lexical correction around the unmodified upstream recipe. A substring
+# such as سیر in مسیر is not a crop mention. Headline evidence wins over body text.
+def _lexical_text(value):
+ return re.sub(r'\s+',' ',str(value or '').replace('‌',' ').replace('ي','ی').replace('ك','ک')).strip()
+def _crop_key(a):
+ for field in ('title','focus','meta_description','summary'):
+  text=_lexical_text(a.get(field,''))
+  for key in sorted(reference.CROPS,key=lambda k:len(_lexical_text(k)),reverse=True):
+   if re.search(r'(?<!\w)'+re.escape(_lexical_text(key))+r'(?!\w)',text,re.UNICODE):return key
+ return None
+def _named_crop(a):
+ key=_crop_key(a)
+ return f'{key} ({reference.CROPS[key]})'if key else'the exact named crop from the article title'
+def _crop_identity(a):
+ key=_crop_key(a)
+ return reference.CROP_VISUALS.get(key,f'{key} ({reference.CROPS[key]}) with botanically accurate leaves, stems, growth habit and harvest stage')if key else'the exact named crop from the article title with botanically accurate, unmistakable morphology'
+reference.named_crop=_named_crop
+reference.crop_identity_spec=_crop_identity

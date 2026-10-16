@@ -68,3 +68,11 @@ class ReferenceConnectionTests(unittest.TestCase):
    result=json.loads((root/'data/blog-generated-image-acceptance.json').read_text())
    self.assertEqual(len(result['families']),2)
    for item in items:self.assertEqual((posts/(item['key']+'.json')).read_text(),original)
+
+ def test_crop_match_uses_title_and_whole_words_not_garlic_in_path(self):
+  import blog_reference_scene as scene
+  a={'title':'نوار تیپ بامیه در قرقری؛ مراقبت حین بهره‌برداری','summary':'پایش مسیر جریان آب و فاصله قطره‌چکان‌ها برای آبیاری منظم انجام می‌شود.'}
+  self.assertEqual(scene.reference.named_crop(a),'بامیه (okra)')
+  self.assertIn('okra',scene.reference.crop_identity_spec(a))
+  self.assertEqual(scene.reference.named_crop({'title':'پایش مسیر آبیاری'}),'the exact named crop from the article title')
+  self.assertEqual(scene.reference.named_crop({'title':'آبیاری سیر','summary':'پایش بامیه'}),'سیر (garlic)')
