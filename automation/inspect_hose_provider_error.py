@@ -23,6 +23,9 @@ def redact_error(raw):
  text=re.sub(r'[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}','[email withheld]',text)
  return {'format':'json','redacted_error_detail':text[:700]}
 def main():
+ from blog_generated_image import family_cancelled
+ if family_cancelled({'family':'hose'},ROOT):
+  print('Hose image generation cancelled by user; zero provider requests.');return 0
  cfg=settings(g.roya.BASE.AGNES_BASE);key=os.getenv('IMAGE_API_KEY','').strip();run=os.getenv('GITHUB_RUN_ID','local')
  if not key or not re.fullmatch(r'[A-Za-z0-9_-]+',run):raise RuntimeError('Diagnostic configuration missing')
  queue=json.loads((ROOT/'data/loxblog/backlink-queue.json').read_text());item=next(copy.deepcopy(x)for x in queue['items']if x.get('family')=='hose'and x.get('published')and x.get('kind')in('city','article'))

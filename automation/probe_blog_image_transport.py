@@ -44,6 +44,9 @@ def checkpoint():
    if git(['push','--quiet','origin',commit+':refs/heads/main'],check=False).returncode==0:return
   raise RuntimeError('Probe checkpoint failed')
 def main():
+ from blog_generated_image import family_cancelled
+ if family_cancelled({'family':'hose'},ROOT):
+  print('Hose image generation cancelled by user; zero provider requests.');return 0
  OUT.mkdir(parents=True,exist_ok=True);cfg=settings('https://apihub.agnes-ai.com/v1');key=os.getenv('IMAGE_API_KEY','').strip()
  report={'workflow_run_id':os.getenv('GITHUB_RUN_ID'),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'connection':cfg,'post_submissions':0,'manual_visual_acceptance':False,'cases':[]}
  try:

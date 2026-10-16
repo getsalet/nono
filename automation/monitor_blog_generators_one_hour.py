@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Finite 3600-second observation; at most five cooldown-aware image probes.
-No publisher dispatch, post submissions, image approval or release-control edits.
+"""Finite 3600-second tape-only observation with no synthetic image probes.
+Sequential normal-pipeline activation; no direct native submissions or image approval.
 """
-import base64,datetime,json,os,re,subprocess,time,urllib.request
+import base64,datetime,json,os,re,subprocess,time,urllib.request,urllib.error
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 API='https://api.github.com/repos/getsalet/nono'
@@ -42,13 +42,42 @@ def snapshot():
   except Exception as exc:row[name+'_read_error_type']=type(exc).__name__
  return row
 
+def dispatch_next(current,dispatches):
+ """At most one single-item normal workflow per blog, no cooldown bypass."""
+ control=current.get('release_control',{})
+ if control.get('activation_dispatch_mode')!='sequential_by_hour_monitor':return None
+ if control.get('enabled')is not True or control.get('pause_image_production')is not False or control.get('enabled_families')!=['tape20'] or 'hose'not in control.get('cancelled_families',[]):return None
+ cooldown=current.get('provider_cooldown',{}).get('retry_at_epoch')
+ if not isinstance(cooldown,(int,float))or isinstance(cooldown,bool)or cooldown>time.time():return None
+ records=current.get('blogs',{})
+ if set(records)!=set(WORKFLOWS)or any('read_error_type'in r or not r.get('runs')for r in records.values()):return None
+ if any(run.get('status')!='completed'for r in records.values()for run in r['runs']):return None
+ # A dispatch may not appear in Actions immediately. Stop rather than overlap.
+ if dispatches:
+  last=dispatches[-1]
+  if last.get('http_status')!=204:return None
+  if not any(datetime.datetime.fromisoformat(x['created_at'].replace('Z','+00:00'))>=datetime.datetime.fromisoformat(last['requested_at'].replace('Z','+00:00'))for x in records[last['blog']]['runs']):return None
+ blog=next((b for b in WORKFLOWS if b in control.get('blogs',[])and b not in {d['blog']for d in dispatches}),None)
+ if blog is None:return None
+ from blog_generated_image import rollout_enabled
+ if not rollout_enabled(blog,ROOT):raise RuntimeError('Current tape acceptance required before dispatch')
+ from activate_blog_publication import plan
+ job=next(x for x in plan(control)if x['blog']==blog)
+ stamp=utc();headers={'Accept':'application/vnd.github+json','Content-Type':'application/json','Authorization':'Bearer '+os.environ['GH_TOKEN']}
+ request=urllib.request.Request(API+'/actions/workflows/'+job['workflow']+'/dispatches',data=json.dumps({'ref':'main','inputs':job['inputs']}).encode(),headers=headers)
+ try:
+  with urllib.request.urlopen(request,timeout=30)as response:status=response.status
+ except urllib.error.HTTPError as exc:status=exc.code;exc.close()
+ except Exception:status=None
+ return {'blog':blog,'workflow':job['workflow'],'requested_at':stamp,'http_status':status,'count':1,'native_publication_verified':False}
+
 def main():
  import blog_generated_image as g
  from blog_image_backpressure import require_open,ImageProviderBusy
  run=os.getenv('GITHUB_RUN_ID','local')
  if not re.fullmatch(r'[A-Za-z0-9_-]+',run):raise ValueError('Invalid run identifier')
  started=time.monotonic();deadline=started+DURATION
- report={'workflow_run_id':run,'run_url':'https://github.com/getsalet/nono/actions/runs/'+run,'status':'monitoring','started_at':utc(),'requested_duration_seconds':DURATION,'sample_interval_seconds':SAMPLE_INTERVAL,'minimum_probe_interval_seconds':PROBE_INTERVAL,'max_image_requests':MAX_PROBES,'post_submissions':0,'release_controls_modified':False,'production_image_approval':False,'publication_caveat':'Green runs and queue flags are not independent public-post verification.','samples':[],'probes':[]}
+ report={'workflow_run_id':run,'run_url':'https://github.com/getsalet/nono/actions/runs/'+run,'status':'monitoring','started_at':utc(),'requested_duration_seconds':DURATION,'sample_interval_seconds':SAMPLE_INTERVAL,'minimum_probe_interval_seconds':PROBE_INTERVAL,'max_image_requests':0,'post_submissions':0,'release_controls_modified':False,'production_image_approval':False,'publication_caveat':'Green runs and queue flags are not independent public-post verification.','samples':[],'probes':[],'dispatches':[],'image_probe_policy':'disabled; only normal tape20 pipelines generate images','activation_mode':'sequential guarded workflows'}
  path='artifacts/blog-one-hour-monitor/'+run+'.json'
  def persist():
   report['elapsed_seconds']=round(time.monotonic()-started,1)
@@ -61,26 +90,10 @@ def main():
    if elapsed>=next_sample:
     current=snapshot();report['samples'].append(current);next_sample=elapsed+SAMPLE_INTERVAL;persist()
     print(json.dumps({'elapsed_minutes':round(elapsed/60,1),'samples':len(report['samples']),'probes':len(report['probes']),'image_received':received}),flush=True)
-    control=current.get('release_control',{});cooldown=current.get('provider_cooldown',{}).get('retry_at_epoch')
-    if isinstance(cooldown,(int,float))and not isinstance(cooldown,bool)and not disabled and probe_allowed(elapsed,deadline-time.monotonic(),len(report['probes']),last_probe,cooldown,time.time(),received,control):
-     last_probe=time.monotonic()-started;probe={'number':len(report['probes'])+1,'started_at':utc(),'production_approval':False};report['probes'].append(probe)
-     probe_id=run+'-probe-'+str(probe['number']);env=dict(os.environ,BLOG_IMAGE_PROBE_ID=probe_id)
-     g.git(['fetch','--quiet','origin','main'],ROOT)
-     files=['automation/blog_reference_scene.py','automation/blog_generated_image.py','automation/blog_image_connection.py','automation/verify_hose_full_references.py']
-     if g.git(['diff','--name-only','HEAD','origin/main','--',*files],ROOT).stdout:probe['status']='skipped_code_changed';disabled=True
-     else:
-      try:
-       require_open(ROOT)
-       result=subprocess.run(['python','automation/verify_hose_full_references.py'],cwd=ROOT,env=env,capture_output=True,timeout=630)
-       probe['process_exit_code']=result.returncode
-       # Only safe child report; never persist stdout, stderr or API bodies.
-       value=content('artifacts/blog-hose-fullrefs/'+probe_id+'.json');probe['result']=value;received=value.get('image_received')is True
-       if any(x.get('http_status')in(401,402,403,429)for x in value.get('provider_attempts',[])):disabled=True
-       probe['status']='candidate_saved_needs_direct_visual_review'if received else value.get('status','no_image_received')
-      except ImageProviderBusy:probe['status']='skipped_shared_cooldown'
-      except subprocess.TimeoutExpired:probe['status']='probe_timeout';disabled=True
-      except Exception as exc:probe['status']='diagnostic_error';probe['error_type']=type(exc).__name__;disabled=True
-     probe['finished_at']=utc();persist()
+    control=current.get('release_control',{})
+    decision=dispatch_next(current,report['dispatches'])
+    if decision:
+     report['dispatches'].append(decision);persist()
    time.sleep(min(30,max(0,deadline-time.monotonic())))
   report['samples'].append(snapshot());report.update(status='completed',finished_at=utc(),candidate_received=received)
  except BaseException as exc:
@@ -88,6 +101,6 @@ def main():
  finally:
   persist()
   if os.getenv('GITHUB_STEP_SUMMARY'):
-   Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('## Finite one-hour monitor\n\nStatus: '+report['status']+'; observed seconds: '+str(report['elapsed_seconds'])+'; snapshots: '+str(len(report['samples']))+'; probes: '+str(len(report['probes']))+'.\n\nNo production image approval or post submission. Candidates need direct visual inspection.\n\nReport: '+path+'\n')
+   Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('## Finite one-hour monitor\n\nStatus: '+report['status']+'; observed seconds: '+str(report['elapsed_seconds'])+'; snapshots: '+str(len(report['samples']))+'; probes: '+str(len(report['probes']))+'.\n\nNo direct post submission or image approval. Dispatch acceptance is not verified publication.\n\nReport: '+path+'\n')
  return 0
 if __name__=='__main__':raise SystemExit(main())

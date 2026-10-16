@@ -55,6 +55,9 @@ def decode(data):
  return out.getvalue(),size
 
 def main():
+ from blog_generated_image import family_cancelled
+ if family_cancelled({'family':'hose'},ROOT):
+  print('Hose image generation cancelled by user; zero provider requests.');return 0
  cfg=settings(generated.roya.BASE.AGNES_BASE);key=os.getenv('IMAGE_API_KEY','').strip();run=os.getenv('GITHUB_RUN_ID','local')
  if not re.fullmatch(r'[A-Za-z0-9_-]+',run):raise ValueError('Bad run identifier')
  report={'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'workflow_run_id':run,'post_submissions':0,'production_approval':False,'max_requests':4,'same_credential_all_cases':True,'connection':cfg,'cases':[]}

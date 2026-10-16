@@ -21,6 +21,8 @@ def main():
  from blog_generated_image import rollout_enabled
  for job in jobs:
   if not rollout_enabled(job['blog'],ROOT):raise RuntimeError('Approved scoped image rollout required')
+ if control.get('activation_dispatch_mode')=='sequential_by_hour_monitor':
+  print('Approved tape-only activation delegated to finite sequential hour monitor.');return 0
  token=os.getenv('GH_TOKEN','')
  if not token:raise RuntimeError('Scoped Actions token unavailable')
  report=[]

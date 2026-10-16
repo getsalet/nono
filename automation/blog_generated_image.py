@@ -11,8 +11,19 @@ from blog_reference_scene import POLICY
 BLOGS={'roya','farsiblog','rozblog','blogfa','loxblog'}
 RAW='https://raw.githubusercontent.com/getsalet/nono/'
 
+def family_cancelled(item,root=None):
+ """Explicit user cancellation applies before assets, prompts or provider calls."""
+ path=Path(root or roya.ROOT)/'data/blog-generated-image-control.json'
+ if not path.exists():return False
+ try:
+  cancelled=json.loads(path.read_text()).get('cancelled_families',[])
+  if not isinstance(cancelled,list):return True
+  return item.get('family')in cancelled
+ except (OSError,ValueError):return True
+
 def family_enabled(item,root=None):
  """Pure scope check; legacy fixtures without an explicit scope are unchanged."""
+ if family_cancelled(item,root):return False
  path=Path(root or roya.ROOT)/'data/blog-generated-image-control.json'
  if not path.exists():return True
  control=json.loads(path.read_text());scope=control.get('enabled_families')
@@ -36,6 +47,7 @@ def rollout_enabled(blog,root=None):
  if control.get('recipe_version')!=RECIPE_VERSION or report.get('recipe_version')!=RECIPE_VERSION or report.get('connection')!=settings(roya.BASE.AGNES_BASE):raise RuntimeError('Current reference recipe and image connection acceptance required')
  scoped='enabled_families'in control;scope=control.get('enabled_families',['tape20','hose'])
  if not isinstance(scope,list)or not scope or len(scope)!=len(set(scope))or not set(scope)<={'tape20','hose'}:raise RuntimeError('Explicit nonempty known family scope required')
+ if any(family_cancelled({'family':name},root)for name in scope):raise RuntimeError('Cancelled family cannot be activated')
  rows=[r for r in report.get('families',[])if r.get('family')in scope]
  if report.get('policy')!=POLICY or len(rows)!=len(scope)or {r.get('family')for r in rows if r.get('passed')is True}!=set(scope)or(not scoped and report.get('passed')is not True):raise RuntimeError('Both genuine product families must pass image acceptance unless an explicit approved subset is selected')
  approved=control.get('approved_samples',{})
@@ -141,6 +153,7 @@ def conditioning_image(expected):
  return ['data:image/webp;base64,'+base64.b64encode(out.getvalue()).decode('ascii')]
 
 def generate(item,blog,slots=None,max_attempts=3):
+ if family_cancelled(item):raise RuntimeError('Image family explicitly cancelled by user')
  from blog_image_gate import family
  expected=family(item)
  from blog_image_connection import settings
