@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""One native-tier hose probe after the matched request diagnosis; no publication."""
-import copy,hashlib,json,os,re,subprocess
+"""One cooldown-aware native-tier hose probe; no publication or release changes."""
+import copy,hashlib,json,os,re,subprocess,time
 from pathlib import Path
 import blog_reference_scene as scene
 import blog_generated_image as generated
@@ -19,6 +19,10 @@ def main():
   report.update(article_key=item['key'],article_context=item['_image_article_context'],scene_plan=scene.scene_plan(item,'loxblog'),family_recipe=scene.recipe_for(item),reference_count=len(refs),reference_sha256=[hashlib.sha256(x.encode()).hexdigest()for x in refs],prompt_sha256=hashlib.sha256(scene.prompt(item,'loxblog').encode()).hexdigest())
   # generate() only: no prepare(), no publish(), no release bypass and no QA approval.
   # A held family may produce a diagnostic candidate, never a production asset.
+  from blog_image_backpressure import retry_at,require_open
+  delay=max(0,retry_at(ROOT)-time.time())
+  if delay>0:time.sleep(min(delay+1,300))
+  require_open(ROOT)
   raw=generated.generate(item,'loxblog',max_attempts=1)
   path=OUT+'/'+run+'.webp'
   url=generated.checkpoint_asset(path,raw,ROOT)

@@ -16,14 +16,14 @@ class HoseFullReferenceTests(unittest.TestCase):
    self.assertEqual(base64.b64decode(ref.split(',',1)[1]),base64.b64decode((scene.reference.ASSET_DIR/name).read_text().strip()))
   guide=Image.open(io.BytesIO(base64.b64decode(refs[2].split(',',1)[1])))
   self.assertEqual(guide.size,(1200,675))
- def test_reference_bytes_match_original_nono_method(self):
+ def test_full_identity_bytes_match_original_nono_method(self):
   import image_prompt_policy as original
-  self.assertEqual(scene.references(self.item()),original.reference_images(3,scene.article(self.item())))
+  self.assertEqual(scene.references(self.item())[:2],original.reference_images(3,scene.article(self.item()))[:2])
  def test_tape_reference_and_recipe_are_unchanged(self):
   item=self.item('tape20')
   self.assertEqual(scene.references(item),scene.reference.reference_images(scene.role(item),scene.article(item)))
   self.assertEqual(scene.recipe_for(item),scene.RECIPE_VERSION)
-  self.assertEqual(scene.recipe_for(self.item()),scene.RECIPE_VERSION+'-hose-native1k-v3')
+  self.assertEqual(scene.recipe_for(self.item()),scene.RECIPE_VERSION+'-hose-native1k-v4-smallguide')
  def test_real_payload_uses_three_nested_references_and_watermark(self):
   from blog_image_watermark import present
   out=io.BytesIO();Image.new('RGB',(1024,768),'green').save(out,'PNG')

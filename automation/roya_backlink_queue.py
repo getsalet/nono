@@ -555,6 +555,10 @@ def main():
     print(f'picked {len(targets)} target(s) of {len(queue["items"])} queued', flush=True)
     completed = []
     for item in targets:
+        from blog_image_backpressure import require_open,ImageProviderBusy
+        try:require_open(ROOT)
+        except ImageProviderBusy:
+            print('Shared image-provider cooldown active; no new text/image calls.');break
         item['status'] = 'processing'
         item['attempts'] = int(item.get('attempts', 0)) + 1
         state['in_progress'] = item['key']
@@ -577,6 +581,7 @@ def main():
             except Exception as exc:
                 errors = ['agnes error: ' + str(exc)[:200]]
                 print(f'{item["key"]} attempt={attempt} {errors[0]}', flush=True)
+                if isinstance(exc,ImageProviderBusy):break
                 continue
             # Titles are owned by the approved matrix, not an AI spelling choice.
             obj['title'] = item['assigned_title']

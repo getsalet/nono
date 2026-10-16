@@ -118,7 +118,7 @@ def checkpoint_asset(path,raw,root):
    git(['read-tree',parent],root,env=env)
    git(['update-index','--add','--cacheinfo','100644,'+blob+','+path],root,env=env)
    tree=git(['write-tree'],root,env=env).stdout.decode().strip()
-   commit=git(['commit-tree',tree,'-p',parent],root,input=b'Persist one QA-approved unique AFP blog image\n',env=env).stdout.decode().strip()
+   commit=git(['commit-tree',tree,'-p',parent],root,input=(b'Persist one QA-approved unique AFP blog image\n'if path.startswith('assets/blog-generated/')else b'Persist safe AFP image diagnostic or provider cooldown\n'),env=env).stdout.decode().strip()
    if git(['push','--quiet','origin',commit+':refs/heads/main'],root,check=False).returncode==0:return RAW+commit+'/'+path
   raise RuntimeError('Image checkpoint push failed; cached candidate retained')
  finally:
@@ -185,6 +185,10 @@ def generate(item,blog,slots=None,max_attempts=3):
    row.update(http_status=code,status='provider_error')
    if getattr(exc,'provider_code',None):row['provider_code']=exc.provider_code
    if getattr(exc,'provider_type',None):row['provider_type']=exc.provider_type
+   if code==503 and getattr(exc,'provider_code',None)=='image_queue_full':
+    from blog_image_backpressure import ImageProviderBusy
+    row['status']='provider_queue_full_deferred'
+    raise ImageProviderBusy(time.time()+max(300,getattr(exc,'retry_after_seconds',None)or 0))from None
    if dedicated_key and code in(429,500,502,503,504)and os.getenv('AGNES_IMAGE_TRANSIENT_FAILOVER')=='1'and endpoint==roya.BASE.AGNES_BASE+'/images/generations':
     # On transient failures only, try credentials already verified against this
     # exact image endpoint/model. Never substitute unaudited text credentials.
@@ -239,7 +243,14 @@ def prepare(item,blog,root=None):
   for round_index in range(3):
    if not cache.exists():
     item['_generation_stage']='generation_api';item['_image_generation_round']=round_index
-    raw=generate(item,blog);tmp=cache.with_suffix('.tmp');tmp.write_bytes(raw);tmp.replace(cache)
+    from blog_image_backpressure import require_open,ImageProviderBusy,defer
+    require_open(root)
+    try:raw=generate(item,blog)
+    except ImageProviderBusy as busy:
+     try:defer(root,busy.retry_at,checkpoint_asset)
+     except Exception:item['_provider_cooldown_checkpoint_failed']=True
+     raise busy
+    tmp=cache.with_suffix('.tmp');tmp.write_bytes(raw);tmp.replace(cache)
    raw=cache.read_bytes();item['_generation_stage']='local_vision_qa'
    try:
     review(item,'generated://'+blog+'/'+asset_id,root=root,_candidate=raw)

@@ -46,7 +46,7 @@ def scene_plan(item,blog):
 
 def recipe_for(item):
  from blog_image_gate import family
- return RECIPE_VERSION+('-hose-native1k-v3'if family(item)=='hose'else'')
+ return RECIPE_VERSION+('-hose-native1k-v4-smallguide'if family(item)=='hose'else'')
 
 def prompt(item,blog):
  # Differential live tests showed that the concise nested-reference request can
@@ -81,11 +81,11 @@ def references(item):
  if family(item)!='hose':
   # Preserve the directly accepted tape request bytes and cache identity.
   return reference.reference_images(role(item),article(item))
- # Pinned nono image_prompt_policy.py @ d8615897: full originals FIRST,
- # then a scale/layout guide. This is input conditioning, never output paste-up.
+ # Pinned nono identity inputs: full originals FIRST,
+ # then the 92/68-width guide of its integrated layflat test. Input only, never output paste-up.
  import base64,io
  from PIL import Image
- rows=[('afp-layflat.webp.b64','image/webp',360),('afp-layflat-bare.jpg.b64','image/jpeg',300)]
+ rows=[('afp-layflat.webp.b64','image/webp',92),('afp-layflat-bare.jpg.b64','image/jpeg',68)]
  refs=[];canvas=Image.new('RGBA',(1200,675),(238,238,235,255));x=96
  for filename,mime,width in rows:
   encoded=(reference.ASSET_DIR/filename).read_text(encoding='ascii').strip()

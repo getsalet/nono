@@ -16,6 +16,7 @@ class AgnesProviderError(RuntimeError):
     for key in ('code','type'):
      candidate=error.get(key)
      if isinstance(candidate,str)and candidate in SAFE_PROVIDER_CODES:setattr(self,'provider_'+key,candidate)
+    if status==503 and 'image queue is full' in str(error.get('message','')).lower():self.provider_code='image_queue_full'
   except (ValueError,TypeError,AttributeError):pass
 
 class AgnesKeyPool:

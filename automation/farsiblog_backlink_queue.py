@@ -183,6 +183,11 @@ def main():
     completed=[];failed=[]
     for item in candidates[:min(9,max(3,count*3))]:
         if len(completed)>=count:break
+        from blog_image_backpressure import require_open,ImageProviderBusy
+        try:require_open(ROOT)
+        except ImageProviderBusy:
+            print('Shared image-provider cooldown active; no new source/text/image calls.');break
+        provider_busy=False
         item.pop('_image_prepared_this_run',None)
         links=links_for(item);obj=None;errors=[];info={};stage='recovery'
         try:
@@ -214,15 +219,19 @@ def main():
                     errors,info=qa(item,obj,links);print(f'{item["key"]}: attempt={attempt+1}, words={info.get("words")}, errors={len(errors)}',flush=True)
                     if not errors:break
         except Exception as exc:
+            provider_busy=isinstance(exc,ImageProviderBusy)
+            if provider_busy:item['image_retry_at']=exc.retry_at
             errors=['generation/source/validation failed: '+type(exc).__name__+' [stage='+stage+']; '+exception_detail(exc)]
             item['failure_stage']=stage
         item.update({'status':'failed'if errors else 'completed','attempts':item.get('attempts',0)+1,'generated_at':now(),'last_error':'; '.join(errors)})
         if errors:
             failed.append(item['key']);defer_item(item)
+            if provider_busy:item['next_retry_at']=datetime.datetime.fromtimestamp(item['image_retry_at'],datetime.timezone.utc).isoformat().replace('+00:00','Z')
             print(item['key']+': deferred; continuing queue; retry at '+item['next_retry_at'],flush=True)
         else:
             item.pop('next_retry_at',None);item.pop('failure_stage',None);item.update({'title':obj['title'],'slug':obj['slug']});completed.append(item['key'])
         save(item_path(item['key']),{**item,'post':obj,'blog':BLOG,'target_url':item.get('target_url','https://navar-abyari.ir/'),'qa':{'passed':not errors,'errors':errors,**info}});save(QUEUE,q)
+        if provider_busy:break  # Capacity is shared; do not generate text for the next candidate.
     refresh_ready(q);state=load(STATE,{});state.update({'updated_at':now(),'completed_keys':[x['key']for x in q['items']if x['status']in('completed','published')],'failed':{x['key']:x.get('last_error','')for x in q['items']if x['status']=='failed'}});save(STATE,state)
     (ART/'status.md').write_text('# فارسی‌بلاگ AFP\n\nصف شهری تصویردار با کنترل شباهت بین سه وبلاگ.\n\n'+f'آخرین اجرا: {now()}\nموفق این اجرا: {len(completed)}\nناموفق: {len(failed)}\n')
     print('Original articles generated:',len(completed),'Deferred items:',len(failed))
