@@ -14,7 +14,14 @@ def cases():
  path=ROOT/'artifacts/loxblog-backlink-queue/items'/(re.sub(r'[^A-Za-z0-9._-]+','_',item['key'])+'.json')
  item['_image_article_context']=scene.context_from_post(json.loads(path.read_text())['post'])
  prompt=scene.prompt(item,'loxblog');refs=scene.references(item)
- return [('text-control',{'prompt':TEXT_CONTROL,'response_format':'b64_json'}),('nested-reference',{'prompt':prompt,'extra_body':{'response_format':'b64_json','image':refs}}),('flat-reference',{'prompt':prompt,'response_format':'b64_json','image':refs})]
+ short=('Close side-view documentary photograph of an unoccupied drip-irrigation header on soil. '
+  'The main subject is one installed black hose coupling joining two hoses, with the seal and a pressure gauge sharply visible. '
+  'Only a few neutral seedlings behind the hardware, no horizon. '
+  'At the lower left, show exactly two AFP layflat products from the reference: one packaged low black woven coil and one unpackaged low black woven coil. '
+  'Both fully inside the frame with contact shadows, together smaller than the irrigation assembly. '
+  'Realistic materials, consistent daylight and perspective. Empty scene, no people. No added captions or text.')
+ return [('short-technical-text',{'prompt':short,'response_format':'b64_json'}),('short-technical-nested',{'prompt':short,'extra_body':{'response_format':'b64_json','image':refs}}),('short-technical-flat',{'prompt':short,'response_format':'b64_json','image':refs})]
+
 def decode(data):
  row=(data.get('data')or[{}])[0]
  if row.get('b64_json'):raw=base64.b64decode(row['b64_json'],validate=True)
