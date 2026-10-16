@@ -32,10 +32,11 @@ jobs:
     timeout-minutes: 90
     env:
       AGNES_API_BASE: https://apihub.agnes-ai.com/v1
-      IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY }}
+      IMAGE_API_KEY: ${{ secrets.AGNES_API_KEY10 }}
+      IMAGE_KEY_SLOT: AGNES_API_KEY10
       IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
       IMAGE_MODEL: ${{ vars.IMAGE_MODEL || 'agnes-image-2.5-flash' }}
-      AGNES_IMAGE_TRANSIENT_FAILOVER: '1'
+      AGNES_IMAGE_TRANSIENT_FAILOVER: '0'
       IMAGE_REVIEW_MODEL: ${{ vars.AGNES_MODEL || 'agnes-3.0-flash' }}
       AGNES_HEALTHY_SLOTS_ONLY: '1'
       AGNES_PREFERRED_KEY_SLOTS: 'AGNES_API_KEY14,AGNES_API_KEY15'

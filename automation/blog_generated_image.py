@@ -193,6 +193,11 @@ def _generate(item,blog,slots=None,max_attempts=3):
   # Keep the already accepted tape request and connection identity unchanged.
   payload.update(size='1K',ratio='16:9');payload.pop('return_base64',None)
  dedicated_key=os.getenv('IMAGE_API_KEY','').strip()if slots is None else ''
+ approved_slot=os.getenv('IMAGE_KEY_SLOT','').strip()if slots is None else ''
+ if approved_slot:
+  from agnes_key_pool import NAMES
+  if approved_slot not in NAMES or not dedicated_key or dedicated_key!=os.getenv(approved_slot,'').strip():
+   raise RuntimeError('Approved image credential binding unavailable; no legacy credential fallback')
  names=[]
  if not dedicated_key:
   names=slots if slots is not None else capability_slots()
@@ -214,7 +219,7 @@ def _generate(item,blog,slots=None,max_attempts=3):
  attempts=item.setdefault('_image_provider_attempts',[])
  for attempt in range(max_attempts):
   key=selected[attempt%len(selected)]
-  row={'requested_secret_slot':'IMAGE_API_KEY'if key==dedicated_key else roya.BASE._key_pool.slots.get(key,'unknown'),'attempt':attempt+1,'route':'configured_image_connection'if key==dedicated_key else'audited_image_pool','timeout_seconds':connection['timeout_seconds']}
+  row={'requested_secret_slot':(approved_slot or 'IMAGE_API_KEY')if key==dedicated_key else roya.BASE._key_pool.slots.get(key,'unknown'),'attempt':attempt+1,'route':'configured_image_connection'if key==dedicated_key else'audited_image_pool','timeout_seconds':connection['timeout_seconds']}
   attempts.append(row)
   if not key:raise RuntimeError('Existing image API credential required')
   try:
