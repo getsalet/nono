@@ -46,7 +46,7 @@ def scene_plan(item,blog):
 
 def recipe_for(item):
  from blog_image_gate import family
- return RECIPE_VERSION+('-hose-compact-v1'if family(item)=='hose'else'')
+ return RECIPE_VERSION+('-hose-fullrefs-v2'if family(item)=='hose'else'')
 
 def prompt(item,blog):
  # Differential live tests showed that the concise nested-reference request can
@@ -60,16 +60,13 @@ def prompt(item,blog):
   # article title/body remain in the context used by the independent vision QA.
   crop='Small neutral seedlings around the hardware'if plan['role']==3 else plan['botany']
   text=(f"Photograph an empty irrigation site, {plan['camera']}, natural daylight. Main subject: {plan['evidence']}. {crop}. "
-   'Nearby, exactly two low horizontal black woven layflat coils from the reference: one in folded AFP cardboard panels with crossing straps, one bare coil with a short cardboard core. '
+   'References 1 and 2 show exact product identity; reference 3 shows their relative layout, not a background. Nearby, exactly two low horizontal black woven layflat coils: one in folded AFP cardboard panels with crossing straps, one bare coil with a short cardboard core. '
    'Together they occupy 12 to 15 percent of the frame width. Preserve authentic packaging, materials and print. '
    'Both products fully inside the frame, resting on soil with matching perspective and contact shadows. '
    'One continuous scene, no people, no inset or extra product; the reference is not a flat layer to paste.')
   feedback=str(a.get('_image_qa_feedback')or'').strip()
   return text+(' Correct: '+feedback[:160]if feedback else'')
- if family(item)=='hose':
-  product='exactly two low horizontal black woven layflat coils: one in its authentic folded AFP cardboard panels and crossing straps, one bare woven coil with a short brown cardboard core. The pair occupies 12 to 15 percent of frame width'
- else:
-  product='exactly one low wide cylindrical AFP drip-tape carton, white printed sleeve and blue lower band, central top hole, diameter larger than height. It occupies about 20 percent of frame width'
+ product='exactly one low wide cylindrical AFP drip-tape carton, white printed sleeve and blue lower band, central top hole, diameter larger than height. It occupies about 20 percent of frame width'
  crop=('Use neutral small seedlings only near the hardware'if plan['role']==3 else'Crop identity: '+plan['botany'])
  brief=(f"One continuous photorealistic agricultural photograph, {plan['camera']}, soft natural daylight. "
   +f"Main subject: {plan['evidence']}. {crop}. Tight equipment-and-soil framing with no skyline. "
@@ -79,7 +76,27 @@ def prompt(item,blog):
  feedback=str(a.get('_image_qa_feedback')or'').strip()
  if feedback:brief+=' Correct the prior visual rejection: '+feedback[:240]
  return brief
-def references(item):return reference.reference_images(role(item),article(item))
+def references(item):
+ from blog_image_gate import family
+ if family(item)!='hose':
+  # Preserve the directly accepted tape request bytes and cache identity.
+  return reference.reference_images(role(item),article(item))
+ # Pinned nono image_prompt_policy.py @ d8615897: full originals FIRST,
+ # then a scale/layout guide. This is input conditioning, never output paste-up.
+ import base64,io
+ from PIL import Image
+ rows=[('afp-layflat.webp.b64','image/webp',360),('afp-layflat-bare.jpg.b64','image/jpeg',300)]
+ refs=[];canvas=Image.new('RGBA',(1200,675),(238,238,235,255));x=96
+ for filename,mime,width in rows:
+  encoded=(reference.ASSET_DIR/filename).read_text(encoding='ascii').strip()
+  raw=base64.b64decode(encoded,validate=True)
+  product=Image.open(io.BytesIO(raw)).convert('RGBA')
+  refs.append('data:'+mime+';base64,'+encoded)
+  product.thumbnail((width,600),Image.Resampling.LANCZOS)
+  canvas.alpha_composite(product,(x,610-product.height));x+=product.width+8
+ out=io.BytesIO();canvas.convert('RGB').save(out,'WEBP',quality=92,method=6)
+ return refs+['data:image/webp;base64,'+base64.b64encode(out.getvalue()).decode('ascii')]
+
 def topic_hash(item):
  data=article(item);data.pop('_image_qa_feedback',None)
  return hashlib.sha256(json.dumps(data,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
