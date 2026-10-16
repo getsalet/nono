@@ -15,46 +15,123 @@
   "assigned_title": "نوار تیپ سویا در چابهار؛ پیگیری عملکرد مسیر",
   "_image_blog": "blogfa",
   "_generation_stage": "public_vision_qa",
-  "_image_generation_round": 0,
+  "_image_generation_round": 1,
   "_image_provider_attempts": [
     {
       "requested_secret_slot": "AGNES_API_KEY7",
       "attempt": 1,
       "http_status": 200,
       "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "IMAGE_API_KEY",
+      "attempt": 1,
+      "route": "configured_image_connection",
+      "timeout_seconds": 600,
+      "http_status": 503,
+      "status": "provider_error",
+      "retry_delay_seconds": 30
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY6",
+      "attempt": 2,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "IMAGE_API_KEY",
+      "attempt": 1,
+      "route": "configured_image_connection",
+      "timeout_seconds": 600,
+      "http_status": 503,
+      "status": "provider_error",
+      "retry_delay_seconds": 30
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY6",
+      "attempt": 2,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 503,
+      "status": "provider_error",
+      "retry_delay_seconds": 60
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY7",
+      "attempt": 3,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     }
   ],
-  "image_url": "https://raw.githubusercontent.com/getsalet/nono/49f81890ae629a41480509ce2a6707e5633ab241/assets/blog-generated/blogfa/7ca5018f9b3c2564e770bd8d7ee59fee.webp",
+  "image_url": "https://raw.githubusercontent.com/getsalet/nono/29fc0a8441222c6bbf8d6c5d123c14f5101b23f2/assets/blog-generated/blogfa/be96ee933f54a181930495713e850d0e.webp",
   "image_width": 1200,
-  "image_height": 675,
+  "image_height": 900,
   "image_review": {
-    "policy": "blog-product-family-reference-vision-v3-full-frame-and-product-detail",
-    "sha256": "d3ec32cd950892c418972246dbaea1de855fa93fd18fd21cc4e95cb2a1e91efa",
+    "policy": "blog-product-family-reference-vision-v7-reference-parity",
+    "sha256": "fe9acaa3f9440780c51742054fb35f6f1ff38822f305d581c5407b784f1b7c2b",
     "family": "tape20",
     "width": 1200,
-    "height": 675,
-    "source_url": "https://raw.githubusercontent.com/getsalet/nono/49f81890ae629a41480509ce2a6707e5633ab241/assets/blog-generated/blogfa/7ca5018f9b3c2564e770bd8d7ee59fee.webp",
+    "height": 900,
+    "source_url": "https://raw.githubusercontent.com/getsalet/nono/29fc0a8441222c6bbf8d6c5d123c14f5101b23f2/assets/blog-generated/blogfa/be96ee933f54a181930495713e850d0e.webp",
     "verdict": {
       "pass": true,
-      "score": 95,
+      "score": 85,
       "observed_family": "tape20",
       "expected_product_visible": true,
       "wrong_product_present": false,
       "fake_text_or_logo": false,
       "implausible_geometry": false,
       "people_present": false,
-      "reasons": [
-        "The candidate displays the correct product family: a white and blue cylindrical carton roll labeled 'AFP Drip Irrigation Tape', matching the tape20 reference. The image is a valid editorial two-panel layout with field context on the left and the product on the right. No wrong products, people, or fake text are present."
-      ]
-    }
+      "topic_match": true,
+      "product_integrated": true,
+      "product_fully_in_frame": true,
+      "product_count_match": true,
+      "technical_evidence_match": true,
+      "observed_product_count": 1,
+      "collage_or_split_layout": false,
+      "crop_contradiction": false,
+      "reasons": []
+    },
+    "watermark": "AFP | 09134922013",
+    "topic_sha256": "1ece41eaa56e74ad81a37426c122a07434ab7b0752a253ce06b686c7b7dc3d74"
   },
-  "image_selection": "afp-one-generated-blog-image-v5-product-dominant-panels",
+  "image_selection": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
   "image_generation": {
-    "policy": "afp-one-generated-blog-image-v5-product-dominant-panels",
+    "policy": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
     "blog": "blogfa",
-    "asset_id": "7ca5018f9b3c2564e770bd8d7ee59fee",
-    "url": "https://raw.githubusercontent.com/getsalet/nono/49f81890ae629a41480509ce2a6707e5633ab241/assets/blog-generated/blogfa/7ca5018f9b3c2564e770bd8d7ee59fee.webp",
-    "kind": "editorial-generated-field-and-authentic-product-photo-panels",
+    "asset_id": "be96ee933f54a181930495713e850d0e",
+    "url": "https://raw.githubusercontent.com/getsalet/nono/29fc0a8441222c6bbf8d6c5d123c14f5101b23f2/assets/blog-generated/blogfa/be96ee933f54a181930495713e850d0e.webp",
+    "kind": "reference-conditioned-single-pass-topic-scene",
+    "topic_sha256": "1ece41eaa56e74ad81a37426c122a07434ab7b0752a253ce06b686c7b7dc3d74",
+    "reference_sources": [
+      "https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py",
+      "https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py",
+      "https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml"
+    ],
+    "rendering": {
+      "connection": {
+        "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+        "model": "agnes-image-2.5-flash",
+        "size": "1024x768",
+        "timeout_seconds": 600
+      },
+      "requested_size": "1024x768",
+      "provider_size": [
+        1152,
+        864
+      ],
+      "output_size": [
+        1200,
+        900
+      ],
+      "cropped": false
+    },
+    "watermark": "AFP | 09134922013",
+    "watermark_policy": "afp-contact-bottom-right-v1",
     "product_photos": [
       {
         "asset": "afp-tape.webp.b64",
@@ -62,19 +139,73 @@
       }
     ]
   },
-  "image_alt": "نوار تیپ چابهار - تصویر آموزشی ترکیبی با عکس واقعی محصول",
+  "image_alt": "نوار تیپ چابهار - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP",
   "matrix_title": "نوار تیپ سویا در چابهار؛ پیگیری عملکرد مسیر",
-  "attempts": 2,
-  "generated_at": "2026-10-15T22:18:53Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=recovery]; RuntimeError",
-  "next_retry_at": "2026-10-16T00:18:53.141500Z",
+  "attempts": 3,
+  "generated_at": "2026-10-16T16:47:59Z",
+  "last_error": "invalid slug; Exactly two distinct approved contextual destinations, each once; Assigned meaningful anchor required: city; Assigned meaningful anchor required: home",
+  "next_retry_at": "2026-10-16T20:47:59.689052Z",
   "failure_stage": "recovery",
-  "post": null,
+  "_image_article_context": {
+    "title": "نوار تیپ سویا در چابهار؛ پیگیری عملکرد مسیر",
+    "meta_description": "راهنمای انتخاب و نصب نوار تیپ برای کشت ردیفی سویا در چابهار؛ بررسی فشار، فاصله روزنه و نکات عیب‌یابی عملیاتی مسیر آبیاری.",
+    "summary": "مقدمه‌ای بر چالش‌های آبیاری ردیفی در مسیر کشت ردیفی سویا یکی از الگوهای رویشی است که توزیع یکنواخت رطوبت در امتداد خط بوته، نقش مستقیمی بر یکرنگی رشد و عملکرد نهایی دارد. نوار تیپ نوار تیپ AFP به‌عنوان راهکاری آبیاری قطره‌ای تحت فشار، امکان رهاسازی آهسته و مستمر آب در کنار ساقه را فراهم می‌کند؛ با این حال عملکرد واقعی مسیر تنها زمانی محقق می‌شود که فشار، فاصله روزنه و شرایط نصب هر سه در تعادل باشند. در ادامه به بررسی مرحله‌ای این عوامل پرداخته و خطاهای شایع را بدون حدس‌وگمان فنی تحلیل می‌کنیم. عیب‌یابی مرحله‌ای عملکرد مسیر نوار تیپ وقتی انتهای ردیف خشک می‌ماند یا توزیع آب در طول خط ناهمگون است، ابتدا باید فشار ورودی را با فشارسنج اندازه‌گیری کنید. فشار کمتر از ۰٫۵ بار معمولاً باعث کاهش دبی روزنه‌ها در انتهای خط می‌شود و فشار بیش از ۱٫۲ بار می‌تواند به درزهای لمینت نوار آسیب برساند. نوار تیپ معمولاٌ در محدوده فشار کاری ۰٫۵ تا ۱ بار طراحی و تولید می‌شود. اگر اختلاف ارتفاع در زمین وجود دارد، فشار پایین‌دست باید با شیر تنظیم کاهش یابد تا یکنواختی حفظ شود. گرفتگی روزنه‌ها مرحله بعدی است. ذرات معلق در آب و املاح محلول می‌توانند به‌مرور خروجی‌ها را مسدود کنند. استفاده از فیلتر مشی حداقل ۱۲۰ مش و شست‌وشوی دوره‌ای خطوط با آب تمیز، از تجمع رسوب جلوگیری می‌کند. همچنین نصب فیلتر دیسکی در نقاط "
+  },
+  "_image_render": {
+    "connection": {
+      "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+      "model": "agnes-image-2.5-flash",
+      "size": "1024x768",
+      "timeout_seconds": 600
+    },
+    "requested_size": "1024x768",
+    "provider_size": [
+      1152,
+      864
+    ],
+    "output_size": [
+      1200,
+      900
+    ],
+    "cropped": false
+  },
+  "_image_rejections": [
+    {
+      "sha256": "63c03d31f53254b46d5df3fbef16ceb15251b1fd8c6b39bea49795743afdfa12",
+      "reason": "Product image rejected: Visual approval required; Image score below 70; Vision flag not cleared: fake_text_or_logo; Integrated/topic visual condition not met: technical_evidence_match"
+    }
+  ],
+  "_image_qa_feedback": "Product image rejected: Visual approval required; Image score below 70; Vision flag not cleared: fake_text_or_logo; Integrated/topic visual condition not met: technical_evidence_match",
+  "_image_prepared_this_run": true,
+  "post": {
+    "title": "نوار تیپ سویا در چابهار؛ پیگیری عملکرد مسیر",
+    "slug": "nوار-tip-soya-dar-chabahar-piygiri-amalkard-masir",
+    "meta_description": "راهنمای انتخاب و نصب نوار تیپ برای کشت ردیفی سویا در چابهار؛ بررسی فشار، فاصله روزنه و نکات عیب‌یابی عملیاتی مسیر آبیاری.",
+    "tags": [
+      "نوار تیپ",
+      "چابهار",
+      "سویا",
+      "آبیاری تحت فشار",
+      "کشاورزی جنوب شرق"
+    ],
+    "html": "<p><img src=\"https://raw.githubusercontent.com/getsalet/nono/29fc0a8441222c6bbf8d6c5d123c14f5101b23f2/assets/blog-generated/blogfa/be96ee933f54a181930495713e850d0e.webp\" alt=\"نوار تیپ چابهار - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP\" width=\"1200\" height=\"900\" loading=\"lazy\"></p><h2>مقدمه‌ای بر چالش‌های آبیاری ردیفی در مسیر</h2>\n<p>کشت ردیفی سویا یکی از الگوهای رویشی است که توزیع یکنواخت رطوبت در امتداد خط بوته، نقش مستقیمی بر یکرنگی رشد و عملکرد نهایی دارد. نوار تیپ <a href=\"#AFP_LINK_1\">نوار تیپ AFP</a> به‌عنوان راهکاری آبیاری قطره‌ای تحت فشار، امکان رهاسازی آهسته و مستمر آب در کنار ساقه را فراهم می‌کند؛ با این حال عملکرد واقعی مسیر تنها زمانی محقق می‌شود که فشار، فاصله روزنه و شرایط نصب هر سه در تعادل باشند. در ادامه به بررسی مرحله‌ای این عوامل پرداخته و خطاهای شایع را بدون حدس‌وگمان فنی تحلیل می‌کنیم.</p>\n\n<h2>عیب‌یابی مرحله‌ای عملکرد مسیر نوار تیپ</h2>\n<p>وقتی انتهای ردیف خشک می‌ماند یا توزیع آب در طول خط ناهمگون است، ابتدا باید فشار ورودی را با فشارسنج اندازه‌گیری کنید. فشار کمتر از ۰٫۵ بار معمولاُ باعث کاهش دبی روزنه‌ها در انتهای خط می‌شود و فشار بیش از ۱٫۲ بار می‌تواند به درزهای لمینت نوار آسیب برساند. نوار تیپ معمولاُ در محدوده فشار کاری ۰٫۵ تا ۱ بار طراحی و تولید می‌شود. اگر اختلاف ارتفاع در زمین وجود دارد، فشار پایین‌دست باید با شیر تنظیم کاهش یابد تا یکنواختی حفظ شود.</p>\n<p>گرفتگی روزنه‌ها مرحله بعدی است. ذرات معلق در آب و املاح محلول می‌توانند به‌مرور خروجی‌ها را مسدود کنند. استفاده از فیلتر مشی حداقل ۱۲۰ مش و شست‌وشوی دوره‌ای خطوط با آب تمیز، از تجمع رسوب جلوگیری می‌کند. همچنین نصب فیلتر دیسکی در نقاط حساس شبکه توصیه می‌شود.</p>\n\n<h3>بررسی مشخصات فنی پیش از خرید</h3>\n<p>هرگونه ادعای فنی درباره ضخامت دیواره باید مستقیماً از برگه مشخصات فنی همان مدل تأیید شود. پیش از سفارش، حتماً برگه فنی محصول را مرور کنید و در صورت نیاز با تیم فنی مشورت نمایید. برای خرید مستقیم از کارخانه و دریافت مشاوره رایگان می‌توانید با شماره ۰۹۱۳۴۹۲۲۰۱۳ تماس بگیرید.</p>\n\n<h2>نکات نصب و پهن‌کردن مسیر در کشت ردیفی</h2>\n<p>نصب صحیح نوار تیپ در مزارع ردیفی شامل چند اصل اساسی است که رعایت هرکدام تأثیر مستقیمی بر عملکرد مسیر دارد:</p>\n<ul>\n<li><strong>سطح‌بندی زمین:</strong> زمین باید هم‌سطح باشد؛ اختلاف ارتفاع چند سانتی‌متری توزیع فشار را برهم می‌زند.</li>\n<li><strong>عمق خواباندن نوار:</strong> نوار را مستقیماً روی سطح خشک خاک قرار ندهید. حداقل دو تا سه سانتی‌متر خاک روی آن بریزید تا هم از تابش مستقیم محافظت شود و هم در برابر باد جابه‌جا نگردد.</li>\n<li><strong>فاصله از ساقه:</strong> فاصله نوار از خط رویش ساقه گیاه باید ۵ تا ۱۰ سانتی‌متر باشد تا ریشه در محدوده مرطوب قرار گیرد.</li>\n<li><strong>جهت‌گیری ردیف‌ها:</strong> ردیف‌های نوار باید عمود بر جهت باد غالب نصب شوند تا فشار باد کمتری به نوار وارد شود.</li>\n<li><strong>شست‌وشوی ابتدایی:</strong> پیش از اتصال به شبکه اصلی، نوار را به مدت ۵ دقیقه با فشار متوسط بشویید تا ذرات اضافی کارخانه از کانال خارج شود.</li>\n</ul>\n\n<h2>چک‌لیست انتخاب و نصب نوار تیپ برای سویا</h2>\n<ol>\n<li>برگه مشخصات فنی مدل مورد نظر را از کارخانه دریافت و مطالعه کنید.</li>\n<li>فشار ورودی شبکه آبیاری را با فشارسنج اندازه‌گیری و در محدوده ۰٫۵ تا ۱ بار تنظیم کنید.</li>\n<li>از عملکرد فیلتراسیون (مش ۱۲۰ به بالا) اطمینان حاصل کنید.</li>\n<li>سطح زمین را قبل از نصب تراز و هم‌سطح کنید.</li>\n<li>عمق پوشش خاک روی نوار را حداقل ۲ تا ۳ سانتی‌متر رعایت کنید.</li>\n<li>فاصله نوار تا ساقه را ۵ تا ۱۰ سانتی‌متر تنظیم نمایید.</li>\n<li>پس از اتمام فصل کشت، نوار را با آب تمیز شست‌وشو داده و برای نگهداری جمع‌آوری کنید.</li>\n</ol>\n\n<h2>خرید مستقیم و پیگیری عملکرد پس از نصب</h2>\n<p>خرید مستقیم از کارخانه تولید نوار تیپ، علاوه بر حذف واسطه‌ها، تضمین می‌کند که مشخصات درج‌شده روی بسته، دقیقاُ همان محصولی باشد که تحویل می‌گیرید. روی هر رول اعلام‌شده ضمانت یک فصل کامل زراعی اعمال می‌شود و تیم فنی در طول فصل کشت پاسخگوی پرسش‌های شماست. برای اطلاع از قیمت روز و مشاوره تخصصی در زمینه <a href=\"#AFP_LINK_2\">نوار تیپ چابهار</a> می‌توانید با کارشناسان فروش تماس بگیرید.</p>\n\n<details>\n<summary>آیا نوار تیپ برای کشت ردیفی سویا مناسب است؟</summary>\n<p>بله. نوار تیپ به‌ویژه برای کشت‌های ردیفی طراحی شده و امکان رهاسازی یکنواخت آب در امتداد خط بوته را فراهم می‌کند. با این حال، انتخاب ضخامت دیواره و فاصله روزنه‌ها باید بر اساس برگه مشخصات فنی همان مدل و مشورت با کارشناس فنی انجام شود.</p>\n</details>\n<details>\n<summary>چه عواملی باعث خشک شدن انتهای ردیف نوار می‌شود؟</summary>\n<p>شایع‌ترین دلایل شامل فشار ورودی کمتر از ۰٫۵ بار، گرفتگی فیلتر یا روزنه‌ها، و اختلاف ارتفاع در زمین است. تنظیم فشار در محدوده ۰٫۵ تا ۱ بار و شست‌وشوی دوره‌ای خطوط می‌تواند این مشکل را کاهش دهد.</p>\n</details>\n<details>\n<summary>آیا نصب نوار تیپ روی سطح خاک توصیه می‌شود؟</summary>\n<p>خیر. نصب روی سطح خشک خاک باعث تبخیر بالا و جابه‌جایی نوار توسط باد می‌شود. حداقل پوشش ۲ تا ۳ سانتی‌متری خاک روی نوار، هم از تابش مستقیم محافظت می‌کند و هم پایداری مسیر را حفظ می‌نماید.</p>\n</details>",
+    "image_url": "https://raw.githubusercontent.com/getsalet/nono/29fc0a8441222c6bbf8d6c5d123c14f5101b23f2/assets/blog-generated/blogfa/be96ee933f54a181930495713e850d0e.webp"
+  },
   "blog": "https://afp-pipe.blogfa.com",
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=recovery]; RuntimeError"
-    ]
+      "invalid slug",
+      "Exactly two distinct approved contextual destinations, each once",
+      "Assigned meaningful anchor required: city",
+      "Assigned meaningful anchor required: home"
+    ],
+    "words": 821,
+    "links": [
+      "#AFP_LINK_1",
+      "#AFP_LINK_2"
+    ],
+    "checked_against": "Roya + FarsiBlog + RozBlog + Blogfa + LoxBlog corpus",
+    "title_matrix": "نوار تیپ سویا در چابهار؛ پیگیری عملکرد مسیر"
   }
 }

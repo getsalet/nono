@@ -1394,46 +1394,123 @@
    "assigned_title": "نوار تیپ سویا در چابهار؛ پیگیری عملکرد مسیر",
    "_image_blog": "blogfa",
    "_generation_stage": "public_vision_qa",
-   "_image_generation_round": 0,
+   "_image_generation_round": 1,
    "_image_provider_attempts": [
     {
      "requested_secret_slot": "AGNES_API_KEY7",
      "attempt": 1,
      "http_status": 200,
      "status": "generation_response_received"
+    },
+    {
+     "requested_secret_slot": "IMAGE_API_KEY",
+     "attempt": 1,
+     "route": "configured_image_connection",
+     "timeout_seconds": 600,
+     "http_status": 503,
+     "status": "provider_error",
+     "retry_delay_seconds": 30
+    },
+    {
+     "requested_secret_slot": "AGNES_API_KEY6",
+     "attempt": 2,
+     "route": "audited_image_pool",
+     "timeout_seconds": 600,
+     "http_status": 200,
+     "status": "generation_response_received"
+    },
+    {
+     "requested_secret_slot": "IMAGE_API_KEY",
+     "attempt": 1,
+     "route": "configured_image_connection",
+     "timeout_seconds": 600,
+     "http_status": 503,
+     "status": "provider_error",
+     "retry_delay_seconds": 30
+    },
+    {
+     "requested_secret_slot": "AGNES_API_KEY6",
+     "attempt": 2,
+     "route": "audited_image_pool",
+     "timeout_seconds": 600,
+     "http_status": 503,
+     "status": "provider_error",
+     "retry_delay_seconds": 60
+    },
+    {
+     "requested_secret_slot": "AGNES_API_KEY7",
+     "attempt": 3,
+     "route": "audited_image_pool",
+     "timeout_seconds": 600,
+     "http_status": 200,
+     "status": "generation_response_received"
     }
    ],
-   "image_url": "https://raw.githubusercontent.com/getsalet/nono/49f81890ae629a41480509ce2a6707e5633ab241/assets/blog-generated/blogfa/7ca5018f9b3c2564e770bd8d7ee59fee.webp",
+   "image_url": "https://raw.githubusercontent.com/getsalet/nono/29fc0a8441222c6bbf8d6c5d123c14f5101b23f2/assets/blog-generated/blogfa/be96ee933f54a181930495713e850d0e.webp",
    "image_width": 1200,
-   "image_height": 675,
+   "image_height": 900,
    "image_review": {
-    "policy": "blog-product-family-reference-vision-v3-full-frame-and-product-detail",
-    "sha256": "d3ec32cd950892c418972246dbaea1de855fa93fd18fd21cc4e95cb2a1e91efa",
+    "policy": "blog-product-family-reference-vision-v7-reference-parity",
+    "sha256": "fe9acaa3f9440780c51742054fb35f6f1ff38822f305d581c5407b784f1b7c2b",
     "family": "tape20",
     "width": 1200,
-    "height": 675,
-    "source_url": "https://raw.githubusercontent.com/getsalet/nono/49f81890ae629a41480509ce2a6707e5633ab241/assets/blog-generated/blogfa/7ca5018f9b3c2564e770bd8d7ee59fee.webp",
+    "height": 900,
+    "source_url": "https://raw.githubusercontent.com/getsalet/nono/29fc0a8441222c6bbf8d6c5d123c14f5101b23f2/assets/blog-generated/blogfa/be96ee933f54a181930495713e850d0e.webp",
     "verdict": {
      "pass": true,
-     "score": 95,
+     "score": 85,
      "observed_family": "tape20",
      "expected_product_visible": true,
      "wrong_product_present": false,
      "fake_text_or_logo": false,
      "implausible_geometry": false,
      "people_present": false,
-     "reasons": [
-      "The candidate displays the correct product family: a white and blue cylindrical carton roll labeled 'AFP Drip Irrigation Tape', matching the tape20 reference. The image is a valid editorial two-panel layout with field context on the left and the product on the right. No wrong products, people, or fake text are present."
-     ]
-    }
+     "topic_match": true,
+     "product_integrated": true,
+     "product_fully_in_frame": true,
+     "product_count_match": true,
+     "technical_evidence_match": true,
+     "observed_product_count": 1,
+     "collage_or_split_layout": false,
+     "crop_contradiction": false,
+     "reasons": []
+    },
+    "watermark": "AFP | 09134922013",
+    "topic_sha256": "1ece41eaa56e74ad81a37426c122a07434ab7b0752a253ce06b686c7b7dc3d74"
    },
-   "image_selection": "afp-one-generated-blog-image-v5-product-dominant-panels",
+   "image_selection": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
    "image_generation": {
-    "policy": "afp-one-generated-blog-image-v5-product-dominant-panels",
+    "policy": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
     "blog": "blogfa",
-    "asset_id": "7ca5018f9b3c2564e770bd8d7ee59fee",
-    "url": "https://raw.githubusercontent.com/getsalet/nono/49f81890ae629a41480509ce2a6707e5633ab241/assets/blog-generated/blogfa/7ca5018f9b3c2564e770bd8d7ee59fee.webp",
-    "kind": "editorial-generated-field-and-authentic-product-photo-panels",
+    "asset_id": "be96ee933f54a181930495713e850d0e",
+    "url": "https://raw.githubusercontent.com/getsalet/nono/29fc0a8441222c6bbf8d6c5d123c14f5101b23f2/assets/blog-generated/blogfa/be96ee933f54a181930495713e850d0e.webp",
+    "kind": "reference-conditioned-single-pass-topic-scene",
+    "topic_sha256": "1ece41eaa56e74ad81a37426c122a07434ab7b0752a253ce06b686c7b7dc3d74",
+    "reference_sources": [
+     "https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py",
+     "https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py",
+     "https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml"
+    ],
+    "rendering": {
+     "connection": {
+      "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+      "model": "agnes-image-2.5-flash",
+      "size": "1024x768",
+      "timeout_seconds": 600
+     },
+     "requested_size": "1024x768",
+     "provider_size": [
+      1152,
+      864
+     ],
+     "output_size": [
+      1200,
+      900
+     ],
+     "cropped": false
+    },
+    "watermark": "AFP | 09134922013",
+    "watermark_policy": "afp-contact-bottom-right-v1",
     "product_photos": [
      {
       "asset": "afp-tape.webp.b64",
@@ -1441,13 +1518,44 @@
      }
     ]
    },
-   "image_alt": "نوار تیپ چابهار - تصویر آموزشی ترکیبی با عکس واقعی محصول",
+   "image_alt": "نوار تیپ چابهار - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP",
    "matrix_title": "نوار تیپ سویا در چابهار؛ پیگیری عملکرد مسیر",
-   "attempts": 2,
-   "generated_at": "2026-10-15T22:18:53Z",
-   "last_error": "generation/source/validation failed: RuntimeError [stage=recovery]; RuntimeError",
-   "next_retry_at": "2026-10-16T00:18:53.141500Z",
-   "failure_stage": "recovery"
+   "attempts": 3,
+   "generated_at": "2026-10-16T16:47:59Z",
+   "last_error": "invalid slug; Exactly two distinct approved contextual destinations, each once; Assigned meaningful anchor required: city; Assigned meaningful anchor required: home",
+   "next_retry_at": "2026-10-16T20:47:59.689052Z",
+   "failure_stage": "recovery",
+   "_image_article_context": {
+    "title": "نوار تیپ سویا در چابهار؛ پیگیری عملکرد مسیر",
+    "meta_description": "راهنمای انتخاب و نصب نوار تیپ برای کشت ردیفی سویا در چابهار؛ بررسی فشار، فاصله روزنه و نکات عیب‌یابی عملیاتی مسیر آبیاری.",
+    "summary": "مقدمه‌ای بر چالش‌های آبیاری ردیفی در مسیر کشت ردیفی سویا یکی از الگوهای رویشی است که توزیع یکنواخت رطوبت در امتداد خط بوته، نقش مستقیمی بر یکرنگی رشد و عملکرد نهایی دارد. نوار تیپ نوار تیپ AFP به‌عنوان راهکاری آبیاری قطره‌ای تحت فشار، امکان رهاسازی آهسته و مستمر آب در کنار ساقه را فراهم می‌کند؛ با این حال عملکرد واقعی مسیر تنها زمانی محقق می‌شود که فشار، فاصله روزنه و شرایط نصب هر سه در تعادل باشند. در ادامه به بررسی مرحله‌ای این عوامل پرداخته و خطاهای شایع را بدون حدس‌وگمان فنی تحلیل می‌کنیم. عیب‌یابی مرحله‌ای عملکرد مسیر نوار تیپ وقتی انتهای ردیف خشک می‌ماند یا توزیع آب در طول خط ناهمگون است، ابتدا باید فشار ورودی را با فشارسنج اندازه‌گیری کنید. فشار کمتر از ۰٫۵ بار معمولاً باعث کاهش دبی روزنه‌ها در انتهای خط می‌شود و فشار بیش از ۱٫۲ بار می‌تواند به درزهای لمینت نوار آسیب برساند. نوار تیپ معمولاٌ در محدوده فشار کاری ۰٫۵ تا ۱ بار طراحی و تولید می‌شود. اگر اختلاف ارتفاع در زمین وجود دارد، فشار پایین‌دست باید با شیر تنظیم کاهش یابد تا یکنواختی حفظ شود. گرفتگی روزنه‌ها مرحله بعدی است. ذرات معلق در آب و املاح محلول می‌توانند به‌مرور خروجی‌ها را مسدود کنند. استفاده از فیلتر مشی حداقل ۱۲۰ مش و شست‌وشوی دوره‌ای خطوط با آب تمیز، از تجمع رسوب جلوگیری می‌کند. همچنین نصب فیلتر دیسکی در نقاط "
+   },
+   "_image_render": {
+    "connection": {
+     "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+     "model": "agnes-image-2.5-flash",
+     "size": "1024x768",
+     "timeout_seconds": 600
+    },
+    "requested_size": "1024x768",
+    "provider_size": [
+     1152,
+     864
+    ],
+    "output_size": [
+     1200,
+     900
+    ],
+    "cropped": false
+   },
+   "_image_rejections": [
+    {
+     "sha256": "63c03d31f53254b46d5df3fbef16ceb15251b1fd8c6b39bea49795743afdfa12",
+     "reason": "Product image rejected: Visual approval required; Image score below 70; Vision flag not cleared: fake_text_or_logo; Integrated/topic visual condition not met: technical_evidence_match"
+    }
+   ],
+   "_image_qa_feedback": "Product image rejected: Visual approval required; Image score below 70; Vision flag not cleared: fake_text_or_logo; Integrated/topic visual condition not met: technical_evidence_match",
+   "_image_prepared_this_run": true
   },
   {
    "city_fa": "سراوان",
@@ -1610,7 +1718,7 @@
    "site_title": "خرید نوار تیپ کنارک | لیست قیمت امروز کارخانه AFP",
    "key": "city-4806d473572128d1",
    "kind": "city",
-   "status": "failed",
+   "status": "published",
    "source_key": "zahedan/%D9%86%D9%88%D8%A7%D8%B1-%D8%AA%DB%8C%D9%BE-%DA%A9%D9%86%D8%A7%D8%B1%DA%A9-%D8%AE%D8%B1%DB%8C%D8%AF-%D9%82%DB%8C%D9%85%D8%AA-buy",
    "reference_url": "https://navar-abyari.ir/zahedan/%D9%86%D9%88%D8%A7%D8%B1-%D8%AA%DB%8C%D9%BE-%DA%A9%D9%86%D8%A7%D8%B1%DA%A9-%D8%AE%D8%B1%DB%8C%D8%AF-%D9%82%DB%8C%D9%85%D8%AA-buy/",
    "topic": "خرید نوار تیپ کنارک | لیست قیمت امروز کارخانه AFP",
@@ -1620,14 +1728,139 @@
    "matrix_title": "نوار تیپ پیاز در کنارک؛ بازبینی پیش از توسعه",
    "_image_article_context": {
     "title": "نوار تیپ پیاز در کنارک؛ بازبینی پیش از توسعه",
-    "meta_description": "راهنمای انتخاب و خرید نوار تیپ پیاز در کنارک؛ بررسی ضخامت، فاصله روزنه‌ها، فشار کاری و نکات نصب برای مزارع پیاز با شرایط اقلیمی منطقه.",
-    "summary": "مقدمه کنارک در جنوب سیستان و بلوچستان با اقلیم گرم و خشک و خاک‌های سبک، یکی از مناطق مهم کشت پیاز در استان است. در این شرایط، خرید نوار تیپ کنارک می‌تواند نقش تعیین‌کننده‌ای در مدیریت مصرف آب و افزایش بهره‌وری مزارع پیاز داشته باشد. نوار تیپ به‌عنوان سیستم آبیاری تحت فشار با توزیع یکنواخت آب در بستر کشت، گزینه‌ای مناسب برای کشت ردیفی پیاز محسوب می‌شود. ویژگی‌های فنی نوار تیپ مناسب کشت پیاز انتخاب نوار تیپ برای پیاز نیازمند توجه به چند پارامتر کلیدی است که هر کدام تأثیر مستقیمی بر عملکرد سیستم و سلامت محصول دارد. ضخامت دیواره ضخامت نوار تیپ معمولاً بین ۸۰ تا ۲۰۰ میکرون متغیر است. برای کشت پیاز که دوره رشد نسبتاً طولانی دارد، ضخامت بالاتر دوام بیشتری را در شرایط عملیاتی مزرعه فراهم می‌کند. پیش از انتخاب، بررسی برگه فنی کارخانه تولیدکننده توصیه می‌شود. فاصله روزنه‌ها فاصله روزنه‌های خروجی آب بسته به نوع خاک و شرایط کشت متفاوت است. در خاک‌های سبک‌تر، فاصله نزدیک‌تر برای حفظ رطوبت پیوسته دور ریشه پیشنهاد می‌شود. عدد ثابتی برای فاصله بدون دسترسی به داده‌های طراحی محصول قابل ارائه نیست. فشار کاری فشار کاری استاندارد نوار تیپ معمولاً در محدوده ۱ تا ۲ اتمسفر است. فشار نامناسب می‌تواند باعث توزیع ناهمگن آب یا آسیب فیزیکی به نوار شود. استفاده از تجهیزات کنترل فشار در ورودی شبکه آبیاری توصیه م"
+    "meta_description": "راهنمای عیب‌یابی نوار تیپ برای کشت پیاز در کنارک؛ بررسی فشار، دبی، فاصله روزنه و نکات نصب بدون حدس‌زنی فنی.",
+    "summary": "کشت پیاز در کنارک به‌دلیل شرایط خاص اقلیمی و نوع خاک، نیازمند انتخاب دقیق سیستم آبیاری است. نوار تیپ به‌عنوان یکی از راهکارهای آبیاری قطره‌ای ردیفی شناخته می‌شود که در صورت نصب و نگهداری صحیح، می‌تواند یکنواختی آبرسانی را بهبود بخشد. این مقاله با رویکرد عیب‌یابی مرحله‌ای و بدون حدس‌زنی درباره مشخصات فنی، راهنمایی عملی برای کشاورزان ارائه می‌دهد. برای اطلاع از محصولات و امکان خرید نوار تیپ کنارک می‌توانید به فروشگاه مراجعه کنید. عیب‌یابی عملکرد نوار تیپ در مزرعه پیاز ۱. توزیع ناهمگن آب در امتداد نوار اگر انتهای نوار خشک‌تر از ابتدای آن است، افت فشار در طول خط یکی از محتمل‌ترین دلایل است. ابتدا طول هر خط نوار را بررسی کنید؛ خطوط بلندتر بدون تجهیزات جبران‌کننده فشار، ناهمگنی بیشتری ایجاد می‌کنند. سپس شیب زمین را کنترل نمایید: شیب صعودی باعث کاهش فشار در انتهای خط و شیب نزولی باعث افزایش فشار می‌شود. اگر نوار روی بستر ناهموار نصب شده باشد، اصلاح بستر خاک می‌تواند مشکل را برطرف کند. ۲. گرفتگی روزنه‌ها کاهش دبی خروجی از روزنه‌ها معمولاً ناشی از ذرات معلق در آب یا رسوبات شیمیایی است. فیلتر استفاده‌شده را بررسی کنید: فیلتر مش‌دار باید مطابق توصیه برگه فنی محصول انتخاب شود. در صورت عدم اطمینان از نوع فیلتر مناسب، حتماً برگه فنی نوار تیپ موردنظر را مطالعه نمایید. شست‌وشوی اولیه شبکه قبل از ن"
    },
-   "failure_stage": "image",
-   "attempts": 1,
-   "generated_at": "2026-10-15T22:19:41Z",
-   "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
-   "next_retry_at": "2026-10-15T23:19:41.529055Z"
+   "attempts": 2,
+   "generated_at": "2026-10-16T16:55:48Z",
+   "last_error": "",
+   "_generation_stage": "public_vision_qa",
+   "_image_generation_round": 0,
+   "_image_provider_attempts": [
+    {
+     "requested_secret_slot": "IMAGE_API_KEY",
+     "attempt": 1,
+     "route": "configured_image_connection",
+     "timeout_seconds": 600,
+     "http_status": 503,
+     "status": "provider_error",
+     "retry_delay_seconds": 30
+    },
+    {
+     "requested_secret_slot": "AGNES_API_KEY6",
+     "attempt": 2,
+     "route": "audited_image_pool",
+     "timeout_seconds": 600,
+     "http_status": 200,
+     "status": "generation_response_received"
+    }
+   ],
+   "_image_render": {
+    "connection": {
+     "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+     "model": "agnes-image-2.5-flash",
+     "size": "1024x768",
+     "timeout_seconds": 600
+    },
+    "requested_size": "1024x768",
+    "provider_size": [
+     1152,
+     864
+    ],
+    "output_size": [
+     1200,
+     900
+    ],
+    "cropped": false
+   },
+   "image_url": "https://raw.githubusercontent.com/getsalet/nono/b84964737cbf520cf6c23b36e17a3ebc97437e94/assets/blog-generated/blogfa/2a2213080b1cd087da8a78ad537c8eff.webp",
+   "image_width": 1200,
+   "image_height": 900,
+   "image_review": {
+    "policy": "blog-product-family-reference-vision-v7-reference-parity",
+    "sha256": "a087df4629a6319dfa7e9b0bd718c76271957c40f8979c4a8f7cc74b60eef4c8",
+    "family": "tape20",
+    "width": 1200,
+    "height": 900,
+    "source_url": "https://raw.githubusercontent.com/getsalet/nono/b84964737cbf520cf6c23b36e17a3ebc97437e94/assets/blog-generated/blogfa/2a2213080b1cd087da8a78ad537c8eff.webp",
+    "verdict": {
+     "pass": true,
+     "score": 85,
+     "observed_family": "tape20",
+     "expected_product_visible": true,
+     "wrong_product_present": false,
+     "fake_text_or_logo": false,
+     "implausible_geometry": false,
+     "people_present": false,
+     "topic_match": true,
+     "product_integrated": true,
+     "product_fully_in_frame": true,
+     "product_count_match": true,
+     "technical_evidence_match": true,
+     "observed_product_count": 1,
+     "collage_or_split_layout": false,
+     "crop_contradiction": false,
+     "reasons": [
+      "The candidate shows the correct white-and-blue cylindrical AFP drip-tape carton roll from the tape20 family",
+      "The crop matches the expected 'onion rows with upright tubular hollow blue-green leaves' botany",
+      "Technical evidence is present: continuous installed irrigation lines are visible in the soil, illustrating the drip-tape system in context",
+      "The required watermark 'AFP | 09134922013' is clearly displayed in the bottom right",
+      "Exactly one commercial product roll is present in the scene",
+      "The product is fully in the frame with visible ground margin; no crop cutting through the product edge",
+      "The scene is a single cohesive photograph without split panels, collages, or mismatched lighting"
+     ]
+    },
+    "watermark": "AFP | 09134922013",
+    "topic_sha256": "73559ab09df3749d08f016fd7371185cc7290d763816b085e1bb05ce6038966c"
+   },
+   "image_selection": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
+   "image_generation": {
+    "policy": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
+    "blog": "blogfa",
+    "asset_id": "2a2213080b1cd087da8a78ad537c8eff",
+    "url": "https://raw.githubusercontent.com/getsalet/nono/b84964737cbf520cf6c23b36e17a3ebc97437e94/assets/blog-generated/blogfa/2a2213080b1cd087da8a78ad537c8eff.webp",
+    "kind": "reference-conditioned-single-pass-topic-scene",
+    "topic_sha256": "73559ab09df3749d08f016fd7371185cc7290d763816b085e1bb05ce6038966c",
+    "reference_sources": [
+     "https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py",
+     "https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py",
+     "https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml"
+    ],
+    "rendering": {
+     "connection": {
+      "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+      "model": "agnes-image-2.5-flash",
+      "size": "1024x768",
+      "timeout_seconds": 600
+     },
+     "requested_size": "1024x768",
+     "provider_size": [
+      1152,
+      864
+     ],
+     "output_size": [
+      1200,
+      900
+     ],
+     "cropped": false
+    },
+    "watermark": "AFP | 09134922013",
+    "watermark_policy": "afp-contact-bottom-right-v1",
+    "product_photos": [
+     {
+      "asset": "afp-tape.webp.b64",
+      "sha256": "7abaafab90504ec98da023015e0b870dd4874ba7b987f03fb15be8458cd82aaa"
+     }
+    ]
+   },
+   "image_alt": "خرید نوار تیپ کنارک - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP",
+   "_image_prepared_this_run": true,
+   "title": "نوار تیپ پیاز در کنارک؛ بازبینی پیش از توسعه",
+   "slug": "nvar-tip-piaz-dar-konarak-bazbini-pish-az-tose-e",
+   "published": true,
+   "published_url": "https://afp-pipe.blogfa.com/post/51",
+   "published_at": "2026-10-16T17:08:06Z",
+   "pid": 51
   },
   {
    "city_fa": "نیکشهر",
@@ -1648,14 +1881,144 @@
    "matrix_title": "نوار تیپ گوجه‌فرنگی در نیکشهر؛ عیب‌یابی مرحله‌ای",
    "_image_article_context": {
     "title": "نوار تیپ گوجه‌فرنگی در نیکشهر؛ عیب‌یابی مرحله‌ای",
-    "meta_description": "عیب‌یابی مرحله‌ای نوار تیپ گوجه‌فرنگی در نیکشهر: از بررسی مسدود شدن روزنه‌ها تا تنظیم فشار و یکنواختی توزیع آب در مزرعه.",
-    "summary": "عیب‌یابی مرحله‌ای نوار تیپ گوجه‌فرنگی در نیکشهر کشت ردیفی گوجه‌فرنگی نیازمند آبیاری دقیق و یکنواخت است؛ هر گونه اختلال در عملکرد نوار تیپ مستقیماً بر کیفیت محصول تأثیر می‌گذارد. در این مقاله، رویکرد بازبینی تصمیمات فنی در مزرعه را دنبال می‌کنیم و مشکلات رایج نوار تیپ گوجه‌فرنگی در نیکشهر را مرحله‌به‌مرحله بررسی می‌کنیم. اولین و مهم‌ترین نشانه اختلال، مشاهده اختلاف دبی بین روزنه‌های ابتدایی و انتهایی نوار است. اگر گیاهان انتهای每条 نوار زردتر یا کوچک‌تر باشند، احتمال کاهش فشار در انتهای مسیر وجود دارد. در این حالت، فشار ورودی را با منومتر بررسی کنید و از تنظیم شیر کنترل اطمینان حاصل نمایید. راهنمای انتخاب مشخصات فنی متناسب با کشت گوجه‌فرنگی انتخاب ضخامت و فاصله روزنه نوار تیپ باید بر اساس شرایط خاک و الگوی کشت تعیین شود. برای بررسی عملکرد دقیق نوار تیپ نیکشهر و مقایسه گزینه‌های موجود، مراجعه به صفحه نوار تیپ نیکشهر می‌تواند کمک‌کننده باشد. در کشت گوجه‌فرنگی که به‌صورت ردیفی انجام می‌شود، فاصله روزنه‌ها معمولاً باید با فاصله بوته‌ها در ردیف همخوانی داشته باشد. ضخامت نوار نیز بسته به بافت خاک و احتمال سایش انتخاب می‌شود؛ پیش از خرید نهایی، توصیه می‌شود برگه فنی مدل مورد نظر را مطالعه کنید تا از تطابق مشخصات با شرایط مزرعه اطمینان حاصل گردد. برای آشنایی با طیف محصولات تولیدی نوار تیپ AFP"
+    "meta_description": "عیب‌یابی گام‌به‌گام نوار آبیاری در کشت ردیفی با تمرکز بر یکنواختی توزیع آب، فیلتراسیون و فشار؛ مثال‌ها با اعداد فنی تولید AFP.",
+    "summary": "چرا گوجه‌فرنگی؟ کشت ردیفی گوجه‌فرنگی با نوار تیپ نیازمند تصمیم‌های فنی دقیق است، به‌ویژه وقتی نوسان فشار یا رسوب آب، یکنواختی آبیاری را مختل می‌کند. در این مقاله به‌جای توصیف اقلیم یا خاک، خطاهای رایج و چگونگی شناسایی سریع آن‌ها را بررسی می‌کنیم؛ مثال‌ها مشروط هستند و هر کشاورز باید پیش از خرید، نوار تیپ نیکشهر را با توجه به برگه فنی مدل موردنظر انتخاب کند. شاخص‌های فنی پایه (بدون حدس‌زنی درباره محصول) مشخصات زیر مستقیماً از مرجع تولید AFP استخراج شده‌اند: طول واقعی هر رول: ۱۰۰۰ متر دبی تنظیم‌شده هر روزنه: ۲٫۸ تا ۳٫۲ لیتر بر ساعت فشار کاری استاندارد: محدوده‌ای که توزیع آب یکنواخت بماند (نصب منومتر الزامی است) این اعداد ثابت طراحی محصول هستند؛ فاصله روزنه و ضخامت پیشنهادی باید متناسب با فاصله ردیف و شرایط مزرعه تعیین شود، نه برعکس. عیب‌یابی مرحله‌ای سیستم نوار تیپ مرحله ۱: بررسی یکنواختی توزیع آب اگر انتهای شاخه نوار خشک است ولی نزدیک پمپ تر دیده می‌شود، احتمالاً فشار ورودی پایین است یا خط لوله مادر فشار زیادی را از دست داده است. اول منومتر را در ابتدای خط اصلی بخوانید؛ سپس طول شاخه و قطر لوله مادر را مرور کنید. مرحله ۲: مسدودی روزنه‌ها نشتی کم یا خشک‌شدن نقاطی از نوار معمولاً به فیلتر برمی‌گردد. ذرات معلق شن یا گل، روزنه‌های ریز را می‌بندند. فیلتر شنی یا صفحه‌ای باید هر دو هفته یکب"
    },
    "failure_stage": "image",
-   "attempts": 1,
-   "generated_at": "2026-10-15T22:50:45Z",
-   "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
-   "next_retry_at": "2026-10-15T23:50:45.920028Z"
+   "attempts": 2,
+   "generated_at": "2026-10-16T17:03:12Z",
+   "last_error": "unsupported claim اقلیم; unapproved Latin words",
+   "next_retry_at": "2026-10-16T19:03:12.510567Z",
+   "_generation_stage": "public_vision_qa",
+   "_image_generation_round": 0,
+   "_image_provider_attempts": [
+    {
+     "requested_secret_slot": "IMAGE_API_KEY",
+     "attempt": 1,
+     "route": "configured_image_connection",
+     "timeout_seconds": 600,
+     "http_status": 503,
+     "status": "provider_error",
+     "retry_delay_seconds": 30
+    },
+    {
+     "requested_secret_slot": "AGNES_API_KEY6",
+     "attempt": 2,
+     "route": "audited_image_pool",
+     "timeout_seconds": 600,
+     "http_status": 503,
+     "status": "provider_error",
+     "retry_delay_seconds": 60
+    },
+    {
+     "requested_secret_slot": "AGNES_API_KEY7",
+     "attempt": 3,
+     "route": "audited_image_pool",
+     "timeout_seconds": 600,
+     "http_status": 200,
+     "status": "generation_response_received"
+    }
+   ],
+   "_image_render": {
+    "connection": {
+     "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+     "model": "agnes-image-2.5-flash",
+     "size": "1024x768",
+     "timeout_seconds": 600
+    },
+    "requested_size": "1024x768",
+    "provider_size": [
+     1152,
+     864
+    ],
+    "output_size": [
+     1200,
+     900
+    ],
+    "cropped": false
+   },
+   "image_url": "https://raw.githubusercontent.com/getsalet/nono/a65fd4d3698ad77ce2a3494ede497c03e1add40e/assets/blog-generated/blogfa/470f6350fb2f610f3867672028937f4e.webp",
+   "image_width": 1200,
+   "image_height": 900,
+   "image_review": {
+    "policy": "blog-product-family-reference-vision-v7-reference-parity",
+    "sha256": "b017eac4d67849cda58be270a046f8a278c892f16cbce3894ec45723670cc190",
+    "family": "tape20",
+    "width": 1200,
+    "height": 900,
+    "source_url": "https://raw.githubusercontent.com/getsalet/nono/a65fd4d3698ad77ce2a3494ede497c03e1add40e/assets/blog-generated/blogfa/470f6350fb2f610f3867672028937f4e.webp",
+    "verdict": {
+     "pass": true,
+     "score": 100,
+     "observed_family": "tape20",
+     "expected_product_visible": true,
+     "wrong_product_present": false,
+     "fake_text_or_logo": false,
+     "implausible_geometry": false,
+     "people_present": false,
+     "topic_match": true,
+     "product_integrated": true,
+     "product_fully_in_frame": true,
+     "product_count_match": true,
+     "technical_evidence_match": true,
+     "observed_product_count": 1,
+     "collage_or_split_layout": false,
+     "crop_contradiction": false,
+     "reasons": [
+      "Product family matches expected tape20 reference",
+      "Single commercial product present and fully visible",
+      "Crop botany (tomato) matches article data",
+      "Technical evidence (installed drip lines and root-zone wetting) visible in scene",
+      "No people, impossible geometry, or unrelated products",
+      "Watermark 'AFP | 09134922013' present as required",
+      "Ground margin visible around the product, no frame-edge crop"
+     ]
+    },
+    "watermark": "AFP | 09134922013",
+    "topic_sha256": "051dbc415c00cfaf5f92038e9b89db79b83358dea4b6f0f2d3cecd3b2c82c76c"
+   },
+   "image_selection": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
+   "image_generation": {
+    "policy": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
+    "blog": "blogfa",
+    "asset_id": "470f6350fb2f610f3867672028937f4e",
+    "url": "https://raw.githubusercontent.com/getsalet/nono/a65fd4d3698ad77ce2a3494ede497c03e1add40e/assets/blog-generated/blogfa/470f6350fb2f610f3867672028937f4e.webp",
+    "kind": "reference-conditioned-single-pass-topic-scene",
+    "topic_sha256": "051dbc415c00cfaf5f92038e9b89db79b83358dea4b6f0f2d3cecd3b2c82c76c",
+    "reference_sources": [
+     "https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py",
+     "https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py",
+     "https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml"
+    ],
+    "rendering": {
+     "connection": {
+      "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+      "model": "agnes-image-2.5-flash",
+      "size": "1024x768",
+      "timeout_seconds": 600
+     },
+     "requested_size": "1024x768",
+     "provider_size": [
+      1152,
+      864
+     ],
+     "output_size": [
+      1200,
+      900
+     ],
+     "cropped": false
+    },
+    "watermark": "AFP | 09134922013",
+    "watermark_policy": "afp-contact-bottom-right-v1",
+    "product_photos": [
+     {
+      "asset": "afp-tape.webp.b64",
+      "sha256": "7abaafab90504ec98da023015e0b870dd4874ba7b987f03fb15be8458cd82aaa"
+     }
+    ]
+   },
+   "image_alt": "نوار تیپ نیکشهر - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP",
+   "_image_prepared_this_run": true
   },
   {
    "city_fa": "راسک",
@@ -19835,14 +20198,127 @@
    "matrix_title": "تفاوت نوار تیپ بغل دوخت و پلاکدار؛ راهنمای مستندسازی",
    "_image_article_context": {
     "title": "تفاوت نوار تیپ بغل دوخت و پلاکدار؛ راهنمای مستندسازی",
-    "meta_description": "بررسی تفاوت‌های ساختاری و عملکردی نوار تیپ بغل دوخت و پلاکدار؛ راهنمای انتخاب بر اساس بافت خاک، شیب زمین و نیاز آبی مزرعه",
-    "summary": "مقدمه‌ای بر انتخاب مسیر آب هنگام طراحی مسیر آب در سیستم آبیاری تحت فشار، انتخاب نوع نوار آبیاری یکی از تصمیمات کلیدی است که مستقیماً بر یکنواختی پخش و راندمان عملیاتی تأثیر می‌گذارد. نوار تیپ بغل دوخت و نوار تیپ پلاکدار دو راهکار پرکاربرد در این حوزه هستند که هر کدام با ساختاری متفاوت، پاسخگوی نیازهای خاص مزارع می‌باشند. در این مطلب به بررسی تفاوت‌های ساختاری و عملکردی این دو محصول پرداخته‌ایم. تفاوت‌های ساختاری و عملکردی نوار تیپ بغل دوخت با استفاده از درزهای زیگزاگ در حاشیه لوله تولید می‌شود و فاقد قطره‌چکان مجزا است. این ساختار ساده باعث می‌شود هزینه تولید پایین‌تری داشته باشد و برای مزارع وسیع که نیاز به پوشش گسترده با بودجه محدود دارند، گزینه مناسبی باشد. نوار تیپ پلاکدار در مقابل، دارای پلاک‌های یکنواخت با درزهای منظم در هر واحد است. این ویژگی به تنظیم دقیق‌تر فشار و دبی خروجی در طول مسیر کمک می‌کند. هر پلاک به‌صورت مستقل عمل کرده و تغییرات فشار در طول نوار تأثیر کمتری بر یکنواختی خروج آب دارد. ویژگی نوار تیپ بغل دوخت نوار تیپ پلاکدار طراحی ساختاری درزهای زیگزاگ بدون قطره‌چکان پلاک‌های یکنواخت با درز منظم یکنواختی خروج آب وابسته به درزهای زیگزاگ بالا از طریق پلاک‌های یکنواخت تنظیم فشار توسط درزهای زیگزاگ و بغل دوخت توسط پلاک‌های مختلف تغییر فشار در طول مسیر محدود تقریباً براب"
+    "meta_description": "ارزیابی سازگاری اجزای مسیر آب در انتخاب بین نوار تیپ بغل دوخت و پلاکدار؛ راهنمای مستند با جدول مقایسه و چک‌لیست فنی.",
+    "summary": "مقدمه: ارزیابی سازگاری در مسیر آب در طراحی سیستم آبیاری تحت فشار، هر قطعه باید با اجزای مجاور خود در مسیر آب سازگار باشد. نوار آبیاری به عنوان آخرین عضو این مسیر، نقش تعیین‌کننده‌ای در عملکرد کل سیستم دارد. نوار تیپ به‌طور کلی در دو نوع اصلی بغل دوخت و پلاکدار تولید می‌شود که هر کدام رفتار هیدرولیکی متفاوتی از خود نشان می‌دهند. درک تفاوت‌های ساختاری این دو نوع، به مهندس طراح کمک می‌کند تا انتخابی متناسب با شرایط هیدرولیکی شبکه آبیاری خود داشته باشد. سازگاری اجزای مسیر آب صرفاً به معنای اتصال فیزیکی لوله‌ها نیست، بلکه شامل هماهنگی فشار، توزیع دبی و یکنواختی خروجی در سراسر طول نوار است. نوار بغل دوخت با درزهای زیگزاگ خود عمل تنظیم فشار داخلی را انجام می‌دهد، در حالی که نوار پلاکدار از قطره‌چکان‌های مجزا با ساختار یکنواخت استفاده می‌کند. این تفاوت بنیادین در نحوه مدیریت جریان آب، بر انتخاب طول رشته نوار، فاصله نصب و حتی نوع پمپاژ تأثیر می‌گذارد. مقایسه فنی ساختار و عملکرد برای درک بهتر تفاوت‌ها، می‌توان پارامترهای کلیدی هر دو نوع نوار را در جدول زیر بررسی کرد: ویژگی‌ها نوار تیپ بغل دوخت نوار تیپ پلاکدار طراحی ساختاری بدون قطره چکان و دارای درزهای زیگزاگ قطره چکان با درزهای یکنواخت در پلاک‌ها یکنواختی خروج آب با استفاده از درزهای زیگزاگ یکنواختی بالا از پلاک‌های یکنواخت برای تنظیم دقیق"
    },
    "failure_stage": "image",
-   "attempts": 1,
-   "generated_at": "2026-10-15T22:18:53Z",
-   "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
-   "next_retry_at": "2026-10-15T23:18:53.119604Z"
+   "attempts": 2,
+   "generated_at": "2026-10-16T16:52:57Z",
+   "last_error": "Exactly two distinct approved contextual destinations, each once; Assigned meaningful anchor required: article; Assigned meaningful anchor required: home",
+   "next_retry_at": "2026-10-16T18:52:57.752483Z",
+   "_generation_stage": "public_vision_qa",
+   "_image_generation_round": 0,
+   "_image_provider_attempts": [
+    {
+     "requested_secret_slot": "IMAGE_API_KEY",
+     "attempt": 1,
+     "route": "configured_image_connection",
+     "timeout_seconds": 600,
+     "http_status": 200,
+     "status": "generation_response_received"
+    }
+   ],
+   "_image_render": {
+    "connection": {
+     "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+     "model": "agnes-image-2.5-flash",
+     "size": "1024x768",
+     "timeout_seconds": 600
+    },
+    "requested_size": "1024x768",
+    "provider_size": [
+     1152,
+     864
+    ],
+    "output_size": [
+     1200,
+     900
+    ],
+    "cropped": false
+   },
+   "image_url": "https://raw.githubusercontent.com/getsalet/nono/099e31c33212d194ef32c48223ebaf195c146efd/assets/blog-generated/blogfa/e6b4e31c7ed8d08c9c21a74162eb1c9e.webp",
+   "image_width": 1200,
+   "image_height": 900,
+   "image_review": {
+    "policy": "blog-product-family-reference-vision-v7-reference-parity",
+    "sha256": "eeb1827196d8a32f3228fe721cf4a9b85ccec682323282c4735e6ef0d9165e75",
+    "family": "tape20",
+    "width": 1200,
+    "height": 900,
+    "source_url": "https://raw.githubusercontent.com/getsalet/nono/099e31c33212d194ef32c48223ebaf195c146efd/assets/blog-generated/blogfa/e6b4e31c7ed8d08c9c21a74162eb1c9e.webp",
+    "verdict": {
+     "pass": true,
+     "score": 94,
+     "observed_family": "tape20",
+     "expected_product_visible": true,
+     "wrong_product_present": false,
+     "fake_text_or_logo": false,
+     "implausible_geometry": false,
+     "people_present": false,
+     "topic_match": true,
+     "product_integrated": true,
+     "product_fully_in_frame": true,
+     "product_count_match": true,
+     "technical_evidence_match": true,
+     "observed_product_count": 1,
+     "collage_or_split_layout": false,
+     "crop_contradiction": false,
+     "reasons": [
+      "Product matches approved reference: White-and-blue low wide cylindrical carton roll of AFP drip tape.",
+      "Exactly one commercial product object is present in the frame.",
+      "The white-and-blue roll is fully inside the frame with visible ground margin; no cropping.",
+      "The deterministic phone watermark 'AFP | 09134922013' is present and correct.",
+      "Scene contains irrigation infrastructure (installed drip tape lines) which is not considered an unrelated product.",
+      "Visual evidence is present showing installed continuous irrigation lines and localized soil contact/wetting.",
+      "Crop visible in the field is consistent with the botany required for technical illustration; no contradictory named crop present.",
+      "Single, unified photographic frame with no split panels, collages, or pasted pixels."
+     ]
+    },
+    "watermark": "AFP | 09134922013",
+    "topic_sha256": "638ac227c225cd9a9bbe3a5fa625b47f4135bfd71a592537330b1f613de07dde"
+   },
+   "image_selection": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
+   "image_generation": {
+    "policy": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
+    "blog": "blogfa",
+    "asset_id": "e6b4e31c7ed8d08c9c21a74162eb1c9e",
+    "url": "https://raw.githubusercontent.com/getsalet/nono/099e31c33212d194ef32c48223ebaf195c146efd/assets/blog-generated/blogfa/e6b4e31c7ed8d08c9c21a74162eb1c9e.webp",
+    "kind": "reference-conditioned-single-pass-topic-scene",
+    "topic_sha256": "638ac227c225cd9a9bbe3a5fa625b47f4135bfd71a592537330b1f613de07dde",
+    "reference_sources": [
+     "https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py",
+     "https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py",
+     "https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml"
+    ],
+    "rendering": {
+     "connection": {
+      "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+      "model": "agnes-image-2.5-flash",
+      "size": "1024x768",
+      "timeout_seconds": 600
+     },
+     "requested_size": "1024x768",
+     "provider_size": [
+      1152,
+      864
+     ],
+     "output_size": [
+      1200,
+      900
+     ],
+     "cropped": false
+    },
+    "watermark": "AFP | 09134922013",
+    "watermark_policy": "afp-contact-bottom-right-v1",
+    "product_photos": [
+     {
+      "asset": "afp-tape.webp.b64",
+      "sha256": "7abaafab90504ec98da023015e0b870dd4874ba7b987f03fb15be8458cd82aaa"
+     }
+    ]
+   },
+   "image_alt": "تفاوت نوار تیپ بغل دوخت و پلاکدار - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP",
+   "_image_prepared_this_run": true
   },
   {
    "family": "tape20",
@@ -19862,14 +20338,125 @@
    "matrix_title": "اتصالات نوار تیپ کشاورزی؛ ثبت نکات فنی",
    "_image_article_context": {
     "title": "اتصالات نوار تیپ کشاورزی؛ ثبت نکات فنی",
-    "meta_description": "راهنمای انتخاب اتصالات نوار تیپ کشاورزی؛ بررسی انواع، مراحل نصب صحیح و نکات عیب‌یابی بدون حدس‌وگمان درباره عملکرد سیستم آبیاری.",
-    "summary": "اتصالات نوار تیپ کشاورزی؛ پایه‌ی یک سیستم پایدار نوار نوار آبیاری تیپ یکی از پرکاربردترین روش‌های آبیاری موضعی در کشت‌های ردیفی است و عملکرد آن تا حد زیادی به کیفیت و نوع اتصالات بستگی دارد. بسیاری از مشکلاتی که پس از راه‌اندازی سیستم ظاهر می‌شوند، ریشه در انتخاب اشتباه اتصال یا نصب نادرست آن دارند؛ بنابراین پیش از هر اقدامی باید مشخصات فنی برگه‌ی محصول همان مدل را بررسی کنید و از حدس‌وگمان درباره عملکرد پرهیز نمایید. انواع اتصالات نوار تیپ کشاورزی اتصال تیپ به لی فلت این اتصال برای وصل کردن نوار تیپ به لبه‌ی لوله‌ی فلت طراحی شده است. نحوه‌ی کار آن ساده است: لبه‌ی نوار تیپ وارد کانال اتصال شده و با فشار دست قفل می‌شود. مزیت اصلی آن عدم نیاز به چسب، واشر یا ابزار خاص است و به همین دلیل نصب سریع و عیب‌یابی آن آسان‌تر انجام می‌شود. اتصال تیپ به تیپ وقتی دو قطعه نوار تیپ باید به هم متصل شوند، از این نوع استفاده می‌شود. مکانیزم اتصال به‌گونه‌ای است که جریان آب بدون افت ناگهانی یا نشتی از سرِ اتصال عبور می‌کند. این اتصال معمولاً بدون نیاز به مواد شیمیایی انجام می‌شود. اتصال دریپر این اتصال مخصوص نصب دریپر روی نوار تیپ است. انتخاب دریپر مناسب و نحوه‌ی قرارگیری آن بر توزیع یکنواخت جریان در طول نوار تأثیر مستقیم دارد. از آنجا که فاصله و دبی دریپر به طرح آبیاری و شرایط مزرعه وابسته است، هر ع"
+    "meta_description": "راهنمای انتخاب و نصب اتصالات نوار تیپ کشاورزی؛ بررسی انواع اتصال تیپ به لوله فلت، تیپ به تیپ، دریپر و زاویه‌ای با نکات فنی.",
+    "summary": "مقدمه‌ای بر اتصالات نوار تیپ انتخاب و نصب صحیح راهنمای اتصالات نوار تیپ کشاورزی نقش مستقیمی در عملکرد و عمر سیستم آبیاری دارد. نوار تیپ به‌دلیل استفاده بدون واشر یا مواد شیمیایی، نصب سریع و یکنواختی توزیع آب را فراهم می‌کند. شناخت انواع اتصال و رعایت نکات فنی، از نشت و کاهش فشار در طول خط جلوگیری می‌کند. انواع رایج اتصالات نوار تیپ اتصال تیپ به لوله فلت این اتصال برای پیوند نوار تیپ به لوله‌های فلت طراحی شده و به‌راحتی روی لبه لوله فلت قرار می‌گیرد. مزیت اصلی آن ایجاد اتصال محکم و بدون نشت است. این نوع اتصال معمولاً برای پخش آب از لوله اصلی به نوار تیپ کاربرد دارد و نیاز به ابزار یا مواد افزودنی ندارد. اتصال تیپ به تیپ وقتی دو قطعه نوار تیپ باید به هم متصل شوند، از اتصال مستقیم تیپ به تیپ استفاده می‌شود. این اتصال بدون چسب یا واشر، دو لوله نازک را به یکدیگر پیوند داده و جریان آب را به صورت یکنواخت بین دو بخش تقسیم می‌کند. اتصال دریپر اتصالات مخصوص دریپر برای اتصال نوار تیپ به دریپرها به کار می‌روند. این قطعات به حفظ فواصل و تنظیم دقیق دبی آب در نقاط هدف کمک می‌کنند و معمولاً در کنار دریپرهای تعبیه‌شده در نوار استفاده می‌شوند. اتصالات زاویه‌ای (U و Z) در مسیرهایی که نیاز به تغییر جهت وجود دارد، از اتصالات زاویه‌ای استفاده می‌شود. این قطعات انعطاف‌پذیری چین‌خوردگی یا تغییر مسیر خطوط "
    },
    "failure_stage": "image",
-   "attempts": 1,
-   "generated_at": "2026-10-15T22:19:16Z",
-   "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
-   "next_retry_at": "2026-10-15T23:19:16.069247Z"
+   "attempts": 2,
+   "generated_at": "2026-10-16T16:58:14Z",
+   "last_error": "unapproved Latin words",
+   "next_retry_at": "2026-10-16T18:58:14.811778Z",
+   "_generation_stage": "public_vision_qa",
+   "_image_generation_round": 0,
+   "_image_provider_attempts": [
+    {
+     "requested_secret_slot": "IMAGE_API_KEY",
+     "attempt": 1,
+     "route": "configured_image_connection",
+     "timeout_seconds": 600,
+     "http_status": 200,
+     "status": "generation_response_received"
+    }
+   ],
+   "_image_render": {
+    "connection": {
+     "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+     "model": "agnes-image-2.5-flash",
+     "size": "1024x768",
+     "timeout_seconds": 600
+    },
+    "requested_size": "1024x768",
+    "provider_size": [
+     1152,
+     864
+    ],
+    "output_size": [
+     1200,
+     900
+    ],
+    "cropped": false
+   },
+   "image_url": "https://raw.githubusercontent.com/getsalet/nono/c8e271139373d8717dfd7f1eb2f5312afd37f3fa/assets/blog-generated/blogfa/906f6e1e385869266df51c10e41dd897.webp",
+   "image_width": 1200,
+   "image_height": 900,
+   "image_review": {
+    "policy": "blog-product-family-reference-vision-v7-reference-parity",
+    "sha256": "aa4939def5c878f31a4eb1cf48e01e8b26e0e8edb1a3e5f1d643f44becb75918",
+    "family": "tape20",
+    "width": 1200,
+    "height": 900,
+    "source_url": "https://raw.githubusercontent.com/getsalet/nono/c8e271139373d8717dfd7f1eb2f5312afd37f3fa/assets/blog-generated/blogfa/906f6e1e385869266df51c10e41dd897.webp",
+    "verdict": {
+     "pass": true,
+     "score": 95,
+     "observed_family": "tape20",
+     "expected_product_visible": true,
+     "wrong_product_present": false,
+     "fake_text_or_logo": false,
+     "implausible_geometry": false,
+     "people_present": false,
+     "topic_match": true,
+     "product_integrated": true,
+     "product_fully_in_frame": true,
+     "product_count_match": true,
+     "technical_evidence_match": true,
+     "observed_product_count": 1,
+     "collage_or_split_layout": false,
+     "crop_contradiction": false,
+     "reasons": [
+      "The candidate correctly displays the AFP drip-tape carton roll (tape20 family) with the required phone watermark.",
+      "The commercial product is fully visible within the frame with appropriate ground margin.",
+      "The technical evidence (a closed ribbed compression union installed inline between two continuous black irrigation pipes) is clearly present.",
+      "The scene is a single, consistent photograph without split panels, collages, or pasted elements.",
+      "Crops are represented as neutral seedlings, consistent with the article's focus on installation technique rather than a specific named crop.",
+      "No people, body parts, or unrelated commercial products are present."
+     ]
+    },
+    "watermark": "AFP | 09134922013",
+    "topic_sha256": "2a47bcfe71f2d0fae98b1dbb366811fc82aca6613911a36406d207a250b8aea7"
+   },
+   "image_selection": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
+   "image_generation": {
+    "policy": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
+    "blog": "blogfa",
+    "asset_id": "906f6e1e385869266df51c10e41dd897",
+    "url": "https://raw.githubusercontent.com/getsalet/nono/c8e271139373d8717dfd7f1eb2f5312afd37f3fa/assets/blog-generated/blogfa/906f6e1e385869266df51c10e41dd897.webp",
+    "kind": "reference-conditioned-single-pass-topic-scene",
+    "topic_sha256": "2a47bcfe71f2d0fae98b1dbb366811fc82aca6613911a36406d207a250b8aea7",
+    "reference_sources": [
+     "https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py",
+     "https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py",
+     "https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml"
+    ],
+    "rendering": {
+     "connection": {
+      "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+      "model": "agnes-image-2.5-flash",
+      "size": "1024x768",
+      "timeout_seconds": 600
+     },
+     "requested_size": "1024x768",
+     "provider_size": [
+      1152,
+      864
+     ],
+     "output_size": [
+      1200,
+      900
+     ],
+     "cropped": false
+    },
+    "watermark": "AFP | 09134922013",
+    "watermark_policy": "afp-contact-bottom-right-v1",
+    "product_photos": [
+     {
+      "asset": "afp-tape.webp.b64",
+      "sha256": "7abaafab90504ec98da023015e0b870dd4874ba7b987f03fb15be8458cd82aaa"
+     }
+    ]
+   },
+   "image_alt": "اتصالات نوار تیپ کشاورزی - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP",
+   "_image_prepared_this_run": true
   },
   {
    "family": "tape20",
@@ -19889,14 +20476,124 @@
    "matrix_title": "انتخاب نوار تیپ کشاورزی؛ بررسی پیش از توسعه",
    "_image_article_context": {
     "title": "انتخاب نوار تیپ کشاورزی؛ بررسی پیش از توسعه",
-    "meta_description": "راهنمای انتخاب نوار تیپ آبیاری بر پایه مشخصات فنی و عیب‌یابی مرحله‌ای، بدون حدس‌زنی درباره اقلیم یا ویژگی‌های خاک.",
-    "summary": "مقدمه انتخاب نوار تیپ آبیاری یکی از تصمیم‌های بنیادین در طراحی سیستم آبیاری تحت فشار است. پیش از هر خرید، نیاز است معیارهای فنی مستند بررسی شوند تا اشتباهات پرهزینه در مرحله نصب و بهره‌برداری رخ ندهد. در این مقاله، انتخاب نوار تیپ کشاورزی را گام‌به‌گام و با زاویه عیب‌یابی پیش از توسعه مورد بررسی قرار می‌دهیم. طول نوار و فاصله دریپرها طول نوار باید با متراژ ردیف‌های کشت هماهنگ باشد؛ نوار کوتاه‌تر از نیاز، تلفات آب در محل اتصالات ایجاد می‌کند و نوار بلندتر از اندازه، هزینه خرید و نصب را بدون بهره‌مندی بالا می‌برد. فاصله سوراخ‌ها یا دریپرها نیز بسته به نوع محصول تعیین می‌شود: محصولات با نیاز آبی بالاتر معمولاً فاصله کمتر (حدود ۳۰ سانتی‌متر) و محصولات مقاوم‌تر به خشکی فاصله بیشتر (حدود ۲۰ سانتی‌متر) را می‌طلبند. این مقادیر باید پیش از سفارش، بر اساس طراحی آبیاری تأیید شوند. تحمل فشار و ضخامت جداره هر نوار تیپ محدوده فشار کاری مشخصی دارد. فشار بیش از حد مجاز باعث برآمدگی جداره، کشش مواد پلی‌اتیلن و در نهایت پاره‌شدگی در محل دریپرها می‌شود. فشار کمتر از حد نیز توزیع یکنواخت آب را مختل می‌کند. قبل از خرید، فشار سیستم خود را اندازه‌گیری کنید و با مشخصات فنی برگه داده‌های نوار تیپ مطابقت دهید. ضخامت جداره نیز مستقیماً با عمر مفید رابطه دارد؛ در شرایطی که احتمال آسیب مکانیکی بیشتر است، ضخامت"
+    "meta_description": "راهنمای گام‌به‌گام انتخاب نوار تیپ کشاورزی با تمرکز بر طول، فشار، ضخامت، قطر داخلی و فاصله دریپرها؛ همراه چک‌لیست و عیب‌یابی عملی.",
+    "summary": "چرا انتخاب نوار تیپ یک فرآیند مهندسی است؟ در بسیاری از مزارع، مشکل آبیاری از ابتدا نهفته است؛ وقتی نوار تیپ بدون بررسی فشار، شیب و متراژ زمین خریداری می‌شود. نتیجه معمولاً خشکی انتهای خط یا فشار بیش‌ازحد در ابتدای آن است. این مقاله به‌جای حدس زدن، مسیر انتخاب را بر اساس پارامترهای قابل اندازه‌گیری می‌سازد. برای اطلاعات بیشتر می‌توانید راهنمای انتخاب نوار تیپ کشاورزی را مطالعه کنید. قبل از هر خرید، باید بدانید آب از چه منبعی وارد سیستم می‌شود، شیب زمین چگونه است و متراژ هر خط چقدر خواهد بود. این سه عامل تمام تصمیمات بعدی را شکل می‌دهند. طول نوار و طول رول؛ دو معیار متفاوت طول نوار به معنای فاصله‌ای است که یک خط آبیاری را پوشش می‌دهد؛ این مقدار مستقیماً با طول ردیف کشت و فاصله بین منابع آبی تعیین می‌شود. طول رول اما بسته به تولیدکننده متفاوت است و معمولاً رول‌های ۱۰۰۰، ۱۵۰۰ و ۳۰۰۰ متری در بازار عرضه می‌شوند. برای زمین‌های وسیع، رول‌های بلندتر هزینه اتصالات و زمان نصب را کاهش می‌دهند، اما باید مطمئن شوید سیستم لوله‌کشی اصلی توان توزیع آب تا انتهای آن رول را دارد. فشار کاری، ضخامت و قطر داخلی؛ مثلث فنی انتخاب هر سه عامل با هم تعامل دارند. فشار سیستم آبیاری باید با محدوده تحمل فشار نوار تیپ انتخابی همخوانی داشته باشد؛ فشار کم یکنواختی ایجاد می‌کند و فشار زیاد خطر پاره‌شدن نوار یا بیرون‌"
    },
    "failure_stage": "image",
-   "attempts": 1,
-   "generated_at": "2026-10-15T22:20:04Z",
-   "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
-   "next_retry_at": "2026-10-15T23:20:04.610889Z"
+   "attempts": 2,
+   "generated_at": "2026-10-16T17:07:07Z",
+   "last_error": "invalid slug",
+   "next_retry_at": "2026-10-16T19:07:07.782766Z",
+   "_generation_stage": "public_vision_qa",
+   "_image_generation_round": 0,
+   "_image_provider_attempts": [
+    {
+     "requested_secret_slot": "IMAGE_API_KEY",
+     "attempt": 1,
+     "route": "configured_image_connection",
+     "timeout_seconds": 600,
+     "http_status": 200,
+     "status": "generation_response_received"
+    }
+   ],
+   "_image_render": {
+    "connection": {
+     "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+     "model": "agnes-image-2.5-flash",
+     "size": "1024x768",
+     "timeout_seconds": 600
+    },
+    "requested_size": "1024x768",
+    "provider_size": [
+     1152,
+     864
+    ],
+    "output_size": [
+     1200,
+     900
+    ],
+    "cropped": false
+   },
+   "image_url": "https://raw.githubusercontent.com/getsalet/nono/c44546f533a326614c0baea4b146dc2e5eb1bd1a/assets/blog-generated/blogfa/f0a6fedeb716f749f05758b659137775.webp",
+   "image_width": 1200,
+   "image_height": 900,
+   "image_review": {
+    "policy": "blog-product-family-reference-vision-v7-reference-parity",
+    "sha256": "c599e6231f02260c65cbbc1981b3dec47d3222e54e3b648a115f5c243e74ccd8",
+    "family": "tape20",
+    "width": 1200,
+    "height": 900,
+    "source_url": "https://raw.githubusercontent.com/getsalet/nono/c44546f533a326614c0baea4b146dc2e5eb1bd1a/assets/blog-generated/blogfa/f0a6fedeb716f749f05758b659137775.webp",
+    "verdict": {
+     "pass": true,
+     "score": 88,
+     "observed_family": "tape20",
+     "expected_product_visible": true,
+     "wrong_product_present": false,
+     "fake_text_or_logo": false,
+     "implausible_geometry": false,
+     "people_present": false,
+     "topic_match": true,
+     "product_integrated": true,
+     "product_fully_in_frame": true,
+     "product_count_match": true,
+     "technical_evidence_match": true,
+     "observed_product_count": 1,
+     "collage_or_split_layout": false,
+     "crop_contradiction": false,
+     "reasons": [
+      "Expected 'tape20' drip tape product is present and clearly integrated into the field scene.",
+      "One commercial product object is visible (a packaged carton roll) with clear ground margin, matching the strict single-item requirement.",
+      "The exact deterministic 'AFP | 09134922013' phone watermark is correctly present on the candidate image.",
+      "Technical evidence shows continuous installed irrigation lines and the article subject (drip tape) is visibly represented.",
+      "The visual composition is a single complete photograph without split panels, collages, or mismatched lighting, maintaining a coherent perspective."
+     ]
+    },
+    "watermark": "AFP | 09134922013",
+    "topic_sha256": "128b2390b5462d04a414e379171ac8130af0bb514c4086c62c885b93a5720631"
+   },
+   "image_selection": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
+   "image_generation": {
+    "policy": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
+    "blog": "blogfa",
+    "asset_id": "f0a6fedeb716f749f05758b659137775",
+    "url": "https://raw.githubusercontent.com/getsalet/nono/c44546f533a326614c0baea4b146dc2e5eb1bd1a/assets/blog-generated/blogfa/f0a6fedeb716f749f05758b659137775.webp",
+    "kind": "reference-conditioned-single-pass-topic-scene",
+    "topic_sha256": "128b2390b5462d04a414e379171ac8130af0bb514c4086c62c885b93a5720631",
+    "reference_sources": [
+     "https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py",
+     "https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py",
+     "https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml"
+    ],
+    "rendering": {
+     "connection": {
+      "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+      "model": "agnes-image-2.5-flash",
+      "size": "1024x768",
+      "timeout_seconds": 600
+     },
+     "requested_size": "1024x768",
+     "provider_size": [
+      1152,
+      864
+     ],
+     "output_size": [
+      1200,
+      900
+     ],
+     "cropped": false
+    },
+    "watermark": "AFP | 09134922013",
+    "watermark_policy": "afp-contact-bottom-right-v1",
+    "product_photos": [
+     {
+      "asset": "afp-tape.webp.b64",
+      "sha256": "7abaafab90504ec98da023015e0b870dd4874ba7b987f03fb15be8458cd82aaa"
+     }
+    ]
+   },
+   "image_alt": "انتخاب نوار تیپ کشاورزی - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP",
+   "_image_prepared_this_run": true
   },
   {
    "family": "tape20",
