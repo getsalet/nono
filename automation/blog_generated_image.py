@@ -48,10 +48,10 @@ def identity(item,blog):
  from blog_image_gate import family
  expected=family(item)
  from blog_image_watermark import POLICY as watermark_policy
- from blog_reference_scene import RECIPE_VERSION,topic_hash
+ from blog_reference_scene import RECIPE_VERSION,topic_hash,recipe_for
  context_hash=topic_hash(item)if item.get('_image_article_context')or item.get('post')else'no-final-draft'
  from blog_image_connection import fingerprint
- return hashlib.sha256((POLICY+'|'+RECIPE_VERSION+'|'+fingerprint(roya.BASE.AGNES_BASE)+'|'+watermark_policy+'|'+blog+'|'+str(item['key'])+'|'+expected+'|'+context_hash).encode()).hexdigest()[:32]
+ return hashlib.sha256((POLICY+'|'+recipe_for(item)+'|'+fingerprint(roya.BASE.AGNES_BASE)+'|'+watermark_policy+'|'+blog+'|'+str(item['key'])+'|'+expected+'|'+context_hash).encode()).hexdigest()[:32]
 
 def brief(item,blog):
  from blog_image_gate import family,reference_identity_instruction

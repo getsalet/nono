@@ -50,3 +50,13 @@ class SafeProviderDiagnosticsTests(unittest.TestCase):
   from agnes_key_pool import AgnesProviderError
   error=AgnesProviderError(503,b'{"error":{"code":"secret-shaped-value","type":"untrusted-type","message":"private"}}')
   self.assertIsNone(error.provider_code);self.assertIsNone(error.provider_type)
+
+class FamilyCacheIsolationTests(unittest.TestCase):
+ def test_hose_refinement_does_not_invalidate_accepted_tape_recipe(self):
+  import blog_reference_scene as scene
+  tape=TopicSceneContractTests().item('نوار تیپ بامیه؛ مراقبت')
+  hose=TopicSceneContractTests().item('لوله نخی ذرت؛ پایش اتصال‌ها','hose')
+  self.assertEqual(scene.recipe_for(tape),scene.RECIPE_VERSION)
+  self.assertNotEqual(scene.recipe_for(hose),scene.RECIPE_VERSION)
+  self.assertLess(len(scene.prompt(hose,'loxblog')),1150)
+  self.assertIn('compression union installed inline',scene.prompt(hose,'loxblog'))

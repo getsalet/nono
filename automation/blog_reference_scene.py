@@ -44,12 +44,28 @@ def scene_plan(item,blog):
  camera=cameras[int(hashlib.sha256((a['slug']+'|'+blog).encode()).hexdigest()[:6],16)%len(cameras)]
  return {'article_title':a['title'],'role':3 if intent in('connection','maintenance')else 2,'crop':reference.named_crop(a),'botany':reference.crop_identity_spec(a),'visual_brief':reference.visual_brief(a),'evidence':evidence,'intent':intent,'camera':camera,'recipe':RECIPE_VERSION}
 
+def recipe_for(item):
+ from blog_image_gate import family
+ return RECIPE_VERSION+('-hose-compact-v1'if family(item)=='hose'else'')
+
 def prompt(item,blog):
  # Differential live tests showed that the concise nested-reference request can
  # express technical equipment without the generic farmer/panorama response.
  # Retain exact upstream reference conditioning, not its 6k repeated directives.
  from blog_image_gate import family
  a=article(item);plan=scene_plan(item,blog)
+ if family(item)=='hose':
+  # The matched 632-character technical probe succeeded with this same nested
+  # reference. Keep generation focused on one English physical scene; the full
+  # article title/body remain in the context used by the independent vision QA.
+  crop='Small neutral seedlings around the hardware'if plan['role']==3 else plan['botany']
+  text=(f"Photograph an empty irrigation site, {plan['camera']}, natural daylight. Main subject: {plan['evidence']}. {crop}. "
+   'Nearby, exactly two low horizontal black woven layflat coils from the reference: one in folded AFP cardboard panels with crossing straps, one bare coil with a short cardboard core. '
+   'Together they occupy 12 to 15 percent of the frame width. Preserve authentic packaging, materials and print. '
+   'Both products fully inside the frame, resting on soil with matching perspective and contact shadows. '
+   'One continuous scene, no people, no inset or extra product; the reference is not a flat layer to paste.')
+  feedback=str(a.get('_image_qa_feedback')or'').strip()
+  return text+(' Correct: '+feedback[:160]if feedback else'')
  if family(item)=='hose':
   product='exactly two low horizontal black woven layflat coils: one in its authentic folded AFP cardboard panels and crossing straps, one bare woven coil with a short brown cardboard core. The pair occupies 12 to 15 percent of frame width'
  else:
