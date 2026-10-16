@@ -7,6 +7,9 @@ import farsiblog_backlink_queue as engine
 engine.CITY_BLOG='loxblog';engine.BLOG='https://afp.lxb.ir'
 engine.QUEUE=engine.ROOT/'data/loxblog/backlink-queue.json';engine.ART=engine.ROOT/'artifacts/loxblog-backlink-queue';engine.STATE=engine.ROOT/'state/loxblog-backlink-progress.json'
 def main():
+ from blog_image_runtime_control import generation_paused
+ if generation_paused(engine.ROOT):
+  print('Generation intentionally paused by user control; no status rewrite or generation.');return 0
  code=engine.main()
  status=engine.ART/'status.md'
  if status.exists():status.write_text(status.read_text().replace('فارسی‌بلاگ AFP','لوکس‌بلاگ AFP').replace('بین سه وبلاگ','بین پنج وبلاگ'))

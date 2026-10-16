@@ -113,6 +113,9 @@ def verify(page,item,record):
  return url
 
 def main():
+ from blog_image_runtime_control import publication_paused
+ if publication_paused(engine.ROOT):
+  print('Publication intentionally paused by user control; no queue mutation, QA API, export, login or submission.');return 0
  if not matrix_ready():raise RuntimeError('Blogfa matrix unavailable')
  todo=state.load(state.PUBLISH_QUEUE,{'items':[]})['items']
  target=os.getenv('BLOGFA_TARGET')

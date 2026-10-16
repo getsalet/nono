@@ -188,6 +188,9 @@ def generated_image_preflight(item):
 
 
 def main():
+    from blog_image_runtime_control import publication_paused
+    if publication_paused(ROOT):
+        print('Publication intentionally paused by user control; no queue mutation, QA API, export, login or submission.');return 0
     if os.getenv('ROYA_DRAFT','0')=='1':raise RuntimeError('This queue publisher is configured for public publication, not drafts')
     pq=load(PUBLISH_QUEUE,{'items':[]});queue=load(QUEUE,{'items':[]});state=load(STATE,{})
     known={i['key'] for i in queue['items'] if i.get('published')}

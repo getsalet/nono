@@ -32,7 +32,7 @@ concurrency:
 
 jobs:
   publish:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_repository.full_name == github.repository
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -79,22 +79,27 @@ jobs:
         with: {fetch-depth: 0, ref: main}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
+      - name: Respect user stop before costly or mutable work
+        id: control
+        run: python automation/check_blog_pipeline_control.py roya
       - run: python -m pip install --quiet Pillow
+        if: steps.control.outputs.proceed == '1'
       - name: Validate unattended login credentials
-        if: env.ROYA_PUBLISH == '1'
+        if: steps.control.outputs.proceed == '1' && (env.ROYA_PUBLISH == '1')
         run: |
           if [ -z "$ROYA_USERNAME" ] || [ -z "$ROYA_PASSWORD" ]; then
             echo '::error::Set ROYA_USERNAME and ROYA_PASSWORD repository secrets for unattended Roya publication.'
             exit 1
           fi
       - name: Install Playwright
-        if: env.ROYA_PUBLISH == '1'
+        if: steps.control.outputs.proceed == '1' && (env.ROYA_PUBLISH == '1')
         run: |
           bash automation/install_blog_browser.sh
       - name: Publish and verify ready posts
+        if: steps.control.outputs.proceed == '1'
         run: python automation/publish_roya_posts.py
       - name: Commit per-post publication checkpoints
-        if: always()
+        if: steps.control.outputs.proceed == '1' && (always())
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

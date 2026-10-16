@@ -1,0 +1,31 @@
+name: Audit five-blog stop controls (offline, no publication)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - automation/check_blog_pipeline_control.py
+      - automation/blog_image_runtime_control.py
+      - tests/test_blog_pipeline_stop.py
+      - .github/workflows/blog-generator-control-audit.yml
+permissions:
+  contents: read
+concurrency:
+  group: blog-generator-control-audit
+  cancel-in-progress: false
+jobs:
+  offline-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Report current stop decision without secrets or APIs
+        run: |
+          for blog in roya farsiblog rozblog blogfa loxblog; do
+            python automation/check_blog_pipeline_control.py "$blog"
+          done
+      - run: python -m pip install --quiet Pillow
+      - name: Test code and stop controls without production calls
+        run: python -m unittest discover -s tests -p 'test_*.py' -v

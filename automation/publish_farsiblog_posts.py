@@ -48,6 +48,9 @@ def verify(page,item,pid):
 native.login=login;native.scan_panel=scan;native.verify_live=verify
 
 def main():
+    from blog_image_runtime_control import publication_paused
+    if publication_paused(generator.ROOT):
+        print('Publication intentionally paused by user control; no queue mutation, QA API, export, login or submission.');return 0
     from city_backlink_policy import matrix_ready
     if not matrix_ready():
         print("City publication paused pending title matrix approval.");return 0

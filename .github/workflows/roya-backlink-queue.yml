@@ -80,13 +80,19 @@ jobs:
         with: {fetch-depth: 0, ref: main}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
+      - name: Respect user stop before costly or mutable work
+        id: control
+        run: python automation/check_blog_pipeline_control.py roya
       - run: python -m pip install --quiet Pillow
+        if: steps.control.outputs.proceed == '1'
       - name: Build or refresh the city queue
+        if: steps.control.outputs.proceed == '1'
         run: python automation/build_roya_queue.py
       - name: Generate city backlink posts
+        if: steps.control.outputs.proceed == '1'
         run: python automation/roya_backlink_queue.py
       - name: Preserve Roya generation recovery checkpoint
-        if: always()
+        if: steps.control.outputs.proceed == '1' && (always())
         uses: actions/upload-artifact@v4
         with:
           name: roya-generation-${{ github.run_id }}-${{ github.run_attempt }}
@@ -98,7 +104,7 @@ jobs:
             artifacts/roya-backlink-queue
             artifacts/content-originality
       - name: Commit queue, state and artifacts
-        if: always()
+        if: steps.control.outputs.proceed == '1' && (always())
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

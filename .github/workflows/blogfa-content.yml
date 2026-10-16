@@ -98,27 +98,31 @@ jobs:
         with: {fetch-depth: 0, ref: main}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
+      - name: Respect user stop before costly or mutable work
+        id: control
+        run: python automation/check_blog_pipeline_control.py blogfa
       - name: Check rolling publication budget before costly steps
+        if: steps.control.outputs.proceed == '1'
         id: budget
         run: python automation/check_blog_run_budget.py blogfa
       - name: Validate unattended credentials
-        if: steps.budget.outputs.proceed == '1' && env.BLOGFA_PUBLISH == '1' && env.BLOGFA_DRY_RUN != '1'
+        if: steps.control.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.BLOGFA_PUBLISH == '1' && env.BLOGFA_DRY_RUN != '1')
         run: |
           if [ -z "$BLOGFA_USERNAME" ] || [ -z "$BLOGFA_PASSWORD" ]; then
             echo '::error::Set BLOGFA_USERNAME and BLOGFA_PASSWORD repository secrets.'
             exit 1
           fi
       - run: python -m pip install --quiet Pillow
-        if: steps.budget.outputs.proceed == '1'
+        if: steps.control.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1')
       - name: Generate independent city article with approved image
-        if: steps.budget.outputs.proceed == '1' && env.BLOGFA_LOGIN_DIAGNOSTIC != '1'
+        if: steps.control.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.BLOGFA_LOGIN_DIAGNOSTIC != '1')
         run: python automation/blogfa_backlink_queue.py
       - name: Install Playwright
-        if: steps.budget.outputs.proceed == '1' && env.BLOGFA_PUBLISH == '1' && env.BLOGFA_DRY_RUN != '1'
+        if: steps.control.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.BLOGFA_PUBLISH == '1' && env.BLOGFA_DRY_RUN != '1')
         run: |
           bash automation/install_blog_browser.sh "$BLOGFA_BROWSER"
       - name: Publish and verify native Blogfa post
-        if: steps.budget.outputs.proceed == '1' && env.BLOGFA_DRY_RUN != '1'
+        if: steps.control.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.BLOGFA_DRY_RUN != '1')
         run: |
           if [ "$BLOGFA_LOGIN_DIAGNOSTIC" = '1' ]; then
             python automation/blogfa_native.py
@@ -126,7 +130,7 @@ jobs:
             python automation/publish_blogfa_posts.py
           fi
       - name: Preserve blogfa recovery checkpoints
-        if: always() && steps.budget.outputs.proceed == '1' && env.BLOGFA_DRY_RUN != '1' && env.BLOGFA_LOGIN_DIAGNOSTIC != '1'
+        if: steps.control.outputs.proceed == '1' && (always() && steps.budget.outputs.proceed == '1' && env.BLOGFA_DRY_RUN != '1' && env.BLOGFA_LOGIN_DIAGNOSTIC != '1')
         uses: actions/upload-artifact@v4
         with:
           name: blogfa-recovery-${{ github.run_id }}-${{ github.run_attempt }}
@@ -139,7 +143,7 @@ jobs:
             artifacts/content-originality
             artifacts/blog-image-reviews
       - name: Commit generation and per-post checkpoints
-        if: always() && steps.budget.outputs.proceed == '1' && env.BLOGFA_DRY_RUN != '1' && env.BLOGFA_LOGIN_DIAGNOSTIC != '1'
+        if: steps.control.outputs.proceed == '1' && (always() && steps.budget.outputs.proceed == '1' && env.BLOGFA_DRY_RUN != '1' && env.BLOGFA_LOGIN_DIAGNOSTIC != '1')
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

@@ -8,3 +8,9 @@ def generation_paused(root):
  except (OSError,ValueError):raise RuntimeError('Image production control unreadable; no unchecked generation')from None
  if not isinstance(control,dict):raise RuntimeError('Image production control invalid; no unchecked generation')
  return control.get('pause_image_production')is True
+
+def publication_paused(root):
+ """The explicit user stop also protects ready drafts and direct publisher calls."""
+ # Direct publisher calls must also fail closed when checkout/control is absent.
+ from check_blog_pipeline_control import decision
+ return not decision('roya',root)['proceed']

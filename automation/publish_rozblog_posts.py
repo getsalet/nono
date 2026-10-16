@@ -209,6 +209,9 @@ def diagnose_login():
  return 0
 
 def main():
+ from blog_image_runtime_control import publication_paused
+ if publication_paused(engine.ROOT):
+  print('Publication intentionally paused by user control; no queue mutation, QA API, export, login or submission.');return 0
  if os.getenv('ROZBLOG_LOGIN_DIAGNOSTIC','0')=='1':return diagnose_login()
  if not matrix_ready():print('RozBlog publication paused pending title matrix.');return 0
  q=state.load(state.PUBLISH_QUEUE,{'items':[]});todo=q['items']
