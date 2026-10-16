@@ -7,9 +7,9 @@ import blog_generated_image as generated
 ROOT=Path(__file__).resolve().parents[1]
 OUT='artifacts/blog-hose-fullrefs'
 def main():
- run=os.getenv('GITHUB_RUN_ID','local')
+ run=os.getenv('BLOG_IMAGE_PROBE_ID')or os.getenv('GITHUB_RUN_ID','local')
  if not re.fullmatch(r'[A-Za-z0-9_-]+',run):raise RuntimeError('Invalid diagnostic run identifier')
- report={'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'workflow_run_id':run,'post_submissions':0,'production_approval':False,'direct_visual_approval':False,'generation_attempt_limit':1,'family':'hose','image_received':False}
+ report={'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'workflow_run_id':os.getenv('GITHUB_RUN_ID','local'),'probe_id':run,'post_submissions':0,'production_approval':False,'direct_visual_approval':False,'generation_attempt_limit':1,'family':'hose','image_received':False}
  try:
   queue=json.loads((ROOT/'data/loxblog/backlink-queue.json').read_text())
   item=next(copy.deepcopy(x)for x in queue['items']if x.get('family')=='hose'and x.get('published')and x.get('kind')in('city','article'))
