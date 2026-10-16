@@ -28,6 +28,11 @@ def main():
   url=generated.checkpoint_asset(path,raw,ROOT)
   report.update(image_received=True,candidate_path=path,candidate_url=url,sha256=hashlib.sha256(raw).hexdigest(),render=item.get('_image_render'))
  except Exception as exc:
+  from blog_image_backpressure import ImageProviderBusy,defer
+  if isinstance(exc,ImageProviderBusy):
+   report['status']='deferred_provider_queue_full';report['retry_at_epoch']=exc.retry_at
+   try:defer(ROOT,exc.retry_at,generated.checkpoint_asset)
+   except Exception:report['cooldown_checkpoint_failed']=True
   report['error_type']=type(exc).__name__
   if re.fullmatch(r'Image provider HTTP \d+; raw response withheld',str(exc)):report['safe_error']=str(exc)
  finally:
