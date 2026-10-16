@@ -1,0 +1,32 @@
+name: Diagnose image instruction and reference transport (no publication)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [automation/probe_blog_image_transport.py]
+permissions:
+  contents: write
+concurrency:
+  group: blog-image-transport-probe
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY }}
+      IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
+      IMAGE_MODEL: ${{ vars.IMAGE_MODEL || 'agnes-image-2.5-flash' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          sparse-checkout: |
+            automation
+            data
+            artifacts/loxblog-backlink-queue/items
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - run: python automation/probe_blog_image_transport.py
