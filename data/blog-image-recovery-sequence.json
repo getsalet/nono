@@ -1,15 +1,16 @@
 {
-  "updated_at": "2026-10-16T02:20:27.396102+00:00",
+  "updated_at": "2026-10-16T02:50:43.617023+00:00",
   "post_publication_enabled": false,
   "order": [
     {
       "step": 1,
       "name": "Repair topic-specific single-pass image production and validate two real product-family samples",
-      "status": "v3_tape_directly_approved_hose_blocked_by_503",
+      "status": "tape_preserved_hose_transport_blocked_after_remaining_audited_route",
       "code_tests": 292,
       "production_paused": true,
       "blockers": [
-        "No current approved hose sample: latest run returned 503 on IMAGE_API_KEY, AGNES_API_KEY6 and AGNES_API_KEY7. Exact upstream cause is not established."
+        "Hose request still returns HTTP 503 before image bytes are received on the configured image connection and image-audited slots 11 and 6. Earlier slots 6 and 7 also failed.",
+        "No accepted hose candidate exists. Header parity and an 801-character hose-only prompt did not resolve this transport failure."
       ],
       "applied": [
         "Replaced long repeated prompt with concise title/summary-derived technical scene after differential tests",
@@ -38,9 +39,21 @@
   "code_tests_passed": 292,
   "current_recipe": "maghala2-reference-v3-concise-topic-scene",
   "current_visual_policy": "blog-product-family-reference-vision-v7-reference-parity",
-  "last_acceptance_run": "https://github.com/getsalet/nono/actions/runs/38839522344",
+  "last_acceptance_run": "https://github.com/getsalet/nono/actions/runs/38842164569",
   "last_acceptance_passed": false,
-  "latest_focused_tests_passed": 117,
-  "next_action": "Resolve persistent image-endpoint 503 or wait for provider recovery before one bounded hose-only retry. Preserve approved tape asset; no repeated generation of accepted tape, no weakening quality gate, no rollout until both families are directly approved.",
-  "key_pool_tests_passed": 9
+  "latest_focused_tests_passed": 120,
+  "next_action": "Do not repeat equivalent image API calls. Resume one bounded hose-only acceptance after provider recovery or an explicitly approved alternate image connection. Approved tape remains reusable; post publication and old-image repair remain paused.",
+  "key_pool_tests_passed": 9,
+  "family_recipes": {
+    "tape20": "maghala2-reference-v3-concise-topic-scene",
+    "hose": "maghala2-reference-v3-concise-topic-scene-hose-compact-v1"
+  },
+  "latest_checks": {
+    "approved_tape_regenerated": false,
+    "hose_prompt_characters": 801,
+    "hose_candidate_received": false,
+    "post_submissions": 0,
+    "remaining_image_audited_slot_tested": "AGNES_API_KEY11",
+    "undocumented_idempotency_header_removed": true
+  }
 }
