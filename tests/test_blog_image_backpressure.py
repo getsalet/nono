@@ -50,3 +50,25 @@ class BackpressureTests(unittest.TestCase):
    def operation():calls.append(1);raise b.ImageProviderBusy(time.time()+300)
    with self.assertRaises(b.ImageProviderBusy):f.retry_transient(operation)
    self.assertEqual(len(calls),1);sleep.assert_not_called()
+
+class CooldownWorktreeIntegrityTests(unittest.TestCase):
+ def test_defer_preserves_tracked_control_and_unrelated_edits(self):
+  import subprocess
+  with tempfile.TemporaryDirectory()as d:
+   root=Path(d)
+   def git(*args):return subprocess.check_output(['git',*args],cwd=root,stderr=subprocess.DEVNULL)
+   git('init');git('config','user.name','fixture');git('config','user.email','fixture@example.invalid')
+   p=root/b.STATE;p.parent.mkdir(parents=True);original=b'{"retry_at_epoch":0}';p.write_bytes(original)
+   other=root/'unrelated.txt';other.write_text('before');git('add','.');git('commit','-qm','fixture');other.write_text('pending edit')
+   before=git('diff','--name-only')
+   calls=[];b.defer(root,time.time()+300,lambda *args:calls.append(args))
+   self.assertEqual(p.read_bytes(),original,'Provider cooldown must not dirty tracked shared state in generator checkout')
+   self.assertEqual(git('diff','--name-only'),before)
+   self.assertEqual(calls[0][0],b.STATE)
+   with self.assertRaises(b.ImageProviderBusy):b.require_open(root)
+ def test_runtime_cooldown_survives_remote_checkpoint_failure(self):
+  with tempfile.TemporaryDirectory()as d:
+   root=Path(d)
+   def fail(*args):raise RuntimeError('checkpoint unavailable')
+   with self.assertRaises(RuntimeError):b.defer(root,time.time()+300,fail)
+   with self.assertRaises(b.ImageProviderBusy):b.require_open(root)
