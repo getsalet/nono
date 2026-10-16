@@ -5,7 +5,7 @@ Agnes payload/reference/watermark order follows nono's exact-product rebuild.
 import hashlib,json,re
 import blog_reference_image_policy as reference
 POLICY='afp-one-generated-blog-image-v6-reference-integrated-topic-scene'
-RECIPE_VERSION='maghala2-reference-parity-v2-whole-word-crops'
+RECIPE_VERSION='maghala2-reference-v3-concise-topic-scene'
 SOURCES=['https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py','https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py','https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml']
 # Add missing crop identities as data, without rewriting the upstream generation recipe.
 reference.CROPS.update({'بامیه':'okra','پیاز':'onion','گوجه فرنگی':'tomato','گوجه‌فرنگی':'tomato','هندوانه':'watermelon','سیب زمینی':'potato','سیب‌زمینی':'potato'})
@@ -27,14 +27,42 @@ def role(item):
  return 2
 
 def scene_plan(item,blog):
- a=article(item);kind=role(item)
- return {'article_title':a['title'],'role':kind,'crop':reference.named_crop(a),'botany':reference.crop_identity_spec(a),'visual_brief':reference.visual_brief(a),'evidence':reference.topic_visual_anchor(a),'visual_template':reference.visual_template(a,kind),'recipe':'maghala2/image_prompt_policy.py'}
+ a=article(item);text=_lexical_text(a['title']+' '+a['focus'])
+ if 'اتصال' in text:
+  intent='connection';evidence='one closed ribbed compression union installed inline between two continuous black irrigation pipes; the joined ends and seal are visible, no open pipe end'
+ elif any(k in text for k in ('فشار','فیلتر','گرفتگی','تخلیه')):
+  intent='maintenance';evidence='one plausible installed filter and closed flush valve connected to the irrigation header'
+ elif any(k in text for k in ('مراقبت','نگهداری','پایش')):
+  intent='monitoring';evidence='continuous installed drip tape beside plants, with a clearly visible uniform dark soil wetting band along the root zone'
+ elif any(k in text for k in ('فاصله','کاشت','بذر')):
+  intent='spacing';evidence='parallel planted rows and continuous installed drip lines with evenly spaced emitters and a few plain unmarked spacing stakes'
+ elif any(k in text for k in ('عملکرد','برداشت')):
+  intent='crop';evidence='uniform healthy crop canopy and visible continuous irrigation lines near the roots'
+ else:
+  intent='agronomy';evidence='crop-specific leaves, continuous installed irrigation lines and localized root-zone wetting'
+ cameras=['close side view','high oblique close view','medium three-quarter technical view']
+ camera=cameras[int(hashlib.sha256((a['slug']+'|'+blog).encode()).hexdigest()[:6],16)%len(cameras)]
+ return {'article_title':a['title'],'role':3 if intent in('connection','maintenance')else 2,'crop':reference.named_crop(a),'botany':reference.crop_identity_spec(a),'visual_brief':reference.visual_brief(a),'evidence':evidence,'intent':intent,'camera':camera,'recipe':RECIPE_VERSION}
 
 def prompt(item,blog):
- # Use the actual upstream function, including title, summary, topic anchors,
- # role, scale, botany and QA correction. Never replace it with a homemade scene.
- a=article(item);a['slug']=str(a['slug'])+'-'+blog
- return reference.image_prompt(a,role(item))
+ # Differential live tests showed that the concise nested-reference request can
+ # express technical equipment without the generic farmer/panorama response.
+ # Retain exact upstream reference conditioning, not its 6k repeated directives.
+ from blog_image_gate import family
+ a=article(item);plan=scene_plan(item,blog)
+ if family(item)=='hose':
+  product='exactly two low horizontal black woven layflat coils: one in its authentic folded AFP cardboard panels and crossing straps, one bare woven coil with a short brown cardboard core. The pair occupies 12 to 15 percent of frame width'
+ else:
+  product='exactly one low wide cylindrical AFP drip-tape carton, white printed sleeve and blue lower band, central top hole, diameter larger than height. It occupies about 20 percent of frame width'
+ crop=('Use neutral small seedlings only near the hardware'if plan['role']==3 else'Crop identity: '+plan['botany'])
+ brief=(f"One continuous photorealistic agricultural photograph, {plan['camera']}, soft natural daylight. "
+  +f"Main subject: {plan['evidence']}. {crop}. Tight equipment-and-soil framing with no skyline. "
+  +f"Naturally resting nearby: {product}. The reference is an identity guide, not a flat layer to paste. Reconstruct it in the same perspective and light, with ground contact and realistic shadows. "
+  +'Keep each product fully inside the frame with clear margins; preserve authentic shape, material and package print. Equipment and plants are the story, products are secondary. Empty scene, no people. Single photograph, no inset, pasted panel, extra product or added writing. '
+  +f"Article context, not on-image text: {a['title']}. {a['summary'][:360]}")
+ feedback=str(a.get('_image_qa_feedback')or'').strip()
+ if feedback:brief+=' Correct the prior visual rejection: '+feedback[:240]
+ return brief
 def references(item):return reference.reference_images(role(item),article(item))
 def topic_hash(item):
  data=article(item);data.pop('_image_qa_feedback',None)

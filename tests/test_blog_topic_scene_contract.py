@@ -5,11 +5,14 @@ from blog_reference_scene import prompt,scene_plan
 class TopicSceneContractTests(unittest.TestCase):
  def item(self,title,family='tape20'):
   return {'key':'actual-topic-fixture','family':family,'site_title':'لوله نخی'if family=='hose'else'نوار تیپ','_image_article_context':{'title':title,'summary':'این متن واقعی مقاله درباره آبیاری و تجهیزات است. کارشناس باید فشار و فیلتر را هم بررسی کند و در بازدید دوره‌ای نشانه‌های مشکل را ثبت کند.'}}
- def test_exact_upstream_function_is_the_generator_not_a_replacement(self):
-  import blog_reference_scene as scene
-  item=self.item('نوار تیپ بامیه؛ مراقبت حین بهره‌برداری')
-  data=scene.article(item);data['slug']+='-loxblog'
-  self.assertEqual(prompt(item,'loxblog'),scene.reference.image_prompt(data,scene.role(item)))
+ def test_concise_recipe_keeps_single_topic_and_actual_context(self):
+  item=self.item('لوله نخی ذرت؛ پایش اتصال‌ها','hose');text=prompt(item,'loxblog')
+  self.assertLess(len(text),2000)
+  self.assertIn('compression union installed inline',text)
+  self.assertIn('exactly two',text)
+  self.assertIn('no people',text)
+  self.assertNotIn('three sibling images',text)
+  self.assertEqual(scene_plan(item,'loxblog')['intent'],'connection')
  def test_actual_summary_is_present_and_changes_the_prompt(self):
   item=self.item('نوار تیپ بامیه؛ مراقبت حین بهره‌برداری');a=prompt(item,'roya')
   self.assertIn(item['_image_article_context']['summary'],a)
