@@ -192,6 +192,8 @@ def main():
         links=links_for(item);obj=None;errors=[];info={};stage='recovery'
         try:
             previous=load(item_path(item['key']),{})
+            from blog_image_draft_recovery import recover
+            image_retry_draft=recover(previous)
             if item.get('status')=='failed' and isinstance(previous.get('post'),dict):
                 old=previous['post'];errors,info=qa(item,old,links)
                 if not errors:
@@ -201,11 +203,16 @@ def main():
                 stage='image'
                 item['_image_blog']=CITY_BLOG
                 stage='source'
-                source=retry_transient(lambda:source_text(item))
+                source=None if image_retry_draft is not None else retry_transient(lambda:source_text(item))
                 for attempt in range(3):
                     stage='generation'
-                    request=repair_request(item,links,source,obj,errors) if obj is not None and errors else prompt(item,links,source)
-                    obj=retry_transient(lambda:agnes(request,temperature=0.1 if attempt>0 else None))
+                    if attempt==0 and image_retry_draft is not None:
+                        obj=image_retry_draft
+                        print(item['key']+': retrying saved image-stage draft; full QA still required',flush=True)
+                    else:
+                        if source is None:source=retry_transient(lambda:source_text(item))
+                        request=repair_request(item,links,source,obj,errors) if obj is not None and errors else prompt(item,links,source)
+                        obj=retry_transient(lambda:agnes(request,temperature=0.1 if attempt>0 else None))
                     if item.get('kind')in ('city','article'):
                         from city_backlink_policy import matrix_title,resolve_editorial_link_tokens
                         resolve_editorial_link_tokens(obj,links)

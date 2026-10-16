@@ -42,4 +42,16 @@ class RetryTests(unittest.TestCase):
     self.assertEqual(e.main(),0)
     source.assert_not_called();text.assert_not_called();image.assert_not_called()
    self.assertEqual(e.load(queue,{})['items'][0]['status'],'pending')
+ def test_image_failure_reuses_saved_text_then_runs_full_quality_gate(self):
+  with tempfile.TemporaryDirectory()as tmp:
+   root=Path(tmp);queue=root/'queue.json';art=root/'art';state=root/'state.json'
+   item={'key':'saved','kind':'city','family':'tape20','status':'failed','image_url':'https://navar-abyari.ir/test.webp','image_alt':'نوار تیپ','image_width':600,'image_height':400}
+   post={'title':'راهنمای نوار تیپ','slug':'saved-topic','html':'<p>پیش نویس ذخیره شده</p>'}
+   e.save(queue,{'items':[item]})
+   with patch.multiple(e,ROOT=root,QUEUE=queue,ART=art,STATE=state):
+    e.save(e.item_path('saved'),{**item,'failure_stage':'image','post':post})
+    with patch('blog_image_runtime_control.generation_paused',return_value=False),patch.dict(os.environ,{'FARSIBLOG_COUNT':'1','FARSIBLOG_DRY_RUN':'0','FARSIBLOG_TARGET':''}),patch.object(e.BASE,'AGNES_KEY','offline-fixture'),patch.object(c,'matrix_ready',return_value=True),patch.object(c,'build_queue'),patch.object(e,'remaining_publication_budget',return_value=1),patch.object(e,'links_for',return_value=[]),patch.object(c,'matrix_title',return_value=post['title']),patch.object(c,'resolve_editorial_link_tokens'),patch.object(c,'prepare_image')as image,patch.object(e,'source_text')as source,patch.object(e,'agnes')as text,patch.object(e,'qa',side_effect=[(['image missing'],{}),([] ,{'words':600})])as qa:
+     self.assertEqual(e.main(),0)
+     image.assert_called_once();source.assert_not_called();text.assert_not_called();self.assertEqual(qa.call_count,2)
+     saved=e.load(e.item_path('saved'),{});self.assertEqual(saved['status'],'completed');self.assertEqual(saved['post']['html'].count('<img'),1)
 if __name__=='__main__':unittest.main()

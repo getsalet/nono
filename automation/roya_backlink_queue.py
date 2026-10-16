@@ -559,24 +559,32 @@ def main():
         try:require_open(ROOT)
         except ImageProviderBusy:
             print('Shared image-provider cooldown active; no new text/image calls.');break
+        from blog_image_draft_recovery import recover
+        image_retry_draft=recover(load_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'),{}))
         item['status'] = 'processing'
         item['attempts'] = int(item.get('attempts', 0)) + 1
         state['in_progress'] = item['key']
         links = approved_links(item, lib)
         image_url = None
         errors, obj = ['not generated'], None
+        stage='generation'
         for attempt in range(1, ATTEMPTS + 1):
             try:
                 if DRY_RUN or not (BASE.AGNES_KEY or BASE.AGNES_KEYS):
                     obj = offline_sample(item, links)
+                elif attempt == 1 and image_retry_draft is not None:
+                    obj = image_retry_draft
                 elif attempt == 1:
+                    stage='generation'
                     obj = agnes(build_prompt(item, links))
                 else:
+                    stage='generation'
                     obj = agnes(repair_prompt(item, links, obj, errors),temperature=0.1)
                 obj['title'] = item['assigned_title']
                 if image_url is None:
                     from blog_reference_scene import context_from_post
                     item['_image_article_context'] = context_from_post(obj)
+                    stage='image'
                     image_url = prepare_roya_image(item)
             except Exception as exc:
                 errors = ['agnes error: ' + str(exc)[:200]]
@@ -587,6 +595,7 @@ def main():
             obj['title'] = item['assigned_title']
             obj = resolve_link_tokens(obj, links)
             obj = inject_image(item, obj, image_url)
+            stage='validation'
             errors, info = qa(item, obj, links)
             print(f'{item["key"]} attempt={attempt} words={info["words"]} links={len(info["links"])} errors={len(errors)}', flush=True)
             if not errors:
@@ -594,7 +603,7 @@ def main():
         record = dict(item)
         record.update({'status': 'completed' if not errors else 'failed',
                        'generated_at': now(), 'qa': {'passed': not errors, 'errors': errors},
-                       'post': obj, 'blog': BLOG})
+                       'post': obj, 'blog': BLOG, 'failure_stage':stage if errors else None})
         if not errors:
             item['status'] = 'completed'
             item['title'] = obj.get('title', item.get('title', ''))
@@ -607,6 +616,8 @@ def main():
             completed.append(item['key'])
         else:
             item['status'] = 'failed'
+            item['generated_at']=record['generated_at']
+            item['failure_stage']=stage
             item['last_error'] = '; '.join(errors)[:400]
             state['failed'][item['key']] = item['last_error']
         save_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'), record)
