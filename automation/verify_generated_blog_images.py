@@ -40,8 +40,11 @@ def main(initialize_only=False):
   try:
    if item is None:raise ValueError('Matching real source topic missing')
    if os.getenv('BLOG_IMAGE_CACHE_SNAPSHOT_ONLY')=='1':raise RuntimeError('Cached candidates snapshot only; no generation or publication')
-   from blog_reference_scene import scene_plan
+   from blog_reference_scene import scene_plan,prompt,references
    row['scene_plan']=scene_plan(item,'loxblog')
+   actual_prompt=prompt(item,'loxblog');actual_refs=references(item)
+   row['request_contract']={'recipe_version':RECIPE_VERSION,'prompt_sha256':hashlib.sha256(actual_prompt.encode()).hexdigest(),'prompt_characters':len(actual_prompt),'reference_count':len(actual_refs),'reference_sha256':[hashlib.sha256(ref.encode()).hexdigest()for ref in actual_refs],'crop':row['scene_plan'].get('crop'),'post_title':item['_image_article_context']['title']}
+   save_report()
    row['requested_size']='1024x768'
    row['url']=prepare(item,'loxblog',root=ROOT);row['passed']=True;row['key']=item['key'];row['review']=item['image_review'];row['generation']=item.get('image_generation',{})
   except Exception as exc:
