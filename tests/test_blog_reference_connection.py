@@ -89,3 +89,18 @@ class ReferenceConnectionTests(unittest.TestCase):
    item=self.item();generated.generate(item,'roya')
    sleep.assert_called_once_with(90)
    self.assertEqual(item['_image_provider_attempts'][0]['retry_delay_seconds'],90)
+
+ def test_transient_failover_uses_only_image_audited_slots(self):
+  from agnes_key_pool import AgnesProviderError
+  pool=generated.roya.BASE._key_pool
+  with patch.dict(os.environ,{'IMAGE_API_KEY':'dedicated-test','AGNES_IMAGE_TRANSIENT_FAILOVER':'1','IMAGE_ENDPOINT':generated.roya.BASE.AGNES_BASE+'/images/generations'}),patch.object(generated,'capability_slots',return_value=['AGNES_API_KEY6']),patch.object(pool,'keys',['text-only-test','image-test']),patch.object(pool,'slots',{'text-only-test':'AGNES_API_KEY3','image-test':'AGNES_API_KEY6'}),patch.object(pool,'fetch_json',side_effect=[AgnesProviderError(503),self.response()])as fetch,patch.object(generated.time,'sleep'):
+   item=self.item();generated.generate(item,'roya')
+   self.assertEqual(fetch.call_args_list[1].args[1]['Authorization'],'Bearer image-test')
+   self.assertNotIn('text-only-test',fetch.call_args_list[1].kwargs['allowed_keys'])
+   self.assertEqual(item['_image_provider_attempts'][1]['requested_secret_slot'],'AGNES_API_KEY6')
+
+ def test_transient_failover_never_applies_to_permission_denial(self):
+  from agnes_key_pool import AgnesProviderError
+  with patch.dict(os.environ,{'IMAGE_API_KEY':'dedicated-test','AGNES_IMAGE_TRANSIENT_FAILOVER':'1'}),patch.object(generated,'capability_slots',side_effect=AssertionError('Do not change credentials on denial')),patch.object(generated.roya.BASE._key_pool,'fetch_json',side_effect=AgnesProviderError(403))as fetch:
+   with self.assertRaisesRegex(RuntimeError,'HTTP 403'):generated.generate(self.item(),'roya')
+   self.assertEqual(fetch.call_count,1)

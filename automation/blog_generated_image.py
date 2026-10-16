@@ -153,7 +153,7 @@ def generate(item,blog,slots=None,max_attempts=3):
  attempts=item.setdefault('_image_provider_attempts',[])
  for attempt in range(max_attempts):
   key=selected[attempt%len(selected)]
-  row={'requested_secret_slot':'IMAGE_API_KEY'if dedicated_key else roya.BASE._key_pool.slots.get(key,'unknown'),'attempt':attempt+1,'route':'configured_image_connection'if dedicated_key else'audited_image_pool','timeout_seconds':connection['timeout_seconds']}
+  row={'requested_secret_slot':'IMAGE_API_KEY'if key==dedicated_key else roya.BASE._key_pool.slots.get(key,'unknown'),'attempt':attempt+1,'route':'configured_image_connection'if key==dedicated_key else'audited_image_pool','timeout_seconds':connection['timeout_seconds']}
   attempts.append(row)
   if not key:raise RuntimeError('Existing image API credential required')
   try:
@@ -165,7 +165,14 @@ def generate(item,blog,slots=None,max_attempts=3):
    row.update(http_status=code,status='provider_error')
    if getattr(exc,'provider_code',None):row['provider_code']=exc.provider_code
    if getattr(exc,'provider_type',None):row['provider_type']=exc.provider_type
-   if attempt<max_attempts-1 and((code in(429,500,502,503,504)or(code==403 and selected and len(selected)>1))or str(exc)=='Agnes/provider transport failure; private details withheld'):
+   if dedicated_key and code in(429,500,502,503,504)and os.getenv('AGNES_IMAGE_TRANSIENT_FAILOVER')=='1'and endpoint==roya.BASE.AGNES_BASE+'/images/generations':
+    # On transient failures only, try credentials already verified against this
+    # exact image endpoint/model. Never substitute unaudited text credentials.
+    try:audited=set(capability_slots())
+    except RuntimeError:audited=set()
+    for fallback in roya.BASE._key_pool.keys:
+     if roya.BASE._key_pool.slots.get(fallback)in audited and fallback not in selected:selected.append(fallback)
+   if attempt<max_attempts-1 and((code in(429,500,502,503,504)or(code==403 and not dedicated_key and selected and len(selected)>1))or str(exc)=='Agnes/provider transport failure; private details withheld'):
     delay=max(min(120,30*(2**attempt)),getattr(exc,'retry_after_seconds',None)or 0)
     row['retry_delay_seconds']=delay;time.sleep(delay);continue
    if code:raise RuntimeError(f'Image provider HTTP {code}; raw response withheld')from None
