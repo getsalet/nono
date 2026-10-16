@@ -6,13 +6,13 @@
     "size": "1024x768",
     "timeout_seconds": 600
   },
-  "source_commit": "03b41503ac3166ea7ebba8556f2efcaee43a885f",
-  "workflow_run_id": "38838736332",
+  "source_commit": "b2ceffb89b752f6f6522d959fb42f5c8fc8d09c0",
+  "workflow_run_id": "38839157040",
   "active_secret_slots": [
     "IMAGE_API_KEY"
   ],
   "policy": "afp-one-generated-blog-image-v6-reference-integrated-topic-scene",
-  "at": "2026-10-16T02:06:58Z",
+  "at": "2026-10-16T02:11:50Z",
   "post_submissions": 0,
   "families": [
     {
@@ -91,24 +91,7 @@
           "https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py",
           "https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml"
         ],
-        "rendering": {
-          "connection": {
-            "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
-            "model": "agnes-image-2.5-flash",
-            "size": "1024x768",
-            "timeout_seconds": 600
-          },
-          "requested_size": "1024x768",
-          "provider_size": [
-            1152,
-            864
-          ],
-          "output_size": [
-            1200,
-            900
-          ],
-          "cropped": false
-        },
+        "rendering": {},
         "watermark": "AFP | 09134922013",
         "watermark_policy": "afp-contact-bottom-right-v1",
         "product_photos": [
@@ -127,24 +110,7 @@
       "candidate_paths": [
         "artifacts/blog-image-acceptance/afp-one-generated-blog-image-v6-reference-integrated-topic-scene/tape20-c677d130b6d99707e88b.webp"
       ],
-      "provider_attempts": [
-        {
-          "requested_secret_slot": "IMAGE_API_KEY",
-          "attempt": 1,
-          "route": "configured_image_connection",
-          "timeout_seconds": 600,
-          "http_status": 503,
-          "status": "provider_error"
-        },
-        {
-          "requested_secret_slot": "IMAGE_API_KEY",
-          "attempt": 2,
-          "route": "configured_image_connection",
-          "timeout_seconds": 600,
-          "http_status": 200,
-          "status": "generation_response_received"
-        }
-      ]
+      "provider_attempts": []
     },
     {
       "family": "hose",
@@ -190,7 +156,8 @@
           "route": "configured_image_connection",
           "timeout_seconds": 600,
           "http_status": 503,
-          "status": "provider_error"
+          "status": "provider_error",
+          "retry_delay_seconds": 30
         },
         {
           "requested_secret_slot": "IMAGE_API_KEY",
@@ -198,7 +165,8 @@
           "route": "configured_image_connection",
           "timeout_seconds": 600,
           "http_status": 503,
-          "status": "provider_error"
+          "status": "provider_error",
+          "retry_delay_seconds": 60
         },
         {
           "requested_secret_slot": "IMAGE_API_KEY",
