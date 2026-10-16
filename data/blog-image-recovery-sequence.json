@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-10-16T02:50:43.617023+00:00",
-  "post_publication_enabled": false,
+  "updated_at": "2026-10-16T16:22:37.924353+00:00",
+  "post_publication_enabled": true,
   "order": [
     {
       "step": 1,
       "name": "Repair topic-specific single-pass image production and validate two real product-family samples",
-      "status": "tape_preserved_hose_transport_blocked_after_remaining_audited_route",
+      "status": "tape20_scoped_release_enabled_hose_held",
       "code_tests": 292,
-      "production_paused": true,
+      "production_paused": false,
       "blockers": [
         "Hose request still returns HTTP 503 before image bytes are received on the configured image connection and image-audited slots 11 and 6. Earlier slots 6 and 7 also failed.",
         "No accepted hose candidate exists. Header parity and an 801-character hose-only prompt did not resolve this transport failure."
@@ -23,7 +23,8 @@
       "reference_contract": "data/blog-image-reference-contract.json",
       "approved_samples": {
         "tape20": "c677d130b6d99707e88b83d42f05caaf9cafd4fe60106c71de0a2a5840fa009e"
-      }
+      },
+      "scope": "tape20 only; hose remains held"
     },
     {
       "step": 2,
@@ -33,7 +34,7 @@
     {
       "step": 3,
       "name": "Canary rollout and verify all five blog publishers, including public Blogfa access",
-      "status": "blocked_by_steps_1_and_2"
+      "status": "five_tape20_canaries_started_public_verification_pending"
     }
   ],
   "code_tests_passed": 292,
@@ -41,8 +42,8 @@
   "current_visual_policy": "blog-product-family-reference-vision-v7-reference-parity",
   "last_acceptance_run": "https://github.com/getsalet/nono/actions/runs/38842164569",
   "last_acceptance_passed": false,
-  "latest_focused_tests_passed": 120,
-  "next_action": "Do not repeat equivalent image API calls. Resume one bounded hose-only acceptance after provider recovery or an explicitly approved alternate image connection. Approved tape remains reusable; post publication and old-image repair remain paused.",
+  "latest_focused_tests_passed": 318,
+  "next_action": "Observe the five initial tape20 pipeline runs and verify public/native outcomes. Keep hose held and old-image repair separate. Never infer successful publication from dispatch acceptance.",
   "key_pool_tests_passed": 9,
   "family_recipes": {
     "tape20": "maghala2-reference-v3-concise-topic-scene",
@@ -55,5 +56,13 @@
     "post_submissions": 0,
     "remaining_image_audited_slot_tested": "AGNES_API_KEY11",
     "undocumented_idempotency_header_removed": true
-  }
+  },
+  "enabled_families": [
+    "tape20"
+  ],
+  "held_families": [
+    "hose"
+  ],
+  "activation_run": "https://github.com/getsalet/nono/actions/runs/38931128558",
+  "activation_evidence": "data/blog-publication-activation.json"
 }
