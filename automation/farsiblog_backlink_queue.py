@@ -233,6 +233,7 @@ def main():
             item['failure_stage']=stage
         item.update({'status':'failed'if errors else 'completed','attempts':item.get('attempts',0)+1,'generated_at':now(),'last_error':'; '.join(errors)})
         if errors:
+            item['failure_stage']=stage
             failed.append(item['key']);defer_item(item)
             if provider_busy:item['next_retry_at']=datetime.datetime.fromtimestamp(item['image_retry_at'],datetime.timezone.utc).isoformat().replace('+00:00','Z')
             print(item['key']+': deferred; continuing queue; retry at '+item['next_retry_at'],flush=True)
