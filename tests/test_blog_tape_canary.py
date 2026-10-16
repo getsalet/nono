@@ -30,3 +30,19 @@ class TapeCanaryTests(unittest.TestCase):
  def test_controller_workflow_has_no_image_credentials_or_direct_generator(self):
   source=(Path(__file__).resolve().parents[1]/'.github/workflows/blog-tape-live-canary.yml').read_text()
   self.assertNotIn('secrets.',source);self.assertNotIn('backlink_queue.py',source);self.assertIn('run_blog_tape_canary.py',source)
+
+class NamedPublicationTests(unittest.TestCase):
+ def test_named_target_does_not_drain_other_approved_drafts(self):
+  import publish_farsiblog_posts as p
+  entries=[{'key':'other'},{'key':'saved'}]
+  self.assertEqual(p.selected_entries(entries,'saved'),[entries[1]])
+  self.assertEqual(p.selected_entries(entries,'missing'),[])
+  self.assertEqual(p.selected_entries(entries,''),entries)
+ def test_named_canary_is_capped_to_one_at_native_handoff(self):
+  import publish_farsiblog_posts as p
+  entries=[{'key':'other'},{'key':'saved'}]
+  saved={'key':'saved','kind':'fixture','post':{}}
+  with patch('blog_image_runtime_control.publication_paused',return_value=False),patch('city_backlink_policy.matrix_ready',return_value=True),patch.dict('os.environ',{'FARSIBLOG_TARGET':'saved'}),patch.object(p.native,'DO_PUBLISH',False),patch.object(p.native,'LIMIT',3),patch.object(p.native,'load',side_effect=[{'items':entries},saved])as load,patch.object(p.native,'main',return_value=0)as native,patch.object(p.generator,'qa',return_value=([],{})),patch.object(p.generator,'links_for',return_value=[]),patch.object(p.generator,'save')as save:
+   self.assertEqual(p.main(),0);self.assertEqual(p.native.LIMIT,1);native.assert_called_once()
+   self.assertEqual(save.call_args.args[1]['items'],[entries[1]])
+   self.assertEqual(load.call_count,2)

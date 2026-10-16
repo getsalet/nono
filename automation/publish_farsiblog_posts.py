@@ -47,6 +47,10 @@ def verify(page,item,pid):
     return url
 native.login=login;native.scan_panel=scan;native.verify_live=verify
 
+def selected_entries(entries,target):
+    # A named manual canary must never drain unrelated approved drafts.
+    return [entry for entry in entries if entry.get('key')==target]if target else list(entries)
+
 def main():
     from blog_image_runtime_control import publication_paused
     if publication_paused(generator.ROOT):
@@ -62,7 +66,9 @@ def main():
         native.LIMIT=min(native.LIMIT,remaining)
     # Check each draft before the browser. A bad draft cannot block healthy drafts.
     queue=native.load(native.PUBLISH_QUEUE,{'items':[]});approved=[]
-    for entry in queue['items']:
+    target=os.getenv('FARSIBLOG_TARGET','').strip()
+    if target:native.LIMIT=1
+    for entry in selected_entries(queue['items'],target):
         item=native.load(native.resolve_item(entry),{})
         try:
             if item.get('kind')in('city','article'):
