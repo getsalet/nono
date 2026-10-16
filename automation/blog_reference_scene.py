@@ -46,7 +46,7 @@ def scene_plan(item,blog):
 
 def recipe_for(item):
  from blog_image_gate import family
- return RECIPE_VERSION+('-hose-fullrefs-v2'if family(item)=='hose'else'')
+ return RECIPE_VERSION+('-hose-native1k-v3'if family(item)=='hose'else'')
 
 def prompt(item,blog):
  # Differential live tests showed that the concise nested-reference request can
@@ -55,15 +55,15 @@ def prompt(item,blog):
  from blog_image_gate import family
  a=article(item);plan=scene_plan(item,blog)
  if family(item)=='hose':
-  # The matched 632-character technical probe succeeded with this same nested
-  # reference. Keep generation focused on one English physical scene; the full
-  # article title/body remain in the context used by the independent vision QA.
-  crop='Small neutral seedlings around the hardware'if plan['role']==3 else plan['botany']
-  text=(f"Photograph an empty irrigation site, {plan['camera']}, natural daylight. Main subject: {plan['evidence']}. {crop}. "
-   'References 1 and 2 show exact product identity; reference 3 shows their relative layout, not a background. Nearby, exactly two low horizontal black woven layflat coils: one in folded AFP cardboard panels with crossing straps, one bare coil with a short cardboard core. '
-   'Together they occupy 12 to 15 percent of the frame width. Preserve authentic packaging, materials and print. '
-   'Both products fully inside the frame, resting on soil with matching perspective and contact shadows. '
-   'One continuous scene, no people, no inset or extra product; the reference is not a flat layer to paste.')
+  # Explicit reference roles and scene inventory: the third reference repeats
+  # the same products, never authorizes an additional coil in the output.
+  crop='A few neutral seedlings'if plan['role']==3 else plan['botany']
+  text=(f"Create a NEW single photorealistic technical photograph, {plan['camera']}, natural daylight. "
+   f"PRIMARY SUBJECT in the central two-thirds: {plan['evidence']}. This installed irrigation evidence is the largest sharp subject. {crop}. "
+   'Reference 1 identifies the packaged AFP coil; reference 2 identifies the bare woven coil. Reference 3 repeats those SAME TWO items for layout only. '
+   'FINAL PRODUCT INVENTORY: exactly two coils total, one packaged and one bare. Place this pair together as small secondary props in the lower-left soil area, 12 to 15 percent of frame width. '
+   'Reconstruct both horizontally with authentic materials and packaging, common perspective, daylight and ground-contact shadows. Keep both complete with ground margins. '
+   'One continuous equipment-and-soil photograph, no people, no inset, no added writing.')
   feedback=str(a.get('_image_qa_feedback')or'').strip()
   return text+(' Correct: '+feedback[:160]if feedback else'')
  product='exactly one low wide cylindrical AFP drip-tape carton, white printed sleeve and blue lower band, central top hole, diameter larger than height. It occupies about 20 percent of frame width'

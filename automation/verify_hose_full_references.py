@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One bounded hose-only image probe. Never change release controls or publish posts."""
+"""One native-tier hose probe after the matched request diagnosis; no publication."""
 import copy,hashlib,json,os,re,subprocess
 from pathlib import Path
 import blog_reference_scene as scene

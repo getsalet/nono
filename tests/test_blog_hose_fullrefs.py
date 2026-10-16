@@ -23,7 +23,7 @@ class HoseFullReferenceTests(unittest.TestCase):
   item=self.item('tape20')
   self.assertEqual(scene.references(item),scene.reference.reference_images(scene.role(item),scene.article(item)))
   self.assertEqual(scene.recipe_for(item),scene.RECIPE_VERSION)
-  self.assertEqual(scene.recipe_for(self.item()),scene.RECIPE_VERSION+'-hose-fullrefs-v2')
+  self.assertEqual(scene.recipe_for(self.item()),scene.RECIPE_VERSION+'-hose-native1k-v3')
  def test_real_payload_uses_three_nested_references_and_watermark(self):
   from blog_image_watermark import present
   out=io.BytesIO();Image.new('RGB',(1024,768),'green').save(out,'PNG')
@@ -31,6 +31,9 @@ class HoseFullReferenceTests(unittest.TestCase):
   with patch.dict('os.environ',{'IMAGE_API_KEY':'unit-test-only'}),patch.object(generated.roya.BASE._key_pool,'fetch_json',return_value=reply)as fetch:
    image=generated.generate(self.item(),'loxblog',max_attempts=1)
   self.assertEqual(fetch.call_args.args[2]['extra_body']['image'],scene.references(self.item()))
+  self.assertEqual(fetch.call_args.args[2]['size'],'1K')
+  self.assertEqual(fetch.call_args.args[2]['ratio'],'16:9')
+  self.assertNotIn('return_base64',fetch.call_args.args[2])
   self.assertTrue(present(Image.open(io.BytesIO(image))))
  def test_production_scope_and_tape_rollout_remain_intact(self):
   control=json.loads((ROOT/'data/blog-generated-image-control.json').read_text())

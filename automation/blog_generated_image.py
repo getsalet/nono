@@ -146,6 +146,11 @@ def generate(item,blog,slots=None,max_attempts=3):
  from blog_image_connection import settings
  connection=settings(roya.BASE.AGNES_BASE);endpoint=connection['endpoint']
  payload={'model':connection['model'],'prompt':__import__('blog_reference_scene').prompt(item,blog),'size':connection['size'],'return_base64':True,'extra_body':{'response_format':'b64_json','image':__import__('blog_reference_scene').references(item)}}
+ if expected=='hose':
+  # Matched same-key differential probe: legacy dimensions returned immediate
+  # 503; the documented native tier/ratio returned an actual 1312x736 image.
+  # Keep the already accepted tape request and connection identity unchanged.
+  payload.update(size='1K',ratio='16:9');payload.pop('return_base64',None)
  dedicated_key=os.getenv('IMAGE_API_KEY','').strip()if slots is None else ''
  names=[]
  if not dedicated_key:
@@ -212,7 +217,7 @@ def generate(item,blog,slots=None,max_attempts=3):
  if image.width<=image.height:raise RuntimeError('Generated image must be landscape; no destructive crop fallback')
  original_size=image.size
  image=image.resize((1200,round(1200*image.height/image.width)),Image.Resampling.LANCZOS)
- item['_image_render']={'connection':connection,'requested_size':payload['size'],'provider_size':list(original_size),'output_size':list(image.size),'cropped':False}
+ item['_image_render']={'connection':connection,'requested_size':payload['size'],'requested_ratio':payload.get('ratio'),'provider_size':list(original_size),'output_size':list(image.size),'cropped':False}
  from blog_image_watermark import apply
  image=apply(image)
  out=io.BytesIO();image.save(out,'WEBP',quality=88,method=6)

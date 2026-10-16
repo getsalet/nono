@@ -58,5 +58,5 @@ class FamilyCacheIsolationTests(unittest.TestCase):
   hose=TopicSceneContractTests().item('لوله نخی ذرت؛ پایش اتصال‌ها','hose')
   self.assertEqual(scene.recipe_for(tape),scene.RECIPE_VERSION)
   self.assertNotEqual(scene.recipe_for(hose),scene.RECIPE_VERSION)
-  self.assertLess(len(scene.prompt(hose,'loxblog')),1150)
+  self.assertLess(len(scene.prompt(hose,'loxblog')),1600)
   self.assertIn('compression union installed inline',scene.prompt(hose,'loxblog'))
