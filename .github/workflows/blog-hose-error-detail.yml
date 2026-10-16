@@ -1,0 +1,38 @@
+name: Inspect redacted hose provider error (two requests, no publication)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [automation/inspect_hose_provider_error.py]
+permissions:
+  contents: write
+concurrency:
+  group: blog-hose-error-detail
+  cancel-in-progress: false
+jobs:
+  hose-reference-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY }}
+      IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
+      IMAGE_MODEL: ${{ vars.IMAGE_MODEL || 'agnes-image-2.5-flash' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          sparse-checkout: |
+            automation
+            tests
+            data
+            templates
+            .github/workflows
+            artifacts/loxblog-backlink-queue/items
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - name: Offline regression tests before any image request
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Inspect two matched native-tier requests
+        run: python automation/inspect_hose_provider_error.py
