@@ -494,10 +494,17 @@ def save_json(path, data):
 
 
 def pick(queue, state, count):
-    pending = [i for i in queue['items']
-               if i.get('status') == 'pending' or (RETRY_FAILED and i.get('status') == 'failed')]
+    from blog_image_draft_recovery import capacity_retry_due,recover
+    pending=[]
+    for item in queue['items']:
+        if item.get('published') or item.get('status') not in ('pending','failed'):continue
+        eligible=item.get('status')=='pending' or RETRY_FAILED
+        if not eligible and capacity_retry_due(item):
+            path=ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json')
+            eligible=recover(load_json(path,{})) is not None
+        if eligible:pending.append(item)
     if ONLY:
-        pending = [i for i in pending if i['key'] == ONLY] or [i for i in queue['items'] if i['key'] == ONLY]
+        pending = [i for i in pending if i['key'] == ONLY]
     from blog_generated_image import family_enabled
     pending=[i for i in pending if family_enabled(i,ROOT)]
     buckets, order = {}, []
@@ -569,6 +576,7 @@ def main():
         image_url = None
         errors, obj = ['not generated'], None
         shared_image_deferred=False
+        image_retry_at=None
         stage='generation'
         for attempt in range(1, ATTEMPTS + 1):
             try:
@@ -593,6 +601,7 @@ def main():
                 print(f'{item["key"]} attempt={attempt} {errors[0]}', flush=True)
                 if isinstance(exc,(ImageProviderBusy,ImageQueueBusy)):
                     shared_image_deferred=True
+                    image_retry_at=exc.retry_at
                     break
                 continue
             # Titles are owned by the approved matrix, not an AI spelling choice.
@@ -604,6 +613,11 @@ def main():
             print(f'{item["key"]} attempt={attempt} words={info["words"]} links={len(info["links"])} errors={len(errors)}', flush=True)
             if not errors:
                 break
+        if image_retry_at is not None:
+            item['next_retry_at']=datetime.datetime.fromtimestamp(image_retry_at,datetime.timezone.utc).isoformat().replace('+00:00','Z')
+        elif not errors:
+            item.pop('next_retry_at',None)
+            item.pop('failure_stage',None)
         record = dict(item)
         record.update({'status': 'completed' if not errors else 'failed',
                        'generated_at': now(), 'qa': {'passed': not errors, 'errors': errors},
@@ -647,7 +661,7 @@ def main():
         'navar-abyari.ir، صفحه استان و فروشگاه لینک می‌دهد؛ مطالب مرتبط با نوار تیپ یک ارجاع '
         'متنی به صفحه نخست دارند که جایگزین لینک جانبی است و مقاله‌های لوله کلیدواژه اجباری ندارند.\n', encoding='utf-8')
     print('completed: ' + (', '.join(completed) or 'none'), flush=True)
-    return 0 if completed else 1
+    return 0 if completed or not targets else 1
 
 
 if __name__ == '__main__':

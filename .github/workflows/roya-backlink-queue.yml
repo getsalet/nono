@@ -86,6 +86,9 @@ jobs:
         run: python automation/check_blog_pipeline_control.py roya
       - run: python -m pip install --quiet Pillow
         if: steps.control.outputs.proceed == '1'
+      - name: Verify bounded capacity recovery before generation
+        if: steps.control.outputs.proceed == '1'
+        run: python -m unittest discover -s tests -p 'test_roya_capacity_recovery.py' -v
       - name: Build or refresh the city queue
         if: steps.control.outputs.proceed == '1'
         run: python automation/build_roya_queue.py
@@ -107,12 +110,14 @@ jobs:
             state/roya-backlink-progress.json
             artifacts/roya-backlink-queue
             artifacts/content-originality
+            artifacts/blog-image-reviews
       - name: Commit queue, state and artifacts
         if: steps.control.outputs.proceed == '1' && (always())
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f data/roya/backlink-queue.json state/roya-backlink-progress.json artifacts/roya-backlink-queue
+          if [ -d artifacts/blog-image-reviews ]; then git add -f artifacts/blog-image-reviews; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update Roya city backlink queue"
           for attempt in 1 2 3; do
