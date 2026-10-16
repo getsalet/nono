@@ -104,3 +104,16 @@ class ReferenceConnectionTests(unittest.TestCase):
   with patch.dict(os.environ,{'IMAGE_API_KEY':'dedicated-test','AGNES_IMAGE_TRANSIENT_FAILOVER':'1'}),patch.object(generated,'capability_slots',side_effect=AssertionError('Do not change credentials on denial')),patch.object(generated.roya.BASE._key_pool,'fetch_json',side_effect=AgnesProviderError(403))as fetch:
    with self.assertRaisesRegex(RuntimeError,'HTTP 403'):generated.generate(self.item(),'roya')
    self.assertEqual(fetch.call_count,1)
+
+ def test_image_request_does_not_add_undocumented_idempotency_header(self):
+  with patch.dict(os.environ,{'IMAGE_API_KEY':'private-image-test-value'}),patch.object(generated.roya.BASE._key_pool,'fetch_json',return_value=self.response())as fetch:
+   generated.generate(self.item(),'roya')
+   self.assertNotIn('Idempotency-Key',fetch.call_args.args[1])
+
+ def test_transient_failover_respects_image_specific_preference(self):
+  from agnes_key_pool import AgnesProviderError
+  pool=generated.roya.BASE._key_pool
+  with patch.dict(os.environ,{'IMAGE_API_KEY':'dedicated-test','AGNES_IMAGE_TRANSIENT_FAILOVER':'1','AGNES_IMAGE_PREFERRED_KEY_SLOTS':'AGNES_API_KEY11','IMAGE_ENDPOINT':generated.roya.BASE.AGNES_BASE+'/images/generations'}),patch.object(generated,'capability_slots',return_value=['AGNES_API_KEY6','AGNES_API_KEY11']),patch.object(pool,'keys',['key6-test','key11-test']),patch.object(pool,'slots',{'key6-test':'AGNES_API_KEY6','key11-test':'AGNES_API_KEY11'}),patch.object(pool,'fetch_json',side_effect=[AgnesProviderError(503),self.response()])as fetch,patch.object(generated.time,'sleep'):
+   item=self.item();generated.generate(item,'roya')
+   self.assertEqual(fetch.call_args_list[1].args[1]['Authorization'],'Bearer key11-test')
+   self.assertEqual(item['_image_provider_attempts'][1]['requested_secret_slot'],'AGNES_API_KEY11')

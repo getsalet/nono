@@ -157,7 +157,7 @@ def generate(item,blog,slots=None,max_attempts=3):
   attempts.append(row)
   if not key:raise RuntimeError('Existing image API credential required')
   try:
-   data=roya.BASE._key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0','Idempotency-Key':POLICY+'-'+hashlib.sha256(json.dumps(payload,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:32]+'-r'+str(item.get('_image_generation_round',0))},payload,timeout=connection['timeout_seconds'],allowed_keys=selected)
+   data=roya.BASE._key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0'},payload,timeout=connection['timeout_seconds'],allowed_keys=selected)
    row.update(http_status=200,status='generation_response_received')
    break
   except RuntimeError as exc:
@@ -170,7 +170,9 @@ def generate(item,blog,slots=None,max_attempts=3):
     # exact image endpoint/model. Never substitute unaudited text credentials.
     try:audited=set(capability_slots())
     except RuntimeError:audited=set()
-    for fallback in roya.BASE._key_pool.keys:
+    preferred=[n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_PREFERRED_KEY_SLOTS',''))if n]
+    fallback_keys=sorted(roya.BASE._key_pool.keys,key=lambda k:preferred.index(roya.BASE._key_pool.slots.get(k))if roya.BASE._key_pool.slots.get(k)in preferred else len(preferred))
+    for fallback in fallback_keys:
      if roya.BASE._key_pool.slots.get(fallback)in audited and fallback not in selected:selected.append(fallback)
    if attempt<max_attempts-1 and((code in(429,500,502,503,504)or(code==403 and not dedicated_key and selected and len(selected)>1))or str(exc)=='Agnes/provider transport failure; private details withheld'):
     delay=max(min(120,30*(2**attempt)),getattr(exc,'retry_after_seconds',None)or 0)
