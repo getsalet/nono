@@ -76,3 +76,16 @@ class ReferenceConnectionTests(unittest.TestCase):
   self.assertIn('okra',scene.reference.crop_identity_spec(a))
   self.assertEqual(scene.reference.named_crop({'title':'پایش مسیر آبیاری'}),'the exact named crop from the article title')
   self.assertEqual(scene.reference.named_crop({'title':'آبیاری سیر','summary':'پایش بامیه'}),'سیر (garlic)')
+
+ def test_retry_after_is_bounded_numeric_metadata_only(self):
+  from agnes_key_pool import AgnesProviderError
+  self.assertEqual(AgnesProviderError(503,retry_after='90').retry_after_seconds,90)
+  self.assertEqual(AgnesProviderError(503,retry_after='999999').retry_after_seconds,120)
+  self.assertIsNone(AgnesProviderError(503,retry_after='private-header-value').retry_after_seconds)
+
+ def test_image_transient_retry_honors_provider_cooldown(self):
+  from agnes_key_pool import AgnesProviderError
+  with patch.dict(os.environ,{'IMAGE_API_KEY':'private-image-test-value'}),patch.object(generated.roya.BASE._key_pool,'fetch_json',side_effect=[AgnesProviderError(503,retry_after='90'),self.response()]),patch.object(generated.time,'sleep')as sleep:
+   item=self.item();generated.generate(item,'roya')
+   sleep.assert_called_once_with(90)
+   self.assertEqual(item['_image_provider_attempts'][0]['retry_delay_seconds'],90)

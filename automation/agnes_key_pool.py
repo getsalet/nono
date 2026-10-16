@@ -6,9 +6,10 @@ DEFAULT_BASE='https://apihub.agnes-ai.com/v1'
 
 SAFE_PROVIDER_CODES={'invalid_request_error','invalid_parameter','invalid_size','invalid_image_size','unsupported_size','unsupported_parameter','invalid_value','rate_limit_exceeded','rate_limit_error','model_not_found','insufficient_quota','permission_denied','authentication_error','overloaded','server_error','internal_error','service_unavailable','upstream_error','timeout','content_policy_violation'}
 class AgnesProviderError(RuntimeError):
- def __init__(self,status,body=b''):
+ def __init__(self,status,body=b'',retry_after=None):
   super().__init__(f'Agnes/provider HTTP {status}; raw response withheld')
   self.http_status=status;self.provider_code=None;self.provider_type=None
+  self.retry_after_seconds=min(120,int(retry_after))if isinstance(retry_after,str)and re.fullmatch(r'[0-9]{1,6}',retry_after)else None
   try:
    value=json.loads(body);error=value.get('error',{})
    if isinstance(error,dict):
@@ -67,7 +68,7 @@ class AgnesKeyPool:
    try:
     with urllib.request.urlopen(req,timeout=timeout)as response:return json.load(response)
    except urllib.error.HTTPError as exc:
-    status=exc.code
+    status=exc.code;retry_after=exc.headers.get('Retry-After')if exc.headers else None
     try:body=exc.read(8192)
     except Exception:body=b''
     exc.close()
@@ -76,7 +77,7 @@ class AgnesKeyPool:
      active=[k for k in candidates if k not in self._disabled]
      if not active:raise RuntimeError('No active credentials in the requested Agnes capability pool')from None
      key=active[0];headers={n:v for n,v in headers.items()if n.lower()!='authorization'};headers['Authorization']='Bearer '+key;continue
-    raise AgnesProviderError(status,body)from None
+    raise AgnesProviderError(status,body,retry_after=retry_after)from None
    except urllib.error.URLError:
     raise RuntimeError('Agnes/provider transport failure; private details withheld')from None
   raise RuntimeError('Agnes authentication fallback exhausted')

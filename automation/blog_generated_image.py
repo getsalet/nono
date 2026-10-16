@@ -166,7 +166,8 @@ def generate(item,blog,slots=None,max_attempts=3):
    if getattr(exc,'provider_code',None):row['provider_code']=exc.provider_code
    if getattr(exc,'provider_type',None):row['provider_type']=exc.provider_type
    if attempt<max_attempts-1 and((code in(429,500,502,503,504)or(code==403 and selected and len(selected)>1))or str(exc)=='Agnes/provider transport failure; private details withheld'):
-    time.sleep(min(60,15*(2**attempt)));continue
+    delay=max(min(120,30*(2**attempt)),getattr(exc,'retry_after_seconds',None)or 0)
+    row['retry_delay_seconds']=delay;time.sleep(delay);continue
    if code:raise RuntimeError(f'Image provider HTTP {code}; raw response withheld')from None
    raise RuntimeError('Image provider transport/format failure; private details withheld')from None
   except Exception as exc:
