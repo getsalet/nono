@@ -10,3 +10,25 @@ class FiniteMonitorTests(unittest.TestCase):
  def test_budget_and_remaining_window(self):self.assertFalse(self.allowed(attempts=5));self.assertFalse(self.allowed(remaining=650))
  def test_candidate_and_pause_stop_probes(self):self.assertFalse(self.allowed(received=True));self.assertFalse(self.allowed(control={'pause_image_production':True,'enabled_families':['tape20']}))
  def test_ambiguous_or_changed_scope(self):self.assertFalse(self.allowed(control={}));self.assertFalse(self.allowed(control={'pause_image_production':False,'enabled_families':['tape20','hose']}))
+
+class LargeQueueReadTests(unittest.TestCase):
+ def test_large_queue_uses_exact_blob(self):
+  import base64,json
+  from unittest.mock import patch
+  import monitor_blog_generators_one_hour as m
+  sha='a'*40;encoded=base64.b64encode(json.dumps({'items':[{'key':'fixture'}]}).encode()).decode()
+  with patch.object(m,'api',side_effect=[{'content':'','encoding':'none','sha':sha},{'content':encoded,'encoding':'base64'}])as call:
+   self.assertEqual(m.content('data/roya/backlink-queue.json')['items'][0]['key'],'fixture')
+   self.assertEqual(call.call_args.args[0],'/git/blobs/'+sha)
+ def test_small_json_needs_no_extra_request(self):
+  import base64
+  from unittest.mock import patch
+  import monitor_blog_generators_one_hour as m
+  with patch.object(m,'api',return_value={'content':base64.b64encode(b'{"items":[]}').decode(),'encoding':'base64'})as call:
+   self.assertEqual(m.content('data/roya/backlink-queue.json'),{'items':[]});self.assertEqual(call.call_count,1)
+ def test_unverified_blob_identifier_not_followed(self):
+  from unittest.mock import patch
+  import monitor_blog_generators_one_hour as m
+  with patch.object(m,'api',return_value={'content':'','sha':'unverified'})as call:
+   with self.assertRaises(RuntimeError):m.content('data/roya/backlink-queue.json')
+   self.assertEqual(call.call_count,1)

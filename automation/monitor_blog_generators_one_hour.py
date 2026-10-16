@@ -14,7 +14,15 @@ def api(path):
  headers={'Accept':'application/vnd.github+json','User-Agent':'AFP-finite-monitor/1.0'}
  if os.getenv('GH_TOKEN'):headers['Authorization']='Bearer '+os.environ['GH_TOKEN']
  with urllib.request.urlopen(urllib.request.Request(API+path,headers=headers),timeout=25)as r:return json.load(r)
-def content(path):return json.loads(base64.b64decode(api('/contents/'+path+'?ref=main')['content']))
+def content(path):
+ value=api('/contents/'+path+'?ref=main')
+ # Contents omits bodies above 1 MB: use the exact returned Git blob SHA.
+ if not value.get('content'):
+  sha=value.get('sha','')
+  if not re.fullmatch(r'[a-f0-9]{40}',sha):raise RuntimeError('Missing verified JSON blob identifier')
+  value=api('/git/blobs/'+sha)
+ if value.get('encoding')!='base64'or not value.get('content'):raise RuntimeError('JSON blob content unavailable')
+ return json.loads(base64.b64decode(value['content']))
 def probe_allowed(elapsed,remaining,attempts,last_probe,cooldown,now,received,control):
  return(remaining>660 and attempts<MAX_PROBES and not received and cooldown<=now and elapsed-last_probe>=PROBE_INTERVAL and control.get('pause_image_production')is False and control.get('enabled_families')==['tape20'])
 def snapshot():
