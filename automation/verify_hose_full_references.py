@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One cooldown-aware native-tier hose probe; no publication or release changes."""
+"""One cooldown-aware native-tier hose probe after isolated regression tests; no publication."""
 import copy,hashlib,json,os,re,subprocess,time
 from pathlib import Path
 import blog_reference_scene as scene

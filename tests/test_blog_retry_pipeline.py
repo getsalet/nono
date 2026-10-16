@@ -28,7 +28,18 @@ class RetryTests(unittest.TestCase):
    def image(row):
     if row['key']=='bad':raise RuntimeError('Product image rejected: wrong family')
    post={'title':'راهنمای انتخاب نوار تیپ','slug':'test-good','html':'<p>متن آزمایشی</p>'}
-   with patch('blog_image_runtime_control.generation_paused',return_value=False),patch.multiple(e,QUEUE=queue,ART=art,STATE=state),patch.dict(os.environ,{'FARSIBLOG_COUNT':'1','FARSIBLOG_DRY_RUN':'0','FARSIBLOG_TARGET':''}),patch.object(e.BASE,'AGNES_KEY','test-only-not-a-secret'),patch.object(c,'matrix_ready',return_value=True),patch.object(c,'build_queue'),patch.object(c,'prepare_image',side_effect=image),patch.object(e,'source_text',return_value='fixture'),patch.object(e,'links_for',return_value=[]),patch.object(e,'prompt',return_value='fixture'),patch.object(e,'agnes',return_value=post),patch.object(e,'qa',return_value=([],{'words':600})):
+   with patch('blog_image_runtime_control.generation_paused',return_value=False),patch.multiple(e,ROOT=root,QUEUE=queue,ART=art,STATE=state),patch.dict(os.environ,{'FARSIBLOG_COUNT':'1','FARSIBLOG_DRY_RUN':'0','FARSIBLOG_TARGET':''}),patch.object(e.BASE,'AGNES_KEY','test-only-not-a-secret'),patch.object(c,'matrix_ready',return_value=True),patch.object(c,'build_queue'),patch.object(c,'prepare_image',side_effect=image),patch.object(e,'source_text',return_value='fixture'),patch.object(e,'links_for',return_value=[]),patch.object(e,'prompt',return_value='fixture'),patch.object(e,'agnes',return_value=post),patch.object(e,'qa',return_value=([],{'words':600})):
     self.assertEqual(e.main(),0)
    result=e.load(queue,{})['items'];self.assertEqual(result[0]['status'],'failed');self.assertIn('next_retry_at',result[0]);self.assertEqual(result[1]['status'],'completed')
+ def test_shared_capacity_cooldown_does_not_generate_next_topic(self):
+  import time
+  from blog_image_backpressure import STATE as COOLDOWN
+  with tempfile.TemporaryDirectory()as tmp:
+   root=Path(tmp);queue=root/'queue.json';art=root/'art';state=root/'state.json'
+   e.save(queue,{'items':[{'key':'waiting','kind':'city','family':'tape20','status':'pending'}]})
+   e.save(root/COOLDOWN,{'retry_at_epoch':time.time()+300})
+   with patch('blog_image_runtime_control.generation_paused',return_value=False),patch.multiple(e,ROOT=root,QUEUE=queue,ART=art,STATE=state),patch.dict(os.environ,{'FARSIBLOG_COUNT':'1','FARSIBLOG_DRY_RUN':'0','FARSIBLOG_TARGET':''}),patch.object(e.BASE,'AGNES_KEY','test-only'),patch.object(c,'matrix_ready',return_value=True),patch.object(c,'build_queue'),patch.object(e,'remaining_publication_budget',return_value=1),patch.object(e,'source_text')as source,patch.object(e,'agnes')as text,patch.object(c,'prepare_image')as image:
+    self.assertEqual(e.main(),0)
+    source.assert_not_called();text.assert_not_called();image.assert_not_called()
+   self.assertEqual(e.load(queue,{})['items'][0]['status'],'pending')
 if __name__=='__main__':unittest.main()
