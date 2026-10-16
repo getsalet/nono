@@ -154,6 +154,34 @@ def conditioning_image(expected):
 
 def generate(item,blog,slots=None,max_attempts=3):
  if family_cancelled(item):raise RuntimeError('Image family explicitly cancelled by user')
+ from blog_image_queue import provider_slot
+ from blog_image_backpressure import require_open,ImageProviderBusy,defer,mark_success
+ with provider_slot(blog,identity(item,blog)) as lease:
+  if lease is not None:
+   # Re-read current shared cooldown AFTER owning the cross-runner lock.
+   git(['fetch','--quiet','origin','main'],roya.ROOT)
+   require_open(roya.ROOT)
+  try:raw=_generate(item,blog,slots,max_attempts)
+  except ImageProviderBusy as busy:
+   if lease is not None:
+    busy.shared_cooldown_attempted=True
+    try:
+     busy.set_retry(defer(roya.ROOT,busy.retry_at,checkpoint_asset))
+     busy.shared_cooldown_saved=True
+    except Exception:
+     lease.retain=True
+     item['_provider_cooldown_checkpoint_failed']=True
+   raise
+  else:
+   if lease is not None:
+    try:mark_success(roya.ROOT,checkpoint_asset)
+    except Exception:
+     lease.retain=True
+     raise RuntimeError('Image queue recovery checkpoint failed; lock retained')from None
+   return raw
+
+def _generate(item,blog,slots=None,max_attempts=3):
+ if family_cancelled(item):raise RuntimeError('Image family explicitly cancelled by user')
  from blog_image_gate import family
  expected=family(item)
  from blog_image_connection import settings
@@ -260,7 +288,8 @@ def prepare(item,blog,root=None):
     require_open(root)
     try:raw=generate(item,blog)
     except ImageProviderBusy as busy:
-     try:defer(root,busy.retry_at,checkpoint_asset)
+     try:
+      if not getattr(busy,'shared_cooldown_attempted',False):busy.set_retry(defer(root,busy.retry_at,checkpoint_asset))
      except Exception:item['_provider_cooldown_checkpoint_failed']=True
      raise busy
     tmp=cache.with_suffix('.tmp');tmp.write_bytes(raw);tmp.replace(cache)

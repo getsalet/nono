@@ -20,6 +20,7 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
 concurrency:
   group: roya-backlink-pipeline
@@ -90,6 +91,9 @@ jobs:
         run: python automation/build_roya_queue.py
       - name: Generate city backlink posts
         if: steps.control.outputs.proceed == '1'
+        env:
+          BLOG_IMAGE_QUEUE_ENABLED: '1'
+          BLOG_IMAGE_QUEUE_TOKEN: ${{ github.token }}
         run: python automation/roya_backlink_queue.py
       - name: Preserve Roya generation recovery checkpoint
         if: steps.control.outputs.proceed == '1' && (always())

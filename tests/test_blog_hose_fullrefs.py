@@ -28,7 +28,7 @@ class HoseFullReferenceTests(unittest.TestCase):
   from blog_image_watermark import present
   out=io.BytesIO();Image.new('RGB',(1024,768),'green').save(out,'PNG')
   reply={'data':[{'b64_json':base64.b64encode(out.getvalue()).decode()}]}
-  with patch.object(generated,'family_cancelled',return_value=False),patch.dict('os.environ',{'IMAGE_API_KEY':'unit-test-only'}),patch.object(generated.roya.BASE._key_pool,'fetch_json',return_value=reply)as fetch:
+  with patch('blog_image_queue.provider_slot',side_effect=lambda *a:__import__('contextlib').nullcontext()),patch.object(generated,'family_cancelled',return_value=False),patch.dict('os.environ',{'IMAGE_API_KEY':'unit-test-only'}),patch.object(generated.roya.BASE._key_pool,'fetch_json',return_value=reply)as fetch:
    image=generated.generate(self.item(),'loxblog',max_attempts=1)
   self.assertEqual(fetch.call_args.args[2]['extra_body']['image'],scene.references(self.item()))
   self.assertEqual(fetch.call_args.args[2]['size'],'1K')

@@ -35,7 +35,7 @@ class PreferredImagePoolTests(unittest.TestCase):
   item=TopicSceneContractTests().item('نوار تیپ پیاز؛ فاصله خطوط')
   buf=io.BytesIO();Image.new('RGB',(1024,768),'green').save(buf,'PNG');reply={'data':[{'b64_json':base64.b64encode(buf.getvalue()).decode()}]}
   pool=g.roya.BASE._key_pool
-  with patch.dict('os.environ',{'IMAGE_API_KEY':'','AGNES_IMAGE_PREFERRED_KEY_SLOTS':'AGNES_API_KEY14,AGNES_API_KEY15'}),patch.object(g,'capability_slots',return_value=['AGNES_API_KEY3','AGNES_API_KEY14','AGNES_API_KEY15']),patch.object(pool,'keys',['k3','k14','k15']),patch.object(pool,'slots',{'k3':'AGNES_API_KEY3','k14':'AGNES_API_KEY14','k15':'AGNES_API_KEY15'}),patch.object(pool,'fetch_json',return_value=reply)as fetch:
+  with patch('blog_image_queue.provider_slot',side_effect=lambda *a:__import__('contextlib').nullcontext()),patch.dict('os.environ',{'IMAGE_API_KEY':'','AGNES_IMAGE_PREFERRED_KEY_SLOTS':'AGNES_API_KEY14,AGNES_API_KEY15'}),patch.object(g,'capability_slots',return_value=['AGNES_API_KEY3','AGNES_API_KEY14','AGNES_API_KEY15']),patch.object(pool,'keys',['k3','k14','k15']),patch.object(pool,'slots',{'k3':'AGNES_API_KEY3','k14':'AGNES_API_KEY14','k15':'AGNES_API_KEY15'}),patch.object(pool,'fetch_json',return_value=reply)as fetch:
    g.generate(item,'roya')
    self.assertEqual(set(fetch.call_args.kwargs['allowed_keys']),{'k14','k15'})
 

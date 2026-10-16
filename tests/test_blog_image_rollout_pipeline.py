@@ -13,10 +13,11 @@ import roya_backlink_queue as roya
 class ImageRolloutTests(unittest.TestCase):
  def setUp(self):
   self.image_env=patch.dict('os.environ',{'IMAGE_API_KEY':''});self.image_env.start();self.addCleanup(self.image_env.stop)
+  self.queue=patch('blog_image_queue.provider_slot',side_effect=lambda *a:__import__('contextlib').nullcontext());self.queue.start();self.addCleanup(self.queue.stop)
   self.item={'key':'image-fixture','family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'فاصله نوار تیپ در کشت گوجه فرنگی','summary':'فاصله خطوط تیپ و آرایش بوته‌های گوجه فرنگی در آبیاری قطره‌ای و توزیع یکنواخت رطوبت'}}
   buf=io.BytesIO();__import__('blog_image_watermark').apply(Image.new('RGB',(1200,675),(190,170,140))).save(buf,'WEBP');self.raw=buf.getvalue()
  def test_generation_never_calls_rejected_compositor(self):
-  source=__import__('inspect').getsource(generated.generate)
+  source=__import__('inspect').getsource(generated.generate)+__import__('inspect').getsource(generated._generate)
   self.assertNotIn('compose(',source)
   self.assertIn('blog_reference_scene',source)
   from blog_reference_scene import prompt,references,topic_hash

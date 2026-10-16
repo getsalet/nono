@@ -184,6 +184,7 @@ def main():
     for item in candidates[:min(9,max(3,count*3))]:
         if len(completed)>=count:break
         from blog_image_backpressure import require_open,ImageProviderBusy
+        from blog_image_queue import ImageQueueBusy
         try:require_open(ROOT)
         except ImageProviderBusy:
             print('Shared image-provider cooldown active; no new source/text/image calls.');break
@@ -226,7 +227,7 @@ def main():
                     errors,info=qa(item,obj,links);print(f'{item["key"]}: attempt={attempt+1}, words={info.get("words")}, errors={len(errors)}',flush=True)
                     if not errors:break
         except Exception as exc:
-            provider_busy=isinstance(exc,ImageProviderBusy)
+            provider_busy=isinstance(exc,(ImageProviderBusy,ImageQueueBusy))
             if provider_busy:item['image_retry_at']=exc.retry_at
             errors=['generation/source/validation failed: '+type(exc).__name__+' [stage='+stage+']; '+exception_detail(exc)]
             item['failure_stage']=stage

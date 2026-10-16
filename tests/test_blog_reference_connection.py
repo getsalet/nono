@@ -6,6 +6,8 @@ ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'automation'
 import blog_generated_image as generated
 from blog_image_connection import settings
 class ReferenceConnectionTests(unittest.TestCase):
+ def setUp(self):
+  self.queue=patch('blog_image_queue.provider_slot',side_effect=lambda *a:__import__('contextlib').nullcontext());self.queue.start();self.addCleanup(self.queue.stop)
  def item(self):return {'key':'reference-connection','family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'نوار تیپ پیاز؛ فاصله کشت','summary':'مقاله درباره فاصله خطوط کشت پیاز و یکنواختی آبیاری در مزرعه است و از همان موضوع برای صحنه استفاده می‌شود.'}}
  def response(self):
   out=io.BytesIO();Image.new('RGB',(1024,768),'green').save(out,'PNG')

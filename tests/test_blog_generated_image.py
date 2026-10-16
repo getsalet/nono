@@ -20,6 +20,8 @@ class ConditioningTests(unittest.TestCase):
  def setUp(self):
   from unittest.mock import patch
   self.image_env=patch.dict('os.environ',{'IMAGE_API_KEY':''});self.image_env.start();self.addCleanup(self.image_env.stop)
+  import contextlib
+  self.queue=patch('blog_image_queue.provider_slot',side_effect=lambda *a:contextlib.nullcontext());self.queue.start();self.addCleanup(self.queue.stop)
  def test_single_combined_reference_both_families(self):
   import base64,io
   from PIL import Image

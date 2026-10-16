@@ -13,6 +13,7 @@ on:
     paths: [automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, automation/publish_farsiblog_posts.py, automation/content_originality.py, tests/test_farsiblog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/farsiblog-content.yml]
 permissions:
   contents: write
+  actions: read
 concurrency:
   group: farsiblog-content-pipeline
   cancel-in-progress: false
@@ -100,6 +101,9 @@ jobs:
         run: python automation/reconcile_farsiblog_editorials.py
       - name: Generate independent city article with approved image
         if: steps.control.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1')
+        env:
+          BLOG_IMAGE_QUEUE_ENABLED: '1'
+          BLOG_IMAGE_QUEUE_TOKEN: ${{ github.token }}
         run: python automation/farsiblog_backlink_queue.py
       - name: Install Playwright
         if: steps.control.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.FARSIBLOG_PUBLISH == '1' && env.FARSIBLOG_DRY_RUN != '1')

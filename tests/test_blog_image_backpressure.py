@@ -13,7 +13,7 @@ class BackpressureTests(unittest.TestCase):
   self.assertIsNone(AgnesProviderError(401,b'{"error":{"message":"image queue is full"}}').provider_code)
  def test_full_queue_never_rotates_credentials_or_retries_immediately(self):
   e=AgnesProviderError(503,b'{"error":{"message":"image queue is full, please retry later"}}')
-  with patch.dict('os.environ',{'IMAGE_API_KEY':'capacity-test-only','AGNES_IMAGE_TRANSIENT_FAILOVER':'1'}),patch.object(g.roya.BASE._key_pool,'fetch_json',side_effect=e)as fetch,patch.object(g,'capability_slots',side_effect=AssertionError('Do not rotate on shared capacity')),patch.object(g.time,'sleep')as sleep:
+  with patch('blog_image_queue.provider_slot',side_effect=lambda *a:__import__('contextlib').nullcontext()),patch.dict('os.environ',{'IMAGE_API_KEY':'capacity-test-only','AGNES_IMAGE_TRANSIENT_FAILOVER':'1'}),patch.object(g.roya.BASE._key_pool,'fetch_json',side_effect=e)as fetch,patch.object(g,'capability_slots',side_effect=AssertionError('Do not rotate on shared capacity')),patch.object(g.time,'sleep')as sleep:
    with self.assertRaises(b.ImageProviderBusy):g.generate(self.item(),'roya')
    self.assertEqual(fetch.call_count,1);sleep.assert_not_called()
  def test_prepare_persists_one_shared_cooldown_then_suppresses_new_api_calls(self):

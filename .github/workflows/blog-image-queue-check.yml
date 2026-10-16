@@ -1,0 +1,60 @@
+name: Verify shared image queue on two runners (no image API)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [automation/blog_image_queue.py, automation/verify_blog_image_queue.py, tests/test_blog_image_queue.py, .github/workflows/blog-image-queue-check.yml]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: blog-image-queue-check
+  cancel-in-progress: false
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+  probe:
+    needs: tests
+    strategy:
+      fail-fast: false
+      matrix: {worker: [A, B]}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Hold the real shared mutex; never request an image
+        env:
+          BLOG_IMAGE_QUEUE_TOKEN: ${{ github.token }}
+        run: python automation/verify_blog_image_queue.py probe ${{ matrix.worker }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: image-queue-probe-${{ matrix.worker }}
+          path: artifacts/blog-image-queue-check/probe-${{ matrix.worker }}.json
+          retention-days: 3
+  verify:
+    needs: probe
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: image-queue-probe-*
+          merge-multiple: true
+          path: artifacts/blog-image-queue-check
+      - name: Verify cross-runner non-overlap and checkpoint proof
+        run: python automation/verify_blog_image_queue.py verify

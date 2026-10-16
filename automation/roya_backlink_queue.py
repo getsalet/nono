@@ -556,6 +556,7 @@ def main():
     completed = []
     for item in targets:
         from blog_image_backpressure import require_open,ImageProviderBusy
+        from blog_image_queue import ImageQueueBusy
         try:require_open(ROOT)
         except ImageProviderBusy:
             print('Shared image-provider cooldown active; no new text/image calls.');break
@@ -567,6 +568,7 @@ def main():
         links = approved_links(item, lib)
         image_url = None
         errors, obj = ['not generated'], None
+        shared_image_deferred=False
         stage='generation'
         for attempt in range(1, ATTEMPTS + 1):
             try:
@@ -589,7 +591,9 @@ def main():
             except Exception as exc:
                 errors = ['agnes error: ' + str(exc)[:200]]
                 print(f'{item["key"]} attempt={attempt} {errors[0]}', flush=True)
-                if isinstance(exc,ImageProviderBusy):break
+                if isinstance(exc,(ImageProviderBusy,ImageQueueBusy)):
+                    shared_image_deferred=True
+                    break
                 continue
             # Titles are owned by the approved matrix, not an AI spelling choice.
             obj['title'] = item['assigned_title']
@@ -624,6 +628,7 @@ def main():
         state['in_progress'] = None
         save_json(QUEUE_PATH, queue)
         save_json(STATE_PATH, state)
+        if shared_image_deferred:break  # Never generate prose for the next item while globally blocked.
     ready = [i for i in queue['items'] if i.get('status') == 'completed' and not i.get('published')]
     save_json(PUBLISH_QUEUE, {'generated_at': now(), 'blog': BLOG, 'count': len(ready),
                               'items': [{'key': i['key'], 'title': i.get('title', ''), 'slug': i.get('slug', ''),
