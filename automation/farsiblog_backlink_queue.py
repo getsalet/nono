@@ -172,6 +172,8 @@ def main():
     if any(x.get('status')=='completed'and not x.get('published')and x.get('kind')in('city','article')for x in q['items']):refresh_ready(q);print('Approved content already waiting; backlog capped.');return 0
     recover_stale_image_deferrals(q)
     candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article') and retry_due(x)]
+    from blog_generated_image import family_enabled
+    candidates=[x for x in candidates if family_enabled(x,ROOT)]
     if target:candidates=[x for x in candidates if x['key']==target]
     else:
         city=[x for x in candidates if x.get('kind')=='city'];articles=[x for x in candidates if x.get('kind')=='article'];candidates=[]

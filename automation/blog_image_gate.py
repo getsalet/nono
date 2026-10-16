@@ -68,6 +68,8 @@ def visual_override_rejected(digest,root):
 
 def review(item,url,root=None,_candidate=None):
  expected=family(item)
+ from blog_generated_image import family_enabled
+ if not family_enabled(item,root):raise RuntimeError('Product image rejected: family held pending direct visual acceptance')
  if _candidate is None:raw,(w,h),fmt=fetch(url)
  else:
   if not url.startswith('generated://')or not isinstance(_candidate,bytes)or len(_candidate)>8*1024*1024:raise RuntimeError('Invalid local generation candidate')
@@ -147,7 +149,8 @@ def validate_record(item):
 
 def generated_record_errors(item,blog,root=None):
  """Bind generated image to THIS blog/article; never accept another post's asset."""
- from blog_generated_image import POLICY as generation_policy,identity,rollout_enabled
+ from blog_generated_image import POLICY as generation_policy,identity,rollout_enabled,family_enabled
+ if not family_enabled(item,root):return ['Product family held pending direct visual acceptance']
  generation=item.get('image_generation',{})
  if not generation and not rollout_enabled(blog,root):return []
  errors=[];asset_id=identity(item,blog)

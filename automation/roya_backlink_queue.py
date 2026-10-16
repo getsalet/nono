@@ -498,6 +498,8 @@ def pick(queue, state, count):
                if i.get('status') == 'pending' or (RETRY_FAILED and i.get('status') == 'failed')]
     if ONLY:
         pending = [i for i in pending if i['key'] == ONLY] or [i for i in queue['items'] if i['key'] == ONLY]
+    from blog_generated_image import family_enabled
+    pending=[i for i in pending if family_enabled(i,ROOT)]
     buckets, order = {}, []
     for item in pending:
         if item['province'] not in buckets:

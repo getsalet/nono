@@ -11,6 +11,14 @@ from blog_reference_scene import POLICY
 BLOGS={'roya','farsiblog','rozblog','blogfa','loxblog'}
 RAW='https://raw.githubusercontent.com/getsalet/nono/'
 
+def family_enabled(item,root=None):
+ """Pure scope check; legacy fixtures without an explicit scope are unchanged."""
+ path=Path(root or roya.ROOT)/'data/blog-generated-image-control.json'
+ if not path.exists():return True
+ control=json.loads(path.read_text());scope=control.get('enabled_families')
+ if scope is None:return True
+ return isinstance(scope,list)and item.get('family')in scope
+
 def rollout_enabled(blog,root=None):
  if blog not in BLOGS:raise RuntimeError('Explicit supported blog required')
  root=Path(root or roya.ROOT);path=root/'data/blog-generated-image-control.json'
@@ -18,20 +26,27 @@ def rollout_enabled(blog,root=None):
  try:control=json.loads(path.read_text())
  except (OSError,ValueError):raise RuntimeError('Image rollout control unreadable; refusing unchecked images')from None
  if control.get('pause_image_production')is True:
-  raise RuntimeError('Image production explicitly paused: user rejected the current method; no fallback or submission')
+  raise RuntimeError('Image production explicitly paused: no fallback or submission')
  if control.get('enabled')is not True:return False
  if control.get('policy')!=POLICY or control.get('direct_visual_approval')is not True:raise RuntimeError('Current direct visual acceptance required for generated images')
  report=json.loads((root/'data/blog-generated-image-acceptance.json').read_text())
- from blog_reference_scene import RECIPE_VERSION
+ from blog_reference_scene import RECIPE_VERSION,recipe_for
  from blog_image_gate import POLICY as review_policy,visual_override_rejected
  from blog_image_connection import settings
  if control.get('recipe_version')!=RECIPE_VERSION or report.get('recipe_version')!=RECIPE_VERSION or report.get('connection')!=settings(roya.BASE.AGNES_BASE):raise RuntimeError('Current reference recipe and image connection acceptance required')
- rows=report.get('families',[])
- if any(r.get('review',{}).get('policy')!=review_policy or visual_override_rejected(r.get('review',{}).get('sha256'),root)for r in rows):raise RuntimeError('Current non-rejected visual review required for both reference samples')
- if report.get('policy')!=POLICY or report.get('passed')is not True or {r.get('family')for r in rows if r.get('passed')is True}!={'tape20','hose'}:raise RuntimeError('Both genuine product families must pass image acceptance')
+ scoped='enabled_families'in control;scope=control.get('enabled_families',['tape20','hose'])
+ if not isinstance(scope,list)or not scope or len(scope)!=len(set(scope))or not set(scope)<={'tape20','hose'}:raise RuntimeError('Explicit nonempty known family scope required')
+ rows=[r for r in report.get('families',[])if r.get('family')in scope]
+ if report.get('policy')!=POLICY or len(rows)!=len(scope)or {r.get('family')for r in rows if r.get('passed')is True}!=set(scope)or(not scoped and report.get('passed')is not True):raise RuntimeError('Both genuine product families must pass image acceptance unless an explicit approved subset is selected')
  approved=control.get('approved_samples',{})
  for row in rows:
-  if approved.get(row['family'])!=row.get('review',{}).get('sha256'):raise RuntimeError('Direct image approval must match the tested image bytes')
+  digest=row.get('review',{}).get('sha256')
+  if row.get('review',{}).get('policy')!=review_policy or visual_override_rejected(digest,root):raise RuntimeError('Current non-rejected visual review required for enabled families')
+  if approved.get(row['family'])!=digest:raise RuntimeError('Direct image approval must match the tested image bytes')
+  if scoped:
+   if row.get('request_contract',{}).get('family_recipe')!=recipe_for({'family':row['family']}):raise RuntimeError('Current enabled-family recipe required')
+   visual=json.loads((root/'data/blog-generated-image-visual-review.json').read_text())
+   if digest not in visual.get('approved_sha256',[]):raise RuntimeError('Directly inspected enabled-family sample required')
  return blog in control.get('blogs',[])
 
 def capability_slots(root=None):
@@ -205,7 +220,9 @@ def generate(item,blog,slots=None,max_attempts=3):
 
 def prepare(item,blog,root=None):
  from blog_image_gate import review
- root=Path(root or roya.ROOT);asset_id=identity(item,blog);path=f'assets/blog-generated/{blog}/{asset_id}.webp'
+ root=Path(root or roya.ROOT)
+ if not family_enabled(item,root):raise RuntimeError('Image family is held pending direct visual acceptance; no generation or fallback')
+ asset_id=identity(item,blog);path=f'assets/blog-generated/{blog}/{asset_id}.webp'
  item['_generation_stage']='remote_cache'
  url=existing_asset(path,root)
  if url:
