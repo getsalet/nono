@@ -66,4 +66,29 @@ class DraftPreflightTests(unittest.TestCase):
  def test_prompt_forbids_pipe_support_and_white_ribbon(self):
   prompt=scene.prompt(self.item,'loxblog')
   self.assertIn('visible strip of bare soil',prompt);self.assertIn('No white ribbon',prompt)
+ def test_invalid_text_is_triaged_during_image_retry_window(self):
+  import time
+  self.enqueue();row=stock.rows(self.root)[0];row['retry_at']=time.time()+1800;stock.persist(self.root,row)
+  with patch.object(draft,'check_saved',return_value=['Bad text']),patch.object(generated,'prepare_now')as api:
+   stock.worker_once(self.root)
+  api.assert_not_called();self.assertEqual(stock.rows(self.root)[0]['status'],'needs_text_repair')
+ def test_crop_free_technical_scene_does_not_require_invented_botany(self):
+  item=copy.deepcopy(self.item);item['_image_article_context']={'title':'تفاوت نوار تیپ بغل دوخت و پلاکدار؛ راهنمای مستندسازی','summary':'مستندسازی نمونه واقعی برای بررسی درز و محل خروجی آب پیش از تصمیم نهایی درباره نوار انجام می شود.'}
+  item['_image_qa_feedback']='Keep the named crop botanically unmistakable: the exact named crop from the article title with botanically accurate, unmistakable morphology. Show this exact installed evidence: crop-specific leaves, continuous installed irrigation lines and localized root-zone wetting.'
+  prompt=scene.prompt(item,'blogfa');plan=scene.scene_plan(item,'blogfa')
+  self.assertEqual(plan['intent'],'tape_construction');self.assertIn('welded edge seam',prompt)
+  self.assertNotIn('Keep the named crop',prompt);self.assertNotIn('crop-specific leaves',prompt)
+
+ def test_shared_provider_wait_does_not_prevent_remaining_text_triage(self):
+  import time
+  from blog_image_backpressure import ImageProviderBusy
+  self.enqueue();other=copy.deepcopy(self.item);other['key']='bad-later'
+  with self.assertRaises(stock.ImagePending):stock.request_image(other,'loxblog',self.root)
+  source=self.root/'data/loxblog/backlink-queue.json';source.write_text(json.dumps({'items':[self.item,other]}))
+  def check(request,*a):return ['Bad text']if request['key']=='bad-later'else[]
+  with patch.object(draft,'check_saved',side_effect=check),patch.object(generated,'rollout_enabled',return_value=True),patch('blog_image_backpressure.require_open',side_effect=ImageProviderBusy(time.time()+600)),patch.object(generated,'prepare_now')as api:
+   result=stock.worker_once(self.root)
+  api.assert_not_called();self.assertEqual(result['status'],'waiting_provider')
+  self.assertEqual(next(r for r in stock.rows(self.root)if r['key']=='bad-later')['status'],'needs_text_repair')
+
 if __name__=='__main__':unittest.main()

@@ -76,7 +76,7 @@ class ReferenceConnectionTests(unittest.TestCase):
   a={'title':'نوار تیپ بامیه در قرقری؛ مراقبت حین بهره‌برداری','summary':'پایش مسیر جریان آب و فاصله قطره‌چکان‌ها برای آبیاری منظم انجام می‌شود.'}
   self.assertEqual(scene.reference.named_crop(a),'بامیه (okra)')
   self.assertIn('okra',scene.reference.crop_identity_spec(a))
-  self.assertEqual(scene.reference.named_crop({'title':'پایش مسیر آبیاری'}),'the exact named crop from the article title')
+  self.assertEqual(scene.reference.named_crop({'title':'پایش مسیر آبیاری'}),'none; neutral seedlings allowed, no named crop required')
   self.assertEqual(scene.reference.named_crop({'title':'آبیاری سیر','summary':'پایش بامیه'}),'سیر (garlic)')
 
  def test_retry_after_is_bounded_numeric_metadata_only(self):

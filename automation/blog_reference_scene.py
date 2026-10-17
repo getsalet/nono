@@ -31,7 +31,9 @@ def role(item):
 
 def scene_plan(item,blog):
  a=article(item);text=_lexical_text(a['title']+' '+a['focus'])
- if 'اتصال' in text:
+ if any(term in text for term in ('بغل دوخت','پلاکدار','پلاک دار')):
+  intent='tape_construction';evidence='a close technical view of two short unbranded thin flattened drip-tape sample sections lying parallel on bare soil: one with a visible welded edge seam, the other with a discreet integrated emitter; a continuous thin installed drip-tape lateral remains visible nearby. These are small tape samples, not additional commercial rolls or packages; no invented labels or dimensions'
+ elif 'اتصال' in text:
   intent='connection';evidence='one closed ribbed compression union installed inline between two continuous black irrigation pipes; the joined ends and seal are visible, no open pipe end'
  elif 'فشار' in text:
   intent='pressure';evidence='one small pressure gauge on a short normal threaded port of a continuous irrigation header, and a separate thin flattened drip-tape lateral connected by a normal small take-off fitting; gauge face angled away so no readable scale or pressure rating is invented'
@@ -46,7 +48,7 @@ def scene_plan(item,blog):
  elif any(k in text for k in ('عملکرد','برداشت')):
   intent='crop';evidence='uniform healthy crop canopy and visible continuous irrigation lines near the roots'
  else:
-  intent='agronomy';evidence='crop-specific leaves, continuous installed irrigation lines and localized root-zone wetting'
+  intent='agronomy';evidence=('crop-specific leaves, 'if _crop_key(a)else'neutral small seedlings, ')+'continuous thin flattened installed drip-tape laterals and localized root-zone wetting'
  cameras=['close side view','high oblique close view','medium three-quarter technical view']
  camera=cameras[int(hashlib.sha256((a['slug']+'|'+blog).encode()).hexdigest()[:6],16)%len(cameras)]
  return {'article_title':a['title'],'scene_contract':SCENE_CONTRACT,'setting':_setting(a),'role':3 if intent in('connection','pressure','filtration','flushing')else 2,'crop':reference.named_crop(a),'botany':reference.crop_identity_spec(a),'visual_brief':reference.visual_brief(a),'evidence':evidence,'intent':intent,'camera':camera,'recipe':RECIPE_VERSION}
@@ -118,6 +120,11 @@ def _setting(a):
  return 'a non-geolocated agricultural crop bed with soil; no invented location or climate'
 
 def _feedback_direction(a,plan,feedback):
+ # Remove stale generic species demands created by the former no-crop fallback.
+ if not _crop_key(a):
+  feedback=re.sub(r'Keep the named crop botanically unmistakable:[^.]*\.\s*','',feedback)
+  feedback=feedback.replace('Match the crop, setting and installed evidence of this article.','Match the setting and installed evidence of this article.')
+  feedback=feedback.replace('Show this exact installed evidence: crop-specific leaves, continuous installed irrigation lines and localized root-zone wetting.','Show this exact installed evidence: '+plan['evidence']+'.')
  flags={
   'crop_contradiction':'Keep the named crop botanically unmistakable: '+plan['botany']+'.',
   'topic_match':'Match the crop, setting and installed evidence of this article.',
@@ -161,9 +168,9 @@ def _crop_key(a):
  return None
 def _named_crop(a):
  key=_crop_key(a)
- return f'{key} ({reference.CROPS[key]})'if key else'the exact named crop from the article title'
+ return f'{key} ({reference.CROPS[key]})'if key else'none; neutral seedlings allowed, no named crop required'
 def _crop_identity(a):
  key=_crop_key(a)
- return reference.CROP_VISUALS.get(key,f'{key} ({reference.CROPS[key]}) with botanically accurate leaves, stems, growth habit and harvest stage')if key else'the exact named crop from the article title with botanically accurate, unmistakable morphology'
+ return reference.CROP_VISUALS.get(key,f'{key} ({reference.CROPS[key]}) with botanically accurate leaves, stems, growth habit and harvest stage')if key else'neutral small seedlings; no species-specific crop requirement'
 reference.named_crop=_named_crop
 reference.crop_identity_spec=_crop_identity

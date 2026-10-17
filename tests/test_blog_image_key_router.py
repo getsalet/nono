@@ -144,4 +144,30 @@ class ImageKeyRouterTests(unittest.TestCase):
   source=inspect.getsource(images.generate)
   self.assertLess(source.index('with provider_slot('),source.index('raw=route_image('))
   self.assertIn("getattr(busy,'key_scoped',False):raise",source)
+ def prefer_health(self):
+  path=self.root/router.CONFIG;cfg=json.loads(path.read_text());cfg['prefer_recent_success_seconds']=21600;path.write_text(json.dumps(cfg))
+ def health_state(self,**overrides):
+  now=time.time();rows={self.names[0]:{'status':'temporary_failure','retry_at_epoch':0,'failures':7,'http_status':503},self.names[2]:{'status':'image_healthy','http_status':200,'retry_at_epoch':0,'last_success_at_epoch':now-60}}
+  rows[self.names[2]].update(overrides)
+  (self.root/router.STATE).write_text(json.dumps({'policy':router.POLICY,'cursor':0,'keys':rows}))
+ def test_recent_real_success_precedes_failed_half_open_account(self):
+  self.prefer_health();self.health_state();chosen=[]
+  self.run_route(lambda *a,**kw:chosen.extend(kw['slots'])or b'ok')
+  self.assertEqual(chosen,[self.names[2]])
+ def test_healthy_priority_never_shortens_key_cooldown(self):
+  self.prefer_health();self.health_state(retry_at_epoch=time.time()+600);chosen=[]
+  self.run_route(lambda *a,**kw:chosen.extend(kw['slots'])or b'ok')
+  self.assertEqual(chosen,[self.names[0]])
+ def test_stale_success_does_not_override_rotation(self):
+  self.prefer_health();self.health_state(last_success_at_epoch=time.time()-21601);chosen=[]
+  self.run_route(lambda *a,**kw:chosen.extend(kw['slots'])or b'ok')
+  self.assertEqual(chosen,[self.names[0]])
+ def test_health_preference_cannot_bypass_shared_rate_limit(self):
+  self.prefer_health();self.health_state()
+  p=self.root/router.STATE;value=json.loads(p.read_text());value['shared_retry_at_epoch']=time.time()+600;p.write_text(json.dumps(value))
+  with self.assertRaises(ImageProviderBusy):self.run_route(lambda *a,**kw:self.fail('Shared stop must win'))
+ def test_invalid_health_window_fails_closed(self):
+  self.prefer_health();p=self.root/router.CONFIG;cfg=json.loads(p.read_text());cfg['prefer_recent_success_seconds']=True;p.write_text(json.dumps(cfg))
+  with self.assertRaisesRegex(RuntimeError,'routing window'):self.run_route(lambda *a,**kw:self.fail('Bad config cannot request'))
+
 if __name__=='__main__':unittest.main()

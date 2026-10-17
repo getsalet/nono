@@ -56,4 +56,19 @@ class ScenePhysicalityTests(unittest.TestCase):
   self.assertIn("if errors:\n            item['failure_stage']=stage",source)
   self.assertIn("else:failed.append(item['key'])",source)
 
+ def test_no_named_crop_never_injects_okra_rule(self):
+  item=copy.deepcopy(self.item);item['_image_article_context']={'title':'تفاوت نوار تیپ بغل دوخت و پلاکدار؛ راهنمای مستندسازی','summary':'بررسی درز کناری نوار و محل قطره چکان داخلی در نمونه های واقعی برای مستندسازی پیش از انتخاب انجام می شود.'}
+  reply={'choices':[{'message':{'content':json.dumps(self.verdict)}}]}
+  with tempfile.TemporaryDirectory()as d,patch.object(generated,'family_enabled',return_value=True),patch.object(gate,'fetch',return_value=(self.raw,(1200,900),'WEBP')),patch.object(roya.BASE,'next_agnes_key',return_value='fixture'),patch.object(roya.BASE,'fetch_json',return_value=reply)as api:
+   gate.review(item,'generated://roya/'+'b'*32,Path(d),_candidate=self.raw)
+  instruction=api.call_args.args[2]['messages'][0]['content'][0]['text']
+  self.assertIn('No crop species is assigned',instruction);self.assertNotIn('For okra require',instruction)
+  self.assertIn('welded edge seam',instruction)
+ def test_okra_botany_guard_remains_for_actual_okra_article(self):
+  item=copy.deepcopy(self.item);item['_image_article_context']['title']='نوار تیپ بامیه؛ بازبینی اتصال'
+  reply={'choices':[{'message':{'content':json.dumps(self.verdict)}}]}
+  with tempfile.TemporaryDirectory()as d,patch.object(generated,'family_enabled',return_value=True),patch.object(gate,'fetch',return_value=(self.raw,(1200,900),'WEBP')),patch.object(roya.BASE,'next_agnes_key',return_value='fixture'),patch.object(roya.BASE,'fetch_json',return_value=reply)as api:
+   gate.review(item,'generated://roya/'+'c'*32,Path(d),_candidate=self.raw)
+  self.assertIn('For okra require',api.call_args.args[2]['messages'][0]['content'][0]['text'])
+
 if __name__=='__main__':unittest.main()

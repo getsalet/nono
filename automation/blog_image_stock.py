@@ -153,8 +153,8 @@ def worker_once(root):
  # Prefer never/less-attempted drafts. With a 20-minute worker, a five-minute
  # per-item retry alone would otherwise select the same oldest failure forever.
  pending=sorted((r for r in rows(root)if r['status']in('requested','processing')),key=lambda r:(r.get('attempts',0),r.get('started_at',r['created_at']),r['created_at']))
+ waiting_result=None
  for row in pending:
-  if row.get('retry_at',0)>time.time():continue
   blog=row['blog'];item=copy.deepcopy(row['item']);asset=row['asset_id']
   with admission(root,blog,asset):
    latest=read(root,request_path(asset))
@@ -177,9 +177,12 @@ def worker_once(root):
      row.update(status='requested',retry_at=time.time()+300,last_error='saved_draft_unavailable');persist(root,row);continue
     if errors:
      row.update(status='needs_text_repair',last_error='text_preflight_failed',text_errors=errors[:12]);persist(root,row);continue
+   # Text triage is local and must not wait for an IMAGE retry/cooldown.
+   if row.get('retry_at',0)>time.time():continue
    if not rollout_enabled(blog,root):raise RuntimeError('Worker rollout acceptance unavailable')
    try:require_open(root)
-   except ImageProviderBusy as exc:return {'status':'waiting_provider','retry_at':exc.retry_at,'provider_requests':0}
+   except ImageProviderBusy as exc:
+    waiting_result={'status':'waiting_provider','retry_at':exc.retry_at,'provider_requests':0};continue
    row.update(status='processing',attempts=row['attempts']+1,started_at=time.time());persist(root,row)
   try:
    url=prepare_now(item,blog,root,max_rounds=1)
@@ -203,7 +206,7 @@ def worker_once(root):
     return {'status':current['status'],'asset_id':asset,'publication_attempted':False}
    persist(root,row)
   return {'status':row['status'],'asset_id':asset,'blog':blog,'publication_attempted':False}
- return {'status':'idle','provider_requests':0,'publication_attempted':False}
+ return waiting_result or {'status':'idle','provider_requests':0,'publication_attempted':False}
 
 def main():
  root=Path(__file__).resolve().parents[1]
