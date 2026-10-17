@@ -509,6 +509,8 @@ def pick(queue, state, count):
     pending=[i for i in pending if family_enabled(i,ROOT)]
     from blog_image_stock import awaiting
     pending=[i for i in pending if not awaiting(i,ROOT)]
+    from blog_image_stock_preflight import eligible
+    pending=eligible(pending,'roya',ROOT)
     buckets, order = {}, []
     for item in pending:
         if item['province'] not in buckets:
@@ -659,7 +661,8 @@ def main():
                                          'item_file': str(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', i['key']) + '.json'))}
                                         for i in ready]})
     from blog_generation_status import write as write_generation_status
-    run_status=write_generation_status(ROOT,'roya',completed,failed,blocked_until,waiting=waiting)
+    from blog_image_stock_preflight import waiting_keys
+    run_status=write_generation_status(ROOT,'roya',completed,failed,blocked_until,waiting=waiting or waiting_keys('roya',ROOT))
     done, total = len(state['completed_keys']), len(queue['items'])
     STATUS_MD.write_text(
         '# صف بک‌لینک وبلاگ AFP\n\n'

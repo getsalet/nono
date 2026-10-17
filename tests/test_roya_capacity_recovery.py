@@ -25,7 +25,7 @@ class RoyaCapacityRecoveryTests(unittest.TestCase):
    rows=[self.row(),{**self.row(),'key':'no-draft'},{**self.row(),'key':'future','next_retry_at':'2099-01-01T00:00:00Z'},{**self.row(),'key':'visual','last_error':'Product image rejected: geometry'}]
    for row in rows:
     if row['key']!='no-draft':r.save_json(Path(d)/(re.sub(r'[^A-Za-z0-9._-]+','_',row['key'])+'.json'),self.saved(row))
-   with patch.multiple(r,ITEMS=Path(d),RETRY_FAILED=False,ONLY=''),patch('blog_generated_image.family_enabled',return_value=True):
+   with patch.multiple(r,ROOT=Path(d),ITEMS=Path(d),RETRY_FAILED=False,ONLY=''),patch('blog_generated_image.family_enabled',return_value=True):
     self.assertEqual([x['key']for x in r.pick({'items':rows},{},3)],['city/test'])
  def test_explicit_target_cannot_reselect_published_or_completed(self):
   for status in ['published','completed','processing']:

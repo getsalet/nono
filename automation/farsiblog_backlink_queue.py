@@ -176,6 +176,8 @@ def main():
     from blog_image_stock import awaiting
     candidates=[x for x in candidates if not awaiting(x,ROOT)]
     candidates=[x for x in candidates if family_enabled(x,ROOT)]
+    from blog_image_stock_preflight import eligible,waiting_keys
+    candidates=eligible(candidates,CITY_BLOG,ROOT)
     if target:candidates=[x for x in candidates if x['key']==target]
     else:
         city=[x for x in candidates if x.get('kind')=='city'];articles=[x for x in candidates if x.get('kind')=='article'];candidates=[]
@@ -250,7 +252,7 @@ def main():
         if isinstance(exc_pending,ImagePending)and not item.get('_image_stock_request'):break  # Stock cap: no more prose.
     refresh_ready(q);state=load(STATE,{});state.update({'updated_at':now(),'completed_keys':[x['key']for x in q['items']if x['status']in('completed','published')],'failed':{x['key']:x.get('last_error','')for x in q['items']if x['status']=='failed'}});save(STATE,state)
     from blog_generation_status import write as write_generation_status,BLOG_NAMES
-    run_status=write_generation_status(ROOT,CITY_BLOG,completed,failed,blocked_until,waiting=waiting)
+    run_status=write_generation_status(ROOT,CITY_BLOG,completed,failed,blocked_until,waiting=waiting or waiting_keys(CITY_BLOG,ROOT))
     (ART/'status.md').write_text('# '+BLOG_NAMES[CITY_BLOG]+' AFP\n\nصف شهری تصویردار با کنترل شباهت بین پنج وبلاگ.\n\n'+f'آخرین اجرا: {now()}\nوضعیت تولید: {run_status["status"]}\nموفق این اجرا: {len(completed)}\nناموفق: {len(failed)}\nاین وضعیت به‌تنهایی تأیید انتشار نیست.\n')
     print('Original articles generated:',len(completed),'Deferred items:',len(failed))
     code=generation_exit_code(completed,failed)
