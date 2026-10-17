@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     env:
-      IMAGE_KEY_POOL_ENABLED: '1'
       IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
       IMAGE_MODEL: ${{ vars.IMAGE_MODEL || 'agnes-image-2.5-flash' }}
     steps:
@@ -28,5 +27,6 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Dispatch at most one existing tape draft with all production gates
         env:
+          IMAGE_KEY_POOL_ENABLED: '1'
           GH_TOKEN: ${{ github.token }}
         run: python automation/run_blog_tape_canary.py

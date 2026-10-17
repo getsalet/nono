@@ -49,6 +49,11 @@ class ImageKeyRouterTests(unittest.TestCase):
  def test_live_canary_preflight_uses_the_same_pool_as_production(self):
   source=(ROOT/'.github/workflows/blog-tape-live-canary.yml').read_text()
   self.assertIn("IMAGE_KEY_POOL_ENABLED: '1'",source)
+  # Production routing must not leak into the offline legacy-route fixtures.
+  job=source.split('    steps:',1)[0]
+  self.assertNotIn('IMAGE_KEY_POOL_ENABLED',job)
+  dispatch=source.split('      - name: Dispatch at most one',1)[1]
+  self.assertIn("IMAGE_KEY_POOL_ENABLED: '1'",dispatch)
  def test_single_key_capacity_failure_does_not_disable_other_keys(self):
   with self.assertRaises(ImageProviderBusy)as exc:self.run_route(self.busy)
   self.assertTrue(exc.exception.key_scoped);self.assertTrue(exc.exception.shared_cooldown_attempted)
