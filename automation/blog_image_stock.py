@@ -2,7 +2,7 @@
 Independent worker uses the existing reference recipe, image mutex and QA gates.
 Only allowlisted article data is persisted; credentials/response bodies are not.
 """
-import contextlib,copy,json,os,re,subprocess,time
+import contextlib,copy,hashlib,json,os,re,subprocess,time
 from pathlib import Path
 from blog_image_queue import ImageQueueBusy
 CONFIG='data/blog-image-stock-control.json'
@@ -131,14 +131,25 @@ def request_image(item,blog,root):
   persist(root,row);item['_image_stock_request']=asset
  raise ImagePending()
 
-def checkpoint_evidence(root,blog,asset):
+def evidence_files(root,blog,asset):
+ root=Path(root)
+ candidates=list((root/'artifacts/blog-image-reviews').glob('*.json'))
+ directory=root/f'artifacts/{blog}-backlink-queue/generated-images'
+ return candidates+list(directory.glob(asset+'.webp'))+list((directory/'rejected').glob(asset+'-*.webp'))
+
+def evidence_snapshot(root,blog,asset):
+ root=Path(root)
+ return {str(file.relative_to(root)):hashlib.sha256(file.read_bytes()).hexdigest()for file in evidence_files(root,blog,asset)}
+
+def checkpoint_evidence(root,blog,asset,before=None):
  if not hosted():return
+ if not isinstance(before,dict):raise RuntimeError('Local evidence baseline required; never overwrite a newer remote review with stale checkout data')
  from blog_generated_image import checkpoint_asset
- candidates=list((Path(root)/'artifacts/blog-image-reviews').glob('*.json'))
- directory=Path(root)/f'artifacts/{blog}-backlink-queue/generated-images'
- candidates+=list(directory.glob(asset+'.webp'))+list((directory/'rejected').glob(asset+'-*.webp'))
- for file in candidates:
+ for file in evidence_files(root,blog,asset):
   path=str(file.relative_to(root));raw=file.read_bytes()
+  # Compare against the local PRE-operation snapshot first. A difference from
+  # origin/main alone can mean that another actor wrote newer remote evidence.
+  if before.get(path)==hashlib.sha256(raw).hexdigest():continue
   previous=subprocess.run(['git','show','origin/main:'+path],cwd=root,capture_output=True)
   if previous.returncode==0 and previous.stdout==raw:continue
   checkpoint_asset(path,raw,root)
@@ -192,6 +203,7 @@ def _worker_once(root):
    except ImageProviderBusy as exc:
     waiting_result={'status':'waiting_provider','retry_at':exc.retry_at,'provider_requests':0};continue
    row.update(status='processing',attempts=row['attempts']+1,started_at=time.time());persist(root,row)
+  baseline=evidence_snapshot(root,blog,asset)
   try:
    url=prepare_now(item,blog,root,max_rounds=1)
   except (ImageProviderBusy,ImageQueueBusy)as exc:
@@ -207,7 +219,7 @@ def _worker_once(root):
   else:
    row.update(status='ready',url=url,ready_at=time.time(),review_sha256=item['image_review']['sha256'])
    row.pop('last_error',None);row.pop('retry_at',None)
-  checkpoint_evidence(root,blog,asset)
+  checkpoint_evidence(root,blog,asset,before=baseline)
   with admission(root,blog,asset):
    current=read(root,request_path(asset))
    if current.get('status')!='processing':
