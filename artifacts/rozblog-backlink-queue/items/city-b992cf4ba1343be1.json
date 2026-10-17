@@ -41,10 +41,10 @@
   "source_image_rejection": "Product image rejected: Visual approval required; Image score below 70; Image product family mismatch; Vision flag not cleared: wrong_product_present",
   "image_alt": "تصویر واقعی نوار آبیاری AFP",
   "matrix_title": "نوار تیپ سیب‌زمینی در محمدان؛ نکات نگهداری",
-  "attempts": 6,
-  "generated_at": "2026-10-16T16:25:08Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
-  "next_retry_at": "2026-10-17T16:25:08.518456Z",
+  "attempts": 7,
+  "generated_at": "2026-10-17T16:51:18Z",
+  "last_error": "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy",
+  "next_retry_at": "2026-10-17T16:51:19.953982Z",
   "_image_blog": "rozblog",
   "_image_article_context": {
     "title": "نوار تیپ سیب‌زمینی در محمدان؛ نکات نگهداری",
@@ -79,9 +79,25 @@
       "timeout_seconds": 600,
       "http_status": 503,
       "status": "provider_error"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY11",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 503,
+      "status": "provider_queue_full_deferred",
+      "provider_code": "image_queue_full"
     }
   ],
   "failure_stage": "image",
+  "_image_key_route": {
+    "policy": "audited-image-key-pool-v1",
+    "slot": "AGNES_API_KEY11",
+    "mode": "controlled_recovery",
+    "max_provider_requests": 1
+  },
+  "image_retry_at": 1792255879.9539816,
   "post": {
     "title": "نوار تیپ سیب‌زمینی در محمدان؛ نکات نگهداری",
     "slug": "nوار-tip-seb-zamini-dar-mohammadan-nokat-neghdari",
@@ -99,14 +115,12 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError"
+      "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy"
     ],
-    "words": 763,
+    "words": 691,
     "links": [
-      "https://navar-abyari.ir/",
-      "https://navar-abyari.ir/",
-      "https://navar-abyari.ir/zahedan/",
-      "https://navar-abyari.ir/zahedan/%D9%85%D8%AD%D9%85%D8%AF%D8%A7%D9%86-%D8%B3%DB%8C%D8%B3%D8%AA%D8%A7%D9%86-%D9%88-%D8%A8%D9%84%D9%88%DA%86%D8%B3%D8%AA%D8%A7%D9%86-navar-tip-20cm-2/"
+      "https://navar-abyari.ir/zahedan/%D9%85%D8%AD%D9%85%D8%AF%D8%A7%D9%86-%D8%B3%DB%8C%D8%B3%D8%AA%D8%A7%D9%86-%D9%88-%D8%A8%D9%84%D9%88%DA%86%D8%B3%D8%AA%D8%A7%D9%86-navar-tip-20cm-2/",
+      "https://navar-abyari.ir/"
     ],
     "checked_against": "Roya + FarsiBlog + RozBlog + Blogfa + LoxBlog corpus",
     "title_matrix": "نوار تیپ سیب‌زمینی در محمدان؛ نکات نگهداری"

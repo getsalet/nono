@@ -693,10 +693,10 @@
       "source_image_rejection": "Product image rejected: Visual approval required; Image score below 70; Image product family mismatch; Vision flag not cleared: wrong_product_present",
       "image_alt": "تصویر واقعی نوار آبیاری AFP",
       "matrix_title": "نوار تیپ سیب‌زمینی در محمدان؛ نکات نگهداری",
-      "attempts": 6,
-      "generated_at": "2026-10-16T16:25:08Z",
-      "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
-      "next_retry_at": "2026-10-17T16:25:08.518456Z",
+      "attempts": 7,
+      "generated_at": "2026-10-17T16:51:18Z",
+      "last_error": "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy",
+      "next_retry_at": "2026-10-17T16:51:19.953982Z",
       "_image_blog": "rozblog",
       "_image_article_context": {
         "title": "نوار تیپ سیب‌زمینی در محمدان؛ نکات نگهداری",
@@ -731,9 +731,25 @@
           "timeout_seconds": 600,
           "http_status": 503,
           "status": "provider_error"
+        },
+        {
+          "requested_secret_slot": "AGNES_API_KEY11",
+          "attempt": 1,
+          "route": "audited_image_pool",
+          "timeout_seconds": 600,
+          "http_status": 503,
+          "status": "provider_queue_full_deferred",
+          "provider_code": "image_queue_full"
         }
       ],
-      "failure_stage": "image"
+      "failure_stage": "image",
+      "_image_key_route": {
+        "policy": "audited-image-key-pool-v1",
+        "slot": "AGNES_API_KEY11",
+        "mode": "controlled_recovery",
+        "max_provider_requests": 1
+      },
+      "image_retry_at": 1792255879.9539816
     },
     {
       "city_fa": "نگور",
