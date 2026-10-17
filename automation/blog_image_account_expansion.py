@@ -41,10 +41,12 @@ def successful(report,connection,current=None):
  return result
 
 def validate_request(request):
- scope=request.get('slots');maximum=6 if scope==list(CANDIDATES)else 24 if scope==list(ALL_SLOTS)else None
+ scope=request.get('slots')
+ targeted=isinstance(scope,list)and len(scope)==1 and scope[0]in ALL_SLOTS and scope[0]!=DUPLICATE and request.get('credential_updated_by_user')is True
+ maximum=1 if targeted else 6 if scope==list(CANDIDATES)else 24 if scope==list(ALL_SLOTS)else None
  if (request.get('policy')!=POLICY or not re.fullmatch('[a-f0-9]{32}',str(request.get('request_id','')))or maximum is None
      or request.get('max_image_requests')!=maximum or request.get('minimum_interval_seconds')!=60 or request.get('account_ownership_confirmed_by_user')is not True):
-  raise RuntimeError('Explicit bounded six-account or all-slot request required')
+  raise RuntimeError('Explicit bounded updated-slot, six-account or all-slot request required')
  return 'data/blog-image-account-expansion/requests/'+request['request_id']+'.json'
 
 def configured_keys(names,environ=None):
@@ -92,7 +94,7 @@ def main():
   # Keep live worktrees clean; publication state and original audit untouched.
   images.checkpoint_asset(ledger,raw,ROOT);images.checkpoint_asset(PROGRESS,raw,ROOT)
   # In-flight/failed audits never revoke previously proved production accounts.
-  if report['status']=='completed':images.checkpoint_asset(LATEST,raw,ROOT)
+  if report['status']=='completed'and len(request['slots'])>1:images.checkpoint_asset(LATEST,raw,ROOT)
  save() # Reserve this request before touching any provider.
  try:
   shared_open(ROOT)
@@ -140,7 +142,7 @@ def main():
    else:report['status']='completed';report['complete_image']=True
   report['finished_at']=datetime.datetime.now(datetime.timezone.utc).isoformat();save()
   names=successful(report,cfg)
-  if names:
+  if names and len(request['slots'])>1:
    # Read the latest remote config; never replace unrelated concurrent state.
    images.git(['fetch','--quiet','origin','main'],ROOT)
    config=json.loads(images.git(['show','origin/main:'+CONFIG],ROOT).stdout)

@@ -110,6 +110,19 @@ class AccountExpansionTests(unittest.TestCase):
  def test_report_with_explicit_duplicate_can_still_admit_other_success(self):
   r=self.report();r['keys'].append({'secret_name':'AGNES_API_KEY8','duplicate_of':'AGNES_API_KEY','text':{'status':'skipped_duplicate'},'image':{'status':'skipped_duplicate'}})
   self.assertEqual(a.successful(r,r['connection']),['AGNES_API_KEY4'])
+ def test_updated_single_slot_is_bounded_and_preserves_full_evidence(self):
+  request=self.request();request.update(slots=['AGNES_API_KEY16'],max_image_requests=1,credential_updated_by_user=True)
+  self.assertIn('b'*32,a.validate_request(request))
+  for change in ({'credential_updated_by_user':False},{'max_image_requests':2},{'slots':['AGNES_API_KEY8']}):
+   invalid={**request,**change}
+   with self.assertRaises(RuntimeError):a.validate_request(invalid)
+  root,saved,patches=self.main_fixture([self.image()],request)
+  with contextlib.ExitStack()as stack:
+   mocks=[stack.enter_context(p)for p in patches]
+   self.assertEqual(a.main(),0);self.assertEqual(mocks[5].call_count,1);self.assertEqual(mocks[6].call_count,1)
+  self.assertNotIn(a.LATEST,saved);self.assertNotIn(router.CONFIG,saved)
+  self.assertEqual(saved[a.PROGRESS]['keys'][0]['secret_name'],'AGNES_API_KEY16')
+  self.assertTrue(saved[a.PROGRESS]['complete_image'])
  def test_workflow_only_has_requested_accounts_and_keeps_secrets_out_of_test_step(self):
   source=(Path(__file__).resolve().parents[1]/'.github/workflows/blog-image-account-expansion.yml').read_text()
   self.assertNotIn('secrets.AGNES_API_KEY8',source)
