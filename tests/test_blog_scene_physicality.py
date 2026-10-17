@@ -12,11 +12,12 @@ import roya_backlink_queue as roya
 
 class ScenePhysicalityTests(unittest.TestCase):
  def setUp(self):
+  self.focused=patch.object(gate,'focused_physical_check',return_value={'clear_soil_gap':True,'line_touches_or_crosses_package':False,'extra_loose_product_coil':False});self.focused.start();self.addCleanup(self.focused.stop)
   self.item={'key':'physicality','family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'بازرسی اتصالات نوار تیپ','summary':'بازرسی اتصال واقعی نوار تیپ به لوله فرعی و آب بندی آن'}}
   self.verdict={'pass':True,'score':95,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'product_fully_in_frame':True,'product_count_match':True,'technical_evidence_match':True,'observed_product_count':1,'collage_or_split_layout':False,'crop_contradiction':False,**{f:True for f in gate.SCENE_FLAGS}}
   buf=io.BytesIO();watermark.apply(Image.new('RGB',(1200,900),'brown')).save(buf,'WEBP');self.raw=buf.getvalue();self.digest=hashlib.sha256(self.raw).hexdigest()
  def test_normal_grounded_package_passes_explicit_conditions(self):
-  self.assertEqual(gate.generated_scene_errors({'scene_guard_version':gate.SCENE_GUARD,'verdict':self.verdict},'tape20'),[])
+  self.assertEqual(gate.generated_scene_errors({'scene_guard_version':gate.SCENE_GUARD,'verdict':self.verdict,'focused_physical_review':{'clear_soil_gap':True,'line_touches_or_crosses_package':False,'extra_loose_product_coil':False}},'tape20'),[])
  def test_every_physical_role_flag_is_required_even_high_score(self):
   for flag in gate.SCENE_FLAGS:
    for bad in (False,None,'true',1):
