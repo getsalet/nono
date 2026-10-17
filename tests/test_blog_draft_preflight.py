@@ -23,6 +23,7 @@ class DraftPreflightTests(unittest.TestCase):
   with patch.object(generated,'prepare_now')as api:
    result=stock.worker_once(self.root)
   api.assert_not_called();row=stock.rows(self.root)[0]
+  self.assertEqual(result['status'],'waiting_retry')
   self.assertEqual(row['last_error'],'saved_draft_unavailable');self.assertEqual(row['attempts'],0)
  def test_invalid_text_frees_capacity_without_image_api(self):
   self.enqueue()

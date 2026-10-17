@@ -131,6 +131,28 @@ class StockTests(unittest.TestCase):
   with patch.object(generated,'existing_asset',return_value=None),patch.object(generated,'generate')as gen:
    with self.assertRaisesRegex(RuntimeError,'inline generation forbidden'):generated.prepare_now(self.item,'roya',self.root,allow_generate=False)
    gen.assert_not_called()
+ def test_future_image_retry_is_reported_waiting_not_idle(self):
+  self.enqueue();self.source();row=stock.rows(self.root)[0];stamp=time.time()+600;row['retry_at']=stamp;stock.persist(self.root,row)
+  result,prepare=self.worker(lambda *a,**k:self.fail('No early request'))
+  self.assertEqual(result['status'],'waiting_retry');self.assertEqual(result['retry_at'],stamp);self.assertEqual(result['provider_requests'],0);prepare.assert_not_called()
+ def test_mutex_wait_before_work_preserves_request(self):
+  from blog_image_queue import ImageQueueBusy
+  self.enqueue();self.source();before=stock.rows(self.root)
+  with patch.object(stock,'admission',side_effect=ImageQueueBusy()):result,prepare=self.worker(lambda *a,**k:self.fail('No provider while mutex busy'))
+  self.assertEqual(result['status'],'waiting_mutex');prepare.assert_not_called();self.assertEqual(stock.rows(self.root),before)
+  self.assertNotIn('provider_requests',result)
+ def test_mutex_wait_after_operation_does_not_claim_zero_requests_or_ready(self):
+  from blog_image_queue import ImageQueueBusy
+  self.enqueue();self.source()
+  def approved(item,*a,**k):item['image_review']={'sha256':'a'*64};return 'approved-immutable'
+  with patch.object(stock,'admission',side_effect=[nullcontext(),ImageQueueBusy()]):result,prepare=self.worker(approved)
+  self.assertEqual(prepare.call_count,1);self.assertEqual(result['status'],'waiting_mutex');self.assertNotIn('provider_requests',result)
+  self.assertFalse(result['publication_attempted']);self.assertEqual(stock.rows(self.root)[0]['status'],'processing')
+ def test_real_configuration_error_is_not_hidden_as_a_mutex_wait(self):
+  self.enqueue();self.source()
+  with patch.object(stock,'admission',side_effect=RuntimeError('Configuration failure')):
+   with self.assertRaisesRegex(RuntimeError,'Configuration failure'):self.worker(lambda *a,**k:self.fail('Must stay closed'))
+
 if __name__=='__main__':unittest.main()
 
 class StockPipelineTests(unittest.TestCase):

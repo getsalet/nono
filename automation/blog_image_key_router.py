@@ -104,14 +104,20 @@ def generate(item,blog,root,pool,operation,checkpoint,lease):
  cursor=int(s.get('cursor',0))%len(configured);ordered=configured[cursor:]+configured[:cursor]
  window=read_json(Path(root)/CONFIG).get('prefer_recent_success_seconds',0)
  if isinstance(window,bool)or not isinstance(window,int)or not 0<=window<=86400:raise RuntimeError('Invalid healthy routing window; no request')
- def fresh(name):
+ def priority(name):
   row=s['keys'].get(name,{})
   stamp=row.get('last_success_at_epoch',0)
   if isinstance(stamp,bool)or not isinstance(stamp,(int,float))or not 0<=stamp<4102444800:raise RuntimeError('Invalid image success timestamp; no request')
-  return window>0 and row.get('status')=='image_healthy'and row.get('http_status')==200 and 0<=now-stamp<=window
- # Stable sorting preserves round-robin within each health class. Eligibility
- # still enforces every per-key cooldown and shared rate/quota stop FIRST.
- ordered=sorted(ordered,key=lambda n:not fresh(n))
+  if not window:return (0,0)  # Explicit legacy round-robin configuration.
+  recent=stamp>0 and 0<=now-stamp<=window
+  if recent and row.get('status')=='image_healthy'and row.get('http_status')==200:return (0,0)
+  if recent and row.get('status')=='temporary_failure':return (1,row.get('failures',0))
+  # When no currently healthy route exists, do not blindly put a seven-failure
+  # account ahead of a one-failure recovery candidate. All are still audited.
+  return (2,row.get('failures',0))
+ # Stable sorting preserves rotation within an equal health/failure class.
+ # Eligibility BELOW still enforces per-key and shared cooldowns first.
+ ordered=sorted(ordered,key=priority)
  name=next(n for n in ordered if s['keys'].get(n,{}).get('retry_at_epoch',0)<=now and s['keys'].get(n,{}).get('status')not in('authentication_rejected','image_scope_denied'))
  prior=s['keys'].get(name,{});failures=int(prior.get('failures',0));s['cursor']=(configured.index(name)+1)%len(configured)
  s['keys'][name]={**prior,'status':'reserved','retry_at_epoch':now+120,'last_attempt_at_epoch':now}
@@ -125,6 +131,9 @@ def generate(item,blog,root,pool,operation,checkpoint,lease):
   delay=min(1800,300*2**min(failures,3));retry=time.time()+delay
   if isinstance(exc,ImageProviderBusy):retry=max(retry,exc.retry_at)
   row={'status':'temporary_failure','failures':min(100,failures+1),'retry_at_epoch':retry,'last_attempt_at_epoch':now,'http_status':code}
+  # A transient failure is not evidence that a real earlier image never existed.
+  # Preserve historical success, without calling the current result healthy.
+  if 'last_success_at_epoch'in prior:row['last_success_at_epoch']=prior['last_success_at_epoch']
   if code==401:row['status']='authentication_rejected'
   if code==403:row['status']='image_scope_denied'
   if code==402 or attempt.get('provider_code')=='insufficient_quota':s['shared_block']='billing_required';row['status']='billing_required'

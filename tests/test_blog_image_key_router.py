@@ -157,9 +157,10 @@ class ImageKeyRouterTests(unittest.TestCase):
  def test_healthy_priority_never_shortens_key_cooldown(self):
   self.prefer_health();self.health_state(retry_at_epoch=time.time()+600);chosen=[]
   self.run_route(lambda *a,**kw:chosen.extend(kw['slots'])or b'ok')
-  self.assertEqual(chosen,[self.names[0]])
+  self.assertNotEqual(chosen,[self.names[2]])
  def test_stale_success_does_not_override_rotation(self):
   self.prefer_health();self.health_state(last_success_at_epoch=time.time()-21601);chosen=[]
+  p=self.root/router.STATE;s=json.loads(p.read_text());s['keys'][self.names[0]]['failures']=0;p.write_text(json.dumps(s))
   self.run_route(lambda *a,**kw:chosen.extend(kw['slots'])or b'ok')
   self.assertEqual(chosen,[self.names[0]])
  def test_health_preference_cannot_bypass_shared_rate_limit(self):
@@ -169,5 +170,24 @@ class ImageKeyRouterTests(unittest.TestCase):
  def test_invalid_health_window_fails_closed(self):
   self.prefer_health();p=self.root/router.CONFIG;cfg=json.loads(p.read_text());cfg['prefer_recent_success_seconds']=True;p.write_text(json.dumps(cfg))
   with self.assertRaisesRegex(RuntimeError,'routing window'):self.run_route(lambda *a,**kw:self.fail('Bad config cannot request'))
+
+ def test_transient_failure_keeps_prior_success_but_not_healthy_status(self):
+  self.prefer_health();self.health_state();before=router.state(self.root)['keys'][self.names[2]]['last_success_at_epoch']
+  with self.assertRaises(ImageProviderBusy):self.run_route(self.busy)
+  row=router.state(self.root)['keys'][self.names[2]]
+  self.assertEqual(row['last_success_at_epoch'],before);self.assertEqual(row['status'],'temporary_failure');self.assertEqual(row['http_status'],503)
+ def test_all_unhealthy_accounts_prefer_fewer_failures_not_blind_cursor(self):
+  self.prefer_health();now=time.time();s={'policy':router.POLICY,'cursor':0,'keys':{n:{'status':'temporary_failure','http_status':503,'retry_at_epoch':0,'failures':7 if i<2 else 1}for i,n in enumerate(self.names)}}
+  (self.root/router.STATE).write_text(json.dumps(s));chosen=[]
+  self.run_route(lambda *a,**kw:chosen.extend(kw['slots'])or b'ok');self.assertEqual(chosen,[self.names[2]])
+ def test_proven_recovery_must_still_wait_for_its_retry_after(self):
+  self.prefer_health();now=time.time();rows={n:{'status':'temporary_failure','http_status':503,'retry_at_epoch':0,'failures':7}for n in self.names}
+  rows[self.names[2]].update(last_success_at_epoch=now-60,failures=1,retry_at_epoch=now+600)
+  (self.root/router.STATE).write_text(json.dumps({'policy':router.POLICY,'cursor':0,'keys':rows}));chosen=[]
+  self.run_route(lambda *a,**kw:chosen.extend(kw['slots'])or b'ok');self.assertNotIn(self.names[2],chosen)
+ def test_proven_recovery_does_not_rotate_around_a_shared_rate_stop(self):
+  self.prefer_health();now=time.time();s={'policy':router.POLICY,'shared_retry_at_epoch':now+600,'keys':{self.names[2]:{'status':'temporary_failure','failures':1,'last_success_at_epoch':now-60,'retry_at_epoch':0,'http_status':503}}}
+  (self.root/router.STATE).write_text(json.dumps(s))
+  with self.assertRaises(ImageProviderBusy):self.run_route(lambda *a,**kw:self.fail('Shared rate stop must win'))
 
 if __name__=='__main__':unittest.main()

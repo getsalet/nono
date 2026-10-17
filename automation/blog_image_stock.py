@@ -144,6 +144,13 @@ def checkpoint_evidence(root,blog,asset):
   checkpoint_asset(path,raw,root)
 
 def worker_once(root):
+ try:return _worker_once(root)
+ except ImageQueueBusy as exc:
+  # May happen before work or while persisting an already-produced asset.
+  # Do not falsely assert zero API requests or a ready image in either case.
+  return {'status':'waiting_mutex','retry_at':exc.retry_at,'publication_attempted':False,'provider_requests_not_asserted':True}
+
+def _worker_once(root):
  from blog_generated_image import identity,rollout_enabled,family_enabled,prepare_now
  from blog_image_runtime_control import generation_paused
  from blog_image_backpressure import require_open,ImageProviderBusy
@@ -153,7 +160,7 @@ def worker_once(root):
  # Prefer never/less-attempted drafts. With a 20-minute worker, a five-minute
  # per-item retry alone would otherwise select the same oldest failure forever.
  pending=sorted((r for r in rows(root)if r['status']in('requested','processing')),key=lambda r:(r.get('attempts',0),r.get('started_at',r['created_at']),r['created_at']))
- waiting_result=None
+ waiting_result=None;retry_times=[]
  for row in pending:
   blog=row['blog'];item=copy.deepcopy(row['item']);asset=row['asset_id']
   with admission(root,blog,asset):
@@ -174,11 +181,12 @@ def worker_once(root):
    if active(root):
     try:errors=check_saved(row,matches[0],root)
     except DraftUnavailable:
-     row.update(status='requested',retry_at=time.time()+300,last_error='saved_draft_unavailable');persist(root,row);continue
+     row.update(status='requested',retry_at=time.time()+300,last_error='saved_draft_unavailable');persist(root,row);retry_times.append(row['retry_at']);continue
     if errors:
      row.update(status='needs_text_repair',last_error='text_preflight_failed',text_errors=errors[:12]);persist(root,row);continue
    # Text triage is local and must not wait for an IMAGE retry/cooldown.
-   if row.get('retry_at',0)>time.time():continue
+   if row.get('retry_at',0)>time.time():
+    retry_times.append(row['retry_at']);continue
    if not rollout_enabled(blog,root):raise RuntimeError('Worker rollout acceptance unavailable')
    try:require_open(root)
    except ImageProviderBusy as exc:
@@ -206,7 +214,9 @@ def worker_once(root):
     return {'status':current['status'],'asset_id':asset,'publication_attempted':False}
    persist(root,row)
   return {'status':row['status'],'asset_id':asset,'blog':blog,'publication_attempted':False}
- return waiting_result or {'status':'idle','provider_requests':0,'publication_attempted':False}
+ if waiting_result:return waiting_result
+ if retry_times:return {'status':'waiting_retry','retry_at':min(retry_times),'waiting_requests':len(retry_times),'provider_requests':0,'publication_attempted':False}
+ return {'status':'idle','provider_requests':0,'publication_attempted':False}
 
 def main():
  root=Path(__file__).resolve().parents[1]
