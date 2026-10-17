@@ -32,3 +32,15 @@ class LargeQueueReadTests(unittest.TestCase):
   with patch.object(m,'api',return_value={'content':'','sha':'unverified'})as call:
    with self.assertRaises(RuntimeError):m.content('data/roya/backlink-queue.json')
    self.assertEqual(call.call_count,1)
+
+class StockAwareMonitorTests(unittest.TestCase):
+ def test_independent_stock_prevents_extra_manual_dispatch(self):
+  from unittest.mock import patch
+  import monitor_blog_generators_one_hour as m
+  with patch.object(m.urllib.request,'urlopen')as request:
+   self.assertIsNone(m.dispatch_next({'image_stock_control':{'enabled':True}},[]));request.assert_not_called()
+ def test_monitor_tracks_stock_and_does_not_claim_homepage_as_post(self):
+  import inspect,monitor_blog_generators_one_hour as m
+  self.assertIn('image_stock_requests',inspect.getsource(m.snapshot))
+  self.assertIn('new_post_verified',inspect.getsource(m.public_check))
+  self.assertEqual(len(m.PUBLIC_BLOGS),5)
