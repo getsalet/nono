@@ -11,8 +11,8 @@ RECIPE_VERSION='maghala2-reference-v3-concise-topic-scene'
 SCENE_CONTRACT='off-axis-carton-soil-island-v3'
 SOURCES=['https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py','https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py','https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml']
 # Add missing crop identities as data, without rewriting the upstream generation recipe.
-reference.CROPS.update({'بامیه':'okra','پیاز':'onion','گوجه فرنگی':'tomato','گوجه‌فرنگی':'tomato','هندوانه':'watermelon','سیب زمینی':'potato','سیب‌زمینی':'potato'})
-reference.CROP_VISUALS.update({'بامیه':'okra with broad connected palmately lobed leaves, upright ridged tapered green pods, and pale creamy-yellow flowers with a dark maroon throat','پیاز':'onion rows with upright tubular hollow blue-green leaves','گوجه فرنگی':'tomato plants with compound serrated leaves and attached tomato clusters','گوجه‌فرنگی':'tomato plants with compound serrated leaves and attached tomato clusters','هندوانه':'watermelon vines with deeply lobed leaves and restrained attached striped fruit','سیب زمینی':'potato rows with compound oval leaflets and low bushy canopies','سیب‌زمینی':'potato rows with compound oval leaflets and low bushy canopies'})
+reference.CROPS.update({'آفتابگردان':'sunflower','آفتاب گردان':'sunflower','بامیه':'okra','پیاز':'onion','گوجه فرنگی':'tomato','گوجه‌فرنگی':'tomato','هندوانه':'watermelon','سیب زمینی':'potato','سیب‌زمینی':'potato'})
+reference.CROP_VISUALS.update({'آفتابگردان':'sunflower plants with upright stems and broad rough serrated heart-shaped leaves; at flowering, recognizable yellow ray petals around a dark central disk','آفتاب گردان':'sunflower plants with upright stems and broad rough serrated heart-shaped leaves; at flowering, recognizable yellow ray petals around a dark central disk','بامیه':'okra with broad connected palmately lobed leaves, upright ridged tapered green pods, and pale creamy-yellow flowers with a dark maroon throat','پیاز':'onion rows with upright tubular hollow blue-green leaves','گوجه فرنگی':'tomato plants with compound serrated leaves and attached tomato clusters','گوجه‌فرنگی':'tomato plants with compound serrated leaves and attached tomato clusters','هندوانه':'watermelon vines with deeply lobed leaves and restrained attached striped fruit','سیب زمینی':'potato rows with compound oval leaflets and low bushy canopies','سیب‌زمینی':'potato rows with compound oval leaflets and low bushy canopies'})
 def context_from_post(post):
  text=re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',post.get('html',''))).strip()
  return {'title':post.get('title',''),'meta_description':post.get('meta_description',''),'summary':text[:1200]}
@@ -86,6 +86,9 @@ def prompt(item,blog):
   +f"Article context, not on-image text: {a['title']}. {a['summary'][:360]}")
  feedback=str(a.get('_image_qa_feedback')or'').strip()
  if feedback:brief+=' Correction for this attempt: '+_feedback_direction(a,plan,feedback)
+ # End with the actual photographed arrangement, not article prose that can
+ # pull the model back into a stock product-on-pipe field composition.
+ brief+=(' Final scene layout: LEFT foreground is one fully enclosed AFP package standing directly on an empty soil patch; its complete base is surrounded by bare soil. RIGHT foreground is the installed irrigation evidence: '+plan['evidence']+'. A broad empty soil corridor, at least one carton diameter wide, separates these two areas. The package is a sealed display object with a clean silhouette; the operating tape belongs only to the crop bed.')
  return brief
 def references(item):
  from blog_image_gate import family

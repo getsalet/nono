@@ -58,6 +58,17 @@ class ScenePromptRepairTests(unittest.TestCase):
   self.assertIn('Keep the named crop botanically unmistakable',text)
   self.assertIn('single AFP carton stands separately',text)
   self.assertNotIn('other diagnostic',text)
+ def test_sunflower_title_assigns_real_botany_instead_of_neutral_seedlings(self):
+  for crop in ('آفتابگردان','آفتاب گردان','آفتاب‌گردان'):
+   item=self.item();item['_image_article_context']['title']='نوار تیپ '+crop+' در سیرکان؛ بازدید اتصال‌ها'
+   plan=scene.scene_plan(item,'loxblog');text=scene.prompt(item,'loxblog')
+   self.assertEqual(plan['intent'],'connection');self.assertIn('sunflower',plan['botany'])
+   self.assertIn('heart-shaped leaves',text);self.assertNotIn('neutral small seedlings',text)
+ def test_prompt_ends_with_installed_evidence_and_positive_soil_layout(self):
+  item=self.item();text=scene.prompt(item,'farsiblog');tail=text.split('Final scene layout:')[-1]
+  self.assertIn(scene.scene_plan(item,'farsiblog')['evidence'],tail)
+  self.assertIn('complete base is surrounded by bare soil',tail)
+  self.assertIn('at least one carton diameter',tail)
  def test_original_reference_bytes_and_acceptance_record_are_not_rewritten(self):
   item=self.item();self.assertEqual(scene.references(item),scene.reference.reference_images(scene.role(item),scene.article(item)))
   self.assertEqual(scene.recipe_for(item),'maghala2-reference-v3-concise-topic-scene')

@@ -7,7 +7,7 @@ from pathlib import Path
 from PIL import Image
 import roya_backlink_queue as roya
 POLICY='blog-product-family-reference-vision-v7-reference-parity'
-SCENE_GUARD='off-axis-carton-independent-separation-v5'
+SCENE_GUARD='off-axis-carton-independent-separation-v6'
 SCENE_FLAGS=('product_role_plausible','packaging_not_used_as_hardware','irrigation_geometry_plausible','package_soil_gap_visible')
 REFERENCES={
  'tape20':'https://navar-abyari.ir/wp-content/uploads/%D9%86%D9%88%D8%A7%D8%B1-%D8%A2%D8%A8%DB%8C%D8%A7%D8%B1%DB%8C-1.webp',
@@ -90,7 +90,7 @@ def candidate_details(raw):
 def focused_separation_errors(value):
  if not isinstance(value,dict):return ['Independent package separation review required']
  errors=[]
- for field,wanted in (('clear_soil_gap',True),('line_touches_or_crosses_package',False),('extra_loose_product_coil',False)):
+ for field,wanted in (('clear_soil_gap',True),('line_touches_or_crosses_package',False),('extra_loose_product_coil',False),('package_has_protruding_strip',False)):
   if value.get(field)is not wanted:errors.append('Independent physical condition not met: '+field)
  return errors
 
@@ -104,9 +104,12 @@ def focused_physical_check(raw,fmt,model,key):
   'Trace every line at the package base. A line touching the base, emerging from the carton, disappearing underneath '
   'or reappearing behind on the same axis means line_touches_or_crosses_package=true. '
   'clear_soil_gap=true ONLY if a broad uninterrupted soil gap is visible around the complete footprint, including behind it. '
-  'A loose uninstalled coil or roll beside the package is an extra_loose_product_coil; ordinary bends of a continuous installed lateral are not. '
+  'Exactly one required white-and-blue AFP package is allowed. The required AFP package itself is NEVER an extra_loose_product_coil, even though it contains a roll. '
+  'extra_loose_product_coil=true means a DISTINCT ADDITIONAL loose uninstalled coil or roll outside that required package. Ordinary bends of a continuous installed lateral are not extra coils. '
+  'Independently inspect the carton sides and base for a protruding white ribbon, strap or tape tail: set package_has_protruding_strip=true if any strip visibly emerges from the package. '
+  'A protruding tail is NOT a second product; it is a separate physical defect. Neither a correct object count nor a separate installed line excuses it. '
   'Detail views are crops of this SAME image, not extra objects. Never assume a hidden gap. '
-  'Return JSON only: {"clear_soil_gap":true,"line_touches_or_crosses_package":false,"extra_loose_product_coil":false,"reason":"brief visual evidence"}.')
+  'Return JSON only: {"clear_soil_gap":true,"line_touches_or_crosses_package":false,"extra_loose_product_coil":false,"package_has_protruding_strip":false,"reason":"brief visual evidence for each condition; identify any distinct extra object"}.')
  content=[{'type':'text','text':instruction}]
  for label,data,format in [('CANDIDATE FULL FRAME',raw,fmt)]+[(label,data,'JPEG')for label,data in candidate_details(raw)]:
   content.extend([{'type':'text','text':label},{'type':'image_url','image_url':{'url':'data:'+mime[format]+';base64,'+base64.b64encode(data).decode(),'detail':'high'}}])
@@ -188,8 +191,11 @@ def review(item,url,root=None,_candidate=None):
    if not verdict_errors(verdict,expected)and not generated_scene_errors(temporary,expected,require_focused=False):
     focused=focused_physical_check(raw,fmt,review_model,key)
     if focused_separation_errors(focused):
-     verdict['pass']=False;verdict['package_soil_gap_visible']=False
-     if isinstance(focused,dict)and focused.get('extra_loose_product_coil')is True:verdict['product_count_match']=False
+     verdict['pass']=False
+     if not isinstance(focused,dict)or focused.get('clear_soil_gap')is not True or focused.get('line_touches_or_crosses_package')is not False:verdict['package_soil_gap_visible']=False
+     if isinstance(focused,dict):
+      if focused.get('extra_loose_product_coil')is True:verdict['product_count_match']=False
+      if focused.get('package_has_protruding_strip')is True:verdict['product_role_plausible']=False
   record={'scene_guard_version':SCENE_GUARD if generated else None,'policy':POLICY,'review_model':review_model,'sha256':digest,'family':expected,'source_url':url,'reference_url':REFERENCES[expected],'width':w,'height':h,'verdict':verdict,'reviewed_at':roya.now(),'topic_sha256':topic_sha,'article_owner':owner,'focused_physical_review':focused}
   path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(record,ensure_ascii=False,indent=2))
  record.setdefault('scene_guard_version',None)
