@@ -507,6 +507,8 @@ def pick(queue, state, count):
         pending = [i for i in pending if i['key'] == ONLY]
     from blog_generated_image import family_enabled
     pending=[i for i in pending if family_enabled(i,ROOT)]
+    from blog_image_stock import awaiting
+    pending=[i for i in pending if not awaiting(i,ROOT)]
     buckets, order = {}, []
     for item in pending:
         if item['province'] not in buckets:
@@ -560,11 +562,12 @@ def main():
     save_json(QUEUE_PATH, queue)
     targets = pick(queue, state, COUNT)
     print(f'picked {len(targets)} target(s) of {len(queue["items"])} queued', flush=True)
-    completed = [];failed=[];blocked_until=None
+    completed = [];failed=[];waiting=[];blocked_until=None
     for item in targets:
         from blog_image_backpressure import require_open,ImageProviderBusy
         from blog_image_queue import ImageQueueBusy
-        try:require_open(ROOT)
+        from blog_image_stock import require_generation_open,ImagePending
+        try:require_generation_open(ROOT)
         except ImageProviderBusy as busy:
             blocked_until=busy.retry_at
             print('Shared image-provider cooldown active; no new text/image calls.');break
@@ -576,7 +579,7 @@ def main():
         links = approved_links(item, lib)
         image_url = None
         errors, obj = ['not generated'], None
-        shared_image_deferred=False
+        shared_image_deferred=False;stock_pending=False
         image_retry_at=None
         stage='generation'
         for attempt in range(1, ATTEMPTS + 1):
@@ -592,16 +595,17 @@ def main():
                     stage='generation'
                     obj = agnes(repair_prompt(item, links, obj, errors),temperature=0.1)
                 obj['title'] = item['assigned_title']
-                if image_url is None:
-                    from blog_reference_scene import context_from_post
-                    item['_image_article_context'] = context_from_post(obj)
+                from blog_reference_scene import context_from_post
+                context=context_from_post(obj)
+                if image_url is None or context!=item.get('_image_article_context'):
+                    item['_image_article_context'] = context
                     stage='image'
                     image_url = prepare_roya_image(item)
             except Exception as exc:
                 errors = ['agnes error: ' + str(exc)[:200]]
                 print(f'{item["key"]} attempt={attempt} {errors[0]}', flush=True)
                 if isinstance(exc,(ImageProviderBusy,ImageQueueBusy)):
-                    shared_image_deferred=True
+                    shared_image_deferred=True;stock_pending=isinstance(exc,ImagePending)
                     image_retry_at=exc.retry_at
                     break
                 continue
@@ -634,7 +638,8 @@ def main():
             state['failed'].pop(item['key'], None)
             completed.append(item['key'])
         else:
-            failed.append(item['key'])
+            if stock_pending:waiting.append(item['key'])
+            else:failed.append(item['key'])
             item['status'] = 'failed'
             item['generated_at']=record['generated_at']
             item['failure_stage']=stage
@@ -644,7 +649,8 @@ def main():
         state['in_progress'] = None
         save_json(QUEUE_PATH, queue)
         save_json(STATE_PATH, state)
-        if shared_image_deferred:break  # Never generate prose for the next item while globally blocked.
+        if shared_image_deferred and not stock_pending:break  # Actual provider block.
+        if stock_pending and not item.get('_image_stock_request'):break  # Stock capacity reached.
     ready = [i for i in queue['items'] if i.get('status') == 'completed' and not i.get('published')]
     save_json(PUBLISH_QUEUE, {'generated_at': now(), 'blog': BLOG, 'count': len(ready),
                               'items': [{'key': i['key'], 'title': i.get('title', ''), 'slug': i.get('slug', ''),
@@ -653,7 +659,7 @@ def main():
                                          'item_file': str(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', i['key']) + '.json'))}
                                         for i in ready]})
     from blog_generation_status import write as write_generation_status
-    run_status=write_generation_status(ROOT,'roya',completed,failed,blocked_until)
+    run_status=write_generation_status(ROOT,'roya',completed,failed,blocked_until,waiting=waiting)
     done, total = len(state['completed_keys']), len(queue['items'])
     STATUS_MD.write_text(
         '# صف بک‌لینک وبلاگ AFP\n\n'

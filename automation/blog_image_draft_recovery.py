@@ -17,7 +17,7 @@ def capacity_retry_due(item,current=None):
  import datetime
  if item.get('status')!='failed' or item.get('published') or item.get('failure_stage')!='image':return False
  reason=str(item.get('last_error')or'')
- if not any(marker in reason for marker in ('ImageProviderBusy','ImageQueueBusy','Image provider queue full; generation deferred until','Shared image queue occupied;')):return False
+ if not any(marker in reason for marker in ('ImageProviderBusy','ImageQueueBusy','Image provider queue full; generation deferred until','Shared image queue occupied;','Independent image stock waiting:')):return False
  stamp=item.get('next_retry_at')
  if not stamp:return True  # Legacy capacity failures had no per-item timer.
  try:

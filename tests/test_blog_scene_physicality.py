@@ -53,6 +53,7 @@ class ScenePhysicalityTests(unittest.TestCase):
  def test_nonexception_validation_failure_updates_saved_stage(self):
   import inspect,farsiblog_backlink_queue as f
   source=inspect.getsource(f.main)
-  self.assertIn("if errors:\n            item['failure_stage']=stage\n            failed.append",source)
+  self.assertIn("if errors:\n            item['failure_stage']=stage",source)
+  self.assertIn("else:failed.append(item['key'])",source)
 
 if __name__=='__main__':unittest.main()

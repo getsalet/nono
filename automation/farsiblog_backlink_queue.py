@@ -173,6 +173,8 @@ def main():
     recover_stale_image_deferrals(q)
     candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article') and retry_due(x)]
     from blog_generated_image import family_enabled
+    from blog_image_stock import awaiting
+    candidates=[x for x in candidates if not awaiting(x,ROOT)]
     candidates=[x for x in candidates if family_enabled(x,ROOT)]
     if target:candidates=[x for x in candidates if x['key']==target]
     else:
@@ -180,16 +182,17 @@ def main():
         for i in range(max(len(city),len(articles))):
             if i<len(city):candidates.append(city[i])
             if i<len(articles):candidates.append(articles[i])
-    completed=[];failed=[];blocked_until=None
+    completed=[];failed=[];waiting=[];blocked_until=None
     for item in candidates[:min(9,max(3,count*3))]:
-        if len(completed)>=count:break
+        if len(completed)+len(waiting)>=count:break
         from blog_image_backpressure import require_open,ImageProviderBusy
         from blog_image_queue import ImageQueueBusy
-        try:require_open(ROOT)
+        from blog_image_stock import require_generation_open,ImagePending
+        try:require_generation_open(ROOT)
         except ImageProviderBusy as busy:
             blocked_until=busy.retry_at
             print('Shared image-provider cooldown active; no new source/text/image calls.');break
-        provider_busy=False
+        provider_busy=False;exc_pending=None
         item.pop('_image_prepared_this_run',None)
         links=links_for(item);obj=None;errors=[];info={};stage='recovery'
         try:
@@ -219,7 +222,7 @@ def main():
                         from city_backlink_policy import matrix_title,resolve_editorial_link_tokens
                         resolve_editorial_link_tokens(obj,links)
                         obj['title']=matrix_title(item,CITY_BLOG)
-                    if item.get('kind')in('city','article')and not item.get('_image_prepared_this_run'):
+                    if item.get('kind')in('city','article'):
                         from blog_reference_scene import context_from_post
                         item['_image_article_context']=context_from_post(obj);stage='image'
                         retry_transient(lambda:prepare_image(item));item['_image_prepared_this_run']=True
@@ -228,23 +231,26 @@ def main():
                     errors,info=qa(item,obj,links);print(f'{item["key"]}: attempt={attempt+1}, words={info.get("words")}, errors={len(errors)}',flush=True)
                     if not errors:break
         except Exception as exc:
-            provider_busy=isinstance(exc,(ImageProviderBusy,ImageQueueBusy))
+            provider_busy=isinstance(exc,(ImageProviderBusy,ImageQueueBusy));exc_pending=exc if isinstance(exc,ImagePending)else None
             if provider_busy:item['image_retry_at']=exc.retry_at
             errors=['generation/source/validation failed: '+type(exc).__name__+' [stage='+stage+']; '+exception_detail(exc)]
             item['failure_stage']=stage
         item.update({'status':'failed'if errors else 'completed','attempts':item.get('attempts',0)+1,'generated_at':now(),'last_error':'; '.join(errors)})
         if errors:
             item['failure_stage']=stage
-            failed.append(item['key']);defer_item(item)
+            if isinstance(exc_pending,ImagePending):waiting.append(item['key'])
+            else:failed.append(item['key'])
+            defer_item(item)
             if provider_busy:item['next_retry_at']=datetime.datetime.fromtimestamp(item['image_retry_at'],datetime.timezone.utc).isoformat().replace('+00:00','Z')
             print(item['key']+': deferred; continuing queue; retry at '+item['next_retry_at'],flush=True)
         else:
             item.pop('next_retry_at',None);item.pop('failure_stage',None);item.update({'title':obj['title'],'slug':obj['slug']});completed.append(item['key'])
         save(item_path(item['key']),{**item,'post':obj,'blog':BLOG,'target_url':item.get('target_url','https://navar-abyari.ir/'),'qa':{'passed':not errors,'errors':errors,**info}});save(QUEUE,q)
-        if provider_busy:break  # Capacity is shared; do not generate text for the next candidate.
+        if provider_busy and not isinstance(exc_pending,ImagePending):break  # Real provider errors still stop the batch.
+        if isinstance(exc_pending,ImagePending)and not item.get('_image_stock_request'):break  # Stock cap: no more prose.
     refresh_ready(q);state=load(STATE,{});state.update({'updated_at':now(),'completed_keys':[x['key']for x in q['items']if x['status']in('completed','published')],'failed':{x['key']:x.get('last_error','')for x in q['items']if x['status']=='failed'}});save(STATE,state)
     from blog_generation_status import write as write_generation_status,BLOG_NAMES
-    run_status=write_generation_status(ROOT,CITY_BLOG,completed,failed,blocked_until)
+    run_status=write_generation_status(ROOT,CITY_BLOG,completed,failed,blocked_until,waiting=waiting)
     (ART/'status.md').write_text('# '+BLOG_NAMES[CITY_BLOG]+' AFP\n\nصف شهری تصویردار با کنترل شباهت بین پنج وبلاگ.\n\n'+f'آخرین اجرا: {now()}\nوضعیت تولید: {run_status["status"]}\nموفق این اجرا: {len(completed)}\nناموفق: {len(failed)}\nاین وضعیت به‌تنهایی تأیید انتشار نیست.\n')
     print('Original articles generated:',len(completed),'Deferred items:',len(failed))
     code=generation_exit_code(completed,failed)

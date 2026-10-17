@@ -281,6 +281,12 @@ def _generate(item,blog,slots=None,max_attempts=3):
  return out.getvalue()
 
 def prepare(item,blog,root=None):
+ from blog_image_stock import enabled,request_image
+ root=Path(root or roya.ROOT)
+ if enabled(root):return request_image(item,blog,root)
+ return prepare_now(item,blog,root)
+
+def prepare_now(item,blog,root=None,max_rounds=3,allow_generate=True):
  from blog_image_gate import review
  root=Path(root or roya.ROOT)
  if not family_enabled(item,root):raise RuntimeError('Image family is held pending direct visual acceptance; no generation or fallback')
@@ -290,15 +296,16 @@ def prepare(item,blog,root=None):
  if url:
   review(item,url,root=root)
  else:
+  if not allow_generate:raise RuntimeError('Approved stock asset unavailable; inline generation forbidden')
   cache=root/f'artifacts/{blog}-backlink-queue/generated-images'/f'{asset_id}.webp';cache.parent.mkdir(parents=True,exist_ok=True)
   # Definitive visual rejection invalidates a candidate, never the entire queue.
   # Bound regeneration to three candidates; auth/transport errors are NOT QA.
-  for round_index in range(3):
+  for round_index in range(max_rounds):
    if not cache.exists():
     item['_generation_stage']='generation_api';item['_image_generation_round']=round_index
     from blog_image_backpressure import require_open,ImageProviderBusy,defer
     require_open(root)
-    try:raw=generate(item,blog)
+    try:raw=generate(item,blog,max_attempts=1 if max_rounds==1 else 3)
     except ImageProviderBusy as busy:
      try:
       if not getattr(busy,'shared_cooldown_attempted',False):busy.set_retry(defer(root,busy.retry_at,checkpoint_asset))
@@ -317,7 +324,7 @@ def prepare(item,blog,root=None):
     item.setdefault('_image_rejections',[]).append({'sha256':digest,'reason':str(exc)[:400]})
     from blog_reference_scene import rejection_feedback
     item['_image_qa_feedback']=rejection_feedback(item,digest,root,str(exc))
-    if round_index==2:raise
+    if round_index==max_rounds-1:raise
   item['_generation_stage']='asset_checkpoint'
   url=checkpoint_asset(path,raw,root)
   item['_generation_stage']='public_vision_qa'

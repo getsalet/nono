@@ -9,9 +9,16 @@ from blog_image_backpressure import ImageProviderBusy
 class ImageKeyRouterTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
-  for p in [router.CONFIG,'data/agnes-usable-key-audit/latest.json','data/agnes-image-key-health/latest.json']:
-   q=self.root/p;q.parent.mkdir(parents=True,exist_ok=True);q.write_bytes((ROOT/p).read_bytes())
+  # Deterministic offline evidence; live audit results must not redefine fixtures.
   self.names=['AGNES_API_KEY10','AGNES_API_KEY6','AGNES_API_KEY7','AGNES_API_KEY11']
+  from blog_image_connection import settings
+  import datetime
+  stamp=datetime.datetime.now(datetime.timezone.utc).isoformat()
+  fixtures={router.CONFIG:{'enabled':True,'policy':router.POLICY,'slots':self.names},
+   'data/agnes-usable-key-audit/latest.json':{'complete_text':True,'complete_image':True,'finished_at':stamp,'connection':settings('https://apihub.agnes-ai.com/v1'),'keys':[{'secret_name':n,'text':{'status':'healthy','http_status':200},'image':{'http_status':503,'provider_code':'image_queue_full'}}for n in self.names]},
+   'data/agnes-image-key-health/latest.json':{'complete':True,'tested_at':stamp,'endpoint':'https://apihub.agnes-ai.com/v1/images/generations','model':'agnes-image-2.5-flash','keys':[{'secret_name':n,'status':'image_healthy','http_status':200}for n in self.names]}}
+  for name,value in fixtures.items():
+   q=self.root/name;q.parent.mkdir(parents=True,exist_ok=True);q.write_text(json.dumps(value))
   self.pool=SimpleNamespace(keys=['private-fixture-'+n for n in self.names],slots={'private-fixture-'+n:n for n in self.names})
   self.lease=SimpleNamespace(retain=False);self.commits=[]
   self.env=patch.dict(os.environ,{'GITHUB_ACTIONS':'false'});self.env.start();self.addCleanup(self.env.stop)
