@@ -148,6 +148,80 @@ class StockTests(unittest.TestCase):
   with patch.object(stock,'admission',side_effect=[nullcontext(),ImageQueueBusy()]):result,prepare=self.worker(approved)
   self.assertEqual(prepare.call_count,1);self.assertEqual(result['status'],'waiting_mutex');self.assertNotIn('provider_requests',result)
   self.assertFalse(result['publication_attempted']);self.assertEqual(stock.rows(self.root)[0]['status'],'processing')
+ def repaired_row(self):
+  self.enqueue();self.source();row=stock.rows(self.root)[0]
+  row.update(status='needs_text_repair',text_errors=['invalid slug'],attempts=2,visual_rejections=1)
+  stock.persist(self.root,row);return row
+ def test_text_repair_waits_without_inline_generation_or_fresh_prose_error(self):
+  self.repaired_row()
+  with patch.object(generated,'generate')as gen:
+   with self.assertRaisesRegex(stock.ImagePending,'worker revalidation'):stock.request_image(self.item,'roya',self.root)
+   gen.assert_not_called()
+  self.assertEqual(stock.rows(self.root)[0]['status'],'needs_text_repair')
+ def test_valid_same_context_repair_resumes_without_resetting_budgets(self):
+  self.repaired_row()
+  def approved(item,*a,**k):item['image_review']={'sha256':'a'*64};return 'approved'
+  with patch('blog_draft_preflight.active',return_value=True),patch('blog_draft_preflight.check_saved',return_value=[])as check:
+   result,prep=self.worker(approved)
+  self.assertEqual(check.call_count,1);self.assertEqual(prep.call_count,1);self.assertEqual(result['status'],'ready')
+  row=stock.rows(self.root)[0];self.assertEqual(row['attempts'],3);self.assertEqual(row['visual_rejections'],1)
+  self.assertNotIn('text_errors',row);self.assertIn('text_repaired_at',row)
+ def test_unrepaired_or_changed_draft_cannot_reopen_or_buy_image(self):
+  self.repaired_row()
+  for errors in (['invalid slug'],['Saved draft changed after image request; rebuild request from current validated text']):
+   with patch('blog_draft_preflight.active',return_value=True),patch('blog_draft_preflight.check_saved',return_value=errors):
+    _,prep=self.worker(lambda *a,**k:self.fail('No provider for invalid draft'));prep.assert_not_called()
+   self.assertEqual(stock.rows(self.root)[0]['status'],'needs_text_repair')
+ def test_missing_or_disabled_text_evidence_cannot_reopen(self):
+  from blog_draft_preflight import DraftUnavailable
+  self.repaired_row()
+  with patch('blog_draft_preflight.active',return_value=True),patch('blog_draft_preflight.check_saved',side_effect=DraftUnavailable('not saved')):
+   _,prep=self.worker(lambda *a,**k:self.fail('No missing draft'));prep.assert_not_called()
+  with patch('blog_draft_preflight.active',return_value=False):
+   _,prep=self.worker(lambda *a,**k:self.fail('No unchecked repair'));prep.assert_not_called()
+  self.assertEqual(stock.rows(self.root)[0]['status'],'needs_text_repair')
+ def test_text_repair_preserves_future_retry_and_calls_no_provider_early(self):
+  row=self.repaired_row();row['retry_at']=time.time()+500;stock.persist(self.root,row)
+  with patch('blog_draft_preflight.active',return_value=True),patch('blog_draft_preflight.check_saved',return_value=[]):
+   result,prep=self.worker(lambda *a,**k:self.fail('No early provider'));prep.assert_not_called()
+  self.assertEqual(result['status'],'waiting_retry');self.assertEqual(stock.rows(self.root)[0]['retry_at'],row['retry_at'])
+  self.assertEqual(stock.rows(self.root)[0]['attempts'],2)
+ def test_repaired_row_cannot_exceed_per_blog_capacity(self):
+  self.repaired_row()
+  for i in range(3):
+   self.enqueue({**copy.deepcopy(self.item),'key':'active-'+str(i)})
+  source=self.root/'data/roya/backlink-queue.json';source.write_text(json.dumps({'items':[self.item]+[{'key':'active-'+str(i)}for i in range(3)]}))
+  for row in stock.rows(self.root):
+   if row['status']=='requested':row['retry_at']=time.time()+500;stock.persist(self.root,row)
+  with patch('blog_draft_preflight.active',return_value=True),patch('blog_draft_preflight.check_saved',return_value=[]):
+   _,prep=self.worker(lambda *a,**k:self.fail('No image beyond capacity'));prep.assert_not_called()
+  self.assertEqual(sum(x['status']in stock.ACTIVE for x in stock.rows(self.root)),3)
+  self.assertEqual(sum(x['status']=='needs_text_repair'for x in stock.rows(self.root)),1)
+ def test_repaired_row_cannot_exceed_twelve_total_capacity(self):
+  self.item['key']='repair-global'
+  self.enqueue(blog='loxblog');self.source(blog='loxblog')
+  repaired=stock.rows(self.root)[0];repaired['status']='needs_text_repair';stock.persist(self.root,repaired)
+  for blog in ('roya','farsiblog','rozblog','blogfa'):
+   items=[]
+   for i in range(3):
+    item={**copy.deepcopy(self.item),'key':blog+str(i)};items.append(item);self.enqueue(item,blog)
+   p=self.root/'data'/blog/'backlink-queue.json';p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps({'items':items}))
+  for row in stock.rows(self.root):
+   if row['status']=='requested':row['retry_at']=time.time()+500;stock.persist(self.root,row)
+  with patch('blog_draft_preflight.active',return_value=True),patch('blog_draft_preflight.check_saved',return_value=[]):
+   _,prep=self.worker(lambda *a,**k:self.fail('No thirteenth request'));prep.assert_not_called()
+  self.assertEqual(sum(x['status']in stock.ACTIVE for x in stock.rows(self.root)),12)
+  self.assertEqual(sum(x['status']=='needs_text_repair'for x in stock.rows(self.root)),1)
+ def test_published_repaired_request_cannot_reactivate(self):
+  self.repaired_row();self.source({**self.item,'published':True})
+  with patch('blog_draft_preflight.active',return_value=True),patch('blog_draft_preflight.check_saved',return_value=[])as check:
+   _,prep=self.worker(lambda *a,**k:self.fail('No published topic'));prep.assert_not_called();check.assert_not_called()
+  self.assertEqual(stock.rows(self.root)[0]['status'],'cancelled')
+ def test_text_repair_cannot_reset_exhausted_visual_budget(self):
+  row=self.repaired_row();row['visual_rejections']=3;stock.persist(self.root,row)
+  with patch('blog_draft_preflight.active',return_value=True),patch('blog_draft_preflight.check_saved',return_value=[]):
+   _,prep=self.worker(lambda *a,**k:self.fail('No fourth image'));prep.assert_not_called()
+  self.assertEqual(stock.rows(self.root)[0]['status'],'rejected')
  def test_real_configuration_error_is_not_hidden_as_a_mutex_wait(self):
   self.enqueue();self.source()
   with patch.object(stock,'admission',side_effect=RuntimeError('Configuration failure')):

@@ -116,7 +116,13 @@ def request_image(item,blog,root):
    row.update(status='consumed',consumed_at=time.time());persist(root,row)
    item['_image_stock_request']=asset
    return url
-  if row and row.get('status')in('rejected','cancelled','superseded','needs_text_repair'):
+  if row and row.get('status')=='needs_text_repair':
+   # A slug/link/late-body repair may leave the image context/hash unchanged.
+   # Wait for the worker to validate the authoritative saved draft, rather than
+   # throwing an image error that sends the producer into another text rewrite.
+   item['_image_stock_request']=asset
+   raise ImagePending('saved text requires worker revalidation')
+  if row and row.get('status')in('rejected','cancelled','superseded'):
    raise RuntimeError('Image stock request needs review: '+row['status'])
   if row:
    item['_image_stock_request']=asset
@@ -170,13 +176,13 @@ def _worker_once(root):
  refresh(root)
  # Prefer never/less-attempted drafts. With a 20-minute worker, a five-minute
  # per-item retry alone would otherwise select the same oldest failure forever.
- pending=sorted((r for r in rows(root)if r['status']in('requested','processing')),key=lambda r:(r.get('attempts',0),r.get('started_at',r['created_at']),r['created_at']))
+ pending=sorted((r for r in rows(root)if r['status']in('requested','processing','needs_text_repair')),key=lambda r:(r.get('attempts',0),r.get('started_at',r['created_at']),r['created_at']))
  waiting_result=None;retry_times=[]
  for row in pending:
   blog=row['blog'];item=copy.deepcopy(row['item']);asset=row['asset_id']
   with admission(root,blog,asset):
    latest=read(root,request_path(asset))
-   if not latest or latest['status']not in('requested','processing'):continue
+   if not latest or latest['status']not in('requested','processing','needs_text_repair'):continue
    row=latest
    # A completed/cancelled run can resume a processing row. A live workflow
    # is protected by workflow concurrency, and the provider mutex still applies.
@@ -189,12 +195,28 @@ def _worker_once(root):
    if identity(item,blog)!=asset or(matches[0].get('_image_stock_request')and matches[0]['_image_stock_request']!=asset):
     row.update(status='superseded');persist(root,row);continue
    from blog_draft_preflight import active,check_saved,DraftUnavailable
-   if active(root):
+   preflight_active=active(root)
+   repairing=row['status']=='needs_text_repair'
+   if repairing and not preflight_active:continue  # Never reopen without full text QA.
+   if preflight_active:
     try:errors=check_saved(row,matches[0],root)
     except DraftUnavailable:
+     if repairing:continue  # Missing evidence cannot reactivate a rejected draft.
      row.update(status='requested',retry_at=time.time()+300,last_error='saved_draft_unavailable');persist(root,row);retry_times.append(row['retry_at']);continue
     if errors:
-     row.update(status='needs_text_repair',last_error='text_preflight_failed',text_errors=errors[:12]);persist(root,row);continue
+     if not repairing or row.get('text_errors')!=errors[:12]:
+      row.update(status='needs_text_repair',last_error='text_preflight_failed',text_errors=errors[:12]);persist(root,row)
+     continue
+   if repairing:
+    current=rows(root);cfg=control(root)
+    # Re-admission uses the same mutex/caps as a new request. No reset of
+    # attempts, visual-rejection budget or existing retry/cooldown timestamps.
+    if any(x['status']in ACTIVE and x['blog']==blog and x['key']==row['key']for x in current):continue
+    if sum(x['status']in ACTIVE for x in current)>=cfg['target']or sum(x['status']in ACTIVE and x['blog']==blog for x in current)>=cfg['per_blog_limit']:continue
+    if row.get('visual_rejections',0)>=3:
+     row.update(status='rejected');persist(root,row);continue
+    row.update(status='requested',text_repaired_at=time.time())
+    row.pop('text_errors',None);row.pop('last_error',None);persist(root,row)
    # Text triage is local and must not wait for an IMAGE retry/cooldown.
    if row.get('retry_at',0)>time.time():
     retry_times.append(row['retry_at']);continue

@@ -36,6 +36,20 @@ class DraftPreflightTests(unittest.TestCase):
   request={'blog':'loxblog','item':self.item};p=self.root/'artifacts/loxblog-backlink-queue/items/draft.json';p.parent.mkdir(parents=True)
   p.write_text(json.dumps({'post':{'title':'موضوع دیگر','slug':'valid','html':'<p>متن جدید</p>'}}))
   self.assertIn('Saved draft changed',draft.check_saved(request,self.item,self.root)[0])
+ def test_same_context_slug_repair_reloads_real_saved_file_before_resuming(self):
+  post={'title':'راهنمای آبیاری','slug':'bad slug','html':'<p>این متن واقعی درباره نصب نوار تیپ و بررسی تجهیزات آبیاری در کنار ردیف های کشت است و برای آزمون بازخوانی فایل ذخیره شده استفاده می شود.</p>'}
+  self.item['_image_article_context']=scene.context_from_post(post);self.enqueue()
+  p=self.root/'artifacts/loxblog-backlink-queue/items/draft.json';p.parent.mkdir(parents=True)
+  p.write_text(json.dumps({'post':post}));before=generated.identity(self.item,'loxblog')
+  def text_qa(item,obj,*a,**k):return ['invalid slug']if obj['slug']=='bad slug'else[]
+  def approved(item,*a,**k):item['image_review']={'sha256':'a'*64};return 'approved'
+  with patch.object(draft,'check',side_effect=text_qa),patch.object(generated,'prepare_now',side_effect=approved)as api,patch.object(generated,'rollout_enabled',return_value=True),patch('blog_image_backpressure.require_open'):
+   stock.worker_once(self.root);api.assert_not_called()
+   self.assertEqual(stock.rows(self.root)[0]['status'],'needs_text_repair')
+   post['slug']='valid-slug';p.write_text(json.dumps({'post':post}))
+   self.assertEqual(scene.context_from_post(post),self.item['_image_article_context'])
+   self.assertEqual(generated.identity(self.item,'loxblog'),before)
+   self.assertEqual(stock.worker_once(self.root)['status'],'ready');self.assertEqual(api.call_count,1)
  def test_normalized_crop_and_introduction_mismatch(self):
   (self.root/'data/blog-city-title-matrix.json').write_text(json.dumps({'row_crops':['گوجه فرنگی']}))
   post={'title':self.item['_image_article_context']['title'],'html':'<p>قیمت روز نوار تیپ و خرید از کارخانه</p>'}
