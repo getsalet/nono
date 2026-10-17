@@ -1,0 +1,149 @@
+{
+  "monitor_run_url": "https://github.com/getsalet/nono/actions/runs/39058433022",
+  "source_report": "artifacts/blog-one-hour-monitor/39058433022.json",
+  "status": "completed_with_external_blocker",
+  "started_at": "2026-10-17T18:32:19.852077+00:00",
+  "finished_at": "2026-10-17T19:32:46.171744+00:00",
+  "observed_seconds": 3626.3,
+  "sample_count": 13,
+  "fixes": [
+    {
+      "name": "stock capacity before source/text work",
+      "commit": "4c939e9038f330d32c4f793ce9d03aa51b49a2bb",
+      "regression": "Full stock previously bought one new prose draft; now zero source/text calls."
+    },
+    {
+      "name": "fair scheduling instead of repeatedly retrying oldest deferred article",
+      "commit": "c23f025894044404c55220dac29ca6d400a32a10",
+      "regression": "Never/less-attempted article gets priority; timers and one-request limit unchanged."
+    }
+  ],
+  "offline_tests_passed": 491,
+  "hosted_tests_and_monitor_passed": true,
+  "final_stock_status_counts": {
+    "requested": 12,
+    "processing": 0,
+    "ready": 0,
+    "consumed": 0,
+    "rejected": 0,
+    "cancelled": 0,
+    "superseded": 0
+  },
+  "new_published_flags": {
+    "roya": 0,
+    "farsiblog": 0,
+    "rozblog": 0,
+    "blogfa": 0,
+    "loxblog": 0
+  },
+  "new_public_posts_independently_verified": 0,
+  "processing_attempts_in_window": [
+    {
+      "blog": "farsiblog",
+      "processing_attempts_in_window": 1,
+      "last_status": "requested",
+      "last_error": "ImageProviderBusy"
+    },
+    {
+      "blog": "rozblog",
+      "processing_attempts_in_window": 1,
+      "last_status": "requested",
+      "last_error": "ImageProviderBusy"
+    },
+    {
+      "blog": "blogfa",
+      "processing_attempts_in_window": 1,
+      "last_status": "requested",
+      "last_error": "ImageProviderBusy"
+    }
+  ],
+  "provider_attempt_results_in_window": [
+    {
+      "secret_slot": "AGNES_API_KEY10",
+      "http_status": 503,
+      "status": "temporary_failure"
+    },
+    {
+      "secret_slot": "AGNES_API_KEY7",
+      "http_status": 503,
+      "status": "temporary_failure"
+    },
+    {
+      "secret_slot": "AGNES_API_KEY3",
+      "http_status": 503,
+      "status": "temporary_failure"
+    }
+  ],
+  "blogs": {
+    "roya": {
+      "last_generation_status": "waiting_image",
+      "last_public_home_result": {
+        "http_status": 200,
+        "bytes_read": 123951,
+        "new_post_verified": false
+      },
+      "observed_home_statuses": [
+        200
+      ]
+    },
+    "farsiblog": {
+      "last_generation_status": "waiting_image",
+      "last_public_home_result": {
+        "http_status": 200,
+        "bytes_read": 94539,
+        "new_post_verified": false
+      },
+      "observed_home_statuses": [
+        200
+      ]
+    },
+    "rozblog": {
+      "last_generation_status": "waiting_image",
+      "last_public_home_result": {
+        "http_status": 200,
+        "bytes_read": 106109,
+        "new_post_verified": false
+      },
+      "observed_home_statuses": [
+        200
+      ]
+    },
+    "blogfa": {
+      "last_generation_status": "waiting_image",
+      "last_public_home_result": {
+        "http_status": 404,
+        "new_post_verified": false
+      },
+      "observed_home_statuses": [
+        200,
+        404
+      ]
+    },
+    "loxblog": {
+      "last_generation_status": "waiting_image",
+      "last_public_home_result": {
+        "http_status": 200,
+        "bytes_read": 62174,
+        "new_post_verified": false
+      },
+      "observed_home_statuses": [
+        200
+      ]
+    }
+  },
+  "remaining": [
+    "Image provider still returns HTTP 503; no approved new image received in window.",
+    "Blogfa public accessibility could not be verified at end: hosted/web reads 404, independent read hit Cloudflare 403. Do not infer deletion or confirmed outage.",
+    "Historical Rozblog duplicate-image repair not performed; needs approved replacements."
+  ],
+  "safety": {
+    "hose_cancelled": true,
+    "watermark_preserved": true,
+    "image_and_two_link_gates_preserved": true,
+    "quality_weakened": false,
+    "provider_limits_bypassed": false,
+    "monitor_forced_publications": 0,
+    "key_values_persisted": false,
+    "normal_schedules_left_active": true
+  }
+}
