@@ -85,6 +85,7 @@ class ImageRolloutTests(unittest.TestCase):
    text=' '.join(x['text']for x in content if x['type']=='text')
    for label in ('CANDIDATE FULL FRAME','CANDIDATE DETAIL LEFT','CANDIDATE DETAIL RIGHT','APPROVED PRODUCT REFERENCE',self.item['_image_article_context']['title']):self.assertIn(label,text)
    self.assertIn('topic_match',text);self.assertIn('collage_or_split_layout',text)
+   self.assertIn('20 cm denote spacing BETWEEN emitters',text);self.assertIn('not normal flattened tape',text)
  def test_split_layout_and_topic_mismatch_are_rejected(self):
   base={'pass':True,'score':90,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'product_fully_in_frame':True,'product_count_match':True,'product_role_plausible':True,'packaging_not_used_as_hardware':True,'package_soil_gap_visible':True,'irrigation_geometry_plausible':True,'technical_evidence_match':True,'observed_product_count':1,'collage_or_split_layout':False,'crop_contradiction':False}
   for change in ({'topic_match':False},{'product_integrated':False},{'product_fully_in_frame':False},{'product_count_match':False},{'technical_evidence_match':False},{'observed_product_count':3},{'collage_or_split_layout':True},{'crop_contradiction':True}):

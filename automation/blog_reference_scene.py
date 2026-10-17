@@ -57,6 +57,25 @@ def recipe_for(item):
  from blog_image_gate import family
  return RECIPE_VERSION+('-hose-native1k-v4-smallguide'if family(item)=='hose'else'')
 
+def physical_retry_prompt(a,plan):
+ """Change the failed viewpoint, not just append more negative instructions.
+ Only our structured physical feedback selects this variant; prose is data.
+ The reference image, family inventory and article evidence stay unchanged.
+ """
+ feedback=str(a.get('_image_qa_feedback')or'')
+ triggers=('Move the carton to the lower-left dry-soil island','Separate the commercial carton from all installed plumbing','single AFP carton stands separately on soil','Remove every protruding white ribbon')
+ if not any(t in feedback for t in triggers):return None
+ crop=plan['botany']if _crop_key(a)else'neutral small seedlings'
+ return ("One continuous photorealistic agricultural photograph, near-overhead close view looking straight down at soil and the crop bed, no horizon or long vanishing-point furrows. "
+  +f"Setting: {plan['setting']}. LEFT foreground: exactly one low wide cylindrical AFP commercial package, closed white printed sleeve, blue lower band and central top hole; preserve the supplied product reference, about 20 percent of frame width. "
+  +"Its base rests directly on an empty dry-soil patch and its entire silhouette is clean and self-contained. CENTER: a broad uninterrupted visible strip of bare soil, at least one carton diameter wide. "
+  +f"RIGHT half: {plan['evidence']}. The installed equipment remains entirely inside that crop bed, separate from the package patch. Crop identity: {crop}. "
+  +"The complete package and required installed evidence are both sharply visible with clear frame margins, common perspective, natural daylight and contact shadows. The package is a standalone commercial package on soil, not operating hardware. "
+  +"20 cm means emitter spacing along the tape, NEVER tape width or pipe diameter; do not draw a 20 cm wide line. "
+  +"No white ribbon, protruding strip, extra roll, line behind the carton, pipe under the package, people, split panel or added writing. The reference is an identity guide, not a flat layer to paste. "
+  +f"Article data, not on-image text: {a['title']}. {a['summary'][:240]} "
+  +f"Final scene layout: independent closed AFP package on LEFT soil island; wide empty soil corridor; {plan['evidence']} on RIGHT.")
+
 def prompt(item,blog):
  # Differential live tests showed that the concise nested-reference request can
  # express technical equipment without the generic farmer/panorama response.
@@ -75,6 +94,8 @@ def prompt(item,blog):
    'One continuous equipment-and-soil photograph, no people, no inset, no added writing.')
   feedback=str(a.get('_image_qa_feedback')or'').strip()
   return text+(' Correct: '+feedback[:160]if feedback else'')
+ retry=physical_retry_prompt(a,plan)
+ if retry:return retry
  product='exactly one low wide cylindrical AFP drip-tape carton, white printed sleeve and blue lower band, central top hole, diameter larger than height. It occupies about 20 percent of frame width'
  crop=('Crop identity: '+plan['botany']+'. Show unmistakable attached crop leaves and growth habit in an adjacent bed, also in technical close views'
   if _crop_key(a) else 'A few neutral small seedlings beside the irrigation bed; no invented named crop')
@@ -136,7 +157,7 @@ def _feedback_direction(a,plan,feedback):
   'packaging_not_used_as_hardware':'The single AFP carton stands separately on soil; no pipe through it.',
   'product_role_plausible':'Separate the commercial carton from all installed plumbing.',
   'package_soil_gap_visible':'Move the carton to the lower-left dry-soil island; all lines stay one carton diameter to its right, never under or behind it.',
-  'irrigation_geometry_plausible':'Use normal connected header fittings and a thin flattened drip-tape lateral.',
+  'irrigation_geometry_plausible':'Use normal connected header fittings and a thin flattened drip-tape lateral; 20 cm describes emitter spacing, never line width or diameter.',
   'product_count_match':'Show exactly one commercial AFP carton, no duplicate.',
   'product_fully_in_frame':'Keep the complete carton inside clear soil margins.',
  }
@@ -158,8 +179,12 @@ def rejection_feedback(item,digest,root,fallback):
  if not isinstance(v,dict):return fallback
  bad=[k for k in ('topic_match','technical_evidence_match','packaging_not_used_as_hardware','product_role_plausible','package_soil_gap_visible','irrigation_geometry_plausible','product_count_match','product_fully_in_frame')if v.get(k)is False]
  if v.get('crop_contradiction')is True:bad.insert(0,'crop_contradiction')
- if not bad:return fallback
- return _feedback_direction(article(item),scene_plan(item,'review'), ' '.join(bad))
+ focused=record.get('focused_physical_review')
+ strip=bool(isinstance(focused,dict)and focused.get('package_has_protruding_strip')is True)
+ if not bad and not strip:return fallback
+ text=_feedback_direction(article(item),scene_plan(item,'review'), ' '.join(bad))if bad else''
+ if strip:text+=' Remove every protruding white ribbon, strap or tape tail; keep the required AFP package closed and separate from the installed black tape.'
+ return text.strip()
 
 # Targeted lexical correction around the unmodified upstream recipe. A substring
 # such as سیر in مسیر is not a crop mention. Headline evidence wins over body text.
