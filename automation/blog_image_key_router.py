@@ -102,7 +102,11 @@ def generate(item,blog,root,pool,operation,checkpoint,lease):
  try:raw=operation(item,blog,slots=[name],max_attempts=1)
  except Exception as exc:
   rows=item.get('_image_provider_attempts',[]);attempt=rows[-1]if rows else{};code=attempt.get('http_status')
-  delay=min(1800,300*2**min(failures,3));row={'status':'temporary_failure','failures':min(100,failures+1),'retry_at_epoch':now+delay,'last_attempt_at_epoch':now,'http_status':code}
+  # Cooldown starts after the response, not before a possibly 600s request.
+  # Respect the provider's explicit queue-full retry time; never shorten it.
+  delay=min(1800,300*2**min(failures,3));retry=time.time()+delay
+  if isinstance(exc,ImageProviderBusy):retry=max(retry,exc.retry_at)
+  row={'status':'temporary_failure','failures':min(100,failures+1),'retry_at_epoch':retry,'last_attempt_at_epoch':now,'http_status':code}
   if code==401:row['status']='authentication_rejected'
   if code==403:row['status']='image_scope_denied'
   if code==402 or attempt.get('provider_code')=='insufficient_quota':s['shared_block']='billing_required';row['status']='billing_required'

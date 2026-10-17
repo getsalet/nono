@@ -31,6 +31,24 @@ class ImageKeyRouterTests(unittest.TestCase):
  def busy(self,item,blog,slots,max_attempts):
   item.setdefault('_image_provider_attempts',[]).append({'http_status':503,'provider_code':'image_queue_full'})
   raise ImageProviderBusy(time.time()+300)
+ def test_queue_retry_after_is_never_shortened(self):
+  start=time.time();provider_retry=start+1200
+  def busy_long(item,*args,**kw):
+   item['_image_provider_attempts']=[{'http_status':503,'provider_code':'image_queue_full'}]
+   raise ImageProviderBusy(provider_retry)
+  with self.assertRaises(ImageProviderBusy):self.run_route(busy_long)
+  self.assertGreaterEqual(router.state(self.root)['keys'][self.names[0]]['retry_at_epoch'],provider_retry)
+ def test_slow_request_still_gets_full_post_response_backoff(self):
+  clock=[time.time()]
+  def slow(item,*args,**kw):
+   clock[0]+=600
+   item['_image_provider_attempts']=[{'http_status':503,'provider_code':'image_queue_full'}]
+   raise ImageProviderBusy(clock[0]+300)
+  with patch.object(router.time,'time',side_effect=lambda:clock[0]),self.assertRaises(ImageProviderBusy):self.run_route(slow)
+  self.assertGreaterEqual(router.state(self.root)['keys'][self.names[0]]['retry_at_epoch'],clock[0]+300)
+ def test_live_canary_preflight_uses_the_same_pool_as_production(self):
+  source=(ROOT/'.github/workflows/blog-tape-live-canary.yml').read_text()
+  self.assertIn("IMAGE_KEY_POOL_ENABLED: '1'",source)
  def test_single_key_capacity_failure_does_not_disable_other_keys(self):
   with self.assertRaises(ImageProviderBusy)as exc:self.run_route(self.busy)
   self.assertTrue(exc.exception.key_scoped);self.assertTrue(exc.exception.shared_cooldown_attempted)
