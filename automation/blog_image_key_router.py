@@ -16,7 +16,7 @@ def evidence(root):
  if cfg.get('policy')!=POLICY or cfg.get('enabled')is not True:raise RuntimeError('Audited image key pool unavailable; no legacy fallback')
  names=cfg.get('slots',[])
  from agnes_key_pool import NAMES
- if not names or len(names)!=len(set(names))or any(n not in NAMES for n in names):raise RuntimeError('Invalid image key-pool slot configuration')
+ if not names or len(names)!=len(set(names))or any(n not in NAMES or n=='AGNES_API_KEY8'for n in names):raise RuntimeError('Invalid image key-pool slot configuration')
  latest=read_json(root/'data/agnes-usable-key-audit/latest.json');old=read_json(root/'data/agnes-image-key-health/latest.json')
  from blog_image_connection import settings
  connection=settings('https://apihub.agnes-ai.com/v1')
@@ -31,6 +31,14 @@ def evidence(root):
   if not 0<=time.time()-old_at<=7*86400:historical=set()
  except (KeyError,ValueError,TypeError,AttributeError):historical=set()
  rows={r['secret_name']:r for r in latest.get('keys',[])};allowed=[]
+ # Optional one-shot expansion evidence does not refresh the original audit or
+ # promote text-only/queue-full candidates. Every added account needs real bytes.
+ extra=root/'data/blog-image-account-expansion/latest.json'
+ if extra.exists():
+  from blog_image_account_expansion import successful
+  report=read_json(extra);fresh=set(successful(report,connection))
+  for row in report['keys']if fresh else[]:
+   if isinstance(row,dict)and row.get('secret_name')in fresh:rows[row['secret_name']]=row
  for name in names:
   row=rows.get(name,{});text=row.get('text',{});image=row.get('image',{})
   if text.get('status')!='healthy'or text.get('http_status')!=200:continue
