@@ -204,6 +204,7 @@ def build_prompt(item, links):
 8. اگر لینک با نقش home در فهرست مجاز هست، آن را فقط یک بار در یک پاراگراف توضیحی مرتبط با انتخاب تجهیزات نوار تیپ بیاور؛ متن لنگر همین لینک را دقیقاً همان «لنگر پیشنهادی» آن بنویس. عبارت مستقل «نوار تیپ» یا «نوار آبیاری» فقط به صفحه نخست اشاره کند؛ لینک شهر همچنان نام شهر و زمینه محصول خود را داشته باشد؛ لینک استان اضافه نکن. دو کلیدواژه اصلی را کنار هم به شکل دو لینک تکراری به صفحه نخست نچین. لینک صفحه نخست را در سوالات متداول یا یک پاراگراف صرفاً تبلیغاتی قرار نده. اگر لینک home در فهرست نیست، آن را اضافه نکن و کلمات نوار تیپ را به متن مربوط به لوله تحمیل نکن.
 9. اولویت مقاله پاسخ دقیق به نیاز خواننده است، نه تکرار کلیدواژه یا افزایش تعداد بک‌لینک. بدون مقدمه و جمله تبلیغاتی قالبی، توصیه کاربردی مرتبط با موضوع بده.
 10. عنوان دقیق از ماتریس مستقل رویابلاگ: {item['assigned_title']}. آن را بدون تغییر استفاده کن؛ حداکثر ۶۵ کاراکتر است و نام شهر را دارد.
+موضوع و مسئله فنی عنوان باید از مقدمه در متن واقعی حاضر باشد؛ مقاله قیمت و خرید عمومی را فقط با تعویض عنوان تحویل نده.
 11. اگر عنوان نام محصول کشت ردیفی دارد، متن، چک‌لیست و FAQ به کاربرد آبیاری همان محصول پاسخ دهند. مثال‌ها مشروط باشند؛ رایج بودن کشت آن در شهر یا تناسب قطعی با خاک و اقلیم را ادعا نکن. فاصله، فشار، دبی و نیاز آبی را بدون مرجع معتبر به محصول نسبت نده.
 12. زاویه اختصاصی رویا: برنامه‌ریزی آبیاری، نیازسنجی مزرعه، تناسب تجهیزات و تصمیم‌های پیش از اجرا. مقدمه، مثال، چک‌لیست و FAQ را از صفر و با همین زاویه بنویس؛ متن فارسی‌بلاگ، رز‌بلاگ و سایت اصلی را کپی یا بازنویسی سطحی نکن. نام شهر فقط زمینه مخاطب است، نه شاهد ویژگی‌های اقلیم یا خاک.
 
@@ -348,14 +349,14 @@ def product_semantics_errors(item,markup):
     return errors
 
 
-def qa(item, obj, links):
+def qa(item, obj, links, root=None, require_image=True):
     errors = []
     # Encoding differences are not invalid destinations. Normalize only approved equivalents.
     html = normalize_approved_hrefs(obj, links).get('html', '') or ''
     title = (obj.get('title', '') or '').strip()
     if item.get('assigned_title') and title != item['assigned_title']:
         errors.append('title differs from assigned independent Roya matrix')
-    for crop in load_json(ROOT / 'data/blog-city-title-matrix.json', {}).get('row_crops', []):
+    for crop in load_json(Path(root or ROOT) / 'data/blog-city-title-matrix.json', {}).get('row_crops', []):
         if item.get('assigned_title') and crop in title and crop not in re.sub(r'<[^>]+>', ' ', html):
             errors.append('Title crop must be addressed in article body')
     n = words(html)
@@ -422,23 +423,24 @@ def qa(item, obj, links):
         errors.append('numeric price claim')
     if re.search(r'```|<script|<style|style=|\*\*|!\[', html, flags=re.I):
         errors.append('markdown, script, style or image markup found')
-    imgs = re.findall(r'<img\b[^>]*>', html, flags=re.I)
-    if len(imgs) != 1:
-        errors.append(f'exactly one post image is required, found {len(imgs)}')
-    else:
-        src = re.search(r'src=["\']([^"\']+)["\']', imgs[0], flags=re.I)
-        alt = re.search(r'alt=["\']([^"\']+)["\']', imgs[0], flags=re.I)
-        from blog_image_gate import approved_url, validate_record
-        if not src or not approved_url(src.group(1)):
-            errors.append('post image must use an approved source or immutable generated asset URL')
-        if item.get('image_generation'):
-            errors.extend(validate_record(item))
-            if src and src.group(1) != item.get('image_url'):
-                errors.append('generated post image differs from reviewed image')
-        if not alt or len(alt.group(1).strip()) < 4:
-            errors.append('post image needs a descriptive alt text')
-        if html.strip().find(imgs[0]) > 30:
-            errors.append('post image must be the first element of the article')
+    if require_image:
+        imgs = re.findall(r'<img\b[^>]*>', html, flags=re.I)
+        if len(imgs) != 1:
+            errors.append(f'exactly one post image is required, found {len(imgs)}')
+        else:
+            src = re.search(r'src=["\']([^"\']+)["\']', imgs[0], flags=re.I)
+            alt = re.search(r'alt=["\']([^"\']+)["\']', imgs[0], flags=re.I)
+            from blog_image_gate import approved_url, validate_record
+            if not src or not approved_url(src.group(1)):
+                errors.append('post image must use an approved source or immutable generated asset URL')
+            if item.get('image_generation'):
+                errors.extend(validate_record(item))
+                if src and src.group(1) != item.get('image_url'):
+                    errors.append('generated post image differs from reviewed image')
+            if not alt or len(alt.group(1).strip()) < 4:
+                errors.append('post image needs a descriptive alt text')
+            if html.strip().find(imgs[0]) > 30:
+                errors.append('post image must be the first element of the article')
     latin = {w.lower() for w in re.findall(r'[A-Za-z]+', re.sub(r'<[^>]+>', ' ', html))}
     stray = sorted(w for w in latin if w not in LATIN_OK)
     if stray:
@@ -448,11 +450,11 @@ def qa(item, obj, links):
         errors.append('slug must be latin lowercase hyphenated (max 60)')
     if not (obj.get('meta_description') or '').strip():
         errors.append('meta_description is required')
-    if item.get('family') in ('tape20', 'hose'):
+    if require_image and item.get('family') in ('tape20', 'hose'):
         from blog_image_gate import generated_record_errors
-        errors.extend(generated_record_errors(item, 'roya'))
+        errors.extend(generated_record_errors(item, 'roya', root))
     errors.extend(product_semantics_errors(item, html))
-    errors.extend(check_corpus(ROOT, 'roya', item['key'], html))
+    errors.extend(check_corpus(root or ROOT, 'roya', item['key'], html))
     return errors, {'words': n, 'links': found, 'title': title, 'slug': slug,
                     'city_anchor': city_anchor, 'key_index': BASE._i, 'agnes_calls': BASE.calls}
 
@@ -597,6 +599,12 @@ def main():
                     stage='generation'
                     obj = agnes(repair_prompt(item, links, obj, errors),temperature=0.1)
                 obj['title'] = item['assigned_title']
+                obj = resolve_link_tokens(obj, links)
+                from blog_draft_preflight import active,check
+                if active(ROOT):
+                    stage='text_validation'
+                    errors=check(item,obj,'roya',ROOT,links)
+                    if errors:continue
                 from blog_reference_scene import context_from_post
                 context=context_from_post(obj)
                 if image_url is None or context!=item.get('_image_article_context'):

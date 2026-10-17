@@ -80,9 +80,9 @@ class ImageRolloutTests(unittest.TestCase):
    with patch.object(gate,'fetch',return_value=(self.raw,(1200,675),'WEBP')),patch.object(roya.BASE,'next_agnes_key',return_value='test-key'),patch.object(roya.BASE,'fetch_json',return_value=reply)as call:
     gate.review(copy.deepcopy(self.item),'generated://roya/'+'a'*32,Path(d),_candidate=self.raw)
    content=call.call_args.args[2]['messages'][0]['content']
-   self.assertEqual(len([x for x in content if x['type']=='image_url']),2)
+   self.assertEqual(len([x for x in content if x['type']=='image_url']),4)
    text=' '.join(x['text']for x in content if x['type']=='text')
-   for label in ('CANDIDATE FULL FRAME','APPROVED PRODUCT REFERENCE',self.item['_image_article_context']['title']):self.assertIn(label,text)
+   for label in ('CANDIDATE FULL FRAME','CANDIDATE DETAIL LEFT','CANDIDATE DETAIL RIGHT','APPROVED PRODUCT REFERENCE',self.item['_image_article_context']['title']):self.assertIn(label,text)
    self.assertIn('topic_match',text);self.assertIn('collage_or_split_layout',text)
  def test_split_layout_and_topic_mismatch_are_rejected(self):
   base={'pass':True,'score':90,'observed_family':'tape20','expected_product_visible':True,'wrong_product_present':False,'fake_text_or_logo':False,'implausible_geometry':False,'people_present':False,'topic_match':True,'product_integrated':True,'product_fully_in_frame':True,'product_count_match':True,'product_role_plausible':True,'packaging_not_used_as_hardware':True,'irrigation_geometry_plausible':True,'technical_evidence_match':True,'observed_product_count':1,'collage_or_split_layout':False,'crop_contradiction':False}

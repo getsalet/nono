@@ -224,6 +224,11 @@ def main():
                         from city_backlink_policy import matrix_title,resolve_editorial_link_tokens
                         resolve_editorial_link_tokens(obj,links)
                         obj['title']=matrix_title(item,CITY_BLOG)
+                    from blog_draft_preflight import active,check
+                    if active(ROOT):
+                        stage='text_validation'
+                        errors=check(item,obj,CITY_BLOG,ROOT,links)
+                        if errors:continue
                     if item.get('kind')in('city','article'):
                         from blog_reference_scene import context_from_post
                         item['_image_article_context']=context_from_post(obj);stage='image'

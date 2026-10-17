@@ -19,7 +19,7 @@ def control(root):
  path=Path(root)/CONFIG
  if not path.exists():return {'enabled':False,'target':12,'per_blog_limit':3}
  value=json.loads(path.read_text())
- if not isinstance(value,dict)or type(value.get('enabled'))is not bool or value.get('target')!=12 or value.get('per_blog_limit')!=3:
+ if not isinstance(value,dict)or type(value.get('enabled'))is not bool or value.get('target')!=12 or value.get('per_blog_limit')!=3 or ('text_preflight_required'in value and type(value['text_preflight_required'])is not bool):
   raise RuntimeError('Invalid independent image stock control; no fallback')
  return value
 
@@ -51,7 +51,7 @@ def rows(root):
   if not re.fullmatch(DIRECTORY+r'/[a-f0-9]{32}\.json',path):raise RuntimeError('Invalid image stock request path')
   row=read(root,path)
   if not isinstance(row,dict)or row.get('policy')!=POLICY or path!=request_path(row.get('asset_id','')):raise RuntimeError('Invalid image stock request')
-  if row.get('blog')not in('roya','farsiblog','rozblog','blogfa','loxblog')or row.get('status')not in ACTIVE|{'consumed','cancelled','superseded','rejected'}or not isinstance(row.get('key'),str):raise RuntimeError('Invalid stock owner or status')
+  if row.get('blog')not in('roya','farsiblog','rozblog','blogfa','loxblog')or row.get('status')not in ACTIVE|{'consumed','cancelled','superseded','rejected','needs_text_repair'}or not isinstance(row.get('key'),str):raise RuntimeError('Invalid stock owner or status')
   result.append(row)
  return result
 
@@ -116,7 +116,7 @@ def request_image(item,blog,root):
    row.update(status='consumed',consumed_at=time.time());persist(root,row)
    item['_image_stock_request']=asset
    return url
-  if row and row.get('status')in('rejected','cancelled','superseded'):
+  if row and row.get('status')in('rejected','cancelled','superseded','needs_text_repair'):
    raise RuntimeError('Image stock request needs review: '+row['status'])
   if row:
    item['_image_stock_request']=asset
@@ -170,6 +170,13 @@ def worker_once(root):
     row.update(status='cancelled');persist(root,row);continue
    if identity(item,blog)!=asset or(matches[0].get('_image_stock_request')and matches[0]['_image_stock_request']!=asset):
     row.update(status='superseded');persist(root,row);continue
+   from blog_draft_preflight import active,check_saved,DraftUnavailable
+   if active(root):
+    try:errors=check_saved(row,matches[0],root)
+    except DraftUnavailable:
+     row.update(status='requested',retry_at=time.time()+300,last_error='saved_draft_unavailable');persist(root,row);continue
+    if errors:
+     row.update(status='needs_text_repair',last_error='text_preflight_failed',text_errors=errors[:12]);persist(root,row);continue
    if not rollout_enabled(blog,root):raise RuntimeError('Worker rollout acceptance unavailable')
    try:require_open(root)
    except ImageProviderBusy as exc:return {'status':'waiting_provider','retry_at':exc.retry_at,'provider_requests':0}
