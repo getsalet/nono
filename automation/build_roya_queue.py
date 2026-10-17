@@ -128,7 +128,7 @@ RUNTIME_FIELDS = (
     'failure_stage', 'last_error', 'next_retry_at', 'image_retry_at',
     '_image_stock_request', '_image_article_context', '_image_qa_feedback',
     '_image_rejections', 'image_generation', 'image_review', 'image_width',
-    'image_height', 'image_alt', 'image_policy_retry',
+    'image_height', 'image_alt', 'image_policy_retry', 'text_policy_retry',
 )
 
 def retained_runtime(prev, key):

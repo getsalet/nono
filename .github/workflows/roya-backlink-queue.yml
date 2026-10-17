@@ -22,6 +22,7 @@ on:
       - automation/roya_backlink_queue.py
       - tests/test_roya_capacity_recovery.py
       - tests/test_roya_queue_runtime.py
+      - tests/test_roya_domain_repair.py
       - .github/workflows/roya-backlink-queue.yml
   schedule:
     - cron: '*/30 * * * *'
@@ -101,6 +102,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_roya_capacity_recovery.py' -v
           python -m unittest discover -s tests -p 'test_roya_queue_runtime.py' -v
+          python -m unittest discover -s tests -p 'test_roya_domain_repair.py' -v
       - name: Build or refresh the city queue
         if: steps.control.outputs.proceed == '1'
         run: python automation/build_roya_queue.py

@@ -187,7 +187,7 @@ def build_prompt(item, links):
         f"- href=\"AFP_LINK_{index}\"\n  عنوان پست مقصد در سایت: {x.get('title', '')}\n  لنگر پیشنهادی: {x['anchor']} ({x['role']})"
         for index, x in enumerate(links, 1))
     return f'''برای شهر {item['city_fa']} در استان {item['province_fa']} یک مقاله تازه، کاربردی و سئوشده فارسی درباره {product} بنویس.
-این مقاله در وبلاگ آموزشی AFP منتشر می‌شود و هدف آن راهنمایی کشاورزان همان شهر است؛ در متن به‌طور طبیعی به لینک‌های زیر به سایت navar-abyari.ir اشاره کن.
+این مقاله در وبلاگ آموزشی AFP منتشر می‌شود و هدف آن راهنمایی کشاورزان همان شهر است؛ در متن به‌طور طبیعی از لینک‌های زیر با لنگر فارسی تعیین‌شده استفاده کن. نام دامنه یا نشانی لاتین را در متن قابل‌نمایش ننویس؛ نشانی فقط در href قرار می‌گیرد. برای اشاره متنی از «وب‌سایت AFP» استفاده کن.
 
 شناسه‌های لینک مجاز (فقط همین شناسه‌ها را عیناً در href بگذار؛ برنامه مقصد تأییدشده را جایگزین می‌کند. هیچ URL واقعی، لینک به وبلاگ یا شناسه دیگری نساز):
 {link_lines}
@@ -495,6 +495,42 @@ def save_json(path, data):
     Path(path).write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding='utf-8')
 
 
+DOMAIN_REPAIR_POLICY = 'visible-domain-anchor-v1'
+
+def domain_repair_draft(record, item, current=None):
+    """One bounded repair of the known contradictory visible-domain instruction."""
+    if (item.get('status') != 'failed' or item.get('published')
+        or item.get('published_url') or item.get('pid')
+        or item.get('text_policy_retry') == DOMAIN_REPAIR_POLICY
+        or record.get('text_policy_retry') == DOMAIN_REPAIR_POLICY
+        or item.get('failure_stage') != 'text_validation'
+        or record.get('status') != 'failed' or record.get('published')
+        or record.get('published_url') or record.get('pid')
+        or record.get('failure_stage') != 'text_validation'
+        or record.get('key') != item.get('key') or not item.get('generated_at')
+        or record.get('generated_at') != item['generated_at']):
+        return None
+    if item.get('next_retry_at'):
+        try:
+            due = datetime.datetime.fromisoformat(item['next_retry_at'].replace('Z', '+00:00'))
+            if due.tzinfo is None or due > (current or datetime.datetime.now(datetime.timezone.utc)):
+                return None
+        except (ValueError, TypeError, AttributeError):
+            return None
+    errors = record.get('qa', {}).get('errors', []) if isinstance(record.get('qa'), dict) else []
+    allowed = {'unexpected latin words: abyari', 'unexpected latin words: abyari, ir'}
+    if not errors or any(not isinstance(e, str) or e not in allowed for e in errors):
+        return None
+    post = record.get('post')
+    if not isinstance(post, dict) or not all(isinstance(post.get(k), str) and post[k].strip() for k in ('title', 'slug', 'html')):
+        return None
+    visible = re.sub(r'<[^>]+>', ' ', post['html'])
+    if not re.search(r'navar\s*-\s*abyari(?:\s*\.\s*ir)?', visible, re.I):
+        return None
+    from blog_draft_preflight import clean
+    return clean(post)  # Not a QA pass; corrected prompt + full text/image QA still run.
+
+
 def pick(queue, state, count):
     from blog_image_draft_recovery import capacity_retry_due,recover
     pending=[]
@@ -504,6 +540,9 @@ def pick(queue, state, count):
         if not eligible and capacity_retry_due(item):
             path=ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json')
             eligible=recover(load_json(path,{})) is not None
+        if not eligible and item.get('failure_stage')=='text_validation':
+            path=ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json')
+            eligible=domain_repair_draft(load_json(path,{}),item) is not None
         if eligible:pending.append(item)
     if ONLY:
         pending = [i for i in pending if i['key'] == ONLY]
@@ -577,6 +616,10 @@ def main():
             print('Shared image-provider cooldown active; no new text/image calls.');break
         from blog_image_draft_recovery import recover
         image_retry_draft=recover(load_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'),{}))
+        if image_retry_draft is None:
+            saved_record=load_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'),{})
+            image_retry_draft=domain_repair_draft(saved_record,item)
+            if image_retry_draft is not None:item['text_policy_retry']=DOMAIN_REPAIR_POLICY
         item['status'] = 'processing'
         item['attempts'] = int(item.get('attempts', 0)) + 1
         state['in_progress'] = item['key']
