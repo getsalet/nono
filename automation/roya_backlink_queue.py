@@ -560,12 +560,13 @@ def main():
     save_json(QUEUE_PATH, queue)
     targets = pick(queue, state, COUNT)
     print(f'picked {len(targets)} target(s) of {len(queue["items"])} queued', flush=True)
-    completed = []
+    completed = [];failed=[];blocked_until=None
     for item in targets:
         from blog_image_backpressure import require_open,ImageProviderBusy
         from blog_image_queue import ImageQueueBusy
         try:require_open(ROOT)
-        except ImageProviderBusy:
+        except ImageProviderBusy as busy:
+            blocked_until=busy.retry_at
             print('Shared image-provider cooldown active; no new text/image calls.');break
         from blog_image_draft_recovery import recover
         image_retry_draft=recover(load_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'),{}))
@@ -633,6 +634,7 @@ def main():
             state['failed'].pop(item['key'], None)
             completed.append(item['key'])
         else:
+            failed.append(item['key'])
             item['status'] = 'failed'
             item['generated_at']=record['generated_at']
             item['failure_stage']=stage
@@ -650,9 +652,12 @@ def main():
                                          'province_fa': i['province_fa'], 'family': i.get('family'),
                                          'item_file': str(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', i['key']) + '.json'))}
                                         for i in ready]})
+    from blog_generation_status import write as write_generation_status
+    run_status=write_generation_status(ROOT,'roya',completed,failed,blocked_until)
     done, total = len(state['completed_keys']), len(queue['items'])
     STATUS_MD.write_text(
         '# صف بک‌لینک وبلاگ AFP\n\n'
+        f'وضعیت این اجرا: {run_status["status"]}؛ این گزارش تأیید انتشار نیست.\n\n'
         '| مورد | مقدار |\n|---|---:|\n'
         f'| کل صف | {total} |\n| تولیدشده | {done} |\n| ناموفق | {len(state["failed"])} |\n'
         f'| باقی‌مانده | {total - done} |\n| پیشرفت | {round(100 * done / max(1, total), 2)}% |\n'
@@ -661,7 +666,7 @@ def main():
         'navar-abyari.ir، صفحه استان و فروشگاه لینک می‌دهد؛ مطالب مرتبط با نوار تیپ یک ارجاع '
         'متنی به صفحه نخست دارند که جایگزین لینک جانبی است و مقاله‌های لوله کلیدواژه اجباری ندارند.\n', encoding='utf-8')
     print('completed: ' + (', '.join(completed) or 'none'), flush=True)
-    return 0 if completed or not targets else 1
+    return 1 if failed and not completed else 0
 
 
 if __name__ == '__main__':

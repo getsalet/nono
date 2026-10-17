@@ -180,13 +180,14 @@ def main():
         for i in range(max(len(city),len(articles))):
             if i<len(city):candidates.append(city[i])
             if i<len(articles):candidates.append(articles[i])
-    completed=[];failed=[]
+    completed=[];failed=[];blocked_until=None
     for item in candidates[:min(9,max(3,count*3))]:
         if len(completed)>=count:break
         from blog_image_backpressure import require_open,ImageProviderBusy
         from blog_image_queue import ImageQueueBusy
         try:require_open(ROOT)
-        except ImageProviderBusy:
+        except ImageProviderBusy as busy:
+            blocked_until=busy.retry_at
             print('Shared image-provider cooldown active; no new source/text/image calls.');break
         provider_busy=False
         item.pop('_image_prepared_this_run',None)
@@ -242,7 +243,9 @@ def main():
         save(item_path(item['key']),{**item,'post':obj,'blog':BLOG,'target_url':item.get('target_url','https://navar-abyari.ir/'),'qa':{'passed':not errors,'errors':errors,**info}});save(QUEUE,q)
         if provider_busy:break  # Capacity is shared; do not generate text for the next candidate.
     refresh_ready(q);state=load(STATE,{});state.update({'updated_at':now(),'completed_keys':[x['key']for x in q['items']if x['status']in('completed','published')],'failed':{x['key']:x.get('last_error','')for x in q['items']if x['status']=='failed'}});save(STATE,state)
-    (ART/'status.md').write_text('# فارسی‌بلاگ AFP\n\nصف شهری تصویردار با کنترل شباهت بین سه وبلاگ.\n\n'+f'آخرین اجرا: {now()}\nموفق این اجرا: {len(completed)}\nناموفق: {len(failed)}\n')
+    from blog_generation_status import write as write_generation_status,BLOG_NAMES
+    run_status=write_generation_status(ROOT,CITY_BLOG,completed,failed,blocked_until)
+    (ART/'status.md').write_text('# '+BLOG_NAMES[CITY_BLOG]+' AFP\n\nصف شهری تصویردار با کنترل شباهت بین پنج وبلاگ.\n\n'+f'آخرین اجرا: {now()}\nوضعیت تولید: {run_status["status"]}\nموفق این اجرا: {len(completed)}\nناموفق: {len(failed)}\nاین وضعیت به‌تنهایی تأیید انتشار نیست.\n')
     print('Original articles generated:',len(completed),'Deferred items:',len(failed))
     code=generation_exit_code(completed,failed)
     if code:print('No publishable article produced: all attempted items deferred; checkpoints preserved, next scheduled run will continue.',flush=True)
