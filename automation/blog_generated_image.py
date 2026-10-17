@@ -161,8 +161,12 @@ def generate(item,blog,slots=None,max_attempts=3):
    # Re-read current shared cooldown AFTER owning the cross-runner lock.
    git(['fetch','--quiet','origin','main'],roya.ROOT)
    require_open(roya.ROOT)
-  try:raw=_generate(item,blog,slots,max_attempts)
+  try:
+   from blog_image_key_router import enabled as pool_enabled,generate as route_image
+   if slots is None and pool_enabled():raw=route_image(item,blog,roya.ROOT,roya.BASE._key_pool,_generate,checkpoint_asset,lease)
+   else:raw=_generate(item,blog,slots,max_attempts)
   except ImageProviderBusy as busy:
+   if getattr(busy,'key_scoped',False):raise
    if lease is not None:
     busy.shared_cooldown_attempted=True
     try:
@@ -228,7 +232,10 @@ def _generate(item,blog,slots=None,max_attempts=3):
    break
   except RuntimeError as exc:
    match=re.fullmatch(r'Agnes/provider HTTP (\d+); raw response withheld',str(exc));code=int(match[1])if match else None
+   if code is None and str(exc)=='No active credentials in the requested Agnes capability pool':code=401
    row.update(http_status=code,status='provider_error')
+   retry_after=getattr(exc,'rate_limit_retry_after_seconds',getattr(exc,'retry_after_seconds',None))
+   if retry_after is not None:row['retry_after_seconds']=retry_after
    if getattr(exc,'provider_code',None):row['provider_code']=exc.provider_code
    if getattr(exc,'provider_type',None):row['provider_type']=exc.provider_type
    if code==503 and getattr(exc,'provider_code',None)=='image_queue_full':

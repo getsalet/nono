@@ -10,6 +10,7 @@ class AgnesProviderError(RuntimeError):
   super().__init__(f'Agnes/provider HTTP {status}; raw response withheld')
   self.http_status=status;self.provider_code=None;self.provider_type=None
   self.retry_after_seconds=min(120,int(retry_after))if isinstance(retry_after,str)and re.fullmatch(r'[0-9]{1,6}',retry_after)else None
+  self.rate_limit_retry_after_seconds=int(retry_after)if status==429 and isinstance(retry_after,str)and re.fullmatch(r'[0-9]{1,6}',retry_after)else self.retry_after_seconds
   try:
    value=json.loads(body);error=value.get('error',{})
    if isinstance(error,dict):

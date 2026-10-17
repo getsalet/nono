@@ -32,6 +32,8 @@ def retry_at(root):
  return max(stamps,default=0)
 def require_open(root,current=None):
  stamp=retry_at(root)
+ from blog_image_key_router import enabled,available_at
+ if enabled():stamp=max(stamp,available_at(root,current=current))
  if stamp>(time.time()if current is None else current):raise ImageProviderBusy(stamp)
 def latest_failure(root):
  values=states(root)
