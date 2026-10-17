@@ -7,7 +7,7 @@ names and product families are taken from the live pages, otherwise they are
 derived from the URL slug. Each item carries a prepared Persian blog title so the
 queue is ready to run. Existing statuses and generated titles are preserved.
 """
-import hashlib, json, re, sys, urllib.parse
+import copy, hashlib, json, re, sys, urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -122,6 +122,42 @@ def targets_from_queue():
             for i in q.get('items', [])]
 
 
+# Explicit non-secret runtime fields. Rebuilding source metadata must not erase
+# async ownership, retry controls or the reviewed-image provenance.
+RUNTIME_FIELDS = (
+    'failure_stage', 'last_error', 'next_retry_at', 'image_retry_at',
+    '_image_stock_request', '_image_article_context', '_image_qa_feedback',
+    '_image_rejections', 'image_generation', 'image_review', 'image_width',
+    'image_height', 'image_alt', 'image_policy_retry',
+)
+
+def retained_runtime(prev, key):
+    result = {field: copy.deepcopy(prev[field]) for field in RUNTIME_FIELDS if field in prev}
+    # Repair previously stripped fields only from the matching authoritative
+    # failed-draft checkpoint. Never resurrect a published or ambiguous record.
+    if (prev.get('status') != 'failed' or prev.get('published')
+        or prev.get('published_url') or prev.get('pid')):
+        return result
+    path = ROOT / 'artifacts/roya-backlink-queue/items' / (re.sub(r'[^A-Za-z0-9._-]+', '_', key) + '.json')
+    try:
+        record = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return result
+    if (not isinstance(record, dict) or record.get('key') != key
+        or record.get('status') != 'failed' or record.get('published')
+        or record.get('published_url') or record.get('pid')
+        or not prev.get('generated_at') or record.get('generated_at') != prev['generated_at']):
+        return result
+    for field in RUNTIME_FIELDS:
+        if field not in result and field in record:
+            result[field] = copy.deepcopy(record[field])
+    if not result.get('last_error'):
+        errors = record.get('qa', {}).get('errors', []) if isinstance(record.get('qa'), dict) else []
+        if isinstance(errors, list) and errors and all(isinstance(error, str) for error in errors):
+            result['last_error'] = '; '.join(errors)[:400]
+    return result
+
+
 def main():
     if TARGETS.exists():
         data = json.loads(TARGETS.read_text(encoding='utf-8'))
@@ -156,6 +192,7 @@ def main():
                 'generated_at': prev.get('generated_at'), 'published': prev.get('published', False),
                 'published_url': prev.get('published_url'), 'pid': prev.get('pid'),
                 'image_url': prev.get('image_url')}
+        item.update(retained_runtime(prev, key))
         items.append(item)
         counter += 1
     QUEUE.write_text(json.dumps({'generated_at': __import__('datetime').datetime.now(
