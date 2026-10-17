@@ -71,4 +71,13 @@ class ScenePhysicalityTests(unittest.TestCase):
    gate.review(item,'generated://roya/'+'c'*32,Path(d),_candidate=self.raw)
   self.assertIn('For okra require',api.call_args.args[2]['messages'][0]['content'][0]['text'])
 
+ def test_line_under_carton_is_blocked_even_with_high_aggregate_score(self):
+  verdict={**self.verdict,'pass':True,'score':99,'package_soil_gap_visible':False}
+  errors=gate.generated_scene_errors({'scene_guard_version':gate.SCENE_GUARD,'verdict':verdict},'tape20')
+  self.assertTrue(any('package_soil_gap_visible'in e for e in errors))
+ def test_new_layout_has_separate_off_axis_soil_island(self):
+  prompt=scene.prompt(self.item,'roya')
+  self.assertIn('LOWER-LEFT',prompt);self.assertIn('RIGHT half',prompt)
+  self.assertIn('one carton diameter',prompt);self.assertIn('No line behind the carton',prompt)
+
 if __name__=='__main__':unittest.main()

@@ -8,7 +8,7 @@ POLICY='afp-one-generated-blog-image-v6-reference-integrated-topic-scene'
 RECIPE_VERSION='maghala2-reference-v3-concise-topic-scene'
 # Separate from the reference/model recipe: binds candidates and reviews to this
 # corrected topic/physical-role contract without rewriting old acceptance records.
-SCENE_CONTRACT='named-crop-setting-standalone-carton-v2'
+SCENE_CONTRACT='off-axis-carton-soil-island-v3'
 SOURCES=['https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py','https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py','https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml']
 # Add missing crop identities as data, without rewriting the upstream generation recipe.
 reference.CROPS.update({'بامیه':'okra','پیاز':'onion','گوجه فرنگی':'tomato','گوجه‌فرنگی':'tomato','هندوانه':'watermelon','سیب زمینی':'potato','سیب‌زمینی':'potato'})
@@ -80,7 +80,7 @@ def prompt(item,blog):
   if _crop_key(a) else 'A few neutral small seedlings beside the irrigation bed; no invented named crop')
  brief=(f"One continuous photorealistic agricultural photograph, {plan['camera']}, soft natural daylight. "
   +f"Setting: {plan['setting']}. Main subject: {plan['evidence']}. {crop}. Tight equipment-and-soil framing with no skyline. "
-  +f"Naturally resting nearby as a standalone commercial package on soil, visibly separated from all pipes and fittings: {product}. A visible strip of bare soil separates the entire carton base from every pipe; never balance or rest the carton on plumbing. No white ribbon, strap or printed strip emerges from the carton; installed drip tape is a separate thin black flattened lateral. Keep the required technical fitting unobstructed in the foreground. No pipe passes through its central hole; the carton is never a coupling, sleeve, filter, valve or installed hardware. Connect only the separate thin flattened drip tape, never its package, to the header. The reference is an identity guide, not a flat layer to paste. Reconstruct it in the same perspective and light, with ground contact and realistic shadows. "
+  +f"Place the complete commercial package in the LOWER-LEFT quarter on a dedicated dry-soil island. Keep ALL installed irrigation lines in the RIGHT half, at least one carton diameter away from the package footprint. No line behind the carton, no collinear line disappearing under its front rim and reappearing behind it. Show a broad uninterrupted dry-soil gap all around the base. The off-axis package is a standalone commercial package on soil, visibly separated from all pipes and fittings, never on the irrigation route: {product}. A visible strip of bare soil separates the entire carton base from every pipe; never balance or rest the carton on plumbing. No white ribbon, strap or printed strip emerges from the carton; installed drip tape is a separate thin black flattened lateral. Keep the required technical fitting unobstructed in the foreground. No pipe passes through its central hole; the carton is never a coupling, sleeve, filter, valve or installed hardware. Connect only the separate thin flattened drip tape, never its package, to the header. The reference is an identity guide, not a flat layer to paste. Reconstruct it in the same perspective and light, with ground contact and realistic shadows. "
   +'Keep each product fully inside the frame with clear margins; preserve authentic shape, material and package print. Equipment and plants are the story, products are secondary. Empty scene, no people. Single photograph, no inset, pasted panel, extra product or added writing. '
   +f"Article context, not on-image text: {a['title']}. {a['summary'][:360]}")
  feedback=str(a.get('_image_qa_feedback')or'').strip()
@@ -131,6 +131,7 @@ def _feedback_direction(a,plan,feedback):
   'technical_evidence_match':'Show this exact installed evidence: '+plan['evidence']+'.',
   'packaging_not_used_as_hardware':'The single AFP carton stands separately on soil; no pipe through it.',
   'product_role_plausible':'Separate the commercial carton from all installed plumbing.',
+  'package_soil_gap_visible':'Move the carton to the lower-left dry-soil island; all lines stay one carton diameter to its right, never under or behind it.',
   'irrigation_geometry_plausible':'Use normal connected header fittings and a thin flattened drip-tape lateral.',
   'product_count_match':'Show exactly one commercial AFP carton, no duplicate.',
   'product_fully_in_frame':'Keep the complete carton inside clear soil margins.',
@@ -151,7 +152,7 @@ def rejection_feedback(item,digest,root,fallback):
  if record.get('sha256')!=digest or record.get('family')!=expected:return fallback
  v=record.get('verdict')
  if not isinstance(v,dict):return fallback
- bad=[k for k in ('topic_match','technical_evidence_match','packaging_not_used_as_hardware','product_role_plausible','irrigation_geometry_plausible','product_count_match','product_fully_in_frame')if v.get(k)is False]
+ bad=[k for k in ('topic_match','technical_evidence_match','packaging_not_used_as_hardware','product_role_plausible','package_soil_gap_visible','irrigation_geometry_plausible','product_count_match','product_fully_in_frame')if v.get(k)is False]
  if v.get('crop_contradiction')is True:bad.insert(0,'crop_contradiction')
  if not bad:return fallback
  return _feedback_direction(article(item),scene_plan(item,'review'), ' '.join(bad))
