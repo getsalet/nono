@@ -150,7 +150,9 @@ def worker_once(root):
  root=Path(root)
  if not enabled(root)or generation_paused(root):return {'status':'paused','provider_requests':0}
  refresh(root)
- pending=sorted((r for r in rows(root)if r['status']in('requested','processing')),key=lambda r:r['created_at'])
+ # Prefer never/less-attempted drafts. With a 20-minute worker, a five-minute
+ # per-item retry alone would otherwise select the same oldest failure forever.
+ pending=sorted((r for r in rows(root)if r['status']in('requested','processing')),key=lambda r:(r.get('attempts',0),r.get('started_at',r['created_at']),r['created_at']))
  for row in pending:
   if row.get('retry_at',0)>time.time():continue
   blog=row['blog'];item=copy.deepcopy(row['item']);asset=row['asset_id']
