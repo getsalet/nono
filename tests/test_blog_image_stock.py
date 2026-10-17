@@ -114,6 +114,11 @@ class StockTests(unittest.TestCase):
  def test_workflow_has_one_worker_no_publishing_and_offline_tests(self):
   text=(ROOT/'.github/workflows/blog-image-stock.yml').read_text()
   self.assertIn('cancel-in-progress: false',text);self.assertIn('needs: tests',text);self.assertNotIn('publish_',text);self.assertNotIn('AGNES_API_KEY8:',text)
+ def test_scene_and_router_fixes_trigger_offline_gated_worker(self):
+  text=(ROOT/'.github/workflows/blog-image-stock.yml').read_text()
+  for path in ('automation/blog_image_key_router.py','automation/blog_image_gate.py','automation/blog_reference_scene.py','automation/blog_draft_preflight.py','data/blog-image-key-pool.json'):
+   self.assertIn('      - '+path,text)
+  self.assertIn('needs: tests',text)
  def test_waiting_status_not_failed_or_published(self):
   from blog_generation_status import outcome
   self.assertEqual(outcome([],[],waiting=['key']),'waiting_image');self.assertEqual(outcome([],['bad'],waiting=['key']),'failed')
