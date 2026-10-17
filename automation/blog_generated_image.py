@@ -315,7 +315,8 @@ def prepare(item,blog,root=None):
     rejected=cache.parent/'rejected';rejected.mkdir(exist_ok=True)
     cache.replace(rejected/(asset_id+'-'+digest[:12]+'.webp'))
     item.setdefault('_image_rejections',[]).append({'sha256':digest,'reason':str(exc)[:400]})
-    item['_image_qa_feedback']=str(exc)[-700:]
+    from blog_reference_scene import rejection_feedback
+    item['_image_qa_feedback']=rejection_feedback(item,digest,root,str(exc))
     if round_index==2:raise
   item['_generation_stage']='asset_checkpoint'
   url=checkpoint_asset(path,raw,root)

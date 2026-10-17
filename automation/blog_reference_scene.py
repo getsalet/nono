@@ -6,6 +6,9 @@ import hashlib,json,re
 import blog_reference_image_policy as reference
 POLICY='afp-one-generated-blog-image-v6-reference-integrated-topic-scene'
 RECIPE_VERSION='maghala2-reference-v3-concise-topic-scene'
+# Separate from the reference/model recipe: binds candidates and reviews to this
+# corrected topic/physical-role contract without rewriting old acceptance records.
+SCENE_CONTRACT='named-crop-setting-standalone-carton-v2'
 SOURCES=['https://github.com/kikibox/maghala2/blob/main/automation/image_prompt_policy.py','https://github.com/getsalet/nono/blob/main/automation/rebuild_city_images_preserve_posts.py','https://github.com/getsalet/nono/blob/main/.github/workflows/city-content-queue.yml']
 # Add missing crop identities as data, without rewriting the upstream generation recipe.
 reference.CROPS.update({'بامیه':'okra','پیاز':'onion','گوجه فرنگی':'tomato','گوجه‌فرنگی':'tomato','هندوانه':'watermelon','سیب زمینی':'potato','سیب‌زمینی':'potato'})
@@ -30,8 +33,12 @@ def scene_plan(item,blog):
  a=article(item);text=_lexical_text(a['title']+' '+a['focus'])
  if 'اتصال' in text:
   intent='connection';evidence='one closed ribbed compression union installed inline between two continuous black irrigation pipes; the joined ends and seal are visible, no open pipe end'
- elif any(k in text for k in ('فشار','فیلتر','گرفتگی','تخلیه')):
-  intent='maintenance';evidence='one plausible installed filter and closed flush valve connected to the irrigation header'
+ elif 'فشار' in text:
+  intent='pressure';evidence='one small pressure gauge on a short normal threaded port of a continuous irrigation header, and a separate thin flattened drip-tape lateral connected by a normal small take-off fitting; gauge face angled away so no readable scale or pressure rating is invented'
+ elif 'فیلتر' in text:
+  intent='filtration';evidence='one compact irrigation filter installed with closed connections in a continuous irrigation header, and a thin flattened drip-tape lateral connected downstream by a normal small take-off fitting'
+ elif any(k in text for k in ('گرفتگی','تخلیه')):
+  intent='flushing';evidence='the closed flush end of a thin flattened installed drip-tape lateral beside the root zone, with an identifiable normal flush end closure, not a rigid oversized pipe'
  elif any(k in text for k in ('مراقبت','نگهداری','پایش')):
   intent='monitoring';evidence='continuous installed drip tape beside plants, with a clearly visible uniform dark soil wetting band along the root zone'
  elif any(k in text for k in ('فاصله','کاشت','بذر')):
@@ -42,7 +49,7 @@ def scene_plan(item,blog):
   intent='agronomy';evidence='crop-specific leaves, continuous installed irrigation lines and localized root-zone wetting'
  cameras=['close side view','high oblique close view','medium three-quarter technical view']
  camera=cameras[int(hashlib.sha256((a['slug']+'|'+blog).encode()).hexdigest()[:6],16)%len(cameras)]
- return {'article_title':a['title'],'role':3 if intent in('connection','maintenance')else 2,'crop':reference.named_crop(a),'botany':reference.crop_identity_spec(a),'visual_brief':reference.visual_brief(a),'evidence':evidence,'intent':intent,'camera':camera,'recipe':RECIPE_VERSION}
+ return {'article_title':a['title'],'scene_contract':SCENE_CONTRACT,'setting':_setting(a),'role':3 if intent in('connection','pressure','filtration','flushing')else 2,'crop':reference.named_crop(a),'botany':reference.crop_identity_spec(a),'visual_brief':reference.visual_brief(a),'evidence':evidence,'intent':intent,'camera':camera,'recipe':RECIPE_VERSION}
 
 def recipe_for(item):
  from blog_image_gate import family
@@ -67,19 +74,20 @@ def prompt(item,blog):
   feedback=str(a.get('_image_qa_feedback')or'').strip()
   return text+(' Correct: '+feedback[:160]if feedback else'')
  product='exactly one low wide cylindrical AFP drip-tape carton, white printed sleeve and blue lower band, central top hole, diameter larger than height. It occupies about 20 percent of frame width'
- crop=('Use neutral small seedlings only near the hardware'if plan['role']==3 else'Crop identity: '+plan['botany'])
+ crop=('Crop identity: '+plan['botany']+'. Show unmistakable attached crop leaves and growth habit in an adjacent bed, also in technical close views'
+  if _crop_key(a) else 'A few neutral small seedlings beside the irrigation bed; no invented named crop')
  brief=(f"One continuous photorealistic agricultural photograph, {plan['camera']}, soft natural daylight. "
-  +f"Main subject: {plan['evidence']}. {crop}. Tight equipment-and-soil framing with no skyline. "
-  +f"Naturally resting nearby: {product}. The reference is an identity guide, not a flat layer to paste. Reconstruct it in the same perspective and light, with ground contact and realistic shadows. "
+  +f"Setting: {plan['setting']}. Main subject: {plan['evidence']}. {crop}. Tight equipment-and-soil framing with no skyline. "
+  +f"Naturally resting nearby as a standalone commercial package on soil, visibly separated from all pipes and fittings: {product}. No pipe passes through its central hole; the carton is never a coupling, sleeve, filter, valve or installed hardware. Connect only the separate thin flattened drip tape, never its package, to the header. The reference is an identity guide, not a flat layer to paste. Reconstruct it in the same perspective and light, with ground contact and realistic shadows. "
   +'Keep each product fully inside the frame with clear margins; preserve authentic shape, material and package print. Equipment and plants are the story, products are secondary. Empty scene, no people. Single photograph, no inset, pasted panel, extra product or added writing. '
   +f"Article context, not on-image text: {a['title']}. {a['summary'][:360]}")
  feedback=str(a.get('_image_qa_feedback')or'').strip()
- if feedback:brief+=' Correct the prior visual rejection: '+feedback[:240]
+ if feedback:brief+=' Correction for this attempt: '+_feedback_direction(a,plan,feedback)
  return brief
 def references(item):
  from blog_image_gate import family
  if family(item)!='hose':
-  # Preserve the directly accepted tape request bytes and cache identity.
+  # Preserve the accepted tape reference bytes; topic contract versions the cache.
   return reference.reference_images(role(item),article(item))
  # Pinned nono identity inputs: full originals FIRST,
  # then the 92/68-width guide of its integrated layflat test. Input only, never output paste-up.
@@ -99,7 +107,47 @@ def references(item):
 
 def topic_hash(item):
  data=article(item);data.pop('_image_qa_feedback',None)
+ data['scene_contract']=SCENE_CONTRACT
  return hashlib.sha256(json.dumps(data,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
+
+def _setting(a):
+ # Use headline/description and the introduction, not incidental comparison tables.
+ text=_lexical_text(' '.join((a['title'],a.get('meta_description',''),a.get('summary','')[:360])))
+ if 'گلخانه' in text or re.search(r'\bgreenhouse\b',text,re.I):
+  return 'inside a greenhouse growing area with a visible softly blurred greenhouse frame, crop beds and a soil walkway; do not invent a specific hydroponic apparatus'
+ return 'a non-geolocated agricultural crop bed with soil; no invented location or climate'
+
+def _feedback_direction(a,plan,feedback):
+ flags={
+  'crop_contradiction':'Keep the named crop botanically unmistakable: '+plan['botany']+'.',
+  'topic_match':'Match the crop, setting and installed evidence of this article.',
+  'technical_evidence_match':'Show this exact installed evidence: '+plan['evidence']+'.',
+  'packaging_not_used_as_hardware':'The single AFP carton stands separately on soil; no pipe through it.',
+  'product_role_plausible':'Separate the commercial carton from all installed plumbing.',
+  'irrigation_geometry_plausible':'Use normal connected header fittings and a thin flattened drip-tape lateral.',
+  'product_count_match':'Show exactly one commercial AFP carton, no duplicate.',
+  'product_fully_in_frame':'Keep the complete carton inside clear soil margins.',
+ }
+ found=[direction for flag,direction in flags.items()if flag in feedback]
+ return ' '.join(found) if found else feedback[:700]
+
+def rejection_feedback(item,digest,root,fallback):
+ """Use saved structured rejection flags instead of a truncated exception tail.
+ Free-form vision reasons remain in the diagnostic record, not as instructions.
+ """
+ from pathlib import Path
+ from blog_image_gate import family
+ expected=family(item)
+ path=Path(root)/'artifacts/blog-image-reviews'/f'{expected}-{digest}.json'
+ try:record=json.loads(path.read_text())
+ except (OSError,ValueError):return fallback
+ if record.get('sha256')!=digest or record.get('family')!=expected:return fallback
+ v=record.get('verdict')
+ if not isinstance(v,dict):return fallback
+ bad=[k for k in ('topic_match','technical_evidence_match','packaging_not_used_as_hardware','product_role_plausible','irrigation_geometry_plausible','product_count_match','product_fully_in_frame')if v.get(k)is False]
+ if v.get('crop_contradiction')is True:bad.insert(0,'crop_contradiction')
+ if not bad:return fallback
+ return _feedback_direction(article(item),scene_plan(item,'review'), ' '.join(bad))
 
 # Targeted lexical correction around the unmodified upstream recipe. A substring
 # such as سیر in مسیر is not a crop mention. Headline evidence wins over body text.
