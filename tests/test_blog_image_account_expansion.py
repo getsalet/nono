@@ -41,9 +41,9 @@ class AccountExpansionTests(unittest.TestCase):
   for change in ({'max_image_requests':7},{'minimum_interval_seconds':0},{'slots':['AGNES_API_KEY8']},{'account_ownership_confirmed_by_user':False}):
    r=self.request();r.update(change)
    with self.assertRaises(RuntimeError):a.validate_request(r)
- def main_fixture(self,results):
+ def main_fixture(self,results,request=None):
   tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);root=Path(tmp.name)
-  p=root/a.REQUEST;p.parent.mkdir(parents=True);p.write_text(json.dumps(self.request()))
+  p=root/a.REQUEST;p.parent.mkdir(parents=True);p.write_text(json.dumps(request or self.request()))
   config={'policy':router.POLICY,'enabled':True,'slots':['AGNES_API_KEY10','AGNES_API_KEY6','AGNES_API_KEY7','AGNES_API_KEY11']}
   saved={}
   def checkpoint(path,raw,*args):saved[path]=json.loads(raw)
@@ -51,7 +51,7 @@ class AccountExpansionTests(unittest.TestCase):
    if args[0]=='cat-file':return SimpleNamespace(returncode=0 if args[-1].split(':',1)[-1]in saved else 1,stdout=b'')
    return SimpleNamespace(returncode=0,stdout=json.dumps(config).encode())
   pool=SimpleNamespace(keys=['fixture-private-'+n for n in a.CANDIDATES],slots={'fixture-private-'+n:n for n in a.CANDIDATES})
-  patches=[patch.object(a,'ROOT',root),patch.object(a,'shared_open'),patch.object(a.images,'git',side_effect=git),patch.object(a.images,'checkpoint_asset',side_effect=checkpoint),patch.object(a.images.roya.BASE,'_key_pool',pool),patch.object(a,'text_probe',return_value={'status':'healthy','http_status':200}),patch.object(a,'image_probe',side_effect=results),patch('blog_image_queue.provider_slot',side_effect=lambda *args:contextlib.nullcontext())]
+  patches=[patch.object(a,'ROOT',root),patch.object(a,'shared_open'),patch.object(a.images,'git',side_effect=git),patch.object(a.images,'checkpoint_asset',side_effect=checkpoint),patch.object(a,'configured_keys',return_value={n:'fixture-private-'+n for n in (request or self.request())['slots']if n!=a.DUPLICATE}),patch.object(a,'text_probe',return_value={'status':'healthy','http_status':200}),patch.object(a,'image_probe',side_effect=results),patch('blog_image_queue.provider_slot',side_effect=lambda *args:contextlib.nullcontext())]
   return root,saved,patches
  def test_one_pass_six_requests_promotes_only_success_and_rerun_is_noop(self):
   root,saved,patches=self.main_fixture([self.image()]+[{'status':'temporarily_unavailable','http_status':503,'provider_code':'image_queue_full'}]*5)
@@ -67,16 +67,53 @@ class AccountExpansionTests(unittest.TestCase):
    root,saved,patches=self.main_fixture([{'status':'rate_limited','http_status':code}])
    with contextlib.ExitStack()as stack:
     mocks=[stack.enter_context(p)for p in patches]
-    self.assertEqual(a.main(),1);self.assertEqual(mocks[6].call_count,1);self.assertNotIn(router.CONFIG,saved)
+    self.assertEqual(a.main(),1);self.assertEqual(mocks[6].call_count,1);self.assertNotIn(router.CONFIG,saved);self.assertNotIn(a.LATEST,saved);self.assertIn(a.PROGRESS,saved)
  def test_global_stop_prevents_even_text_probe(self):
   root,saved,patches=self.main_fixture([])
   with contextlib.ExitStack()as stack:
    mocks=[stack.enter_context(p)for p in patches];mocks[1].side_effect=RuntimeError('Global stop')
    self.assertEqual(a.main(),1);self.assertEqual(mocks[5].call_count,0);self.assertEqual(mocks[6].call_count,0)
+ def full_request(self):
+  r=self.request();r.update(slots=list(a.ALL_SLOTS),max_image_requests=24);return r
+ def test_full_scope_includes_every_slot_and_rejects_extra_budget(self):
+  self.assertIn('b'*32,a.validate_request(self.full_request()))
+  for change in ({'max_image_requests':25},{'slots':list(a.ALL_SLOTS)+['UNKNOWN']}):
+   r=self.full_request();r.update(change)
+   with self.assertRaises(RuntimeError):a.validate_request(r)
+ def test_diagnostic_sees_previously_rejected_slots_without_changing_production_pool(self):
+  names=list(a.ALL_SLOTS);env={'AGNES_API_KEY2':'fixture-two','AGNES_API_KEY16':'fixture-sixteen','AGNES_API_KEY8':'fixture-duplicate'}
+  self.assertEqual(a.configured_keys(names,env),{'AGNES_API_KEY2':'fixture-two','AGNES_API_KEY16':'fixture-sixteen'})
+  self.assertNotIn('AGNES_API_KEY8',a.configured_keys(names,env))
+ def test_all_25_slots_reported_text_first_and_no_image_for_bad_text(self):
+  failed={'status':'temporarily_unavailable','http_status':503,'provider_code':'image_queue_full'}
+  root,saved,patches=self.main_fixture([failed]*11,self.full_request());events=[]
+  def text(key):
+   name=key.replace('fixture-private-','');events.append('text')
+   if name in [f'AGNES_API_KEY{i}'for i in range(16,26)]:return {'status':'authentication_rejected','http_status':401}
+   if name in ('AGNES_API_KEY2','AGNES_API_KEY12','AGNES_API_KEY13'):return {'status':'nonconforming_response','http_status':200}
+   return {'status':'healthy','http_status':200}
+  with contextlib.ExitStack()as stack:
+   mocks=[stack.enter_context(p)for p in patches];mocks[5].side_effect=text
+   def image(*args):events.append('image');return failed
+   mocks[6].side_effect=image
+   self.assertEqual(a.main(),0);self.assertEqual(mocks[5].call_count,24);self.assertEqual(mocks[6].call_count,11)
+  report=saved[a.LATEST];self.assertEqual(len(report['keys']),25)
+  self.assertEqual(events[:24],['text']*24);self.assertTrue(report['complete_text'])
+  dup=next(r for r in report['keys']if r['secret_name']=='AGNES_API_KEY8');self.assertEqual(dup['duplicate_of'],'AGNES_API_KEY')
+  self.assertNotIn(router.CONFIG,saved)
+ def test_completed_prior_six_account_results_are_reused_not_reprobed(self):
+  prior=self.report();prior.update(request_id='c'*32)
+  prior['keys']=[{'secret_name':n,'text':{'status':'healthy','http_status':200},'image':{'status':'temporarily_unavailable','http_status':503}}for n in a.CANDIDATES]
+  request=self.full_request();request['reuse_request_id']='c'*32
+  self.assertEqual(len(a.reusable(prior,request,prior['connection'])),6)
+  prior['status']='checking_images';self.assertEqual(a.reusable(prior,request,prior['connection']),{})
+ def test_report_with_explicit_duplicate_can_still_admit_other_success(self):
+  r=self.report();r['keys'].append({'secret_name':'AGNES_API_KEY8','duplicate_of':'AGNES_API_KEY','text':{'status':'skipped_duplicate'},'image':{'status':'skipped_duplicate'}})
+  self.assertEqual(a.successful(r,r['connection']),['AGNES_API_KEY4'])
  def test_workflow_only_has_requested_accounts_and_keeps_secrets_out_of_test_step(self):
   source=(Path(__file__).resolve().parents[1]/'.github/workflows/blog-image-account-expansion.yml').read_text()
   self.assertNotIn('secrets.AGNES_API_KEY8',source)
-  self.assertNotIn('secrets.',source.split('Probe at most six',1)[0])
+  self.assertNotIn('secrets.',source.split('Probe all requested',1)[0])
   for n in a.CANDIDATES:self.assertIn('secrets.'+n+' }}',source)
   self.assertIn("BLOG_IMAGE_QUEUE_ENABLED: '1'",source)
 
