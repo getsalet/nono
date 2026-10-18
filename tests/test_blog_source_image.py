@@ -15,7 +15,7 @@ class SourceImageTests(unittest.TestCase):
  qa=fixtures.EditorialImagePolicyTests.qa
  def setUp(self):
   fixtures.EditorialImagePolicyTests.setUp(self)
-  self.cfg['source_image_preferred']=True;self.write(policy.CONFIG,self.cfg)
+  self.cfg['source_image_preferred']=True;self.cfg['source_image_review_required']=True;self.write(policy.CONFIG,self.cfg)
   self.item['_image_article_context']=context_from_post(self.post)
   self.url='https://navar-abyari.ir/wp-content/uploads/article-own.webp'
   self.page='<meta property="og:image" content="'+self.url+'"><article><p>راهنمای نوار تیپ</p><img src="'+self.url+'"></article>'

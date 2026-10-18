@@ -12,7 +12,7 @@ class EditorialImagePolicyTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
   local_stock=patch.object(stock,'hosted',return_value=False);local_stock.start();self.addCleanup(local_stock.stop)
-  self.cfg=json.loads((ROOT/policy.CONFIG).read_text());self.cfg['source_image_preferred']=False;self.write(policy.CONFIG,self.cfg)
+  self.cfg=json.loads((ROOT/policy.CONFIG).read_text());self.cfg['source_image_preferred']=False;self.cfg['source_image_review_required']=True;self.write(policy.CONFIG,self.cfg)
   self.matrix={'approved':True,'approval_note':'offline fixture','templates':{b:{'tape20':['راهنمای نوار تیپ در {city}']}for b in city.BLOGS}}
   self.write('data/blog-city-title-matrix.json',self.matrix)
   self.item={'kind':'city','key':'city-fixture','family':'tape20','city_fa':'آزمایش','province_fa':'آزمایش','site_title':'نوار تیپ در آزمایش','target_url':'https://navar-abyari.ir/city/tape/','status':'failed','failure_stage':'image','next_retry_at':'2099-01-01T00:00:00Z'}

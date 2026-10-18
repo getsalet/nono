@@ -18,9 +18,13 @@ def plan(control):
 def main():
  control=json.loads((ROOT/'data/blog-generated-image-control.json').read_text());jobs=plan(control)
  if not jobs:print('Activation not requested or control paused; no workflow dispatched.');return 0
- from blog_generated_image import rollout_enabled
- for job in jobs:
-  if not rollout_enabled(job['blog'],ROOT):raise RuntimeError('Approved scoped image rollout required')
+ if control.get('activation_dispatch_mode')=='trusted_source_once':
+  from blog_source_image import trusted_source
+  if control.get('enabled_families')!=['tape20']or any(not trusted_source({'family':'tape20'},job['blog'],ROOT)for job in jobs):raise RuntimeError('Explicit exact-source trust scope required')
+ else:
+  from blog_generated_image import rollout_enabled
+  for job in jobs:
+   if not rollout_enabled(job['blog'],ROOT):raise RuntimeError('Approved scoped image rollout required')
  if control.get('activation_dispatch_mode')=='sequential_by_hour_monitor':
   print('Approved tape-only activation delegated to finite sequential hour monitor.');return 0
  token=os.getenv('GH_TOKEN','')
@@ -38,6 +42,6 @@ def main():
  if os.getenv('GITHUB_STEP_SUMMARY'):
   with open(os.environ['GITHUB_STEP_SUMMARY'],'a')as out:
    out.write('## Scoped publication activation\n\nEnabled families: '+', '.join(control['enabled_families'])+'. Other families remain held.\n\n')
-   out.write('Dispatch acceptance is NOT a verified published post. Each pipeline retains article/image/native/duplicate and rolling-budget checks. One initial article requested per blog.\n\n```json\n'+json.dumps(report,indent=2)+'\n```\n')
+   out.write('Dispatch acceptance is NOT a verified published post. Each pipeline retains full article QA, exact-source URL binding, native publication verification, duplicate prevention and rolling-budget checks. Trusted source images are not visually rescored. One initial article requested per blog.\n\n```json\n'+json.dumps(report,indent=2)+'\n```\n')
  return 0 if all(x['workflow_dispatch_accepted']for x in report)else 1
 if __name__=='__main__':raise SystemExit(main())

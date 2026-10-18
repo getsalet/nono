@@ -245,7 +245,9 @@ def main():
                         item['_image_article_context']=context_from_post(obj);stage='image'
                         prepare_article(item,obj,CITY_BLOG,ROOT,lambda:retry_transient(lambda:prepare_image(item)));item['_image_prepared_this_run']=True
                     stage='validation'
-                    if item.get('image_url'):obj['html']='<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+html.escape(item['image_alt'],quote=True)+'" width="'+str(item['image_width'])+'" height="'+str(item['image_height'])+'" loading="lazy"></p>'+obj.get('html','');obj['image_url']=item['image_url']
+                    if item.get('image_url'):
+                        from blog_source_image import image_markup
+                        obj['html']=image_markup(item)+obj.get('html','');obj['image_url']=item['image_url']
                     errors,info=qa(item,obj,links);print(f'{item["key"]}: attempt={attempt+1}, words={info.get("words")}, errors={len(errors)}',flush=True)
                     if not errors:break
         except Exception as exc:

@@ -1,12 +1,13 @@
 """Reuse only a validated image declared in the exact linked source article.
 No image generation, no generic product fallback, no upload/copy, no extra link.
-Original image URL is kept; actual bytes and source membership are rechecked.
+Original image URL is kept. Explicit owner-trusted mode skips vision and rechecks.
 """
 import hashlib,html,json,os,re,time,urllib.request
 from pathlib import Path
 from urllib.parse import urlsplit,urljoin,unquote
 POLICY='exact-linked-source-image-v1'
 REVIEW='source-image-context-score90-v1'
+TRUSTED='trusted-existing-source-no-recheck-v1'
 ROOT=Path(__file__).resolve().parents[1]
 class SourceImageUnavailable(RuntimeError):pass
 
@@ -14,6 +15,19 @@ def source_preferred(item,blog,root=ROOT):
  from blog_editorial_image_policy import optional,load
  cfg=load(root)
  return bool(optional(item,blog,root)and cfg.get('source_image_preferred')is True)
+def trusted_source(item,blog,root=ROOT):
+ from blog_editorial_image_policy import load
+ cfg=load(root)
+ return bool(source_preferred(item,blog,root)and cfg.get('source_image_review_required',True)is False)
+def image_markup(item,alt=None):
+ """Keep natural source proportions; never invent dimensions."""
+ attrs=''
+ for key in ('width','height'):
+  value=item.get('image_'+key)
+  if type(value)is int and value>0:attrs+=' '+key+'="'+str(value)+'"'
+ return '<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+html.escape(alt or item.get('image_alt',''),quote=True)+'"'+attrs+' loading="lazy"></p>'
+def trusted_result(item):
+ return {'policy':TRUSTED,'visual_review_performed':False,'recheck_performed':False,'page_url':item['image_source']['page_url'],'image_url':item['image_url']}
 def safe_page(url):
  try:
   p=urlsplit(url)
@@ -53,10 +67,13 @@ def source_record_errors(item,blog,root=ROOT):
  p=item.get('image_source',{});r=item.get('source_image_review',{});e=[]
  from blog_image_gate import approved_url
  from blog_reference_scene import topic_hash
- if not isinstance(p,dict)or p.get('policy')!=POLICY:return ['Exact source-image provenance missing']
+ if not isinstance(p,dict)or p.get('policy')not in ((POLICY,TRUSTED)if trusted_source(item,blog,root)else(POLICY,)):return ['Exact source-image provenance missing']
  if p.get('owner')!=blog+'|'+item.get('key',''):e.append('Source image owner changed')
  if not safe_page(p.get('page_url'))or canonical(p.get('page_url',''))!=canonical(item.get('target_url','')):e.append('Image must come from this article backlink destination')
  if not isinstance(item.get('image_url'),str)or not item['image_url'].startswith('https://navar-abyari.ir/wp-content/uploads/')or not approved_url(item['image_url'])or p.get('image_url')!=item['image_url']:e.append('Exact original site image URL required')
+ if p.get('selection_policy')!='exact-page-declared-or-body-v1':e.append('Article-owned source selection evidence missing')
+ if item.get('image_generation'):e.append('Source and generated image provenance cannot be mixed')
+ if trusted_source(item,blog,root):return e
  if not re.fullmatch('[a-f0-9]{64}',str(p.get('sha256','')))or r.get('sha256')!=p.get('sha256'):e.append('Actual source image digest missing or changed')
  if r.get('policy')!=REVIEW or r.get('image_url')!=item.get('image_url')or r.get('page_url')!=p.get('page_url'):e.append('Exact source review binding missing')
  if p.get('topic_sha256')!=topic_hash(item)or r.get('topic_sha256')!=p.get('topic_sha256'):e.append('Source image reviewed for a different article context')
@@ -102,12 +119,37 @@ def clear(item,post=None):
  from blog_editorial_image_policy import IMAGE_FIELDS
  for field in IMAGE_FIELDS+('image_source','source_image_review'):item.pop(field,None)
  if post is not None:post.pop('image_url',None)
+def prepare_trusted(item,post,blog,root=ROOT):
+ """One source-page discovery, or reuse saved provenance; no image API/vision."""
+ from blog_editorial_image_policy import required
+ needed=required(item,blog,root,post)
+ # Saved exact-page selection is authoritative: do not download it again.
+ if item.get('image_source')and not source_record_errors(item,blog,root):
+  item.pop('source_image_review',None)
+  item['image_source']['policy']=TRUSTED
+  item['image_source']['visual_review_performed']=False
+  item['editorial_image_decision']='reuse_trusted_existing_source_image'
+  return item['image_url']
+ page_url=item.get('target_url','');failure='source_image_not_found'
+ try:
+  own=candidates(read_page(page_url),page_url)
+  if own:
+   url=own[0];clear(item,post)
+   item.update(image_url=url,image_alt='تصویر مرتبط با '+post['title'],image_source={'policy':TRUSTED,'page_url':page_url,'image_url':url,'owner':blog+'|'+item['key'],'selection_policy':'exact-page-declared-or-body-v1','visual_review_performed':False},editorial_image_decision='reuse_trusted_existing_source_image')
+   if source_record_errors(item,blog,root):raise SourceImageUnavailable('Source binding failed')
+   return url
+ except Exception as exc:failure='source_image_unavailable_'+type(exc).__name__
+ clear(item,post);item['editorial_image_decision']='text_only_'+failure
+ if needed:raise SourceImageUnavailable('Required source illustration unavailable; no generated-image fallback')
+ return None
+
 def prepare_source(item,post,blog,root=ROOT):
  from blog_editorial_image_policy import required
  from blog_image_gate import fetch
  from blog_reference_scene import topic_hash
  # Policy malformed/scope changed must not silently fall back to text.
  if not source_preferred(item,blog,root):raise RuntimeError('Source-preferred scope required')
+ if trusted_source(item,blog,root):return prepare_trusted(item,post,blog,root)
  needed=required(item,blog,root,post);page_url=item.get('target_url','');failure='source_image_unavailable'
  try:
   own=candidates(read_page(page_url),page_url)
@@ -135,6 +177,7 @@ def review_for_publication(item,blog,root=ROOT):
   return review(item,item['image_url'],root=root)
  errors=source_record_errors(item,blog,root)
  if errors:raise SourceImageUnavailable('Saved source image provenance rejected')
+ if trusted_source(item,blog,root):return trusted_result(item)
  p=item['image_source'];url=item['image_url']
  if url not in candidates(read_page(p['page_url']),p['page_url']):raise SourceImageUnavailable('Image no longer belongs to the linked source page')
  from blog_image_gate import fetch

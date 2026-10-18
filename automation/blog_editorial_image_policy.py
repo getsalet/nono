@@ -17,6 +17,8 @@ def load(root=ROOT):
 def validate(value):
  if not isinstance(value,dict)or value.get('policy')!='afp-editorial-image-need-v1'or value.get('mode')!='text_first' or value.get('blogs')!=['roya','farsiblog','rozblog','loxblog'] or value.get('families')!=['tape20']:raise RuntimeError('Invalid editorial image policy; no optional-image fallback')
  if 'source_image_preferred'in value and type(value['source_image_preferred'])is not bool:raise RuntimeError('Invalid source-image preference')
+ if 'source_image_review_required'in value and type(value['source_image_review_required'])is not bool:raise RuntimeError('Invalid source-image review policy')
+ if value.get('source_image_review_required')is False and value.get('source_image_preferred')is not True:raise RuntimeError('Trusted images require exact-source preference')
  return value
 _UNSET=object()
 def optional(item,blog,root=ROOT,config=_UNSET):

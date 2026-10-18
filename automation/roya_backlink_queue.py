@@ -292,8 +292,12 @@ def inject_image(item, obj, image_url):
         return obj
     alt = (item.get('site_title') or obj.get('title') or item.get('city_fa') or 'نوار آبیاری AFP')
     alt = re.sub(r'\s+', ' ', alt.split('|')[0]).strip()[:90]
-    width=item.get('image_width',1200);height=item.get('image_height',675)
-    obj['html'] = f'<p><img src="{html_lib.escape(image_url,quote=True)}" alt="{html_lib.escape(alt,quote=True)}" width="{width}" height="{height}"></p>' + html
+    if item.get('image_source'):
+        from blog_source_image import image_markup
+        obj['html'] = image_markup({**item,'image_url':image_url},alt) + html
+    else:
+        width=item.get('image_width',1200);height=item.get('image_height',675)
+        obj['html'] = f'<p><img src="{html_lib.escape(image_url,quote=True)}" alt="{html_lib.escape(alt,quote=True)}" width="{width}" height="{height}"></p>' + html
     obj['image_url'] = image_url
     return obj
 
