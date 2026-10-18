@@ -71,7 +71,7 @@ class DraftPreflightTests(unittest.TestCase):
   with self.assertRaises(RuntimeError):stock.control(self.root)
  def test_both_producers_validate_before_preparing_image(self):
   import farsiblog_backlink_queue as f,roya_backlink_queue as r
-  for module,image_call in ((f,'retry_transient(lambda:prepare_image(item))'),(r,'image_url = prepare_roya_image(item)')):
+  for module,image_call in ((f,'retry_transient(lambda:prepare_image(item))'),(r,"image_url = prepare_article(item,obj,'roya'")):
    source=inspect.getsource(module.main);self.assertLess(source.index("stage='text_validation'"),source.index(image_call))
  def test_detail_views_are_bounded_same_candidate(self):
   buf=io.BytesIO();Image.new('RGB',(1200,900),'brown').save(buf,'PNG')

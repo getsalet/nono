@@ -108,6 +108,9 @@ def snapshot(root):
  def read(path):return json.loads(subprocess.check_output(['git','show',ref+':'+path],cwd=root,stderr=subprocess.DEVNULL))
  paths=subprocess.check_output(['git','ls-tree','-r','--name-only',ref,'data/blog-image-stock/requests'],cwd=root).decode().splitlines()
  rows=[read(p)for p in paths]
+ from blog_editorial_image_policy import required
+ config=read('data/blog-editorial-image-policy.json')
+ rows=[r for r in rows if required(r.get('item',{}),r.get('blog'),root,config=config)]
  return {'cfg':read(CONFIG),'control':read('data/blog-generated-image-control.json'),'key_config':read('data/blog-image-key-pool.json'),'provider':read('data/blog-image-provider-backpressure.json'),'pool':read('data/blog-image-key-pool-state.json'),'stock':rows,'audit':read('data/agnes-usable-key-audit/latest.json'),'ref':ref}
 
 def run(root=ROOT,clock=time.time,sleep=time.sleep,client=None,loader=snapshot):

@@ -20,6 +20,8 @@ on:
   push:
     branches: [main]
     paths:
+      - automation/blog_public_content_verify.py
+      - data/blog-editorial-image-policy.json
       - .github/workflows/roya-backlink-publish.yml
       - automation/publish_roya_posts.py
 
@@ -135,3 +137,15 @@ jobs:
           done
           echo '::error::Checkpoint push failed after three attempts; recovery artifact retained.'
           exit 1
+
+      - name: Report actual publication target, including text-only articles
+        if: steps.control.outputs.proceed == '1' && (always())
+        run: python automation/blog_publication_throughput.py
+      - name: Preserve actual throughput observation
+        if: steps.control.outputs.proceed == '1' && (always())
+        uses: actions/upload-artifact@v4
+        with:
+          name: backlink-throughput-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/blog-throughput
+          retention-days: 14
+          if-no-files-found: ignore

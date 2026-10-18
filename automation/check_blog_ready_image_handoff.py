@@ -38,9 +38,31 @@ def select(blog,root=ROOT):
   selected.append((row.get('ready_at',0),key))
  return min(selected)[1]if selected else None
 
+def select_text(blog,root=ROOT):
+ from check_blog_pipeline_control import decision
+ from blog_editorial_image_policy import saved_optional
+ if blog not in ('roya','farsiblog','rozblog','loxblog')or not decision(blog,root)['proceed']:return None
+ root=Path(root);queue=read(root/'data'/blog/'backlink-queue.json',{'items':[]})
+ candidates=[]
+ for source in queue['items']:
+  key=source.get('key','')
+  if source.get('status')!='failed'or not re.fullmatch('[A-Za-z0-9%/._-]+'if blog=='roya'else'[A-Za-z0-9_-]+',key):continue
+  filename=re.sub(r'[^A-Za-z0-9._-]+','_',key)if blog=='roya'else key
+  if filename in ('.','..')or sum((re.sub(r'[^A-Za-z0-9._-]+','_',x.get('key',''))if blog=='roya'else x.get('key'))==filename for x in queue['items'])!=1:continue
+  # A corrupt allegedly-ready image is never silently discarded by this wakeup.
+  asset=source.get('_image_stock_request','')
+  if re.fullmatch('[a-f0-9]{32}',asset):
+   row=read(root/'data/blog-image-stock/requests'/(asset+'.json'),{})
+   if row.get('status')in('ready','consumed','processing'):continue
+  record=read(root/f'artifacts/{blog}-backlink-queue/items/{filename}.json',{})
+  if saved_optional(record,source,blog,root):candidates.append(source)
+ if not candidates:return None
+ from blog_city_priority import enabled,ordered
+ return (ordered(candidates,root)if enabled(root)else candidates)[0]['key']
+
 def handoff(event,blog,root=ROOT):
  if event not in('push','workflow_run'):return {'proceed':True,'cached_only':False,'target':''}
- target=select(blog,root)
+ target=select(blog,root)or select_text(blog,root)
  return {'proceed':bool(target),'cached_only':True,'target':target or ''}
 def main():
  result=handoff(os.getenv('GITHUB_EVENT_NAME',''),sys.argv[1]);print(json.dumps(result))

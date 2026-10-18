@@ -7,12 +7,14 @@ def eligible(candidates,blog,root):
  if not enabled(root):return candidates
  current=rows(root);cfg=control(root)
  waiting={r['key']for r in current if r['blog']==blog and r['status']in WAITING}
- candidates=[x for x in candidates if x['key']not in waiting]
+ from blog_editorial_image_policy import required
+ candidates=[x for x in candidates if not required(x,blog,root)or x['key']not in waiting]
  active=[r for r in current if r['status']in WAITING|{'ready'}]
  full=len(active)>=cfg['target']or sum(r['blog']==blog for r in active)>=cfg['per_blog_limit']
  if not full:return candidates
  ready={r['key']for r in current if r['blog']==blog and r['status']in('ready','consumed')}
- return [x for x in candidates if x['key']in ready]
+ return [x for x in candidates if not required(x,blog,root)or x['key']in ready]
 def waiting_keys(blog,root):
  if not enabled(root):return []
- return [r['key']for r in rows(root)if r['blog']==blog and r['status']in WAITING]
+ from blog_editorial_image_policy import required
+ return [r['key']for r in rows(root)if r['blog']==blog and r['status']in WAITING and required(r.get('item',{}),blog,root)]

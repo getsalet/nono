@@ -95,7 +95,7 @@ def prepare(page,item):
  page.locator('#ptitle').wait_for(timeout=30000)
  page.wait_for_function('()=>window.tinymce?.get("editor1")?.initialized && window.tinymce?.get("editor2")?.initialized',timeout=60000)
  page.locator('#ptitle').fill(post['title']);page.locator('#pslug-input').fill(post['slug'])
- page.locator('input[name=pimage]').fill(native_image_value(item['image_url']))
+ page.locator('input[name=pimage]').fill(native_image_value(item['image_url'])if item.get('image_url')else '')
  page.evaluate('tags=>{const e=document.querySelector("#keywords"),t=e.__tagify;if(!t)throw new Error("Native tag control unavailable");t.removeAllTags();t.addTags(tags);}',post.get('tags',[])[:4])
  page.locator('textarea[name=meta_description]').fill(post['meta_description'])
  # Preserve the server-selected current Jalali timestamp instead of erasing it.
@@ -140,7 +140,10 @@ def verify(public,item,record):
  if body.locator('details').count()!=3:raise RuntimeError('Three native FAQs did not persist')
  hrefs={unquote(x).rstrip('/')for x in body.locator('a[href]').evaluate_all('es=>es.map(e=>e.href)')}
  if any(unquote(x['url']).rstrip('/')not in hrefs for x in links_for(item)):raise RuntimeError('Approved contextual links did not persist')
- if body.locator('img').evaluate_all('es=>es.map(e=>e.src)')!=[item['image_url']]:raise RuntimeError('Approved native image missing/duplicated')
+ if body.locator('img').evaluate_all('es=>es.map(e=>e.src)')!=([item['image_url']]if item.get('image_url')else []):raise RuntimeError('Approved native image missing/duplicated or unexpected image')
+ if not item.get('image_url'):
+  from blog_public_content_verify import verify_text_body
+  verify_text_body(item,html,links_for(item))
  if public.locator('form[action*=comment],.comment-form').count():raise RuntimeError('Public comment form still present')
  public.goto(BLOG,wait_until='domcontentloaded',timeout=60000)
  card=public.locator('article.post-card').filter(has=public.get_by_text(item['post']['title'],exact=True))
@@ -167,7 +170,8 @@ def main():
  for e in todo[:limit]:
   item=state.load(state.resolve_item(e),{})
   from blog_image_gate import review
-  engine.retry_transient(lambda:review(item,item['image_url']))
+  from blog_editorial_image_policy import validate_image
+  if validate_image(item,item.get('post',{}),'loxblog',engine.ROOT):engine.retry_transient(lambda:review(item,item['image_url']))
   errors,_=qa(item,item['post'],links_for(item),'loxblog')
   if errors or not item.get('qa',{}).get('passed'):raise RuntimeError('Native LoxBlog quality gate rejected article')
   approved.append((e,item))

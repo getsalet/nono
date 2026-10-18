@@ -127,6 +127,15 @@ def verify_live(page,item,pid):
         from urllib.parse import unquote
         links=page.eval_on_selector_all('a[href]','a=>a.map(e=>e.href)')
         if unquote(target) not in [unquote(v) for v in links]:raise RuntimeError('City backlink did not verify')
+    from blog_editorial_image_policy import optional,has_image
+    if BLOG=='https://afp.royablog.ir'and optional(item,'roya',ROOT)and not has_image(item,post):
+        import roya_backlink_queue as generator
+        from blog_public_content_verify import verify_text_body
+        article=page.locator('article.post-card').filter(has=page.get_by_text(post['title'],exact=True))
+        if article.count()!=1:raise RuntimeError('Published article body not unique; stop and reconcile')
+        body=article.locator('.post-content')
+        if body.count()!=1:raise RuntimeError('Published article body unavailable; stop and reconcile')
+        verify_text_body(item,body.inner_html(),generator.approved_links(item,load(ROOT/'data/roya/link-library.json',{})))
     return url
 
 def publish(todo):
@@ -180,6 +189,16 @@ def publish(todo):
 def generated_image_preflight(item):
     # Other platforms use this module too and own their separate strict preflight.
     if BLOG != 'https://afp.royablog.ir' or item.get('family') not in ('tape20','hose'):return []
+    from blog_editorial_image_policy import optional,validate_image
+    if optional(item,'roya',ROOT):
+        import roya_backlink_queue as generator
+        from blog_draft_preflight import subject_errors
+        post=item.get('post',{})
+        links=generator.approved_links(item,load(ROOT/'data/roya/link-library.json',{}))
+        errors,_=generator.qa(item,post,links,root=ROOT)
+        errors+=subject_errors(item,post,ROOT)
+        if errors:return errors
+        if not validate_image(item,post,'roya',ROOT):return []
     from blog_generated_image import rollout_enabled
     if not rollout_enabled('roya'):return []
     from blog_image_gate import generated_record_errors,validate_record,review

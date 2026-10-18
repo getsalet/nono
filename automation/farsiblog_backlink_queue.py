@@ -174,10 +174,11 @@ def main():
     if not(BASE.AGNES_KEY or BASE.AGNES_KEYS):raise RuntimeError('Agnes API key required; no fake content fallback')
     if any(x.get('status')=='completed'and not x.get('published')and x.get('kind')in('city','article')for x in q['items']):refresh_ready(q);print('Approved content already waiting; backlog capped.');return 0
     recover_stale_image_deferrals(q)
-    candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article') and (ready_handoff or retry_due(x))]
+    from blog_editorial_image_policy import required,saved_optional,prepare_article
+    candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article') and (ready_handoff or retry_due(x)or saved_optional(load(item_path(x['key']),{}),x,CITY_BLOG,ROOT))]
     from blog_generated_image import family_enabled
     from blog_image_stock import awaiting
-    candidates=[x for x in candidates if not awaiting(x,ROOT)]
+    candidates=[x for x in candidates if not required(x,CITY_BLOG,ROOT)or not awaiting(x,ROOT)]
     candidates=[x for x in candidates if family_enabled(x,ROOT)]
     from blog_image_stock_preflight import eligible,waiting_keys
     candidates=eligible(candidates,CITY_BLOG,ROOT)
@@ -197,7 +198,8 @@ def main():
         from blog_image_backpressure import require_open,ImageProviderBusy
         from blog_image_queue import ImageQueueBusy
         from blog_image_stock import require_generation_open,ImagePending
-        try:require_generation_open(ROOT)
+        try:
+            if required(item,CITY_BLOG,ROOT):require_generation_open(ROOT)
         except ImageProviderBusy as busy:
             blocked_until=busy.retry_at
             print('Shared image-provider cooldown active; no new source/text/image calls.');break
@@ -211,7 +213,8 @@ def main():
             if ready_handoff and image_retry_draft is None:raise RuntimeError('Saved image-stage draft required for cached-only handoff; no source/text generation')
             if item.get('status')=='failed' and isinstance(previous.get('post'),dict):
                 old=previous['post'];errors,info=qa(item,old,links)
-                if not errors:
+                from blog_editorial_image_policy import optional
+                if not errors and not optional(item,CITY_BLOG,ROOT):
                     obj=old
                     print(item['key']+': recovered existing draft after complete cross-blog validation; no new AI charge',flush=True)
             if obj is None:
@@ -240,9 +243,9 @@ def main():
                     if item.get('kind')in('city','article'):
                         from blog_reference_scene import context_from_post
                         item['_image_article_context']=context_from_post(obj);stage='image'
-                        retry_transient(lambda:prepare_image(item));item['_image_prepared_this_run']=True
+                        prepare_article(item,obj,CITY_BLOG,ROOT,lambda:retry_transient(lambda:prepare_image(item)));item['_image_prepared_this_run']=True
                     stage='validation'
-                    obj['html']='<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+html.escape(item['image_alt'],quote=True)+'" width="'+str(item['image_width'])+'" height="'+str(item['image_height'])+'" loading="lazy"></p>'+obj.get('html','');obj['image_url']=item['image_url']
+                    if item.get('image_url'):obj['html']='<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+html.escape(item['image_alt'],quote=True)+'" width="'+str(item['image_width'])+'" height="'+str(item['image_height'])+'" loading="lazy"></p>'+obj.get('html','');obj['image_url']=item['image_url']
                     errors,info=qa(item,obj,links);print(f'{item["key"]}: attempt={attempt+1}, words={info.get("words")}, errors={len(errors)}',flush=True)
                     if not errors:break
         except Exception as exc:

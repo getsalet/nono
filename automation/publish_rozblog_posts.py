@@ -191,7 +191,10 @@ def verify(page,item,pid,public_url):
  if any(unquote(x['url']).rstrip('/')not in hrefs for x in links_for(item)):raise RuntimeError('Contextual city/province/home backlink did not persist')
  if content.locator('details').count()!=3:raise RuntimeError('FAQ did not persist')
  images=article.locator('img[src]').evaluate_all('a=>a.map(x=>x.src)')
- if item['image_url']not in images:raise RuntimeError('Approved city image did not persist')
+ if item.get('image_url')and item['image_url']not in images:raise RuntimeError('Approved city image did not persist')
+ if not item.get('image_url'):
+  from blog_public_content_verify import verify_text_body
+  verify_text_body(item,content.inner_html(),links_for(item))
  return page.url
 
 def diagnose_login():
@@ -228,7 +231,8 @@ def main():
   item=state.load(state.resolve_item(entry),{})
   try:
    from blog_image_gate import review
-   engine.retry_transient(lambda:review(item,item['image_url']))
+   from blog_editorial_image_policy import validate_image
+   if validate_image(item,item.get('post',{}),'rozblog',engine.ROOT):engine.retry_transient(lambda:review(item,item['image_url']))
    errors,_=qa(item,item['post'],links_for(item),'rozblog')
    if errors:raise RuntimeError('Publication QA rejected')
   except Exception as exc:

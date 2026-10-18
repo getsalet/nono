@@ -14,7 +14,7 @@ on:
     - cron: '*/15 * * * *'
   push:
     branches: [main]
-    paths: [automation/check_blog_ready_image_handoff.py, tests/test_blog_ready_image_handoff.py, automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, automation/publish_farsiblog_posts.py, automation/content_originality.py, tests/test_farsiblog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/farsiblog-content.yml]
+    paths: [automation/blog_public_content_verify.py, data/blog-editorial-image-policy.json, automation/blog_editorial_image_policy.py, tests/test_blog_editorial_image_policy.py, automation/check_blog_ready_image_handoff.py, tests/test_blog_ready_image_handoff.py, automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, automation/publish_farsiblog_posts.py, automation/content_originality.py, tests/test_farsiblog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/farsiblog-content.yml]
 permissions:
   contents: write
   actions: read
@@ -172,3 +172,15 @@ jobs:
           done
           echo '::error::Checkpoint push failed after three attempts; recovery artifact retained.'
           exit 1
+
+      - name: Report actual publication target, including text-only articles
+        if: steps.control.outputs.proceed == '1' && (always())
+        run: python automation/blog_publication_throughput.py
+      - name: Preserve actual throughput observation
+        if: steps.control.outputs.proceed == '1' && (always())
+        uses: actions/upload-artifact@v4
+        with:
+          name: backlink-throughput-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/blog-throughput
+          retention-days: 14
+          if-no-files-found: ignore

@@ -351,6 +351,8 @@ def product_semantics_errors(item,markup):
 
 def qa(item, obj, links, root=None, require_image=True):
     errors = []
+    from blog_editorial_image_policy import validate_image
+    require_image=require_image and validate_image(item,obj,'roya',root or ROOT)
     # Encoding differences are not invalid destinations. Normalize only approved equivalents.
     html = normalize_approved_hrefs(obj, links).get('html', '') or ''
     title = (obj.get('title', '') or '').strip()
@@ -537,6 +539,10 @@ def pick(queue, state, count):
     for item in queue['items']:
         if item.get('published') or item.get('status') not in ('pending','failed'):continue
         eligible=item.get('status')=='pending' or RETRY_FAILED or (os.getenv('BLOG_READY_IMAGE_HANDOFF')=='1' and bool(ONLY) and item['key']==ONLY)
+        from blog_editorial_image_policy import saved_optional
+        if not eligible:
+            path=ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json')
+            eligible=saved_optional(load_json(path,{}),item,'roya',ROOT)
         if not eligible and capacity_retry_due(item):
             path=ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json')
             eligible=recover(load_json(path,{})) is not None
@@ -549,7 +555,8 @@ def pick(queue, state, count):
     from blog_generated_image import family_enabled
     pending=[i for i in pending if family_enabled(i,ROOT)]
     from blog_image_stock import awaiting
-    pending=[i for i in pending if not awaiting(i,ROOT)]
+    from blog_editorial_image_policy import required
+    pending=[i for i in pending if not required(i,'roya',ROOT)or not awaiting(i,ROOT)]
     from blog_image_stock_preflight import eligible
     pending=eligible(pending,'roya',ROOT)
     from blog_city_priority import enabled as city_priority_enabled,ordered as city_priority_ordered
@@ -616,7 +623,9 @@ def main():
         from blog_image_backpressure import require_open,ImageProviderBusy
         from blog_image_queue import ImageQueueBusy
         from blog_image_stock import require_generation_open,ImagePending
-        try:require_generation_open(ROOT)
+        from blog_editorial_image_policy import required,prepare_article
+        try:
+            if required(item,'roya',ROOT):require_generation_open(ROOT)
         except ImageProviderBusy as busy:
             blocked_until=busy.retry_at
             print('Shared image-provider cooldown active; no new text/image calls.');break
@@ -644,7 +653,7 @@ def main():
                     obj = image_retry_draft
                 elif attempt == 1:
                     stage='generation'
-                    obj = agnes(build_prompt(item, links))
+                    obj = agnes(build_prompt(item, links)+'\nمقاله باید بدون تصویر هم کامل باشد؛ به عکس یا تصویر بالا/پایین و نمودار پیوست ارجاع نده. تصویر فقط در صورت نیاز توسط سیستم اضافه می‌شود.')
                 else:
                     stage='generation'
                     obj = agnes(repair_prompt(item, links, obj, errors),temperature=0.1)
@@ -660,7 +669,7 @@ def main():
                 if image_url is None or context!=item.get('_image_article_context'):
                     item['_image_article_context'] = context
                     stage='image'
-                    image_url = prepare_roya_image(item)
+                    image_url = prepare_article(item,obj,'roya',ROOT,lambda:prepare_roya_image(item))
             except Exception as exc:
                 errors = ['agnes error: ' + str(exc)[:200]]
                 print(f'{item["key"]} attempt={attempt} {errors[0]}', flush=True)

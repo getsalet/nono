@@ -77,7 +77,7 @@ def admission(root,blog,asset):
  else:yield
 
 def snapshot(item):
- fields=('key','family','kind','topic','angle','site_title','matrix_title','assigned_title','city_fa','province_fa','_image_article_context','_image_qa_feedback')
+ fields=('key','family','kind','topic','angle','site_title','matrix_title','assigned_title','city_fa','province_fa','editorial_image_required','_image_article_context','_image_qa_feedback')
  value={k:copy.deepcopy(item[k])for k in fields if k in item}
  from blog_reference_scene import article
  article(value)  # Require a real final-draft title/body summary, not a generic topic.
@@ -86,6 +86,9 @@ def snapshot(item):
 def awaiting(item,root):
  """Do not regenerate prose while its durable request is waiting."""
  if not enabled(root):return False
+ from blog_editorial_image_policy import required
+ blog=item.get('_image_blog')
+ if blog and not required(item,blog,root):return False
  asset=item.get('_image_stock_request')
  if not asset:return False
  row=read(root,request_path(asset))
@@ -124,6 +127,11 @@ def request_image(item,blog,root):
    # throwing an image error that sends the producer into another text rewrite.
    item['_image_stock_request']=asset
    raise ImagePending('saved text requires worker revalidation')
+  if row and row.get('status')=='cancelled'and row.get('last_error')=='editorial_image_not_required':
+   from blog_editorial_image_policy import required
+   current=rows(root);cfg=control(root)
+   if required(item,blog,root)and row.get('visual_rejections',0)<3 and sum(x['status']in ACTIVE for x in current)<cfg['target']and sum(x['status']in ACTIVE and x['blog']==blog for x in current)<cfg['per_blog_limit']:
+    row.update(status='requested',item=snapshot(item));row.pop('last_error',None);persist(root,row)
   if row and row.get('status')in('rejected','cancelled','superseded'):
    raise RuntimeError('Image stock request needs review: '+row['status'])
   if row:
@@ -183,6 +191,13 @@ def _worker_once(root):
  pending=sorted((r for r in rows(root)if r['status']in('requested','processing','needs_text_repair')),key=lambda r:(0 if r['asset_id']in reconsider_assets else 1,r.get('attempts',0),r.get('started_at',r['created_at']),r['created_at']))
  waiting_result=None;retry_times=[]
  for row in pending:
+  from blog_editorial_image_policy import required
+  if not required(row.get('item',{}),row.get('blog'),root):
+   with admission(root,row['blog'],row['asset_id']):
+    latest=read(root,request_path(row['asset_id']))
+    if latest and latest['status']in('requested','processing','needs_text_repair')and not required(latest.get('item',{}),latest.get('blog'),root):
+     latest.update(status='cancelled',last_error='editorial_image_not_required',cancelled_at=time.time());persist(root,latest)
+   continue  # No optional image API work; ready/consumed assets untouched.
   blog=row['blog'];item=copy.deepcopy(row['item']);asset=row['asset_id']
   with admission(root,blog,asset):
    latest=read(root,request_path(asset))

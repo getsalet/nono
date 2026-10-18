@@ -44,6 +44,9 @@ def verify(page,item,pid):
     links={unquote(x).rstrip('/')for x in article.locator('.post-content a[href]').evaluate_all('a=>a.map(x=>x.href)')}
     if any(unquote(x['url']).rstrip('/')not in links for x in generator.links_for(item)):raise RuntimeError('Published contextual link missing')
     if article.locator('.post-content details').count()!=3:raise RuntimeError('Published FAQ did not persist')
+    if not item.get('image_url'):
+        from blog_public_content_verify import verify_text_body
+        verify_text_body(item,article.locator('.post-content').inner_html(),generator.links_for(item))
     return url
 native.login=login;native.scan_panel=scan;native.verify_live=verify
 
@@ -71,7 +74,8 @@ def main():
     for entry in selected_entries(queue['items'],target):
         item=native.load(native.resolve_item(entry),{})
         try:
-            if item.get('kind')in('city','article'):
+            from blog_editorial_image_policy import validate_image
+            if item.get('kind')in('city','article')and validate_image(item,item.get('post',{}),generator.CITY_BLOG,generator.ROOT):
                 from blog_image_gate import review
                 generator.retry_transient(lambda:review(item,item['image_url']))
             errors,_=generator.qa(item,item['post'],generator.links_for(item))

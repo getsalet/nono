@@ -44,7 +44,7 @@ class RoyaCapacityRecoveryTests(unittest.TestCase):
   s=inspect.getsource(r.main)
   self.assertLess(s.index("item['next_retry_at']=datetime"),s.index('record = dict(item)'))
   self.assertIn('recover(load_json',s);self.assertIn('errors, info = qa(item, obj, links)',s)
-  self.assertIn('image_url = prepare_roya_image(item)',s)
+  self.assertIn("image_url = prepare_article(item,obj,'roya',ROOT,lambda:prepare_roya_image(item))",s)
 
 class RoyaCachedHandoffTests(unittest.TestCase):
  def test_ready_target_can_retry_without_waiting_for_old_capacity_timer(self):
