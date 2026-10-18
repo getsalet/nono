@@ -6,6 +6,8 @@ on:
   push:
     branches: [main]
     paths:
+      - automation/blog_publication_throughput.py
+      - tests/test_blog_publication_throughput.py
       - automation/blog_image_stock.py
       - automation/blog_image_key_router.py
       - automation/blog_image_gate.py
@@ -76,6 +78,9 @@ jobs:
       - run: python -m pip install --quiet Pillow
       - name: Process at most one article-owned image; never publish a post
         run: python automation/blog_image_stock.py
+      - name: Report actual rolling publication target; never infer it from run success
+        if: always()
+        run: python automation/blog_publication_throughput.py
       - name: Preserve independent queue evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -84,6 +89,7 @@ jobs:
           retention-days: 14
           if-no-files-found: ignore
           path: |
+            artifacts/blog-throughput
             artifacts/blog-image-stock
             artifacts/blog-image-reviews
             artifacts/*-backlink-queue/generated-images
