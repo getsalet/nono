@@ -12,6 +12,10 @@ def main():
  from blog_generated_image import family_cancelled
  if family_cancelled({'family':'hose'},ROOT):
   print('Hose image generation cancelled by user; zero provider requests.');return 0
+ from blog_hose_trial import admission
+ status,trial=admission(ROOT)
+ if status!='allowed':
+  print(json.dumps({'trial_status':status,'post_submissions':0,'production_approval':False}));return 0
  run=os.getenv('BLOG_IMAGE_PROBE_ID')or os.getenv('GITHUB_RUN_ID','local')
  if not re.fullmatch(r'[A-Za-z0-9_-]+',run):raise RuntimeError('Invalid diagnostic run identifier')
  report={'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'workflow_run_id':os.getenv('GITHUB_RUN_ID','local'),'probe_id':run,'post_submissions':0,'production_approval':False,'direct_visual_approval':False,'generation_attempt_limit':1,'family':'hose','image_received':False}
@@ -29,6 +33,11 @@ def main():
   delay=max(0,retry_at(ROOT)-time.time())
   if delay>0:time.sleep(min(delay+1,300))
   require_open(ROOT)
+  # Reserve before entering the shared queue: crashes consume budget conservatively.
+  status,trial=admission(ROOT)
+  if status!='allowed':raise RuntimeError('Trial admission changed before request')
+  report.update(trial_id=trial['trial_id'],trial_attempt_at_epoch=time.time(),provider_request_reserved=True)
+  generated.checkpoint_asset(OUT+'/'+run+'.json',json.dumps(report,ensure_ascii=False,indent=2).encode(),ROOT)
   raw=generated.generate(item,'loxblog',max_attempts=1)
   path=OUT+'/'+run+'.webp'
   url=generated.checkpoint_asset(path,raw,ROOT)

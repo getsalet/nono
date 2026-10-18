@@ -1,6 +1,8 @@
 name: Verify full hose reference parity (one candidate, no publication)
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '12,32,52 1-4 18 10 *'
   push:
     branches: [main]
     paths: [automation/verify_hose_full_references.py]
@@ -11,7 +13,19 @@ concurrency:
   group: blog-hose-fullrefs-check
   cancel-in-progress: false
 jobs:
+  admission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      allowed: ${{ steps.guard.outputs.allowed }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check trial expiry, spacing, prior results and three-request budget
+        id: guard
+        run: python automation/blog_hose_trial.py
   tests:
+    needs: admission
+    if: needs.admission.outputs.allowed == '1'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
