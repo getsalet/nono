@@ -168,7 +168,7 @@ def worker_once(root):
   return {'status':'waiting_mutex','retry_at':exc.retry_at,'publication_attempted':False,'provider_requests_not_asserted':True}
 
 def _worker_once(root):
- from blog_generated_image import identity,rollout_enabled,family_enabled,prepare_now
+ from blog_generated_image import identity,rollout_enabled,family_enabled,prepare_now,reconsider_candidate
  from blog_image_runtime_control import generation_paused
  from blog_image_backpressure import require_open,ImageProviderBusy
  root=Path(root)
@@ -176,7 +176,9 @@ def _worker_once(root):
  refresh(root)
  # Prefer never/less-attempted drafts. With a 20-minute worker, a five-minute
  # per-item retry alone would otherwise select the same oldest failure forever.
- pending=sorted((r for r in rows(root)if r['status']in('requested','processing','needs_text_repair')),key=lambda r:(r.get('attempts',0),r.get('started_at',r['created_at']),r['created_at']))
+ from blog_image_gate import acceptance_mode,PRACTICAL_MODE,ACCEPTANCE_CONFIG
+ reconsider_assets=set(json.loads((root/ACCEPTANCE_CONFIG).read_text()).get('reconsider_candidates',{}))if acceptance_mode(root)==PRACTICAL_MODE else set()
+ pending=sorted((r for r in rows(root)if r['status']in('requested','processing','needs_text_repair')),key=lambda r:(0 if r['asset_id']in reconsider_assets else 1,r.get('attempts',0),r.get('started_at',r['created_at']),r['created_at']))
  waiting_result=None;retry_times=[]
  for row in pending:
   blog=row['blog'];item=copy.deepcopy(row['item']);asset=row['asset_id']
@@ -217,11 +219,15 @@ def _worker_once(root):
      row.update(status='rejected');persist(root,row);continue
     row.update(status='requested',text_repaired_at=time.time())
     row.pop('text_errors',None);row.pop('last_error',None);persist(root,row)
+   # A user-authorized saved-image recheck makes ZERO image API requests,
+   # so it can use cached evidence without waiting for a generation cooldown.
+   reconsidering=reconsider_candidate(item,blog,root)is not None
    # Text triage is local and must not wait for an IMAGE retry/cooldown.
-   if row.get('retry_at',0)>time.time():
+   if not reconsidering and row.get('retry_at',0)>time.time():
     retry_times.append(row['retry_at']);continue
    if not rollout_enabled(blog,root):raise RuntimeError('Worker rollout acceptance unavailable')
-   try:require_open(root)
+   try:
+    if not reconsidering:require_open(root)
    except ImageProviderBusy as exc:
     waiting_result={'status':'waiting_provider','retry_at':exc.retry_at,'provider_requests':0};continue
    row.update(status='processing',attempts=row['attempts']+1,started_at=time.time());persist(root,row)

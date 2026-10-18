@@ -280,6 +280,23 @@ def _generate(item,blog,slots=None,max_attempts=3):
  out=io.BytesIO();image.save(out,'WEBP',quality=88,method=6)
  return out.getvalue()
 
+def reconsider_candidate(item,blog,root):
+ """Only an explicitly named saved candidate can be reused under new policy.
+ No synthetic score, model call, shared image or stale owner is accepted here.
+ Actual review() still checks watermark, identity, core flags and score >=90.
+ """
+ from blog_image_gate import acceptance_mode,PRACTICAL_MODE,ACCEPTANCE_CONFIG
+ root=Path(root)
+ if acceptance_mode(root)!=PRACTICAL_MODE:return None
+ cfg=json.loads((root/ACCEPTANCE_CONFIG).read_text());asset=identity(item,blog)
+ row=cfg.get('reconsider_candidates',{}).get(asset)
+ if row is None:return None
+ digest=row.get('sha256')
+ if row.get('blog')!=blog or row.get('key')!=item.get('key')or not re.fullmatch('[a-f0-9]{64}',str(digest)):raise RuntimeError('Reconsidered image owner or digest mismatch')
+ path=root/f'artifacts/{blog}-backlink-queue/generated-images/rejected'/f'{asset}-{digest[:12]}.webp'
+ if not path.exists()or hashlib.sha256(path.read_bytes()).hexdigest()!=digest:raise RuntimeError('Reconsidered saved candidate missing or changed; no regeneration fallback')
+ return path
+
 def prepare(item,blog,root=None):
  from blog_image_stock import enabled,request_image
  root=Path(root or roya.ROOT)
@@ -298,6 +315,9 @@ def prepare_now(item,blog,root=None,max_rounds=3,allow_generate=True):
  else:
   if not allow_generate:raise RuntimeError('Approved stock asset unavailable; inline generation forbidden')
   cache=root/f'artifacts/{blog}-backlink-queue/generated-images'/f'{asset_id}.webp';cache.parent.mkdir(parents=True,exist_ok=True)
+  if not cache.exists():
+   reconsidered=reconsider_candidate(item,blog,root)
+   if reconsidered is not None:cache.write_bytes(reconsidered.read_bytes())
   # Definitive visual rejection invalidates a candidate, never the entire queue.
   # Bound regeneration to three candidates; auth/transport errors are NOT QA.
   for round_index in range(max_rounds):
