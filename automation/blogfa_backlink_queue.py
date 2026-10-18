@@ -6,6 +6,8 @@ for suffix in ('COUNT','TARGET','DRY_RUN','PUBLISH','PUBLISH_LIMIT'):
 import farsiblog_backlink_queue as engine
 engine.CITY_BLOG='blogfa';engine.BLOG='https://afp-pipe.blogfa.com'
 engine.QUEUE=engine.ROOT/'data/blogfa/backlink-queue.json';engine.ART=engine.ROOT/'artifacts/blogfa-backlink-queue';engine.STATE=engine.ROOT/'state/blogfa-backlink-progress.json'
+def main():
+ print('Blogfa retired by user; no queue mutation, generation, login or publication.');return 0
 if __name__=='__main__':
- try:sys.exit(engine.main())
+ try:sys.exit(main())
  except Exception as exc:print('Blogfa generation stopped: '+str(exc),file=sys.stderr);sys.exit(1)

@@ -20,7 +20,7 @@ jobs:
       - name: Install public-browser fallback for HTTP blocks
         run: |
           bash automation/install_blog_browser.sh
-      - name: Observe all four queues, native public posts and guarded recovery
+      - name: Observe remaining active queues, native public posts and guarded recovery
         env:
           GH_TOKEN: ${{ github.token }}
           MONITOR_MINUTES: ${{ inputs.minutes }}
@@ -28,7 +28,6 @@ jobs:
           MONITOR_INTERVAL_SECONDS: '300'
           FARSIBLOG_AUTOMATION_ENABLED: ${{ vars.FARSIBLOG_AUTOMATION_ENABLED }}
           ROZBLOG_AUTOMATION_ENABLED: ${{ vars.ROZBLOG_AUTOMATION_ENABLED }}
-          BLOGFA_AUTOMATION_ENABLED: ${{ vars.BLOGFA_AUTOMATION_ENABLED }}
         run: python automation/monitor_four_blogs.py
       - name: Preserve four-blog window report
         if: always()

@@ -39,4 +39,4 @@ class HoseFullReferenceTests(unittest.TestCase):
   control=json.loads((ROOT/'data/blog-generated-image-control.json').read_text())
   self.assertEqual(control['enabled_families'],['tape20'])
   self.assertFalse(generated.family_enabled(self.item(),ROOT))
-  for blog in sorted(generated.BLOGS):self.assertTrue(generated.rollout_enabled(blog,ROOT))
+  for blog in sorted(generated.BLOGS):self.assertEqual(generated.rollout_enabled(blog,ROOT),blog!='blogfa')

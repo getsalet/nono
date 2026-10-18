@@ -11,6 +11,9 @@ def decision(blog,root=ROOT):
   value=json.loads(path.read_text())
   if not isinstance(value,dict)or type(value.get('pause_image_production'))is not bool:raise ValueError('Invalid control')
  except (OSError,ValueError,TypeError):return {'blog':blog,'proceed':False,'reason':'control_unavailable','publication_attempted':False}
+ retired=value.get('retired_blogs',[])
+ if not isinstance(retired,list)or any(b not in BLOGS for b in retired):return {'blog':blog,'proceed':False,'reason':'control_unavailable','publication_attempted':False}
+ if blog in retired:return {'blog':blog,'proceed':False,'reason':'blog_retired_by_user','publication_attempted':False}
  paused=value['pause_image_production']
  return {'blog':blog,'proceed':not paused,'reason':'user_pause'if paused else'other_gates_still_required','publication_attempted':False}
 def main():

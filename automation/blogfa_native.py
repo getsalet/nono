@@ -25,6 +25,7 @@ def active(page):
   routes[key]=candidates.pop()
  return routes
 def login(page,trace=None):
+ raise RuntimeError('Blogfa retired by user; no login or network request')
  username=os.getenv('BLOGFA_USERNAME');password=os.getenv('BLOGFA_PASSWORD')
  if not username or not password:raise RuntimeError('Blogfa repository secrets missing')
  if trace:trace.checkpoint('before_login_navigation')
@@ -73,6 +74,7 @@ def wait_submit_ready(page):
  print('Native stabilization complete; form/session still consistent.',flush=True)
 
 def main():
+ print('Blogfa retired by user; no browser, login or network request.');return 0
  from playwright.sync_api import sync_playwright
  with sync_playwright() as pw:
   browser=launch_browser(pw);page=browser.new_page()

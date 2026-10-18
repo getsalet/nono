@@ -149,6 +149,8 @@ def generation_exit_code(completed,failed):
     return 2 if failed and not completed else 0
 
 def main():
+    if CITY_BLOG=='blogfa':
+        print('Blogfa retired by user; no queue mutation, generation or publication.');return 0
     from blog_image_runtime_control import generation_paused
     if generation_paused(ROOT):
         print('Generation intentionally paused by user control; no text API, image API or new ready item.');return 0

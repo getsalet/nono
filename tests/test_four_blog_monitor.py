@@ -30,7 +30,7 @@ class MonitorGuards(unittest.TestCase):
  def test_unverified_not_guessed(self):
   self.row['public']['unverified']='HTTPError';self.assertIsNone(m.recovery_plan('farsiblog',self.row,self.now,{},True)[0])
  def test_ready_recovery_no_new_generation(self):
-  p,_=m.recovery_plan('blogfa',self.row,self.now,{},True);self.assertEqual(p['inputs']['count'],'0')
+  p,_=m.recovery_plan('farsiblog',self.row,self.now,{},True);self.assertEqual(p['inputs']['count'],'0')
  def test_window_limit(self):
   previous={'farsiblog':{'at':m.iso(self.now-dt.timedelta(hours=2)),'count':2}}
   self.assertIsNone(m.recovery_plan('farsiblog',self.row,self.now,previous,True)[0])

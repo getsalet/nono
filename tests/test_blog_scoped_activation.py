@@ -37,7 +37,7 @@ class ActivationDispatchPlanTests(unittest.TestCase):
  def test_activation_requests_one_canary_per_blog(self):
   from activate_blog_publication import plan,WORKFLOWS
   jobs=plan({'enabled':True,'pause_image_production':False,'enabled_families':['tape20'],'blogs':list(WORKFLOWS)})
-  self.assertEqual(len(jobs),5)
+  self.assertEqual(len(jobs),4)
   for job in jobs:self.assertEqual(job['inputs']['count'],'1');self.assertEqual(job['inputs']['dry_run'],'0')
  def test_paused_control_does_not_dispatch(self):
   from activate_blog_publication import plan

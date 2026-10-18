@@ -56,6 +56,7 @@ def published_snapshot(root,blog,item):
     if cache.exists():
         obj=json.loads(cache.read_text())
         if obj.get('url')==url and len(text(obj.get('html','')).split())>=100:return obj['html']
+    if blog=='blogfa':raise RuntimeError('Blogfa retired by user; originality history is local-cache only, no network request')
     safe=urlunsplit((parts.scheme,parts.netloc,quote(parts.path,safe='/%'),parts.query,parts.fragment))
     request=urllib.request.Request(safe,headers={'User-Agent':'AFP-originality-history-check/1.0'})
     try:

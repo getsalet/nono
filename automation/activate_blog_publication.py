@@ -3,7 +3,7 @@
 import json,os,urllib.request,urllib.error
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-WORKFLOWS={'roya':'roya-backlink-queue.yml','farsiblog':'farsiblog-content.yml','rozblog':'rozblog-content.yml','blogfa':'blogfa-content.yml','loxblog':'loxblog-content.yml'}
+WORKFLOWS={'roya':'roya-backlink-queue.yml','farsiblog':'farsiblog-content.yml','rozblog':'rozblog-content.yml','loxblog':'loxblog-content.yml'}
 def plan(control):
  if control.get('enabled')is not True or control.get('pause_image_production')is not False:return []
  scope=control.get('enabled_families',[])

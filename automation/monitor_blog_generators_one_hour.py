@@ -7,8 +7,8 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 API='https://api.github.com/repos/getsalet/nono'
 DURATION=3600;SAMPLE_INTERVAL=300;PROBE_INTERVAL=600;MAX_PROBES=5
-PUBLIC_BLOGS={'roya':'https://afp.royablog.ir/','farsiblog':'https://afp.farsiblog.com/','rozblog':'https://afp-pipe.rozblog.com/','blogfa':'https://afp-pipe.blogfa.com/','loxblog':'https://afp.lxb.ir/'}
-WORKFLOWS={'roya':'roya-backlink-queue.yml','farsiblog':'farsiblog-content.yml','rozblog':'rozblog-content.yml','blogfa':'blogfa-content.yml','loxblog':'loxblog-content.yml'}
+PUBLIC_BLOGS={'roya':'https://afp.royablog.ir/','farsiblog':'https://afp.farsiblog.com/','rozblog':'https://afp-pipe.rozblog.com/','loxblog':'https://afp.lxb.ir/'}
+WORKFLOWS={'roya':'roya-backlink-queue.yml','farsiblog':'farsiblog-content.yml','rozblog':'rozblog-content.yml','loxblog':'loxblog-content.yml'}
 def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 def api(path):
  if not path.startswith('/'):raise ValueError('Repository-relative path required')

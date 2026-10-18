@@ -100,6 +100,8 @@ def require_generation_open(root):
  # caps saved requests and no producer can bypass it to call the provider.
 
 def request_image(item,blog,root):
+ from blog_generated_image import blog_retired
+ if blog_retired(blog,root):raise RuntimeError('Blog retired by user; no stock admission')
  from blog_generated_image import identity,family_enabled,prepare_now,existing_asset
  from blog_image_gate import review
  if not family_enabled(item,root):raise RuntimeError('Image family cancelled or held')
@@ -190,6 +192,8 @@ def _worker_once(root):
    # is protected by workflow concurrency, and the provider mutex still applies.
    remote_control=read(root,'data/blog-generated-image-control.json',{})
    if remote_control.get('pause_image_production')is True:return {'status':'paused','provider_requests':0}
+   if blog in remote_control.get('retired_blogs',[]):
+    row.update(status='cancelled',last_error='blog_retired_by_user');persist(root,row);continue
    source=read(root,'data/'+blog+'/backlink-queue.json',{'items':[]})
    matches=[x for x in source['items']if x.get('key')==row['key']]
    if len(matches)!=1 or matches[0].get('published')or matches[0].get('status')=='published'or not family_enabled(item,root):

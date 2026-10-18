@@ -10,8 +10,7 @@ REPO=os.getenv('GITHUB_REPOSITORY','getsalet/nono');API='https://api.github.com/
 BLOGS={
  'roya':{'url':'https://afp.royablog.ir/','workflows':['roya-backlink-queue.yml','roya-backlink-publish.yml'],'optin':None},
  'farsiblog':{'url':'https://afp.farsiblog.com/','workflows':['farsiblog-content.yml'],'optin':'FARSIBLOG_AUTOMATION_ENABLED'},
- 'rozblog':{'url':'https://afp-pipe.rozblog.com/','workflows':['rozblog-content.yml'],'optin':'ROZBLOG_AUTOMATION_ENABLED'},
- 'blogfa':{'url':'https://afp-pipe.blogfa.com/','workflows':['blogfa-content.yml'],'optin':'BLOGFA_AUTOMATION_ENABLED'}}
+ 'rozblog':{'url':'https://afp-pipe.rozblog.com/','workflows':['rozblog-content.yml'],'optin':'ROZBLOG_AUTOMATION_ENABLED'}}
 ACTIVE={'in_progress','queued','waiting','pending','requested'}
 def stamp():return dt.datetime.now(dt.timezone.utc)
 def iso(d):return d.isoformat()
@@ -107,6 +106,7 @@ def latest_article(url,host):
  return {'url':secure,'http_status':status,'body_extracted':parser.done,'body_words':len(text(fragment).split()),
   'images':len(re.findall(r'<img\b',fragment,re.I)),'faqs':len(re.findall(r'<details\b',fragment,re.I))}
 def recovery_plan(blog,row,now,last_recovery,enabled):
+ if blog not in BLOGS:return None,'blog retired or unsupported; no recovery'
  if not enabled:return None,'scheduled opt-in is off'
  if row.get('unverified') or row.get('public',{}).get('unverified') or row.get('latest_article',{}).get('unverified'):return None,'observations incomplete; do not guess'
  runs=row.get('workflows',[])

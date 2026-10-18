@@ -11,6 +11,14 @@ from blog_reference_scene import POLICY
 BLOGS={'roya','farsiblog','rozblog','blogfa','loxblog'}
 RAW='https://raw.githubusercontent.com/getsalet/nono/'
 
+def blog_retired(blog,root=None):
+ """Historical Blogfa records stay readable, but no active operation is allowed."""
+ path=Path(root or roya.ROOT)/'data/blog-generated-image-control.json'
+ if not path.exists():return False
+ value=json.loads(path.read_text());retired=value.get('retired_blogs',[])
+ if not isinstance(retired,list):raise RuntimeError('Invalid blog retirement control')
+ return blog in retired
+
 def family_cancelled(item,root=None):
  """Explicit user cancellation applies before assets, prompts or provider calls."""
  path=Path(root or roya.ROOT)/'data/blog-generated-image-control.json'
@@ -46,6 +54,7 @@ def rollout_enabled(blog,root=None):
  if not path.exists():return False
  try:control=json.loads(path.read_text())
  except (OSError,ValueError):raise RuntimeError('Image rollout control unreadable; refusing unchecked images')from None
+ if blog in control.get('retired_blogs',[]):return False
  if control.get('pause_image_production')is True:
   raise RuntimeError('Image production explicitly paused: no fallback or submission')
  if control.get('enabled')is not True:return False
@@ -166,6 +175,7 @@ def conditioning_image(expected):
  return ['data:image/webp;base64,'+base64.b64encode(out.getvalue()).decode('ascii')]
 
 def generate(item,blog,slots=None,max_attempts=3):
+ if blog_retired(blog):raise RuntimeError('Blog retired by user; no provider request')
  if family_cancelled(item):raise RuntimeError('Image family explicitly cancelled by user')
  from blog_image_queue import provider_slot
  from blog_image_backpressure import require_open,ImageProviderBusy,defer,mark_success
@@ -198,6 +208,7 @@ def generate(item,blog,slots=None,max_attempts=3):
    return raw
 
 def _generate(item,blog,slots=None,max_attempts=3):
+ if blog_retired(blog):raise RuntimeError('Blog retired by user; no provider request')
  if family_cancelled(item):raise RuntimeError('Image family explicitly cancelled by user')
  from blog_image_gate import family
  expected=family(item)
@@ -311,12 +322,14 @@ def reconsider_candidate(item,blog,root):
  return path
 
 def prepare(item,blog,root=None):
+ if blog_retired(blog,root):raise RuntimeError('Blog retired by user; no image preparation')
  from blog_image_stock import enabled,request_image
  root=Path(root or roya.ROOT)
  if enabled(root):return request_image(item,blog,root)
  return prepare_now(item,blog,root)
 
 def prepare_now(item,blog,root=None,max_rounds=3,allow_generate=True):
+ if blog_retired(blog,root):raise RuntimeError('Blog retired by user; no image preparation')
  from blog_image_gate import review
  root=Path(root or roya.ROOT)
  if not family_enabled(item,root):raise RuntimeError('Image family is held pending direct visual acceptance; no generation or fallback')

@@ -22,8 +22,8 @@ class BlogfaContracts(unittest.TestCase):
   for s in ('<BlogComment>','line-clamp'):self.assertNotIn(s,t)
   # Image sizing is allowed; article text itself must never be clipped.
   self.assertNotRegex(t,r'(?:\.post-content|\.post-card)\s*\{[^}]*max-height:')
- def test_schedule_requires_opt_in(self):
-  w=(ROOT/'.github/workflows/blogfa-content.yml').read_text();self.assertIn("vars.BLOGFA_AUTOMATION_ENABLED == '1'",w);self.assertIn('cancel-in-progress: false',w);self.assertIn('always()',w)
+ def test_retirement_removes_schedule_and_blocks_jobs(self):
+  w=(ROOT/'.github/workflows/blogfa-content.yml').read_text();self.assertNotIn('schedule:',w);self.assertNotIn('  push:',w);self.assertEqual(w.count('if: ${{ false }}'),2);self.assertIn('always()',w)
  def test_readonly_diagnosis_uses_bounded_inputs_not_cross_blog_images(self):
   w=(ROOT/'.github/workflows/blogfa-content.yml').read_text()
   d=w.split('- name: Checkout read-only Blogfa diagnostic inputs',1)[1].split('- uses: actions/checkout@v4',1)[0]
