@@ -1,0 +1,35 @@
+name: One-hour read-only source backlink watch (three blogs)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [automation/start-source-backlink-three-blog-watch.txt]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: source-backlink-three-blog-one-hour-watch
+  cancel-in-progress: false
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Test read-only monitor before starting
+        run: python -m unittest discover -s tests -p 'test_source_backlink_three_blog_watch.py' -v
+      - name: Observe FarsiBlog, RozBlog and LoxBlog for 3600 seconds
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python automation/monitor_source_backlink_three_blogs.py
+      - name: Preserve observations and final report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-backlink-three-blog-one-hour-${{ github.run_id }}
+          path: artifacts/source-backlink-three-blog-watch
+          retention-days: 14
+          if-no-files-found: warn
