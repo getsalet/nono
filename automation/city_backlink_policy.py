@@ -189,8 +189,12 @@ def qa(item,obj,links,blog,root=None,require_image=True):
  if re.search(r'```|\*\*',obj.get('html','')):e.append('No Markdown')
  from blog_image_gate import validate_record,generated_record_errors
  if require_image:
-  e+=validate_record(item)
-  e+=generated_record_errors(item,blog,root)
+  if item.get('image_source'):
+   from blog_source_image import source_record_errors
+   e+=source_record_errors(item,blog,root or ROOT)
+  else:
+   e+=validate_record(item)
+   e+=generated_record_errors(item,blog,root)
  e+=roya.product_semantics_errors(item,obj.get('html',''))
  e+=check_corpus(root or ROOT,blog,item['key'],obj.get('html',''))
  return e,{'words':n,'links':p.links,'checked_against':'Roya + FarsiBlog + RozBlog + Blogfa + LoxBlog corpus','title_matrix':item.get('matrix_title')or obj.get('title')}

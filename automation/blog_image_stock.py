@@ -93,6 +93,8 @@ def awaiting(item,root):
  if not asset:return False
  row=read(root,request_path(asset))
  if not row:return False
+ from blog_source_image import source_preferred
+ if source_preferred(item,row.get('blog'),root):return False
  return row.get('status')in('requested','processing')
 
 def require_generation_open(root):
@@ -105,6 +107,8 @@ def require_generation_open(root):
 def request_image(item,blog,root):
  from blog_generated_image import blog_retired
  if blog_retired(blog,root):raise RuntimeError('Blog retired by user; no stock admission')
+ from blog_source_image import source_preferred
+ if source_preferred(item,blog,root):raise RuntimeError('Source-preferred article cannot enqueue generated-image work')
  from blog_generated_image import identity,family_enabled,prepare_now,existing_asset
  from blog_image_gate import review
  if not family_enabled(item,root):raise RuntimeError('Image family cancelled or held')
@@ -192,10 +196,11 @@ def _worker_once(root):
  waiting_result=None;retry_times=[]
  for row in pending:
   from blog_editorial_image_policy import required
-  if not required(row.get('item',{}),row.get('blog'),root):
+  from blog_source_image import source_preferred
+  if source_preferred(row.get('item',{}),row.get('blog'),root)or not required(row.get('item',{}),row.get('blog'),root):
    with admission(root,row['blog'],row['asset_id']):
     latest=read(root,request_path(row['asset_id']))
-    if latest and latest['status']in('requested','processing','needs_text_repair')and not required(latest.get('item',{}),latest.get('blog'),root):
+    if latest and latest['status']in('requested','processing','needs_text_repair')and(source_preferred(latest.get('item',{}),latest.get('blog'),root)or not required(latest.get('item',{}),latest.get('blog'),root)):
      latest.update(status='cancelled',last_error='editorial_image_not_required',cancelled_at=time.time());persist(root,latest)
    continue  # No optional image API work; ready/consumed assets untouched.
   blog=row['blog'];item=copy.deepcopy(row['item']);asset=row['asset_id']

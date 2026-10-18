@@ -192,8 +192,8 @@ def verify(page,item,pid,public_url):
  if content.locator('details').count()!=3:raise RuntimeError('FAQ did not persist')
  images=article.locator('img[src]').evaluate_all('a=>a.map(x=>x.src)')
  if item.get('image_url')and item['image_url']not in images:raise RuntimeError('Approved city image did not persist')
- if not item.get('image_url'):
-  from blog_public_content_verify import verify_text_body
+ if item.get('image_source')or not item.get('image_url'):
+  from blog_public_content_verify import verify_article_body as verify_text_body
   verify_text_body(item,content.inner_html(),links_for(item))
  return page.url
 
@@ -232,7 +232,9 @@ def main():
   try:
    from blog_image_gate import review
    from blog_editorial_image_policy import validate_image
-   if validate_image(item,item.get('post',{}),'rozblog',engine.ROOT):engine.retry_transient(lambda:review(item,item['image_url']))
+   if validate_image(item,item.get('post',{}),'rozblog',engine.ROOT):
+    from blog_source_image import review_for_publication
+    engine.retry_transient(lambda:review_for_publication(item,'rozblog',engine.ROOT))
    errors,_=qa(item,item['post'],links_for(item),'rozblog')
    if errors:raise RuntimeError('Publication QA rejected')
   except Exception as exc:

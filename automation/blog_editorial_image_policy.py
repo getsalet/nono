@@ -16,6 +16,7 @@ def load(root=ROOT):
  return validate(json.loads(p.read_text()))
 def validate(value):
  if not isinstance(value,dict)or value.get('policy')!='afp-editorial-image-need-v1'or value.get('mode')!='text_first' or value.get('blogs')!=['roya','farsiblog','rozblog','loxblog'] or value.get('families')!=['tape20']:raise RuntimeError('Invalid editorial image policy; no optional-image fallback')
+ if 'source_image_preferred'in value and type(value['source_image_preferred'])is not bool:raise RuntimeError('Invalid source-image preference')
  return value
 _UNSET=object()
 def optional(item,blog,root=ROOT,config=_UNSET):
@@ -35,13 +36,18 @@ def has_image(item,post):
  return bool(item.get('image_url')or item.get('image_generation')or item.get('image_review')or (post or {}).get('image_url')or re.search(r'<img\b',(post or {}).get('html',''),re.I))
 def validate_image(item,post,blog,root=ROOT):
  return required(item,blog,root,post)or has_image(item,post)
+def generation_needed(item,blog,root=ROOT):
+ from blog_source_image import source_preferred
+ return required(item,blog,root)and not source_preferred(item,blog,root)
 def saved_optional(record,item,blog,root=ROOT):
  """Only an intact saved image-stage draft; full text/originality QA follows."""
  if record.get('status')!='failed'or record.get('failure_stage')!='image'or item.get('published'):return False
  post=record.get('post')
  return bool(isinstance(post,dict)and all(isinstance(post.get(k),str)and post[k].strip()for k in ('title','slug','html'))and not required(item,blog,root,post))
 def prepare_article(item,post,blog,root,prepare):
- """Use genuine cached image if present; never buy an optional new image."""
+ """Reuse the linked source first when authorized; no generation fallback."""
+ from blog_source_image import source_preferred,prepare_source
+ if source_preferred(item,blog,root):return prepare_source(item,post,blog,root)
  if required(item,blog,root,post):
   item['editorial_image_decision']='required';item['editorial_image_required']=True;return prepare()
  from blog_generated_image import identity

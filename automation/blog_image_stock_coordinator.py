@@ -110,7 +110,7 @@ def snapshot(root):
  rows=[read(p)for p in paths]
  from blog_editorial_image_policy import required
  config=read('data/blog-editorial-image-policy.json')
- rows=[r for r in rows if required(r.get('item',{}),r.get('blog'),root,config=config)]
+ rows=[r for r in rows if not(config.get('source_image_preferred')is True and r.get('blog')in config['blogs']and r.get('item',{}).get('family')in config['families'])and required(r.get('item',{}),r.get('blog'),root,config=config)]
  return {'cfg':read(CONFIG),'control':read('data/blog-generated-image-control.json'),'key_config':read('data/blog-image-key-pool.json'),'provider':read('data/blog-image-provider-backpressure.json'),'pool':read('data/blog-image-key-pool-state.json'),'stock':rows,'audit':read('data/agnes-usable-key-audit/latest.json'),'ref':ref}
 
 def run(root=ROOT,clock=time.time,sleep=time.sleep,client=None,loader=snapshot):

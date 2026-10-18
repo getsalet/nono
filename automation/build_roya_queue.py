@@ -129,7 +129,7 @@ RUNTIME_FIELDS = (
     '_image_stock_request', '_image_article_context', '_image_qa_feedback',
     '_image_rejections', 'image_generation', 'image_review', 'image_width',
     'image_height', 'image_alt', 'image_policy_retry', 'text_policy_retry',
-    'editorial_image_required', 'editorial_image_decision',
+    'editorial_image_required', 'editorial_image_decision', 'image_source', 'source_image_review',
 )
 
 def retained_runtime(prev, key):

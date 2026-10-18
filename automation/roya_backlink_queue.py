@@ -292,7 +292,8 @@ def inject_image(item, obj, image_url):
         return obj
     alt = (item.get('site_title') or obj.get('title') or item.get('city_fa') or 'نوار آبیاری AFP')
     alt = re.sub(r'\s+', ' ', alt.split('|')[0]).strip()[:90]
-    obj['html'] = f'<p><img src="{image_url}" alt="{alt}" width="1200" height="675"></p>' + html
+    width=item.get('image_width',1200);height=item.get('image_height',675)
+    obj['html'] = f'<p><img src="{html_lib.escape(image_url,quote=True)}" alt="{html_lib.escape(alt,quote=True)}" width="{width}" height="{height}"></p>' + html
     obj['image_url'] = image_url
     return obj
 
@@ -454,7 +455,10 @@ def qa(item, obj, links, root=None, require_image=True):
         errors.append('meta_description is required')
     if require_image and item.get('family') in ('tape20', 'hose'):
         from blog_image_gate import generated_record_errors
-        errors.extend(generated_record_errors(item, 'roya', root))
+        if item.get('image_source'):
+            from blog_source_image import source_record_errors
+            errors.extend(source_record_errors(item,'roya',root or ROOT))
+        else:errors.extend(generated_record_errors(item, 'roya', root))
     errors.extend(product_semantics_errors(item, html))
     errors.extend(check_corpus(root or ROOT, 'roya', item['key'], html))
     return errors, {'words': n, 'links': found, 'title': title, 'slug': slug,
@@ -623,9 +627,9 @@ def main():
         from blog_image_backpressure import require_open,ImageProviderBusy
         from blog_image_queue import ImageQueueBusy
         from blog_image_stock import require_generation_open,ImagePending
-        from blog_editorial_image_policy import required,prepare_article
+        from blog_editorial_image_policy import required,prepare_article,generation_needed
         try:
-            if required(item,'roya',ROOT):require_generation_open(ROOT)
+            if generation_needed(item,'roya',ROOT):require_generation_open(ROOT)
         except ImageProviderBusy as busy:
             blocked_until=busy.retry_at
             print('Shared image-provider cooldown active; no new text/image calls.');break

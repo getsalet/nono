@@ -174,7 +174,7 @@ def main():
     if not(BASE.AGNES_KEY or BASE.AGNES_KEYS):raise RuntimeError('Agnes API key required; no fake content fallback')
     if any(x.get('status')=='completed'and not x.get('published')and x.get('kind')in('city','article')for x in q['items']):refresh_ready(q);print('Approved content already waiting; backlog capped.');return 0
     recover_stale_image_deferrals(q)
-    from blog_editorial_image_policy import required,saved_optional,prepare_article
+    from blog_editorial_image_policy import required,saved_optional,prepare_article,generation_needed
     candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article') and (ready_handoff or retry_due(x)or saved_optional(load(item_path(x['key']),{}),x,CITY_BLOG,ROOT))]
     from blog_generated_image import family_enabled
     from blog_image_stock import awaiting
@@ -199,7 +199,7 @@ def main():
         from blog_image_queue import ImageQueueBusy
         from blog_image_stock import require_generation_open,ImagePending
         try:
-            if required(item,CITY_BLOG,ROOT):require_generation_open(ROOT)
+            if generation_needed(item,CITY_BLOG,ROOT):require_generation_open(ROOT)
         except ImageProviderBusy as busy:
             blocked_until=busy.retry_at
             print('Shared image-provider cooldown active; no new source/text/image calls.');break

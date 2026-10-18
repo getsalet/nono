@@ -128,9 +128,9 @@ def verify_live(page,item,pid):
         links=page.eval_on_selector_all('a[href]','a=>a.map(e=>e.href)')
         if unquote(target) not in [unquote(v) for v in links]:raise RuntimeError('City backlink did not verify')
     from blog_editorial_image_policy import optional,has_image
-    if BLOG=='https://afp.royablog.ir'and optional(item,'roya',ROOT)and not has_image(item,post):
+    if BLOG=='https://afp.royablog.ir'and optional(item,'roya',ROOT)and(item.get('image_source')or not has_image(item,post)):
         import roya_backlink_queue as generator
-        from blog_public_content_verify import verify_text_body
+        from blog_public_content_verify import verify_article_body as verify_text_body
         article=page.locator('article.post-card').filter(has=page.get_by_text(post['title'],exact=True))
         if article.count()!=1:raise RuntimeError('Published article body not unique; stop and reconcile')
         body=article.locator('.post-content')
@@ -199,6 +199,12 @@ def generated_image_preflight(item):
         errors+=subject_errors(item,post,ROOT)
         if errors:return errors
         if not validate_image(item,post,'roya',ROOT):return []
+    if item.get('image_source'):
+        try:
+            from blog_source_image import review_for_publication
+            review_for_publication(item,'roya',ROOT)
+        except Exception:return ['Exact source-image publication recheck failed; defer without submission']
+        return []
     from blog_generated_image import rollout_enabled
     if not rollout_enabled('roya'):return []
     from blog_image_gate import generated_record_errors,validate_record,review
