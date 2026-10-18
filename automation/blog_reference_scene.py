@@ -66,8 +66,8 @@ def physical_retry_prompt(a,plan):
  triggers=('Move the carton to the lower-left dry-soil island','Separate the commercial carton from all installed plumbing','single AFP carton stands separately on soil','Remove every protruding white ribbon')
  if not any(t in feedback for t in triggers):return None
  crop=plan['botany']if _crop_key(a)else'neutral small seedlings'
- return ("One continuous photorealistic agricultural photograph, near-overhead close view looking straight down at soil and the crop bed, no horizon or long vanishing-point furrows. "
-  +f"Setting: {plan['setting']}. LEFT foreground: exactly one low wide cylindrical AFP commercial package, closed white printed sleeve, blue lower band and central top hole; preserve the supplied product reference, about 20 percent of frame width. "
+ return ("One continuous photorealistic agricultural photograph, elevated three-quarter side view showing the full carton sidewall and a small top ellipse beside the crop bed, no horizon or long vanishing-point furrows. "
+  +f"Setting: {plan['setting']}. LEFT foreground: exactly one upright cylindrical AFP commercial package, closed white printed sleeve, blue lower band and central top hole; preserve the supplied reference sidewall-height-to-diameter proportions without vertical compression or exaggerated width, about 20 percent of frame width. "
   +"Its base rests directly on an empty dry-soil patch and its entire silhouette is clean and self-contained. CENTER: a broad uninterrupted visible strip of bare soil, at least one carton diameter wide. "
   +f"RIGHT half: {plan['evidence']}. The installed equipment remains entirely inside that crop bed, separate from the package patch. Crop identity: {crop}. "
   +"The complete package and required installed evidence are both sharply visible with clear frame margins, common perspective, natural daylight and contact shadows. The package is a standalone commercial package on soil, not operating hardware. "
@@ -79,7 +79,7 @@ def physical_retry_prompt(a,plan):
 def prompt(item,blog):
  # Differential live tests showed that the concise nested-reference request can
  # express technical equipment without the generic farmer/panorama response.
- # Retain exact upstream reference conditioning, not its 6k repeated directives.
+ # Retain single-reference conditioning, preserving source proportions, not its 6k repeated directives.
  from blog_image_gate import family
  a=article(item);plan=scene_plan(item,blog)
  if family(item)=='hose':
@@ -96,7 +96,7 @@ def prompt(item,blog):
   return text+(' Correct: '+feedback[:160]if feedback else'')
  retry=physical_retry_prompt(a,plan)
  if retry:return retry
- product='exactly one low wide cylindrical AFP drip-tape carton, white printed sleeve and blue lower band, central top hole, diameter larger than height. It occupies about 20 percent of frame width'
+ product='exactly one upright cylindrical AFP drip-tape carton, white printed sleeve and blue lower band, central top hole. Match the supplied reference sidewall-height-to-diameter proportions; no vertical compression or exaggerated width. Show its full sidewall with a modest top ellipse. It occupies about 20 percent of frame width'
  crop=('Crop identity: '+plan['botany']+'. Show unmistakable attached crop leaves and growth habit in an adjacent bed, also in technical close views'
   if _crop_key(a) else 'A few neutral small seedlings beside the irrigation bed; no invented named crop')
  technical_priority=('The RIGHT half must clearly show dark moist soil directly alongside the installed tape and plant roots, bordered by lighter dry soil. Only the separate carton island is dry; do not make the entire irrigated root zone dry. 'if plan['intent']=='monitoring'else'')
@@ -111,11 +111,30 @@ def prompt(item,blog):
  # pull the model back into a stock product-on-pipe field composition.
  brief+=(' Final scene layout: LEFT foreground is one fully enclosed AFP package standing directly on an empty soil patch; its complete base is surrounded by bare soil. RIGHT foreground is the installed irrigation evidence: '+plan['evidence']+'. A broad empty soil corridor, at least one carton diameter wide, separates these two areas. The package is a sealed display object with a clean silhouette; the operating tape belongs only to the crop bed.')
  return brief
+def tape_reference_product():
+ """Uniformly scale the original identity photo; never squash its sidewall."""
+ import base64,io
+ from PIL import Image
+ raw=base64.b64decode((reference.ASSET_DIR/'afp-tape.webp.b64').read_text(encoding='ascii').strip(),validate=True)
+ product=Image.open(io.BytesIO(raw)).convert('RGB')
+ product.thumbnail((280,280),Image.Resampling.LANCZOS)
+ return product
+
+def tape_reference_images():
+ """One input-only guide, not an output composite or a new product identity."""
+ import base64,io
+ from PIL import Image
+ product=tape_reference_product()
+ canvas=Image.new('RGB',(1200,675),(238,238,235))
+ canvas.paste(product,(90,675-product.height-55))
+ out=io.BytesIO();canvas.save(out,'WEBP',quality=90,method=6)
+ return ['data:image/webp;base64,'+base64.b64encode(out.getvalue()).decode('ascii')]
+
 def references(item):
  from blog_image_gate import family
  if family(item)!='hose':
-  # Preserve the accepted tape reference bytes; topic contract versions the cache.
-  return reference.reference_images(role(item),article(item))
+  article(item) # Still require real article context before preparing any input.
+  return tape_reference_images()
  # Pinned nono identity inputs: full originals FIRST,
  # then the 92/68-width guide of its integrated layflat test. Input only, never output paste-up.
  import base64,io

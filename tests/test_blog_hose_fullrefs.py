@@ -19,9 +19,9 @@ class HoseFullReferenceTests(unittest.TestCase):
  def test_full_identity_bytes_match_original_nono_method(self):
   import image_prompt_policy as original
   self.assertEqual(scene.references(self.item())[:2],original.reference_images(3,scene.article(self.item()))[:2])
- def test_tape_reference_and_recipe_are_unchanged(self):
+ def test_tape_uses_proportional_guide_and_keeps_recipe(self):
   item=self.item('tape20')
-  self.assertEqual(scene.references(item),scene.reference.reference_images(scene.role(item),scene.article(item)))
+  self.assertEqual(scene.references(item),scene.tape_reference_images())
   self.assertEqual(scene.recipe_for(item),scene.RECIPE_VERSION)
   self.assertEqual(scene.recipe_for(self.item()),scene.RECIPE_VERSION+'-hose-native1k-v4-smallguide')
  def test_real_payload_uses_three_nested_references_and_watermark(self):

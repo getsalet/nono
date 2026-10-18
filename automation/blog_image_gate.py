@@ -40,7 +40,7 @@ def reference_identity_instruction(expected):
           'white-and-blue cylindrical drip-tape carton not matching these references is still a wrong product. '
           'One packaged hose or a recognizable packaged/bare pair may match the hose family; '
           'all objects must match those references and remain physically plausible.')
- return ('Authoritative tape identity: the labeled tape reference is the white-and-blue low wide cylindrical AFP drip-tape '
+ return ('Authoritative tape identity: the labeled tape reference is the white-and-blue upright cylindrical AFP drip-tape '
          'carton roll. Reject woven layflat hose, polygonal strapped hose packaging or unrelated products.')
 
 

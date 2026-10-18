@@ -139,7 +139,10 @@ def checkpoint_asset(path,raw,root):
    except FileNotFoundError:pass
 
 def conditioning_image(expected):
- # Proven maghala2 recipe: ONE combined canvas, not multiple competing inputs.
+ # One input guide; share tape geometry with the active production adapter.
+ if expected=='tape20':
+  from blog_reference_scene import tape_reference_images
+  return tape_reference_images()
  import image_prompt_policy
  canvas=Image.new('RGB',(1200,675),(238,238,235));x=72
  names=('afp-layflat.webp.b64','afp-layflat-bare.jpg.b64')if expected=='hose'else('afp-tape.webp.b64',)
@@ -147,7 +150,7 @@ def conditioning_image(expected):
   raw=base64.b64decode((image_prompt_policy.ASSET_DIR/name).read_text().strip())
   product=Image.open(io.BytesIO(raw)).convert('RGB')
   if expected=='hose':product.thumbnail((112,84),Image.Resampling.LANCZOS)
-  else:product=product.resize((280,170),Image.Resampling.LANCZOS);x=90
+  else:product.thumbnail((280,280),Image.Resampling.LANCZOS);x=90
   canvas.paste(product,(x,675-product.height-55));x+=product.width+24
  out=io.BytesIO();canvas.save(out,'WEBP',quality=90,method=6)
  return ['data:image/webp;base64,'+base64.b64encode(out.getvalue()).decode('ascii')]
