@@ -1,0 +1,61 @@
+name: Bounded AFP image stock coordinator (no image or publication API)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '13,43 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - automation/blog_image_stock_coordinator.py
+      - tests/test_blog_image_stock_coordinator.py
+      - data/blog-image-coordinator-control.json
+      - .github/workflows/blog-image-stock-coordinator.yml
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: afp-bounded-image-stock-coordinator
+  cancel-in-progress: false
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+  coordinate:
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /automation/blog_image_stock_coordinator.py
+            /data/blog-image-coordinator-control.json
+            /data/blog-generated-image-control.json
+            /data/blog-image-key-pool.json
+            /data/blog-image-key-pool-state.json
+            /data/blog-image-provider-backpressure.json
+            /data/blog-image-stock/requests/
+            /data/agnes-usable-key-audit/latest.json
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Coordinate bounded due work; existing worker owns every provider and QA gate
+        run: python automation/blog_image_stock_coordinator.py
+      - name: Preserve coordinator admission and dispatch evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: afp-image-coordinator-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/blog-image-coordinator
+          retention-days: 14
+          if-no-files-found: ignore
