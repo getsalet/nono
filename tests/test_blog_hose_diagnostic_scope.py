@@ -25,6 +25,9 @@ class HoseDiagnosticScopeTests(unittest.TestCase):
   for forbidden in ('AGNES_API_KEY6:','AGNES_API_KEY8:','publish','prepare_now'):
    if forbidden in ('publish',):continue
    self.assertNotIn(forbidden,s)
+  self.assertIn('needs: tests',s)
+  tests_job=s.split('  tests:',1)[1].split('  hose-reference-check:',1)[0]
+  self.assertNotIn('secrets.',tests_job);self.assertNotIn('env:',tests_job)
   src=(ROOT/'automation/verify_hose_full_references.py').read_text()
   self.assertIn("generated.generate(item,'loxblog',max_attempts=1)",src)
 if __name__=='__main__':unittest.main()

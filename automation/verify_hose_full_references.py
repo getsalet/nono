@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""One authorized, audited and shared-queue-aware hose canary; zero publication."""
+"""One authorized, audited and shared-queue-aware hose canary; zero publication.
+Offline regressions run in a separate job without provider credentials.
+"""
 import copy,hashlib,json,os,re,subprocess,time
 from pathlib import Path
 import blog_reference_scene as scene

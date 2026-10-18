@@ -11,7 +11,18 @@ concurrency:
   group: blog-hose-fullrefs-check
   cancel-in-progress: false
 jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - name: Offline regressions without provider credentials or routing environment
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
   hose-reference-check:
+    needs: tests
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
@@ -46,7 +57,5 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: python -m pip install --quiet Pillow
-      - name: Offline regression tests before any image request
-        run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Generate exactly one diagnostic candidate, without publishing
         run: python automation/verify_hose_full_references.py
