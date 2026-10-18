@@ -74,6 +74,18 @@ class PracticalScore90Tests(unittest.TestCase):
   self.assertTrue(gate.verdict_errors({**self.v,'pass':True,'observed_family':'drip tape'},'tape20','strict'))
   for flag in ('wrong_product_present','fake_text_or_logo','implausible_geometry','people_present'):
    self.assertTrue(gate.verdict_errors({**self.v,'observed_family':'drip tape',flag:True},'tape20',gate.PRACTICAL_MODE))
+ def test_practical_review_does_not_reimport_strict_generation_layout(self):
+  plan={'article_title':'عنوان','evidence':'thin flattened installed tape and root-zone wetting','crop':'okra','botany':'lobed leaves','setting':'field','intent':'agronomy','visual_brief':'EXACT_CARTON_DIAMETER_LAYOUT','camera':'generation only'}
+  evidence=gate.practical_scene_evidence(plan)
+  self.assertEqual(evidence['evidence'],plan['evidence']);self.assertEqual(evidence['botany'],plan['botany'])
+  self.assertNotIn('visual_brief',evidence);self.assertNotIn('camera',evidence)
+  reply={'choices':[{'message':{'content':json.dumps({**self.v,'pass':True})}}]}
+  with patch.object(scene,'scene_plan',return_value=plan),patch.object(gate,'fetch',return_value=(self.raw,(1200,900),'WEBP')),patch.object(roya.BASE,'next_agnes_key',return_value='fixture'),patch.object(roya.BASE,'fetch_json',return_value=reply)as api:
+   gate.review(self.item,'generated://rozblog/'+'a'*32,self.root,_candidate=self.raw)
+  prompt=api.call_args.args[2]['messages'][0]['content'][0]['text']
+  self.assertNotIn('EXACT_CARTON_DIAMETER_LAYOUT',prompt)
+  self.assertIn('supporting infrastructure',prompt);self.assertIn('technical_evidence_match',prompt)
+  self.assertIn('altered branding remains a core defect',prompt)
  def install_saved_candidate(self):
   asset=generated.identity(self.item,'rozblog');self.cfg['reconsider_candidates'][asset]={'blog':'rozblog','key':self.item['key'],'sha256':self.digest};self.write_config()
   p=self.root/'artifacts/rozblog-backlink-queue/generated-images/rejected'/f'{asset}-{self.digest[:12]}.webp';p.parent.mkdir(parents=True);p.write_bytes(self.raw);self.save_record();return asset,p
