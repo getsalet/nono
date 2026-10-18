@@ -7,11 +7,15 @@ on:
       dry_run: {description: '1 = configuration tests only, no publishable samples', default: '0'}
       target: {description: 'Optional topic key', default: ''}
       diagnose_login: {description: '1 = read-only native login diagnostic; no generation or publication', default: '0'}
+  workflow_run:
+    workflows: ['Independent AFP article image stock (no publication)']
+    types: [completed]
+    branches: [main]
   schedule:
     - cron: '5,20,35,50 * * * *'
   push:
     branches: [main]
-    paths: [automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, tests/test_blog_retry_pipeline.py, automation/rozblog_backlink_queue.py, automation/publish_rozblog_posts.py, automation/content_originality.py, tests/test_city_blog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/rozblog-content.yml]
+    paths: [automation/check_blog_ready_image_handoff.py, tests/test_blog_ready_image_handoff.py, automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, tests/test_blog_retry_pipeline.py, automation/rozblog_backlink_queue.py, automation/publish_rozblog_posts.py, automation/content_originality.py, tests/test_city_blog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/rozblog-content.yml]
 permissions:
   contents: write
   actions: read
@@ -19,6 +23,20 @@ concurrency:
   group: rozblog-content-pipeline
   cancel-in-progress: false
 jobs:
+  image_handoff:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    outputs:
+      proceed: ${{ steps.ready.outputs.proceed }}
+      cached_only: ${{ steps.ready.outputs.cached_only }}
+      target: ${{ steps.ready.outputs.target }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - id: ready
+        run: python automation/check_blog_ready_image_handoff.py rozblog
   tests:
     runs-on: ubuntu-latest
     steps:
@@ -28,9 +46,9 @@ jobs:
       - run: python -m pip install --quiet Pillow
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
   pipeline:
-    needs: tests
+    needs: [tests, image_handoff]
     # Hosted native publication verified end-to-end; repository opt-in still gates scheduled runs.
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && vars.ROZBLOG_AUTOMATION_ENABLED == '1')
+    if: needs.image_handoff.outputs.proceed == '1' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && vars.ROZBLOG_AUTOMATION_ENABLED == '1') || (needs.image_handoff.outputs.cached_only == '1' && vars.ROZBLOG_AUTOMATION_ENABLED == '1'))
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
@@ -74,11 +92,12 @@ jobs:
       AGNES_MODEL: agnes-2.5-flash
       ROZBLOG_USERNAME: ${{ secrets.ROZBLOG_USERNAME }}
       ROZBLOG_PASSWORD: ${{ secrets.ROZBLOG_PASSWORD }}
-      ROZBLOG_COUNT: ${{ github.event.inputs.count || '3' }}
+      BLOG_READY_IMAGE_HANDOFF: ${{ needs.image_handoff.outputs.cached_only }}
+      ROZBLOG_COUNT: ${{ needs.image_handoff.outputs.cached_only == '1' && '1' || github.event.inputs.count || '3' }}
       ROZBLOG_PUBLISH: ${{ github.event.inputs.publish || '1' }}
       ROZBLOG_PUBLISH_LIMIT: '3'
       ROZBLOG_DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
-      ROZBLOG_TARGET: ${{ github.event.inputs.target || '' }}
+      ROZBLOG_TARGET: ${{ needs.image_handoff.outputs.target || github.event.inputs.target || '' }}
       ROZBLOG_LOGIN_DIAGNOSTIC: ${{ github.event.inputs.diagnose_login || '0' }}
     steps:
       - uses: actions/checkout@v4

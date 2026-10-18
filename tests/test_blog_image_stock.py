@@ -241,7 +241,7 @@ class StockPipelineTests(unittest.TestCase):
    post={'title':'نوار تیپ پیاز','slug':'onion-topic','html':'<p>این متن واقعی درباره نصب نوار تیپ در ردیف های پیاز و بررسی توزیع رطوبت در خاک است</p>'}
    def prepare(item):return stock.request_image(item,'farsiblog',root)
    def qa(item,obj,links):return ([]if '<img' in obj['html']else['image required']),{}
-   with patch.multiple(f,ROOT=root,QUEUE=queue,ART=art,STATE=state),patch.object(f.BASE,'AGNES_KEY','offline-only-fixture'),patch.object(f,'remaining_publication_budget',return_value=3),patch.object(f,'links_for',return_value=[]),patch.object(f,'source_text',return_value='source'),patch.object(f,'prompt',return_value='offline prompt'),patch.object(f,'qa',side_effect=qa),patch('city_backlink_policy.build_queue'),patch('city_backlink_policy.matrix_ready',return_value=True),patch('city_backlink_policy.matrix_title',return_value=post['title']),patch('city_backlink_policy.resolve_editorial_link_tokens'),patch('city_backlink_policy.prepare_image',side_effect=prepare),patch.object(f,'agnes',return_value=copy.deepcopy(post))as text:
+   with patch.multiple(f,ROOT=root,QUEUE=queue,ART=art,STATE=state),patch.object(f.BASE,'AGNES_KEY','offline-only-fixture'),patch.object(f,'remaining_publication_budget',return_value=3),patch.object(f,'links_for',return_value=[]),patch.object(f,'source_text',return_value='source')as source_api,patch.object(f,'prompt',return_value='offline prompt'),patch.object(f,'qa',side_effect=qa),patch('city_backlink_policy.build_queue'),patch('city_backlink_policy.matrix_ready',return_value=True),patch('city_backlink_policy.matrix_title',return_value=post['title']),patch('city_backlink_policy.resolve_editorial_link_tokens'),patch('city_backlink_policy.prepare_image',side_effect=prepare),patch.object(f,'agnes',return_value=copy.deepcopy(post))as text:
     self.assertEqual(f.main(),0);self.assertEqual(text.call_count,1)
     self.assertEqual(json.loads((art/'publish-queue.json').read_text())['count'],0)
     self.assertEqual(json.loads((art/'generation-status.json').read_text())['status'],'waiting_image')
@@ -251,7 +251,9 @@ class StockPipelineTests(unittest.TestCase):
     def cache(item,*args,**kwargs):
      self.assertFalse(kwargs['allow_generate']);item.update(image_url='approved',image_alt='نوار تیپ',image_width=1200,image_height=675);return 'approved'
     with patch.object(generated,'existing_asset',return_value='approved'),patch('blog_image_gate.review'),patch.object(generated,'prepare_now',side_effect=cache):
-     self.assertEqual(f.main(),0)
+     source_calls=source_api.call_count
+     with patch.dict(os.environ,{'BLOG_READY_IMAGE_HANDOFF':'1','FARSIBLOG_TARGET':'integration'}):self.assertEqual(f.main(),0)
+     self.assertEqual(source_api.call_count,source_calls)
     self.assertEqual(text.call_count,1)
     self.assertEqual(json.loads((art/'publish-queue.json').read_text())['count'],1)
     self.assertEqual(stock.rows(root)[0]['status'],'consumed')

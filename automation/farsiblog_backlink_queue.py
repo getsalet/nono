@@ -166,18 +166,20 @@ def main():
     remaining=remaining_publication_budget()
     if count>0 and remaining==0:
         refresh_ready(q);print('Hourly publication budget exhausted; skip new AI generation.');return 0
-    count=min(count,remaining)
+    ready_handoff=os.getenv('BLOG_READY_IMAGE_HANDOFF')=='1'
+    count=min(count,remaining,1)if ready_handoff else min(count,remaining)
     if count==0:refresh_ready(q);print('Publish-only; no generation.');return 0
     if not(BASE.AGNES_KEY or BASE.AGNES_KEYS):raise RuntimeError('Agnes API key required; no fake content fallback')
     if any(x.get('status')=='completed'and not x.get('published')and x.get('kind')in('city','article')for x in q['items']):refresh_ready(q);print('Approved content already waiting; backlog capped.');return 0
     recover_stale_image_deferrals(q)
-    candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article') and retry_due(x)]
+    candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article') and (ready_handoff or retry_due(x))]
     from blog_generated_image import family_enabled
     from blog_image_stock import awaiting
     candidates=[x for x in candidates if not awaiting(x,ROOT)]
     candidates=[x for x in candidates if family_enabled(x,ROOT)]
     from blog_image_stock_preflight import eligible,waiting_keys
     candidates=eligible(candidates,CITY_BLOG,ROOT)
+    if ready_handoff and not target:raise RuntimeError('Explicit saved article target required for cached-only handoff')
     if target:candidates=[x for x in candidates if x['key']==target]
     else:
         city=[x for x in candidates if x.get('kind')=='city'];articles=[x for x in candidates if x.get('kind')=='article'];candidates=[]
@@ -201,6 +203,7 @@ def main():
             previous=load(item_path(item['key']),{})
             from blog_image_draft_recovery import recover
             image_retry_draft=recover(previous)
+            if ready_handoff and image_retry_draft is None:raise RuntimeError('Saved image-stage draft required for cached-only handoff; no source/text generation')
             if item.get('status')=='failed' and isinstance(previous.get('post'),dict):
                 old=previous['post'];errors,info=qa(item,old,links)
                 if not errors:
@@ -211,7 +214,7 @@ def main():
                 item['_image_blog']=CITY_BLOG
                 stage='source'
                 source=None if image_retry_draft is not None else retry_transient(lambda:source_text(item))
-                for attempt in range(3):
+                for attempt in range(1 if ready_handoff else 3):
                     stage='generation'
                     if attempt==0 and image_retry_draft is not None:
                         obj=image_retry_draft
