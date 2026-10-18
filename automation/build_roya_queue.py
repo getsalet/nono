@@ -195,7 +195,9 @@ def main():
         item.update(retained_runtime(prev, key))
         items.append(item)
         counter += 1
-    QUEUE.write_text(json.dumps({'generated_at': __import__('datetime').datetime.now(
+    from blog_city_priority import prioritize_queue
+    ranked=prioritize_queue({'items':items},ROOT);items=ranked['items']
+    QUEUE.write_text(json.dumps({'city_priority_policy':ranked.get('city_priority_policy'),'generated_at': __import__('datetime').datetime.now(
         __import__('datetime').timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
         'source': 'navar-abyari.ir sitemaps', 'count': len(items), 'items': items},
         ensure_ascii=False, indent=1), encoding='utf-8')

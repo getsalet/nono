@@ -69,11 +69,14 @@ def build_queue(blog,root=None):
  for x in q['items']:
   if x.get('kind')not in ('city','article')or x.get('published'):continue
   pool=title_candidates(x,blog,root)
-  title=next((t for t in pool if t not in used),None)
+  previous=x.get('assigned_title')
+  title=previous if previous in pool and previous not in used else next((t for t in pool if t not in used),None)
   if title:
    x['assigned_title']=title;used.add(title)
    if x.get('status')=='needs_title_review':x['status']='pending'
   else:x['status']='needs_title_review';x['last_error']='No unique meaningful matrix title; manual review required'
+ from blog_city_priority import prioritize_queue
+ prioritize_queue(q,root)
  q.update(blog=BLOGS[blog],mode='city',title_matrix='data/blog-city-title-matrix.json');write(path,q);return q
 
 def links_for(item):

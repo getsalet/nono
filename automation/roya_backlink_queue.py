@@ -552,6 +552,8 @@ def pick(queue, state, count):
     pending=[i for i in pending if not awaiting(i,ROOT)]
     from blog_image_stock_preflight import eligible
     pending=eligible(pending,'roya',ROOT)
+    from blog_city_priority import enabled as city_priority_enabled,ordered as city_priority_ordered
+    if city_priority_enabled(ROOT):return city_priority_ordered(pending,ROOT)[:count]
     buckets, order = {}, []
     for item in pending:
         if item['province'] not in buckets:
@@ -602,6 +604,8 @@ def main():
         state['in_progress'] = None
     ITEMS.mkdir(parents=True, exist_ok=True)
     assign_roya_titles(queue)
+    from blog_city_priority import prioritize_queue
+    prioritize_queue(queue,ROOT)
     save_json(QUEUE_PATH, queue)
     targets = pick(queue, state, COUNT)
     print(f'picked {len(targets)} target(s) of {len(queue["items"])} queued', flush=True)

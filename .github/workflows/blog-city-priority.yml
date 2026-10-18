@@ -1,0 +1,32 @@
+name: Prioritize future blog city titles (offline, no publication)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [automation/apply_blog_city_priority.py]
+permissions:
+  contents: write
+concurrency:
+  group: blog-city-priority-application
+  cancel-in-progress: false
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+  apply:
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Reorder only future-work slots; preserve concurrent edits with compare-and-swap
+        run: python automation/apply_blog_city_priority.py

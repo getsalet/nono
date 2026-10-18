@@ -184,10 +184,13 @@ def main():
     if ready_handoff and not target:raise RuntimeError('Explicit saved article target required for cached-only handoff')
     if target:candidates=[x for x in candidates if x['key']==target]
     else:
-        city=[x for x in candidates if x.get('kind')=='city'];articles=[x for x in candidates if x.get('kind')=='article'];candidates=[]
-        for i in range(max(len(city),len(articles))):
-            if i<len(city):candidates.append(city[i])
-            if i<len(articles):candidates.append(articles[i])
+        from blog_city_priority import enabled as city_priority_enabled,ordered as city_priority_ordered
+        if city_priority_enabled(ROOT):candidates=city_priority_ordered(candidates,ROOT)
+        else:
+            city=[x for x in candidates if x.get('kind')=='city'];articles=[x for x in candidates if x.get('kind')=='article'];candidates=[]
+            for i in range(max(len(city),len(articles))):
+                if i<len(city):candidates.append(city[i])
+                if i<len(articles):candidates.append(articles[i])
     completed=[];failed=[];waiting=[];blocked_until=None
     for item in candidates[:min(9,max(3,count*3))]:
         if len(completed)+len(waiting)>=count:break
