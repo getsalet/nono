@@ -46,4 +46,39 @@ class ReadyImageHandoffTests(unittest.TestCase):
   for value in ('workflow_run:',"workflows: ['Independent AFP article image stock (no publication)']",'needs: [tests, image_handoff]','head_repository.full_name == github.repository','BLOG_READY_IMAGE_HANDOFF:','needs.image_handoff.outputs.target','check_blog_run_budget.py rozblog','check_blog_pipeline_control.py rozblog','publish_rozblog_posts.py'):
    self.assertIn(value,text)
   self.assertIn('ROZBLOG_AUTOMATION_ENABLED',text);self.assertIn("with: {ref: main}",text)
+ def install_blog(self,blog,key='city-existing'):
+  import re
+  self.row['blog']=blog;self.row['key']=key;self.source['key']=key
+  self.write('data/'+blog+'/backlink-queue.json',{'items':[self.source]})
+  self.write('data/blog-image-stock/requests/'+self.asset+'.json',self.row)
+  filename=re.sub(r'[^A-Za-z0-9._-]+','_',key)if blog=='roya'else key
+  self.write('artifacts/'+blog+'-backlink-queue/items/'+filename+'.json',self.record)
+  p=self.root/'assets/blog-generated'/blog/(self.asset+'.webp');p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(self.raw)
+ def test_all_active_blogs_use_the_same_exact_owner_and_digest_gate(self):
+  for blog in ('farsiblog','loxblog','roya'):
+   key='south_khorasan/%d9%86-test'if blog=='roya'else self.key
+   with self.subTest(blog=blog):
+    self.install_blog(blog,key);self.assertEqual(h.select(blog,self.root),key)
+    self.row['review_sha256']='b'*64;self.install_blog(blog,key);self.assertIsNone(h.select(blog,self.root));self.row['review_sha256']=self.digest
+ def test_roya_sanitized_path_collision_is_rejected(self):
+  key='province/city';self.install_blog('roya',key)
+  self.write('data/roya/backlink-queue.json',{'items':[self.source,{**self.source,'key':'province_city'}]})
+  self.assertIsNone(h.select('roya',self.root))
+ def test_roya_control_characters_and_retired_blog_are_rejected(self):
+  self.install_blog('roya','province/city\nunsafe');self.assertIsNone(h.select('roya',self.root))
+  with self.assertRaises(ValueError):h.select('blogfa',self.root)
+ def test_workflows_preserve_trust_release_budget_and_native_gates(self):
+  for blog in ('farsiblog','loxblog'):
+   text=(ROOT/'.github/workflows'/f'{blog}-content.yml').read_text()
+   for value in ('workflow_run:', 'head_repository.full_name == github.repository', 'BLOG_READY_IMAGE_HANDOFF:', 'needs.image_handoff.outputs.target','check_blog_run_budget.py '+blog,'publish_'+blog+'_posts.py'):
+    self.assertIn(value,text)
+   if blog=='loxblog':self.assertIn('check_loxblog_release.py',text)
+   else:self.assertIn('vars.FARSIBLOG_AUTOMATION_ENABLED',text)
+  text=(ROOT/'.github/workflows/roya-backlink-queue.yml').read_text()
+  self.assertIn('head_repository.full_name == github.repository',text);self.assertIn('BLOG_READY_IMAGE_HANDOFF:',text)
+ def test_stock_schedule_can_support_six_images_per_hour_without_a_burst(self):
+  text=(ROOT/'.github/workflows/blog-image-stock.yml').read_text()
+  self.assertIn("cron: '*/5 * * * *'",text)
+  self.assertIn('group: blog-image-independent-stock',text);self.assertIn('cancel-in-progress: false',text)
+  self.assertIn('Process at most one article-owned image',text)
 if __name__=='__main__':unittest.main()

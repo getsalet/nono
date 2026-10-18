@@ -18,12 +18,18 @@ on:
   push:
     branches: [main]
     paths:
+      - automation/check_blog_ready_image_handoff.py
+      - tests/test_blog_ready_image_handoff.py
       - automation/build_roya_queue.py
       - automation/roya_backlink_queue.py
       - tests/test_roya_capacity_recovery.py
       - tests/test_roya_queue_runtime.py
       - tests/test_roya_domain_repair.py
       - .github/workflows/roya-backlink-queue.yml
+  workflow_run:
+    workflows: ['Independent AFP article image stock (no publication)']
+    types: [completed]
+    branches: [main]
   schedule:
     - cron: '*/30 * * * *'
 
@@ -36,7 +42,23 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  image_handoff:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    outputs:
+      proceed: ${{ steps.ready.outputs.proceed }}
+      cached_only: ${{ steps.ready.outputs.cached_only }}
+      target: ${{ steps.ready.outputs.target }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - id: ready
+        run: python automation/check_blog_ready_image_handoff.py roya
   queue:
+    needs: image_handoff
+    if: needs.image_handoff.outputs.proceed == '1'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
@@ -78,9 +100,10 @@ jobs:
       AGNES_API_KEYS: ${{ secrets.AGNES_API_KEYS }}
       AGNES_KEY_ROTATE_EVERY: '1'
       AGNES_MODEL: agnes-2.5-flash
-      ROYA_COUNT: ${{ github.event.inputs.count || '3' }}
+      BLOG_READY_IMAGE_HANDOFF: ${{ needs.image_handoff.outputs.cached_only }}
+      ROYA_COUNT: ${{ needs.image_handoff.outputs.cached_only == '1' && '1' || github.event.inputs.count || '3' }}
       ROYA_DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
-      ROYA_TARGET: ${{ github.event.inputs.target || '' }}
+      ROYA_TARGET: ${{ needs.image_handoff.outputs.target || github.event.inputs.target || '' }}
       ROYA_MIN_WORDS: '500'
       ROYA_MAX_WORDS: '1000'
       ROYA_MIN_LINKS: '2'

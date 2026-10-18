@@ -8,7 +8,7 @@ def evaluate(release,event,repository_switch=''):
  valid_ids=isinstance(ids,list)and all(type(x)is int and x>0 for x in ids)and len(set(ids))>=2
  approved=isinstance(release,dict)and release.get('enabled') is True and valid_ids and bool(re.fullmatch(r'https://github\.com/getsalet/nono/actions/runs/\d+',str(release.get('acceptance_run',''))))
  paused=repository_switch=='0'
- allowed=event=='workflow_dispatch'or(event=='schedule'and approved and not paused)
+ allowed=event=='workflow_dispatch'or(event in ('schedule','workflow_run')and approved and not paused)
  return {'event':event,'versioned_approval':bool(approved),'repository_pause_active':paused,'proceed':bool(allowed)}
 def main():
  try:release=json.loads((ROOT/'data/loxblog/deployment-control.json').read_text())

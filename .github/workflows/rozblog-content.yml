@@ -38,6 +38,8 @@ jobs:
       - id: ready
         run: python automation/check_blog_ready_image_handoff.py rozblog
   tests:
+    needs: image_handoff
+    if: needs.image_handoff.outputs.proceed == '1'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

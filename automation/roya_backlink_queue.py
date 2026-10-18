@@ -536,7 +536,7 @@ def pick(queue, state, count):
     pending=[]
     for item in queue['items']:
         if item.get('published') or item.get('status') not in ('pending','failed'):continue
-        eligible=item.get('status')=='pending' or RETRY_FAILED
+        eligible=item.get('status')=='pending' or RETRY_FAILED or (os.getenv('BLOG_READY_IMAGE_HANDOFF')=='1' and bool(ONLY) and item['key']==ONLY)
         if not eligible and capacity_retry_due(item):
             path=ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json')
             eligible=recover(load_json(path,{})) is not None
@@ -587,6 +587,8 @@ def main():
         return 0
     if not (BASE.AGNES_KEY or BASE.AGNES_KEYS):
         raise RuntimeError('Agnes API key required; refusing fake publishable sample fallback')
+    ready_handoff=os.getenv('BLOG_READY_IMAGE_HANDOFF')=='1'
+    if ready_handoff and not ONLY:raise RuntimeError('Explicit saved article target required for cached-only handoff')
     queue = load_json(QUEUE_PATH, {'items': []})
     if not queue.get('items'):
         print('queue is empty; run automation/build_roya_queue.py first', file=sys.stderr)
@@ -607,7 +609,7 @@ def main():
     from blog_city_priority import prioritize_queue
     prioritize_queue(queue,ROOT)
     save_json(QUEUE_PATH, queue)
-    targets = pick(queue, state, COUNT)
+    targets = pick(queue, state, 1 if ready_handoff else COUNT)
     print(f'picked {len(targets)} target(s) of {len(queue["items"])} queued', flush=True)
     completed = [];failed=[];waiting=[];blocked_until=None
     for item in targets:
@@ -620,6 +622,7 @@ def main():
             print('Shared image-provider cooldown active; no new text/image calls.');break
         from blog_image_draft_recovery import recover
         image_retry_draft=recover(load_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'),{}))
+        if ready_handoff and image_retry_draft is None:raise RuntimeError('Saved image-stage draft required; no source/text generation')
         if image_retry_draft is None:
             saved_record=load_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'),{})
             image_retry_draft=domain_repair_draft(saved_record,item)
@@ -633,7 +636,7 @@ def main():
         shared_image_deferred=False;stock_pending=False
         image_retry_at=None
         stage='generation'
-        for attempt in range(1, ATTEMPTS + 1):
+        for attempt in range(1, (1 if ready_handoff else ATTEMPTS) + 1):
             try:
                 if DRY_RUN or not (BASE.AGNES_KEY or BASE.AGNES_KEYS):
                     obj = offline_sample(item, links)

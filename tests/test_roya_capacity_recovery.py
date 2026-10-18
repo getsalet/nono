@@ -45,3 +45,17 @@ class RoyaCapacityRecoveryTests(unittest.TestCase):
   self.assertLess(s.index("item['next_retry_at']=datetime"),s.index('record = dict(item)'))
   self.assertIn('recover(load_json',s);self.assertIn('errors, info = qa(item, obj, links)',s)
   self.assertIn('image_url = prepare_roya_image(item)',s)
+
+class RoyaCachedHandoffTests(unittest.TestCase):
+ def test_ready_target_can_retry_without_waiting_for_old_capacity_timer(self):
+  row={'key':'province/city','province':'p','family':'tape20','status':'failed','next_retry_at':'2099-01-01T00:00:00Z','last_error':'Product image rejected: Image product family mismatch'}
+  with patch.dict('os.environ',{'BLOG_READY_IMAGE_HANDOFF':'1'}),patch.multiple(r,ROOT=Path('/nonexistent/fixture'),ONLY=row['key'],RETRY_FAILED=False),patch('blog_generated_image.family_enabled',return_value=True):
+   self.assertEqual(r.pick({'items':[row]},{},1),[row])
+ def test_cached_handoff_refuses_missing_target_before_queue_changes(self):
+  with patch.dict('os.environ',{'BLOG_READY_IMAGE_HANDOFF':'1'}),patch.multiple(r,DRY_RUN=False,ONLY=''),patch('blog_image_runtime_control.generation_paused',return_value=False),patch.object(r.BASE,'AGNES_KEY','fixture'),patch.object(r,'load_json',side_effect=AssertionError('No queue changes')):
+   with self.assertRaisesRegex(RuntimeError,'Explicit saved article target'):r.main()
+ def test_cached_handoff_has_single_attempt_and_requires_saved_draft(self):
+  import inspect
+  source=inspect.getsource(r.main)
+  self.assertIn('(1 if ready_handoff else ATTEMPTS)',source)
+  self.assertIn("if ready_handoff and image_retry_draft is None:raise RuntimeError",source)

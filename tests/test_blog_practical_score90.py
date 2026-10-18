@@ -60,6 +60,20 @@ class PracticalScore90Tests(unittest.TestCase):
    record=gate.review(self.item,'generated://rozblog/'+'a'*32,self.root,_candidate=self.raw)
   self.assertEqual(api.call_count,1);self.assertEqual(record['verdict']['score'],95)
   self.assertIn('ADVISORY',api.call_args.args[2]['messages'][0]['content'][0]['text'])
+ def test_explicit_tape_synonyms_preserve_original_review_and_score(self):
+  for label in ('AFP drip tape','drip tape','drip_tape_carton'):
+   with self.subTest(label=label):
+    v={**self.v,'observed_family':label};self.save_record(self.record()|{'verdict':v})
+    with patch.object(roya.BASE,'fetch_json',side_effect=AssertionError('No model re-score')):
+     result=gate.review(self.item,'generated://rozblog/'+'a'*32,self.root,_candidate=self.raw)
+    self.assertEqual(result['verdict'],v);self.assertEqual(gate.validate_record(self.item),[])
+ def test_aliases_never_accept_unknown_mixed_hose_or_core_defects(self):
+  for label in ('hose','mixed','unknown','AFP drip tape and hose','not drip tape','drip','tape20|hose',None,[]):
+   self.assertTrue(gate.verdict_errors({**self.v,'observed_family':label},'tape20',gate.PRACTICAL_MODE))
+  self.assertTrue(gate.verdict_errors({**self.v,'observed_family':'drip tape'},'hose',gate.PRACTICAL_MODE))
+  self.assertTrue(gate.verdict_errors({**self.v,'pass':True,'observed_family':'drip tape'},'tape20','strict'))
+  for flag in ('wrong_product_present','fake_text_or_logo','implausible_geometry','people_present'):
+   self.assertTrue(gate.verdict_errors({**self.v,'observed_family':'drip tape',flag:True},'tape20',gate.PRACTICAL_MODE))
  def install_saved_candidate(self):
   asset=generated.identity(self.item,'rozblog');self.cfg['reconsider_candidates'][asset]={'blog':'rozblog','key':self.item['key'],'sha256':self.digest};self.write_config()
   p=self.root/'artifacts/rozblog-backlink-queue/generated-images/rejected'/f'{asset}-{self.digest[:12]}.webp';p.parent.mkdir(parents=True);p.write_bytes(self.raw);self.save_record();return asset,p

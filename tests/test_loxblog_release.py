@@ -8,6 +8,10 @@ class InJobReleaseTests(unittest.TestCase):
  def test_repository_pause_still_blocks_scheduled_work(self):self.assertFalse(evaluate(self.release,'schedule','0')['proceed'])
  def test_versioned_disabled_or_invalid_evidence_blocks_schedules(self):
   for release in ({},{**self.release,'enabled':False},{**self.release,'verified_post_ids':[1]},{**self.release,'verified_post_ids':[True,2]},{**self.release,'acceptance_run':'https://wrong.example/1'}):self.assertFalse(evaluate(release,'schedule')['proceed'])
+ def test_stock_workflow_wakeup_requires_existing_release_and_respects_pause(self):
+  self.assertTrue(evaluate(self.release,'workflow_run')['proceed'])
+  self.assertFalse(evaluate(self.release,'workflow_run','0')['proceed'])
+  self.assertFalse(evaluate({},'workflow_run')['proceed'])
  def test_push_cannot_publish_and_manual_behavior_is_preserved(self):
   self.assertFalse(evaluate(self.release,'push')['proceed']);self.assertTrue(evaluate({},'workflow_dispatch','0')['proceed'])
  def test_every_costly_or_checkpoint_step_is_guarded(self):

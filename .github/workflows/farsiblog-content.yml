@@ -6,11 +6,15 @@ on:
       publish: {description: '1 = publish, 0 = generate/export only', default: '1'}
       dry_run: {description: '1 = configuration tests only, no publishable samples', default: '0'}
       target: {description: 'Optional topic key', default: ''}
+  workflow_run:
+    workflows: ['Independent AFP article image stock (no publication)']
+    types: [completed]
+    branches: [main]
   schedule:
     - cron: '*/15 * * * *'
   push:
     branches: [main]
-    paths: [automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, automation/publish_farsiblog_posts.py, automation/content_originality.py, tests/test_farsiblog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/farsiblog-content.yml]
+    paths: [automation/check_blog_ready_image_handoff.py, tests/test_blog_ready_image_handoff.py, automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, automation/publish_farsiblog_posts.py, automation/content_originality.py, tests/test_farsiblog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/farsiblog-content.yml]
 permissions:
   contents: write
   actions: read
@@ -18,7 +22,23 @@ concurrency:
   group: farsiblog-content-pipeline
   cancel-in-progress: false
 jobs:
+  image_handoff:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    outputs:
+      proceed: ${{ steps.ready.outputs.proceed }}
+      cached_only: ${{ steps.ready.outputs.cached_only }}
+      target: ${{ steps.ready.outputs.target }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - id: ready
+        run: python automation/check_blog_ready_image_handoff.py farsiblog
   tests:
+    needs: image_handoff
+    if: needs.image_handoff.outputs.proceed == '1'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,8 +47,8 @@ jobs:
       - run: python -m pip install --quiet Pillow
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
   pipeline:
-    needs: tests
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && vars.FARSIBLOG_AUTOMATION_ENABLED == '1')
+    needs: [tests, image_handoff]
+    if: needs.image_handoff.outputs.proceed == '1' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && vars.FARSIBLOG_AUTOMATION_ENABLED == '1') || (needs.image_handoff.outputs.cached_only == '1' && vars.FARSIBLOG_AUTOMATION_ENABLED == '1'))
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
@@ -72,11 +92,12 @@ jobs:
       AGNES_MODEL: agnes-2.5-flash
       FARSIBLOG_USERNAME: ${{ secrets.FARSIBLOG_USERNAME }}
       FARSIBLOG_PASSWORD: ${{ secrets.FARSIBLOG_PASSWORD }}
-      FARSIBLOG_COUNT: ${{ github.event.inputs.count || '3' }}
+      BLOG_READY_IMAGE_HANDOFF: ${{ needs.image_handoff.outputs.cached_only }}
+      FARSIBLOG_COUNT: ${{ needs.image_handoff.outputs.cached_only == '1' && '1' || github.event.inputs.count || '3' }}
       FARSIBLOG_PUBLISH: ${{ github.event.inputs.publish || '1' }}
       FARSIBLOG_PUBLISH_LIMIT: '3'
       FARSIBLOG_DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
-      FARSIBLOG_TARGET: ${{ github.event.inputs.target || '' }}
+      FARSIBLOG_TARGET: ${{ needs.image_handoff.outputs.target || github.event.inputs.target || '' }}
     steps:
       - uses: actions/checkout@v4
         with: {fetch-depth: 0, ref: main}

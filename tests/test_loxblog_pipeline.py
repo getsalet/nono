@@ -86,7 +86,7 @@ class LoxBlogIndependentPipelineTests(unittest.TestCase):
   self.assertGreaterEqual(len(set(d['verified_post_ids'])),2)
   self.assertTrue(d['acceptance_run'].startswith('https://github.com/getsalet/nono/actions/runs/'))
   s=(ROOT/'.github/workflows/loxblog-content.yml').read_text()
-  self.assertIn('needs: [tests, deployment-gate]',s)
+  self.assertIn('needs: [tests, deployment-gate, image_handoff]',s)
   self.assertIn("release.get('enabled') is True",s)
  def test_schedule_is_gated_and_checkpoint_is_independent(self):
   s=(ROOT/'.github/workflows/loxblog-content.yml').read_text()
