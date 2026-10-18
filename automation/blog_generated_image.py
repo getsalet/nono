@@ -18,7 +18,17 @@ def family_cancelled(item,root=None):
  try:
   cancelled=json.loads(path.read_text()).get('cancelled_families',[])
   if not isinstance(cancelled,list):return True
-  return item.get('family')in cancelled
+  expected=item.get('family')
+  # A separately authorized no-publication canary may resume a held family;
+  # ordinary production and legacy diagnostics still honor cancellation.
+  control=json.loads(path.read_text())
+  diagnostic=control.get('diagnostic_families',[])
+  if (expected=='hose' and os.getenv('BLOG_IMAGE_DIAGNOSTIC_FAMILY')=='hose'
+      and isinstance(diagnostic,list) and expected in diagnostic
+      and control.get('pause_image_production')is False
+      and expected not in control.get('enabled_families',[])):
+   return False
+  return expected in cancelled
  except (OSError,ValueError):return True
 
 def family_enabled(item,root=None):

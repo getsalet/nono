@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One cooldown-aware native-tier hose probe after isolated regression tests; no publication."""
+"""One authorized, audited and shared-queue-aware hose canary; zero publication."""
 import copy,hashlib,json,os,re,subprocess,time
 from pathlib import Path
 import blog_reference_scene as scene
@@ -18,6 +18,7 @@ def main():
   item=next(copy.deepcopy(x)for x in queue['items']if x.get('family')=='hose'and x.get('published')and x.get('kind')in('city','article'))
   post_path=ROOT/'artifacts/loxblog-backlink-queue/items'/(re.sub(r'[^A-Za-z0-9._-]+','_',item['key'])+'.json')
   item['_image_article_context']=scene.context_from_post(json.loads(post_path.read_text())['post'])
+  if os.getenv('BLOG_IMAGE_DIAGNOSTIC_FAMILY')!='hose':raise RuntimeError('Explicit hose diagnostic invocation required')
   refs=scene.references(item)
   report.update(article_key=item['key'],article_context=item['_image_article_context'],scene_plan=scene.scene_plan(item,'loxblog'),family_recipe=scene.recipe_for(item),reference_count=len(refs),reference_sha256=[hashlib.sha256(x.encode()).hexdigest()for x in refs],prompt_sha256=hashlib.sha256(scene.prompt(item,'loxblog').encode()).hexdigest())
   # generate() only: no prepare(), no publish(), no release bypass and no QA approval.
@@ -34,8 +35,9 @@ def main():
   from blog_image_backpressure import ImageProviderBusy,defer
   if isinstance(exc,ImageProviderBusy):
    report['status']='deferred_provider_queue_full';report['retry_at_epoch']=exc.retry_at
-   try:defer(ROOT,exc.retry_at,generated.checkpoint_asset)
-   except Exception:report['cooldown_checkpoint_failed']=True
+   if not getattr(exc,'shared_cooldown_attempted',False):
+    try:defer(ROOT,exc.retry_at,generated.checkpoint_asset)
+    except Exception:report['cooldown_checkpoint_failed']=True
   report['error_type']=type(exc).__name__
   if re.fullmatch(r'Image provider HTTP \d+; raw response withheld',str(exc)):report['safe_error']=str(exc)
  finally:

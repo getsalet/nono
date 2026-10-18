@@ -1,8 +1,12 @@
 name: Verify full hose reference parity (one candidate, no publication)
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [automation/verify_hose_full_references.py]
 permissions:
   contents: write
+  actions: read
 concurrency:
   group: blog-hose-fullrefs-check
   cancel-in-progress: false
@@ -11,9 +15,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 18
     env:
-      IMAGE_API_KEY: ${{ secrets.IMAGE_API_KEY || secrets.AGNES_API_KEY }}
-      IMAGE_ENDPOINT: ${{ vars.IMAGE_ENDPOINT || 'https://apihub.agnes-ai.com/v1/images/generations' }}
-      IMAGE_MODEL: ${{ vars.IMAGE_MODEL || 'agnes-image-2.5-flash' }}
+      AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+      BLOG_IMAGE_DIAGNOSTIC_FAMILY: hose
+      BLOG_IMAGE_QUEUE_ENABLED: '1'
+      BLOG_IMAGE_QUEUE_TOKEN: ${{ github.token }}
+      IMAGE_KEY_POOL_ENABLED: '1'
+      IMAGE_API_KEY: ${{ secrets.AGNES_API_KEY10 }}
+      IMAGE_KEY_SLOT: AGNES_API_KEY10
+      IMAGE_ENDPOINT: https://apihub.agnes-ai.com/v1/images/generations
+      IMAGE_MODEL: agnes-image-2.5-flash
+      AGNES_IMAGE_TRANSIENT_FAILOVER: '0'
+      AGNES_KEY_ROTATE_EVERY: '1'
+      AGNES_MODEL: agnes-2.5-flash
+      AGNES_API_KEY3: ${{ secrets.AGNES_API_KEY3 }}
+      AGNES_API_KEY7: ${{ secrets.AGNES_API_KEY7 }}
+      AGNES_API_KEY10: ${{ secrets.AGNES_API_KEY10 }}
+      AGNES_API_KEY11: ${{ secrets.AGNES_API_KEY11 }}
     steps:
       - uses: actions/checkout@v4
         with:
