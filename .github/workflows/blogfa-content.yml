@@ -1,17 +1,6 @@
 name: Blogfa independent city content pipeline
-on:
-  workflow_dispatch:
-    inputs:
-      count: {description: 'New articles (0 = publish existing ready queue)', default: '3'}
-      publish: {description: '1 = publish, 0 = generate/export only', default: '1'}
-      dry_run: {description: '1 = configuration tests only, no publishable samples', default: '0'}
-      target: {description: 'Optional topic key', default: ''}
-      diagnose_login: {description: '1 = read-only native login diagnostic; no generation or publication', default: '0'}
-  schedule:
-    - cron: '8,23,38,53 * * * *'
-  push:
-    branches: [main]
-    paths: [automation/check_blog_run_budget.py, tests/test_blog_budget_preflight_pipeline.py, tests/test_blog_generation_recovery.py, automation/farsiblog_backlink_queue.py, tests/test_blog_retry_pipeline.py, automation/blogfa_backlink_queue.py, automation/publish_blogfa_posts.py, automation/content_originality.py, tests/test_city_blog_pipeline.py, automation/city_backlink_policy.py, automation/blog_image_gate.py, data/blog-city-title-matrix.json, .github/workflows/blogfa-content.yml]
+# Retired by user: no scheduled/push runs and no executable jobs.
+on: workflow_dispatch
 permissions:
   contents: write
   actions: read
@@ -20,6 +9,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   tests:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +20,7 @@ jobs:
   pipeline:
     needs: tests
     # Scheduled runs remain gated until a real hosted native publication is verified.
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && vars.BLOGFA_AUTOMATION_ENABLED == '1')
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
