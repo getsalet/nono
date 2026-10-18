@@ -50,6 +50,9 @@ def checkpoint(entry,item,row):
     state=load(STATE,{})
     rows={r['key']:r for r in state.get('published',[])}
     rows[entry['key']]={k:row[k] for k in ('key','pid','url','at')}
+    # Recovering an old native post verifies existence, not its creation time.
+    # Keep that distinction for rolling throughput accounting.
+    if 'recovered_existing'in row:rows[entry['key']]['recovered_existing']=row['recovered_existing'] is True
     state['published']=list(rows.values());state['last_publish_run']=now();state['updated_at']=now();save(STATE,state)
     pq=load(PUBLISH_QUEUE,{'items':[]});pq['items']=[e for e in pq['items'] if e['key']!=entry['key']];pq['count']=len(pq['items']);save(PUBLISH_QUEUE,pq)
     LOG.parent.mkdir(parents=True,exist_ok=True)

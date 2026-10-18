@@ -40,6 +40,8 @@ def evaluate(states,now):
   for at,row in sorted(parsed,key=lambda pair:pair[0]):
    if row['key']in keys or row['pid']in ids or row['url']in urls:continue
    keys.add(row['key']);ids.add(row['pid']);urls.add(row['url'])
+   if lower<at<=now and row.get('recovered_existing') is True:
+    issues.append({'blog':blog,'reason':'recovered_existing_creation_time_unverified'});continue
    if lower<at<=now:
     publications.append({'blog':blog,'key':row['key'],'pid':row['pid'],'url':row['url'],'at':at.isoformat()});by_blog[blog]+=1
  count=len(publications)

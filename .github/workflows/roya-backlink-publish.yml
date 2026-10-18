@@ -67,6 +67,7 @@ jobs:
       AGNES_API_KEYS: ${{ secrets.AGNES_API_KEYS }}
       AGNES_KEY_ROTATE_EVERY: '1'
       AGNES_MODEL: agnes-2.5-flash
+      IMAGE_REVIEW_MODEL: ${{ vars.AGNES_MODEL || 'agnes-3.0-flash' }}
       ROYA_PUBLISH: ${{ github.event.inputs.publish || '1' }}
       ROYA_PUBLISH_LIMIT: ${{ github.event.inputs.limit || '30' }}
       ROYA_DELAY_SECONDS: '10'
@@ -98,13 +99,39 @@ jobs:
       - name: Publish and verify ready posts
         if: steps.control.outputs.proceed == '1'
         run: python automation/publish_roya_posts.py
+      - name: Preserve native publication receipts before checkpoint push
+        if: steps.control.outputs.proceed == '1' && (always())
+        uses: actions/upload-artifact@v4
+        with:
+          name: roya-publication-recovery-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: ignore
+          path: |
+            data/roya/backlink-queue.json
+            state/roya-backlink-progress.json
+            artifacts/roya-backlink-queue
+            artifacts/blog-image-reviews
+            artifacts/content-originality
       - name: Commit per-post publication checkpoints
         if: steps.control.outputs.proceed == '1' && (always())
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f data/roya/backlink-queue.json state/roya-backlink-progress.json artifacts/roya-backlink-queue
+          for path in artifacts/blog-image-reviews artifacts/content-originality; do
+            if [ -e "$path" ]; then git add -f "$path"; fi
+          done
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Record verified Roya publication checkpoints"
-          git pull --rebase origin main
-          git push origin main
+          if ! git diff --quiet; then
+            git diff --name-only
+            echo '::error::Unexpected unstaged changes; publication recovery artifact retained.'
+            exit 1
+          fi
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || { echo '::error::Checkpoint conflict; recovery artifact retained, no overwrite.'; exit 1; }
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          echo '::error::Checkpoint push failed after three attempts; recovery artifact retained.'
+          exit 1

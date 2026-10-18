@@ -33,6 +33,9 @@ class PublicationThroughputTests(unittest.TestCase):
   with self.assertRaises(ValueError):t.evaluate(self.states,self.now.replace(tzinfo=None))
  def test_blogfa_is_not_read_or_counted(self):
   self.states['blogfa']={'published':[self.row()]};self.assertEqual(t.evaluate(self.states,self.now)['count'],0)
+ def test_recovered_existing_post_is_not_assumed_new_at_reconciliation_time(self):
+  self.states['roya']['published']=[self.row(recovered_existing=True)]
+  r=t.evaluate(self.states,self.now);self.assertEqual(r['count'],0);self.assertEqual(r['status'],'unverified')
  def test_main_is_read_only_and_shortfall_does_not_fail_handoff(self):
   with tempfile.TemporaryDirectory()as d,patch('blog_image_stock.refresh')as refresh,patch('blog_image_stock.read',side_effect=lambda root,path:self.states[path.split('/')[1].split('-')[0]]):
    self.assertEqual(t.main(Path(d)),0)
