@@ -73,6 +73,9 @@ def build_queue(blog,root=None):
   item={k:src.get(k,'')for k in ('family','target_url','site_title')}
   item.update(key=key,kind='article',status='pending',source_key=src['key'],reference_url=src['target_url'],topic=src['site_title'],angle=ANGLES[blog][int(key[-4:],16)%4],city_fa='',province_fa='')
   q['items'].append(item);keys.add(key)
+ if blog=='blogsky':
+  from blogsky_title_inventory import expand
+  expand(q,root)
  used={x.get('title')for x in q['items']if x.get('published')and x.get('title')}
  for x in q['items']:
   if x.get('kind')not in ('city','article')or x.get('published'):continue

@@ -1,0 +1,17 @@
+name: Blogsky requested generation start
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/blogsky-controlled-start.yml]
+permissions:
+  contents: write
+jobs:
+  requested-draft:
+    # Explicit user request: generate one next priority draft, never publish.
+    if: contains(github.event.head_commit.message, '[blogsky-generate-start]')
+    uses: ./.github/workflows/blogsky-content.yml
+    with:
+      dry_run: false
+      count: '1'
+      target: ''
+    secrets: inherit

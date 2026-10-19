@@ -30,6 +30,10 @@ class AccountExpansionTests(unittest.TestCase):
    out=Path(d)
    for path in (router.CONFIG,'data/agnes-usable-key-audit/latest.json','data/agnes-image-key-health/latest.json'):
     p=out/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((root/path).read_bytes())
+   # This test checks expansion admission, not expiry of repository snapshots.
+   # Only temporary fixtures get fresh dates; production audits stay untouched.
+   for path,field in (('data/agnes-usable-key-audit/latest.json','finished_at'),('data/agnes-image-key-health/latest.json','tested_at')):
+    fixture=out/path;value=json.loads(fixture.read_text());value[field]=datetime.datetime.now(datetime.timezone.utc).isoformat();fixture.write_text(json.dumps(value))
    cfg=json.loads((out/router.CONFIG).read_text());cfg['slots'].append('AGNES_API_KEY4');(out/router.CONFIG).write_text(json.dumps(cfg))
    self.assertNotIn('AGNES_API_KEY4',router.evidence(out))
    p=out/a.LATEST;p.parent.mkdir(parents=True);p.write_text(json.dumps(self.report()))

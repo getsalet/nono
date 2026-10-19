@@ -17,7 +17,8 @@ from blog_generated_image import family_enabled
 ROOT = Path(__file__).resolve().parents[1]
 INPUTS = ('data/blog-city-title-matrix.json', 'data/blogsky/backlink-queue.json',
           'data/roya/backlink-queue.json', 'data/blog-city-crop-evidence.json',
-          'data/blog-city-priority.json', 'data/blog-generated-image-control.json')
+          'data/blog-city-priority.json', 'data/blog-generated-image-control.json',
+          'data/blogsky/title-inventory-control.json')
 
 def build(root=ROOT):
     root = Path(root)

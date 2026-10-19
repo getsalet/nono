@@ -63,7 +63,8 @@ def preview(root=ROOT):
         tree = Path(temp)
         for name in ('data/blog-city-title-matrix.json', 'data/roya/backlink-queue.json',
                      'data/blog-city-priority.json', 'data/blog-city-crop-evidence.json',
-                     'data/blogsky/backlink-queue.json'):
+                     'data/blogsky/backlink-queue.json', 'data/blogsky/title-inventory-control.json',
+                     'data/blog-generated-image-control.json'):
             source = root / name
             if source.exists():
                 dest = tree / name
