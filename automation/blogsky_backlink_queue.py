@@ -62,7 +62,8 @@ def preview(root=ROOT):
     with tempfile.TemporaryDirectory(prefix='blogsky-preflight-') as temp:
         tree = Path(temp)
         for name in ('data/blog-city-title-matrix.json', 'data/roya/backlink-queue.json',
-                     'data/blog-city-priority.json', 'data/blogsky/backlink-queue.json'):
+                     'data/blog-city-priority.json', 'data/blog-city-crop-evidence.json',
+                     'data/blogsky/backlink-queue.json'):
             source = root / name
             if source.exists():
                 dest = tree / name

@@ -139,8 +139,7 @@ def approved_links(item, lib):
     city = {'url': item['target_url'], 'anchor': city_anchor,
             'title': site_title or city_anchor, 'role': 'city'}
     if item.get('family', 'tape20') in ('tape20', 'hub'):
-        anchors = ('نوار تیپ', 'نوار آبیاری', 'نوار تیپ AFP',
-                   'نوار آبیاری قطره‌ای AFP', 'آبگستر فرا پارسیان', 'وب‌سایت AFP')
+        anchors = ('نوار تیپ', 'نوار آبیاری')
         bucket = int(hashlib.sha256(item['key'].encode('utf-8')).hexdigest()[:8], 16) % len(anchors)
         primary = {'url': lib['home']['url'], 'anchor': anchors[bucket],
                    'title': 'نوار تیپ | خرید نوار آبیاری قطره‌ای AFP', 'role': 'home'}
@@ -161,6 +160,10 @@ def assign_roya_titles(queue, root=None):
         raise RuntimeError('Independent Roya title matrix awaiting approval')
     used = {x.get('title') for x in queue['items'] if x.get('title')}
     for item in queue['items']:
+        if not item.get('published') and item.get('status') == 'completed':
+            from blog_city_editorial import title_errors
+            if title_errors(item, item.get('title') or item.get('assigned_title', ''), root):
+                item.update(status='failed', failure_stage='editorial_policy', last_error='Unverified local crop in saved draft; regenerate and revalidate')
         if item.get('published') or item.get('status') not in ('pending', 'failed', 'needs_title_review'):
             continue
         pool = title_candidates(item, 'royablog', root)
@@ -206,6 +209,7 @@ def build_prompt(item, links):
 10. عنوان دقیق از ماتریس مستقل رویابلاگ: {item['assigned_title']}. آن را بدون تغییر استفاده کن؛ حداکثر ۶۵ کاراکتر است و نام شهر را دارد.
 موضوع و مسئله فنی عنوان باید از مقدمه در متن واقعی حاضر باشد؛ مقاله قیمت و خرید عمومی را فقط با تعویض عنوان تحویل نده.
 11. اگر عنوان نام محصول کشت ردیفی دارد، متن، چک‌لیست و FAQ به کاربرد آبیاری همان محصول پاسخ دهند. مثال‌ها مشروط باشند؛ رایج بودن کشت آن در شهر یا تناسب قطعی با خاک و اقلیم را ادعا نکن. فاصله، فشار، دبی و نیاز آبی را بدون مرجع معتبر به محصول نسبت نده.
+12الف. اگر عنوان نام محصول ندارد، کشت محصول مشخصی را در شهر ادعا نکن. قبل از سوالات متداول، بخش «جمع‌بندی» با حداقل ۳۰ کلمه فارسی بنویس: نتیجه کاربردی و اقدام بعدی مرتبط با عنوان را مشخص کن و برای بررسی مشخصات یا راهنمای شهری به وب‌سایت اصلی AFP هدایت کن. لینک سوم اضافه نکن؛ همان دو لینک در پاراگراف‌های مرتبط بدنه باشند. سوالات متداول دقیقاً سه details/summary/p کامل و آخرین محتوای مقاله باشند.
 12. زاویه اختصاصی رویا: برنامه‌ریزی آبیاری، نیازسنجی مزرعه، تناسب تجهیزات و تصمیم‌های پیش از اجرا. مقدمه، مثال، چک‌لیست و FAQ را از صفر و با همین زاویه بنویس؛ متن فارسی‌بلاگ، رز‌بلاگ و سایت اصلی را کپی یا بازنویسی سطحی نکن. نام شهر فقط زمینه مخاطب است، نه شاهد ویژگی‌های اقلیم یا خاک.
 
 نام شهر «{item['city_fa']}»، نام استان «{item['province_fa']}» و واژه‌های عنوان را عیناً با حروف فارسی کپی کن؛ بخشی از کلمه فارسی را با حرف لاتین جایگزین نکن.
@@ -366,6 +370,8 @@ def qa(item, obj, links, root=None, require_image=True):
     for crop in load_json(Path(root or ROOT) / 'data/blog-city-title-matrix.json', {}).get('row_crops', []):
         if item.get('assigned_title') and crop in title and crop not in re.sub(r'<[^>]+>', ' ', html):
             errors.append('Title crop must be addressed in article body')
+    from blog_city_editorial import editorial_errors
+    errors.extend(editorial_errors(item, obj, links, root or ROOT))
     n = words(html)
     if n < MIN_WORDS:
         errors.append(f'too short: {n} words < {MIN_WORDS}')

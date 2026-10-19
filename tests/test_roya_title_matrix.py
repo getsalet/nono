@@ -11,12 +11,12 @@ class RoyaMatrixTests(unittest.TestCase):
   for blog in ('royablog','farsiblog','rozblog'):
    for family in ('tape20','hose'):
     self.assertTrue(m['templates'][blog][family]);self.assertTrue(m['article_templates'][blog][family])
- def test_crop_city_and_blog_angle_present(self):
+ def test_city_and_blog_angle_present_without_unverified_crop(self):
   m=json.loads((ROOT/'data/blog-city-title-matrix.json').read_text())
   for blog in ('royablog','farsiblog','rozblog'):
    for family in ('tape20','hose'):
     title=c.matrix_title(self.item(family=family),blog)
-    self.assertIn('آزمایش',title);self.assertEqual(sum(crop in title for crop in m['row_crops']),1);self.assertLessEqual(len(title),65)
+    self.assertIn('آزمایش',title);self.assertEqual(__import__('blog_city_editorial').crop_names(title),[]);self.assertLessEqual(len(title),65)
   titles={c.matrix_title(self.item(),b)for b in ('royablog','farsiblog','rozblog')};self.assertEqual(len(titles),3)
  def test_distinct_titles_preserve_posts(self):
   old={**self.item('old'),'status':'published','published':True,'title':'عنوان قبلی بدون تغییر'}
