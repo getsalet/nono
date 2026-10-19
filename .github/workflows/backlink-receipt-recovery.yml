@@ -1,0 +1,114 @@
+name: Recover existing FarsiBlog and LoxBlog receipts without resubmission
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/backlink-receipt-recovery.yml, automation/recover_existing_blog_receipt.py]
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+  recover:
+    needs: tests
+    strategy:
+      fail-fast: false
+      matrix:
+        blog: [farsiblog, loxblog]
+    concurrency:
+      group: ${{ matrix.blog }}-content-pipeline
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    env:
+      FARSIBLOG_USERNAME: ${{ secrets.FARSIBLOG_USERNAME }}
+      FARSIBLOG_PASSWORD: ${{ secrets.FARSIBLOG_PASSWORD }}
+      LOXBLOG_USERNAME: ${{ secrets.LOXBLOG_USERNAME }}
+      LOXBLOG_PASSWORD: ${{ secrets.LOXBLOG_PASSWORD }}
+      AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+      AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+      AGNES_API_KEYS: ${{ secrets.AGNES_API_KEYS }}
+      AGNES_MODEL: agnes-2.5-flash
+      RELEASE_EVENT_NAME: workflow_dispatch
+      RELEASE_REPOSITORY_SWITCH: ${{ vars.LOXBLOG_AUTOMATION_ENABLED }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0, ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - name: Respect publication pause
+        id: control
+        run: python automation/check_blog_pipeline_control.py ${{ matrix.blog }}
+      - name: Respect LoxBlog release gate
+        id: release
+        if: matrix.blog == 'loxblog' && steps.control.outputs.proceed == '1'
+        run: python automation/check_loxblog_release.py
+      - name: Install hosted browser only for permitted read-only reconciliation
+        if: steps.control.outputs.proceed == '1' && (matrix.blog != 'loxblog' || steps.release.outputs.proceed == '1')
+        run: bash automation/install_blog_browser.sh chromium
+      - name: Verify existing native post and recover receipt, never submit
+        if: steps.control.outputs.proceed == '1' && (matrix.blog != 'loxblog' || steps.release.outputs.proceed == '1')
+        run: python automation/recover_existing_blog_receipt.py ${{ matrix.blog }}
+      - name: Preserve sanitized result and verified checkpoints
+        if: always()
+        env:
+          BLOG: ${{ matrix.blog }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for path in "data/$BLOG/backlink-queue.json" "state/$BLOG-backlink-progress.json" "artifacts/$BLOG-backlink-queue"; do
+            if [ -e "$path" ]; then git add -f "$path"; fi
+          done
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Recover verified existing $BLOG receipt without resubmission"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          exit 1
+      - name: Preserve recovery artifact if checkpoint persistence fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: existing-receipt-${{ matrix.blog }}-${{ github.run_id }}
+          path: artifacts/${{ matrix.blog }}-backlink-queue/existing-receipt-recovery.json
+          if-no-files-found: ignore
+          retention-days: 14
+  resume-normal-guarded-pipelines:
+    needs: recover
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - name: Resume only after both existing receipts are verified
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,os,urllib.request
+          from pathlib import Path
+          for blog in ('farsiblog','loxblog'):
+              result=json.loads(Path('artifacts/'+blog+'-backlink-queue/existing-receipt-recovery.json').read_text())
+              if result.get('passed') is not True:raise RuntimeError('Existing receipt recovery is not verified; no dispatch')
+          jobs=[('farsiblog-content.yml',{'count':'1','publish':'1','dry_run':'0','target':'city-b0acaa09e21bdd10'}),('loxblog-content.yml',{'count':'1','publish':'1','dry_run':'0'})]
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','Content-Type':'application/json','User-Agent':'AFP-receipt-recovery'}
+          for workflow,inputs in jobs:
+              url='https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/workflows/'+workflow+'/dispatches'
+              req=urllib.request.Request(url,headers=headers,data=json.dumps({'ref':'main','inputs':inputs}).encode(),method='POST')
+              with urllib.request.urlopen(req,timeout=30)as response:
+                  if response.status!=204:raise RuntimeError('Guarded pipeline dispatch was not accepted')
+              print('Requested guarded normal pipeline: '+workflow+'; not proof of publication.')
+          PY

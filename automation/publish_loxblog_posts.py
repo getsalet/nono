@@ -210,6 +210,12 @@ def main():
      for attempt in range(12):
       existing=scan_public(public);record=existing.get(title)
       if record:break
+      # The public archive may lag behind a successful native save. A unique,
+      # all-status native identity gives an observed alias for full verification;
+      # it is never permission to repeat the POST.
+      native_record=find_native_record(page,title)
+      if native_record:
+       record=native_record;break
       time.sleep(5)
      if not record:raise RuntimeError('Single native submission not confirmed; no resubmission'+('; native feedback: '+feedback if feedback else ''))
     native=find_native_record(page,title)

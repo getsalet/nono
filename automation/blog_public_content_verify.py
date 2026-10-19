@@ -10,7 +10,7 @@ class Body(HTMLParser):
   if tag=='a':self.hrefs.append(data.get('href',''))
   if tag=='img':self.images.append(data.get('src',''))
   if tag=='details':self.faqs+=1
- def normalized(self):return re.sub(r'\s+',' ',unicodedata.normalize('NFKC',' '.join(self.parts))).strip()
+ def normalized(self):return re.sub(r'\s+',' ',unicodedata.normalize('NFKC',' '.join(self.parts)).replace('ي','ی').replace('ك','ک')).strip()
 def verify_article_body(item,actual_html,links):
  expected=Body();expected.feed(item['post']['html']);actual=Body();actual.feed(actual_html)
  if list(map(unquote,expected.images))!=list(map(unquote,actual.images)):raise RuntimeError('Public image URL missing, duplicated or changed')
