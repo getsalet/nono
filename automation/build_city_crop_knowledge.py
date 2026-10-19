@@ -37,6 +37,11 @@ def build(root=ROOT, today=None):
     targets = read(root, 'data/blog-city-title-inventory.json')['targets']
     sources = read(root, 'data/city-crop-knowledge/sources.json')['sources']
     claims = read(root, 'data/city-crop-knowledge/claims.json')['claims']
+    quick_path=root/'data/city-crop-knowledge/quick-screening.json'
+    quick=json.loads(quick_path.read_text()) if quick_path.exists() else {'observations':[]}
+    quick_sources={s['id']:s for s in quick.get('sources',[])}
+    if any(c['source_id']not in quick_sources for c in quick['observations']):
+        raise ValueError('Quick observation has no source')
     source_map = {s['id']:s for s in sources}
     if len(source_map)!=len(sources) or len({c['id'] for c in claims})!=len(claims):
         raise ValueError('Duplicate source/claim ID')
@@ -94,6 +99,13 @@ def build(root=ROOT, today=None):
                 status='scope_or_system_review'
             if 'historical_policy_caution' in statuses:status='historical_policy_caution'
         if records:status='current_field_evidence'
+        quick_matches=[c for c in quick['observations']if c['province_route']==route
+                       and norm(c['place_fa'])==norm(t['city_fa'])]
+        documented=[c for c in matched if c['claim_kind']=='cultivation_report']
+        listing=[c for c in quick_matches if c['screening_basis']=='named_official_news_listing']
+        tier='مستند' if documented or listing else 'محتمل' if quick_matches else 'نامشخص'
+        candidate_crops=list(dict.fromkeys([c['crop']for c in documented]+
+                                         [c['crop']for c in quick_matches]))
         flags=[]
         if counts[norm(t['city_fa'])]>1:flags.append('homonym_keep_province_and_exact_url')
         if t['city_fa'] in suspicious:flags.append('administrative_or_spelling_review_no_auto_merge')
@@ -102,6 +114,8 @@ def build(root=ROOT, today=None):
                              'explicit_approved_scope_only' if records else 'crop_free_until_approved'),
                          approved_crops=list(dict.fromkeys(r['crop']for r in records)),
                          claim_ids=[c['id']for c in matched],geography_flags=flags,
+                         screening_tier=tier,candidate_crops=candidate_crops,
+                         quick_claim_ids=[c['id']for c in quick_matches],
                          next_action=('recheck_source_before_generation' if records else
                                       'resolve_geography_then_load_local_source' if flags else
                                       'load_current_local_main_text_or_county_statistics')))
@@ -116,6 +130,8 @@ def build(root=ROOT, today=None):
     summary=dict(schema='afp-city-crop-knowledge-summary-v1',as_of=today.isoformat(),
                  target_count=len(rows),source_count=len(sources),claim_count=len(claims),
                  approved_target_count=sum(bool(r['approved_crops'])for r in rows),
+                 screening_tier_counts=dict(Counter(r['screening_tier']for r in rows)),
+                 screening_note='مستند includes historical and explicitly scoped reports and named-official news summaries; محتمل is a secondary-source lead, not a confirmed current claim. Screening does not change production approvals.',
                  status_counts=dict(Counter(r['knowledge_status']for r in rows)),
                  geography_review_target_count=sum(bool(r['geography_flags'])for r in rows),
                  unattached_claim_ids=[c['id']for c in claims if c['id']not in attached],
@@ -159,13 +175,22 @@ def main():
             query=norm(args.lookup)
             selected=[c for c in claims if any(query in norm(c[k]) for k in ('place_fa','crop','province_route'))]
             claim_ids={c['id']for c in selected}
+            quick_path=args.root/'data/city-crop-knowledge/quick-screening.json'
+            quick=json.loads(quick_path.read_text())if quick_path.exists()else {'observations':[]}
+            quick_claims=[c for c in quick['observations']if any(
+                query in norm(c[k])for k in ('place_fa','crop','province_route'))]
+            quick_ids={c['id']for c in quick_claims}
             output=dict(destinations=[r for r in rows if query in norm(r['place_fa'])or
-                                     query in norm(r['province_route'])or bool(set(r['claim_ids'])&claim_ids)],
-                        claims=selected,sources=[sources[sid]for sid in sorted({c['source_id']for c in selected})])
+                                     query in norm(r['province_route'])or bool(set(r['claim_ids'])&claim_ids)
+                                     or bool(set(r['quick_claim_ids'])&quick_ids)],
+                        claims=selected,sources=[sources[sid]for sid in sorted({c['source_id']for c in selected})],
+                        quick_observations=quick_claims,
+                        quick_sources=[s for s in quick.get('sources',[])if s['id']in
+                                       {c['source_id']for c in quick_claims}])
         else:
             provinces={urlsplit(t['hub_url']).path.strip('/').split('/')[0]:t['province_fa']
                        for t in read(args.root,'data/blog-city-title-inventory.json')['targets']}
-            pending=sorted([r for r in rows if not r['approved_crops']],
+            pending=sorted([r for r in rows if r['screening_tier']=='نامشخص'],
                            key=lambda r:(r['province_route'],bool(r['geography_flags']),r['target_key']))
             digest=hashlib.sha256(json.dumps(pending,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
             if args.offset and not args.expected_plan_sha256:

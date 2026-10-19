@@ -67,4 +67,16 @@ class KnowledgeTests(unittest.TestCase):
         self.assertEqual(sum(c['source_id']=='mehr-6920740'for c in claims),3)
         self.assertEqual(sum(c['source_id']=='mehr-6905006'for c in claims),4)
 
+    def test_quick_official_listing_is_recorded_without_full_article_gate(self):
+        rows,summary,_,_=k.build(ROOT)
+        byplace={r['place_fa']:r for r in rows}
+        for place in ('بیضا','گلوگاه'):
+            self.assertEqual(byplace[place]['screening_tier'],'مستند')
+            self.assertIn('هندوانه',byplace[place]['candidate_crops'])
+            self.assertTrue(byplace[place]['quick_claim_ids'])
+            self.assertFalse(byplace[place]['approved_crops'])
+        quick=k.read(ROOT,'data/city-crop-knowledge/quick-screening.json')
+        self.assertTrue(all(not s['full_article_loaded']for s in quick['sources']))
+        self.assertEqual(len(quick['observations']),12)
+
 if __name__=='__main__':unittest.main()
