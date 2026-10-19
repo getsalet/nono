@@ -71,7 +71,10 @@ class CityEvidenceTests(unittest.TestCase):
         self.assertIn('شهرستان تهران',prompt);self.assertIn('لینک سوم اضافه نکن',prompt)
     def test_current_approved_targets_cover_all_five_active_blogs_without_padding(self):
         data=build(ROOT);verified=[row for row in data['titles']if row['crop']]
-        self.assertEqual(len(verified),10)
+        targets=data['targets']
+        expected=5*sum(bool(e.approved_crop_records({**t,'kind':'city','family':'tape20'},ROOT))for t in targets)
+        self.assertEqual(len(verified),expected)
+        self.assertGreaterEqual(len(verified),10)
         self.assertEqual({row['locality_status']for row in verified},{'approved_county_crop'})
         self.assertEqual({row['blog']for row in verified},{'royablog','farsiblog','rozblog','loxblog','blogsky'})
         self.assertTrue(all(row.get('evidence_ids')for row in verified))

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build a finite, reviewable TITLE inventory, never 1,500 auto-published posts.
 Only exact tape city destinations already in Roya are eligible. Crop-free rows
-are explicitly identified; a production crop title requires municipal evidence.
+are explicitly identified; crop titles require exact reviewed geographic scope.
 """
 import argparse
 import hashlib
