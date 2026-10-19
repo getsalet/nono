@@ -26,11 +26,11 @@ def reuse_errors(markup,records):
 class PublishedBody(HTMLParser):
     """Extract only the actual .post-content block, without layout/advertising."""
     VOID={'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}
-    def __init__(self):super().__init__(convert_charrefs=True);self.depth=0;self.done=False;self.parts=[]
+    def __init__(self,body_class='post-content'):super().__init__(convert_charrefs=True);self.body_class=body_class;self.depth=0;self.done=False;self.parts=[]
     def handle_starttag(self,tag,attrs):
         if self.done:return
         if not self.depth:
-            if 'post-content'in dict(attrs).get('class','').split():self.depth=1
+            if self.body_class in dict(attrs).get('class','').split():self.depth=1
             return
         self.parts.append(self.get_starttag_text())
         if tag not in self.VOID:self.depth+=1
@@ -46,7 +46,7 @@ class PublishedBody(HTMLParser):
         if self.depth and not self.done:self.parts.append(html.escape(data))
 
 def published_snapshot(root,blog,item):
-    url=item.get('published_url');host={'roya':'afp.royablog.ir','farsiblog':'afp.farsiblog.com','rozblog':'afp-pipe.rozblog.com','blogfa':'afp-pipe.blogfa.com','loxblog':'afp.lxb.ir'}[blog]
+    url=item.get('published_url');host={'roya':'afp.royablog.ir','farsiblog':'afp.farsiblog.com','rozblog':'afp-pipe.rozblog.com','blogfa':'afp-pipe.blogfa.com','loxblog':'afp.lxb.ir','blogsky':'afp-pipe.blogsky.com'}[blog]
     parts=urlsplit(url or '')
     native_path=parts.path.startswith('/post/') or (blog in ('rozblog','loxblog') and parts.path not in ('','/'))
     # published_url is an already verified native checkpoint; Roz and LoxBlog use their own custom slugs.
@@ -62,7 +62,7 @@ def published_snapshot(root,blog,item):
     try:
         with urllib.request.urlopen(request,timeout=45)as response:
             if urlsplit(response.geturl()).hostname!=host:raise RuntimeError('originality public history redirected to another host')
-            parser=PublishedBody();parser.feed(response.read().decode('utf8','replace'))
+            parser=PublishedBody('afp-article-body' if blog=='blogsky' else 'post-content');parser.feed(response.read().decode('utf8','replace'))
     except Exception as exc:raise RuntimeError('originality cannot load published history for '+blog+': '+type(exc).__name__)from None
     body=''.join(parser.parts)
     if not parser.done or len(text(body).split())<100:raise RuntimeError('originality published article body incomplete for '+blog)
@@ -71,7 +71,7 @@ def published_snapshot(root,blog,item):
 
 def corpus(root,exclude_blog='',exclude_key=''):
     records=[]
-    for blog in ('roya','farsiblog','rozblog','blogfa','loxblog'):
+    for blog in ('roya','farsiblog','rozblog','blogfa','loxblog','blogsky'):
         for p in sorted((Path(root)/'artifacts'/f'{blog}-backlink-queue'/'items').glob('*.json')):
             obj=json.loads(p.read_text())
             if blog==exclude_blog and obj.get('key')==exclude_key:continue

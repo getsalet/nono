@@ -1,0 +1,116 @@
+name: Blogsky city generator (review-only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Read-only configuration check: no AI call, queue write or publication'
+        type: boolean
+        default: true
+      count:
+        description: 'Maximum new approved city drafts (0 exports existing drafts, 1 generates)'
+        type: choice
+        options: ['0', '1']
+        default: '1'
+      target:
+        description: 'Optional exact existing city-<16 hex> key'
+        type: string
+        default: ''
+
+concurrency:
+  group: blogsky-city-export
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    env:
+      BLOGSKY_DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+      BLOGSKY_COUNT: ${{ inputs.count }}
+      BLOGSKY_TARGET: ${{ inputs.target }}
+      BLOGSKY_PUBLISH: '0'
+      AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+      AGNES_API_KEY2: ${{ secrets.AGNES_API_KEY2 }}
+      AGNES_API_KEY3: ${{ secrets.AGNES_API_KEY3 }}
+      AGNES_API_KEY4: ${{ secrets.AGNES_API_KEY4 }}
+      AGNES_API_KEY5: ${{ secrets.AGNES_API_KEY5 }}
+      AGNES_API_KEY6: ${{ secrets.AGNES_API_KEY6 }}
+      AGNES_API_KEY7: ${{ secrets.AGNES_API_KEY7 }}
+      AGNES_API_KEY8: ${{ secrets.AGNES_API_KEY8 }}
+      AGNES_API_KEY9: ${{ secrets.AGNES_API_KEY9 }}
+      AGNES_API_KEY10: ${{ secrets.AGNES_API_KEY10 }}
+      AGNES_API_KEY11: ${{ secrets.AGNES_API_KEY11 }}
+      AGNES_API_KEY12: ${{ secrets.AGNES_API_KEY12 }}
+      AGNES_API_KEY13: ${{ secrets.AGNES_API_KEY13 }}
+      AGNES_API_KEY14: ${{ secrets.AGNES_API_KEY14 }}
+      AGNES_API_KEY15: ${{ secrets.AGNES_API_KEY15 }}
+      AGNES_API_KEY16: ${{ secrets.AGNES_API_KEY16 }}
+      AGNES_API_KEY17: ${{ secrets.AGNES_API_KEY17 }}
+      AGNES_API_KEY18: ${{ secrets.AGNES_API_KEY18 }}
+      AGNES_API_KEY19: ${{ secrets.AGNES_API_KEY19 }}
+      AGNES_API_KEY20: ${{ secrets.AGNES_API_KEY20 }}
+      AGNES_API_KEY21: ${{ secrets.AGNES_API_KEY21 }}
+      AGNES_API_KEY22: ${{ secrets.AGNES_API_KEY22 }}
+      AGNES_API_KEY23: ${{ secrets.AGNES_API_KEY23 }}
+      AGNES_API_KEY24: ${{ secrets.AGNES_API_KEY24 }}
+      AGNES_API_KEY25: ${{ secrets.AGNES_API_KEY25 }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Respect global stop before dependencies, queue writes or APIs
+        id: control
+        run: python automation/check_blog_pipeline_control.py blogsky
+      - name: Install local validation dependency
+        if: steps.control.outputs.proceed == '1'
+        run: python -m pip install --quiet Pillow
+      - name: Run complete offline regression suite
+        if: steps.control.outputs.proceed == '1'
+        run: python -m unittest discover -s tests
+      - name: Generate or check configuration; never submit a native post
+        if: steps.control.outputs.proceed == '1'
+        run: python automation/blogsky_backlink_queue.py
+      - name: Preserve generation/review recovery checkpoints
+        if: always() && steps.control.outputs.proceed == '1' && !inputs.dry_run
+        uses: actions/upload-artifact@v4
+        with:
+          name: blogsky-review-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: ignore
+          path: |
+            data/blogsky/backlink-queue.json
+            state/blogsky-backlink-progress.json
+            artifacts/blogsky-backlink-queue
+            artifacts/content-originality
+      - name: Commit drafts and review exports; never record false publication
+        if: always() && steps.control.outputs.proceed == '1' && !inputs.dry_run
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for path in data/blogsky/backlink-queue.json state/blogsky-backlink-progress.json artifacts/blogsky-backlink-queue artifacts/content-originality; do
+            if [ -e "$path" ]; then git add -f "$path"; fi
+          done
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record Blogsky city drafts and QA-reviewed HTML exports (not published)'
+          if ! git diff --quiet; then
+            git diff --name-only
+            echo '::error::Unexpected tracked changes; recovery artifact retained.'
+            exit 1
+          fi
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          echo '::error::Draft checkpoint push failed; recover from uploaded artifact.'
+          exit 1
+      - name: Report scope honestly
+        if: always()
+        run: |
+          echo '## Blogsky: city generation and HTML review exports only' >> "$GITHUB_STEP_SUMMARY"
+          echo 'No native Blogsky login, post submission, publication verification, schedule or automatic image handoff is enabled. A green configuration check is NOT generated/published content.' >> "$GITHUB_STEP_SUMMARY"

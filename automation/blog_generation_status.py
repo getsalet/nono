@@ -1,7 +1,7 @@
 """Explicit generation outcome; a green cooldown/idle run is not publication."""
 import datetime,json,math,os
 from pathlib import Path
-BLOG_NAMES={'roya':'رویا','farsiblog':'فارسی‌بلاگ','rozblog':'روزبلاگ','blogfa':'بلاگفا','loxblog':'لوکس‌بلاگ'}
+BLOG_NAMES={'roya':'رویا','farsiblog':'فارسی‌بلاگ','rozblog':'روزبلاگ','blogfa':'بلاگفا','loxblog':'لوکس‌بلاگ','blogsky':'بلاگ‌اسکای'}
 def outcome(completed,failed,retry_at=None,waiting=None):
  if completed:return 'partial_success' if failed else 'produced'
  if failed:return 'failed'

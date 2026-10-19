@@ -5,7 +5,7 @@ from pathlib import Path
 from farsiblog_backlink_queue import remaining_publication_budget
 ROOT=Path(__file__).resolve().parents[1]
 def decision(blog,root=ROOT,current=None,force=False,target=""):
- if blog not in ('farsiblog','rozblog','blogfa','loxblog'):raise ValueError('Unsupported blog')
+ if blog not in ('farsiblog','rozblog','blogfa','loxblog','blogsky'):raise ValueError('Unsupported blog')
  current=current or dt.datetime.now(dt.timezone.utc);state=Path(root)/'state'/(blog+'-backlink-progress.json')
  remaining=remaining_publication_budget(state,current)
  recent=[]

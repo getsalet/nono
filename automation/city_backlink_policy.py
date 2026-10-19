@@ -8,8 +8,8 @@ import roya_backlink_queue as roya
 from content_originality import check_corpus
 ROOT=Path(__file__).resolve().parent.parent
 MATRIX=ROOT/'data/blog-city-title-matrix.json'
-BLOGS={'loxblog':'https://afp.lxb.ir','farsiblog':'https://afp.farsiblog.com','rozblog':'https://afp-pipe.rozblog.com','blogfa':'https://afp-pipe.blogfa.com'}
-ANGLES={'loxblog':['پایش بهره‌برداری و مشاهده نشانه‌های تغییر','تنظیم برگه بازدید دوره‌ای تجهیزات','تفکیک نشانه قابل مشاهده از حدس فنی','تحویل اطلاعات واقعی مزرعه به کارشناس'], 'blogfa':['ثبت اطلاعات و مستندسازی سامانه آبیاری','عیب‌یابی مرحله‌ای بدون حدس مشخصات','ارزیابی سازگاری اجزای مسیر آب','بازبینی تصمیم‌های فنی در مزرعه'], 'farsiblog':['چک‌لیست پیش از سفارش','مقایسه مشخصات و هزینه واقعی','خطاهای انتخاب و نصب','پرسش‌های مشاوره فنی'], 'rozblog':['آماده‌سازی مسیر آبیاری و نصب','بازرسی و نگهداری پس از نصب','اطلاعات لازم برای طراحی مسیر','مقایسه پیشنهادهای فنی فروشندگان']}
+BLOGS={'loxblog':'https://afp.lxb.ir','farsiblog':'https://afp.farsiblog.com','rozblog':'https://afp-pipe.rozblog.com','blogfa':'https://afp-pipe.blogfa.com','blogsky':'https://afp-pipe.blogsky.com'}
+ANGLES={'blogsky':['ثبت پرسش‌های فنی پیش از انتخاب تجهیزات','تطبیق برگه مشخصات با نیاز ثبت‌شده مزرعه','تهیه چک‌لیست تحویل و بازدید سامانه','مستندسازی تصمیم انتخاب بدون ادعای محلی'], 'loxblog':['پایش بهره‌برداری و مشاهده نشانه‌های تغییر','تنظیم برگه بازدید دوره‌ای تجهیزات','تفکیک نشانه قابل مشاهده از حدس فنی','تحویل اطلاعات واقعی مزرعه به کارشناس'], 'blogfa':['ثبت اطلاعات و مستندسازی سامانه آبیاری','عیب‌یابی مرحله‌ای بدون حدس مشخصات','ارزیابی سازگاری اجزای مسیر آب','بازبینی تصمیم‌های فنی در مزرعه'], 'farsiblog':['چک‌لیست پیش از سفارش','مقایسه مشخصات و هزینه واقعی','خطاهای انتخاب و نصب','پرسش‌های مشاوره فنی'], 'rozblog':['آماده‌سازی مسیر آبیاری و نصب','بازرسی و نگهداری پس از نصب','اطلاعات لازم برای طراحی مسیر','مقایسه پیشنهادهای فنی فروشندگان']}
 def read(p,default):return json.loads(Path(p).read_text())if Path(p).exists()else copy.deepcopy(default)
 def write(p,obj):
  p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);tmp=p.with_suffix('.tmp');tmp.write_text(json.dumps(obj,ensure_ascii=False,indent=2));tmp.replace(p)
@@ -59,7 +59,9 @@ def build_queue(blog,root=None):
   item={k:src.get(k,'')for k in ('city_fa','province_fa','family','target_url','hub_url','site_title')}
   item.update(key=key,kind='city',status='pending',source_key=src['key'],reference_url=src['target_url'],topic=src['site_title'],angle=ANGLES[blog][int(key[-4:],16)%4])
   q['items'].append(item);keys.add(key)
- for src in read(root/'data/blog-site-article-targets.json',{'targets':[]})['targets']:
+ # Blogsky currently connects only the requested city targets, not site articles.
+ article_targets=[] if blog=='blogsky' else read(root/'data/blog-site-article-targets.json',{'targets':[]})['targets']
+ for src in article_targets:
   key='article-'+hashlib.sha256(src['key'].encode()).hexdigest()[:16]
   if key in keys:continue
   item={k:src.get(k,'')for k in ('family','target_url','site_title')}
@@ -197,4 +199,4 @@ def qa(item,obj,links,blog,root=None,require_image=True):
    e+=generated_record_errors(item,blog,root)
  e+=roya.product_semantics_errors(item,obj.get('html',''))
  e+=check_corpus(root or ROOT,blog,item['key'],obj.get('html',''))
- return e,{'words':n,'links':p.links,'checked_against':'Roya + FarsiBlog + RozBlog + Blogfa + LoxBlog corpus','title_matrix':item.get('matrix_title')or obj.get('title')}
+ return e,{'words':n,'links':p.links,'checked_against':'Roya + FarsiBlog + RozBlog + Blogfa + LoxBlog + Blogsky corpus','title_matrix':item.get('matrix_title')or obj.get('title')}

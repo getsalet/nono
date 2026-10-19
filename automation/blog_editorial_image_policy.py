@@ -1,11 +1,11 @@
 """Editorial need, not an image-quality bypass. No external calls or QA approvals.
 Absent policy preserves mandatory imagery; malformed policy fails closed.
-Only approved tape20 articles on the four active blogs may be image-free.
+Only explicitly scoped tape20 articles may be image-free.
 """
 import json,re
 from pathlib import Path
 CONFIG='data/blog-editorial-image-policy.json'
-BLOGS={'roya','farsiblog','rozblog','loxblog'}
+BLOGS={'roya','farsiblog','rozblog','loxblog','blogsky'}
 ROOT=Path(__file__).resolve().parents[1]
 IMAGE_FIELDS=('image_url','image_width','image_height','image_alt','image_review','image_generation','image_selection','source_image_rejection','_image_prepared_this_run')
 VISUAL_TITLE=re.compile(r'تصویری|عکس(?:\s|$)|نمودار|اینفوگرافیک|گالری|نقشه[‌ ](?:نصب|اجرا)')
@@ -16,6 +16,8 @@ def load(root=ROOT):
  return validate(json.loads(p.read_text()))
 def validate(value):
  if not isinstance(value,dict)or value.get('policy')!='afp-editorial-image-need-v1'or value.get('mode')!='text_first' or value.get('blogs')!=['roya','farsiblog','rozblog','loxblog'] or value.get('families')!=['tape20']:raise RuntimeError('Invalid editorial image policy; no optional-image fallback')
+ extra=value.get('additional_blogs',[])
+ if not isinstance(extra,list) or any(not isinstance(b,str) or b!='blogsky' for b in extra) or len(extra)!=len(set(extra)):raise RuntimeError('Invalid additional editorial image scope')
  if 'source_image_preferred'in value and type(value['source_image_preferred'])is not bool:raise RuntimeError('Invalid source-image preference')
  if 'source_image_review_required'in value and type(value['source_image_review_required'])is not bool:raise RuntimeError('Invalid source-image review policy')
  if value.get('source_image_review_required')is False and value.get('source_image_preferred')is not True:raise RuntimeError('Trusted images require exact-source preference')
@@ -23,7 +25,7 @@ def validate(value):
 _UNSET=object()
 def optional(item,blog,root=ROOT,config=_UNSET):
  value=load(root)if config is _UNSET else (validate(config)if config is not None else None)
- return bool(value and blog in value['blogs'] and item.get('family')in value['families'])
+ return bool(value and blog in value['blogs']+value.get('additional_blogs',[]) and item.get('family')in value['families'])
 def required(item,blog,root=ROOT,post=None,config=_UNSET):
  if not optional(item,blog,root,config):return True
  flag=item.get('editorial_image_required')

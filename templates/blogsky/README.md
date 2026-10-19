@@ -18,11 +18,11 @@
 - The rich article footer and product sidebar are based on the same official AFP URLs as the homepage.
 - There are no Blogsky posts published yet. The single-post layout was rendered locally against a snapshot of the native Blogsky page and real server-rendered sidebar structure. It MUST be checked against the first actual published post before claiming end-to-end publication acceptance.
 - Native statistic values in previews are snapshots, not a live analytics widget. The deliverable template does not contain those values.
-- No generator workflow, schedule, article publication, or credentials were changed or enabled.
+- The generator connection below has now been added. No schedule, native article publication, or credential validation has been enabled/performed.
 
 ## Editing constraints
 
-The current Blogsky panel exposes colors/header/widgets, but no global HTML/CSS theme editor. Thus the dedicated homepage's CSS does not alter ordinary posts. The single-post wrapper must accompany each new post. Do not claim it is globally installed or integrated into the generator until an actual publisher uses it.
+The current Blogsky panel exposes colors/header/widgets, but no global HTML/CSS theme editor. Thus the dedicated homepage's CSS does not alter ordinary posts. The single-post wrapper must accompany each new post. The export adapter now applies this wrapper after raw-article QA. This is not a globally installed theme or a verified native publishing integration.
 
 ## Source
 
@@ -31,3 +31,42 @@ https://navar-abyari.ir/ — footer/contact and category links checked 2026-10-1
 ## Rollback
 
 Set the start page back to “نمایش آخرین نوشته‌ها” in General settings. For a post using this wrapper, remove the `afp-post-skin` style and unwrap `#afp-post` while preserving article HTML.
+
+
+## City generator connection (review/export only)
+
+- Workflow: `.github/workflows/blogsky-content.yml`, **Blogsky city generator (review-only)**. Manual dispatch only; `dry_run=true` by default. No cron, push trigger, image-worker handoff or unattended native publisher.
+- Adapter: `automation/blogsky_backlink_queue.py` loads a private instance of the existing `farsiblog_backlink_queue.py` engine. It does not duplicate the generator or retarget other blogs' globals/environment on import.
+- Targets: exactly the existing city destinations in `data/roya/backlink-queue.json`; no province hubs, fabricated city URLs or general site-article targets. Only target metadata is shared, never article prose. Blogsky has its own titles, editorial angles, progress and drafts.
+- Raw article QA is unchanged: 500–1000 Persian words, assigned city title, three FAQs, sections/checklist, semantic/claim checks and exactly two contextual backlinks (matching city + relevant home/shop destination). Footer/navigation links are not article backlinks and are outside `.afp-article-body`.
+- Originality checks now include Blogsky checkpoints for all blogs. Missing approved history still fails closed; wrapped footer text must not enter the originality corpus.
+- The existing explicit stop, per-family holds (including hose), rolling three-publications/60-minute budget and backlog cap remain effective. Blogsky is capped at **one newly approved draft per manual run** during setup. No holds or four-blog schedules/monitors were changed.
+- Blogsky is explicitly added to the existing tape20 exact-source-image reuse scope. Keep the original linked-page image URL if available; do not generate new images. The source policy's text-only/required-illustration checks still apply. Blogsky is NOT added to the generated-image worker's enabled blogs.
+- Configuration: `data/blogsky/generator-control.json` is deliberately `city_export_only` with `publication_enabled=false`; `BLOGSKY_PUBLISH=1` is rejected before queue changes. `BLOGSKY_USERNAME` / `BLOGSKY_PASSWORD` are not used, read or tested by this export-only adapter. Existing Agnes repository secrets are used only for an explicitly requested real generation run.
+
+### Commands
+
+```bash
+# Read-only default: no API calls, queue writes, exports or native login
+python automation/blogsky_backlink_queue.py
+
+# Real content generation, one approved draft maximum; still NO publication
+BLOGSKY_DRY_RUN=0 BLOGSKY_COUNT=1 python automation/blogsky_backlink_queue.py
+
+# Revalidate/export existing completed drafts without new AI generation
+BLOGSKY_DRY_RUN=0 BLOGSKY_COUNT=0 python automation/blogsky_backlink_queue.py
+```
+
+Optional `BLOGSKY_TARGET=city-<16 hex>` selects an exact existing queue key; an unknown or held-family target is rejected before provider calls. An existing ready backlog is exported/reused, not regenerated.
+
+### Durable outputs and review
+
+- Queue: `data/blogsky/backlink-queue.json` (created only on a real run).
+- Draft/QA records: `artifacts/blogsky-backlink-queue/items/`.
+- Generation progress: `state/blogsky-backlink-progress.json`; `generation-status.json` is generation-only, never evidence of publication.
+- Review manifest: `artifacts/blogsky-backlink-queue/exports/index.json`. Only its current items are authorized for review. The manifest is invalidated before revalidation; old immutable HTML files are not readiness/publication evidence.
+- Wrapped HTML fragments: the manifest's `body_file` values. Title, slug, tags and meta description are separate manifest fields; only supported native Blogsky fields should be filled during manual review. Do not claim Blogsky exposes an editable meta-description/slug field until inspected.
+- The exporter reruns full raw-article QA instead of trusting a stored pass, then injects it into the single `{{ARTICLE_HTML}}` placeholder. It stores article/template/body hashes and never sets `published`, native IDs or public URLs.
+- Actions uploads checkpoints even after a generation/export failure, then commits only Blogsky outputs and existing read-only originality caches. Conflicts fail closed and keep the recovery artifact.
+
+**Acceptance boundary:** local tests and read-only production-queue preflight are not a successful Agnes generation, login or native Blogsky publication. Next release step is a deliberately approved first real draft and native-editor verification (including HTML sanitization, full article/FAQ/backlink persistence, sidebar/statistics, mobile/desktop layout and duplicate-safe reconciliation). Only then implement/enable the unattended native publisher; keep schedule off until that acceptance passes.

@@ -3,7 +3,7 @@
 import json,os,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-BLOGS=('roya','farsiblog','rozblog','blogfa','loxblog')
+BLOGS=('roya','farsiblog','rozblog','blogfa','loxblog','blogsky')
 def decision(blog,root=ROOT):
  if blog not in BLOGS:raise ValueError('Unsupported blog')
  path=Path(root)/'data/blog-generated-image-control.json'
