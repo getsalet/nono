@@ -48,7 +48,7 @@ class PublishedBody(HTMLParser):
 def published_snapshot(root,blog,item):
     url=item.get('published_url');host={'roya':'afp.royablog.ir','farsiblog':'afp.farsiblog.com','rozblog':'afp-pipe.rozblog.com','blogfa':'afp-pipe.blogfa.com','loxblog':'afp.lxb.ir','blogsky':'afp-pipe.blogsky.com'}[blog]
     parts=urlsplit(url or '')
-    native_path=parts.path.startswith('/post/') or (blog in ('rozblog','loxblog') and parts.path not in ('','/'))
+    native_path=parts.path.startswith('/post/') or (blog=='blogsky' and bool(re.fullmatch(r'/\d{4}/\d{2}/\d{2}/post-[1-9]\d*/[^/]+',parts.path))) or (blog in ('rozblog','loxblog') and parts.path not in ('','/'))
     # published_url is an already verified native checkpoint; Roz and LoxBlog use their own custom slugs.
     if parts.scheme!='https'or parts.hostname!=host or not native_path:
         raise RuntimeError('originality published history missing a verified public URL for '+blog)
