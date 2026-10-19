@@ -80,3 +80,8 @@ The single-post footer now includes AFP branding, product categories, warranty/a
 ### Independent wide footer layout
 
 Single-post CSS now promotes the footer into its own native page-grid row with `display: contents` on layout-only wrappers. Desktop footer spans both article and sidebar columns (1320px maximum); mobile footer follows the sidebar in the normal document flow. Article tags and author metadata remain above the separate footer. No JavaScript relocation, absolute footer, fixed height, homepage change or publication-schedule change is used.
+
+
+### Edge-to-edge header and footer backgrounds
+
+Header backgrounds span the viewport and the footer uses a horizontally extended, vertically clipped background shadow to reach both viewport edges without horizontal overflow. Footer corners are square. Inner content stays centered in the existing 1320px maximum page grid with responsive mobile gutters. The independent footer row and article content are unchanged.
