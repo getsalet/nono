@@ -24,23 +24,23 @@ def title_candidates(item,blog,root=None):
   curated=m.get('article_editorial_titles',{}).get(blog,{}).get(item.get('source_key',''))
   if curated:return [t for t in curated if 12<=len(t)<=65]
  if not pool:raise RuntimeError('Missing product/blog title matrix')
- from blog_city_editorial import approved_crops
- crops=approved_crops(item,root) if any('{crop}' in t for t in pool) else ['']
- if not crops:
+ from blog_city_editorial import crop_contexts
+ contexts=crop_contexts(item,root) if any('{crop}' in t for t in pool) else [('',item.get('city_fa',''))]
+ if not contexts:
   # Never fill a city title from the global crop vocabulary. No evidence means
   # an explicitly crop-free title, not an implied local cultivation claim.
   pool=m.get('city_only_templates',{}).get(blog,{}).get(item['family'],[]) or [t.replace('برای {crop} در','در').replace('{crop} در','در') for t in pool]
   if any('{crop}' in t for t in pool):raise RuntimeError('No evidence-safe title fallback')
-  crops=['']
+  contexts=[('',item.get('city_fa',''))]
  h=int(hashlib.sha256((blog+item['key']).encode()).hexdigest()[:8],16)
  ordered=pool[h%len(pool):]+pool[:h%len(pool)]
- crops=crops[h%len(crops):]+crops[:h%len(crops)]
+ contexts=contexts[h%len(contexts):]+contexts[:h%len(contexts)]
  subject=re.sub(r'^(خرید|قیمت|فروش)\s+','',item.get('site_title','').split('|')[0].strip()).replace('ایدعال','ایده‌آل')
- labels=[item.get('city_fa','')]
- if item.get('province_fa')and item.get('city_fa')!=item.get('province_fa'):labels.append(item['city_fa']+'، '+item['province_fa'])
  candidates=[]
- for label in labels:
-  for crop in crops:
+ for crop,place in contexts:
+  labels=[place]
+  if item.get('province_fa')and item.get('city_fa')!=item.get('province_fa'):labels.append(place+'، '+item['province_fa'])
+  for label in labels:
    for t in ordered:
     allowed=65-len(t.format(subject='',city=label,crop=crop,province=item.get('province_fa','')))
     if allowed < 0:continue
@@ -84,6 +84,8 @@ def build_queue(blog,root=None):
   title=previous if previous in pool and previous not in used else next((t for t in pool if t not in used),None)
   if title:
    x['assigned_title']=title;used.add(title)
+   if x.get('status')=='completed' and x.get('title') and x['title']!=title:
+    x['status']='failed';x['failure_stage']='editorial_policy';x['last_error']='Assigned title changed after evidence review; regenerate raw article before export/publication'
    if x.get('status')=='needs_title_review':x['status']='pending'
   else:x['status']='needs_title_review';x['last_error']='No unique meaningful matrix title; manual review required'
  from blog_city_priority import prioritize_queue
@@ -146,11 +148,14 @@ def resolve_editorial_link_tokens(obj,links):
 
 def prompt(item,links,source,blog):
  title=matrix_title(item,blog)
+ from blog_city_editorial import evidence_prompt
+ cultivation_evidence=evidence_prompt(item,title,ROOT)
  link_tokens=[{'href':f'AFP_LINK_{i}','anchor':x['anchor'],'role':x['role']}for i,x in enumerate(links,1)]
  item['matrix_title']=title
  location=(' در '+item['city_fa'])if item.get('city_fa')else''
  return f'''برای وبلاگ مستقل {BLOGS[blog]} یک مقاله تازه ۶۰۰ تا ۹۰۰ کلمه‌ای درباره موضوع دقیق «{title}»{location} بنویس.
 عنوان دقیق از ماتریس تأییدشده: {title}
+{cultivation_evidence}
 موضوع و مسئله فنی عنوان باید از مقدمه در متن واقعی حاضر باشد. مقاله قیمت و خرید عمومی را با تعویض عنوان تحویل نده؛ نام صفحه مقصد لینک، موضوع اصلی مقاله نیست.
 اگر عنوان نام محصول کشت ردیفی دارد، متن، چک‌لیست و FAQ به کاربرد آبیاری همان محصول پاسخ دهند؛ مثال‌ها مشروط باشند. کشت رایج آن محصول در شهر یا تناسب قطعی آن با خاک و اقلیم را ادعا نکن. فاصله، فشار، دبی و نیاز آبی را بدون مرجع معتبر به محصول نسبت نده.
 زاویه اختصاصی این وبلاگ: {item['angle']}. مقدمه، مثال‌های غیرمحلی، چک‌لیست و FAQ را از صفر بنویس؛ متن یا پاراگراف رویا و وبلاگ‌های دیگر را بازنویسی سطحی یا کپی نکن. فقط نام شهر زمینه مخاطب است، نه شاهد ویژگی‌های اقلیم یا خاک.
@@ -176,7 +181,8 @@ def qa(item,obj,links,blog,root=None,require_image=True):
  from blog_editorial_image_policy import validate_image
  require_image=require_image and validate_image(item,obj,blog,root or ROOT)
  roya.normalize_approved_hrefs(obj,links);p=Inspect();p.feed(obj.get('html',''));plain=' '.join(p.plain);e=p.errors;n=len(re.findall(r'[\u0600-\u06FF]+',plain))
- for crop in read(Path(root or ROOT)/'data/blog-city-title-matrix.json',{}).get('row_crops',[]):
+ from blog_city_editorial import crop_names
+ for crop in crop_names(obj.get('title',''),root or ROOT):
   if crop in obj.get('title','') and crop not in plain:e.append('Title crop must be addressed in article body')
  if not matrix_ready(root):e.append('Independent title matrix awaiting approval')
  if obj.get('title')!=matrix_title(item,blog,root):e.append('title differs from assigned city matrix')

@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 from collections import Counter
 from city_backlink_policy import title_candidates
-from blog_city_editorial import approved_crops, crop_names, title_errors
+from blog_city_editorial import approved_crop_records, crop_names, title_errors, matching_evidence
 from blog_city_priority import ordered
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -26,22 +26,31 @@ def build(root=ROOT, count=1500):
         seen.add(source['target_url'])
         key='city-'+hashlib.sha256(source['key'].encode()).hexdigest()[:16]
         targets.append({**source,'key':key,'kind':'city'})
-    rows=[];used=set();pairs=set()
-    # Breadth first: cover every available target before adding another angle.
+    rows=[];used=set();pairs=set();per_blog=Counter()
+    quotas={blog:count//len(BLOGS)+(i<count%len(BLOGS))for i,blog in enumerate(BLOGS)}
+    def offer(item,blog):
+        if len(rows)>=count or per_blog[blog]>=quotas[blog] or (blog,item['key']) in pairs:return
+        title=next((t for t in title_candidates(item,blog,root)
+                    if t not in used and not title_errors(item,t,root)),None)
+        if title is None:return
+        crops=crop_names(title,root);evidence=matching_evidence(item,title,root)
+        scope='county' if crops and any(row['scope']=='county'for row in evidence) else 'municipality'
+        row={'id':'title-'+hashlib.sha256((blog+'|'+item['key']+'|'+title).encode()).hexdigest()[:16],
+             'blog':blog,'target_key':item['key'],'title':title,'crop':crops[0] if crops else None,
+             'locality_status':('approved_'+scope+'_crop') if crops else 'city_only_no_crop_claim',
+             'status':'title_candidate_not_generated'}
+        if crops:row['evidence_ids']=[x['id']for x in evidence if x.get('id')]
+        rows.append(row);used.add(title);pairs.add((blog,item['key']));per_blog[blog]+=1
+    # First make reviewed crop targets available in every active blog. This is
+    # at most one title per destination/blog, not padding one crop to 1,500 rows.
+    verified=[item for item in targets if approved_crop_records(item,root)]
+    for item in verified:
+        for blog in BLOGS:offer(item,blog)
+    # Then breadth-first over actual targets, preserving important-city order,
+    # distinct blog angles, and equal quotas. No new target is invented.
     for turn in range(len(BLOGS)):
         for index,item in enumerate(targets):
-            blog=BLOGS[(index+turn)%len(BLOGS)]
-            if (blog,item['key']) in pairs:continue
-            candidates=title_candidates(item,blog,root)
-            title=next((t for t in candidates if t not in used and not title_errors(item,t,root)),None)
-            if title is None:continue
-            crops=crop_names(title,root)
-            rows.append({'id':'title-'+hashlib.sha256((blog+'|'+item['key']+'|'+title).encode()).hexdigest()[:16],
-                         'blog':blog,'target_key':item['key'],'title':title,
-                         'crop':crops[0] if crops else None,
-                         'locality_status':'approved_municipality_crop' if crops else 'city_only_no_crop_claim',
-                         'status':'title_candidate_not_generated'})
-            used.add(title);pairs.add((blog,item['key']))
+            offer(item,BLOGS[(index+turn)%len(BLOGS)])
             if len(rows)==count:break
         if len(rows)==count:break
     if len(rows)!=count:raise RuntimeError('Insufficient unique evidence-safe titles; do not pad, duplicate or invent crop claims')

@@ -44,6 +44,37 @@ class CityEvidenceTests(unittest.TestCase):
                        {'reviewed_at':'invalid'}):
             self.registry({**self.approval,**change})
             self.assertEqual(e.approved_crops(self.item,self.root),[],change)
+    def test_county_evidence_only_produces_explicit_same_county_titles(self):
+        self.registry({**self.approval,'scope':'county','county_fa':'تهران'})
+        titles=c.title_candidates(self.item,'blogsky',self.root)
+        self.assertTrue(titles)
+        self.assertTrue(all('در شهرستان تهران' in t for t in titles))
+        self.assertTrue(all(not e.title_errors(self.item,t,self.root)for t in titles))
+        self.assertTrue(e.title_errors(self.item,'نوار تیپ گوجه‌فرنگی در تهران؛ بررسی نیازها',self.root))
+        self.registry({**self.approval,'scope':'county','county_fa':'ورامین'})
+        self.assertEqual(e.approved_crops(self.item,self.root),[])
+    def test_county_crop_binding_does_not_cross_product_with_city_evidence(self):
+        self.write('data/blog-city-crop-evidence.json',{'policy':e.POLICY,'approved_records':[
+            self.approval,{**self.approval,'scope':'county','county_fa':'تهران','crop':'سیب‌زمینی'}]})
+        titles=c.title_candidates(self.item,'blogsky',self.root)
+        self.assertTrue(any('گوجه‌فرنگی در تهران' in t for t in titles))
+        self.assertTrue(any('سیب‌زمینی در شهرستان تهران' in t for t in titles))
+        self.assertFalse(any('گوجه‌فرنگی در شهرستان تهران' in t or 'سیب‌زمینی در تهران' in t for t in titles))
+    def test_county_intro_and_evidence_prompt_retain_scope_not_third_link(self):
+        self.registry({**self.approval,'scope':'county','county_fa':'تهران'})
+        title=c.title_candidates(self.item,'blogsky',self.root)[0]
+        post={'title':title,'html':self.valid_body()}
+        self.assertTrue(e.editorial_errors(self.item,post,c.links_for(self.item),self.root))
+        post['html']='<p>اگر در شهرستان تهران گوجه‌فرنگی می‌کارید، اطلاعات واقعی زمین را برای بررسی مدل ثبت کنید.</p>'+post['html']
+        self.assertEqual(e.editorial_errors(self.item,post,c.links_for(self.item),self.root),[])
+        prompt=e.evidence_prompt(self.item,title,self.root)
+        self.assertIn('شهرستان تهران',prompt);self.assertIn('لینک سوم اضافه نکن',prompt)
+    def test_current_approved_targets_cover_all_five_active_blogs_without_padding(self):
+        data=build(ROOT);verified=[row for row in data['titles']if row['crop']]
+        self.assertEqual(len(verified),10)
+        self.assertEqual({row['locality_status']for row in verified},{'approved_county_crop'})
+        self.assertEqual({row['blog']for row in verified},{'royablog','farsiblog','rozblog','loxblog','blogsky'})
+        self.assertTrue(all(row.get('evidence_ids')for row in verified))
     def test_historical_research_record_is_not_approval(self):
         self.write('data/blog-city-crop-evidence.json',{'policy':e.POLICY,'research_records':[self.approval]})
         self.assertEqual(e.approved_crops(self.item,self.root),[])
@@ -68,6 +99,18 @@ class CityEvidenceTests(unittest.TestCase):
         stale={**self.item,'key':key,'status':'completed','title':'نوار تیپ پنبه در تهران'}
         self.write('data/blogsky/backlink-queue.json',{'items':[stale]})
         q=c.build_queue('blogsky',self.root);self.assertEqual(q['items'][0]['status'],'failed')
+    def test_new_crop_evidence_reopens_neutral_completed_draft_instead_of_blocking_backlog(self):
+        import hashlib
+        self.registry({**self.approval,'scope':'county','county_fa':'تهران'})
+        source={**self.item,'key':'source'}
+        self.write('data/roya/backlink-queue.json',{'items':[source]})
+        key='city-'+hashlib.sha256(b'source').hexdigest()[:16]
+        stale={**self.item,'key':key,'status':'completed','title':'نوار تیپ در تهران؛ ثبت پرسش‌های فنی',
+               'assigned_title':'نوار تیپ در تهران؛ ثبت پرسش‌های فنی'}
+        self.write('data/blogsky/backlink-queue.json',{'items':[stale]})
+        q=c.build_queue('blogsky',self.root);row=q['items'][0]
+        self.assertEqual(row['status'],'failed');self.assertIn('شهرستان تهران',row['assigned_title'])
+        self.assertEqual(row['title'],stale['title'])  # Never relabel old prose as a new article.
     def valid_body(self):
         return ('<h2>جمع‌بندی</h2><p>برای تصمیم نهایی ابتدا اطلاعات واقعی زمین و مسیر آب را ثبت کنید و مشخصات همان مدل را بررسی کنید. سپس راهنمای شهری و توضیحات تجهیزات را در وب‌سایت اصلی AFP مطالعه کنید تا پرسش‌های لازم را برای مشاوره آماده داشته باشید.</p>'+
                 '<h2>سوالات متداول</h2>'+''.join('<details><summary>چه اطلاعاتی لازم است؟</summary><p>مشخصات واقعی مسیر را برای بررسی مدل آماده کنید.</p></details>'for _ in range(3)))
@@ -88,7 +131,12 @@ class CityEvidenceTests(unittest.TestCase):
         source=json.loads((ROOT/'data/roya/backlink-queue.json').read_text())
         expected=len({x['target_url']for x in source['items']if x.get('family')=='tape20' and x.get('target_url')!=x.get('hub_url')})
         self.assertEqual(data['count'],1500);self.assertEqual(data['summary']['unique_city_targets'],min(expected,1500))
-        self.assertEqual(data['summary']['crop_verified_titles'],0)
+        target={t['key']:t for t in data['targets']}
+        for row in data['titles']:
+            if row['crop']:
+                item={**target[row['target_key']],'family':'tape20','kind':'city'}
+                self.assertTrue(e.matching_evidence(item,row['title'],ROOT))
+                self.assertFalse(e.title_errors(item,row['title'],ROOT))
         self.assertEqual(len({x['title']for x in data['titles']}),1500)
         self.assertNotIn('blogfa',{x['blog']for x in data['titles']})
         self.assertTrue(all(len(x['title'])<=65 for x in data['titles']))

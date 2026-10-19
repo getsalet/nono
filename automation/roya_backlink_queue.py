@@ -183,6 +183,8 @@ def assign_roya_titles(queue, root=None):
 
 
 def build_prompt(item, links):
+    from blog_city_editorial import evidence_prompt
+    cultivation_evidence = evidence_prompt(item,item.get('assigned_title',''),ROOT)
     fam = item.get('family', 'tape20')
     product = 'نوار تیپ ۲۰ سانتی‌متری (قطره‌چکان ۲۰ سانتی)' if fam != 'hose' else 'لوله نخی و لوله تاشو'
     technical = ('لوله نخی و تاشو مسیر انتقال آب هستند؛ لوله نخی را نوار تیپ یا لوله دارای قطره‌چکان معرفی نکن. برای خود لوله نخی «قطره‌چکان‌گذاری» ننویس؛ اتصال به شبکه توزیع یا نوارهای فرعی را جداگانه توضیح بده. مشخصات قطر، فشار و اتصالات را فقط با برگه فنی همان مدل مطرح کن؛ ضخامت یا فاصله قطره‌چکان نوار تیپ را به لوله انتقال آب نسبت نده.' if fam == 'hose' else 'مشخصات فاصله خروجی، دبی، ضخامت و فشار را برای همان مدل از برگه فنی بخواه؛ بدون مرجع، مقدار عددی تجویز نکن و قابلیت جبران فشار را به همه نوارها نسبت نده.')
@@ -194,6 +196,8 @@ def build_prompt(item, links):
 
 شناسه‌های لینک مجاز (فقط همین شناسه‌ها را عیناً در href بگذار؛ برنامه مقصد تأییدشده را جایگزین می‌کند. هیچ URL واقعی، لینک به وبلاگ یا شناسه دیگری نساز):
 {link_lines}
+
+{cultivation_evidence}
 
 قواعد محتوا:
 1. طول متن بین {MIN_WORDS} و {MAX_WORDS} کلمه فارسی باشد (نه کمتر، نه بیشتر).
@@ -367,7 +371,8 @@ def qa(item, obj, links, root=None, require_image=True):
     title = (obj.get('title', '') or '').strip()
     if item.get('assigned_title') and title != item['assigned_title']:
         errors.append('title differs from assigned independent Roya matrix')
-    for crop in load_json(Path(root or ROOT) / 'data/blog-city-title-matrix.json', {}).get('row_crops', []):
+    from blog_city_editorial import crop_names
+    for crop in crop_names(title, root or ROOT):
         if item.get('assigned_title') and crop in title and crop not in re.sub(r'<[^>]+>', ' ', html):
             errors.append('Title crop must be addressed in article body')
     from blog_city_editorial import editorial_errors
@@ -477,6 +482,8 @@ def qa(item, obj, links, root=None, require_image=True):
 
 def offline_sample(item, links):
     city, prov = item['city_fa'], item['province_fa']
+    from blog_city_editorial import evidence_prompt
+    cultivation_evidence = evidence_prompt(item,item.get('assigned_title',''),ROOT)
     fam = item.get('family', 'tape20')
     product = 'نوار تیپ ۲۰ سانتی‌متری' if fam != 'hose' else 'لوله نخی و تاشو'
     filler = ('آبیاری قطره‌ای یکی از کارآمدترین روش‌ها برای کاهش هدررفت آب در مزرعه است و '
