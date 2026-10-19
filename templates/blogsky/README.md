@@ -70,3 +70,8 @@ Optional `BLOGSKY_TARGET=city-<16 hex>` selects an exact existing queue key; an 
 - Actions uploads checkpoints even after a generation/export failure, then commits only Blogsky outputs and existing read-only originality caches. Conflicts fail closed and keep the recovery artifact.
 
 **Acceptance boundary:** local tests and read-only production-queue preflight are not a successful Agnes generation, login or native Blogsky publication. Next release step is a deliberately approved first real draft and native-editor verification (including HTML sanitization, full article/FAQ/backlink persistence, sidebar/statistics, mobile/desktop layout and duplicate-safe reconciliation). Only then implement/enable the unattended native publisher; keep schedule off until that acceptance passes.
+
+
+## Source-derived single-post footer
+
+The single-post footer now includes AFP branding, product categories, warranty/after-sales/quality-test/inspection/request links, factory phone/email/Bale/address, site quick links and language navigation, derived from https://navar-abyari.ir/. It excludes inactive newsletter forms and unverified trust seals. Scoped CSS leaves the homepage and native sidebar unchanged; article prose, header and its two contextual backlinks remain outside the footer. This wrapper is used for future exports, not a global theme or an enabled publication schedule.
