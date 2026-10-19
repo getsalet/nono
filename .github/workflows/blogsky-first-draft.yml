@@ -7,11 +7,11 @@ permissions:
   contents: write
 jobs:
   first-draft:
-    # A narrowly authorized one-shot push, not a schedule or general push producer.
+    # User-requested controlled restart: one Asadabad county draft; no schedule or publication.
     if: contains(github.event.head_commit.message, '[blogsky-first-draft]')
     uses: ./.github/workflows/blogsky-content.yml
     with:
       dry_run: false
       count: '1'
-      target: city-44532954dbc9730f
+      target: city-373f12c4d2b81e25
     secrets: inherit
