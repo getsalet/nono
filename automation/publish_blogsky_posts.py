@@ -109,4 +109,4 @@ if __name__=='__main__':
  try:raise SystemExit(main())
  except Exception as exc:
   # Never print browser exceptions/raw form responses that might include secrets.
-  print('Blogsky native operation stopped: '+type(exc).__name__+'. Review controls/checkpoints; no automatic retry.',file=sys.stderr);raise SystemExit(1)
+  print('Blogsky native operation stopped: '+(str(exc) if type(exc) is RuntimeError else type(exc).__name__)+'. Review controls/checkpoints; no automatic retry.',file=sys.stderr);raise SystemExit(1)
