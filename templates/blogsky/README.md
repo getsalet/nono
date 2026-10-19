@@ -85,3 +85,12 @@ Single-post CSS now promotes the footer into its own native page-grid row with `
 ### Edge-to-edge header and footer backgrounds
 
 Header backgrounds span the viewport and the footer uses a horizontally extended, vertically clipped background shadow to reach both viewport edges without horizontal overflow. Footer corners are square. Inner content stays centered in the existing 1320px maximum page grid with responsive mobile gutters. The independent footer row and article content are unchanged.
+
+
+## Current homepage: native live recent-post cards
+
+`afp-home.html` promotes the native Recent Posts widget into the custom homepage grid. It displays up to six actual latest posts in three desktop columns and one narrow-screen column, preserving the existing hero, products and site footer. No inline script is required: Blogsky's page renderer strips scripts, so the earlier client-side-fetch prototype was discarded. The native latest-widget count, normal posts-per-page and `/posts` archive count are all set to six. Older posts are accessed through the native paginated archive; this is not an inline JavaScript pager on the static homepage.
+
+No count/explanation sentence is shown above or below the cards. No fabricated or duplicate posts were published to fill six slots. The first existing post has an exact source-image cover CSS rule; future posts use a decorative AFP brand cover unless a verified source-image mapping is added. The source is the native server widget, so newly published titles appear without resaving this homepage.
+
+`data/blogsky/home-display.json` records the intended panel settings and implementation boundary. `data/blogsky/title-matrix.json` is the separate reproducible generator-title review export; it does not enable article generation or publication.
