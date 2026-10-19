@@ -75,3 +75,8 @@ Optional `BLOGSKY_TARGET=city-<16 hex>` selects an exact existing queue key; an 
 ## Source-derived single-post footer
 
 The single-post footer now includes AFP branding, product categories, warranty/after-sales/quality-test/inspection/request links, factory phone/email/Bale/address, site quick links and language navigation, derived from https://navar-abyari.ir/. It excludes inactive newsletter forms and unverified trust seals. Scoped CSS leaves the homepage and native sidebar unchanged; article prose, header and its two contextual backlinks remain outside the footer. This wrapper is used for future exports, not a global theme or an enabled publication schedule.
+
+
+### Independent wide footer layout
+
+Single-post CSS now promotes the footer into its own native page-grid row with `display: contents` on layout-only wrappers. Desktop footer spans both article and sidebar columns (1320px maximum); mobile footer follows the sidebar in the normal document flow. Article tags and author metadata remain above the separate footer. No JavaScript relocation, absolute footer, fixed height, homepage change or publication-schedule change is used.
