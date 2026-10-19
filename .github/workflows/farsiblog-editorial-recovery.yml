@@ -1,0 +1,44 @@
+name: Controlled FarsiBlog FAQ placement recovery
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [automation/start-farsiblog-editorial-recovery.txt]
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: controlled-farsiblog-editorial-recovery
+  cancel-in-progress: false
+jobs:
+  request-one-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --quiet Pillow
+      - name: Complete regression suite before recovery
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Request one named recovery after current pipeline is idle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,os,time,urllib.request
+          endpoint='https://api.github.com/repos/getsalet/nono/actions/workflows/farsiblog-content.yml'
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','Content-Type':'application/json','User-Agent':'AFP-controlled-editorial-recovery'}
+          for attempt in range(21):
+              with urllib.request.urlopen(urllib.request.Request(endpoint+'/runs?per_page=20',headers=headers),timeout=30) as response: runs=json.load(response)['workflow_runs']
+              active=[r for r in runs if r.get('status')in ('queued','in_progress','pending','waiting','requested')]
+              if not active:break
+              if attempt==20:raise RuntimeError('Existing pipeline still active; no duplicate dispatch')
+              print('Waiting for existing FarsiBlog pipeline; no publication submitted.',flush=True);time.sleep(30)
+          inputs={'count':'1','publish':'1','dry_run':'0','target':'city-b0acaa09e21bdd10'}
+          request=urllib.request.Request(endpoint+'/dispatches',headers=headers,data=json.dumps({'ref':'main','inputs':inputs}).encode(),method='POST')
+          with urllib.request.urlopen(request,timeout=30) as response:
+              if response.status!=204:raise RuntimeError('Recovery dispatch not accepted')
+          print('One named FarsiBlog recovery requested. This is not proof of publication; existing budget, full QA, native verification and dedup remain mandatory.')
+          PY

@@ -143,6 +143,11 @@ def retry_transient(operation):
 def refresh_ready(q):
     entries=[{'key':x['key'],'title':x.get('title'),'slug':x.get('slug'),'target_url':x.get('target_url','https://navar-abyari.ir/'),'item_file':str(item_path(x['key']))}for x in q['items']if x.get('status')=='completed'and not x.get('published') and x.get('kind')in('city','article')]
     save(ART/'publish-queue.json',{'generated_at':now(),'blog':BLOG,'count':len(entries),'items':entries})
+def recoverable_faq_draft(item,validate=True):
+    if CITY_BLOG!='farsiblog':return None
+    from farsiblog_editorial_repair import recover_saved
+    return recover_saved(load(item_path(item['key']),{}),item,links_for(item),CITY_BLOG,ROOT,validate=validate)
+
 def generation_exit_code(completed,failed):
     # Partial success can still publish approved drafts. A fully rejected
     # batch is not a successful content-producing run; expose it to Actions.
@@ -175,7 +180,7 @@ def main():
     if any(x.get('status')=='completed'and not x.get('published')and x.get('kind')in('city','article')for x in q['items']):refresh_ready(q);print('Approved content already waiting; backlog capped.');return 0
     recover_stale_image_deferrals(q)
     from blog_editorial_image_policy import required,saved_optional,prepare_article,generation_needed
-    candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article') and (ready_handoff or retry_due(x)or saved_optional(load(item_path(x['key']),{}),x,CITY_BLOG,ROOT))]
+    candidates=[x for x in q['items']if x.get('status','pending')in('pending','failed')and not x.get('published') and x.get('kind')in('city','article') and (ready_handoff or retry_due(x)or saved_optional(load(item_path(x['key']),{}),x,CITY_BLOG,ROOT)or recoverable_faq_draft(x,validate=False)is not None)]
     from blog_generated_image import family_enabled
     from blog_image_stock import awaiting
     candidates=[x for x in candidates if not required(x,CITY_BLOG,ROOT)or not awaiting(x,ROOT)]
@@ -210,6 +215,12 @@ def main():
             previous=load(item_path(item['key']),{})
             from blog_image_draft_recovery import recover
             image_retry_draft=recover(previous)
+            if image_retry_draft is None:
+                image_retry_draft=recoverable_faq_draft(item)
+                if image_retry_draft is not None:
+                    from farsiblog_editorial_repair import POLICY as FAQ_REPAIR_POLICY
+                    item['faq_link_recovery_policy']=FAQ_REPAIR_POLICY
+                    print(item['key']+': recovered misplaced approved FAQ link without rewriting prose; complete QA still required',flush=True)
             if ready_handoff and image_retry_draft is None:raise RuntimeError('Saved image-stage draft required for cached-only handoff; no source/text generation')
             if item.get('status')=='failed' and isinstance(previous.get('post'),dict):
                 old=previous['post'];errors,info=qa(item,old,links)
@@ -235,6 +246,10 @@ def main():
                         from city_backlink_policy import matrix_title,resolve_editorial_link_tokens
                         resolve_editorial_link_tokens(obj,links)
                         obj['title']=matrix_title(item,CITY_BLOG)
+                    if CITY_BLOG=='farsiblog':
+                        from farsiblog_editorial_repair import relocate
+                        corrected=relocate(obj,links)
+                        if corrected is not None:obj=corrected
                     from blog_draft_preflight import active,check
                     if active(ROOT):
                         stage='text_validation'
