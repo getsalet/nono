@@ -39,7 +39,9 @@ def main():
                 context=browser.new_context();page=context.new_page();native.login(page)
                 report['native_login_verified']=True
                 body=(ROOT/'templates/blogsky/afp-single-post.html').read_text().replace('{{ARTICLE_HTML}}',post['html'])
-                report['stage']='fill'
+                report['editor_state']=page.evaluate("""()=>({getHTML:HTMLArea.prototype.getHTML.toString(),setHTML:HTMLArea.prototype.setHTML.toString(),submit:document.querySelector('#post-form').onsubmit.toString(),registry:Object.keys(HTMLArea).filter(k=>/editor|instance/i.test(k)),frames:[...document.querySelectorAll('.htmlarea iframe')].map(f=>({ready:f.contentDocument?.readyState,hasBody:!!f.contentDocument?.body}))})""")
+                page.wait_for_timeout(3000)
+                report['stage']='fill' 
                 native.fill(page,post,body)
                 report['stage']='validation'
                 report['native_form_preflight']=page.evaluate('''()=>{const f=document.querySelector('#post-form');let jqValid=null,errors=[];try{if(window.jQuery&&jQuery.fn.valid){jqValid=jQuery(f).valid();errors=(jQuery(f).validate().errorList||[]).map(e=>({field:e.element.id,message:e.message}))}}catch(e){errors=[{field:'validator',message:e.message}]}return {htmlValid:f.checkValidity(),jqueryValid:jqValid,errors,visibleErrors:[...document.querySelectorAll('.field-validation-error,.validation-summary-errors,.token-invalid')].map(x=>x.textContent.trim()).filter(Boolean),fields:['post-title','post-address','post-tag','post-content'].map(id=>{const x=document.getElementById(id);return {id,name:x?.name,length:x?.value?.length,validation:x?[...x.attributes].filter(a=>a.name.startsWith('data-val')||['maxlength','pattern','required'].includes(a.name)).map(a=>({name:a.name,value:a.value})):[]}})}}''')
