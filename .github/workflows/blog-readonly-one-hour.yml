@@ -1,0 +1,40 @@
+name: One-hour read-only five-generator observation
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [automation/start-blog-readonly-one-hour.txt]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: blog-readonly-one-hour
+  cancel-in-progress: false
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install report checkpoint dependency (no provider credentials)
+        run: python -m pip install --quiet Pillow
+      - name: Verify read-only observation boundaries
+        run: python -m unittest discover -s tests -p 'test_blog_readonly_one_hour.py' -v
+      - name: Observe all five active generators for 3600 seconds without recovery or dispatch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python automation/observe_blog_generators_one_hour.py
+      - name: Preserve the latest observation even if interrupted
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blog-readonly-one-hour-${{ github.run_id }}
+          retention-days: 30
+          if-no-files-found: warn
+          path: artifacts/blog-readonly-one-hour/
