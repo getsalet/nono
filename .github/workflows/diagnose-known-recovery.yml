@@ -1,0 +1,33 @@
+name: Read-only diagnosis of known recovery run
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/diagnose-known-recovery.yml]
+  workflow_dispatch:
+permissions: {contents: write, actions: read}
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Read logs, export only safe diagnostic categories
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python automation/diagnose_known_recovery_run.py
+      - name: Save bounded non-secret diagnosis
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f artifacts/known-blog-recovery-diagnosis.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record allowlisted diagnosis of existing-post recovery; no login or publication'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          exit 1
