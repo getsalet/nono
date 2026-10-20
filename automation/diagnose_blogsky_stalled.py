@@ -38,6 +38,9 @@ def main():
             try:
                 context=browser.new_context();page=context.new_page();native.login(page)
                 report['native_login_verified']=True
+                body=(ROOT/'templates/blogsky/afp-single-post.html').read_text().replace('{{ARTICLE_HTML}}',post['html'])
+                native.fill(page,post,body)
+                report['native_form_preflight']=page.evaluate('''()=>{const f=document.querySelector('#post-form');let jqValid=null,errors=[];if(window.jQuery&&jQuery.fn.valid){jqValid=jQuery(f).valid();errors=(jQuery(f).validate().errorList||[]).map(e=>({field:e.element.id,message:e.message}))}return {htmlValid:f.checkValidity(),jqueryValid:jqValid,errors,visibleErrors:[...document.querySelectorAll('.field-validation-error,.validation-summary-errors,.token-invalid')].map(x=>x.textContent.trim()).filter(Boolean),fields:['post-title','post-address','post-tag','post-content'].map(id=>{const x=document.getElementById(id);return {id,name:x?.name,length:x?.value?.length,validation:x?[...x.attributes].filter(a=>a.name.startsWith('data-val')||['maxlength','pattern','required'].includes(a.name)).map(a=>({name:a.name,value:a.value})):[]}})}}''')
                 page.goto(native.ARCHIVE,wait_until='domcontentloaded',timeout=60000)
                 if page.url!=native.ARCHIVE:raise RuntimeError('Unexpected archive')
                 report['native_archive']=page.locator('a[href]').evaluate_all('''(aa,p)=>({matches:aa.filter(a=>a.textContent.trim()===p.title || a.href.includes(p.slug)).map(a=>({label:a.textContent.trim(),href:a.href,rowText:(a.closest('tr')||a.closest('li')||a.parentElement).innerText.slice(0,700)})),editorLinks:aa.filter(a=>a.href.includes('/afp-pipe/post/edit/')).slice(0,15).map(a=>({label:a.textContent.trim(),href:a.href,rowText:(a.closest('tr')||a.closest('li')||a.parentElement).innerText.slice(0,500)}))})''',post)
