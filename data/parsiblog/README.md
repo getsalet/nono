@@ -11,3 +11,5 @@
 - Publication ceiling: one verified post per rolling hour, with workflow concurrency and the existing global stop respected. A successful public canary enables scheduled hourly runs only when control.activate_after_verified_canary is true.
 - Publication receipts, draft IDs and errors: state/parsiblog-progress.json; artifacts/parsiblog-backlink-queue. No screenshots, DOM dumps, cookies or authentication state are uploaded.
 - There is no guarantee of search-engine rankings. Articles must remain independently useful and evidence-bound, not doorway pages with fabricated local facts.
+
+- Factual safety v2: unreviewed city-page prose is not fed to the model as evidence. Only approved scoped cultivation existence is supplied. Numeric technical prescriptions, chemical cleaning and fabricated local soil/water/product construction claims are rejected; an additional editorial model review must approve each text before image/native submission. Approval is bound to the exact saved post digest and rechecked before publishing.

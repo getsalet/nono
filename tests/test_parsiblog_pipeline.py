@@ -17,7 +17,7 @@ class Tests(unittest.TestCase):
   body='<p><img src="'+item['image_url']+'" alt="نمای محصول آبیاری AFP"></p><h2>ثبت نیاز زمین</h2>'+para+'<h2>انتخاب مشخصات</h2><ul><li>ثبت نیاز واقعی زمین</li></ul><h2>جمع‌بندی</h2>'
   for x in links:body+='<p>برای بررسی دقیق‌تر <a href="'+x['url']+'">'+x['anchor']+'</a> را بخوانید.</p>'
   body+='<h2>پرسش‌های متداول</h2>'+''.join('<h3>چه اطلاعاتی لازم است؟</h3><p>نیاز زمین و مشخصات همان مدل باید بررسی شود.</p>'for _ in range(3))
-  post={'title':item['assigned_title'],'slug':'parsiblog-city-choice','meta_description':'راهنمای انتخاب تجهیزات آبیاری و بررسی مشخصات محصول با توجه به اطلاعات واقعی زمین، پرسش‌های فنی و نکات ضروری پیش از ثبت سفارش.','tags':['آبیاری','راهنمای انتخاب'],'html':body};return item,post
+  post={'title':item['assigned_title'],'slug':'parsiblog-city-choice','meta_description':'راهنمای انتخاب تجهیزات آبیاری و بررسی مشخصات محصول با توجه به اطلاعات واقعی زمین، پرسش‌های فنی و نکات ضروری پیش از ثبت سفارش.','tags':['آبیاری','راهنمای انتخاب'],'html':body};item['editorial_review']={'policy':'parsiblog-evidence-review-v2','passed':True,'post_sha256':policy.post_digest(post)};return item,post
  def test_inventory(self):
   rows=self.inventory['items'];self.assertEqual(len(rows),1000);self.assertEqual(len({x['assigned_title']for x in rows}),1000);self.assertTrue(all(12<=len(x['assigned_title'])<=65 for x in rows));self.assertEqual(self.inventory['crop_title_count'],8)
   self.assertTrue(all(not policy.title_errors(x,x['assigned_title'],matrix.ROOT)for x in rows))
@@ -27,6 +27,19 @@ class Tests(unittest.TestCase):
   x,p=self.fixture()
   for i,link in enumerate(policy.links_for(x),1):p['html']=p['html'].replace('href="'+link['url']+'"','href="AFP_LINK_'+str(i)+'"')
   self.assertEqual(policy.qa(x,p,originality=False)[0],[])
+ def test_hash_link_tokens_resolve(self):
+  x,p=self.fixture()
+  for i,link in enumerate(policy.links_for(x),1):p['html']=p['html'].replace('href="'+link['url']+'"','href="#AFP_LINK_'+str(i)+'"')
+  self.assertEqual(policy.qa(x,p,originality=False)[0],[])
+ def test_factual_prescriptions_rejected(self):
+  for claim in ('ضخامت ۲۰۰ میکرون مناسب است','نوار را 2 سانتی متر بالای خاک بگذارید','شستشو با اسید ملایم','خاک لومی و رسی','یکی از مناطق مهم کشت است','نوار فاقد قطره چکان است','دشت این شهرستان دارای شوری بالا است'):
+   self.assertTrue(policy.factual_errors(claim),claim)
+ def test_conditional_checklist_not_fabricated_local_fact(self):
+  self.assertEqual(policy.factual_errors('پیش از انتخاب محصول برای این شهرستان باید کیفیت آب و خاک همان زمین بررسی شود. برگه فنی همان مدل را بخوانید.'),[])
+ def test_current_editorial_review_bound_to_body(self):
+  x,p=self.fixture();self.assertEqual(policy.review_errors(x,p),[]);p['html']+='<p>تغییر متن</p>';self.assertTrue(policy.review_errors(x,p))
+ def test_unknown_hash_token_rejected(self):
+  x,p=self.fixture();p['html']=p['html'].replace(policy.links_for(x)[0]['url'],'#AFP_LINK_4');self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_unknown_link_token_rejected(self):
   x,p=self.fixture();p['html']=p['html'].replace(policy.links_for(x)[0]['url'],'AFP_LINK_4');self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_fourth_link_rejected(self):
