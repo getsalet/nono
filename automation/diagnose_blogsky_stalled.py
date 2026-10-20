@@ -39,15 +39,23 @@ def main():
                 context=browser.new_context();page=context.new_page();native.login(page)
                 report['native_login_verified']=True
                 body=(ROOT/'templates/blogsky/afp-single-post.html').read_text().replace('{{ARTICLE_HTML}}',post['html'])
+                report['stage']='fill'
                 native.fill(page,post,body)
-                report['native_form_preflight']=page.evaluate('''()=>{const f=document.querySelector('#post-form');let jqValid=null,errors=[];if(window.jQuery&&jQuery.fn.valid){jqValid=jQuery(f).valid();errors=(jQuery(f).validate().errorList||[]).map(e=>({field:e.element.id,message:e.message}))}return {htmlValid:f.checkValidity(),jqueryValid:jqValid,errors,visibleErrors:[...document.querySelectorAll('.field-validation-error,.validation-summary-errors,.token-invalid')].map(x=>x.textContent.trim()).filter(Boolean),fields:['post-title','post-address','post-tag','post-content'].map(id=>{const x=document.getElementById(id);return {id,name:x?.name,length:x?.value?.length,validation:x?[...x.attributes].filter(a=>a.name.startsWith('data-val')||['maxlength','pattern','required'].includes(a.name)).map(a=>({name:a.name,value:a.value})):[]}})}}''')
+                report['stage']='validation'
+                report['native_form_preflight']=page.evaluate('''()=>{const f=document.querySelector('#post-form');let jqValid=null,errors=[];try{if(window.jQuery&&jQuery.fn.valid){jqValid=jQuery(f).valid();errors=(jQuery(f).validate().errorList||[]).map(e=>({field:e.element.id,message:e.message}))}}catch(e){errors=[{field:'validator',message:e.message}]}return {htmlValid:f.checkValidity(),jqueryValid:jqValid,errors,visibleErrors:[...document.querySelectorAll('.field-validation-error,.validation-summary-errors,.token-invalid')].map(x=>x.textContent.trim()).filter(Boolean),fields:['post-title','post-address','post-tag','post-content'].map(id=>{const x=document.getElementById(id);return {id,name:x?.name,length:x?.value?.length,validation:x?[...x.attributes].filter(a=>a.name.startsWith('data-val')||['maxlength','pattern','required'].includes(a.name)).map(a=>({name:a.name,value:a.value})):[]}})}}''')
+                report['stage']='archive'
                 page.goto(native.ARCHIVE,wait_until='domcontentloaded',timeout=60000)
                 if page.url!=native.ARCHIVE:raise RuntimeError('Unexpected archive')
                 report['native_archive']=page.locator('a[href]').evaluate_all('''(aa,p)=>({matches:aa.filter(a=>a.textContent.trim()===p.title || a.href.includes(p.slug)).map(a=>({label:a.textContent.trim(),href:a.href,rowText:(a.closest('tr')||a.closest('li')||a.parentElement).innerText.slice(0,700)})),editorLinks:aa.filter(a=>a.href.includes('/afp-pipe/post/edit/')).slice(0,15).map(a=>({label:a.textContent.trim(),href:a.href,rowText:(a.closest('tr')||a.closest('li')||a.parentElement).innerText.slice(0,500)}))})''',post)
                 page.goto(native.BLOG+'/posts',wait_until='domcontentloaded',timeout=60000)
                 report['public_archive_matches']=page.locator('a[href]').evaluate_all('(aa,p)=>aa.filter(a=>a.textContent.trim()===p.title || a.href.includes(p.slug)).map(a=>({title:a.textContent.trim(),href:a.href}))',post)
             finally:browser.close()
-    except Exception as exc:report['native_diagnostic_error_type']=type(exc).__name__
+    except Exception as exc:
+        report['native_diagnostic_error_type']=type(exc).__name__
+        message=str(exc).split('Call log:')[0].split('\n')[0]
+        for secret in [os.getenv('BLOGSKY_USERNAME',''),os.getenv('BLOGSKY_PASSWORD',''),os.getenv('GH_TOKEN','')]:
+            if secret:message=message.replace(secret,'[redacted]')
+        report['error_summary']=message[:350]
     REPORT.parent.mkdir(parents=True,exist_ok=True);REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(report,ensure_ascii=False))
     from blog_generated_image import checkpoint_asset
