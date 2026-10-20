@@ -17,10 +17,10 @@ def gate(root=ROOT):
  from blogsky_auto_control import MANUAL,AUTOMATIC
  if c not in (MANUAL,AUTOMATIC):raise RuntimeError('Native publication is not explicitly enabled for single-post operation')
  if not decision('blogsky',root)['proceed']:raise RuntimeError('Global Blogsky stop gate is active')
-def pending(root=ROOT):
+def pending(root=ROOT,recovery=None):
  for p in (root/'artifacts/blogsky-backlink-queue/native-publications').glob('*.json'):
-  if read(p,{}).get('phase')!='verified':raise RuntimeError('Unconfirmed native submission exists; reconcile before any further publication')
-def prepare(key,root=ROOT):
+  if read(p,{}).get('phase')!='verified' and not (recovery is not None and recovery.allows(p,read(p,{}))):raise RuntimeError('Unconfirmed native submission exists; reconcile before any further publication')
+def prepare(key,root=ROOT,recovery=None):
  from export_blogsky_posts import export
  from city_backlink_policy import qa,links_for
  from blog_generated_image import family_enabled
@@ -30,7 +30,7 @@ def prepare(key,root=ROOT):
  if len(rows)!=1:raise RuntimeError('Unique queue target required')
  item=rows[0]
  if item.get('published'):return None
- pending(root)
+ pending(root,recovery)
  if remaining_publication_budget(root/'state/blogsky-backlink-progress.json')<1:raise RuntimeError('Hourly publication budget exhausted')
  from blogsky_auto_control import configuration,AUTOMATIC,interval_open
  if configuration(root)==AUTOMATIC and not interval_open(root):raise RuntimeError('Automatic 20-minute publication interval not elapsed')
@@ -75,8 +75,8 @@ def run(page,context,root=ROOT):
  from city_backlink_policy import links_for,qa
  from content_originality import PublishedBody
  gate(root);mode=os.getenv('BLOGSKY_NATIVE_MODE','diagnose')
- if mode not in ('diagnose','publish-one','auto-one'):raise RuntimeError('Unsupported native operation')
- ready=None
+ if mode not in ('diagnose','publish-one','auto-one','recover-one'):raise RuntimeError('Unsupported native operation')
+ ready=None;recovery=None
  if mode=='auto-one':
   from blogsky_auto_control import select_target
   key=select_target(root)
@@ -87,6 +87,11 @@ def run(page,context,root=ROOT):
   if ready is None:print('Already verified published; no native submission.');return 0
  if mode=='auto-one' and ready is None:print('Already published; automatic submission skipped.');return 0
  native.login(page)
+ if mode=='recover-one':
+  from blogsky_recovery import authorize
+  key=os.getenv('BLOGSKY_TARGET','');recovery=authorize(context,key,root)
+  ready=prepare(key,root,recovery)
+  if ready is None:raise RuntimeError('Recovery target is already published')
  if mode=='diagnose':
   page.goto(native.ARCHIVE,wait_until='domcontentloaded',timeout=60000)
   if page.url!=native.ARCHIVE:raise RuntimeError('Native archive unavailable')
@@ -107,15 +112,35 @@ def run(page,context,root=ROOT):
  serialized_post={**post,'html':''.join(parser.parts)};errors,_=qa(item,serialized_post,links_for(item),'blogsky',root)
  if errors:raise RuntimeError('Native editor serialization failed current QA')
  # Recheck controls immediately before the irreversible click, then durable WAL.
- gate(root);pending(root)
+ native.validate_form(page)
+ gate(root);pending(root,recovery)
  receipt=root/f'artifacts/blogsky-backlink-queue/native-publications/{key}.json'
- journal={'key':key,'title':post['title'],'phase':'submitting','submittedAt':now(),'bodySha256':hashlib.sha256(serialized.encode()).hexdigest(),'schedule':mode=='auto-one'};save(receipt,journal)
- if mode=='auto-one':
+ journal={'key':key,'title':post['title'],'phase':'submitting','submittedAt':now(),'bodySha256':hashlib.sha256(serialized.encode()).hexdigest(),'schedule':mode in ('auto-one','recover-one')}
+ if recovery is not None:
+  prior=read(receipt,{})
+  if not recovery.allows(receipt,prior):raise RuntimeError('Recovery authorization expired or journal changed')
+  journal.update(previousAttempts=[prior],recoveryAbsence=recovery.evidence,recoveryRunId=recovery.run_id)
+ save(receipt,journal)
+ if mode in ('auto-one','recover-one'):
   durable_automatic_intent(root,receipt,journal)
   gate(root)
   from blogsky_auto_control import configuration,AUTOMATIC,interval_open
   if configuration(root)!=AUTOMATIC or not interval_open(root):raise RuntimeError('Automatic admission changed before submit; reconcile saved intent')
- page.locator('#publish').click();page.wait_for_timeout(2000)
+ responses=[]
+ def observe(response):
+  from urllib.parse import urlsplit
+  parsed=urlsplit(response.url)
+  if response.request.method=='POST' and parsed.scheme=='https' and parsed.netloc=='www.blogsky.com' and parsed.path.startswith('/afp-pipe/'):
+   responses.append({'path':parsed.path,'status':response.status})
+ page.on('response',observe)
+ try:
+  page.locator('#publish').click();page.wait_for_timeout(2000)
+ finally:
+  page.remove_listener('response',observe)
+  journal['nativePostResponses']=responses
+  save(receipt,journal)
+ if not responses:raise RuntimeError('Native publish click produced no confirmed POST response; reconcile intent before any retry')
+ if any(r['status']>=400 for r in responses):raise RuntimeError('Native publisher returned an HTTP error; reconcile intent without retry')
  # Native success pages do not reliably expose a unique view link. Discover
  # from the public archive after the ONE submit; absence still fails closed.
  discovery=context.new_page()

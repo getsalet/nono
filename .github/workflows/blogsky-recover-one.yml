@@ -1,0 +1,67 @@
+name: Blogsky explicitly authorized single absent-intent recovery
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/blogsky-recover-one.yml]
+permissions:
+  contents: write
+concurrency:
+  group: blogsky-native-publication
+  cancel-in-progress: false
+jobs:
+  recover-exact-intent:
+    if: contains(github.event.head_commit.message, '[blogsky-recover-one]') && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate gates before credentials
+        run: python -c 'import sys;sys.path.insert(0,"automation");from publish_blogsky_posts import gate;gate()'
+      - name: Install native browser
+        run: |
+          python -m pip install --quiet Pillow playwright
+          python -m playwright install --with-deps chromium
+      - name: Recovery and native regression tests
+        run: |
+          python -m unittest discover -s tests -p 'test_blogsky_native.py'
+          python -m unittest discover -s tests -p 'test_blogsky_auto.py'
+          python -m unittest discover -s tests -p 'test_blogsky_recovery.py'
+      - name: Fresh two-archive absence check and at most one native submission
+        env:
+          BLOGSKY_USERNAME: ${{ secrets.BLOGSKY_USERNAME }}
+          BLOGSKY_PASSWORD: ${{ secrets.BLOGSKY_PASSWORD }}
+          BLOGSKY_NATIVE_MODE: recover-one
+          BLOGSKY_TARGET: city-66afad426708678b
+        run: python automation/publish_blogsky_posts.py
+      - name: Preserve outcome even if verification fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blogsky-exact-recovery-${{ github.run_id }}
+          path: |
+            artifacts/blogsky-backlink-queue/
+            artifacts/content-originality/blogsky/
+            data/blogsky/backlink-queue.json
+            state/blogsky-backlink-progress.json
+      - name: Persist outcome and consume one-time recovery control
+        if: always()
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path('data/blogsky/native-recovery-control.json')
+          v=json.loads(p.read_text());v['enabled']=False;v['consumed_by_run']=os.environ['GITHUB_RUN_ID'];p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f artifacts/blogsky-backlink-queue artifacts/content-originality/blogsky data/blogsky/backlink-queue.json state/blogsky-backlink-progress.json data/blogsky/native-recovery-control.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Checkpoint explicit Blogsky recovery outcome and consume authorization [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main

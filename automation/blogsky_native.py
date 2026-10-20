@@ -30,7 +30,8 @@ def login(page):
  page.evaluate('()=>clearInterval(window.interval)')
 def fill(page,post,body):
  assert_editor(page)
- page.evaluate('''()=>{clearInterval(window.interval);const old=HTMLArea.prototype.getHTML;try{HTMLArea.prototype.getHTML=function(){window.afpNativeEditor=this;return old.call(this)};document.querySelector('#post-form').onsubmit()}finally{HTMLArea.prototype.getHTML=old}if(!window.afpNativeEditor)throw Error('Native editor unavailable')}''')
+ page.evaluate('''()=>{clearInterval(window.interval);const old=HTMLArea.prototype.getHTML;try{HTMLArea.prototype.getHTML=function(){window.afpNativeEditor=this;return this._textArea?.value||''};document.querySelector('#post-form').onsubmit()}finally{HTMLArea.prototype.getHTML=old}if(!window.afpNativeEditor)throw Error('Native editor unavailable')}''')
+ page.wait_for_function('()=>window.afpNativeEditor && ((afpNativeEditor._editMode==="wysiwyg" && afpNativeEditor._doc?.body) || (afpNativeEditor._editMode==="textmode" && afpNativeEditor._textArea))',timeout=30000)
  page.locator('#post-title').fill(post['title'])
  page.evaluate('''({body,tags,slug})=>{afpNativeEditor.setHTML(body);document.querySelector('#post-content').value=body;document.querySelector('#post-address').value=slug;$('#post-tag').tokenfield('setTokens',tags);document.querySelector('#Post_CommentStatus').value='2'}''',{'body':body,'tags':post['tags'],'slug':post['slug']})
  return page.evaluate('()=>{const h=afpNativeEditor.getHTML();document.querySelector("#post-content").value=h;return h}')
@@ -60,3 +61,13 @@ def discover_public_post(page,post):
  urls={url for url in matches if public_url(url)}
  if len(urls)!=1:raise RuntimeError('Published post not uniquely confirmed in public archive; reconcile journal, never resubmit')
  return next(iter(urls))
+
+
+def form_validation(page):
+ """Read only native validity; never submit or expose field values/tokens."""
+ return page.evaluate('''()=>{const f=document.querySelector('#post-form');if(!f)return {valid:false,errorFields:['missing-form']};let valid=f.checkValidity(),errorFields=[];if(window.jQuery&&jQuery.fn.valid){valid=jQuery(f).valid()&&valid;errorFields=(jQuery(f).validate().errorList||[]).map(e=>e.element.id)}return {valid,errorFields}}''')
+
+def validate_form(page):
+ result=form_validation(page)
+ if not result.get('valid'):raise RuntimeError('Native form validation failed before submission intent; no publication')
+ return result
