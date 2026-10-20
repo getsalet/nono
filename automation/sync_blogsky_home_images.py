@@ -35,6 +35,15 @@ def without_mapping(body):
  if body.count(START)!=1 or body.count(END)!=1:raise RuntimeError('Ambiguous homepage image mapping boundary')
  return re.sub(re.escape(START)+r'.*?'+re.escape(END),'',body,flags=re.S)
 
+def preserved_body(body):
+ # HTMLArea wraps style text in CDATA comments on each serialize round-trip.
+ # Ignore only these editor-added CSS no-ops; keep all other HTML/text exact.
+ def normalize(match):
+  content=without_mapping(match.group(2))
+  content=re.sub(r'/\*<!\[CDATA\[\*/\s*|\s*/\*\]\]>\*/','',content)
+  return match.group(1)+content.strip()+match.group(3)
+ return re.sub(r'(<style\b[^>]*>)(.*?)(</style>)',normalize,body,flags=re.S|re.I)
+
 def patch_body(body,css):
  if len(re.findall(r'<div\b[^>]*\bid=["\']afp-home["\']',body,re.I))!=1:raise RuntimeError('Expected homepage root unavailable')
  style=re.search(r'(<style\b[^>]*\bid=["\']afp-page-style["\'][^>]*>)(.*?)(</style>)',body,re.S|re.I)
@@ -97,7 +106,8 @@ def sync(context,root=ROOT):
    (folder/'before.html').write_text(before)
    if before!=after:
     serialized=page.evaluate('''body=>{afpHomeEditor.setHTML(body);const html=afpHomeEditor.getHTML();document.querySelector('#post-content').value=html;return html}''',after)
-    if without_mapping(serialized)!=without_mapping(before):raise RuntimeError('Homepage changed outside card image mapping; save refused')
+    (folder/'candidate.html').write_text(serialized)
+    if preserved_body(serialized)!=preserved_body(before):raise RuntimeError('Homepage changed outside card image mapping; save refused')
     valid=page.evaluate('''()=>{const f=document.querySelector('#page-form');return f.checkValidity()&&(!window.jQuery||!jQuery.fn.valid||jQuery(f).valid())}''')
     if not valid:raise RuntimeError('Homepage form invalid; no save attempted')
     gate(root);report['page_save_attempts']=1;save(folder/'status.json',report)
