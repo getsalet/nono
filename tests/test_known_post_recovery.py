@@ -33,6 +33,13 @@ class RecoveryTests(unittest.TestCase):
   self.assertEqual(canonical_text('نوار تيپ در رضوانشهر؛ انتخاب اتصالات'),canonical_text('نوار تیپ در رضوانشهر؛ انتخاب اتصالات'))
   self.assertNotEqual(canonical_text('انتخاب اتصالات'),canonical_text('انتخاب فیلتر'))
   self.assertNotEqual(canonical_text('تنظیم‌کننده'),canonical_text('تنظیم کننده'))
+ def test_native_dedup_retains_equivalent_title_and_rejects_collision(self):
+  from publish_roya_posts import remember_native_title
+  found={};remember_native_title(found,'نوار تيپ',146)
+  self.assertEqual(found['نوار تیپ'],146)
+  self.assertEqual(found['نوار تيپ'],146)
+  remember_native_title(found,'نوار تیپ',146)
+  with self.assertRaises(RuntimeError):remember_native_title(found,'نوار تیپ',147)
  def test_exact_json_edit_acknowledgement(self):
   from reconcile_known_blog_posts import edit_acknowledged
   self.assertTrue(edit_acknowledged('{"status":"ok","pid":146}',146))

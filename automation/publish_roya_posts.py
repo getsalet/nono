@@ -58,6 +58,12 @@ def checkpoint(entry,item,row):
     LOG.parent.mkdir(parents=True,exist_ok=True)
     with LOG.open('a',encoding='utf-8') as f:f.write(json.dumps(row,ensure_ascii=False)+'\n')
 
+def remember_native_title(found,title,pid):
+    from blog_public_content_verify import canonical_text
+    key=canonical_text(title);pid=int(pid)
+    if key in found and found[key]!=pid:raise RuntimeError('Ambiguous normalized native title; no new submission')
+    found[key]=pid;found[title]=pid
+
 def scan_panel(page):
     found={};pending=[POSTS_URL];seen=set()
     while pending:
@@ -69,7 +75,7 @@ def scan_panel(page):
         page.wait_for_selector('table.poststable',timeout=30000)
         rows=page.eval_on_selector_all('table.poststable tbody tr',r"""rows=>rows.map(r=>({title:(r.querySelector('.tdtitle')?.innerText||'').trim(),pid:(r.querySelector('a.actionedit')?.href||'').match(/EditPosts\/(\d+)/)?.[1]}))""")
         for r in rows:
-            if r['pid'] and r['title']:found[r['title']]=int(r['pid'])
+            if r['pid'] and r['title']:remember_native_title(found,r['title'],r['pid'])
         links=page.eval_on_selector_all('a[href]','a=>a.map(e=>e.href)')
         for link in links:
             if urlsplit(link).netloc==urlsplit(PANEL).netloc and urlsplit(link).path.rstrip('/')=='/User/Posts' and link not in seen and link not in pending:pending.append(link)
@@ -141,6 +147,7 @@ def verify_live(page,item,pid):
 
 def publish(todo):
     from playwright.sync_api import sync_playwright
+    from blog_public_content_verify import canonical_text
     attached=bool(os.getenv('AGENT_BROWSER_CDP'));completed=0
     with sync_playwright() as pw:
         if attached:
@@ -151,7 +158,7 @@ def publish(todo):
         try:
             login(page);existing=scan_panel(page)
             for n,entry in enumerate(todo,1):
-                item=load(resolve_item(entry),{});post=item['post'];title=post['title'].strip();pid=existing.get(title)
+                item=load(resolve_item(entry),{});post=item['post'];title=post['title'].strip();pid=existing.get(canonical_text(title))
                 recovered=bool(pid)
                 if not pid:
                     page.goto(ADD_URL,wait_until='domcontentloaded',timeout=90000)
@@ -175,9 +182,9 @@ def publish(todo):
                     if '/User/Posts/' not in page.url:page.goto(POSTS_URL,wait_until='domcontentloaded',timeout=90000)
                     page.wait_for_selector('table.poststable',timeout=30000)
                     pid=page.evaluate(r"""title=>{const row=[...document.querySelectorAll('table.poststable tbody tr')].find(r=>(r.querySelector('.tdtitle')?.innerText||'').trim()===title);return(row?.querySelector('a.actionedit')?.href||'').match(/EditPosts\/(\d+)/)?.[1]||null;}""",title)
-                    if not pid:pid=scan_panel(page).get(title)
+                    if not pid:pid=scan_panel(page).get(canonical_text(title))
                     if not pid:raise RuntimeError('Post was not found after native submit; stop and reconcile before any retry')
-                    pid=int(pid);existing[title]=pid
+                    pid=int(pid);existing[canonical_text(title)]=pid
                 url=verify_live(page,item,pid)
                 row={'key':entry['key'],'title':title,'pid':pid,'url':url,'at':now(),'verified':True,'recovered_existing':recovered}
                 checkpoint(entry,item,row);completed+=1;print(f'[{n}/{len(todo)}] verified {item.get("city_fa","")} pid={pid} -> {url}',flush=True)
