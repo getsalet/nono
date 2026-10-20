@@ -1,0 +1,110 @@
+name: Blogsky automatic generation and verified publication
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/blogsky-auto.yml]
+permissions:
+  contents: write
+concurrency:
+  group: blogsky-automatic-cycle
+  cancel-in-progress: false
+jobs:
+  admission:
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'push' || contains(github.event.head_commit.message, '[blogsky-auto-enable]'))
+    runs-on: ubuntu-latest
+    outputs:
+      proceed: ${{ steps.gate.outputs.proceed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Controls, unresolved submissions and rolling one-post hourly limit
+        id: gate
+        run: python automation/blogsky_auto_control.py
+  generate:
+    needs: admission
+    if: needs.admission.outputs.proceed == '1'
+    uses: ./.github/workflows/blogsky-content.yml
+    with:
+      dry_run: false
+      count: '1'
+      target: ''
+    secrets: inherit
+  publish:
+    needs: generate
+    if: needs.generate.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: blogsky-native-publication
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recheck automatic controls before credentials or dependencies
+        id: gate
+        run: python automation/blogsky_auto_control.py
+      - name: Require dedicated repository credentials without printing values
+        if: steps.gate.outputs.proceed == '1'
+        env:
+          BLOGSKY_USERNAME: ${{ secrets.BLOGSKY_USERNAME }}
+          BLOGSKY_PASSWORD: ${{ secrets.BLOGSKY_PASSWORD }}
+        run: |
+          test -n "$BLOGSKY_USERNAME" && test -n "$BLOGSKY_PASSWORD" || { echo '::error::Dedicated Blogsky repository credentials are missing; no login or publication.'; exit 1; }
+      - name: Install native browser dependencies
+        if: steps.gate.outputs.proceed == '1'
+        run: |
+          python -m pip install --quiet Pillow playwright
+          python -m playwright install --with-deps chromium
+      - name: Native and automatic publication regression tests
+        if: steps.gate.outputs.proceed == '1'
+        run: |
+          python -m unittest discover -s tests -p 'test_blogsky_native.py'
+          python -m unittest discover -s tests -p 'test_blogsky_auto.py'
+      - name: Publish at most one QA-approved priority draft and verify the public DOM
+        if: steps.gate.outputs.proceed == '1'
+        env:
+          BLOGSKY_USERNAME: ${{ secrets.BLOGSKY_USERNAME }}
+          BLOGSKY_PASSWORD: ${{ secrets.BLOGSKY_PASSWORD }}
+          BLOGSKY_NATIVE_MODE: auto-one
+        run: python automation/publish_blogsky_posts.py
+      - name: Preserve recovery checkpoints even after an uncertain submission
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blogsky-auto-checkpoints-${{ github.run_id }}
+          retention-days: 30
+          if-no-files-found: ignore
+          path: |
+            artifacts/blogsky-backlink-queue/
+            artifacts/content-originality/blogsky/
+            data/blogsky/backlink-queue.json
+            state/blogsky-backlink-progress.json
+      - name: Commit verified publication or retain the blocking submission journal
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for path in artifacts/blogsky-backlink-queue artifacts/content-originality/blogsky data/blogsky/backlink-queue.json state/blogsky-backlink-progress.json; do
+            if [ -e "$path" ]; then git add -f "$path"; fi
+          done
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Checkpoint Blogsky automatic publication outcome [skip ci]'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          echo '::error::Checkpoint push failed; durable submit intent blocks further publication; recovery artifact retained.'
+          exit 1
