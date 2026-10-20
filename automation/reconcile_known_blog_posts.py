@@ -3,6 +3,7 @@
 import copy,json,os,re,sys,time,traceback
 from pathlib import Path
 from urllib.parse import urlsplit
+from blog_public_content_verify import canonical_text
 ROOT=Path(__file__).resolve().parents[1]
 TARGETS={'farsiblog':'city-3e7ef4ae8bebb305','loxblog':'city-fbb8d21e0c46bc3f'}
 
@@ -49,7 +50,7 @@ def farsi():
     page.locator('table.poststable').wait_for(timeout=30000)
     records+=page.locator('table.poststable tbody tr').evaluate_all('es=>es.map(e=>({title:e.querySelector(".tdtitle")?.innerText.trim(),edit:e.querySelector("a.actionedit")?.href}))')
     pending += [u for u in page.locator('a[href]').evaluate_all('es=>es.map(e=>e.href)')if urlsplit(u).netloc==urlsplit(state.PANEL).netloc and urlsplit(u).path.rstrip('/')=='/User/Posts' and u not in seen and u not in pending]
-   found=[r for r in records if r['title']==item['post']['title']]
+   found=[r for r in records if canonical_text(r['title']or'')==canonical_text(item['post']['title'])]
    edits={r['edit']for r in found}
    if len(edits)!=1:raise RuntimeError('Native title is absent or ambiguous; no new POST allowed')
    edit=edits.pop()
@@ -64,7 +65,7 @@ def farsi():
      censored=copy.deepcopy(item);censored['post']['html']=re.sub(r'نرمال([\u200c ])کننده فشار',r'ن********\1کننده فشار',item['post']['html'])
      if not matches(censored,actual,links):raise RuntimeError('Public mismatch is not the diagnosed wording-only change; no edit')
      page.goto(edit,wait_until='domcontentloaded',timeout=60000);publisher.active_blog(page)
-     if page.locator('#ptitle').input_value().strip()!=item['post']['title']:raise RuntimeError('Edit title identity mismatch')
+     if canonical_text(page.locator('#ptitle').input_value())!=canonical_text(item['post']['title']):raise RuntimeError('Edit title identity mismatch')
      slug=page.locator('#plink').input_value()
      if slug!=item['post']['slug'][:60].strip('-'):raise RuntimeError('Edit slug identity mismatch')
      page.wait_for_function("()=>['pshort','pfull'].every(id=>window.tinymce?.get(id)?.initialized)",timeout=45000)

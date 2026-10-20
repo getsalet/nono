@@ -2,6 +2,9 @@
 from html.parser import HTMLParser
 from urllib.parse import unquote
 import re,unicodedata
+def canonical_text(text):
+ # Equivalent Persian/Arabic glyph forms only; preserve words and ZWNJ.
+ return re.sub(r'\s+',' ',unicodedata.normalize('NFKC',text).replace('ي','ی').replace('ك','ک')).strip()
 class Body(HTMLParser):
  def __init__(self):super().__init__(convert_charrefs=True);self.parts=[];self.hrefs=[];self.images=[];self.faqs=0
  def handle_data(self,text):self.parts.append(text)
@@ -10,7 +13,7 @@ class Body(HTMLParser):
   if tag=='a':self.hrefs.append(data.get('href',''))
   if tag=='img':self.images.append(data.get('src',''))
   if tag=='details':self.faqs+=1
- def normalized(self):return re.sub(r'\s+',' ',unicodedata.normalize('NFKC',' '.join(self.parts)).replace('ي','ی').replace('ك','ک')).strip()
+ def normalized(self):return canonical_text(' '.join(self.parts))
 def verify_article_body(item,actual_html,links):
  expected=Body();expected.feed(item['post']['html']);actual=Body();actual.feed(actual_html)
  if list(map(unquote,expected.images))!=list(map(unquote,actual.images)):raise RuntimeError('Public image URL missing, duplicated or changed')

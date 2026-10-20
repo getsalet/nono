@@ -120,7 +120,8 @@ def verify_live(page,item,pid):
     response=page.goto(url,wait_until='domcontentloaded',timeout=90000)
     if not response or response.status>=400:raise RuntimeError('Published URL returned an error')
     content=page.content()
-    if post['title'].strip()[:25] not in page.inner_text('body'):raise RuntimeError('Published page title did not verify')
+    from blog_public_content_verify import canonical_text
+    if canonical_text(post['title'])[:25] not in canonical_text(page.inner_text('body')):raise RuntimeError('Published page title did not verify')
     # Verify the city backlink, not a success response alone.
     target=item.get('target_url')
     if target and target not in page.eval_on_selector_all('a[href]','a=>a.map(e=>e.href)'):

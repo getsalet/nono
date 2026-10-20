@@ -28,6 +28,11 @@ class RecoveryTests(unittest.TestCase):
   self.assertIn('verified_url=publisher.verify(public,corrected,pid)',s)
   self.assertIn("if not matches(censored,actual,links)",s)
   self.assertIn("publisher.journal(entry,'verified')",s)
+ def test_title_equivalence_does_not_accept_different_words(self):
+  from blog_public_content_verify import canonical_text
+  self.assertEqual(canonical_text('نوار تيپ در رضوانشهر؛ انتخاب اتصالات'),canonical_text('نوار تیپ در رضوانشهر؛ انتخاب اتصالات'))
+  self.assertNotEqual(canonical_text('انتخاب اتصالات'),canonical_text('انتخاب فیلتر'))
+  self.assertNotEqual(canonical_text('تنظیم‌کننده'),canonical_text('تنظیم کننده'))
  def test_exact_json_edit_acknowledgement(self):
   from reconcile_known_blog_posts import edit_acknowledged
   self.assertTrue(edit_acknowledged('{"status":"ok","pid":146}',146))
