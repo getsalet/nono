@@ -105,7 +105,7 @@ def sync(context,root=ROOT):
    before=page.evaluate('()=>afpHomeEditor.getHTML()');after=patch_body(before,css)
    (folder/'before.html').write_text(before)
    if before!=after:
-    serialized=page.evaluate('''body=>{afpHomeEditor.setHTML(body);const html=afpHomeEditor.getHTML();document.querySelector('#post-content').value=html;return html}''',after)
+    serialized=page.evaluate('''body=>{if(typeof afpHomeEditor.setMode!=='function')throw Error('Native source editor unavailable');afpHomeEditor.setMode('textmode');afpHomeEditor._textArea.value=body;document.querySelector('#post-content').value=body;return afpHomeEditor.getHTML()}''',after)
     (folder/'candidate.html').write_text(serialized)
     if preserved_body(serialized)!=preserved_body(before):raise RuntimeError('Homepage changed outside card image mapping; save refused')
     valid=page.evaluate('''()=>{const f=document.querySelector('#page-form');return f.checkValidity()&&(!window.jQuery||!jQuery.fn.valid||jQuery(f).valid())}''')

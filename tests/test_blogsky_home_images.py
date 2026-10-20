@@ -24,6 +24,10 @@ class HomeImageTests(unittest.TestCase):
   before=self.body();after=images.patch_body(before,images.cover_css([self.row()])).replace('>.hero','>/*<![CDATA[*/\n.hero').replace('</style>','/*]]>*/</style>')
   self.assertEqual(images.preserved_body(before),images.preserved_body(after))
   self.assertNotEqual(images.preserved_body(before),images.preserved_body(after.replace('unchanged','changed')))
+ def test_native_source_mode_preserves_rtl_attributes(self):
+  body=self.body().replace('unchanged','<strong dir="ltr">09134922013</strong>');after=images.patch_body(body,images.cover_css([self.row()]));self.assertEqual(images.without_mapping(after),body)
+  import inspect
+  source=inspect.getsource(images.sync);self.assertIn("setMode('textmode')",source);self.assertNotIn('afpHomeEditor.setHTML(body)',source)
  def test_sync_is_hooked_after_publication_and_before_checkpoint(self):
   workflow=(ROOT/'.github/workflows/blogsky-auto.yml').read_text();self.assertLess(workflow.index('run: python automation/publish_blogsky_posts.py'),workflow.index('run: python automation/sync_blogsky_home_images.py'));self.assertLess(workflow.index('run: python automation/sync_blogsky_home_images.py'),workflow.index('run: python automation/checkpoint_blogsky_native.py'))
  def test_current_article_samples_all_receive_exact_image_css(self):
