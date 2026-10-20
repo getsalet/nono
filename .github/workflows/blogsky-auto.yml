@@ -80,6 +80,12 @@ jobs:
           BLOGSKY_PASSWORD: ${{ secrets.BLOGSKY_PASSWORD }}
           BLOGSKY_NATIVE_MODE: auto-one
         run: python automation/publish_blogsky_posts.py
+      - name: Update homepage covers from the newly published articles
+        if: steps.gate.outputs.proceed == '1'
+        env:
+          BLOGSKY_USERNAME: ${{ secrets.BLOGSKY_USERNAME }}
+          BLOGSKY_PASSWORD: ${{ secrets.BLOGSKY_PASSWORD }}
+        run: python automation/sync_blogsky_home_images.py
       - name: Preserve recovery checkpoints even after an uncertain submission
         if: always()
         uses: actions/upload-artifact@v4

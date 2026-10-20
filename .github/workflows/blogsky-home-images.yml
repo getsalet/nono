@@ -1,0 +1,46 @@
+name: Blogsky homepage article image card synchronization
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/blogsky-home-images.yml]
+permissions:
+  contents: write
+concurrency:
+  group: blogsky-native-publication
+  cancel-in-progress: false
+jobs:
+  sync-existing-home:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[blogsky-home-images]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate existing Blogsky stop and native control
+        run: python -c 'import sys;sys.path.insert(0,"automation");from publish_blogsky_posts import gate;gate()'
+      - name: Install image card verifier
+        run: |
+          python -m pip install --quiet Pillow playwright
+          python -m playwright install --with-deps chromium
+      - name: Homepage image regression tests
+        run: python -m unittest discover -s tests -p 'test_blogsky_home*.py'
+      - name: Synchronize actual article covers; no article submission
+        env:
+          BLOGSKY_USERNAME: ${{ secrets.BLOGSKY_USERNAME }}
+          BLOGSKY_PASSWORD: ${{ secrets.BLOGSKY_PASSWORD }}
+        run: python automation/sync_blogsky_home_images.py
+      - name: Preserve public previews and verification
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blogsky-home-card-images-${{ github.run_id }}
+          path: artifacts/blogsky-backlink-queue/home-card-images/
+      - name: Persist scoped verification and template without unrelated overwrites
+        if: always()
+        run: python automation/checkpoint_blogsky_native.py

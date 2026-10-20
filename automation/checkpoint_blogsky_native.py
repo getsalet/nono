@@ -6,7 +6,7 @@ edit to a target path. One Git tree contains all verification/queue/state change
 import json,os,subprocess,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-SCOPES=('artifacts/blogsky-backlink-queue','artifacts/content-originality/blogsky','data/blogsky/backlink-queue.json','state/blogsky-backlink-progress.json','data/blogsky/native-recovery-control.json')
+SCOPES=('artifacts/blogsky-backlink-queue','artifacts/content-originality/blogsky','data/blogsky/backlink-queue.json','state/blogsky-backlink-progress.json','data/blogsky/native-recovery-control.json','templates/blogsky/afp-home.html')
 REF='refs/afp/blogsky-native-checkpoint'
 def git(args,root,env=None,data=None,check=True):
  r=subprocess.run(['git',*args],cwd=root,env=env,input=data,capture_output=True,timeout=90)
