@@ -21,6 +21,7 @@ Create only these new repository secrets under Settings > Secrets and variables 
 Never commit these values or include them in logs or issue comments.
 The public URL is not a secret. Reuse existing generation-provider secrets when wiring this provider into the existing generator.
 
-## Readiness boundary
-These secret names are the agreed connection contract. No Parsiblog publishing workflow/adapter is implemented by this theme change. Creating the secrets does not activate publishing. A later integration must verify login and editing, prevent duplicate posts, test a draft, and validate public content before claiming generator readiness. No articles were published in these theme tests.
-The provider's current admin/blog URLs use HTTP. Do not assume HTTPS transport or describe this login as encrypted.
+## Rich footer and generator integration
+The installed footer uses real main-site article, product, service, contact, email, Bale and map links. Styles are loaded from a pinned immutable CSS commit because the provider enforces a 40,960-character editor limit. The mobile menu remains native details/summary.
+
+Generator code and the 1,000-title evidence-safe inventory are in automation/parsiblog_*.py and data/parsiblog/. See data/parsiblog/README.md for exact three-link rules and readiness boundaries. Secret-backed login/draft/publication are separate checks; code installation alone is not successful activation. The hourly schedule remains disabled until an actual public canary is verified.

@@ -1,0 +1,13 @@
+# Parsiblog city generator
+
+- Account/blog: AFP, http://afp.parsiblog.com/ (provider currently uses HTTP).
+- Login secrets: PARSIBLOG_USERNAME, PARSIBLOG_PASSWORD. Existing AGNES text/vision keys are reused. No credentials are stored in files or artifacts.
+- Inventory: 1,000 distinct assigned titles across 802 source city/locality labels, based on actual site target pages. Eight titles use approved county/municipality cultivation evidence. Other titles are crop-free: missing evidence never turns into invented local cultivation or agronomic advice. The source registry retains original locality labels; route/province aliases are not treated as agronomic evidence.
+- Exactly three contextual links: main site, corresponding city product page, matching product category. Exactly one occurrence each, assigned anchors, no links in FAQs. Shared existing two-link generators are unchanged.
+- SEO checks: title 12–65 chars; independent 500–1,000 Persian words; description 70–180 chars in export; 1–6 native tags under 120 chars; headings/checklist/conclusion; three final FAQ questions; actual product image approved by existing vision/reference gate; cross-blog and own-queue reuse rejection.
+- Platform-specific FAQ format is h3+p because the native TinyMCE editor strips details/summary. Native source readback and public body verification check text, three links, headings, FAQ structure and image. Description/slug remain in export: no native per-post meta-description/slug field was observed, so their persistence is not claimed.
+- No retries of ambiguous writes. A pre-submission checkpoint survives failure. Known draft IDs are updated rather than creating a second article. Uncertain results are reconciled by native title/body; if inconclusive, human review is required.
+- Workflow: .github/workflows/parsiblog-content.yml. `probe` verifies secret-backed login only; `draft` saves and re-reads a real approved article without public release; `publish` promotes/reconciles one approved item and verifies the actual public URL; `generate` only exports; scheduled jobs are disabled until a public canary is verified.
+- Publication ceiling: one verified post per rolling hour, with workflow concurrency and the existing global stop respected. A successful public canary enables scheduled hourly runs only when control.activate_after_verified_canary is true.
+- Publication receipts, draft IDs and errors: state/parsiblog-progress.json; artifacts/parsiblog-backlink-queue. No screenshots, DOM dumps, cookies or authentication state are uploaded.
+- There is no guarantee of search-engine rankings. Articles must remain independently useful and evidence-bound, not doorway pages with fabricated local facts.
