@@ -41,9 +41,9 @@ jobs:
         if: steps.control.outputs.proceed == '1'
         run: |
           python -m pip install --quiet Pillow
+          bash automation/install_blog_browser.sh chromium
           python -m unittest discover -s tests -p 'test_farsiblog_pressure_wording.py' -v
           python -m unittest discover -s tests -p 'test_known_post_recovery.py' -v
-          bash automation/install_blog_browser.sh chromium
       - name: Reconcile exact existing article only
         if: steps.control.outputs.proceed == '1'
         run: python automation/reconcile_known_blog_posts.py ${{ matrix.blog }}
