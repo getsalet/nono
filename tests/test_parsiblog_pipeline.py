@@ -49,6 +49,12 @@ class Tests(unittest.TestCase):
  def test_mixed_language_rejected(self):
   for claim in ('بررسی que محصول','با对照 اطلاعات زمین'):
    self.assertTrue(policy.factual_errors(claim))
+ def test_document_availability_not_invented(self):
+  self.assertTrue(policy.factual_errors('برگه فنی هر محصول در صفحه همان مدل منتشر می شود و قابل مشاهده و دانلود است'))
+  self.assertEqual(policy.factual_errors('برگه فنی همان مدل را از تولیدکننده درخواست کنید'),[])
+ def test_review_calibrates_checklists_not_local_soil_assertions(self):
+  x,p=self.fixture();brief=policy.review_prompt(x,p)
+  self.assertIn('جمع‌آوری داده است',brief);self.assertIn('خاک این شهرستان رسی است',brief)
  def test_unknown_link_token_rejected(self):
   x,p=self.fixture();p['html']=p['html'].replace(policy.links_for(x)[0]['url'],'AFP_LINK_4');self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_fourth_link_rejected(self):
