@@ -40,6 +40,15 @@ class Tests(unittest.TestCase):
   x,p=self.fixture();self.assertEqual(policy.review_errors(x,p),[]);p['html']+='<p>تغییر متن</p>';self.assertTrue(policy.review_errors(x,p))
  def test_unknown_hash_token_rejected(self):
   x,p=self.fixture();p['html']=p['html'].replace(policy.links_for(x)[0]['url'],'#AFP_LINK_4');self.assertTrue(policy.qa(x,p,originality=False)[0])
+ def test_empty_hash_exact_assigned_anchors_only(self):
+  x,p=self.fixture()
+  for link in policy.links_for(x):p['html']=p['html'].replace('href="'+link['url']+'"','href="#"')
+  self.assertEqual(policy.qa(x,p,originality=False)[0],[])
+  p['html']+='<p><a href="#">نشانی ناشناخته</a></p>'
+  self.assertTrue(policy.qa(x,p,originality=False)[0])
+ def test_mixed_language_rejected(self):
+  for claim in ('بررسی que محصول','با对照 اطلاعات زمین'):
+   self.assertTrue(policy.factual_errors(claim))
  def test_unknown_link_token_rejected(self):
   x,p=self.fixture();p['html']=p['html'].replace(policy.links_for(x)[0]['url'],'AFP_LINK_4');self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_fourth_link_rejected(self):
