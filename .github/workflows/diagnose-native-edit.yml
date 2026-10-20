@@ -1,0 +1,42 @@
+name: Read-only diagnosis of exact native FarsiBlog edit form
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/diagnose-native-edit.yml]
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    concurrency: {group: farsiblog-content-pipeline, cancel-in-progress: false}
+    env:
+      FARSIBLOG_USERNAME: ${{ secrets.FARSIBLOG_USERNAME }}
+      FARSIBLOG_PASSWORD: ${{ secrets.FARSIBLOG_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Respect user stop
+        id: control
+        run: python automation/check_blog_pipeline_control.py farsiblog
+      - name: Inspect existing form without submitting
+        if: steps.control.outputs.proceed == '1'
+        run: |
+          bash automation/install_blog_browser.sh chromium
+          python automation/diagnose_farsiblog_edit.py
+      - name: Save non-secret form metadata only
+        if: steps.control.outputs.proceed == '1'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f artifacts/farsiblog-edit-form-diagnosis.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record read-only metadata for exact existing FarsiBlog edit form'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          exit 1
