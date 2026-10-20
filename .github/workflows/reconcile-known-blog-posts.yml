@@ -42,6 +42,7 @@ jobs:
         run: |
           python -m pip install --quiet Pillow
           python -m unittest discover -s tests -p 'test_farsiblog_pressure_wording.py' -v
+          python -m unittest discover -s tests -p 'test_known_post_recovery.py' -v
           bash automation/install_blog_browser.sh chromium
       - name: Reconcile exact existing article only
         if: steps.control.outputs.proceed == '1'
@@ -56,6 +57,7 @@ jobs:
             data/${{ matrix.blog }}/backlink-queue.json
             state/${{ matrix.blog }}-backlink-progress.json
             artifacts/${{ matrix.blog }}-backlink-queue
+      # Recovery v2: AJAX completion observation and pre-submit CAPTCHA consensus.
       - name: Commit verified checkpoints only
         if: always() && steps.control.outputs.proceed == '1'
         run: |

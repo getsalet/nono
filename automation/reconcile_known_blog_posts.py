@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Bounded reconciliation of two known posts. Never creates a new article."""
-import copy,json,os,re,sys,time
+import copy,json,os,re,sys,time,traceback
 from pathlib import Path
 from urllib.parse import urlsplit
 ROOT=Path(__file__).resolve().parents[1]
@@ -69,8 +69,16 @@ def farsi():
      serialized=page.evaluate("()=>tinymce.get('pshort').getContent()+tinymce.get('pfull').getContent()")
      verify_article_body(corrected,serialized,links)
      # Submit the existing edit form once, preserving all server-loaded metadata.
-     with page.expect_navigation(wait_until='domcontentloaded',timeout=90000):
-      page.locator('#ptitle').evaluate("e=>window.jQuery?window.jQuery(e.form).submit():e.form.submit()")
+     # The native edit can save via AJAX without a document navigation.
+     # Observe the exact existing edit POST once, then verify public content;
+     # never treat a navigation timeout as permission to submit again.
+     from playwright.sync_api import TimeoutError as BrowserTimeout
+     try:
+      with page.expect_response(lambda r:r.request.method=='POST' and urlsplit(r.url).hostname==urlsplit(state.PANEL).hostname and urlsplit(r.url).path.rstrip('/')=='/User/EditPosts/146',timeout=90000)as saved:
+       page.locator('#ptitle').evaluate("e=>window.jQuery?window.jQuery(e.form).submit():e.form.submit()")
+      if saved.value.status>=400:raise RuntimeError('Native existing edit POST failed; no repeat submission')
+     except BrowserTimeout:
+      print('Edit response uncertain; checking public article without another POST.',flush=True)
      verified_url=None
      for attempt in range(3):
       try:verified_url=publisher.verify(public,corrected,pid);break
@@ -116,4 +124,19 @@ def main():
   release=json.loads((ROOT/'data/loxblog/deployment-control.json').read_text())
   if not evaluate(release,'schedule',os.getenv('REPOSITORY_SWITCH',''))['proceed']:raise RuntimeError('LoxBlog release not approved')
  {'farsiblog':farsi,'loxblog':lox}[blog]()
-if __name__=='__main__':main()
+def run_report():
+ blog=sys.argv[1]
+ if blog not in TARGETS:raise RuntimeError('Unsupported recovery target')
+ report={'blog':blog,'key':TARGETS[blog],'passed':False,'new_articles':0}
+ try:
+  main();report['passed']=True
+ except Exception as exc:
+  report['error_class']=type(exc).__name__
+  report['reason']=str(exc)[:350]if type(exc)is RuntimeError else 'Hosted operation failed; inspect sanitized location'
+  report['locations']=[{'file':Path(f.filename).name,'line':f.lineno,'function':f.name}for f in traceback.extract_tb(exc.__traceback__)if str(ROOT/'automation')in f.filename][-6:]
+  raise
+ finally:
+  path=ROOT/'artifacts'/(blog+'-backlink-queue')/'known-post-recovery.json'
+  path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+  print(json.dumps(report,ensure_ascii=False),flush=True)
+if __name__=='__main__':run_report()

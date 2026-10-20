@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Native LoxBlog login with visual CAPTCHA; never exports sessions or secrets."""
-import base64,json,os,re,sys,urllib.request
+import base64,io,json,os,re,sys,urllib.request
+from collections import Counter
 from urllib.parse import urlsplit
 PANEL='https://loxblog.com'
 BLOG='https://afp.lxb.ir/'
 NEW=PANEL+'/adminnew.php?page=sendpost'
 ARCHIVE=PANEL+'/adminnew.php?page=postslist'
 
-def read_captcha(raw):
+def transcribe_captcha(raw):
  import roya_backlink_queue as roya
  from agnes_json_client import parse_object
  key=roya.BASE.next_agnes_key() if hasattr(roya.BASE,'next_agnes_key') else roya.BASE.AGNES_KEY
@@ -22,6 +23,29 @@ def read_captcha(raw):
  except Exception as exc:raise RuntimeError('Native visual challenge transcription unavailable: '+type(exc).__name__)from None
  if not re.fullmatch(r'[0-9]{5}',str(value)):raise RuntimeError('Visual challenge ambiguous; no credential submission')
  return str(value)
+
+def captcha_consensus(values):
+ valid=[str(v).strip() for v in values if re.fullmatch(r'[0-9]{5}',str(v).strip())]
+ if valid:
+  code,count=Counter(valid).most_common(1)[0]
+  if count>=2:return code
+ raise RuntimeError('Visual challenge ambiguous; no credential submission')
+
+def read_captcha(raw):
+ # Two independent readings must agree BEFORE any credential submission.
+ # Enlarge the same in-memory screenshot; never GET the challenge again:
+ # doing so can replace the server-side answer while the old image is visible.
+ from PIL import Image,ImageOps
+ image=Image.open(io.BytesIO(raw)).convert('RGB')
+ variants=[raw]
+ for factor in (3,5):
+  out=io.BytesIO();ImageOps.autocontrast(image.resize((image.width*factor,image.height*factor),Image.Resampling.LANCZOS)).save(out,format='PNG');variants.append(out.getvalue())
+ values=[]
+ for variant in variants:
+  values.append(transcribe_captcha(variant))
+  try:return captcha_consensus(values)
+  except RuntimeError:pass
+ raise RuntimeError('Visual challenge ambiguous; no credential submission')
 
 def launch_browser(pw):return pw.chromium.launch(headless=True)
 
