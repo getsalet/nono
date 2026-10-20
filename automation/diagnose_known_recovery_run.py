@@ -15,7 +15,7 @@ def api(path):
   # Never forward the GitHub credential to the signed blob URL.
   return urllib.request.urlopen(url,timeout=45).read()
 rows=[]
-for j in json.loads(api('actions/runs/39489558974/jobs?per_page=100'))['jobs']:
+for j in json.loads(api('actions/runs/39493473509/jobs?per_page=100'))['jobs']:
  if j['conclusion']!='failure':continue
  raw=api('actions/jobs/'+str(j['id'])+'/logs').decode('utf-8','replace')
  categories=[]
@@ -26,6 +26,6 @@ for j in json.loads(api('actions/runs/39489558974/jobs?per_page=100'))['jobs']:
  waiting=re.findall(r'waiting for (?:locator|selector)\([^\n]{0,140}',raw)
  # Locator names only; do not export caller input values, DOM, tokens or logs.
  waiting=[x for x in waiting if not any(y in x.lower()for y in ('password','passwd','username','usern','loginpass'))]
- rows.append({'job':j['name'],'job_id':j['id'],'categories':categories,'frames':frames[-8:],'timeouts':timeouts,'waiting':waiting[-3:]})
-path=Path('artifacts/known-blog-recovery-diagnosis.json');path.parent.mkdir(exist_ok=True);path.write_text(json.dumps({'run':39489558974,'diagnostics':rows},indent=2))
+ rows.append({'job':j['name'],'job_id':j['id'],'categories':categories,'frames':frames[-8:],'timeouts':timeouts,'waiting':waiting[-3:],'network_errors':sorted(set(re.findall(r'net::ERR_[A-Z_]+',raw)))})
+path=Path('artifacts/known-blog-recovery-diagnosis.json');path.parent.mkdir(exist_ok=True);path.write_text(json.dumps({'run':39493473509,'diagnostics':rows},indent=2))
 print(json.dumps(rows,indent=2))
