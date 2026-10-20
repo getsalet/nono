@@ -9,6 +9,8 @@ import parsiblog_pipeline as pipeline
 class Tests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):cls.inventory=matrix.build();cls.item=copy.deepcopy(next(x for x in cls.inventory['items']if not x['evidence']));cls.item['image_url']='https://navar-abyari.ir/wp-content/uploads/afp-drip-tape-roll-transparent.webp'
+ def setUp(self):
+  mock=patch('blog_image_gate.validate_record',return_value=[]);mock.start();self.addCleanup(mock.stop)
  def fixture(self):
   item=copy.deepcopy(self.item);links=policy.links_for(item)
   para='<p>'+('بررسی مشخصات محصول پیش از سفارش و ثبت اطلاعات زمین برای انتخاب آگاهانه ضروری است. '*43)+'</p>'
@@ -21,6 +23,12 @@ class Tests(unittest.TestCase):
   self.assertTrue(all(not policy.title_errors(x,x['assigned_title'],matrix.ROOT)for x in rows))
  def test_three_links_and_native_faq(self):
   x,p=self.fixture();e,r=policy.qa(x,p,originality=False);self.assertEqual(e,[]);self.assertEqual(r['link_count'],3)
+ def test_link_tokens_resolve_before_strict_qa(self):
+  x,p=self.fixture()
+  for i,link in enumerate(policy.links_for(x),1):p['html']=p['html'].replace('href="'+link['url']+'"','href="AFP_LINK_'+str(i)+'"')
+  self.assertEqual(policy.qa(x,p,originality=False)[0],[])
+ def test_unknown_link_token_rejected(self):
+  x,p=self.fixture();p['html']=p['html'].replace(policy.links_for(x)[0]['url'],'AFP_LINK_4');self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_fourth_link_rejected(self):
   x,p=self.fixture();p['html']+='<p><a href="https://navar-abyari.ir/shop/">فروشگاه</a></p>';self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_links_in_faq_rejected(self):
@@ -33,6 +41,11 @@ class Tests(unittest.TestCase):
   x,p=self.fixture();q=copy.deepcopy(p);q['html']=q['html'].replace('ی','ي').replace('ک','ك');q['title']=q['title'].replace('ی','ي');self.assertEqual(native.persisted_errors(x,p,q),[])
  def test_budget(self):
   self.assertEqual(pipeline.budget({'published':[]}),1);self.assertEqual(pipeline.budget({'published':[{'at':pipeline.stamp()}]}),0)
+ def test_missing_image_review_rejected(self):
+  x,p=self.fixture()
+  with patch('blog_image_gate.validate_record',return_value=['Current family-aware image review missing']):self.assertTrue(policy.qa(x,p,originality=False)[0])
+ def test_unverified_crop_body_rejected(self):
+  x,p=self.fixture();p['html']=p['html'].replace('<h2>ثبت نیاز زمین</h2>','<h2>ثبت نیاز زمین</h2><p>کشت '+json.loads((matrix.ROOT/'data/blog-city-title-matrix.json').read_text())['row_crops'][0]+' در این شهر</p>');self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_account_guard(self):
   class P:
    url='http://www.parsiblog.com/Notes.aspx'

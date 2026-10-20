@@ -52,7 +52,9 @@ def persisted_errors(item,expected,actual):
 def save_post(page,item,publish=False,pid=None):
  guard(page)
  page.wait_for_function('typeof tinyMCE!=="undefined"&&tinyMCE.get("PBEdit")&&tinyMCE.get("PBEdit").initialized',timeout=45000)
- post=item['post'];page.locator('#Title').fill(post['title'])
+ post=item['post']
+ if any(SEP in value for value in [post['title'],post['html']]+post['tags']):raise NativeError('Native protocol delimiter present in content')
+ page.locator('#Title').fill(post['title'])
  result=page.evaluate('''x=>{CurNoteID=x.id||'-1';tinyMCE.get('PBEdit').setContent(x.body);document.getElementById('SubjectDL').value=x.tags;return tinyMCE.get('PBEdit').getContent()}''',{'body':post['html'],'tags':'+'.join(post['tags']),'id':str(pid)if pid else None})
  check={'title':post['title'],'html':result};errors=persisted_errors(item,post,check)
  if errors:raise NativeError('Editor changed approved content; '+','.join(errors))

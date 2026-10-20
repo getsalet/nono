@@ -63,7 +63,7 @@ jobs:
       AGNES_API_KEY25: ${{ secrets.AGNES_API_KEY25 }}
     steps:
       - uses: actions/checkout@v4
-        with: {ref: main, fetch-depth: 0}
+        with: {ref: "${{ github.sha }}", fetch-depth: 1}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - name: Respect existing global stop and disabled schedule
@@ -110,6 +110,7 @@ jobs:
       - name: Commit only Parsiblog and content QA checkpoints
         if: always() && steps.gate.outputs.proceed == '1'
         run: |
+          git switch -C parsiblog-checkpoint
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           for path in state/parsiblog-progress.json data/parsiblog/control.json artifacts/parsiblog-backlink-queue artifacts/content-originality artifacts/blog-image-reviews; do
@@ -120,7 +121,7 @@ jobs:
           if ! git diff --quiet; then echo '::error::Unexpected tracked changes; artifact retained.'; git diff --name-only; exit 1; fi
           for attempt in 1 2 3; do
             git pull --rebase origin main || exit 1
-            if git push origin main; then exit 0; fi
+            if git push origin HEAD:main; then exit 0; fi
             sleep $((attempt * 5))
           done
           exit 1
