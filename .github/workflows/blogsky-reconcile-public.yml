@@ -25,13 +25,6 @@ jobs:
           python -m pip install --quiet Pillow playwright
           python -m playwright install --with-deps chromium
       - name: Verify the already-observed Tehran article without login or submit
-        run: python automation/reconcile_blogsky_public_post.py city-44532954dbc9730f https://afp-pipe.blogsky.com/1405/07/28/post-2/nivar-tip-dar-tehran-barghe-neyzsanji
+        run: python automation/reconcile_blogsky_public_post.py city-66afad426708678b https://afp-pipe.blogsky.com/1405/07/28/post-3/nvar-tip-tehran-yaddasht-ha-bahrebardari
       - name: Persist only publicly verified checkpoint
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f artifacts/blogsky-backlink-queue artifacts/content-originality/blogsky data/blogsky/backlink-queue.json state/blogsky-backlink-progress.json
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Reconcile publicly verified Tehran Blogsky post; zero submissions [skip ci]'
-          git pull --rebase origin main
-          git push origin HEAD:main
+        run: python automation/checkpoint_blogsky_native.py --consume-recovery

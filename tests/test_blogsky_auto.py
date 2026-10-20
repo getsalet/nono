@@ -60,11 +60,11 @@ class AutomaticBlogskyTests(unittest.TestCase):
     def test_automatic_intent_requires_remote_durability_before_submit(self):
         receipt=self.root/'artifacts/blogsky-backlink-queue/native-publications/key.json'
         with patch.dict(os.environ,{'GITHUB_ACTIONS':'false'}),self.assertRaises(RuntimeError):publisher.durable_automatic_intent(self.root,receipt,{'phase':'submitting'})
-        with patch.dict(os.environ,{'GITHUB_ACTIONS':'true'}),patch.object(publisher.subprocess,'run',return_value=SimpleNamespace(returncode=0)) as run:
+        with patch.dict(os.environ,{'GITHUB_ACTIONS':'true'}),patch('checkpoint_blogsky_native.persist',return_value='durable') as persist:
             publisher.durable_automatic_intent(self.root,receipt,{'phase':'submitting'})
-            self.assertEqual(run.call_args_list[-1].args[0],['git','push','origin','HEAD:main'])
+            persist.assert_called_once_with(self.root,[str(receipt.relative_to(self.root))],'Checkpoint Blogsky automatic submit intent [skip ci]')
             self.assertEqual(json.loads(receipt.read_text())['phase'],'submitting')
-        with patch.dict(os.environ,{'GITHUB_ACTIONS':'true'}),patch.object(publisher.subprocess,'run',return_value=SimpleNamespace(returncode=1)),self.assertRaises(RuntimeError):publisher.durable_automatic_intent(self.root,receipt,{'phase':'submitting'})
+        with patch.dict(os.environ,{'GITHUB_ACTIONS':'true'}),patch('checkpoint_blogsky_native.persist',side_effect=RuntimeError('safe failure')),self.assertRaises(RuntimeError):publisher.durable_automatic_intent(self.root,receipt,{'phase':'submitting'})
     def test_workflow_requires_qa_and_serializes_native_publication(self):
         text=(ROOT/'.github/workflows/blogsky-auto.yml').read_text()
         for required in ("cron: '*/20 * * * *'",'needs.generate.result',"count: '1'",'blogsky-native-publication','BLOGSKY_NATIVE_MODE: auto-one','if: always()'):

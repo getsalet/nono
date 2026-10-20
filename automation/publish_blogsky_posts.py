@@ -64,11 +64,8 @@ def durable_automatic_intent(root,receipt,journal):
  """
  if os.getenv('GITHUB_ACTIONS')!='true':raise RuntimeError('Automatic publication requires a durable GitHub runner checkpoint')
  save(receipt,journal)
- relative=str(receipt.relative_to(root))
- commands=[['config','user.name','github-actions[bot]'],['config','user.email','41898282+github-actions[bot]@users.noreply.github.com'],['add','--',relative],['commit','-m','Checkpoint Blogsky automatic submit intent [skip ci]','--',relative],['push','origin','HEAD:main']]
- for args in commands:
-  result=subprocess.run(['git',*args],cwd=root,capture_output=True,timeout=90)
-  if result.returncode:raise RuntimeError('Durable automatic intent checkpoint failed; no native submit allowed')
+ from checkpoint_blogsky_native import persist
+ persist(root,[str(receipt.relative_to(root))],'Checkpoint Blogsky automatic submit intent [skip ci]')
 
 def run(page,context,root=ROOT):
  import blogsky_native as native
