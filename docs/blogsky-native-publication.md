@@ -6,9 +6,9 @@ Blog: https://afp-pipe.blogsky.com
 
 - Generation and export remain in `blogsky-content.yml`; `BLOGSKY_PUBLISH=0` is intentional there.
 - `blogsky-native.yml` remains the manual diagnostic/single-post recovery path.
-- Explicit user authorization enabled `blogsky-auto.yml`: hourly at minute 17 UTC (GitHub scheduling may be delayed), plus one immediate activation run. It generates at most one priority draft and publishes at most one current QA-approved article.
-- Automatic mode enforces **one verified publication in a rolling 60 minutes**; held families, missing credentials and unresolved submission journals block the cycle.
-- `data/blogsky/native-publication-control.json` now explicitly selects `automatic_one_post`, maximum one per run, with schedule enabled. The export adapter remains non-publishing by design.
+- Explicit user authorization enabled `blogsky-auto.yml`: every 20 minutes, at minutes 0, 20 and 40 UTC (GitHub scheduling and generation/QA may delay actual publication), plus one immediate activation run. It generates at most one priority draft and publishes at most one current QA-approved article.
+- Automatic mode enforces **at least 20 minutes between verified publications**, maximum one per run, while retaining the shared maximum of three in a rolling hour; held families, missing credentials and unresolved submission journals block the cycle.
+- `data/blogsky/native-publication-control.json` now explicitly selects `automatic_one_post`, maximum one per run, with schedule enabled and `min_interval_minutes=20`. The export adapter remains non-publishing by design.
 - Default operation is `diagnose`: repository secrets authenticate, then the expected blog, native editor and management archive are checked. No AI generation or post submission.
 - `publish-one` requires an explicitly selected city key and one existing completed, currently approved export. It does not generate another draft.
 - Repository secrets: `BLOGSKY_USERNAME` and `BLOGSKY_PASSWORD`. Never place credentials/cookies in files, logs or artifacts.
@@ -45,3 +45,7 @@ To disable automatic publishing, replace the native publication control with the
 The first automatic submission published the Tehran article (`city-44532954dbc9730f`) at the observed native `post-2` URL. The original success-page view-link locator timed out after the successful submission, leaving the durable `submitting` journal. Public browser readback independently matched the complete raw article, exact two links, three FAQs and rich layout; no second submission was attempted.
 
 The publisher now discovers the exact title+slug on the public `/posts` archive after its single click, rather than depending on the management success-page link. `reconcile_blogsky_public_post.py` and the explicit one-time `blogsky-reconcile-public.yml` read the already-observed public article, run full verification and checkpoint it. They never read credentials, log in or submit a form. A missing or mismatching public post remains blocked, not retried.
+
+## User-requested 20-minute cadence
+
+The schedule is now `*/20 * * * *`; the admission gate, publisher preparation and final pre-submit recheck all use the same 20-minute minimum interval. Exactly 20 elapsed minutes is eligible; a future timestamp, malformed history, unresolved submission, global stop or failed QA still blocks. One successful publication per invocation and the shared three-per-hour limit remain unchanged. GitHub schedules are best-effort: delayed workflows or an unfinished generation/QA step can make the actual interval longer, never shorter than the admission limit.

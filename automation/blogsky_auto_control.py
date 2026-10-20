@@ -1,16 +1,16 @@
-"""Automatic Blogsky admission: one verified publication per rolling hour."""
+"""Automatic Blogsky admission: one verified publication per 20-minute interval."""
 import datetime
 import json
 import os
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 MANUAL={'enabled':True,'mode':'manual_one_post','max_count_per_run':1,'schedule_enabled':False}
-AUTOMATIC={'enabled':True,'mode':'automatic_one_post','max_count_per_run':1,'schedule_enabled':True}
+AUTOMATIC={'enabled':True,'mode':'automatic_one_post','max_count_per_run':1,'schedule_enabled':True,'min_interval_minutes':20}
 
 def configuration(root=ROOT):
     return json.loads((Path(root)/'data/blogsky/native-publication-control.json').read_text())
 
-def hour_open(root=ROOT,current=None):
+def interval_open(root=ROOT,current=None):
     current=current or datetime.datetime.now(datetime.timezone.utc)
     if current.tzinfo is None:raise RuntimeError('Timezone-aware publication clock required')
     path=Path(root)/'state/blogsky-backlink-progress.json'
@@ -21,7 +21,7 @@ def hour_open(root=ROOT,current=None):
             if at.tzinfo is None:raise ValueError()
         except (KeyError,ValueError,TypeError,AttributeError):
             raise RuntimeError('Invalid publication history; reconcile before automatic publishing') from None
-        if at>=current-datetime.timedelta(hours=1):return False
+        if at>current-datetime.timedelta(minutes=AUTOMATIC['min_interval_minutes']):return False
     return True
 
 def preflight(root=ROOT):
@@ -29,7 +29,7 @@ def preflight(root=ROOT):
     gate(root)
     if configuration(root)!=AUTOMATIC:raise RuntimeError('Automatic publication is not enabled')
     pending(root)
-    return hour_open(root)
+    return interval_open(root)
 
 def select_target(root=ROOT):
     from blog_city_priority import ordered
@@ -43,7 +43,7 @@ def select_target(root=ROOT):
 
 def main():
     allowed=preflight()
-    print('Blogsky automatic admission: '+('allowed; generation and QA still required' if allowed else 'hourly idle; no generation or publication'))
+    print('Blogsky automatic admission: '+('allowed; generation and QA still required' if allowed else '20-minute interval idle; no generation or publication'))
     if os.getenv('GITHUB_OUTPUT'):
         with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('proceed='+('1' if allowed else '0')+'\n')
     return 0

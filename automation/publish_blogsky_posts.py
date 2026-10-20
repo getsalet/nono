@@ -32,8 +32,8 @@ def prepare(key,root=ROOT):
  if item.get('published'):return None
  pending(root)
  if remaining_publication_budget(root/'state/blogsky-backlink-progress.json')<1:raise RuntimeError('Hourly publication budget exhausted')
- from blogsky_auto_control import configuration,AUTOMATIC,hour_open
- if configuration(root)==AUTOMATIC and not hour_open(root):raise RuntimeError('Automatic one-post hourly budget exhausted')
+ from blogsky_auto_control import configuration,AUTOMATIC,interval_open
+ if configuration(root)==AUTOMATIC and not interval_open(root):raise RuntimeError('Automatic 20-minute publication interval not elapsed')
  if not family_enabled(item,root):raise RuntimeError('Product family is held')
  manifest=export(root);entries=[x for x in manifest['items'] if x['key']==key]
  if len(entries)!=1:raise RuntimeError('Target has no currently approved export')
@@ -80,7 +80,7 @@ def run(page,context,root=ROOT):
  if mode=='auto-one':
   from blogsky_auto_control import select_target
   key=select_target(root)
-  if key is None:print('No approved automatic target or hourly idle; no login or submission.');return 0
+  if key is None:print('No approved automatic target or interval idle; no login or submission.');return 0
   ready=prepare(key,root)
  if mode=='publish-one':
   ready=prepare(os.getenv('BLOGSKY_TARGET',''),root)
@@ -113,8 +113,8 @@ def run(page,context,root=ROOT):
  if mode=='auto-one':
   durable_automatic_intent(root,receipt,journal)
   gate(root)
-  from blogsky_auto_control import configuration,AUTOMATIC,hour_open
-  if configuration(root)!=AUTOMATIC or not hour_open(root):raise RuntimeError('Automatic admission changed before submit; reconcile saved intent')
+  from blogsky_auto_control import configuration,AUTOMATIC,interval_open
+  if configuration(root)!=AUTOMATIC or not interval_open(root):raise RuntimeError('Automatic admission changed before submit; reconcile saved intent')
  page.locator('#publish').click();page.wait_for_timeout(2000)
  # Native success pages do not reliably expose a unique view link. Discover
  # from the public archive after the ONE submit; absence still fails closed.

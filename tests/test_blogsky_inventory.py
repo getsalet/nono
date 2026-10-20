@@ -21,10 +21,16 @@ class BlogskyInventoryTests(unittest.TestCase):
         titles=[x['title'] if x.get('published') else x['assigned_title'] for x in active]
         self.assertEqual(len(set(titles)),1500)
         self.assertEqual(len({x['target_url'] for x in active}),645)
-        self.assertEqual(sum(bool(x.get('published')) for x in active),1)
+        original=json.loads((ROOT/'data/blogsky/backlink-queue.json').read_text())
+        expected=sum(bool(x.get('published')) for x in original['items'] if x.get('family')=='tape20')
+        self.assertEqual(sum(bool(x.get('published')) for x in active),expected)
 
     def test_variants_never_copy_drafts_or_publish_fields(self):
-        variants=[x for x in self.queue['items'] if x.get('inventory_parent_key')]
+        # Exercise fresh enrollment, not the mutable real publication history.
+        q=copy.deepcopy(self.queue)
+        q['items']=[x for x in q['items'] if not x.get('inventory_parent_key')]
+        expand(q,ROOT)
+        variants=[x for x in q['items'] if x.get('inventory_parent_key')]
         self.assertEqual(len(variants),855)
         for row in variants:
             self.assertEqual(row['status'],'pending')
