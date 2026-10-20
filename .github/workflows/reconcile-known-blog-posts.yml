@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        blog: [farsiblog, loxblog]
+        blog: [farsiblog] # LoxBlog passed in run 39495040265; do not repeat login.
     concurrency:
       group: ${{ matrix.blog }}-content-pipeline
       cancel-in-progress: false
@@ -57,7 +57,7 @@ jobs:
             data/${{ matrix.blog }}/backlink-queue.json
             state/${{ matrix.blog }}-backlink-progress.json
             artifacts/${{ matrix.blog }}-backlink-queue
-      # Recovery v3: confirmed /Op/ edit handler and observed public canonical URL.
+      # Recovery v4: exact hidden post ID and numeric server failure diagnosis.
       - name: Commit verified checkpoints only
         if: always() && steps.control.outputs.proceed == '1'
         run: |

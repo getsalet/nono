@@ -65,6 +65,7 @@ def farsi():
      if not any(matches(x,native,links)for x in (item,censored,corrected)):raise RuntimeError('Native body does not match known draft; no edit')
      form=page.locator('#ptitle').evaluate('e=>({action:e.form?.action,cls:e.form?.className,method:e.form?.method})')
      if form['method'].lower()!='post' or not form['action'].rstrip('/').endswith('/User/EditPosts/146'):raise RuntimeError('Native edit form action not confirmed: '+str(form))
+     if page.locator('input[name=postid]').input_value()!='146':raise RuntimeError('Hidden existing post identity mismatch; no edit')
      page.evaluate("body=>{tinymce.get('pshort').setContent(body);tinymce.get('pfull').setContent('');tinymce.triggerSave();}",corrected['post']['html'])
      serialized=page.evaluate("()=>tinymce.get('pshort').getContent()+tinymce.get('pfull').getContent()")
      verify_article_body(corrected,serialized,links)
@@ -76,7 +77,7 @@ def farsi():
      try:
       with page.expect_response(lambda r:r.request.method=='POST' and urlsplit(r.url).hostname==urlsplit(state.PANEL).hostname and urlsplit(r.url).path.rstrip('/')=='/Op',timeout=90000)as saved:
        page.locator('#ptitle').evaluate("e=>window.jQuery?window.jQuery(e.form).submit():e.form.submit()")
-      if saved.value.status>=400:raise RuntimeError('Native existing edit POST failed; no repeat submission')
+      if saved.value.status>=400:raise RuntimeError('Native existing edit HTTP '+str(saved.value.status)+'; no repeat submission')
       feedback=saved.value.text().strip()
       if not feedback.startswith('success:'):
        if feedback.startswith('error:'):
