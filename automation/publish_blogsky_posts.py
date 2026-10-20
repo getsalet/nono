@@ -116,7 +116,11 @@ def run(page,context,root=ROOT):
   from blogsky_auto_control import configuration,AUTOMATIC,hour_open
   if configuration(root)!=AUTOMATIC or not hour_open(root):raise RuntimeError('Automatic admission changed before submit; reconcile saved intent')
  page.locator('#publish').click();page.wait_for_timeout(2000)
- observed=page.get_by_role('link',name='مشاهده یادداشت',exact=True).get_attribute('href',timeout=30000)
+ # Native success pages do not reliably expose a unique view link. Discover
+ # from the public archive after the ONE submit; absence still fails closed.
+ discovery=context.new_page()
+ try:observed=native.discover_public_post(discovery,post)
+ finally:discovery.close()
  if not native.public_url(observed):raise RuntimeError('Submission not confirmed; reconcile journal, do not retry')
  journal.update(phase='submitted_unverified',publicUrl=observed);save(receipt,journal)
  public=context.new_page()

@@ -39,3 +39,9 @@ The native connection's repository-secret diagnostic is a separate acceptance te
 ## Stop and recovery
 
 To disable automatic publishing, replace the native publication control with the prior exact manual configuration (`enabled=true`, `mode=manual_one_post`, `max_count_per_run=1`, `schedule_enabled=false`), or use the existing global stop. The automatic workflow fails closed under manual configuration. Do not delete an uncertain journal or set it verified without checking the native archive and public article. GitHub logs/artifacts must never contain credentials, cookies or browser storage.
+
+## Automatic acceptance and view-link recovery
+
+The first automatic submission published the Tehran article (`city-44532954dbc9730f`) at the observed native `post-2` URL. The original success-page view-link locator timed out after the successful submission, leaving the durable `submitting` journal. Public browser readback independently matched the complete raw article, exact two links, three FAQs and rich layout; no second submission was attempted.
+
+The publisher now discovers the exact title+slug on the public `/posts` archive after its single click, rather than depending on the management success-page link. `reconcile_blogsky_public_post.py` and the explicit one-time `blogsky-reconcile-public.yml` read the already-observed public article, run full verification and checkpoint it. They never read credentials, log in or submit a form. A missing or mismatching public post remains blocked, not retried.

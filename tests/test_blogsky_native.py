@@ -43,4 +43,24 @@ class NativeTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as temp:
    root=Path(temp);p=root/'artifacts/content-originality/blogsky'/(hashlib.sha256(url.encode()).hexdigest()+'.json');p.parent.mkdir(parents=True);p.write_text(json.dumps({'url':url,'html':'<p>'+('متن '+ 'معتبر ')*110+'</p>'}))
    self.assertTrue(published_snapshot(root,'blogsky',{'published_url':url,'key':'x'}))
+
+class PublicArchiveDiscoveryTests(unittest.TestCase):
+ def page(self,urls):
+  from unittest.mock import Mock
+  page=Mock();page.url=native.BLOG+'/posts';page.locator.return_value.evaluate_all.return_value=urls
+  return page
+ def test_unique_public_title_slug_match_is_discovered_without_view_link(self):
+  url=native.BLOG+'/1405/07/28/post-2/test-slug'
+  page=self.page([url,url]);self.assertEqual(native.discover_public_post(page,{'title':'عنوان','slug':'test-slug'}),url)
+  page.goto.assert_called_once()
+ def test_missing_ambiguous_or_foreign_url_blocks_without_submit(self):
+  url=native.BLOG+'/1405/07/28/post-2/test-slug'
+  for urls in ([],['https://evil.example/x'],[url,native.BLOG+'/1405/07/28/post-3/test-slug']):
+   with self.assertRaises(RuntimeError):native.discover_public_post(self.page(urls),{'title':'عنوان','slug':'test-slug'})
+ def test_reconciliation_invalid_inputs_never_touch_browser(self):
+  from reconcile_blogsky_public_post import reconcile
+  with patch('publish_blogsky_posts.gate'):
+   for key,url in [('invalid','https://afp-pipe.blogsky.com/'),('city-0123456789abcdef','https://evil.example/x')]:
+    with self.assertRaises(RuntimeError):reconcile(None,key,url)
+
 if __name__=='__main__':unittest.main()

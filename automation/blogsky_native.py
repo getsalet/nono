@@ -50,3 +50,13 @@ def verify(result,post,links,image_url):
   if len(images)!=1 or images[0].get('src')!=image_url or not images[0].get('alt'):raise RuntimeError('Public source image mismatch')
  elif images:raise RuntimeError('Unexpected public image')
  return True
+
+
+def discover_public_post(page,post):
+ """Find one exact title+slug in the public archive, never submit or retry POST."""
+ page.goto(BLOG+'/posts',wait_until='domcontentloaded',timeout=60000)
+ if page.url.rstrip('/')!=BLOG+'/posts':raise RuntimeError('Unexpected public archive URL')
+ matches=page.locator('a[href]').evaluate_all('(aa,p)=>aa.filter(a=>a.textContent.trim()===p.title && new URL(a.href).pathname.endsWith("/"+p.slug)).map(a=>a.href)',post)
+ urls={url for url in matches if public_url(url)}
+ if len(urls)!=1:raise RuntimeError('Published post not uniquely confirmed in public archive; reconcile journal, never resubmit')
+ return next(iter(urls))
