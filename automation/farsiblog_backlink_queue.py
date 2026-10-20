@@ -43,6 +43,9 @@ class Inspect(HTMLParser):
         if tag=='img':self.images.append(a)
     def handle_data(self,s):self.plain.append(s)
 def qa(item,obj,links,root=None):
+    if CITY_BLOG=='farsiblog':
+        from farsiblog_pressure_wording import errors as wording_errors
+        if wording_errors(obj):return wording_errors(obj),{}
     if item.get("kind")in("city","article"):
         from city_backlink_policy import qa as city_qa
         return city_qa(item,obj,links,CITY_BLOG,root)
@@ -247,6 +250,8 @@ def main():
                         resolve_editorial_link_tokens(obj,links)
                         obj['title']=matrix_title(item,CITY_BLOG)
                     if CITY_BLOG=='farsiblog':
+                        from farsiblog_pressure_wording import normalize
+                        obj=normalize(obj)
                         from farsiblog_editorial_repair import relocate
                         corrected=relocate(obj,links)
                         if corrected is not None:obj=corrected

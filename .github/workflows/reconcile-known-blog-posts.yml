@@ -1,0 +1,73 @@
+name: Reconcile two known existing blog posts (no new articles)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/reconcile-known-blog-posts.yml]
+permissions:
+  contents: write
+jobs:
+  reconcile:
+    strategy:
+      fail-fast: false
+      matrix:
+        blog: [farsiblog, loxblog]
+    concurrency:
+      group: ${{ matrix.blog }}-content-pipeline
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      FARSIBLOG_USERNAME: ${{ secrets.FARSIBLOG_USERNAME }}
+      FARSIBLOG_PASSWORD: ${{ secrets.FARSIBLOG_PASSWORD }}
+      LOXBLOG_USERNAME: ${{ secrets.LOXBLOG_USERNAME }}
+      LOXBLOG_PASSWORD: ${{ secrets.LOXBLOG_PASSWORD }}
+      REPOSITORY_SWITCH: ${{ vars.LOXBLOG_AUTOMATION_ENABLED }}
+      AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+      AGNES_API_KEY14: ${{ secrets.AGNES_API_KEY14 }}
+      AGNES_API_KEY15: ${{ secrets.AGNES_API_KEY15 }}
+      AGNES_HEALTHY_SLOTS_ONLY: '1'
+      AGNES_PREFERRED_KEY_SLOTS: AGNES_API_KEY14,AGNES_API_KEY15
+      AGNES_MODEL: agnes-2.5-flash
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Respect user stop
+        id: control
+        run: python automation/check_blog_pipeline_control.py ${{ matrix.blog }}
+      - name: Install browser and test repair invariants
+        if: steps.control.outputs.proceed == '1'
+        run: |
+          python -m pip install --quiet Pillow
+          python -m unittest discover -s tests -p 'test_farsiblog_pressure_wording.py' -v
+          bash automation/install_blog_browser.sh chromium
+      - name: Reconcile exact existing article only
+        if: steps.control.outputs.proceed == '1'
+        run: python automation/reconcile_known_blog_posts.py ${{ matrix.blog }}
+      - name: Preserve recovery evidence
+        if: always() && steps.control.outputs.proceed == '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: existing-post-reconciliation-${{ matrix.blog }}-${{ github.run_id }}
+          retention-days: 14
+          path: |
+            data/${{ matrix.blog }}/backlink-queue.json
+            state/${{ matrix.blog }}-backlink-progress.json
+            artifacts/${{ matrix.blog }}-backlink-queue
+      - name: Commit verified checkpoints only
+        if: always() && steps.control.outputs.proceed == '1'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/${{ matrix.blog }}/backlink-queue.json state/${{ matrix.blog }}-backlink-progress.json artifacts/${{ matrix.blog }}-backlink-queue
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Reconcile verified existing ${{ matrix.blog }} article without resubmission'
+          if ! git diff --quiet; then echo 'Unexpected unstaged files; evidence retained.'; exit 1; fi
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          exit 1
