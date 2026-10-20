@@ -21,12 +21,19 @@ class RecoveryTests(unittest.TestCase):
   s=(ROOT/'automation/reconcile_known_blog_posts.py').read_text()
   self.assertNotIn('expect_navigation(',s)
   self.assertIn("page.expect_response(",s)
-  self.assertIn("path.rstrip('/')=='/Op'",s)
-  self.assertIn("feedback.startswith('success:')",s)
-  self.assertEqual(s.count('window.jQuery(e.form).submit()'),1)
+  self.assertIn("('/User/EditPosts/146','/Op')",s)
+  self.assertIn("edit_acknowledged(saved.value.text(),pid)",s)
+  self.assertEqual(s.count('save_button.first.click()'),1)
+  self.assertNotIn('window.jQuery(e.form).submit()',s)
   self.assertIn('verified_url=publisher.verify(public,corrected,pid)',s)
   self.assertIn("if not matches(censored,actual,links)",s)
   self.assertIn("publisher.journal(entry,'verified')",s)
+ def test_exact_json_edit_acknowledgement(self):
+  from reconcile_known_blog_posts import edit_acknowledged
+  self.assertTrue(edit_acknowledged('{"status":"ok","pid":146}',146))
+  self.assertTrue(edit_acknowledged('success:saved',146))
+  for raw in ('{"status":"ok","pid":147}','{"status":"error","pid":146}','<html>login</html>','{"status":"ok"}'):
+   self.assertFalse(edit_acknowledged(raw,146))
  def test_transient_get_retry_is_bounded(self):
   import publish_loxblog_posts as publisher
   from playwright.sync_api import Error

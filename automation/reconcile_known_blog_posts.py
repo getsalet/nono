@@ -17,6 +17,13 @@ def entry_and_item(state,blog):
  if item.get('key')!=key or not item.get('post') or not item.get('qa',{}).get('passed'):raise RuntimeError('Exact QA-approved recovery draft unavailable')
  return {'key':key,'item_file':str(path)},item
 
+def edit_acknowledged(raw,pid):
+ # Current native button posts JSON to the edit form action; older versions
+ # use /Op/ and a text success marker. Neither alone is publication proof.
+ try:feedback=json.loads(raw)
+ except (ValueError,TypeError):return str(raw).strip().startswith('success:')
+ return isinstance(feedback,dict)and feedback.get('status')=='ok'and str(feedback.get('pid'))==str(pid)
+
 def farsi():
  import publish_farsiblog_posts as publisher
  from farsiblog_pressure_wording import normalize
@@ -69,23 +76,17 @@ def farsi():
      page.evaluate("body=>{tinymce.get('pshort').setContent(body);tinymce.get('pfull').setContent('');tinymce.triggerSave();}",corrected['post']['html'])
      serialized=page.evaluate("()=>tinymce.get('pshort').getContent()+tinymce.get('pfull').getContent()")
      verify_article_body(corrected,serialized,links)
-     # Submit the existing edit form once, preserving all server-loaded metadata.
-     # The native edit can save via AJAX without a document navigation.
-     # Observe the confirmed native /Op/ AJAX handler once, then verify content;
-     # never treat a navigation timeout as permission to submit again.
+     # Use the observed Save control and its current native handler, not
+     # jQuery(form).submit(): that can bypass the site's newer JSON handler.
+     # Observe one same-origin existing-edit POST, then require public proof.
      from playwright.sync_api import TimeoutError as BrowserTimeout
+     save_button=page.locator('a[onclick="__sePst()"]')
+     if not save_button.count()or not save_button.first.is_visible():raise RuntimeError('Observed native Save control unavailable; no edit')
      try:
-      with page.expect_response(lambda r:r.request.method=='POST' and urlsplit(r.url).hostname==urlsplit(state.PANEL).hostname and urlsplit(r.url).path.rstrip('/')=='/Op',timeout=90000)as saved:
-       page.locator('#ptitle').evaluate("e=>window.jQuery?window.jQuery(e.form).submit():e.form.submit()")
+      with page.expect_response(lambda r:r.request.method=='POST' and urlsplit(r.url).hostname==urlsplit(state.PANEL).hostname and urlsplit(r.url).path.rstrip('/')in ('/User/EditPosts/146','/Op'),timeout=90000)as saved:
+       save_button.first.click()
       if saved.value.status>=400:raise RuntimeError('Native existing edit HTTP '+str(saved.value.status)+'; no repeat submission')
-      feedback=saved.value.text().strip()
-      if not feedback.startswith('success:'):
-       if feedback.startswith('error:'):
-        reason=re.sub(r'<[^>]*>',' ',feedback)[:300]
-        for value in (os.getenv('FARSIBLOG_USERNAME'),os.getenv('FARSIBLOG_PASSWORD')):
-         if value:reason=reason.replace(value,'[redacted]')
-        raise RuntimeError('Native existing edit rejected: '+reason)
-       raise RuntimeError('Native existing edit did not acknowledge success; no repeat submission')
+      if not edit_acknowledged(saved.value.text(),pid):raise RuntimeError('Native existing edit did not acknowledge exact post; no repeat submission')
      except BrowserTimeout:
       print('Edit response uncertain; checking public article without another POST.',flush=True)
      verified_url=None
@@ -136,7 +137,7 @@ def main():
 def run_report():
  blog=sys.argv[1]
  if blog not in TARGETS:raise RuntimeError('Unsupported recovery target')
- report={'blog':blog,'key':TARGETS[blog],'passed':False,'new_articles':0}
+ report={'blog':blog,'key':TARGETS[blog],'passed':False,'new_articles':0,'run':os.getenv('GITHUB_RUN_ID')}
  try:
   main();report['passed']=True
  except Exception as exc:
