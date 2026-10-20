@@ -70,13 +70,21 @@ def farsi():
      verify_article_body(corrected,serialized,links)
      # Submit the existing edit form once, preserving all server-loaded metadata.
      # The native edit can save via AJAX without a document navigation.
-     # Observe the exact existing edit POST once, then verify public content;
+     # Observe the confirmed native /Op/ AJAX handler once, then verify content;
      # never treat a navigation timeout as permission to submit again.
      from playwright.sync_api import TimeoutError as BrowserTimeout
      try:
-      with page.expect_response(lambda r:r.request.method=='POST' and urlsplit(r.url).hostname==urlsplit(state.PANEL).hostname and urlsplit(r.url).path.rstrip('/')=='/User/EditPosts/146',timeout=90000)as saved:
+      with page.expect_response(lambda r:r.request.method=='POST' and urlsplit(r.url).hostname==urlsplit(state.PANEL).hostname and urlsplit(r.url).path.rstrip('/')=='/Op',timeout=90000)as saved:
        page.locator('#ptitle').evaluate("e=>window.jQuery?window.jQuery(e.form).submit():e.form.submit()")
       if saved.value.status>=400:raise RuntimeError('Native existing edit POST failed; no repeat submission')
+      feedback=saved.value.text().strip()
+      if not feedback.startswith('success:'):
+       if feedback.startswith('error:'):
+        reason=re.sub(r'<[^>]*>',' ',feedback)[:300]
+        for value in (os.getenv('FARSIBLOG_USERNAME'),os.getenv('FARSIBLOG_PASSWORD')):
+         if value:reason=reason.replace(value,'[redacted]')
+        raise RuntimeError('Native existing edit rejected: '+reason)
+       raise RuntimeError('Native existing edit did not acknowledge success; no repeat submission')
      except BrowserTimeout:
       print('Edit response uncertain; checking public article without another POST.',flush=True)
      verified_url=None

@@ -130,8 +130,30 @@ def begin(entry):
  if any(r.get('phase')in BLOCKED for r in rows.values()):raise RuntimeError('Prior uncertain native submission blocks new publication; manual reconciliation required')
  journal(entry,'submitting')
 
+def navigate_public(public,url):
+ # GET-only bounded retries. No credentials, form submit, or DNS overrides.
+ from playwright.sync_api import Error
+ for attempt in range(3):
+  try:return public.goto(url,wait_until='domcontentloaded',timeout=60000)
+  except Error as exc:
+   if not any(code in str(exc)for code in ('net::ERR_NAME_NOT_RESOLVED','net::ERR_CONNECTION_RESET','net::ERR_CONNECTION_CLOSED'))or attempt==2:raise
+   time.sleep(2*(attempt+1))
+
 def verify(public,item,record):
- url=record['url'];r=public.goto(url,wait_until='domcontentloaded',timeout=60000)
+ url=record['url']
+ from playwright.sync_api import Error
+ try:r=navigate_public(public,url)
+ except Error as exc:
+  if 'net::ERR_NAME_NOT_RESOLVED'not in str(exc):raise
+  # The provider's numeric alias may redirect to an unresolvable legacy host.
+  # Resolve only an OBSERVED exact-title link on the expected public blog;
+  # native ID/title/status were checked before calling verify. No guessed URL.
+  homepage=navigate_public(public,BLOG)
+  if not homepage or homepage.status>=400 or urlsplit(public.url).hostname!=HOST:raise RuntimeError('Expected public homepage unavailable during alias reconciliation')
+  rows=public.locator('article.post-card h2 a[href]').evaluate_all('es=>es.map(e=>({url:e.href,title:e.textContent.trim()}))')
+  candidates={x['url']for x in rows if x['title']==item['post']['title']and urlsplit(x['url']).scheme=='https'and urlsplit(x['url']).hostname==HOST}
+  if len(candidates)!=1:raise RuntimeError('Exact public canonical title missing or ambiguous; no receipt')
+  url=candidates.pop();r=navigate_public(public,url)
  if not r or r.status>=400 or urlsplit(public.url).hostname!=HOST:raise RuntimeError('Native public article unavailable')
  article=public.locator('article.post-card');body=article.locator('.post-content')
  if article.count()!=1 or article.locator('h1').inner_text().strip()!=item['post']['title']:raise RuntimeError('Published title not unique/exact')
