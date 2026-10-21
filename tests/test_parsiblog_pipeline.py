@@ -65,6 +65,10 @@ class Tests(unittest.TestCase):
   x,p=self.fixture();p['html']=p['html'].replace('<h3>چه اطلاعاتی لازم است؟</h3>','<details><summary>پرسش</summary></details>',1);self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_readback_changed_text_rejected(self):
   x,p=self.fixture();self.assertEqual(native.persisted_errors(x,p,p),[]);q=copy.deepcopy(p);q['html']=q['html'].replace('اطلاعات واقعی زمین','متن عوض شده');q['html']+='<p>بخش تازه</p>';self.assertTrue(native.persisted_errors(x,p,q))
+ def test_native_title_only_known_zwnj_normalization(self):
+  self.assertTrue(native.title_matches('گوجه‌فرنگی در شهرستان ارومیه','گوجهفرنگي در شهرستان اروميه'))
+  self.assertTrue(native.title_matches('گوجه‌فرنگی در شهرستان ارومیه','گوجه فرنگی در شهرستان ارومیه'))
+  self.assertFalse(native.title_matches('گوجه‌فرنگی در شهرستان ارومیه','گوجهفرنگی در شهرستان دیگری'))
  def test_readback_normalizes_letters(self):
   x,p=self.fixture();q=copy.deepcopy(p);q['html']=q['html'].replace('ی','ي').replace('ک','ك');q['title']=q['title'].replace('ی','ي');self.assertEqual(native.persisted_errors(x,p,q),[])
  def test_budget(self):

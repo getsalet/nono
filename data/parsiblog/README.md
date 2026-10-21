@@ -15,3 +15,5 @@
 - Factual safety v2: unreviewed city-page prose is not fed to the model as evidence. Only approved scoped cultivation existence is supplied. Numeric technical prescriptions, chemical cleaning and fabricated local soil/water/product construction claims are rejected; an additional editorial model review must approve each text before image/native submission. Approval is bound to the exact saved post digest and rechecked before publishing.
 
 - User-requested ceiling: 2 posts per rolling hour; cron at minute 23 and 53. A corrected canary seed is unapproved input only and must pass all deterministic checks, independent editorial review, image review and native/public readback. It never bypasses quality gates.
+
+- Native form uses Windows-1256 responses; the adapter decodes the declared charset. The new-note `?Post` view does not contain the full notes list, so reconciliation uses Notes.aspx. Persisted titles may drop ZWNJ; only that explicit alternative and Arabic/Persian letter normalization are accepted, never changed words or locations.

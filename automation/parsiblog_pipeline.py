@@ -68,7 +68,7 @@ def main(argv=None):
  if args.mode=='generate':
   item=generate(item)if not item.get('qa',{}).get('passed')else item;statuses[key]={'status':'ready','at':stamp()};save(STATE,state);return 0
  from playwright.sync_api import sync_playwright
- from parsiblog_native import login,first_page_posts,read_post,persisted_errors,save_post,verify_public,NativeError
+ from parsiblog_native import login,first_page_posts,read_post,persisted_errors,save_post,verify_public,NativeError,title_matches
  with sync_playwright()as pw:
   attached=bool(os.getenv('AGENT_BROWSER_CDP'));browser=pw.chromium.connect_over_cdp(os.environ['AGENT_BROWSER_CDP'])if attached else pw.chromium.launch(headless=True)
   ctx=browser.contexts[0]if attached else browser.new_context();page=ctx.new_page()
@@ -87,7 +87,7 @@ def main(argv=None):
     for x in native_rows:
      actual=normalized_title(x['title']);expected=normalized_title(row['assigned_title']);first=next((i for i,(a,b)in enumerate(zip(actual,expected))if a!=b),None)
      details['candidate_diagnostics'].append({'id':x['id'],'published':x['published'],'title_length':len(actual),'title_prefix_codepoints':[ord(c)for c in actual[:6]],'first_difference':first,'actual_codepoint':ord(actual[first])if first is not None else None,'expected_codepoint':ord(expected[first])if first is not None else None,'replacement_count':x['title'].count('\ufffd'),'contract_errors':persisted_errors(item,item['post'],x)if item.get('post')else[]})
-    matches=[x for x in native_rows if normalized_title(x['title'])==normalized_title(row['assigned_title'])]
+    matches=[x for x in native_rows if title_matches(row['assigned_title'],x['title'])]
     details['matching_posts']=[{'id':x['id'],'published':x['published'],'errors':persisted_errors(item,item['post'],x)if item.get('post')else['No approved local body']}for x in matches]
     if len(matches)==1 and item.get('post')and not details['matching_posts'][0]['errors']:
      actual=matches[0];statuses[key]={'status':'published'if actual['published']else'draft','id':actual['id'],'at':stamp(),'reconciled_read_only':True};save(STATE,state)
@@ -95,7 +95,7 @@ def main(argv=None):
    # Recover an uncertain prior response before any costly generation or write.
    pid=saved.get('id')
    if not pid:
-    matches=[x for x in first_page_posts(page)if normalized_title(x['title'])==normalized_title(row['assigned_title'])]
+    matches=[x for x in first_page_posts(page)if title_matches(row['assigned_title'],x['title'])]
     if len(matches)>1:raise NativeError('Multiple native titles match; manual reconciliation required')
     if matches:
      if not item.get('post')or persisted_errors(item,item['post'],matches[0]):raise NativeError('Matching native title exists but approved body is unavailable/mismatched')

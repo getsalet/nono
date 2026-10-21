@@ -4,6 +4,10 @@ from urllib.parse import urlsplit
 from parsiblog_policy import normalized_title,urlkey
 PANEL='http://www.parsiblog.com';BLOG='http://afp.parsiblog.com';NOTES=PANEL+'/Notes.aspx';SEP='$#PB'
 class NativeError(RuntimeError):pass
+def title_matches(expected,actual):
+ # The provider drops ZWNJ in persisted titles. Keep all other words exact.
+ variants={normalized_title(expected),normalized_title(expected.replace('\u200c',''))}
+ return normalized_title(actual)in variants
 def guard(page):
  if urlsplit(page.url).hostname!='www.parsiblog.com':raise NativeError('Unexpected admin host')
  page.wait_for_selector('#Title',state='attached',timeout=30000)
@@ -41,7 +45,7 @@ def first_page_posts(page):
  return [read_post(page,pid)for pid in ids]
 def persisted_errors(item,expected,actual):
  errors=[]
- if normalized_title(actual['title'])!=normalized_title(expected['title']):errors.append('Saved title mismatch')
+ if not title_matches(expected['title'],actual['title']):errors.append('Saved title mismatch')
  from city_backlink_policy import Inspect
  p=Inspect();p.feed(actual['html']);q=Inspect();q.feed(expected['html'])
  if len(p.links)!=3 or {urlkey(x)for x in p.links}!={urlkey(x)for x in q.links}:errors.append('Saved three-link contract failed')
