@@ -91,6 +91,23 @@ class Tests(unittest.TestCase):
   page=P()
   with patch.object(native,'guard'),self.assertRaises(StopBeforeAnyWrite):native.save_post(page,{},pid='8027686')
   self.assertEqual(page.url,native.NOTES+'?Post')
+ def test_public_local_id_is_not_native_database_id(self):
+  item,post=self.fixture();item['post']=post
+  class Title:
+   def count(self):return 1
+   def inner_text(self):return post['title']
+  class Card:
+   def locator(self,selector):
+    if selector!='.post-title':raise AssertionError('Guessed native ID used for public selector')
+    return Title()
+  class Cards:
+   def count(self):return 1
+   def nth(self,i):return Card()
+  class Page:
+   def locator(self,selector):
+    if selector!='.post-card':raise AssertionError('Guessed native ID used for public selector')
+    return Cards()
+  self.assertIsInstance(native.find_public_article(Page(),item),Card)
  def test_account_guard(self):
   class P:
    url='http://www.parsiblog.com/Notes.aspx'

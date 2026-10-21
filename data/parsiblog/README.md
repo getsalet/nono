@@ -17,3 +17,5 @@
 - User-requested ceiling: 2 posts per rolling hour; cron at minute 23 and 53. A corrected canary seed is unapproved input only and must pass all deterministic checks, independent editorial review, image review and native/public readback. It never bypasses quality gates.
 
 - Native form uses Windows-1256 responses; the adapter decodes the declared charset. The new-note `?Post` view does not contain the full notes list, so reconciliation uses Notes.aspx. Persisted titles may drop ZWNJ; only that explicit alternative and Arabic/Persian letter normalization are accepted, never changed words or locations.
+
+- Internal native database IDs differ from blog-local public post ordinals. Public verification finds the unique exact normalized title, follows the actual rendered permalink and checks the complete body, image and three destinations; it never constructs a public URL from the internal ID.

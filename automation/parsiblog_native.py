@@ -81,18 +81,26 @@ def save_post(page,item,publish=False,pid=None,checkpoint=None):
  if readback['published']!=publish:errors.append('Publication checkbox not persisted')
  if errors:raise NativeError('Native readback rejected: '+','.join(errors))
  return saved_id
+def find_public_article(page,item):
+ # Public PostID is the blog-local ordinal, not the internal native database ID.
+ cards=page.locator('.post-card');matches=[]
+ for i in range(cards.count()):
+  card=cards.nth(i);title=card.locator('.post-title')
+  if title.count()==1 and title_matches(item['post']['title'],title.inner_text()):matches.append(card)
+ if len(matches)!=1:raise NativeError('Public article title absent or ambiguous')
+ return matches[0]
 def verify_public(context,item,pid):
  page=context.new_page()
  try:
   page.goto(BLOG+'/',wait_until='domcontentloaded',timeout=60000)
-  link=page.locator('#post-'+str(pid)+' .post-title a')
-  if link.count()!=1:raise NativeError('New post not found in native public homepage')
+  card=find_public_article(page,item);link=card.locator('.post-title a')
+  if link.count()!=1:raise NativeError('Public permalink missing')
   url=link.get_attribute('href');from urllib.parse import urljoin
   url=urljoin(BLOG+'/',url)
   if urlsplit(url).hostname!='afp.parsiblog.com':raise NativeError('Wrong public post host')
   page.goto(url,wait_until='domcontentloaded',timeout=60000)
-  article=page.locator('#post-'+str(pid));body=article.locator('.post-content')
-  if article.count()!=1 or body.count()!=1:raise NativeError('Native public article missing')
+  article=find_public_article(page,item);body=article.locator('.post-content')
+  if body.count()!=1:raise NativeError('Native public article missing')
   actual={'title':article.locator('.post-title').inner_text(),'html':body.inner_html()}
   errors=persisted_errors(item,item['post'],actual)
   if errors:raise NativeError('Public verification rejected: '+','.join(errors))
