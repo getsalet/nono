@@ -36,3 +36,5 @@
 - Held product families are excluded before generation; explicit held targets stop without generation or login.
 
 - Observed native persistence maps U+FF0C (fullwidth comma) to ASCII comma. Body readback accepts only this explicit punctuation equivalent in addition to existing Persian letter/whitespace normalization; all other word, destination, image and FAQ changes still reject. An acknowledged submission is reconciled/read back by ID and actual public URL without another create/save.
+
+- Local soil/water assertions use Persian whole-token boundaries: «آبیاری» is not the standalone word «آب». Introductory decision-making language no longer becomes a false local-water claim; actual unsupported soil/water assertions remain rejected and independent editorial review still applies.

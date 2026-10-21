@@ -43,7 +43,7 @@ def factual_errors(plain):
  if re.search(r'اسید|اسیدی|اسیدشویی|جوهر\s*نمک',text):errors.append('Chemical cleaning requires a reviewed model-specific procedure; omit it')
  if re.search(r'(?<![آ-ی])(?:لومی|لوم|رسی|شنی)(?![آ-ی])|هیبرید|تالاب|بحران کم آبی|سختی متوسط|روزنه.{0,15}لیزری|فاقد قطره چکان|قطب.{0,25}کشت|(?:مناطق|مراکز) (?:مهم|اصلی|عمده).{0,35}کشت',text):errors.append('Unverified locality, soil, crop importance, or categorical product construction claim')
  for sentence in re.split(r'[.!؟؛\n]',text):
-  if re.search(r'دشت|منطقه|شهرستان|استان|محلی',sentence) and re.search(r'خاک|آب|شوری|سختی|بارندگی',sentence) and re.search(r'عمدتا|معمولا|دارای|هستند|است|افزایش می|کاهش می',sentence) and not re.search(r'باید|لازم|بررسی|اندازه گیری|آزمایش|نمی توان|نمی شود|نباید|اگر|ممکن',sentence):errors.append('Unsupported categorical local soil/water assertion')
+  if re.search(r'دشت|منطقه|شهرستان|استان|محلی',sentence) and re.search(r'(?<![آ-ی])(?:خاک|آب|شوری|سختی|بارندگی)(?![آ-ی])',sentence) and re.search(r'عمدتا|معمولا|دارای|هستند|است|افزایش می|کاهش می',sentence) and not re.search(r'باید|لازم|بررسی|اندازه گیری|آزمایش|نمی توان|نمی شود|نباید|اگر|ممکن',sentence):errors.append('Unsupported categorical local soil/water assertion')
  return list(dict.fromkeys(errors))
 def review_errors(item,obj):
  review=item.get('editorial_review',{})

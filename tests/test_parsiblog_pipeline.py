@@ -81,6 +81,10 @@ class Tests(unittest.TestCase):
  def test_factual_prescriptions_rejected(self):
   for claim in ('ضخامت ۲۰۰ میکرون مناسب است','نوار را 2 سانتی متر بالای خاک بگذارید','شستشو با اسید ملایم','خاک لومی و رسی','یکی از مناطق مهم کشت است','نوار فاقد قطره چکان است','دشت این شهرستان دارای شوری بالا است'):
    self.assertTrue(policy.factual_errors(claim),claim)
+ def test_irrigation_word_is_not_a_local_water_assertion(self):
+  self.assertEqual(policy.factual_errors('انتخاب نوار آبیاری مناسب برای زمین‌های کشت سیر در شهرستان هوراند، نیازمند یک فرایند تصمیم‌گیری ساختاریافته است.'),[])
+  self.assertTrue(policy.factual_errors('آب این شهرستان دارای شوری بالا است.'))
+  self.assertTrue(policy.factual_errors('خاک این شهرستان دارای سختی بالا است.'))
  def test_conditional_checklist_not_fabricated_local_fact(self):
   self.assertEqual(policy.factual_errors('پیش از انتخاب محصول برای این شهرستان باید کیفیت آب و خاک همان زمین بررسی شود. برگه فنی همان مدل را بخوانید.'),[])
  def test_current_editorial_review_bound_to_body(self):
