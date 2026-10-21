@@ -78,6 +78,10 @@ def main(argv=None):
     details={'at':stamp(),'passed':True,'account':'afp','mode':'read-only-reconciliation','publication_attempted':False}
     page.wait_for_timeout(3000)
     details['editor']=page.evaluate('''()=>({tiny:typeof tinyMCE!=="undefined",editor:typeof tinyMCE!=="undefined"&&!!tinyMCE.get("PBEdit"),initialized:typeof tinyMCE!=="undefined"&&tinyMCE.get("PBEdit")?tinyMCE.get("PBEdit").initialized:null,nativeListCount:document.querySelectorAll('div[id^="NT"]').length})''')
+    details['protocol']=page.evaluate('''()=>({delimiter:typeof PreStr==='string'?PreStr:null,actions:Array.from(document.querySelectorAll('[onclick]')).map(e=>e.getAttribute('onclick')).filter(s=>s&&s.includes('SaveNote(')),charset:document.characterSet,list:!!document.getElementById('NotesList')})''')
+    page.goto('http://www.parsiblog.com/Notes.aspx',wait_until='domcontentloaded',timeout=60000)
+    page.wait_for_timeout(2000)
+    details['listing_count']=page.locator('div[id^="NT"]').count()
     matches=[x for x in first_page_posts(page)if normalized_title(x['title'])==normalized_title(row['assigned_title'])]
     details['matching_posts']=[{'id':x['id'],'published':x['published'],'errors':persisted_errors(item,item['post'],x)if item.get('post')else['No approved local body']}for x in matches]
     if len(matches)==1 and item.get('post')and not details['matching_posts'][0]['errors']:
