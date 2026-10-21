@@ -63,8 +63,8 @@ class Tests(unittest.TestCase):
   with patch.object(native,'_verify_public_once',side_effect=[native.NativeError('not visible yet'),'http://afp.parsiblog.com/Posts/2/'])as read,patch.object(native.time,'sleep'),patch.object(native,'save_post')as write:
    self.assertEqual(native.verify_public(None,{},'42'),'http://afp.parsiblog.com/Posts/2/');self.assertEqual(read.call_count,2);write.assert_not_called()
  def test_public_read_retry_is_bounded(self):
-  with patch.object(native,'_verify_public_once',side_effect=native.NativeError('not visible'))as read,patch.object(native.time,'sleep'),self.assertRaises(native.NativeError):native.verify_public(None,{},'42')
-  self.assertEqual(read.call_count,3)
+  with patch.object(native,'_verify_public_once',side_effect=native.NativeError('not visible'))as read,patch.object(native.time,'sleep')as wait,self.assertRaises(native.NativeError):native.verify_public(None,{},'42')
+  self.assertEqual(read.call_count,5);self.assertEqual([x.args[0]for x in wait.call_args_list],[5,15,30,60])
  def test_inventory(self):
   rows=self.inventory['items'];self.assertEqual(len(rows),1000);self.assertEqual(len({x['assigned_title']for x in rows}),1000);self.assertTrue(all(12<=len(x['assigned_title'])<=65 for x in rows));self.assertEqual(self.inventory['crop_title_count'],8)
   self.assertTrue(all(not policy.title_errors(x,x['assigned_title'],matrix.ROOT)for x in rows))

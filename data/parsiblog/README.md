@@ -25,7 +25,7 @@
 - The last rejected JSON may be reused only as unapproved input to full deterministic, editorial, originality and image review. Explicit `--retry-pre-submit --target pb-...` can recover known pre-submission QA failures, never uncertain writes or published posts. The old failure remains in the state audit history.
 - Every run writes its own run-report.json with run ID, status, phase and safe errors; the Actions summary refuses to display an earlier successful receipt as the current result.
 - Event mode/target are captured first; latest main code and receipts are then refreshed under the shared publication lock, avoiding stale queued-run state. Existing global stop and the two-post rolling-hour ceiling stay in force.
-- Public verification retries only read-only GETs, three bounded attempts. Native writes remain one-shot with checkpoint/reconciliation protection.
+- Public verification retries only read-only GETs, five bounded attempts with 5/15/30/60-second propagation waits and no-cache request headers. Native writes remain one-shot with checkpoint/reconciliation protection.
 - Cron is every 30 minutes (minute 23 and 53), but GitHub may start scheduled runs late. This is a maximum publication frequency, not a wall-clock delivery guarantee.
 
 ## Real-product-photo scope
@@ -38,3 +38,5 @@
 - Observed native persistence maps U+FF0C (fullwidth comma) to ASCII comma. Body readback accepts only this explicit punctuation equivalent in addition to existing Persian letter/whitespace normalization; all other word, destination, image and FAQ changes still reject. An acknowledged submission is reconciled/read back by ID and actual public URL without another create/save.
 
 - Local soil/water assertions use Persian whole-token boundaries: «آبیاری» is not the standalone word «آب». Introductory decision-making language no longer becomes a false local-water claim; actual unsupported soil/water assertions remain rejected and independent editorial review still applies.
+
+- Real publication showed a delayed homepage listing after native acknowledgement. Public readback tolerates that bounded propagation window, never retries the native write, and the next locked schedule reconciles an acknowledged ID before considering any new item.

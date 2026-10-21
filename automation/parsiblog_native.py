@@ -96,6 +96,7 @@ def find_public_article(page,item):
 def _verify_public_once(context,item,pid):
  page=context.new_page()
  try:
+  page.set_extra_http_headers({'Cache-Control':'no-cache','Pragma':'no-cache'})
   page.goto(BLOG+'/',wait_until='domcontentloaded',timeout=60000)
   card=find_public_article(page,item);link=card.locator('.post-title a')
   if link.count()!=1:raise NativeError('Public permalink missing')
@@ -114,8 +115,9 @@ def _verify_public_once(context,item,pid):
 def verify_public(context,item,pid):
  # Retrying a public GET is safe; native save_post is never retried here.
  from playwright.sync_api import TimeoutError as BrowserTimeout
- for attempt in range(3):
+ waits=(5,15,30,60)  # Provider listings can lag after a successful native acknowledgement.
+ for attempt in range(5):
   try:return _verify_public_once(context,item,pid)
   except (NativeError,BrowserTimeout):
-   if attempt==2:raise
-   time.sleep(3*(attempt+1))
+   if attempt==4:raise
+   time.sleep(waits[attempt])
