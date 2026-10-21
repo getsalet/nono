@@ -74,7 +74,15 @@ def main(argv=None):
   ctx=browser.contexts[0]if attached else browser.new_context();page=ctx.new_page()
   try:
    login(page)
-   if args.mode=='probe':save(ART/'login-probe.json',{'at':stamp(),'passed':True,'account':'afp','mode':'login-only','publication_attempted':False});return 0
+   if args.mode=='probe':
+    details={'at':stamp(),'passed':True,'account':'afp','mode':'read-only-reconciliation','publication_attempted':False}
+    page.wait_for_timeout(3000)
+    details['editor']=page.evaluate('''()=>({tiny:typeof tinyMCE!=="undefined",editor:typeof tinyMCE!=="undefined"&&!!tinyMCE.get("PBEdit"),initialized:typeof tinyMCE!=="undefined"&&tinyMCE.get("PBEdit")?tinyMCE.get("PBEdit").initialized:null,nativeListCount:document.querySelectorAll('div[id^="NT"]').length})''')
+    matches=[x for x in first_page_posts(page)if normalized_title(x['title'])==normalized_title(row['assigned_title'])]
+    details['matching_posts']=[{'id':x['id'],'published':x['published'],'errors':persisted_errors(item,item['post'],x)if item.get('post')else['No approved local body']}for x in matches]
+    if len(matches)==1 and item.get('post')and not details['matching_posts'][0]['errors']:
+     actual=matches[0];statuses[key]={'status':'published'if actual['published']else'draft','id':actual['id'],'at':stamp(),'reconciled_read_only':True};save(STATE,state)
+    save(ART/'login-probe.json',details);return 0
    # Recover an uncertain prior response before any costly generation or write.
    pid=saved.get('id')
    if not pid:
