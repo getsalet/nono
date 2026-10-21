@@ -84,8 +84,8 @@ def qa(item,obj,root=ROOT,require_image=True,originality=True):
  errors+=factual_errors(plain)
  if require_image:
   errors+=review_errors(item,obj)
-  from blog_image_gate import validate_record
-  errors+=validate_record(item)
+  from parsiblog_images import validate_record
+  errors+=validate_record(item,root)
  errors+=title_errors(item,obj.get('title',''),root)
  allowed_crops={e['crop']for e in approved_crop_records(item,root)}
  named=set(crop_names(plain,root))

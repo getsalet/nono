@@ -11,10 +11,16 @@ def stamp():return dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00'
 RUN={}
 def run_report(**fields):
  RUN.update(fields);save(ART/'run-report.json',RUN)
-def recover_explicit_preflight(state,key,requested):
+def same_failure_checkpoint(old,report):
+ try:
+  at=dt.datetime.fromisoformat(old['at'].replace('Z','+00:00'));done=dt.datetime.fromisoformat(report['completed_at'].replace('Z','+00:00'));began=dt.datetime.fromisoformat(report['started_at'].replace('Z','+00:00'))
+  return at.tzinfo is not None and done.tzinfo is not None and began.tzinfo is not None and began<=at<=done and (done-at).total_seconds()<1
+ except (KeyError,TypeError,ValueError):return False
+def recover_explicit_preflight(state,key,requested,prior_report=None):
  old=state['items'].get(key,{})
  if not requested or old.get('status')!='failed':return False
- if old.get('id')or old.get('native_phase')or not old.get('reason','').startswith(('Text SEO preflight rejected:','Final SEO/image preflight rejected:')):
+ proven_no_write=isinstance(prior_report,dict)and prior_report.get('key')==key and prior_report.get('status')=='failed'and prior_report.get('native_write_attempted')is False and same_failure_checkpoint(old,prior_report)
+ if old.get('id')or old.get('native_phase')or not(proven_no_write or old.get('reason','').startswith(('Text SEO preflight rejected:','Final SEO/image preflight rejected:','Image preflight rejected:'))):
   raise RuntimeError('Only a known pre-submission QA failure may be retried explicitly')
  state.setdefault('reviewed_pre_submit_failures',[]).append(dict(old,key=key,review='Explicit repair run; complete content, editorial, image and native QA remain mandatory.'))
  del state['items'][key];return True
@@ -32,8 +38,10 @@ def generate(item):
  from roya_backlink_queue import agnes,normalize_approved_hrefs
  import roya_backlink_queue as roya
  roya.IMAGE_CACHE=ART/'source-target-images.json'
- from city_backlink_policy import prepare_image
+ from parsiblog_images import prepare_image
  seed=load(DATA/'canary-seed.json',{});seed_post=seed.get('post')if seed.get('key')==item['key']and seed.get('requires_full_qa_and_editorial_review')is True else None
+ text_ready=load(ART/'text-ready'/(item['key']+'.json'),{})
+ if seed_post is None and text_ready.get('key')==item['key']and isinstance(text_ready.get('post'),dict)and text_ready.get('post_sha256')==post_digest(text_ready['post']):seed_post=text_ready['post']
  rejected=load(ART/'rejected'/(item['key']+'.json'),{})
  if seed_post is None and rejected.get('key')==item['key']and rejected.get('passed')is False and isinstance(rejected.get('post'),dict):
   candidate=rejected['post']
@@ -53,8 +61,11 @@ def generate(item):
    else:break
   save(ART/'rejected'/(item['key']+'.json'),{'key':item['key'],'at':stamp(),'post':obj,'errors':errors,'passed':False})
  if errors:raise RuntimeError('Text SEO preflight rejected: '+','.join(errors[:5]))
- # Real product/reference selection with the existing vision gate; never a fictitious local farm photo.
- item['image_url']=retry_transient(lambda:prepare_image(item));item['image_alt']='نمای محصول AFP برای بررسی مشخصات '+('نوار تیپ'if item['family']=='tape20'else'لوله انتقال آب')
+ # Preserve approved text before image/network work; reuse only through full QA/review.
+ save(ART/'text-ready'/(item['key']+'.json'),{'key':item['key'],'post':obj,'post_sha256':post_digest(obj),'editorial_review':review,'link_render':link_report,'at':stamp()})
+ run_report(phase='image_preflight',qa_errors=[])
+ # Separate real-product scope: never claim an invented local farm scene.
+ item['image_url']=retry_transient(lambda:prepare_image(item,ROOT));item['image_alt']='نمای محصول AFP برای بررسی مشخصات '+('نوار تیپ'if item['family']=='tape20'else'لوله انتقال آب')
  obj['html']='<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+item['image_alt']+'"></p>'+obj['html']
  item['editorial_review']={'policy':'parsiblog-evidence-review-v2','passed':True,'post_sha256':post_digest(obj),'at':stamp(),'reviewer':'agnes independent review','errors':[]}
  errors,report=qa(item,obj,ROOT)
@@ -63,6 +74,7 @@ def generate(item):
 
 def main(argv=None):
  parser=argparse.ArgumentParser();parser.add_argument('--mode',choices=['probe','draft','publish','generate','scheduled'],default='draft');parser.add_argument('--target',default='');parser.add_argument('--retry-pre-submit',action='store_true');args=parser.parse_args(argv)
+ prior_report=load(ART/'run-report.json',{})
  RUN.clear();run_report(run_id=os.getenv('GITHUB_RUN_ID','local'),started_at=stamp(),status='started',mode=args.mode,target=args.target,native_write_attempted=False)
  control=load(DATA/'control.json',{});global_control=load(ROOT/'data/blog-generated-image-control.json',{})
  if type(global_control.get('pause_image_production'))is not bool or global_control['pause_image_production']:
@@ -78,10 +90,12 @@ def main(argv=None):
  if args.mode=='publish'and budget(state,limit=limit)==0:run_report(status='skipped',reason='Rolling two-post/hour budget exhausted');print('Rolling publication budget exhausted.');return 0
  if args.target:rows=[r for r in rows if r['key']==args.target]
  if not rows:raise RuntimeError('Target absent from approved matrix')
+ from blog_generated_image import family_enabled
+ if args.target and not family_enabled(rows[0],ROOT):run_report(status='blocked',reason='Target product family held or cancelled before generation');return 0
  if args.retry_pre_submit:
   if not args.target:raise RuntimeError('Explicit QA retry requires one matrix target')
-  if recover_explicit_preflight(state,args.target,True):save(STATE,state)
- candidates=[r for r in rows if statuses.get(r['key'],{}).get('status')not in ('published','failed')]
+  if recover_explicit_preflight(state,args.target,True,prior_report):save(STATE,state)
+ candidates=[r for r in rows if family_enabled(r,ROOT)and statuses.get(r['key'],{}).get('status')not in ('published','failed')]
  if args.mode=='publish':candidates.sort(key=lambda r:statuses.get(r['key'],{}).get('status')not in('draft','ready','submitting_publish','submitting_draft'))
  if not candidates:run_report(status='skipped',reason='No eligible item; failures remain quarantined');print('No eligible item; failed/uncertain records need review, no silent reset.');return 0
  row=candidates[0];key=row['key'];run_report(key=key,phase='selected');saved=statuses.get(key,{});item=load(itemfile(key),copy.deepcopy(row))
@@ -150,12 +164,13 @@ def main(argv=None):
    print('Parsiblog '+receipt['status']+' verified: '+str(pid),flush=True)
   except Exception as exc:
    # Preserve submitting_* on ambiguous writes; fail closed instead of duplicate publication.
+   failed_at=stamp()
    if not statuses.get(key,{}).get('status','').startswith('submitting'):
-    statuses[key]={'status':'failed','at':stamp(),'reason':(str(exc)[:700]if isinstance(exc,NativeError)or str(exc).startswith(('Text SEO preflight rejected:','Final SEO/image preflight rejected:'))else type(exc).__name__)}
+    statuses[key]={'status':'failed','at':failed_at,'reason':(str(exc)[:700]if isinstance(exc,NativeError)or str(exc).startswith(('Text SEO preflight rejected:','Final SEO/image preflight rejected:','Image preflight rejected:'))else type(exc).__name__)}
    if statuses.get(key,{}).get('status','').startswith('submitting'):
     statuses[key]['last_error_type']=type(exc).__name__
     if isinstance(exc,NativeError):statuses[key]['last_native_error']=str(exc)[:700]
-   run_report(status='failed',completed_at=stamp(),error_type=type(exc).__name__,reason=statuses.get(key,{}).get('last_native_error')or statuses.get(key,{}).get('reason')or type(exc).__name__)
+   run_report(status='failed',completed_at=failed_at,error_type=type(exc).__name__,reason=statuses.get(key,{}).get('last_native_error')or statuses.get(key,{}).get('reason')or type(exc).__name__)
    save(STATE,state);raise
   finally:
    page.close()

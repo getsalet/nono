@@ -12,7 +12,7 @@ class Tests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):cls.inventory=matrix.build();cls.item=copy.deepcopy(next(x for x in cls.inventory['items']if not x['evidence']));cls.item['image_url']='https://navar-abyari.ir/wp-content/uploads/afp-drip-tape-roll-transparent.webp'
  def setUp(self):
-  mock=patch('blog_image_gate.validate_record',return_value=[]);mock.start();self.addCleanup(mock.stop)
+  mock=patch('parsiblog_images.validate_record',return_value=[]);mock.start();self.addCleanup(mock.stop)
  def fixture(self):
   item=copy.deepcopy(self.item);links=policy.links_for(item)
   para='<p>'+('بررسی مشخصات محصول پیش از سفارش و ثبت اطلاعات زمین برای انتخاب آگاهانه ضروری است. '*43)+'</p>'
@@ -122,7 +122,7 @@ class Tests(unittest.TestCase):
   self.assertEqual(pipeline.budget({'published':[]}),2);self.assertEqual(pipeline.budget({'published':[{'at':pipeline.stamp()}]}),1);self.assertEqual(pipeline.budget({'published':[{'at':pipeline.stamp()},{'at':pipeline.stamp()}]}),0)
  def test_missing_image_review_rejected(self):
   x,p=self.fixture()
-  with patch('blog_image_gate.validate_record',return_value=['Current family-aware image review missing']):self.assertTrue(policy.qa(x,p,originality=False)[0])
+  with patch('parsiblog_images.validate_record',return_value=['Current family-aware image review missing']):self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_unverified_crop_body_rejected(self):
   x,p=self.fixture();p['html']=p['html'].replace('<h2>ثبت نیاز زمین</h2>','<h2>ثبت نیاز زمین</h2><p>کشت '+json.loads((matrix.ROOT/'data/blog-city-title-matrix.json').read_text())['row_crops'][0]+' در این شهر</p>');self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_canary_seed_not_automatically_approved(self):
@@ -166,4 +166,59 @@ class Tests(unittest.TestCase):
    def evaluate(self,*a):return 'native-edit-payload'
   with patch.object(native,'guard'),patch.object(native,'native_request',return_value='OK$#PBFalse$#PBعنوان$#PB<p>متن</p>$#PB12$#PBFalse$#PBTrue$#PBSub=آبیاری'):
    actual=native.read_post(P(),'12');self.assertEqual(actual['id'],'12');self.assertFalse(actual['published']);self.assertEqual(actual['title'],'عنوان')
+class RealPhotoTests(unittest.TestCase):
+ def setUp(self):
+  import tempfile,hashlib
+  import parsiblog_images as images
+  self.images=images;self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)
+  (self.root/'data').mkdir();(self.root/'data/blog-generated-image-control.json').write_text(json.dumps({'pause_image_production':False,'enabled_families':['tape20'],'cancelled_families':['hose']}))
+  self.raw=b'actual-verified-image-fixture';self.item={'family':'tape20','key':'pb-test'}
+  self.good={'pass':True,'score':96,'observed_family':'tape20',**{k:True for k in images.TRUE_FLAGS},**{k:False for k in images.FALSE_FLAGS}}
+  m=patch.object(images.shared,'fetch',return_value=(self.raw,(386,382),'WEBP'));m.start();self.addCleanup(m.stop)
+ def prepare(self):
+  with patch.object(self.images,'vision',return_value=(self.good,self.images.common.BASE.AGNES_MODEL))as review:
+   self.item['image_url']=self.images.prepare_image(self.item,self.root)
+  return review
+ def test_real_photo_requires_actual_scoped_vision(self):
+  review=self.prepare();review.assert_called_once();self.assertEqual(self.images.validate_record(self.item,self.root),[])
+  self.assertEqual(self.item['image_review']['scope'],'real-product-photo')
+ def test_real_photo_rejects_unknown_or_low_scores(self):
+  for score in (True,89,101,float('nan'),'95',None):
+   v=dict(self.good,score=score);self.assertTrue(self.images.verdict_errors(v,'tape20'))
+ def test_real_photo_rejects_every_missing_safety_flag(self):
+  for flag in self.images.TRUE_FLAGS+self.images.FALSE_FLAGS:
+   v=dict(self.good);del v[flag];self.assertTrue(self.images.verdict_errors(v,'tape20'),flag)
+  self.assertTrue(self.images.verdict_errors(dict(self.good,observed_family='hose'),'tape20'))
+ def test_shared_rejected_cache_never_counts_as_scoped_approval(self):
+  (self.root/'artifacts/blog-image-reviews').mkdir(parents=True);(self.root/'artifacts/blog-image-reviews/old.json').write_text(json.dumps({'pass':True}))
+  self.prepare().assert_called_once()
+ def test_real_photo_changed_bytes_invalidates_approval(self):
+  self.prepare()
+  with patch.object(self.images.shared,'fetch',return_value=(b'changed-image',(386,382),'WEBP')):self.assertTrue(self.images.validate_record(self.item,self.root))
+ def test_real_photo_persisted_verdict_required(self):
+  self.prepare();record=self.item['image_review'];record['scope']='generated-field-scene';self.assertTrue(self.images.validate_record(self.item,self.root))
+ def test_real_photo_manual_rejection_blocks_cached_approval(self):
+  self.prepare()
+  with patch.object(self.images.shared,'visual_override_rejected',return_value=True):
+   self.assertTrue(self.images.validate_record(self.item,self.root))
+   with self.assertRaises(RuntimeError):self.images.prepare_image(self.item,self.root)
+ def test_global_stop_and_held_family_block_before_network(self):
+  with patch.object(self.images.shared,'fetch')as network:
+   for item in ({'family':'hose'},):
+    with self.assertRaises(RuntimeError):self.images.prepare_image(item,self.root)
+   (self.root/'data/blog-generated-image-control.json').write_text(json.dumps({'pause_image_production':True,'enabled_families':['tape20']}))
+   with self.assertRaises(RuntimeError):self.images.prepare_image(self.item,self.root)
+   network.assert_not_called()
+ def test_no_approval_from_url_or_filename(self):
+  with patch.object(self.images,'vision',return_value=(dict(self.good,**{'pass':False}),self.images.common.BASE.AGNES_MODEL))as vision:
+   with self.assertRaises(RuntimeError):self.images.prepare_image(self.item,self.root)
+   vision.assert_called_once()
+ def test_timestamp_bound_report_permits_explicit_prewrite_recovery(self):
+  at='2026-10-21T01:28:15.014888Z';state={'items':{'k':{'status':'failed','at':at,'reason':'RuntimeError'}}}
+  report={'key':'k','status':'failed','native_write_attempted':False,'started_at':'2026-10-21T01:25:31Z','completed_at':'2026-10-21T01:28:15.014912Z'}
+  self.assertTrue(pipeline.recover_explicit_preflight(state,'k',True,report))
+ def test_unrelated_report_cannot_reset_generic_failure(self):
+  for extra in ({'key':'other'},{'native_write_attempted':True},{'completed_at':'2026-10-21T03:00:00Z'},{'completed_at':'bad'}):
+   state={'items':{'k':{'status':'failed','at':'2026-10-21T01:28:15Z','reason':'RuntimeError'}}};r=dict(key='k',status='failed',native_write_attempted=False,started_at='2026-10-21T01:25:31Z',completed_at='2026-10-21T01:28:15Z');r.update(extra)
+   with self.assertRaises(RuntimeError):pipeline.recover_explicit_preflight(state,'k',True,r)
 if __name__=='__main__':unittest.main()
