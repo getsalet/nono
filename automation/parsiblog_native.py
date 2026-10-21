@@ -24,7 +24,7 @@ def login(page):
  guard(page);print('Parsiblog protected native form and AFP account verified',flush=True)
 def native_request(page,payload):
  # Same payload produced by the site's own controls, single request, never retry a write.
- result=page.evaluate('''async payload=>{const r=await fetch('Notes.aspx?Post',{method:'POST',body:payload,credentials:'same-origin',redirect:'error'});return {status:r.status,text:await r.text()}}''',payload)
+ result=page.evaluate(r'''async payload=>{const r=await fetch('Notes.aspx?Post',{method:'POST',body:payload,credentials:'same-origin',redirect:'error'});const type=r.headers.get('content-type')||'';const match=type.match(/charset\s*=\s*["']?([^;\s"']+)/i);const encoding=match?match[1]:document.characterSet;const bytes=await r.arrayBuffer();return {status:r.status,text:new TextDecoder(encoding).decode(bytes)}}''',payload)
  if result['status']!=200:raise NativeError('Native endpoint HTTP failure; reconcile before any retry')
  return result['text']
 def read_post(page,pid):
@@ -34,6 +34,8 @@ def read_post(page,pid):
  if len(parts)<7:raise NativeError('Unexpected native edit response')
  return {'title':html.unescape(parts[2]),'html':parts[3],'id':str(parts[4]),'published':parts[5].lower()=='true','tags':parts[7]if len(parts)>7 and parts[7].startswith('Sub=')else''}
 def first_page_posts(page):
+ # ?Post is a new-note view: its list can be empty even after a successful save.
+ if urlsplit(page.url).query:page.goto(NOTES,wait_until='domcontentloaded',timeout=60000)
  guard(page);ids=page.locator('div[id^="NT"]').evaluate_all('(es)=>es.map(e=>e.id).filter(x=>/^NT[0-9]+$/.test(x)).map(x=>x.slice(2))')
  if len(ids)>100:raise NativeError('Unexpected native listing size')
  return [read_post(page,pid)for pid in ids]
@@ -49,7 +51,9 @@ def persisted_errors(item,expected,actual):
  if len(p.images)!=1 or p.images[0].get('src')!=item.get('image_url'):errors.append('Saved image missing or changed')
  if p.tags.count('h3')!=q.tags.count('h3') or p.tags.count('h2')!=q.tags.count('h2'):errors.append('Saved FAQ/section structure changed')
  return errors
-def save_post(page,item,publish=False,pid=None):
+def save_post(page,item,publish=False,pid=None,checkpoint=None):
+ checkpoint=checkpoint or (lambda phase,pid=None:None)
+ checkpoint('editor_validation',pid)
  guard(page)
  page.wait_for_function('typeof tinyMCE!=="undefined"&&tinyMCE.get("PBEdit")&&tinyMCE.get("PBEdit").initialized',timeout=45000)
  post=item['post']
@@ -60,11 +64,13 @@ def save_post(page,item,publish=False,pid=None):
  if errors:raise NativeError('Editor changed approved content; '+','.join(errors))
  page.evaluate('''publish=>{for(const [id,value]of Object.entries({Publish:publish,AllowComment:true,ConstCB:false,DateViewCB:false,PassCheckbox:false})){const e=document.getElementById(id);if(e)e.checked=value}}''',publish)
  payload=page.evaluate('()=>{if(!GetNValue())throw Error("Editor not ready");return GetNParams("SaveBtn")}')
+ checkpoint('request_pending',pid)
  response=native_request(page,payload)
  match=re.match(r'^OK([1-9][0-9]*)\$#PB',response)
  # Native updates can return OK alone; known ID may be retained, then strict readback.
  saved_id=match.group(1)if match else str(pid)if pid and response.startswith('OK') else None
  if not saved_id:raise NativeError('Native save acknowledgement missing; do not blindly resubmit')
+ checkpoint('acknowledged',saved_id)
  readback=read_post(page,saved_id);errors=persisted_errors(item,post,readback)
  if readback['published']!=publish:errors.append('Publication checkbox not persisted')
  if errors:raise NativeError('Native readback rejected: '+','.join(errors))

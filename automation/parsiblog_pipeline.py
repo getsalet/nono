@@ -109,7 +109,9 @@ def main(argv=None):
    if not already:
     # A full local item and uncertainty checkpoint are written before each one-shot submission.
     save(itemfile(key),item);statuses[key]={'status':'submitting_publish'if desired else'submitting_draft','id':pid,'at':stamp()};save(STATE,state)
-    pid=save_post(page,item,publish=desired,pid=pid)
+    def checkpoint(phase,native_id=None):
+     statuses[key].update(native_phase=phase,id=str(native_id)if native_id else None,at=stamp());save(STATE,state)
+    pid=save_post(page,item,publish=desired,pid=pid,checkpoint=checkpoint)
    receipt={'status':'published'if desired else'draft','id':str(pid),'at':stamp(),'qa':report,'title':item['post']['title']}
    if desired:
     receipt['url']=verify_public(ctx,item,pid)
@@ -123,6 +125,9 @@ def main(argv=None):
    # Preserve submitting_* on ambiguous writes; fail closed instead of duplicate publication.
    if not statuses.get(key,{}).get('status','').startswith('submitting'):
     statuses[key]={'status':'failed','at':stamp(),'reason':(str(exc)[:700]if isinstance(exc,NativeError)or str(exc).startswith(('Text SEO preflight rejected:','Final SEO/image preflight rejected:'))else type(exc).__name__)}
+   if statuses.get(key,{}).get('status','').startswith('submitting'):
+    statuses[key]['last_error_type']=type(exc).__name__
+    if isinstance(exc,NativeError):statuses[key]['last_native_error']=str(exc)[:700]
    save(STATE,state);raise
   finally:
    page.close()
