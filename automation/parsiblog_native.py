@@ -58,6 +58,8 @@ def persisted_errors(item,expected,actual):
 def save_post(page,item,publish=False,pid=None,checkpoint=None):
  checkpoint=checkpoint or (lambda phase,pid=None:None)
  checkpoint('editor_validation',pid)
+ # The full listing exposes controls but initializes TinyMCE only in ?Post.
+ page.goto(NOTES+'?Post',wait_until='domcontentloaded',timeout=60000)
  guard(page)
  page.wait_for_function('typeof tinyMCE!=="undefined"&&tinyMCE.get("PBEdit")&&tinyMCE.get("PBEdit").initialized',timeout=45000)
  post=item['post']

@@ -80,6 +80,17 @@ class Tests(unittest.TestCase):
   x,p=self.fixture();p['html']=p['html'].replace('<h2>ثبت نیاز زمین</h2>','<h2>ثبت نیاز زمین</h2><p>کشت '+json.loads((matrix.ROOT/'data/blog-city-title-matrix.json').read_text())['row_crops'][0]+' در این شهر</p>');self.assertTrue(policy.qa(x,p,originality=False)[0])
  def test_canary_seed_not_automatically_approved(self):
   seed=json.loads((matrix.ROOT/'data/parsiblog/canary-seed.json').read_text());self.assertFalse(seed['approved']);self.assertTrue(seed['requires_full_qa_and_editorial_review']);self.assertTrue(policy.review_errors({},seed['post']))
+ def test_native_editor_opens_post_view_before_initialization(self):
+  class StopBeforeAnyWrite(Exception):pass
+  class P:
+   url=native.NOTES
+   def goto(self,url,**kw):self.url=url
+   def wait_for_function(self,*a,**kw):
+    if self.url!=native.NOTES+'?Post':raise AssertionError('Editor was not opened')
+    raise StopBeforeAnyWrite()
+  page=P()
+  with patch.object(native,'guard'),self.assertRaises(StopBeforeAnyWrite):native.save_post(page,{},pid='8027686')
+  self.assertEqual(page.url,native.NOTES+'?Post')
  def test_account_guard(self):
   class P:
    url='http://www.parsiblog.com/Notes.aspx'
