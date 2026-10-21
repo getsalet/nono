@@ -19,3 +19,11 @@
 - Native form uses Windows-1256 responses; the adapter decodes the declared charset. The new-note `?Post` view does not contain the full notes list, so reconciliation uses Notes.aspx. Persisted titles may drop ZWNJ; only that explicit alternative and Arabic/Persian letter normalization are accepted, never changed words or locations.
 
 - Internal native database IDs differ from blog-local public post ordinals. Public verification finds the unique exact normalized title, follows the actual rendered permalink and checks the complete body, image and three destinations; it never constructs a public URL from the internal ID.
+
+## Reliability repair
+- Application-owned contextual linking: the generator supplies Persian prose; code inserts exactly the approved home, city and category anchors in distinct body paragraphs before FAQ. Missing and duplicate approved links are repaired before strict QA and editorial review. Unknown destinations remain rejected; the three-link gate is not weakened.
+- The last rejected JSON may be reused only as unapproved input to full deterministic, editorial, originality and image review. Explicit `--retry-pre-submit --target pb-...` can recover known pre-submission QA failures, never uncertain writes or published posts. The old failure remains in the state audit history.
+- Every run writes its own run-report.json with run ID, status, phase and safe errors; the Actions summary refuses to display an earlier successful receipt as the current result.
+- Event mode/target are captured first; latest main code and receipts are then refreshed under the shared publication lock, avoiding stale queued-run state. Existing global stop and the two-post rolling-hour ceiling stay in force.
+- Public verification retries only read-only GETs, three bounded attempts. Native writes remain one-shot with checkpoint/reconciliation protection.
+- Cron is every 30 minutes (minute 23 and 53), but GitHub may start scheduled runs late. This is a maximum publication frequency, not a wall-clock delivery guarantee.

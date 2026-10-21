@@ -10,6 +10,10 @@ on:
       target:
         description: Optional approved pb-key
         default: ''
+      retry_pre_submit:
+        description: Explicitly retry one known pre-submission QA failure after repair
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths: [automation/start-parsiblog.json]
@@ -27,6 +31,7 @@ jobs:
     env:
       REQUESTED_MODE: ${{ inputs.mode || '' }}
       REQUESTED_TARGET: ${{ inputs.target || '' }}
+      REQUESTED_RETRY: ${{ inputs.retry_pre_submit && '1' || '0' }}
       AGNES_API_BASE: https://apihub.agnes-ai.com/v1
       AGNES_MODEL: agnes-2.5-flash
       IMAGE_REVIEW_MODEL: agnes-3.0-flash
@@ -70,16 +75,29 @@ jobs:
         id: gate
         run: |
           python - <<'PY'
-          import json,os
+          import json,os,re
           from pathlib import Path
           global_control=json.loads(Path('data/blog-generated-image-control.json').read_text())
           local=json.loads(Path('data/parsiblog/control.json').read_text())
-          mode='scheduled' if os.environ['GITHUB_EVENT_NAME']=='schedule' else os.environ.get('REQUESTED_MODE') or json.loads(Path('automation/start-parsiblog.json').read_text())['mode']
+          event=os.environ['GITHUB_EVENT_NAME']
+          marker=json.loads(Path('automation/start-parsiblog.json').read_text())
+          mode='scheduled' if event=='schedule' else (os.environ.get('REQUESTED_MODE') or 'draft') if event=='workflow_dispatch' else marker['mode']
+          target='' if event=='schedule' else os.environ.get('REQUESTED_TARGET','') if event=='workflow_dispatch' else marker.get('target','')
+          retry=False if event=='schedule' else os.environ.get('REQUESTED_RETRY')=='1' if event=='workflow_dispatch' else marker.get('retry_pre_submit') is True
+          if target and not re.fullmatch(r'pb-[0-9a-f]{20}',target):raise SystemExit('Invalid matrix target')
+          if retry and (not target or mode not in ('draft','publish','generate')):raise SystemExit('Explicit QA retry needs one target')
           if mode not in ('probe','draft','generate','publish','scheduled'):raise SystemExit('Invalid requested mode')
           proceed=global_control.get('pause_image_production') is False and (mode!='scheduled' or local.get('enabled') is True)
-          with open(os.environ['GITHUB_OUTPUT'],'a')as out:out.write('proceed='+('1'if proceed else'0')+'\nmode='+mode+'\n')
+          with open(os.environ['GITHUB_OUTPUT'],'a')as out:out.write('proceed='+('1'if proceed else'0')+'\nmode='+mode+'\ntarget='+target+'\nretry='+('1'if retry else'0')+'\n')
           print('Parsiblog preflight:',mode,'allowed'if proceed else'blocked')
           PY
+      - name: Refresh latest main after acquiring the publication lock
+        if: steps.gate.outputs.proceed == '1'
+        run: |
+          # Mode/target were captured from the immutable triggering event above.
+          # Refresh code AND receipts under the workflow lock, not an old queued SHA.
+          git fetch --depth=1 origin main
+          git checkout --detach FETCH_HEAD
       - name: Install content test dependencies
         if: steps.gate.outputs.proceed == '1'
         run: python -m pip install --quiet Pillow beautifulsoup4
@@ -93,7 +111,12 @@ jobs:
         if: steps.gate.outputs.proceed == '1'
         env:
           RUN_MODE: ${{ steps.gate.outputs.mode }}
-        run: python automation/parsiblog_pipeline.py --mode "$RUN_MODE" --target "$REQUESTED_TARGET"
+          RUN_TARGET: ${{ steps.gate.outputs.target }}
+          RETRY_PRE_SUBMIT: ${{ steps.gate.outputs.retry }}
+        run: |
+          args=(--mode "$RUN_MODE" --target "$RUN_TARGET")
+          if [ "$RETRY_PRE_SUBMIT" = '1' ]; then args+=(--retry-pre-submit); fi
+          python automation/parsiblog_pipeline.py "${args[@]}"
       - name: Preserve non-secret recovery checkpoints
         if: always() && steps.gate.outputs.proceed == '1'
         uses: actions/upload-artifact@v4
@@ -131,8 +154,10 @@ jobs:
           python - <<'PY'
           import json,os
           from pathlib import Path
-          p=Path('artifacts/parsiblog-backlink-queue/latest-receipt.json')
-          probe=Path('artifacts/parsiblog-backlink-queue/login-probe.json')
-          report=json.loads(p.read_text()) if p.exists() else json.loads(probe.read_text()) if probe.exists() else {'status':'No verified receipt; inspect failed step.'}
+          p=Path('artifacts/parsiblog-backlink-queue/run-report.json')
+          report=json.loads(p.read_text()) if p.exists() else {}
+          if report.get('run_id')!=os.environ['GITHUB_RUN_ID']:
+            report={'status':'No fresh report for this run; inspect the failed step.','run_id':os.environ['GITHUB_RUN_ID']}
+          # Never display a prior successful receipt as the result of a failed run.
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a')as out:out.write('## Actual Parsiblog receipt\n\n```json\n'+json.dumps(report,ensure_ascii=False,indent=2)+'\n```\n')
           PY

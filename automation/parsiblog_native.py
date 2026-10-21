@@ -1,5 +1,5 @@
 """Native Parsiblog forms: account guard, draft readback, one-shot submissions."""
-import os,re,html,json
+import os,re,html,json,time
 from urllib.parse import urlsplit
 from parsiblog_policy import normalized_title,urlkey
 PANEL='http://www.parsiblog.com';BLOG='http://afp.parsiblog.com';NOTES=PANEL+'/Notes.aspx';SEP='$#PB'
@@ -89,7 +89,7 @@ def find_public_article(page,item):
   if title.count()==1 and title_matches(item['post']['title'],title.inner_text()):matches.append(card)
  if len(matches)!=1:raise NativeError('Public article title absent or ambiguous')
  return matches[0]
-def verify_public(context,item,pid):
+def _verify_public_once(context,item,pid):
  page=context.new_page()
  try:
   page.goto(BLOG+'/',wait_until='domcontentloaded',timeout=60000)
@@ -106,3 +106,12 @@ def verify_public(context,item,pid):
   if errors:raise NativeError('Public verification rejected: '+','.join(errors))
   return url
  finally:page.close()
+
+def verify_public(context,item,pid):
+ # Retrying a public GET is safe; native save_post is never retried here.
+ from playwright.sync_api import TimeoutError as BrowserTimeout
+ for attempt in range(3):
+  try:return _verify_public_once(context,item,pid)
+  except (NativeError,BrowserTimeout):
+   if attempt==2:raise
+   time.sleep(3*(attempt+1))

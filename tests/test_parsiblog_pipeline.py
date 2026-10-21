@@ -5,6 +5,8 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'automation'))
 import parsiblog_matrix as matrix
 import parsiblog_policy as policy
 import parsiblog_native as native
+from parsiblog_links import render_contextual_links
+from bs4 import BeautifulSoup
 import parsiblog_pipeline as pipeline
 class Tests(unittest.TestCase):
  @classmethod
@@ -18,6 +20,51 @@ class Tests(unittest.TestCase):
   for x in links:body+='<p>برای بررسی دقیق‌تر <a href="'+x['url']+'">'+x['anchor']+'</a> را بخوانید.</p>'
   body+='<h2>پرسش‌های متداول</h2>'+''.join('<h3>چه اطلاعاتی لازم است؟</h3><p>نیاز زمین و مشخصات همان مدل باید بررسی شود.</p>'for _ in range(3))
   post={'title':item['assigned_title'],'slug':'parsiblog-city-choice','meta_description':'راهنمای انتخاب تجهیزات آبیاری و بررسی مشخصات محصول با توجه به اطلاعات واقعی زمین، پرسش‌های فنی و نکات ضروری پیش از ثبت سفارش.','tags':['آبیاری','راهنمای انتخاب'],'html':body};item['editorial_review']={'policy':'parsiblog-evidence-review-v2','passed':True,'post_sha256':policy.post_digest(post)};return item,post
+ def text_fixture(self):
+  x,p=self.fixture();soup=BeautifulSoup(p['html'],'html.parser')
+  for image in soup.find_all('img'):image.parent.decompose()
+  p['html']=str(soup);return x,p
+ def test_renderer_fills_missing_home_link(self):
+  x,p=self.text_fixture();soup=BeautifulSoup(p['html'],'html.parser');soup.find('a',href=policy.links_for(x)[0]['url']).unwrap();p['html']=str(soup)
+  e,r=render_contextual_links(x,p);self.assertEqual(e,[]);self.assertEqual(r['link_count'],3);self.assertEqual(policy.qa(x,p,require_image=False,originality=False)[0],[])
+ def test_renderer_owns_all_three_links_without_model_anchors(self):
+  x,p=self.text_fixture();soup=BeautifulSoup(p['html'],'html.parser')
+  for a in soup.find_all('a'):a.unwrap()
+  p['html']=str(soup);e,r=render_contextual_links(x,p);self.assertEqual(e,[]);self.assertEqual(r['link_count'],3);self.assertEqual(len({v['paragraph_index']for v in r['placements']}),3)
+  self.assertEqual(policy.qa(x,p,require_image=False,originality=False)[0],[])
+ def test_renderer_fallback_when_anchor_phrases_absent(self):
+  x,p=self.text_fixture();soup=BeautifulSoup(p['html'],'html.parser')
+  for a in soup.find_all('a'):a.replace_with('مشخصات محصول')
+  p['html']=str(soup);e,r=render_contextual_links(x,p);self.assertEqual(e,[]);self.assertTrue(all(z['placement']=='contextual reading sentence'for z in r['placements']));self.assertEqual(policy.qa(x,p,require_image=False,originality=False)[0],[])
+ def test_renderer_idempotent(self):
+  x,p=self.text_fixture();self.assertEqual(render_contextual_links(x,p)[0],[]);before=p['html'];self.assertEqual(render_contextual_links(x,p)[0],[]);self.assertEqual(before,p['html'])
+ def test_renderer_does_not_hide_unknown_destination(self):
+  x,p=self.text_fixture();p['html']+='<p><a href="https://example.invalid/">لینک نامعتبر</a></p>';self.assertTrue(render_contextual_links(x,p)[0]);self.assertIn('https://example.invalid/',p['html'])
+ def test_renderer_deduplicates_only_approved_destinations(self):
+  x,p=self.text_fixture();p['html']=p['html'].replace('<h2>جمع‌بندی</h2>','<p><a href="'+policy.links_for(x)[0]['url']+'">راهنمای بیشتر</a></p><h2>جمع‌بندی</h2>');self.assertEqual(render_contextual_links(x,p)[0],[]);self.assertEqual(policy.qa(x,p,require_image=False,originality=False)[0],[])
+ def test_renderer_never_links_in_faq(self):
+  x,p=self.text_fixture();self.assertEqual(render_contextual_links(x,p)[0],[]);faq=p['html'].split('<h2>پرسش‌های متداول</h2>')[1];self.assertNotIn('<a ',faq)
+ def test_renderer_requires_real_body(self):
+  self.assertTrue(render_contextual_links(self.item,{'html':'<h2>پرسش‌های متداول</h2><p>پاسخ</p>'})[0])
+ def test_invalid_model_json_is_a_repairable_error(self):
+  for p in (None,[],{}, {'title':[],'html':None}):self.assertTrue(policy.qa(self.item,p,require_image=False,originality=False)[0])
+ def test_explicit_preflight_recovery_preserves_audit(self):
+  s={'items':{'k':{'status':'failed','reason':'Text SEO preflight rejected: missing link'}},'published':[]};self.assertTrue(pipeline.recover_explicit_preflight(s,'k',True));self.assertNotIn('k',s['items']);self.assertEqual(len(s['reviewed_pre_submit_failures']),1)
+ def test_recovery_never_resets_ambiguous_or_published_state(self):
+  for status in ('submitting_publish','submitting_draft','published'):
+   s={'items':{'k':{'status':status,'id':'42'}}};self.assertFalse(pipeline.recover_explicit_preflight(s,'k',True));self.assertEqual(s['items']['k']['status'],status)
+  with self.assertRaises(RuntimeError):pipeline.recover_explicit_preflight({'items':{'k':{'status':'failed','id':'42','reason':'Text SEO preflight rejected: x'}}},'k',True)
+ def test_fresh_run_report_is_not_prior_receipt(self):
+  import tempfile
+  with tempfile.TemporaryDirectory()as d,patch.object(pipeline,'ART',Path(d)):
+   pipeline.RUN.clear();pipeline.run_report(run_id='new-run',status='failed',native_write_attempted=False)
+   r=json.loads((Path(d)/'run-report.json').read_text());self.assertEqual(r['run_id'],'new-run');self.assertEqual(r['status'],'failed');self.assertNotIn('receipt',r)
+ def test_public_read_retry_never_repeats_native_write(self):
+  with patch.object(native,'_verify_public_once',side_effect=[native.NativeError('not visible yet'),'http://afp.parsiblog.com/Posts/2/'])as read,patch.object(native.time,'sleep'),patch.object(native,'save_post')as write:
+   self.assertEqual(native.verify_public(None,{},'42'),'http://afp.parsiblog.com/Posts/2/');self.assertEqual(read.call_count,2);write.assert_not_called()
+ def test_public_read_retry_is_bounded(self):
+  with patch.object(native,'_verify_public_once',side_effect=native.NativeError('not visible'))as read,patch.object(native.time,'sleep'),self.assertRaises(native.NativeError):native.verify_public(None,{},'42')
+  self.assertEqual(read.call_count,3)
  def test_inventory(self):
   rows=self.inventory['items'];self.assertEqual(len(rows),1000);self.assertEqual(len({x['assigned_title']for x in rows}),1000);self.assertTrue(all(12<=len(x['assigned_title'])<=65 for x in rows));self.assertEqual(self.inventory['crop_title_count'],8)
   self.assertTrue(all(not policy.title_errors(x,x['assigned_title'],matrix.ROOT)for x in rows))
