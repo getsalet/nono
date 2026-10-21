@@ -43,6 +43,10 @@ def first_page_posts(page):
  guard(page);ids=page.locator('div[id^="NT"]').evaluate_all('(es)=>es.map(e=>e.id).filter(x=>/^NT[0-9]+$/.test(x)).map(x=>x.slice(2))')
  if len(ids)>100:raise NativeError('Unexpected native listing size')
  return [read_post(page,pid)for pid in ids]
+def normalized_body(value):
+ # Observed provider canonicalization: U+FF0C becomes ASCII comma on persistence.
+ # No broad Unicode folding: all other text/words remain exact.
+ return normalized_title(value).replace('\uff0c',',')
 def persisted_errors(item,expected,actual):
  errors=[]
  if not title_matches(expected['title'],actual['title']):errors.append('Saved title mismatch')
@@ -50,7 +54,7 @@ def persisted_errors(item,expected,actual):
  p=Inspect();p.feed(actual['html']);q=Inspect();q.feed(expected['html'])
  if len(p.links)!=3 or {urlkey(x)for x in p.links}!={urlkey(x)for x in q.links}:errors.append('Saved three-link contract failed')
  # Compare normalized visible text, not irrelevant whitespace/entity serialization.
- a=normalized_title(' '.join(p.plain));e=normalized_title(' '.join(q.plain))
+ a=normalized_body(' '.join(p.plain));e=normalized_body(' '.join(q.plain))
  if a!=e:errors.append('Saved article text differs from approved draft')
  if len(p.images)!=1 or p.images[0].get('src')!=item.get('image_url'):errors.append('Saved image missing or changed')
  if p.tags.count('h3')!=q.tags.count('h3') or p.tags.count('h2')!=q.tags.count('h2'):errors.append('Saved FAQ/section structure changed')

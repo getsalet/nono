@@ -116,6 +116,10 @@ class Tests(unittest.TestCase):
   self.assertTrue(native.title_matches('گوجه‌فرنگی در شهرستان ارومیه','گوجهفرنگي در شهرستان اروميه'))
   self.assertTrue(native.title_matches('گوجه‌فرنگی در شهرستان ارومیه','گوجه فرنگی در شهرستان ارومیه'))
   self.assertFalse(native.title_matches('گوجه‌فرنگی در شهرستان ارومیه','گوجهفرنگی در شهرستان دیگری'))
+ def test_readback_only_observed_fullwidth_comma_canonicalization(self):
+  x,p=self.fixture();p['html']=p['html'].replace('بررسی مشخصات','بررسی، مشخصات，',1);actual=copy.deepcopy(p);actual['html']=actual['html'].replace('，',',')
+  self.assertEqual(native.persisted_errors(x,p,actual),[])
+  actual['html']=actual['html'].replace('بررسی، مشخصات','حذف مشخصات',1);self.assertTrue(native.persisted_errors(x,p,actual))
  def test_readback_normalizes_letters(self):
   x,p=self.fixture();q=copy.deepcopy(p);q['html']=q['html'].replace('ی','ي').replace('ک','ك');q['title']=q['title'].replace('ی','ي');self.assertEqual(native.persisted_errors(x,p,q),[])
  def test_budget(self):

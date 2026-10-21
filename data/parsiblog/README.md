@@ -34,3 +34,5 @@
 - Review records are stored separately under artifacts/parsiblog-backlink-queue/real-product-reviews. Shared rejected verdicts are neither overwritten nor treated as approvals. Current image bytes, manual visual rejection, global pause and held/cancelled families remain enforced.
 - Approved text is checkpointed before image work. A retry treats it only as input to full QA and independent review. Failed pre-write runs may be explicitly recovered only with a matching timestamp-bound report proving no native write, or a known preflight failure; ambiguous and published states are never reset.
 - Held product families are excluded before generation; explicit held targets stop without generation or login.
+
+- Observed native persistence maps U+FF0C (fullwidth comma) to ASCII comma. Body readback accepts only this explicit punctuation equivalent in addition to existing Persian letter/whitespace normalization; all other word, destination, image and FAQ changes still reject. An acknowledged submission is reconciled/read back by ID and actual public URL without another create/save.
