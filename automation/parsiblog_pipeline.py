@@ -82,7 +82,12 @@ def main(argv=None):
     page.goto('http://www.parsiblog.com/Notes.aspx',wait_until='domcontentloaded',timeout=60000)
     page.wait_for_timeout(2000)
     details['listing_count']=page.locator('div[id^="NT"]').count()
-    matches=[x for x in first_page_posts(page)if normalized_title(x['title'])==normalized_title(row['assigned_title'])]
+    native_rows=first_page_posts(page)
+    details['candidate_diagnostics']=[]
+    for x in native_rows:
+     actual=normalized_title(x['title']);expected=normalized_title(row['assigned_title']);first=next((i for i,(a,b)in enumerate(zip(actual,expected))if a!=b),None)
+     details['candidate_diagnostics'].append({'id':x['id'],'published':x['published'],'title_length':len(actual),'title_prefix_codepoints':[ord(c)for c in actual[:6]],'first_difference':first,'actual_codepoint':ord(actual[first])if first is not None else None,'expected_codepoint':ord(expected[first])if first is not None else None,'replacement_count':x['title'].count('\ufffd'),'contract_errors':persisted_errors(item,item['post'],x)if item.get('post')else[]})
+    matches=[x for x in native_rows if normalized_title(x['title'])==normalized_title(row['assigned_title'])]
     details['matching_posts']=[{'id':x['id'],'published':x['published'],'errors':persisted_errors(item,item['post'],x)if item.get('post')else['No approved local body']}for x in matches]
     if len(matches)==1 and item.get('post')and not details['matching_posts'][0]['errors']:
      actual=matches[0];statuses[key]={'status':'published'if actual['published']else'draft','id':actual['id'],'at':stamp(),'reconciled_read_only':True};save(STATE,state)
