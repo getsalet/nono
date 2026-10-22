@@ -14,6 +14,10 @@ class AutomationApprovalTests(unittest.TestCase):
  def test_approved_active_providers_only(self):
   for b in a.ACTIVE:self.assertTrue(a.enabled(b,self.r))
   for b in ('blogfa','unknown','roya'):self.assertFalse(a.enabled(b,self.r))
+ def test_startup_is_scoped_and_cannot_include_retired_provider(self):
+  (self.r/'automation').mkdir();p=self.r/'automation/start-blog-generators.json'
+  p.write_text(json.dumps({'providers':['farsiblog']}));self.assertTrue(a.startup_requested('farsiblog',self.r));self.assertFalse(a.startup_requested('loxblog',self.r))
+  p.write_text(json.dumps({'providers':['farsiblog','blogfa']}));self.assertFalse(a.startup_requested('farsiblog',self.r))
  def test_pause_retirement_and_invalid_config_fail_closed(self):
   self.write('blog-generated-image-control.json',{'pause_image_production':True});self.assertFalse(a.enabled('farsiblog',self.r))
   self.write('blog-generated-image-control.json',{'pause_image_production':False,'retired_blogs':['farsiblog']});self.assertFalse(a.enabled('farsiblog',self.r))

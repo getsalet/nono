@@ -163,6 +163,7 @@ jobs:
         id: release
         env:
           RELEASE_EVENT_NAME: ${{ github.event_name }}
+          BLOG_AUTOMATION_WAKE: ${{ contains(github.event.head_commit.message, '[blog-generators-resume]') }}
           RELEASE_REPOSITORY_SWITCH: ${{ vars.LOXBLOG_AUTOMATION_ENABLED }}
         run: python automation/check_loxblog_release.py
       - name: Check rolling publication budget before costly steps

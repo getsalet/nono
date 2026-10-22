@@ -10,3 +10,11 @@ def enabled(blog,root=ROOT):
   c=json.loads((Path(root)/'data/blog-automation-control.json').read_text())
   return c.get('policy')=='explicit-blog-scheduler-v1' and c.get('enabled',{}).get(blog)is True
  except (OSError,ValueError,TypeError,AttributeError):return False
+
+def startup_requested(blog,root=ROOT):
+ if blog not in ACTIVE:return False
+ try:
+  c=json.loads((Path(root)/'automation/start-blog-generators.json').read_text())
+  providers=c.get('providers')
+  return isinstance(providers,list)and blog in providers and all(p in (*ACTIVE,'blogsky')for p in providers)
+ except (OSError,ValueError,TypeError,AttributeError):return False

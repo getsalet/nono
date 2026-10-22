@@ -249,6 +249,9 @@ def main():
                         from city_backlink_policy import matrix_title,resolve_editorial_link_tokens
                         resolve_editorial_link_tokens(obj,links)
                         obj['title']=matrix_title(item,CITY_BLOG)
+                        from blog_draft_structure import normalize as normalize_structure
+                        structural=normalize_structure(item,obj,CITY_BLOG)
+                        if structural:item['_structural_repairs']=structural
                     if CITY_BLOG=='farsiblog':
                         from farsiblog_pressure_wording import normalize
                         obj=normalize(obj)

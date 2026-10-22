@@ -65,11 +65,11 @@ def handoff(event,blog,root=ROOT):
  target=select(blog,root)or select_text(blog,root)
  return {'proceed':bool(target),'cached_only':True,'target':target or ''}
 def main():
- from blog_automation_control import enabled
+ from blog_automation_control import enabled,startup_requested
  blog=sys.argv[1];event=os.getenv('GITHUB_EVENT_NAME','');approved=enabled(blog)
  # Ordinary code/image pushes remain cached-only. Only an explicit operator
  # wake-up starts fresh generation, and only for versioned approved providers.
- result=({'proceed':True,'cached_only':False,'target':''}if event=='push'and os.getenv('BLOG_AUTOMATION_WAKE')=='true'and approved else handoff(event,blog))
+ result=({'proceed':True,'cached_only':False,'target':''}if event=='push'and os.getenv('BLOG_AUTOMATION_WAKE')=='true'and approved and startup_requested(blog)else handoff(event,blog))
  result['automation_enabled']=approved
  print(json.dumps(result))
  if os.getenv('GITHUB_OUTPUT'):

@@ -14,6 +14,11 @@ class InJobReleaseTests(unittest.TestCase):
   self.assertFalse(evaluate({},'workflow_run')['proceed'])
  def test_push_cannot_publish_and_manual_behavior_is_preserved(self):
   self.assertFalse(evaluate(self.release,'push')['proceed']);self.assertTrue(evaluate({},'workflow_dispatch','0')['proceed'])
+ def test_explicit_approved_startup_obeys_release_and_repository_pause(self):
+  self.assertTrue(evaluate(self.release,'push',explicit_startup=True)['proceed'])
+  self.assertFalse(evaluate(self.release,'push','0',True)['proceed'])
+  self.assertFalse(evaluate({},'push',explicit_startup=True)['proceed'])
+  self.assertFalse(evaluate(self.release,'push',explicit_startup='true')['proceed'])
  def test_every_costly_or_checkpoint_step_is_guarded(self):
   import re
   source=(Path(__file__).resolve().parents[1]/'.github/workflows/loxblog-content.yml').read_text()
