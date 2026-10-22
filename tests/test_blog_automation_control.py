@@ -32,5 +32,5 @@ class AutomationApprovalTests(unittest.TestCase):
  def test_shared_suite_installs_its_html_parser_in_active_workflows(self):
   for name in ('farsiblog-content','rozblog-content','loxblog-content','blogsky-content','roya-backlink-queue'):
    text=(ROOT/'.github/workflows'/(name+'.yml')).read_text()
-   self.assertIn('pip install --quiet Pillow beautifulsoup4',text)
+   self.assertIn('pip install --quiet Pillow beautifulsoup4 playwright',text)
 if __name__=='__main__':unittest.main()
