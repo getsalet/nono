@@ -123,7 +123,7 @@ jobs:
       - name: Respect user stop before costly or mutable work
         id: control
         run: python automation/check_blog_pipeline_control.py roya
-      - run: python -m pip install --quiet Pillow
+      - run: python -m pip install --quiet Pillow beautifulsoup4
         if: steps.control.outputs.proceed == '1'
       - name: Verify bounded capacity recovery before generation
         if: steps.control.outputs.proceed == '1'

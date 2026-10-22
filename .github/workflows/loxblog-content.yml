@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - run: python -m pip install --quiet Pillow
+      - run: python -m pip install --quiet Pillow beautifulsoup4
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
   deployment-gate:
     runs-on: ubuntu-latest
@@ -176,7 +176,7 @@ jobs:
             echo '::error::Set LOXBLOG_USERNAME and LOXBLOG_PASSWORD repository secrets.'
             exit 1
           fi
-      - run: python -m pip install --quiet Pillow
+      - run: python -m pip install --quiet Pillow beautifulsoup4
         if: steps.control.outputs.proceed == '1' && (steps.release.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1'))
       - name: Generate independent city article with approved image
         if: steps.control.outputs.proceed == '1' && (steps.release.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.LOXBLOG_LOGIN_DIAGNOSTIC != '1'))

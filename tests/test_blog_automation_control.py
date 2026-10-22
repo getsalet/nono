@@ -29,4 +29,8 @@ class AutomationApprovalTests(unittest.TestCase):
   for b in a.ACTIVE:
    text=(ROOT/'.github/workflows'/f'{b}-content.yml').read_text()
    for expected in ('automation_enabled','[blog-generators-resume]','check_blog_pipeline_control.py '+b,'check_blog_run_budget.py '+b,'publish_'+b+'_posts.py','cancel-in-progress: false'):self.assertIn(expected,text)
+ def test_shared_suite_installs_its_html_parser_in_active_workflows(self):
+  for name in ('farsiblog-content','rozblog-content','loxblog-content','blogsky-content','roya-backlink-queue'):
+   text=(ROOT/'.github/workflows'/(name+'.yml')).read_text()
+   self.assertIn('pip install --quiet Pillow beautifulsoup4',text)
 if __name__=='__main__':unittest.main()
