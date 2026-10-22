@@ -40,3 +40,8 @@
 - Local soil/water assertions use Persian whole-token boundaries: «آبیاری» is not the standalone word «آب». Introductory decision-making language no longer becomes a false local-water claim; actual unsupported soil/water assertions remain rejected and independent editorial review still applies.
 
 - Real publication showed a delayed homepage listing after native acknowledgement. Public readback tolerates that bounded propagation window, never retries the native write, and the next locked schedule reconciles an acknowledged ID before considering any new item.
+
+## Unicode and acknowledged-post repair
+- Visible title, description, tags, body and image alt text must contain Arabic-script letters or the AFP mark only; Cyrillic, Greek, CJK, isolated Latin letters, internal family codes and replacement-character corruption are rejected. URL attributes and the Latin slug are not visible prose. Writer context contains Persian product labels instead of internal family enums.
+- Explicit `repair` mode requires one target and an authorized same-ID manifest with the exact original post digest, observed published-native snapshot digest and exact reviewed target digest. It never resets pending state or creates a new post.
+- The single inspected Babakan repair changes the accidental Russian word to Persian. Full text/originality, independent editorial and current real-photo QA must pass; the native snapshot is reread immediately before the one-shot update. Any other remote change stops the repair. Successful native and public readback are required before the queue unlocks. An already-applied repair reconciles read-only.

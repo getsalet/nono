@@ -6,6 +6,7 @@ from city_backlink_policy import Inspect
 from blog_city_editorial import title_errors,matching_evidence,crop_names,approved_crop_records
 from content_originality import check_corpus,reuse_errors
 import roya_backlink_queue as common
+from parsiblog_text import language_errors,post_language_errors
 ROOT=Path(__file__).resolve().parents[1]
 CATEGORY={
  'tape20':'https://navar-abyari.ir/product-category/%d9%86%d9%88%d8%a7%d8%b1-%d8%aa%db%8c%d9%be/',
@@ -37,7 +38,7 @@ def post_digest(obj):
  return hashlib.sha256(json.dumps(obj,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
 def factual_errors(plain):
  text=normalized_title(plain);errors=[]
- if re.search(r'[\u3400-\u9fff]',text)or any(word.upper()not in ('AFP',)for word in re.findall(r'[A-Za-z]{2,}',text)):errors.append('Unexpected foreign-language text in Persian article')
+ errors+=language_errors(text)
  if re.search(r'[0-9۰-۹٠-٩]+(?:[\s./–—تا-]*[0-9۰-۹٠-٩]+)?\s*(?:میکرون|سانتی\s*متر|میلی\s*متر|متر|بار|درصد|لیتر|مش)(?![آ-ی])',text):errors.append('Unreviewed numeric technical prescription')
  if re.search(r'(?:برگه|کاتالوگ|فایل|فرم).{0,100}(?:منتشر می شود|قابل دانلود|دانلود است|قابل مشاهده و دانلود|همیشه موجود)',text):errors.append('Unverified product-page document/download availability claim')
  if re.search(r'اسید|اسیدی|اسیدشویی|جوهر\s*نمک',text):errors.append('Chemical cleaning requires a reviewed model-specific procedure; omit it')
@@ -82,6 +83,7 @@ def qa(item,obj,root=ROOT,require_image=True,originality=True):
  if require_image and (len(p.images)!=1 or p.images[0].get('src')!=item.get('image_url')or len(p.images[0].get('alt',''))<8):errors.append('One approved product image required')
  if not require_image and p.images:errors.append('Text generation must not invent images')
  errors+=factual_errors(plain)
+ errors+=post_language_errors(obj)
  if require_image:
   errors+=review_errors(item,obj)
   from parsiblog_images import validate_record
@@ -124,6 +126,6 @@ def prompt(item,source):
 هیچ تگ a یا URL ننویس. لینک‌گذاری دقیق سه مقصد زیر را برنامه بعد از تولید متن انجام می‌دهد. عبارت‌های لنگر زیر را در صورت تناسب به‌صورت متن ساده در سه پاراگراف متفاوت بدنه (نه FAQ) بیاور. متن باید مستقل و کاربردی بماند؛ نبود عبارت را با ادعا یا داستان ساختگی پر نکن:
 {lines}
 واژه‌ها و عبارت‌های «اقلیم»، «آب و هوای»، «ارسال رایگان»، «نمایندگی رسمی»، «موجود در انبار»، «تخفیف ویژه» را حتی در جمله منفی یا پرسش به کار نبر. هیچ قیمت عددی، موجودی، تخفیف، نمایندگی یا زمان قطعی ارسال ننویس. ضخامت/فشار/فاصله/دبی را بدون مشخصات معتبر عدد ثابت نده. هیچ ادعای محلی تازه یا وعده عملکرد و صرفه‌جویی نساز. اسم شهر را طبیعی و کم‌تکرار بیاور؛ هیچ تضمین رتبه گوگل ننویس.
-همه متن فارسی روان و یکدست باشد؛ واژه بیگانه یا نویسه چینی وارد نکن. وعده نده که در صفحات لینک‌شده فایل، فرم یا برگه فنی منتشر شده یا قابل دانلود است؛ از خواننده بخواه برگه فنی مدل را از تولیدکننده درخواست کند. برگه فنی را «تنها منبع معتبر» ننام؛ اطلاعات واقعی زمین و ارزیابی کارشناس هم لازم‌اند. جمع‌بندی کوتاه باشد و FAQ پرسش تازه کاربردی را پاسخ دهد نه تکرار همه متن. جدول را نمونه خالی/در انتظار بررسی بنویس نه اینکه بررسی انجام شده یا برگه‌ای موجود است. فقط HTML ساده p,h2,h3,ul,ol,li,strong,em,a,table,thead,tbody,tr,th,td,br. بدون style,class,script,iframe,img یا Markdown. تصویر محصول پس از کنترل کیفیت اضافه می‌شود.
+همه متن فارسی روان و یکدست باشد؛ هیچ واژه بیگانه با خط لاتین، روسی، یونانی یا چینی و هیچ شناسه داخلی محصول وارد نکن؛ تنها نشان تجاری AFP مجاز است. گروه محصول را فقط با نام فارسی بنویس. وعده نده که در صفحات لینک‌شده فایل، فرم یا برگه فنی منتشر شده یا قابل دانلود است؛ از خواننده بخواه برگه فنی مدل را از تولیدکننده درخواست کند. برگه فنی را «تنها منبع معتبر» ننام؛ اطلاعات واقعی زمین و ارزیابی کارشناس هم لازم‌اند. جمع‌بندی کوتاه باشد و FAQ پرسش تازه کاربردی را پاسخ دهد نه تکرار همه متن. جدول را نمونه خالی/در انتظار بررسی بنویس نه اینکه بررسی انجام شده یا برگه‌ای موجود است. فقط HTML ساده p,h2,h3,ul,ol,li,strong,em,a,table,thead,tbody,tr,th,td,br. بدون style,class,script,iframe,img یا Markdown. تصویر محصول پس از کنترل کیفیت اضافه می‌شود.
 فقط JSON شامل title برابر عنوان بالا، slug انگلیسی کوچک با خط‌تیره ۳ تا ۶۰ کاراکتر، meta_description فارسی ۷۰ تا ۱۸۰ کاراکتر، tags آرایه ۱ تا ۶ برچسب کوتاه مجموع کمتر از۱۲۰ کاراکتر، html.
 '''

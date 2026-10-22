@@ -229,4 +229,49 @@ class RealPhotoTests(unittest.TestCase):
   for extra in ({'key':'other'},{'native_write_attempted':True},{'completed_at':'2026-10-21T03:00:00Z'},{'completed_at':'bad'}):
    state={'items':{'k':{'status':'failed','at':'2026-10-21T01:28:15Z','reason':'RuntimeError'}}};r=dict(key='k',status='failed',native_write_attempted=False,started_at='2026-10-21T01:25:31Z',completed_at='2026-10-21T01:28:15Z');r.update(extra)
    with self.assertRaises(RuntimeError):pipeline.recover_explicit_preflight(state,'k',True,r)
+class UnicodeAndRepairTests(unittest.TestCase):
+ def test_foreign_scripts_and_single_letters_rejected(self):
+  from parsiblog_text import language_errors
+  for token in ('для','α','対照','偏离','X','tape20','hose','AFPfoo','الفБ'):
+   self.assertTrue(language_errors('مدل '+token+' برای زمین'),token)
+ def test_persian_text_and_afp_mark_allowed(self):
+  from parsiblog_text import language_errors
+  self.assertEqual(language_errors('مدل نوار تیپ AFP برای زمین؛ بررسی کیفیت آب و خاک.'),[])
+ def test_replacement_character_corruption_rejected(self):
+  from parsiblog_text import language_errors
+  for text in ('مدل ??? برای زمین','مدل � زمین'):self.assertTrue(language_errors(text))
+ def test_slug_and_hrefs_not_misclassified_as_visible_prose(self):
+  from parsiblog_text import post_language_errors
+  p={'title':'عنوان فارسی','slug':'navar-tip-city','meta_description':'توضیح فارسی','tags':['آبیاری'],'html':'<p><a href="https://example.com/tape20/">نوار تیپ AFP</a></p>'}
+  self.assertEqual(post_language_errors(p),[])
+  for field in ('title','meta_description','tags','html'):
+   q=copy.deepcopy(p);q[field]=['для']if field=='tags'else'برای برای для';self.assertTrue(post_language_errors(q),field)
+ def test_model_source_has_no_internal_family_code(self):
+  from parsiblog_text import source_context
+  x=source_context({'family':'tape20','city_fa':'بابکان'});text=json.dumps(x,ensure_ascii=False)
+  self.assertNotIn('tape20',text);self.assertNotIn('locality_label',text);self.assertIn('نوار آبیاری قطره‌ای',text)
+ def repair_fixture(self):
+  import parsiblog_repair as r
+  fixture=Tests();fixture.item=Tests.item;item,post=fixture.fixture();item.update(key='pb-guard-fixture',post=post);post['html']=post['html'].replace('بررسی مشخصات','بررسی مشخصات для',1)
+  actual={'id':'42','published':True,'title':post['title'],'html':post['html'].replace('для','???',1)};target=copy.deepcopy(post);target['html']=target['html'].replace('для','برای',1)
+  m={'policy':r.POLICY,'authorized':True,'key':item['key'],'native_id':'42','source_post_sha256':policy.post_digest(post),'observed_native_sha256':r.snapshot_digest(actual),'target_post_sha256':policy.post_digest(target),'old_text':'для','new_text':'برای'}
+  state={'id':'42','status':'submitting_publish','native_phase':'acknowledged'};return r,item,state,actual,m
+ def test_repair_requires_exact_remote_snapshot_and_same_id(self):
+  r,item,state,actual,m=self.repair_fixture();candidate,write=r.repair_candidate(item,state,actual,m)
+  self.assertTrue(write);self.assertIn('برای',candidate['post']['html']);self.assertNotIn('для',candidate['post']['html']);self.assertIn('для',item['post']['html'])
+ def test_repair_never_overwrites_unknown_remote_changes(self):
+  r,item,state,actual,m=self.repair_fixture()
+  for change in ({'id':'99'},{'published':False},{'title':'عنوان عوض شده'},{'html':actual['html']+'<p>تغییر تازه</p>'}):
+   q=dict(actual,**change)
+   with self.assertRaises(native.NativeError):r.repair_candidate(item,state,q,m)
+ def test_repair_never_accepts_changed_local_or_target_digest(self):
+  r,item,state,actual,m=self.repair_fixture()
+  for change in ({'authorized':False},{'target_post_sha256':'bad'},{'source_post_sha256':'bad'},{'native_id':'43'},{'key':'other'}):
+   with self.assertRaises(native.NativeError):r.repair_candidate(item,state,actual,dict(m,**change))
+ def test_completed_repair_reconciles_without_second_write(self):
+  r,item,state,actual,m=self.repair_fixture();candidate,_=r.repair_candidate(item,state,actual,m);actual['html']=candidate['post']['html'];state['status']='published'
+  same,write=r.repair_candidate(candidate,state,actual,m);self.assertFalse(write)
+ def test_repair_does_not_accept_unacknowledged_write(self):
+  r,item,state,actual,m=self.repair_fixture();state['native_phase']='request_pending'
+  with self.assertRaises(native.NativeError):r.repair_candidate(item,state,actual,m)
 if __name__=='__main__':unittest.main()
