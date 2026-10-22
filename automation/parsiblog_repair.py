@@ -44,7 +44,10 @@ def prepare_repair(item,saved,actual,root,now):
  text['html']=str(soup);errors,report=qa(candidate,text,root,require_image=False);errors+=validate_record(candidate,root)
  if errors:raise NativeError('Repair preflight rejected: '+','.join(errors[:5]))
  review=agnes(review_prompt(candidate,candidate['post'],root),temperature=.05)
- if not isinstance(review,dict)or review.get('passed')is not True or review.get('errors')!=[]:raise NativeError('Independent repair editorial review did not approve')
+ if not isinstance(review,dict)or review.get('passed')is not True or review.get('errors')!=[]:
+  # Persist the non-secret reviewer findings before aborting; never publish a rejection.
+  save(root/'artifacts/parsiblog-backlink-queue/repairs'/(item['key']+'-rejected.json'),{'at':now(),'native_id':str(saved['id']),'review':review,'candidate_post_sha256':post_digest(candidate['post']),'native_write_attempted':False})
+  raise NativeError('Independent repair editorial review did not approve; see persisted rejected review')
  candidate['editorial_review']={'policy':'parsiblog-evidence-review-v2','passed':True,'post_sha256':post_digest(candidate['post']),'at':now(),'reviewer':'agnes independent repair review','errors':[]}
  errors,report=qa(candidate,candidate['post'],root)
  if errors:raise NativeError('Repair final preflight rejected: '+','.join(errors[:5]))
