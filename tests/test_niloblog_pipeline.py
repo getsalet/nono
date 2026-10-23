@@ -3,6 +3,13 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'automation'))
 import niloblog_pipeline as m
 class RuntimeTests(unittest.TestCase):
+ def test_placeholder_binding_is_exact(self):
+  b={'links':[{'url':'https://navar-abyari.ir/a','anchor':'a'},{'url':'https://navar-abyari.ir/','anchor':'b'}]}
+  o=m.bind_links({'html':'<p><a href="AFP_LINK_1">a</a><a href="AFP_LINK_2">b</a></p>'},b)
+  self.assertNotIn('AFP_LINK_',o['html']);self.assertIn('https://navar-abyari.ir/a',o['html'])
+ def test_binding_does_not_hide_unknown_destinations(self):
+  o=m.bind_links({'html':'<a href="https://evil.example/">x</a>'},{'links':[]})
+  self.assertIn('https://evil.example/',o['html'])
  def test_two_per_rolling_hour(self):
   n=datetime.datetime.now(datetime.timezone.utc);s={'published':[{'at':(n-datetime.timedelta(minutes=5)).isoformat()},{'at':(n-datetime.timedelta(minutes=45)).isoformat()}]};self.assertEqual(m.budget(s,n),0)
   s['published'][1]['at']=(n-datetime.timedelta(minutes=61)).isoformat();self.assertEqual(m.budget(s,n),1)
