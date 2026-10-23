@@ -192,10 +192,24 @@ def login(page):
  if overlay.count() and overlay.first.is_visible():overlay.first.click()
  return True
 
+def management_frame(page):
+ # The iframe can attach after the protected header finishes loading.
+ slot=page.locator('iframe#frmleft,iframe[name=frmleft]')
+ slot.wait_for(state='attached',timeout=30000)
+ if slot.count()!=1:raise PipelineStop('Ambiguous native management frame')
+ frame=slot.element_handle().content_frame()
+ if not frame:raise PipelineStop('Native management frame not attached')
+ return frame
+
 def navigate(page,label):
- frame=page.frame(name='frmleft')
- if not frame:raise PipelineStop('Native management frame missing')
- with frame.expect_navigation(wait_until='domcontentloaded',timeout=45000):page.get_by_text(label,exact=True).click()
+ frame=management_frame(page);link=page.get_by_text(label,exact=True)
+ if link.count()!=1:raise PipelineStop('Unique native navigation link missing')
+ target=urljoin(page.url,link.get_attribute('href') or '')
+ u=urlsplit(target)
+ if u.scheme!='https' or u.hostname!='www.niloblog.com' or u.path!='/desktop.php':raise PipelineStop('Unexpected native navigation destination')
+ # The authenticated sidebar can be hidden/collapsed. Follow its observed href
+ # inside its own target iframe, rather than relying on a hidden-menu click.
+ frame.goto(target,wait_until='domcontentloaded',timeout=45000)
  return frame
 
 def fill_form(frame,item,draft):
@@ -265,7 +279,7 @@ def verify_public(page,item):
    video.evaluate("v=>{v.preload='metadata';v.load()}")
    public.wait_for_function('()=>{let v=document.querySelector(".post-body video");return v&&v.readyState>=1&&v.duration>0}',timeout=60000)
    proof['video_metadata_loaded']=True
-  proof.update(url=url,at=now().isoformat(),public_post_public_receipt_verified=True)
+  proof.update(url=url,at=now().isoformat(),public_post_verified=True)
   return proof
  finally:public.close()
 

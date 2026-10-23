@@ -28,13 +28,13 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: python -m pip install --quiet playwright beautifulsoup4
-      - run: python automation/niloblog_form_diagnostic.py
+      - run: python automation/niloblog_private_canary.py
       - name: Save sanitized report only
         if: always()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -f artifacts/niloblog/form-diagnostic.json
+          git add -f artifacts/niloblog/private-canary-diagnostic.json
           git diff --cached --quiet && exit 0
           git commit -m 'Record read-only Niloblog form diagnostic [skip ci]'
           git pull --rebase origin main
@@ -43,3 +43,5 @@ jobs:
 # diagnostic revision 3: resolve iframe by actual DOM element
 
 # diagnostic revision 4: navigate observed target href within native frame
+
+# revision 5: single durable private canary, no public writes
