@@ -9,6 +9,14 @@ class EditorialTests(unittest.TestCase):
   self.bundle={'local':{'text':self.quote},'article':{'text':self.quote+' متن فنی'},'technical':[],'links':[]}
   self.plan={'blocked':False,'facts':[{'excerpt_id':'s0-e0','source_index':0,'claim':'گزارش محصول','quote':self.quote},{'excerpt_id':'s1-e0','source_index':1,'claim':'اطلاعات محصول','quote':self.quote}]}
   self.approved={'approved':True,'grounded':True,'locally_distinct':True,'semantic_duplicate':False,'unsupported_claims':[],'local_evidence_quote':self.quote,'local_evidence_id':'s0-e0'}
+ def test_both_configured_technical_sources_are_read(self):
+  loc={'evidence_status':'previously_reviewed_county_crop','scope':'county','evidence_ref':'e','source_url':'https://news.example/a','crop':'سیب','city_fa':'شهر'}
+  matrix={'localities':{'loc':loc},'link_plans':{'plan':{'required_links':[{'target_ref':'article'},{'target_ref':'product','anchor_keyword':'نوار'}],'research_only_target_refs':['tech1','tech2']}}}
+  targets={k:{'target_url':'https://navar-abyari.ir/'+k,'site_title':k} for k in ['article','product','tech1','tech2']}
+  evidence={'approved_records':[{'id':'e','approved':True,'source_url':loc['source_url'],'scope':'county'}]}
+  with mock.patch.object(m,'read',return_value=evidence),mock.patch.object(m,'fetch',side_effect=lambda url,*args:{'url':url,'text':'گزارش سیب در شهر'}) as fetch:
+   bundle=m.source_bundle({'locality_ref':'loc','link_plan_ref':'plan'},matrix,targets)
+  self.assertEqual(len(bundle['technical']),2);self.assertEqual(fetch.call_count,4)
  def test_bound_links_keep_exact_matching_anchor(self):
   b={'links':[{'url':'https://x/a','anchor':'راهنما'},{'url':'https://x/b','anchor':'نوار تیپ'}]}
   o=m.bind_links({'html':'<p><a href="AFP_LINK_1">عنوان اشتباه</a> و <a href="AFP_LINK_2">دیگر</a></p>'},b)

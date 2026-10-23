@@ -83,3 +83,7 @@ An exact-quote gate correctly rejected model-paraphrased quotations. Source exce
 ## Structural and candidate-selection repair (revision 15)
 
 Recognized link placeholders and approved URLs now bind their exact matching approved anchor as well as their URL. Unknown links remain untouched and are rejected by the existing link gate; missing/extra links are not silently inserted or removed. The generated markup is still reviewed independently. Each bounded cycle prefers fresh candidates and diverse clusters/localities instead of spending all three attempts on near-identical older failures. No candidate quality check or publication limit is relaxed. 73 regression tests passed.
+
+## Complete configured research and scope checks (revision 16)
+
+Both configured research-only technical sources are now fetched (previously only the first was read), using the existing source URL/canonical safety checks. Deterministic excerpts distinguish local_report from technical_general. Review explicitly distinguishes a sourced general method from a location-specific claim and from a question requesting unknown farm data; unsupported local inferences, generic city swaps and duplicate content still fail. 74 regression tests passed; publication remains subject to all original gates and independent receipt verification.
