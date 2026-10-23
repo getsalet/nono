@@ -10,7 +10,12 @@ try:
  if not allowed():raise RuntimeError('global_control_blocks')
  with sync_playwright() as pw:
   browser=pw.chromium.launch(channel='chrome',headless=True,args=['--no-sandbox']);page=browser.new_page();login(page)
-  f=navigate(page,'ارسال مطلب جدید');f.locator('#mtitle').wait_for()
+  report['iframes']=page.locator('iframe').evaluate_all("es=>es.map(e=>({id:e.id,name:e.name,path:new URL(e.src,location.href).pathname}))")
+  page.locator('iframe#frmleft,iframe[name=frmleft]').wait_for(timeout=30000)
+  f=page.locator('iframe#frmleft,iframe[name=frmleft]').element_handle().content_frame()
+  if not f:raise RuntimeError('Native iframe not attached')
+  with f.expect_navigation(wait_until='domcontentloaded',timeout=45000):page.get_by_text('ارسال مطلب جدید',exact=True).click()
+  f.locator('#mtitle').wait_for()
   report['form']=f.evaluate('''()=>({method:document.forms[0].method,onsubmit:document.forms[0].getAttribute('onsubmit'),controls:[...document.forms[0].elements].map(e=>({tag:e.tagName,type:e.type,name:e.name,id:e.id,disabled:e.disabled,checked:e.checked,options:e.tagName==='SELECT'?[...e.options].map(o=>({value:o.value,text:o.textContent,selected:o.selected})):undefined,value:e.type==='checkbox'?e.value:undefined})),scripts:[...document.scripts].filter(e=>!e.src).map(e=>e.textContent).filter(t=>t.includes('pars20_go')||t.includes('CKEDITOR.replace'))})''')
   for sel in ['select[name=pcm]']:
    f.locator(sel).select_option('7')
