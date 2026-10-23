@@ -75,6 +75,14 @@ class RuntimeTests(unittest.TestCase):
  def test_public_verification_uses_explicit_multi_page_context(self):
   code=(ROOT/'automation/niloblog_pipeline.py').read_text().split('def main():',1)[1]
   self.assertIn('context=browser.new_context()',code);self.assertIn('page=context.new_page()',code);self.assertNotIn('page=browser.new_page()',code)
+ def test_checkbox_adapter_rejects_unknown_controls(self):
+  import unittest.mock as mock
+  frame=mock.Mock()
+  with self.assertRaises(ValueError):m.set_native_checkbox(frame,'unknown',False)
+  frame.locator.assert_not_called()
+ def test_native_submit_uses_form_events_not_ad_obstructed_pointer(self):
+  code=(ROOT/'automation/niloblog_pipeline.py').read_text().split('def submit_once',1)[1].split('def verify_public',1)[0]
+  self.assertIn('requestSubmit(e)',code);self.assertNotIn('.click()',code)
  def test_no_global_pause_bypass(self):
   import unittest.mock as mock
   with mock.patch('check_blog_pipeline_control.decision',return_value={'proceed':False}):self.assertFalse(m.allowed())

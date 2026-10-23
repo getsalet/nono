@@ -219,8 +219,16 @@ def fill_form(frame,item,draft):
  # Native server corrupts CKEditor pretty-print linefeeds into literal n text.
  frame.evaluate(r"""async body=>{let e=CKEDITOR.instances.mtex;if(!e._afpCompact){let original=e.getData.bind(e);e.getData=(...args)=>original(...args).replace(/[\r\n\t]+/g,' ');e._afpCompact=true;}e.dataProcessor.writer.lineBreakChars='';e.dataProcessor.writer.indentationChars='';await new Promise(r=>e.setData(body.replace(/[\r\n\t]+/g,' '),r));e.updateElement();if(/[\r\n\t]/.test(e.getData()))throw Error('noncompact editor output')}""",item['post']['html'])
  if not frame.locator('textarea[name=mtex]').input_value().strip():raise PipelineStop('Native editor did not receive body')
- frame.locator('input[name=ptags]').fill(','.join(item['post'].get('tags',[])[:4]));frame.locator('#cdraft').set_checked(draft)
- frame.locator('#sabet').uncheck();frame.locator('#a_member').uncheck();frame.locator('#cmail').uncheck();frame.locator('select[name=pcm]').select_option('7')
+ frame.locator('input[name=ptags]').fill(','.join(item['post'].get('tags',[])[:4]))
+ set_native_checkbox(frame,'cdraft',draft)
+ for flag in ('sabet','a_member','cmail'):set_native_checkbox(frame,flag,False)
+ frame.locator('select[name=pcm]').select_option('7')
+
+def set_native_checkbox(frame,control,checked):
+ if control not in ('cdraft','sabet','a_member','cmail'):raise PipelineStop('Unexpected native checkbox')
+ # Advertising layers can cover pointer coordinates. Use the same native input
+ # and change events, without clicking unrelated advertising or hidden controls.
+ frame.locator('#'+control).evaluate("""(e,value)=>{if(e.type!=='checkbox'||e.disabled)throw Error('Unavailable native checkbox');e.checked=value;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}))}""",bool(checked))
 
 def scan(page,title):
  f=navigate(page,'مدیریت مطالب قبلی')
@@ -257,7 +265,8 @@ def recheck(s,public=False):
 
 def submit_once(f):
  # A timeout is ambiguous. Never submit again; keep intent for reconciliation.
- with f.expect_navigation(wait_until='domcontentloaded',timeout=60000):f.locator('input[type=submit][name=submit]').click()
+ with f.expect_navigation(wait_until='domcontentloaded',timeout=60000):
+  f.locator('input[type=submit][name=submit]').evaluate("e=>{if(e.disabled||!e.form)throw Error('Native submit unavailable');e.form.requestSubmit(e)}")
 
 def verify_public(page,item):
  public=page.context.new_page()
@@ -307,7 +316,7 @@ def publish_new(page,item,s):
  f=navigate(page,'ارسال مطلب جدید');fill_form(f,item,True)
  verify_stored_body(item,f.evaluate('()=>CKEDITOR.instances.mtex.getData()'))
  s['intent']={'key':item['key'],'operation':'create_public_post','at':now().isoformat()};checkpoint(s);recheck(s,True)
- f.locator('#cdraft').uncheck();submit_once(f)
+ set_native_checkbox(f,'cdraft',False);submit_once(f)
  receipt=verify_public(page,item)
  s['media']=acknowledge(read(D/'media-catalog.json'),s['media'],item['key'],receipt['url'],public_receipt_verified=True)
  s.setdefault('published',[]).append({'key':item['key'],'url':receipt['url'],'at':receipt['at']})
