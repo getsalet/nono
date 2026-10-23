@@ -6,6 +6,7 @@ from playwright.sync_api import sync_playwright
 import niloblog_pipeline as n
 report={'at':n.now().isoformat(),'mode':'private_canary_only','public_submission':False}
 s=n.read(n.STATE);item=n.read(n.A/'items'/'nilo-7d32c1dc781cd9a1.json')
+if any(x['key']==item['key'] for x in s.get('published',[])):raise SystemExit('Canary already published and reconciled; no private mutation')
 test=copy.deepcopy(item);test['post']['title']='پیش‌نویس داخلی بررسی AFP: پرونده آبیاری گوجه‌فرنگی تاکستان'
 try:
  if not n.allowed():raise n.PipelineStop('Global/user control blocks native write')

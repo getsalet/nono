@@ -12,10 +12,10 @@
   "credentials_verified": true,
   "matrix_path": "data/niloblog/title-matrix.json",
   "article_targets_path": "data/niloblog/article-targets.json",
-  "publication_enabled": false,
+  "publication_enabled": true,
   "workflow_enabled": true,
-  "native_adapter_status": "private_round_trip_verified_public_canary_in_progress",
-  "image_status": "37_webp_host_verified_native_canary_blocked",
+  "native_adapter_status": "verified_native_new_post_publisher",
+  "image_status": "catalog_webp_verified_first_native_receipt_verified",
   "image_generation_enabled": false,
   "content_style": "original_educational_article_not_link_farm",
   "activation_requires": [
@@ -58,7 +58,7 @@
       2,
       3
     ],
-    "image_status": "37_webp_host_verified_native_canary_blocked"
+    "image_status": "catalog_webp_verified_first_native_receipt_verified"
   },
   "media_catalog_path": "data/niloblog/media-catalog.json",
   "media_policy": {
@@ -69,13 +69,29 @@
     "image_format": "webp",
     "webp_quality": 65,
     "image_generation_enabled": false,
-    "native_media_rendering_tested": false,
-    "runtime_integration_enabled": false,
+    "native_media_rendering_tested": true,
+    "runtime_integration_enabled": true,
     "selector_module": "automation/niloblog_media.py",
     "state_requirement": "single writer lock + atomic durable state; ambiguous publications must be reconciled before retry",
     "video_rendering": "controls; no autoplay; preload=none; responsive; validate native HTML preservation first",
-    "media_link_budget": "Image src/video src are media resources, not extra SEO anchors; any visible fallback link counts toward the 2..3 body link cap."
+    "media_link_budget": "Image src/video src are media resources, not extra SEO anchors; any visible fallback link counts toward the 2..3 body link cap.",
+    "native_media_test_scope": {
+      "post_key": "nilo-7d32c1dc781cd9a1",
+      "image_id": "image-001",
+      "video_id": "video-004",
+      "desktop_chrome_image_decode": true,
+      "desktop_chrome_video_playback_advanced": true,
+      "mobile_playback_tested": false,
+      "all_videos_full_playback_tested": false
+    }
   },
   "runtime_enabled": true,
-  "activation_blocker": null
+  "activation_blocker": null,
+  "activation_evidence": {
+    "private_native_id": "2",
+    "public_receipt_path": "artifacts/niloblog/receipts/nilo-7d32c1dc781cd9a1.json",
+    "verified_at": "2026-10-23T04:00:56.951030+00:00",
+    "public_url": "https://afp.niloblog.com/p/3/%DA%A9%D8%B4%D8%AA-%DA%AF%D9%88%D8%AC%D9%87-%D9%81%D8%B1%D9%86%DA%AF%DB%8C-%D8%B4%D9%87%D8%B1%D8%B3%D8%AA%D8%A7%D9%86-%D8%AA%D8%A7%DA%A9%D8%B3%D8%AA%D8%A7%D9%86-%D9%84%DB%8C%D8%B3%D8%AA-%D8%B2%D9%85%DB%8C%D9%86-%D9%86%D9%88%D8%A7%D8%B1-%D8%AA%DB%8C%D9%BE",
+    "new_public_write_during_reconciliation": false
+  }
 }

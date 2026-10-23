@@ -83,6 +83,9 @@ class RuntimeTests(unittest.TestCase):
  def test_native_submit_uses_form_events_not_ad_obstructed_pointer(self):
   code=(ROOT/'automation/niloblog_pipeline.py').read_text().split('def submit_once',1)[1].split('def verify_public',1)[0]
   self.assertIn('requestSubmit(e)',code);self.assertNotIn('.click()',code)
+ def test_public_discovery_bypasses_stale_homepage_cache(self):
+  code=(ROOT/'automation/niloblog_pipeline.py').read_text().split('def verify_public',1)[1].split('def publish_new',1)[0]
+  self.assertIn('/?afp_verify=',code);self.assertIn('time.time_ns()',code)
  def test_no_global_pause_bypass(self):
   import unittest.mock as mock
   with mock.patch('check_blog_pipeline_control.decision',return_value={'proceed':False}):self.assertFalse(m.allowed())

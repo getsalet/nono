@@ -31,7 +31,9 @@ class NiloblogMatrixTests(unittest.TestCase):
     def test_credential_names_only(self):
         self.assertEqual(self.config['credential_secret_names'],{'username':'NILOBLOG_USERNAME','password':'NILOBLOG_PASSWORD'});self.assertIsInstance(self.config['credentials_verified'],bool);self.assertFalse(self.config['credential_values_stored'])
     def test_verified_media_does_not_enable_generator(self):
-        self.assertIn(self.config['image_status'],('catalog_verified_adapter_pending','37_webp_host_verified_native_canary_blocked'));self.assertFalse(self.config['image_generation_enabled']);self.assertFalse(self.config['media_policy']['runtime_integration_enabled']);self.assertFalse(self.config['media_policy']['native_media_rendering_tested'])
+        self.assertIn(self.config['image_status'],('catalog_verified_adapter_pending','37_webp_host_verified_native_canary_blocked','catalog_webp_verified_first_native_receipt_verified'));self.assertFalse(self.config['image_generation_enabled']);
+        if self.config['media_policy']['runtime_integration_enabled']:
+            self.assertTrue(self.config['media_policy']['native_media_rendering_tested']);receipts=list((ROOT/'artifacts/niloblog/receipts').glob('*.json'));self.assertTrue(receipts);self.assertTrue(any(json.loads(p.read_text()).get('image_decoded') for p in receipts))
     def test_destinations_are_https_main_site(self):
         c=copy.deepcopy(self.c);c['targets'][0]['target_url']='https://example.org/';self.assertTrue(mod.validate(self.m,c))
 if __name__=='__main__':unittest.main()

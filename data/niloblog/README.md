@@ -15,7 +15,7 @@
 ۲. نام شهر/شهرستان + فقط یک کشت ردیفی + زاویه مشخص درباره آبیاری قطره‌ای یا نوار تیپ.
 ۳. دو تا سه لینک داخل متن: یک مقاله مرتبط + یک لینک طبیعی کلیدواژه؛ لینک سوم اختیاری و فقط با ارزش واقعی برای خواننده.
 ۴. دو عبارت کلیدی هدف «نوار تیپ» و «نوار آبیاری» هستند. هر دو نباید صرفاً برای تکمیل سهمیه به جمله تحمیل شوند.
-۵. تصویر منتظر URL کاربر است؛ تولید یا انتخاب تصویر خودکار خاموش است.
+۵. تصاویر از ۳۷ فایل WebP معرفی‌شدهٔ مالک به‌صورت نوبتی انتخاب می‌شوند؛ ویدیو اختیاری از ۹ فایل موجود است. تولید تصویر هوش مصنوعی خاموش است.
 
 ## محدوده شواهد و کیفیت
 این نسخه از ۸ ترکیب شهرستان–کشت دارای سابقه بررسی در `data/blog-city-crop-evidence.json` استفاده می‌کند؛ ۱۲۴ زاویه نگارشی برای هر ترکیب، ۹۹۲ پیشنهاد می‌سازد. ۸ نمونه پیشنهادی درچه–پیاز نیز با وضعیت نیازمند منبع محلی اضافه شده است. جمع دقیقاً ۱۰۰۰ عنوان، در ۹ مکان و ۴ کشت است. این عدد به معنای ۱۰۰۰ مکان، یا ۱۰۰۰ موضوع علمی مستقل و آماده انتشار نیست.
@@ -25,12 +25,12 @@
 همه ردیف‌ها در مرحله بررسی نگارشی/محلی هستند. حتی ردیف‌های دارای سابقه منبع، برای فصل جاری، طراحی شبکه، کیفیت آب و ادعاهای فنی مجوز خودکار ندارند. تکرار یک زاویه در شهر دیگر به‌تنهایی محتوای جدید نیست؛ داده محلی مستقل و بررسی شباهت معنایی بین وبلاگ‌ها الزامی است. در نبود منبع، ردیف متوقف بماند؛ ادعای اقلیم، رواج کشت، زمان‌بندی آبیاری، فشار/آبدهی ثابت یا تضمین صرفه‌جویی ساخته نشود.
 
 ## اتصال و وضعیت اجرا
-- نام سکرت‌ها: `NILOBLOG_USERNAME` و `NILOBLOG_PASSWORD`.
-- فقط نام‌ها ثبت شده‌اند؛ مقادیر خوانده/ذخیره یا صحت آن‌ها تأیید نشده است.
-- این مرحله اتصال داده‌ها به مخزن است. آداپتر ورود/پیش‌نویس/انتشار نیلوبلاگ و workflow عملیاتی هنوز ساخته نشده‌اند.
-- `publication_enabled=false` و `workflow_enabled=false`. هیچ پست یا تصویری تولید/منتشر نشده است.
-- فایل‌های کنترل جنراتورهای فعلی، توقف سراسری، خانواده hose و Blogfa بازنشسته تغییر نکرده‌اند.
-- فعال‌سازی آینده منوط به مجوز انتشار، دریافت URL تصویر، آزمون بومی ذخیره و رسید عمومی، کنترل بودجه و توقف سراسری و بررسی محتوایی است.
+- سکرت‌ها: `NILOBLOG_USERNAME` و `NILOBLOG_PASSWORD`؛ ورود واقعی در runner تأیید شده و هیچ مقدار محرمانه در فایل‌ها ذخیره نشده است.
+- workflow: `.github/workflows/niloblog-content.yml`، زمان‌بندی دقیقه‌های 17 و 47 هر ساعت UTC؛ هر چرخه حداکثر یک مقاله و سقف سخت دو انتشار تأییدشده در هر بازه لغزان 60 دقیقه. تأخیر اجرای GitHub ممکن است؛ این زمان‌بندی تضمین ساعت دقیق یا تعداد روزانه نیست.
+- `runtime-control.json`: روشن، مرحله `publish`. همهٔ ردیف‌های ماتریس همچنان پیشنهاد و نیازمند بررسی‌اند، نه مجوز انتشار دسته‌جمعی.
+- منابع محلی و مقصدها، ادعاها، اصالت بین وبلاگ‌ها، متن و لینک‌ها بررسی می‌شوند؛ نبود شواهد یا شباهت معنایی باعث توقف همان مقاله می‌شود. پیش‌نویس تأییدنشده یا نوشتهٔ ضعیف فقط برای پرکردن سهمیه منتشر نمی‌شود.
+- قصد ارسال قبل از submit در مخزن پایدار می‌شود. ارسال مبهم تکرار نمی‌شود؛ ابتدا همان پست عمومی موجود باید مستقل بررسی و reconcile شود.
+- توقف سراسری، سقف انتشار و کنترل خانواده‌ها پابرجاست؛ جنراتورهای دیگر، hose و Blogfa بازنشسته تغییر نکرده‌اند.
 
 ## آزمون
 ```bash
@@ -40,10 +40,10 @@ python -m unittest discover -s tests -p 'test_niloblog_title_matrix.py'
 اعتبارسنج به مدرک مشترک شهر–کشت نیاز دارد و در نبود آن fail-closed عمل می‌کند. تغییر وضعیت برای دور زدن بررسی مجاز نیست.
 
 ## اصلاح طول عنوان و مقاله
-عنوان‌ها با حفظ شناسه، شهر/شهرستان، کشت، منبع و وضعیت بررسی کوتاه شدند. سقف نگارشی عنوان ۷۸ نویسه و هدف ۵۰ تا ۷۰ است؛ محدودیت قطعی گوگل محسوب نمی‌شود. هدف متن ۶۰۰ تا ۹۰۰ کلمه است؛ متن بیش از ۱۱۰۰ کلمه باید بازبینی شود. متن کوتاه و کامل بر متن کش‌دار اولویت دارد؛ تعداد کلمه عامل رتبه‌بندی یا تضمین سئو نیست. این پروفایل فقط برنامه نگارشی نیلوبلاگ است؛ نویسنده/ناشر عملیاتی هنوز پیاده نشده و انتشار و تصویر خودکار خاموش باقی می‌مانند.
+عنوان‌ها با حفظ شناسه، شهر/شهرستان، کشت، منبع و وضعیت بررسی کوتاه شدند. سقف نگارشی عنوان ۷۸ نویسه و هدف ۵۰ تا ۷۰ است؛ محدودیت قطعی گوگل محسوب نمی‌شود. هدف متن ۶۰۰ تا ۹۰۰ کلمه است؛ متن بیش از ۱۱۰۰ کلمه باید بازبینی شود. متن کوتاه و کامل بر متن کش‌دار اولویت دارد؛ تعداد کلمه عامل رتبه‌بندی یا تضمین سئو نیست. ناشر بومی این قرارداد نگارشی را همراه کنترل منبع و اصالت اجرا می‌کند؛ تعداد کلمه یا لینک تضمین سئو نیست.
 
 
-## رسانه‌های آماده؛ انتشار همچنان خاموش
+## رسانه‌ها و گردش نوبت
 - `media-catalog.json`: ۳۷ تصویر WebP و ۹ ویدیو MP4 در پوشه عمومی معرفی‌شده توسط مالک.
 - `media-links.md`: فهرست لینک‌ها؛ `media-conversion-report.json`: حجم و گزارش تبدیل.
 - WebP با quality=65 از 100، با اعمال جهت EXIF، حذف متادیتا و حداکثر ضلع 1600 ساخته شد. این عدد کیفیت است، نه تضمین 65٪ کاهش حجم.
@@ -51,18 +51,18 @@ python -m unittest discover -s tests -p 'test_niloblog_title_matrix.py'
 - تصاویر: دانلود عمومی، MIME، decode کامل و SHA256 عین فایل آپلودشده تأیید شد. ویدیوها: هدر و فرمت/کدک/ابعاد/مدت با ffprobe بررسی شد، نه مشاهده کامل تمام فیلم‌ها.
 - تصویر محصول/تولید/انبار، تصویر محلی مزرعه نیست؛ alt واقعی انتخاب شود، نه نام شهر و کشت جعلی.
 - انتخاب تصویر نوبتی؛ ویدیو در احتمال پیشنهادی و قابل‌تنظیم 25٪، ثابت برای هر شناسه مطلب در تلاش مجدد. پخش خودکار ممنوع، controls و preload=none و اندازه منعطف. لینک قابل‌کلیک احتمالی ویدیو باید در سقف 2 تا 3 لینک بدنه حساب شود.
-- `automation/niloblog_media.py` فقط helper بدون انتشار است. رزرو مجدد همان پست ثابت می‌ماند؛ تا تأیید مستقل رسید عمومی، نوبت تصویر جلو نمی‌رود. وضعیت مبهم باید reconcile شود. caller آینده مسئول قفل تک‌نویسنده، ذخیره اتمیک پایدار و بررسی واقعی رسید است.
-- این helper هنوز به نویسنده بومی نیلوبلاگ متصل نشده است. حفظ HTML تصویر/ویدیو، پخش روی موبایل، مدیریت وضعیت، ورود با سکرت‌ها و انتشار نیازمند آزمون مستقل است. `publication_enabled`، `workflow_enabled` و `runtime_integration_enabled` همگی false می‌مانند.
+- `automation/niloblog_media.py` فقط helper بدون انتشار است. رزرو مجدد همان پست ثابت می‌ماند؛ تا تأیید مستقل رسید عمومی، نوبت تصویر جلو نمی‌رود. وضعیت مبهم باید reconcile شود. ناشر بومی با قفل تک‌نویسنده، checkpoint پایدار و بررسی مستقل رسید این الزامات را اجرا می‌کند.
+- این helper به ناشر بومی وصل است. نخستین رسید عمومی حفظ دقیق متن و لینک‌ها، decode تصویر و جلو رفتن زمان پخش ویدیوی انتخاب‌شده در Chrome را تأیید کرد. این تأیید معادل آزمون پخش کامل همهٔ ۹ ویدیو یا آزمون موبایل نیست.
 
 
-## Runtime status — native provider blocker
-
-- GitHub workflow: `.github/workflows/niloblog-content.yml`, scheduled at minutes 17 and 47 UTC; one candidate publication per cycle, hard ceiling two verified receipts per rolling hour.
-- `NILOBLOG_USERNAME` / `NILOBLOG_PASSWORD` were present and an actual GitHub-runner sign-in succeeded. No credential values are stored in artifacts.
-- Runtime revision 6 is **intentionally disabled**, phase `native_server_blocked`; the schedule's preflight exits before browser/API costs. User publication authorization remains recorded, but does not override a native failure.
-- Native post ID 1 is private and held: CKEditor pretty-print linefeeds were corrupted into literal `nn` text. Corrected educational copy is stored in the item, but **was not saved or published natively**.
-- Current new-post form rejects even a private save with `DB ERROR: Incorrect integer value: '' for column 'pcomment' at row 1`; the edit form returns an internal operation error. Supplying the existing moderation selector did not fix the provider error. No corrected private canary exists.
-- The prepared adapter uses compact editor output, strict body/link/WebP/video round-trip checks, fresh source checks, factual/semantic originality review, durable write intents, and public permalink receipts. Its new-public-post path remains unverified and cannot run until the private canary gate is satisfied.
-- No public post was submitted. No image cursor advanced. The original pending media selection remains reserved. No other blog's runtime or global controls were modified.
-- Provider support must fix native new-post and edit errors. Then verify corrected private body, links, WebP decoding and selected video; run exactly one public canary; independently verify native permalink and media before enabling normal `publish` phase. Do not just toggle the runtime flag.
-- See `artifacts/niloblog/native-server-blocker.json` for a non-secret native-state check. Never retry an ambiguous public submission automatically.
+## رفع ایرادها و تأیید عملی
+- آماده‌شدن iframe پنل پیش از دسترسی بررسی می‌شود و ناوبری با href واقعی لینک داخل همان قاب انجام می‌شود؛ وابستگی به کلیک منوی مخفی حذف شد.
+- کلیک کلی روی علامت × تبلیغات حذف شد. کنترل‌های مشخص فرم با رویدادهای استاندارد input/change و submit با requestSubmit همان دکمه عمل می‌کنند تا لایه تبلیغ، کلیک را نبلعد؛ خبرنامه و پست ثابت/خصوصی اعضا فعال نمی‌شوند و نظرات نیازمند تأیید باقی می‌مانند.
+- قبل از خواندن CKEditor، وجود کتابخانه و آماده‌شدن آن بررسی می‌شود. خروجی فشرده از خراب‌شدن newline به نویسه‌های nn جلوگیری می‌کند؛ تطبیق متن واقعی همچنان سخت‌گیر است.
+- context صریح چندصفحه‌ای برای پنل و بررسی مستقل صفحه عمومی ایجاد می‌شود؛ استفاده اشتباه از context تک‌صفحه‌ای رفع شد.
+- کش صفحه اصلی پست تازه را پنهان کرده بود. کش برای کشف لینک با nonce دور زده می‌شود، ولی رسید، همان permalink بومی تمیز است. مقاله موجود بازخوانی شد و ارسال مجدد انجام نشد.
+- خطای قبلی pcomment با ورود تازه و همان مقدار pcm=7 تکرار نشد؛ نسبت‌دادن کل مشکل به خرابی دائمی سرور درست نبود. گزارش تاریخی با وضعیت resolved نگهداری شده است. مسیر انتشار به endpoint ویرایش معیوب متکی نیست و رفع خطای داخلی آن endpoint ادعا نمی‌شود.
+- پیش‌نویس قدیمی ID 1 خراب و خصوصی باقی مانده؛ پیش‌نویس اصلاح‌شده ID 2 خصوصی است. هیچ‌یک به‌عنوان رسید عمومی شمرده نشده و هیچ مطلبی برای آزمایش پاک نشده است.
+- مقالهٔ واقعی منتشرشده: https://afp.niloblog.com/p/3/%DA%A9%D8%B4%D8%AA-%DA%AF%D9%88%D8%AC%D9%87-%D9%81%D8%B1%D9%86%DA%AF%DB%8C-%D8%B4%D9%87%D8%B1%D8%B3%D8%AA%D8%A7%D9%86-%D8%AA%D8%A7%DA%A9%D8%B3%D8%AA%D8%A7%D9%86-%D9%84%DB%8C%D8%B3%D8%AA-%D8%B2%D9%85%DB%8C%D9%86-%D9%86%D9%88%D8%A7%D8%B1-%D8%AA%DB%8C%D9%BE
+- رسید مستقل: `artifacts/niloblog/receipts/nilo-7d32c1dc781cd9a1.json`؛ نوبت تصویر فقط بعد از این رسید یک‌بار جلو رفت.
+- ابزار تشخیصی اکنون فقط workflow_dispatch و فقط خواندنی است؛ script بازبینی عمومی هیچ فرم انتشار را submit نمی‌کند.
