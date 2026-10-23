@@ -30,6 +30,12 @@ class ExistingPostRepairTests(unittest.TestCase):
   self.assertIn("verify_body(''.join(before.values()),item['post']['html'])",source)
   self.assertIn('Unexpected nonempty continuation',source)
   self.assertIn("after={'mtex':expected_html,'mtex2':before['mtex2']}",source)
+ def test_checkpoint_configures_identity_before_rebase(self):
+  import inspect
+  from repair_rozblog_editorial import checkpoint
+  source=inspect.getsource(checkpoint)
+  self.assertLess(source.index("'config','user.name'"),source.index("'pull','--rebase'"))
+  self.assertLess(source.index("'config','user.email'"),source.index("'pull','--rebase'"))
  def test_workflow_has_same_native_lock_and_no_generation(self):
   s=(ROOT/'.github/workflows/rozblog-editorial-repair.yml').read_text()
   self.assertIn('group: rozblog-content-pipeline',s);self.assertNotIn('AGNES_API_KEY',s)

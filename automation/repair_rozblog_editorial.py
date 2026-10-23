@@ -38,6 +38,10 @@ def save(path,value):
  path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
 
 def checkpoint(paths):
+ # Rebase can create commits too: identity must be configured for the checkout,
+ # not supplied only through -c to the first commit command.
+ subprocess.run(['git','config','user.name','github-actions[bot]'],cwd=ROOT,check=True,stdout=subprocess.DEVNULL)
+ subprocess.run(['git','config','user.email','41898282+github-actions[bot]@users.noreply.github.com'],cwd=ROOT,check=True,stdout=subprocess.DEVNULL)
  for p in paths:
   if (ROOT/p).exists():subprocess.run(['git','add','-f',p],cwd=ROOT,check=True,stdout=subprocess.DEVNULL)
  if subprocess.run(['git','diff','--cached','--quiet'],cwd=ROOT).returncode==0:return
