@@ -233,8 +233,11 @@ def edit_existing(page,item):
  if not found:raise PipelineStop('Expected saved native draft missing')
  f,i=found;link=f.locator('tr').nth(i).locator('a:has(img[src="images/edit.gif"])')
  if link.count()!=1:raise PipelineStop('Unique native edit control missing')
- with f.expect_navigation(wait_until='domcontentloaded',timeout=45000):link.click()
- f.locator('#mtitle').wait_for();f.wait_for_function('()=>CKEDITOR.instances.mtex?.status==="ready"')
+ target=urljoin(f.url,link.get_attribute('href') or '')
+ u=urlsplit(target)
+ if u.scheme!='https' or u.hostname!='www.niloblog.com' or u.path!='/desktop.php':raise PipelineStop('Unexpected native edit destination')
+ f.goto(target,wait_until='domcontentloaded',timeout=45000)
+ f.locator('#mtitle').wait_for();f.wait_for_function('()=>typeof CKEDITOR!=="undefined" && CKEDITOR.instances.mtex?.status==="ready"')
  if f.locator('#mtitle').input_value()!=item['post']['title']:raise PipelineStop('Native title changed')
  return f
 
@@ -354,7 +357,8 @@ if __name__=='__main__':
   # Do not dump private form HTML, cookies, credentials or API error bodies.
   print('Niloblog stopped safely:',str(e) if isinstance(e,PipelineStop) else type(e).__name__,file=sys.stderr)
   try:
-   save(A/'last-error.json',{'at':now().isoformat(),'reason':str(e) if isinstance(e,PipelineStop) else type(e).__name__})
+   import traceback
+   save(A/'last-error.json',{'at':now().isoformat(),'reason':str(e) if isinstance(e,PipelineStop) else type(e).__name__,'frames':[{'file':Path(x.filename).name,'function':x.name,'line':x.lineno} for x in traceback.extract_tb(e.__traceback__)][-8:]})
    if os.getenv('GITHUB_ACTIONS')=='true':checkpoint(read(STATE))
   except Exception:pass
   sys.exit(1)
