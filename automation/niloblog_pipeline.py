@@ -279,6 +279,9 @@ def verify_public(page,item):
    video.evaluate("v=>{v.preload='metadata';v.load()}")
    public.wait_for_function('()=>{let v=document.querySelector(".post-body video");return v&&v.readyState>=1&&v.duration>0}',timeout=60000)
    proof['video_metadata_loaded']=True
+   video.evaluate('async v=>{v.muted=true;await v.play()}')
+   public.wait_for_function('()=>document.querySelector(".post-body video").currentTime>0.25',timeout=30000)
+   video.evaluate('v=>v.pause()');proof['video_playback_advanced']=True
   proof.update(url=url,at=now().isoformat(),public_post_verified=True)
   return proof
  finally:public.close()
@@ -287,8 +290,10 @@ def publish_new(page,item,s):
  # Niloblog edit endpoint returned server-side errors. Use its working new-post
  # form only; the historical failed private draft is explicitly retained/held.
  found=scan(page,item['post']['title'])
- if found and not (item.get('private_canary') and item['private_canary'].get('legacy_draft_native_id')=='1'):
-  raise PipelineStop('Matching native title already exists; manual reconciliation required')
+ if found:
+  if not (item.get('private_canary') and item['private_canary'].get('legacy_draft_native_id')=='1'):raise PipelineStop('Matching native title already exists; manual reconciliation required')
+  legacy=edit_existing(page,item)
+  if legacy.locator('input[name=id]').input_value()!='1' or not legacy.locator('#cdraft').is_checked():raise PipelineStop('Legacy private draft identity changed; no duplicate submission')
  public=page.context.new_page()
  try:
   public.goto(BLOG+'/',wait_until='domcontentloaded',timeout=60000)

@@ -39,6 +39,21 @@ class RuntimeTests(unittest.TestCase):
   code=(ROOT/'automation/niloblog_pipeline.py').read_text().split('def publish_new',1)[1]
   self.assertLess(code.index('receipt=verify_public'),code.index('acknowledge('))
   self.assertLess(code.index('receipt=verify_public'),code.index("s['intent']=None"))
+ def test_navigation_uses_observed_link_inside_ready_frame(self):
+  import unittest.mock as mock
+  page=mock.Mock();page.url='https://www.niloblog.com/management.php';link=page.get_by_text.return_value;link.count.return_value=1;link.get_attribute.return_value='desktop.php?a=observed';frame=mock.Mock()
+  with mock.patch.object(m,'management_frame',return_value=frame):self.assertIs(m.navigate(page,'ارسال مطلب جدید'),frame)
+  frame.goto.assert_called_once_with('https://www.niloblog.com/desktop.php?a=observed',wait_until='domcontentloaded',timeout=45000);link.click.assert_not_called()
+ def test_navigation_rejects_unexpected_host(self):
+  import unittest.mock as mock
+  page=mock.Mock();page.url='https://www.niloblog.com/management.php';link=page.get_by_text.return_value;link.count.return_value=1;link.get_attribute.return_value='https://evil.example/desktop.php';frame=mock.Mock()
+  with mock.patch.object(m,'management_frame',return_value=frame):
+   with self.assertRaises(ValueError):m.navigate(page,'ارسال مطلب جدید')
+  frame.goto.assert_not_called()
+ def test_frame_waits_for_attachment(self):
+  import unittest.mock as mock
+  page=mock.Mock();slot=page.locator.return_value;slot.count.return_value=1;frame=slot.element_handle.return_value.content_frame.return_value
+  self.assertIs(m.management_frame(page),frame);slot.wait_for.assert_called_once_with(state='attached',timeout=30000)
  def test_no_global_pause_bypass(self):
   import unittest.mock as mock
   with mock.patch('check_blog_pipeline_control.decision',return_value={'proceed':False}):self.assertFalse(m.allowed())

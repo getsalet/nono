@@ -21,7 +21,7 @@ class NiloblogMatrixTests(unittest.TestCase):
     def test_duplicate_rejected(self):
         m=copy.deepcopy(self.m);m['titles'][1]['title']=m['titles'][0]['title'];self.assertTrue(mod.validate(m,self.c))
     def test_publication_not_enabled(self):
-        self.assertFalse(self.config['publication_enabled']);self.assertFalse(self.config.get('runtime_enabled',False));m=copy.deepcopy(self.m);m['publication_enabled']=True;self.assertTrue(mod.validate(m,self.c))
+        self.assertFalse(self.m['publication_enabled']);control=json.loads((ROOT/'data/niloblog/runtime-control.json').read_text());self.assertEqual(bool(self.config.get('runtime_enabled')),bool(control['enabled']));self.assertEqual(control['rolling_hourly_limit'],2);self.assertTrue(control['publication_authorized_by_user']);m=copy.deepcopy(self.m);m['publication_enabled']=True;self.assertTrue(mod.validate(m,self.c))
     def test_unverified_example_cannot_be_unlocked(self):
         m=copy.deepcopy(self.m);m['titles'][0]['review_state']='editorial_review_required';self.assertTrue(mod.validate(m,self.c))
     def test_link_budget_and_keyword(self):
