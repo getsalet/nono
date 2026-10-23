@@ -7,8 +7,21 @@ class EditorialTests(unittest.TestCase):
  def setUp(self):
   self.quote='این یک نقل دقیق و مستند درباره محصول شهرستان است'
   self.bundle={'local':{'text':self.quote},'article':{'text':self.quote+' متن فنی'},'technical':[],'links':[]}
-  self.plan={'blocked':False,'facts':[{'source_index':0,'claim':'گزارش محصول','quote':self.quote},{'source_index':1,'claim':'اطلاعات محصول','quote':self.quote}]}
-  self.approved={'approved':True,'grounded':True,'locally_distinct':True,'semantic_duplicate':False,'unsupported_claims':[],'local_evidence_quote':self.quote}
+  self.plan={'blocked':False,'facts':[{'excerpt_id':'s0-e0','source_index':0,'claim':'گزارش محصول','quote':self.quote},{'excerpt_id':'s1-e0','source_index':1,'claim':'اطلاعات محصول','quote':self.quote}]}
+  self.approved={'approved':True,'grounded':True,'locally_distinct':True,'semantic_duplicate':False,'unsupported_claims':[],'local_evidence_quote':self.quote,'local_evidence_id':'s0-e0'}
+ def test_catalog_quotes_are_source_substrings(self):
+  for f in m.evidence_catalog(self.bundle):self.assertIn(f['quote'],m.canon([self.bundle['local'],self.bundle['article']][f['source_index']]['text']))
+ def test_plan_resolves_ids_not_model_quotations(self):
+  raw=copy.deepcopy(self.plan);raw['facts'][0]['quote']='جعلی';raw['facts'][0]['source_index']=99
+  plan=m.resolve_evidence_plan(raw,m.evidence_catalog(self.bundle),self.bundle)
+  self.assertEqual(plan['facts'][0]['quote'],self.quote);self.assertEqual(plan['facts'][0]['source_index'],0)
+  raw['facts'][0]['excerpt_id']='fake'
+  with self.assertRaises(m.PipelineStop):m.resolve_evidence_plan(raw,m.evidence_catalog(self.bundle),self.bundle)
+ def test_review_requires_selected_local_evidence_id(self):
+  for eid in ['s1-e0','fake',None]:
+   review=m.bind_review_evidence(dict(self.approved,local_evidence_id=eid),self.plan)
+   self.assertFalse(m.review_passes(review,self.bundle))
+  self.assertTrue(m.review_passes(m.bind_review_evidence(self.approved,self.plan),self.bundle))
  def test_evidence_quotes_checked_against_exact_source(self):
   self.assertEqual(m.verify_evidence_plan(self.plan,self.bundle),self.plan)
   for field,value in [('quote','یک نقل ساختگی که در هیچ کدام از منابع وجود ندارد'),('source_index',9),('source_index',True)]:
