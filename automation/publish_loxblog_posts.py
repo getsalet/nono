@@ -25,13 +25,15 @@ def public_records(rows):
   found[title]=record
  return found
 
+from loxblog_archive_read import read_archive_page
+
 def scan_public(page):
  pending=[BLOG,BLOG+'posts/'];seen=set();found={}
  while pending:
   url=pending.pop(0)
   if url in seen:continue
   if len(seen)>=150:raise RuntimeError('Public archive pagination incomplete')
-  seen.add(url);r=page.goto(url,wait_until='domcontentloaded',timeout=60000)
+  seen.add(url);r=read_archive_page(page,url)
   if not r or r.status>=400 or urlsplit(page.url).hostname!=HOST:raise RuntimeError('Public archive unavailable; refuse partial dedup')
   native_archive=urlsplit(page.url).path.rstrip('/')=='/posts'
   if native_archive:

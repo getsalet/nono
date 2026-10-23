@@ -13,7 +13,7 @@ def load(path,default):return json.loads(path.read_text()) if path.exists() else
 def save(path,data):
     path.parent.mkdir(parents=True,exist_ok=True);tmp=path.with_suffix(path.suffix+'.tmp');tmp.write_text(json.dumps(data,ensure_ascii=False,indent=2));tmp.replace(path)
 def remaining_publication_budget(state_path=None,current=None):
-    """At most three verified generator publications in any rolling 60 minutes."""
+    """At most two verified generator publications in any rolling 60 minutes."""
     current=current or datetime.datetime.now(datetime.timezone.utc)
     if current.tzinfo is None:raise RuntimeError('hourly publication budget requires a timezone-aware clock')
     cutoff=current-datetime.timedelta(hours=1)
@@ -23,7 +23,7 @@ def remaining_publication_budget(state_path=None,current=None):
         except (KeyError,TypeError,ValueError,AttributeError):raise RuntimeError('invalid publication timestamp; reconcile history before publishing')from None
         if stamp.tzinfo is None:raise RuntimeError('publication history timestamp lacks timezone')
         if stamp>=cutoff:recent+=1
-    return max(0,3-recent)
+    return max(0,2-recent)
 def item_path(key):return ART/'items'/(re.sub(r'[^A-Za-z0-9._-]+','_',key)+'.json')
 def links_for(item):
     if item.get("kind")in("city","article"):

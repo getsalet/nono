@@ -145,7 +145,13 @@ def verify_live(page,item,pid):
         verify_text_body(item,body.inner_html(),generator.approved_links(item,load(ROOT/'data/roya/link-library.json',{})))
     return url
 
+def roya_hourly_budget():
+    from farsiblog_backlink_queue import remaining_publication_budget
+    return remaining_publication_budget(STATE)
+
 def publish(todo):
+    if BLOG=='https://afp.royablog.ir' and todo and not roya_hourly_budget():
+        print('Roya rolling two-post hourly budget exhausted; no login or submission.');return 0
     from playwright.sync_api import sync_playwright
     from blog_public_content_verify import canonical_text
     attached=bool(os.getenv('AGENT_BROWSER_CDP'));completed=0
@@ -161,6 +167,8 @@ def publish(todo):
                 item=load(resolve_item(entry),{});post=item['post'];title=post['title'].strip();pid=existing.get(canonical_text(title))
                 recovered=bool(pid)
                 if not pid:
+                    if BLOG=='https://afp.royablog.ir' and not roya_hourly_budget():
+                        print('Roya rolling two-post hourly budget reached; no additional submission.');break
                     page.goto(ADD_URL,wait_until='domcontentloaded',timeout=90000)
                     if '/SignIn/' in page.url:raise RuntimeError('Roya login expired; refusing a blind retry')
                     page.wait_for_selector('#ptitle',timeout=30000)

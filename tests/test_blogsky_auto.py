@@ -45,6 +45,12 @@ class AutomaticBlogskyTests(unittest.TestCase):
         for stamp in ('bad','2026-01-01T00:00:00'):
             self.write('state/blogsky-backlink-progress.json',{'published':[{'at':stamp}]})
             with self.assertRaises(RuntimeError):auto.interval_open(self.root,now)
+    def test_twenty_minute_checks_do_not_allow_third_post_in_hour(self):
+        now=dt.datetime.now(dt.timezone.utc)
+        self.write('state/blogsky-backlink-progress.json',{'published':[{'at':(now-dt.timedelta(minutes=m)).isoformat()}for m in [21,45]]})
+        self.assertFalse(auto.interval_open(self.root,now))
+        self.write('state/blogsky-backlink-progress.json',{'published':[{'at':(now-dt.timedelta(minutes=m)).isoformat()}for m in [21,61]]})
+        self.assertTrue(auto.interval_open(self.root,now))
     def test_only_completed_unpublished_enabled_family_in_priority_order(self):
         row={'kind':'city','family':'tape20','status':'completed'}
         self.write('data/blogsky/backlink-queue.json',{'items':[

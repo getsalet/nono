@@ -46,7 +46,7 @@ class PipelineTests(unittest.TestCase):
         current=datetime.datetime(2026,10,13,18,30,tzinfo=datetime.timezone.utc)
         state=self.root/'budget.json'
         state.write_text(json.dumps({'published':[{'at':'2026-10-13T17:00:00Z'},{'at':'2026-10-13T18:05:00Z'},{'at':'2026-10-13T18:10:00Z'}]}))
-        self.assertEqual(f.remaining_publication_budget(state,current),1)
+        self.assertEqual(f.remaining_publication_budget(state,current),0)
         state.write_text(json.dumps({'published':[{'at':'2026-10-13T18:05:00Z'}]*3}))
         self.assertEqual(f.remaining_publication_budget(state,current),0)
     def test_bad_hourly_history_fails_closed(self):

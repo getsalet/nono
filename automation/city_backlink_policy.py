@@ -183,9 +183,10 @@ class Inspect(HTMLParser):
  def handle_data(self,s):self.plain.append(s)
 def qa(item,obj,links,blog,root=None,require_image=True):
  if not isinstance(obj,dict):return ['response must be an object'],{}
+ from blog_visible_text import visible_text_errors
  from blog_editorial_image_policy import validate_image
  require_image=require_image and validate_image(item,obj,blog,root or ROOT)
- roya.normalize_approved_hrefs(obj,links);p=Inspect();p.feed(obj.get('html',''));plain=' '.join(p.plain);e=p.errors;n=len(re.findall(r'[\u0600-\u06FF]+',plain))
+ roya.normalize_approved_hrefs(obj,links);p=Inspect();p.feed(obj.get('html',''));plain=' '.join(p.plain);e=p.errors+visible_text_errors(obj);n=len(re.findall(r'[\u0600-\u06FF]+',plain))
  from blog_city_editorial import crop_names
  for crop in crop_names(obj.get('title',''),root or ROOT):
   if crop in obj.get('title','') and crop not in plain:e.append('Title crop must be addressed in article body')

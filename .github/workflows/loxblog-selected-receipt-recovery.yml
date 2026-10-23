@@ -1,0 +1,78 @@
+name: LoxBlog selected uncertain receipt recovery (never resubmit)
+on:
+  push:
+    branches: [main]
+    paths: [automation/start-loxblog-selected-recovery.txt]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: loxblog-content-pipeline
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Respect existing stop
+        id: control
+        run: python automation/check_blog_pipeline_control.py loxblog
+      - name: Respect approved LoxBlog release
+        id: release
+        if: steps.control.outputs.proceed == '1'
+        env:
+          RELEASE_EVENT_NAME: workflow_dispatch
+          RELEASE_REPOSITORY_SWITCH: ${{ vars.LOXBLOG_AUTOMATION_ENABLED }}
+        run: python automation/check_loxblog_release.py
+      - name: Install browser for existing-post verification
+        if: steps.control.outputs.proceed == '1' && steps.release.outputs.proceed == '1'
+        run: |
+          python -m pip install --quiet Pillow beautifulsoup4
+          bash automation/install_blog_browser.sh
+      - name: Read existing article, verify and recover receipt without submission
+        if: steps.control.outputs.proceed == '1' && steps.release.outputs.proceed == '1'
+        env:
+          LOXBLOG_USERNAME: ${{ secrets.LOXBLOG_USERNAME }}
+          LOXBLOG_PASSWORD: ${{ secrets.LOXBLOG_PASSWORD }}
+          AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+          AGNES_API_KEY14: ${{ secrets.AGNES_API_KEY14 }}
+          AGNES_API_KEY15: ${{ secrets.AGNES_API_KEY15 }}
+          AGNES_HEALTHY_SLOTS_ONLY: '1'
+          AGNES_PREFERRED_KEY_SLOTS: AGNES_API_KEY14,AGNES_API_KEY15
+          AGNES_MODEL: agnes-2.5-flash
+        run: |
+          python - <<'PY'
+          import sys,json
+          sys.path.insert(0,'automation')
+          import recover_existing_blog_receipt as recovery
+          recovery.TARGETS={'loxblog':'city-2c396c586e4fb71a'}
+          report=recovery.recover('loxblog')
+          print(json.dumps(report,ensure_ascii=False))
+          sys.exit(0 if report.get('passed') else 1)
+          PY
+      - name: Retain existing-post recovery checkpoints
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/loxblog/backlink-queue.json state/loxblog-backlink-progress.json artifacts/loxblog-backlink-queue
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Recover existing LoxBlog receipt without resubmission [skip ci]'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
+      - name: Preserve non-secret recovery evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: loxblog-selected-recovery-${{ github.run_id }}
+          path: artifacts/loxblog-backlink-queue/existing-receipt-recovery.json
+          if-no-files-found: ignore
+          retention-days: 14

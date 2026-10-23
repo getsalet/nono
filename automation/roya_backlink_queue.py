@@ -513,6 +513,8 @@ def qa(item, obj, links, root=None, require_image=True):
             from blog_source_image import source_record_errors
             errors.extend(source_record_errors(item,'roya',root or ROOT))
         else:errors.extend(generated_record_errors(item, 'roya', root))
+    from blog_visible_text import visible_text_errors
+    errors.extend(visible_text_errors(obj))
     errors.extend(product_semantics_errors(item, html))
     errors.extend(check_corpus(root or ROOT, 'roya', item['key'], html))
     return errors, {'words': n, 'links': found, 'title': title, 'slug': slug,

@@ -1,4 +1,4 @@
-"""Automatic Blogsky admission: one verified publication per 20-minute interval."""
+"""Automatic Blogsky admission: 20-minute interval plus two posts per rolling hour."""
 import datetime
 import json
 import os
@@ -22,7 +22,8 @@ def interval_open(root=ROOT,current=None):
         except (KeyError,ValueError,TypeError,AttributeError):
             raise RuntimeError('Invalid publication history; reconcile before automatic publishing') from None
         if at>current-datetime.timedelta(minutes=AUTOMATIC['min_interval_minutes']):return False
-    return True
+    from farsiblog_backlink_queue import remaining_publication_budget
+    return remaining_publication_budget(path,current)>0
 
 def preflight(root=ROOT):
     from publish_blogsky_posts import gate,pending
