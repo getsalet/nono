@@ -1,0 +1,34 @@
+name: Persist browser-verified LoxBlog post 56 receipt only
+on:
+  push:
+    branches: [main]
+    paths: [data/loxblog-post56-observed-proof.json]
+permissions:
+  contents: write
+concurrency:
+  group: loxblog-content-pipeline
+  cancel-in-progress: false
+jobs:
+  receipt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Persist existing observed receipt, without publication
+        run: python automation/persist_loxblog_post56_proof.py
+      - name: Commit runtime checkpoint atomically
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f data/loxblog/backlink-queue.json state/loxblog-backlink-progress.json artifacts/loxblog-backlink-queue
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Reconcile browser-verified existing LoxBlog post 56 [skip ci]'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
