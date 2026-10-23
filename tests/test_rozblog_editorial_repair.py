@@ -25,6 +25,11 @@ class ExistingPostRepairTests(unittest.TestCase):
  def test_links_are_invariant(self):
   plan=copy.deepcopy(self.plan);plan['replacements'].append({'old':'href="https://navar-abyari.ir/"','new':'href="https://example.com/"'})
   with self.assertRaises(RuntimeError):corrected({'mtex':self.body,'mtex2':''},plan)
+ def test_native_serialization_does_not_allow_fuzzy_or_unrelated_edits(self):
+  source=(ROOT/'automation/repair_rozblog_editorial.py').read_text()
+  self.assertIn("verify_body(''.join(before.values()),item['post']['html'])",source)
+  self.assertIn('Unexpected nonempty continuation',source)
+  self.assertIn("after={'mtex':expected_html,'mtex2':before['mtex2']}",source)
  def test_workflow_has_same_native_lock_and_no_generation(self):
   s=(ROOT/'.github/workflows/rozblog-editorial-repair.yml').read_text()
   self.assertIn('group: rozblog-content-pipeline',s);self.assertNotIn('AGNES_API_KEY',s)

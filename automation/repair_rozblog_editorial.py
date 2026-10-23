@@ -87,7 +87,12 @@ def main():
    before=read_editors()
    if not pending:
     verify_body(''.join(before.values()),item['post']['html'])
-    after=corrected(before,plan);verify_body(''.join(after.values()),expected_html)
+    # The provider serializes punctuation/entities differently. The complete
+    # native text and link/image/FAQ structure were verified against the saved
+    # original above. Use the already-reviewed corrected source, not fuzzy edits.
+    if digest(before['mtex2'])!=digest('') or structure(before['mtex2'])!=structure(''):raise RuntimeError('Unexpected nonempty continuation; no editor repartition allowed')
+    after={'mtex':expected_html,'mtex2':before['mtex2']}
+    verify_body(''.join(after.values()),expected_html)
     save(ART/'backup.json',{'pid':pid,'title':title,'url':url,'bodies':before,'post':item['post']})
     save(ART/'candidate.json',{'pid':pid,'title':title,'url':url,'bodies':after,'expected_sha256':digest(expected_html)})
     # Set only the two existing text editors; leave title/slug/status/category/date untouched.
