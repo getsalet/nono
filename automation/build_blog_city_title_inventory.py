@@ -21,7 +21,7 @@ def build(root=ROOT, count=1500):
     raw=json.loads((root/'data/roya/backlink-queue.json').read_text())
     targets=[];seen=set()
     for source in ordered(raw['items'],root):
-        if (source.get('family')!='tape20' or not source.get('city_fa') or not source.get('target_url')
+        if (source.get('kind')=='article' or source.get('family')!='tape20' or not source.get('city_fa') or not source.get('target_url')
                 or source.get('target_url')==source.get('hub_url') or source['target_url'] in seen):continue
         seen.add(source['target_url'])
         key='city-'+hashlib.sha256(source['key'].encode()).hexdigest()[:16]
@@ -58,7 +58,7 @@ def build(root=ROOT, count=1500):
     table=[{'key':t['key'],'city_fa':t['city_fa'],'province_fa':t.get('province_fa',''),
             'hub_url':t.get('hub_url',''),'target_url':t['target_url']}for t in targets if t['key']in selected]
     # Independent checks against the raw source, not just derived summary fields.
-    official={x.get('target_url')for x in raw['items']if x.get('family')=='tape20' and x.get('target_url')!=x.get('hub_url')}
+    official={x.get('target_url')for x in raw['items']if x.get('kind')!='article' and x.get('city_fa') and x.get('family')=='tape20' and x.get('target_url')!=x.get('hub_url')}
     assert len(rows)==len({x['id']for x in rows})==len({x['title']for x in rows})==count
     assert len(table)==len(selected) and all(t['target_url'] in official for t in table)
     assert all(12<=len(t['title'])<=65 for t in rows)

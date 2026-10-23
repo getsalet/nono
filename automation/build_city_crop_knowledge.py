@@ -121,7 +121,7 @@ def build(root=ROOT, today=None):
                                       'load_current_local_main_text_or_county_statistics')))
     # Independent coverage check against the actual source queue, not summaries.
     queue=read(root,'data/roya/backlink-queue.json')['items']
-    actual={x['target_url'] for x in queue if x.get('family')=='tape20'
+    actual={x['target_url'] for x in queue if x.get('family')=='tape20' and x.get('kind')!='article' and x.get('city_fa')
             and x.get('target_url') and x.get('target_url')!=x.get('hub_url')}
     if {t['target_url']for t in targets}!=actual:
         raise ValueError('Destination inventory differs from actual source queue')

@@ -8,8 +8,7 @@ REQUESTS=[
  ('rozblog-content.yml',{'count':'1','publish':'1','dry_run':'0'}),
  ('loxblog-content.yml',{'count':'1','publish':'1','dry_run':'0'}),
  ('blogsky-auto.yml',{}),
- ('parsiblog-content.yml',{'mode':'publish','retry_pre_submit':'false'}),
- ('roya-backlink-queue.yml',{'count':'1','dry_run':'0'})]
+ ('parsiblog-content.yml',{'mode':'publish','target':'pb-09c80b6703337d9bc817','retry_pre_submit':'true'})]
 def main():
  if os.getenv('GITHUB_REF')!='refs/heads/main' or os.getenv('GITHUB_EVENT_NAME')!='push':
   raise RuntimeError('Only explicit main-branch recovery marker push is permitted')

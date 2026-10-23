@@ -132,7 +132,7 @@ class CityEvidenceTests(unittest.TestCase):
     def test_inventory_has_1500_unique_titles_real_targets_and_no_false_crop_approval(self):
         data=build(ROOT)
         source=json.loads((ROOT/'data/roya/backlink-queue.json').read_text())
-        expected=len({x['target_url']for x in source['items']if x.get('family')=='tape20' and x.get('target_url')!=x.get('hub_url')})
+        expected=len({x['target_url']for x in source['items']if x.get('family')=='tape20' and x.get('kind')!='article' and x.get('city_fa') and x.get('target_url')!=x.get('hub_url')})
         self.assertEqual(data['count'],1500);self.assertEqual(data['summary']['unique_city_targets'],min(expected,1500))
         target={t['key']:t for t in data['targets']}
         for row in data['titles']:

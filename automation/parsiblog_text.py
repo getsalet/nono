@@ -18,3 +18,20 @@ def post_language_errors(post):
 def source_context(item):
  # Do not feed family=tape20, internal booleans or pipeline keys to the writer.
  return {'برند':'AFP','گروه محصول':'نوار آبیاری قطره‌ای'if item['family']=='tape20'else'لوله نخی و تاشو برای انتقال آب','محدوده جغرافیایی':item['city_fa']}
+
+def language_feedback(post):
+ # Targeted repair feedback only; never silently translate/delete article text.
+ # Slugs, URLs and HTML attributes are not Persian prose and stay excluded.
+ values=[('title',post.get('title','')),('meta_description',post.get('meta_description',''))]
+ if isinstance(post.get('tags'),list):values.extend(('tag',x)for x in post['tags']if isinstance(x,str))
+ soup=BeautifulSoup(post.get('html',''),'html.parser');values.append(('body',soup.get_text(' ',strip=True)))
+ values.extend(('image_alt',x.get('alt',''))for x in soup.find_all('img'))
+ found=[]
+ for field,text in values:
+  for token in re.findall(r'\S+',str(text)):
+   value=re.sub(r'(?<!\w)AFP(?!\w)','',token,flags=re.I)
+   if any(unicodedata.category(c).startswith('L')and 'ARABIC'not in unicodedata.name(c,'')for c in value):
+    entry={'field':field,'invalid_visible_token':token[:80]}
+    if entry not in found:found.append(entry)
+    if len(found)==8:return found
+ return found
