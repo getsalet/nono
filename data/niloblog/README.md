@@ -95,3 +95,7 @@ The evidence planner now extracts directly supported local and technical facts a
 ## Measured structural repair (revision 18)
 
 Invalid-length descriptions are now extracted from the candidate's existing body (110–155 characters, no added claims) before independent review. Valid descriptions are preserved. Format repair receives the exact Persian word-group, section and meta-character counts used by validation; the writer targets 750–950 words rather than repeatedly under-shooting the unchanged 500-word minimum. No filler is inserted; a short/unsupported article still stays held. 78 regression tests passed.
+
+## Lossless schema preparation (revision 19)
+
+The queue-assigned title is now bound by code instead of asking the writer to reproduce it. Extra h2 subtopics after the fifth are demoted to h3 without deleting or adding text. This fixes the observed 607-word / six-h2 candidate without a destructive full rewrite. Content, source, originality, link-count, word-count and independent editorial gates still run on the prepared article. 80 tests passed. No filler or publication bypass is introduced.

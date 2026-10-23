@@ -102,9 +102,15 @@ def article_metrics(obj):
  soup=BeautifulSoup(obj.get('html',''),'html.parser')
  return {'persian_word_groups':len(re.findall(r'[\u0600-\u06ff]+',soup.get_text(' ',strip=True))),'h2_count':len(soup.find_all('h2')),'meta_characters':len(obj.get('meta_description',''))}
 
-def prepare_article(obj,bundle):
+def prepare_article(obj,bundle,row=None):
  obj=bind_links(obj,bundle)
  if not isinstance(obj,dict) or obj.get('blocked'):return obj
+ if row is not None:obj['title']=row['title']
+ soup=BeautifulSoup(obj.get('html',''),'html.parser')
+ # Preserve every word: extra subtopics are h3, not extra top-level sections.
+ headings=soup.find_all('h2')
+ for heading in headings[5:]:heading.name='h3'
+ obj['html']=str(soup)
  meta=obj.get('meta_description','')
  if not isinstance(meta,str) or not 110<=len(meta)<=165:
   # An extractive description adds no new facts and still goes through review.
@@ -221,14 +227,14 @@ def generate(row,m,targets,media,state):
  prompt+='\nمتن دقیق هر دو لینک و مقصد جایگزین آن‌ها در داده زیر آمده است. عنوان لینک محصول را با لینک راهنما جابه‌جا نکن؛ href و متن هر لینک باید متعلق به همان مورد باشد.\n'
  prompt+=json.dumps({'required_link_markup':['<a href=\"AFP_LINK_'+str(i)+'\">'+html.escape(link['anchor'])+'</a>' for i,link in enumerate(bundle['links'],1)],'evidence_plan':plan,'title':row['title'],'angle':m['angles'][row['angle_ref']],'source_bundle':bundle},ensure_ascii=False)
  print('Niloblog stage: independent article generation',flush=True)
- obj=prepare_article(agnes(prompt,temperature=0.35),bundle)
+ obj=prepare_article(agnes(prompt,temperature=0.35),bundle,row)
  if obj.get('blocked'):raise PipelineStop('Editorial source insufficiency')
  try:words=validate_article(row,obj,bundle)
  except PipelineStop as error:
   # One bounded format repair; never relax grounding/originality or claim success.
   save(A/'rejected'/f"{row['id']}-format.json",{'post':obj,'reason':str(error),'at':now().isoformat()})
   if str(error) not in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed'}:raise
-  obj=prepare_article(agnes(prompt+'\nفقط خطای ساختاری زیر را در مقاله اصلاح کن؛ هیچ ادعای تازه یا متن تکراری برای پرکردن حجم اضافه نکن. اگر امکان اصلاح مستند نیست blocked=true بده.\n'+json.dumps({'error':str(error),'measured_counts':article_metrics(obj),'required_counts':{'persian_word_groups_min':500,'persian_word_groups_max':1100,'h2_min':3,'h2_max':5,'meta_min':110,'meta_max':165},'previous':obj},ensure_ascii=False),temperature=0.2),bundle)
+  obj=prepare_article(agnes(prompt+'\nفقط خطای ساختاری زیر را در مقاله اصلاح کن؛ هیچ ادعای تازه یا متن تکراری برای پرکردن حجم اضافه نکن. اگر امکان اصلاح مستند نیست blocked=true بده.\n'+json.dumps({'error':str(error),'measured_counts':article_metrics(obj),'required_counts':{'persian_word_groups_min':500,'persian_word_groups_max':1100,'h2_min':3,'h2_max':5,'meta_min':110,'meta_max':165},'previous':obj},ensure_ascii=False),temperature=0.2),bundle,row)
   words=validate_article(row,obj,bundle)
  # A separate low-temperature factual and semantic gate, not a publish-all switch.
  reviews=[]
@@ -241,7 +247,7 @@ def generate(row,m,targets,media,state):
   save(A/'reviews'/f"{row['id']}.json",{'review':review,'candidate':obj,'sources':bundle,'attempts':reviews,'at':now().isoformat()})
   if review_passes(review,bundle):break
   if review_attempt==1:raise PipelineStop('Independent editorial review rejected')
-  obj=prepare_article(agnes(prompt+'\nاین مقاله رد شده است. فقط یک فرصت اصلاح داری: ادعاهای بی‌شاهد را حذف کن، هر ادعای باقی‌مانده را به شواهد واقعی محدود کن و دلیل رد زیر را رفع کن. منبع یا نقل جعلی نساز. کنترل کیفیت تغییر نمی‌کند؛ اگر تمایز یا حجم مستند ممکن نیست blocked=true بده.\n'+json.dumps({'previous':obj,'editorial_feedback':review},ensure_ascii=False),temperature=0.1),bundle)
+  obj=prepare_article(agnes(prompt+'\nاین مقاله رد شده است. فقط یک فرصت اصلاح داری: ادعاهای بی‌شاهد را حذف کن، هر ادعای باقی‌مانده را به شواهد واقعی محدود کن و دلیل رد زیر را رفع کن. منبع یا نقل جعلی نساز. کنترل کیفیت تغییر نمی‌کند؛ اگر تمایز یا حجم مستند ممکن نیست blocked=true بده.\n'+json.dumps({'previous':obj,'editorial_feedback':review},ensure_ascii=False),temperature=0.1),bundle,row)
   if obj.get('blocked'):raise PipelineStop('Editorial source insufficiency')
   words=validate_article(row,obj,bundle)
  ms,selection=reserve(media,state.get('media'),row['id'],video_probability=0)

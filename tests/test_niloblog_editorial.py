@@ -9,6 +9,15 @@ class EditorialTests(unittest.TestCase):
   self.bundle={'local':{'text':self.quote},'article':{'text':self.quote+' متن فنی'},'technical':[],'links':[]}
   self.plan={'blocked':False,'facts':[{'excerpt_id':'s0-e0','source_index':0,'claim':'گزارش محصول','quote':self.quote},{'excerpt_id':'s1-e0','source_index':1,'claim':'اطلاعات محصول','quote':self.quote}]}
   self.approved={'approved':True,'grounded':True,'locally_distinct':True,'semantic_duplicate':False,'unsupported_claims':[],'local_evidence_quote':self.quote,'local_evidence_id':'s0-e0'}
+ def test_assigned_title_is_not_regenerated(self):
+  result=m.prepare_article({'title':'عنوان تغییر یافته','html':'<p>متن</p>'},{'links':[]},{'title':'عنوان دقیق صف'})
+  self.assertEqual(result['title'],'عنوان دقیق صف')
+ def test_extra_h2_demoted_without_losing_words(self):
+  from bs4 import BeautifulSoup
+  body=''.join('<h2>عنوان '+str(i)+'</h2><p>متن مستند</p>' for i in range(7))
+  result=m.prepare_article({'html':body},{'links':[]});soup=BeautifulSoup(result['html'],'html.parser')
+  self.assertEqual(len(soup.find_all('h2')),5);self.assertEqual(len(soup.find_all('h3')),2)
+  self.assertEqual(soup.get_text(' ',strip=True),BeautifulSoup(body,'html.parser').get_text(' ',strip=True))
  def test_description_repair_is_extractive_and_bounded(self):
   body=' '.join(['اطلاعات مستند درباره گزارش محصول و تصمیم آبیاری']*12)
   obj=m.prepare_article({'html':'<p>'+body+'</p>','meta_description':'کوتاه'},{'links':[]})
