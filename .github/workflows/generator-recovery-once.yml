@@ -1,0 +1,31 @@
+name: Explicit bounded recovery of six existing generator cycles
+on:
+  push:
+    branches: [main]
+    paths: [automation/start-generator-recovery-once.txt]
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: generator-recovery-once
+  cancel-in-progress: false
+jobs:
+  dispatch:
+    if: contains(github.event.head_commit.message, '[generator-recovery-once]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Dispatch standard existing workflows once; preserve their own controls
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python automation/recover_generator_cycles_once.py
+      - name: Preserve accepted-dispatch receipts, not a publication success claim
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bounded-generator-recovery-${{ github.run_id }}
+          path: artifacts/generator-recovery-dispatch.json
+          retention-days: 14
