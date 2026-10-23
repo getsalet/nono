@@ -3,12 +3,8 @@ No provider/site credentials. Never retry a POST with uncertain delivery.
 """
 import datetime,json,os,pathlib,urllib.request,urllib.error
 ROOT=pathlib.Path(__file__).resolve().parents[1]
-REQUESTS=[
- ('farsiblog-content.yml',{'count':'1','publish':'1','dry_run':'0'}),
- ('rozblog-content.yml',{'count':'1','publish':'1','dry_run':'0'}),
- ('loxblog-content.yml',{'count':'1','publish':'1','dry_run':'0'}),
- ('blogsky-auto.yml',{}),
- ('parsiblog-content.yml',{'mode':'publish','target':'pb-09c80b6703337d9bc817','retry_pre_submit':'true'})]
+REQUESTS=[('parsiblog-content.yml',{'mode':'publish','target':'pb-09c80b6703337d9bc817','retry_pre_submit':'true'})]
+
 def main():
  if os.getenv('GITHUB_REF')!='refs/heads/main' or os.getenv('GITHUB_EVENT_NAME')!='push':
   raise RuntimeError('Only explicit main-branch recovery marker push is permitted')
