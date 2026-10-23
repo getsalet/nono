@@ -272,7 +272,7 @@ def verify_public(page,item):
  public=page.context.new_page()
  try:
   for attempt in range(4):
-   public.goto(BLOG+'/',wait_until='domcontentloaded',timeout=60000)
+   public.goto(BLOG+'/?afp_verify='+str(time.time_ns()),wait_until='domcontentloaded',timeout=60000)
    anchors=public.locator('.post-title a').evaluate_all('es=>es.map(e=>({title:e.textContent,href:e.href}))')
    matches=[a for a in anchors if canon(a['title'])==canon(item['post']['title'])]
    if matches:break
@@ -309,7 +309,7 @@ def publish_new(page,item,s):
   if legacy.locator('input[name=id]').input_value()!='1' or not legacy.locator('#cdraft').is_checked():raise PipelineStop('Legacy private draft identity changed; no duplicate submission')
  public=page.context.new_page()
  try:
-  public.goto(BLOG+'/',wait_until='domcontentloaded',timeout=60000)
+  public.goto(BLOG+'/?afp_verify='+str(time.time_ns()),wait_until='domcontentloaded',timeout=60000)
   titles=public.locator('.post-title').all_inner_texts()
   if any(canon(x)==canon(item['post']['title']) for x in titles):raise PipelineStop('Title already public; no duplicate submission')
  finally:public.close()
