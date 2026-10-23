@@ -170,7 +170,7 @@ def main():
  from playwright.sync_api import sync_playwright
  with sync_playwright() as pw:
   print('Niloblog stage: credential and account verification',flush=True)
-  browser=pw.chromium.launch(headless=True,args=['--no-sandbox']);page=browser.new_page();login(page)
+  browser=pw.chromium.launch(headless=True,channel='chrome',args=['--no-sandbox']);page=browser.new_page();login(page)
   s['credentials_verified_at']=now().isoformat()
   media=read(D/'media-catalog.json');validate_catalog(media)
   if s.get('current'):
