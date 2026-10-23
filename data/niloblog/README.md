@@ -53,3 +53,16 @@ python -m unittest discover -s tests -p 'test_niloblog_title_matrix.py'
 - انتخاب تصویر نوبتی؛ ویدیو در احتمال پیشنهادی و قابل‌تنظیم 25٪، ثابت برای هر شناسه مطلب در تلاش مجدد. پخش خودکار ممنوع، controls و preload=none و اندازه منعطف. لینک قابل‌کلیک احتمالی ویدیو باید در سقف 2 تا 3 لینک بدنه حساب شود.
 - `automation/niloblog_media.py` فقط helper بدون انتشار است. رزرو مجدد همان پست ثابت می‌ماند؛ تا تأیید مستقل رسید عمومی، نوبت تصویر جلو نمی‌رود. وضعیت مبهم باید reconcile شود. caller آینده مسئول قفل تک‌نویسنده، ذخیره اتمیک پایدار و بررسی واقعی رسید است.
 - این helper هنوز به نویسنده بومی نیلوبلاگ متصل نشده است. حفظ HTML تصویر/ویدیو، پخش روی موبایل، مدیریت وضعیت، ورود با سکرت‌ها و انتشار نیازمند آزمون مستقل است. `publication_enabled`، `workflow_enabled` و `runtime_integration_enabled` همگی false می‌مانند.
+
+
+## Runtime status — native provider blocker
+
+- GitHub workflow: `.github/workflows/niloblog-content.yml`, scheduled at minutes 17 and 47 UTC; one candidate publication per cycle, hard ceiling two verified receipts per rolling hour.
+- `NILOBLOG_USERNAME` / `NILOBLOG_PASSWORD` were present and an actual GitHub-runner sign-in succeeded. No credential values are stored in artifacts.
+- Runtime revision 6 is **intentionally disabled**, phase `native_server_blocked`; the schedule's preflight exits before browser/API costs. User publication authorization remains recorded, but does not override a native failure.
+- Native post ID 1 is private and held: CKEditor pretty-print linefeeds were corrupted into literal `nn` text. Corrected educational copy is stored in the item, but **was not saved or published natively**.
+- Current new-post form rejects even a private save with `DB ERROR: Incorrect integer value: '' for column 'pcomment' at row 1`; the edit form returns an internal operation error. Supplying the existing moderation selector did not fix the provider error. No corrected private canary exists.
+- The prepared adapter uses compact editor output, strict body/link/WebP/video round-trip checks, fresh source checks, factual/semantic originality review, durable write intents, and public permalink receipts. Its new-public-post path remains unverified and cannot run until the private canary gate is satisfied.
+- No public post was submitted. No image cursor advanced. The original pending media selection remains reserved. No other blog's runtime or global controls were modified.
+- Provider support must fix native new-post and edit errors. Then verify corrected private body, links, WebP decoding and selected video; run exactly one public canary; independently verify native permalink and media before enabling normal `publish` phase. Do not just toggle the runtime flag.
+- See `artifacts/niloblog/native-server-blocker.json` for a non-secret native-state check. Never retry an ambiguous public submission automatically.
