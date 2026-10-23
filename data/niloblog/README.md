@@ -69,3 +69,9 @@ python -m unittest discover -s tests -p 'test_niloblog_title_matrix.py'
 
 ## لغو ویدیو در مقالات جدید
 به درخواست کاربر، ناشر دیگر کد video نمی‌سازد. انتخاب پیش‌فرض رسانه و فراخوانی ناشر هر دو بدون ویدیو هستند. کنترل قبل از انتشار نیز متن یا انتخاب ویدیویی قدیمی را متوقف می‌کند. گردش ۳۷ تصویر WebP، کنترل کیفیت، عدم تکرار و سقف دو انتشار در ساعت بدون تغییر باقی است. این تغییر هیچ فایل هاست یا مطلب قبلاً منتشرشده‌ای را حذف نمی‌کند.
+
+## Source-grounded generation revision 13
+
+Before writing, a bounded evidence plan must supply exact verifiable quotations from the provided sources, including local evidence. Generation must not infer climate, soil, engineering numbers or suitability from crop-production news. Independent editorial gates remain unchanged. A rejected draft gets one feedback-based revision and another full structural/originality/editorial check; failure remains held without media allocation or submission. Older eligible holds may be retried once under a newer policy revision (maximum two candidate attempts). No published state, media receipt or durable intent is reset.
+
+Validation: 68 Niloblog regression tests passed, including mocked reject → repair → independent approval and repeated-rejection fail-closed paths. Live publication under this revision is not yet verified. Image-only policy, one post per cycle, two verified posts per rolling hour, shared pause and checkpoint-before-submit remain unchanged.
