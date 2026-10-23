@@ -1,0 +1,34 @@
+name: Read-only recovery failure diagnostics
+on:
+  push:
+    branches: [main]
+    paths: [automation/inspect_generator_recovery_failures.py]
+permissions:
+  actions: read
+  contents: write
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Read bounded failed-step diagnostics; no provider or native calls
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python automation/inspect_generator_recovery_failures.py
+      - name: Persist only non-secret diagnosis
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f artifacts/generator-recovery-diagnostics.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record read-only generator recovery diagnostics [skip ci]'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          exit 1
