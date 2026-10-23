@@ -10,6 +10,14 @@ class NiloblogTemplateTests(unittest.TestCase):
     def setUpClass(cls):
         cls.html = TEMPLATE.read_text(encoding='utf-8')
 
+    def test_google_verification_is_once_in_head(self):
+        from bs4 import BeautifulSoup
+        doc=BeautifulSoup(self.html,'html.parser')
+        tags=doc.find_all('meta',attrs={'name':'google-site-verification'})
+        self.assertEqual(len(tags),1)
+        self.assertIsNotNone(tags[0].find_parent('head'))
+        self.assertEqual(tags[0].get('content'),'mfvTYyYIDjhZyWQxwHLs9MwtTAeaMDnBkHeU3te-ts8')
+
     def test_preserves_native_rendering(self):
         for tag in ['<NILOOBLOG>', '</NILOOBLOG>', '<-PostContent->', '<-PostLink->', '<-PostTitle->', '<BlogExtendedPost>', '<BlogLastPosts>', '<-PostSchema->', '<-BlogCustomHtml->']:
             self.assertIn(tag, self.html)
@@ -36,7 +44,8 @@ class NiloblogTemplateTests(unittest.TestCase):
     def test_no_fake_sample_post_or_tracking_code(self):
         self.assertNotIn('این متن فقط برای آزمون', self.html)
         self.assertNotIn('googletagmanager', self.html)
-        self.assertNotIn('google-site-verification', self.html)
+        # The real user-authorized verification token is checked separately above.
+        self.assertNotIn('G-XXXXXXXXXX', self.html)
         self.assertIn('میزبانی و انتشار با نیلوبلاگ', self.html)
 
     def test_real_brand_destinations(self):
