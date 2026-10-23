@@ -99,3 +99,7 @@ Invalid-length descriptions are now extracted from the candidate's existing body
 ## Lossless schema preparation (revision 19)
 
 The queue-assigned title is now bound by code instead of asking the writer to reproduce it. Extra h2 subtopics after the fifth are demoted to h3 without deleting or adding text. This fixes the observed 607-word / six-h2 candidate without a destructive full rewrite. Content, source, originality, link-count, word-count and independent editorial gates still run on the prepared article. 80 tests passed. No filler or publication bypass is introduced.
+
+## Cached-home receipt recovery (revision 20)
+
+A real image-only article passed all gates and was submitted once, but its permalink was absent from the cached homepage during the original short verification window. Discovery now waits up to 16 read-only checks. A durable create_public_post intent can be reconciled by fetching and fully verifying the existing public article; it never navigates to a submission form or calls submit_once. Missing/mismatched public content retains the intent and media reservation. Unknown intent types still require manual review. Reconciliation uses the original submission timestamp for the rolling budget, records a verified receipt and ends the cycle without creating another post. 83 regression tests passed.

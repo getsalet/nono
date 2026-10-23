@@ -9,6 +9,21 @@ class EditorialTests(unittest.TestCase):
   self.bundle={'local':{'text':self.quote},'article':{'text':self.quote+' متن فنی'},'technical':[],'links':[]}
   self.plan={'blocked':False,'facts':[{'excerpt_id':'s0-e0','source_index':0,'claim':'گزارش محصول','quote':self.quote},{'excerpt_id':'s1-e0','source_index':1,'claim':'اطلاعات محصول','quote':self.quote}]}
   self.approved={'approved':True,'grounded':True,'locally_distinct':True,'semantic_duplicate':False,'unsupported_claims':[],'local_evidence_quote':self.quote,'local_evidence_id':'s0-e0'}
+ def test_read_only_intent_recovery_never_resubmits(self):
+  item={'key':'key','status':'reviewed'};state={'current':'key','intent':{'key':'key','operation':'create_public_post','at':'2026-10-23T07:14:00+00:00'},'media':{},'published':[]}
+  receipt={'url':'https://afp.niloblog.com/p/4/test','at':'2026-10-23T07:20:00+00:00'}
+  with mock.patch.object(m,'read',return_value=item),mock.patch.object(m,'verify_public',return_value=receipt),mock.patch.object(m,'acknowledge',return_value={}),mock.patch.object(m,'save'),mock.patch.object(m,'checkpoint'),mock.patch.object(m,'submit_once') as submit:
+   m.reconcile_public_intent(mock.Mock(),state)
+  submit.assert_not_called();self.assertIsNone(state['intent']);self.assertEqual(len(state['published']),1);self.assertEqual(state['published'][0]['at'],'2026-10-23T07:14:00+00:00')
+ def test_missing_receipt_retains_intent_and_media(self):
+  state={'current':'key','intent':{'key':'key','operation':'create_public_post'},'media':{},'published':[]};original=copy.deepcopy(state)
+  with mock.patch.object(m,'read',return_value={'key':'key','status':'reviewed'}),mock.patch.object(m,'verify_public',side_effect=m.PipelineStop('missing')),mock.patch.object(m,'acknowledge') as ack,mock.patch.object(m,'checkpoint') as checkpoint:
+   with self.assertRaises(m.PipelineStop):m.reconcile_public_intent(mock.Mock(),state)
+  ack.assert_not_called();checkpoint.assert_not_called();self.assertEqual(state,original)
+ def test_unknown_or_mismatched_intent_never_reads_provider(self):
+  with mock.patch.object(m,'verify_public') as verify:
+   with self.assertRaises(m.PipelineStop):m.reconcile_public_intent(mock.Mock(),{'current':'x','intent':{'key':'y','operation':'create_public_post'}})
+  verify.assert_not_called()
  def test_assigned_title_is_not_regenerated(self):
   result=m.prepare_article({'title':'عنوان تغییر یافته','html':'<p>متن</p>'},{'links':[]},{'title':'عنوان دقیق صف'})
   self.assertEqual(result['title'],'عنوان دقیق صف')

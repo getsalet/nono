@@ -371,12 +371,12 @@ def submit_once(f):
 def verify_public(page,item):
  public=page.context.new_page()
  try:
-  for attempt in range(4):
+  for attempt in range(16):
    public.goto(BLOG+'/?afp_verify='+str(time.time_ns()),wait_until='domcontentloaded',timeout=60000)
    anchors=public.locator('.post-title a').evaluate_all('es=>es.map(e=>({title:e.textContent,href:e.href}))')
    matches=[a for a in anchors if canon(a['title'])==canon(item['post']['title'])]
    if matches:break
-   time.sleep(4)
+   time.sleep(5)
   if len(matches)!=1:raise PipelineStop('Unique public permalink receipt missing; no resubmission')
   url=matches[0]['href'];u=urlsplit(url)
   if u.scheme!='https' or u.hostname!='afp.niloblog.com' or u.path in ('','/') or u.query:raise PipelineStop('Invalid native public permalink')
@@ -432,19 +432,37 @@ def publish_new(page,item,s):
  s['intent']=None;s['current']=None;s['public_canary_verified_at']=receipt['at'];checkpoint(s)
  print('Verified native Niloblog publication:',receipt['url'],flush=True)
 
+def reconcile_public_intent(page,s):
+ intent=s.get('intent') or {};key=intent.get('key')
+ if intent.get('operation')!='create_public_post' or not key or s.get('current')!=key:raise PipelineStop('Ambiguous intent; no resubmission')
+ item=read(A/'items'/f"{key}.json")
+ if item.get('key')!=key or item.get('status') not in ('reviewed','published'):raise PipelineStop('Intent item identity/status mismatch')
+ # READ ONLY against the provider. Missing/ambiguous content retains the intent.
+ receipt=verify_public(page,item)
+ s['media']=acknowledge(read(D/'media-catalog.json'),s['media'],key,receipt['url'],public_receipt_verified=True)
+ if not any(p['key']==key for p in s.setdefault('published',[])):
+  s['published'].append({'key':key,'url':receipt['url'],'at':intent.get('at') or receipt['at']})
+ item.update(status='published',receipt=receipt);save(A/'items'/f"{key}.json",item);save(A/'receipts'/f"{key}.json",receipt)
+ s['intent_reconciliation']={'at':now().isoformat(),'operation':'create_public_post','result':'Existing public article independently verified; read-only reconciliation, no resubmission.','url':receipt['url']}
+ s['intent']=None;s['current']=None;s['public_canary_verified_at']=receipt['at'];checkpoint(s)
+ print('Verified existing publication without resubmission:',receipt['url'],flush=True)
+ return receipt
+
 def main():
  if not allowed():print('User/global/family control blocks Niloblog; no external write');return
  config=read(D/'integration-plan.json');runtime=read(D/'runtime-control.json');s=read(STATE)
  if not runtime.get('enabled') or runtime.get('phase') not in ('draft_canary','live_canary','publish'):print('Niloblog runtime stopped');return
- if not budget(s):print('Rolling 60-minute limit reached');return
+ if not budget(s) and not s.get('intent'):print('Rolling 60-minute limit reached');return
  if runtime['phase']=='live_canary' and s.get('public_canary_verified_at'):print('Live canary complete; awaiting normal-mode activation');return
- if s.get('intent'):raise PipelineStop('Unreconciled external-write intent; manual reconciliation required, no blind retry')
+ if s.get('intent') and s['intent'].get('operation')!='create_public_post':raise PipelineStop('Unreconciled external-write intent; manual reconciliation required, no blind retry')
  from playwright.sync_api import sync_playwright
  with sync_playwright() as pw:
   print('Niloblog stage: credential and account verification',flush=True)
   browser=pw.chromium.launch(headless=True,channel='chrome',args=['--no-sandbox']);context=browser.new_context();page=context.new_page();login(page)
   s['credentials_verified_at']=now().isoformat()
   media=read(D/'media-catalog.json');validate_catalog(media)
+  if s.get('intent'):
+   reconcile_public_intent(page,s);browser.close();return
   if s.get('current'):
    item=read(A/'items'/f"{s['current']}.json")
    if item['status']=='published':raise PipelineStop('Current item already published; reconcile state')
