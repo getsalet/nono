@@ -9,6 +9,16 @@ class EditorialTests(unittest.TestCase):
   self.bundle={'local':{'text':self.quote},'article':{'text':self.quote+' متن فنی'},'technical':[],'links':[]}
   self.plan={'blocked':False,'facts':[{'excerpt_id':'s0-e0','source_index':0,'claim':'گزارش محصول','quote':self.quote},{'excerpt_id':'s1-e0','source_index':1,'claim':'اطلاعات محصول','quote':self.quote}]}
   self.approved={'approved':True,'grounded':True,'locally_distinct':True,'semantic_duplicate':False,'unsupported_claims':[],'local_evidence_quote':self.quote,'local_evidence_id':'s0-e0'}
+ def test_description_repair_is_extractive_and_bounded(self):
+  body=' '.join(['اطلاعات مستند درباره گزارش محصول و تصمیم آبیاری']*12)
+  obj=m.prepare_article({'html':'<p>'+body+'</p>','meta_description':'کوتاه'},{'links':[]})
+  self.assertTrue(110<=len(obj['meta_description'])<=165);self.assertIn(obj['meta_description'],body)
+  self.assertEqual(obj['html'],'<p>'+body+'</p>')
+ def test_valid_description_is_preserved(self):
+  meta='م'*120;self.assertEqual(m.prepare_article({'html':'<p>متن</p>','meta_description':meta},{'links':[]})['meta_description'],meta)
+ def test_metrics_use_same_persian_counter_as_validation(self):
+  metrics=m.article_metrics({'html':'<h2>عنوان بخش</h2><p>متن فارسی</p>','meta_description':'متا'})
+  self.assertEqual(metrics,{'persian_word_groups':4,'h2_count':1,'meta_characters':3})
  def test_evidence_extraction_does_not_replace_final_editorial_gate(self):
   code=Path(m.__file__).read_text()
   self.assertIn('وظیفه تو فقط استخراج شواهد است',code)

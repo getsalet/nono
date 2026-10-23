@@ -91,3 +91,7 @@ Both configured research-only technical sources are now fetched (previously only
 ## Separate extraction from final editorial assessment (revision 17)
 
 The evidence planner now extracts directly supported local and technical facts and reports a blocked_reason when none exist, rather than pre-judging a not-yet-written article. Exact excerpt-ID checks remain mandatory. The writer may still block for insufficient article-level evidence; the independent final reviewer retains every grounding, unsupported-claims, local-value and semantic-duplicate gate. This corrects over-blocking during evidence collection without approving any article or manufacturing locality-specific recommendations. 75 regression tests passed.
+
+## Measured structural repair (revision 18)
+
+Invalid-length descriptions are now extracted from the candidate's existing body (110–155 characters, no added claims) before independent review. Valid descriptions are preserved. Format repair receives the exact Persian word-group, section and meta-character counts used by validation; the writer targets 750–950 words rather than repeatedly under-shooting the unchanged 500-word minimum. No filler is inserted; a short/unsupported article still stays held. 78 regression tests passed.
