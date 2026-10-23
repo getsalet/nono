@@ -8,6 +8,8 @@ class NumericTapeSpecTests(unittest.TestCase):
    self.assertTrue(product_semantics_errors({'family':'tape20'},'<p>'+text+'</p>'),text)
  def test_known_product_spacing_and_non_numeric_review_remain_allowed(self):
   self.assertEqual(product_semantics_errors({'family':'tape20'},'<p>نوار تیپ ۲۰ سانتی؛ ضخامت و فشار مجاز همان مدل را از تولیدکننده درخواست کنید.</p>'),[])
+ def test_number_of_visits_is_not_a_pressure_spec(self):
+  self.assertEqual(product_semantics_errors({'family':'tape20'},'<p>در ۲ بار بازدید، وضعیت را ثبت کنید.</p>'),[])
  def test_html_image_dimensions_are_not_article_specs(self):
   self.assertEqual(product_semantics_errors({'family':'tape20'},'<img width="1200" height="675"><p>مشخصات را بررسی کنید.</p>'),[])
 if __name__=='__main__':unittest.main()

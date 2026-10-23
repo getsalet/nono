@@ -377,7 +377,12 @@ def product_semantics_errors(item,markup):
         # Reject invented numeric thickness/pressure even when framed as examples.
         number = r'[0-9۰-۹٠-٩]+(?:[.,٫٬][0-9۰-۹٠-٩]+)*'
         unit = r'(?:میلی[\s‌-]*متر(?:ی)?|میکرون(?:ی)?|بار|mm|psi)'
-        matches = re.findall(number + r'[\s‌-]*' + unit + r'(?![\w])', plain, flags=re.I)
+        matches = []
+        for match in re.finditer(number + r'[\s‌-]*(' + unit + r')(?![\w])', plain, flags=re.I):
+            # Persian «بار» can mean number of visits, not pressure units.
+            if match.group(1) == 'بار' and not re.search(r'فشار(?:[\s‌]+(?:کاری|کارکرد|مجاز|آب|ورودی|خروجی|حداکثر|حداقل)){0,3}[\s‌:]*$', plain[max(0,match.start()-65):match.start()]):
+                continue
+            matches.append(match.group(0))
         if matches:
             errors.append('Unsupported numeric tape thickness/pressure without model datasheet: ' + '، '.join(dict.fromkeys(matches))[:120])
     if item.get('family') == 'hose':
