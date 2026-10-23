@@ -95,7 +95,7 @@ def bind_links(obj,bundle):
   value=a.get('href','')
   for i,link in enumerate(bundle['links'],1):
    if value==f'AFP_LINK_{i}' or unquote(value).rstrip('/')==unquote(link['url']).rstrip('/'):
-    a['href']=link['url'];break
+    a['href']=link['url'];a.clear();a.append(link['anchor']);break
  obj['html']=str(soup);return obj
 
 def validate_article(row,obj,bundle):
@@ -177,6 +177,15 @@ def candidate_allowed(row,held,used,revision):
  retry=(hold and hold.get('reason') in repairable and hold.get('pipeline_revision',0)<revision and hold.get('attempts',1)<2)
  return row['review_state']=='editorial_review_required' and row['angle_ref'] not in used and (not hold or bool(retry))
 
+def choose_candidates(pool,m,held,limit=3):
+ # New evidence/angles first; avoid spending a whole cycle on near-identical topics.
+ pending=list(enumerate(pool));chosen=[];clusters=set();localities=set()
+ while pending and len(chosen)<limit:
+  index,row=min(pending,key=lambda pair:(pair[1]['id'] in held,m['angles'][pair[1]['angle_ref']]['cluster'] in clusters,pair[1]['locality_ref'] in localities,pair[0]))
+  pending.remove((index,row));chosen.append(row)
+  clusters.add(m['angles'][row['angle_ref']]['cluster']);localities.add(row['locality_ref'])
+ return chosen
+
 def generate(row,m,targets,media,state):
  from roya_backlink_queue import agnes
  print('Niloblog stage: fresh source review '+row['id'],flush=True)
@@ -192,7 +201,8 @@ def generate(row,m,targets,media,state):
  prompt+='\nاز خبر تولید محصول، نوع خاک یا مناسب‌بودن اقلیم شهرستان را نتیجه نگیر. هیچ عمق نمونه‌برداری، فاصله، دبی، فشار یا نسخه مهندسی عددی پیشنهاد نده؛ این داده‌ها باید توسط کارشناس برای زمین واقعی تعیین شوند. مطالب عمومی را به‌صورت شرطی و فرایند تصمیم‌گیری مطرح کن، نه حکم محلی.\n'
  prompt+='\nبرای جلوگیری از خرابی URL فارسی، href لینک اول فقط AFP_LINK_1 و href لینک دوم فقط AFP_LINK_2 باشد؛ این دو نشانه بعداً به URL دقیق تبدیل می‌شوند. هیچ لینک دیگری نساز.\n'
  prompt+='\nفقط ادعاهای تأییدپذیرِ دفتر شواهد را به‌کار ببر. عدد، مقایسه، نسخه فنی، برداشت زمانی تازه یا ویژگی محلی دیگری اضافه نکن. برای کاربرد عملی، پرسش و مدارک لازم برای تصمیم را توضیح بده، نه پاسخ فرضی زمین. اگر حجم یا تمایز کافی نیست blocked=true؛ با مطلب عمومی پر نکن.\n'
- prompt+=json.dumps({'evidence_plan':plan,'title':row['title'],'angle':m['angles'][row['angle_ref']],'source_bundle':bundle},ensure_ascii=False)
+ prompt+='\nمتن دقیق هر دو لینک و مقصد جایگزین آن‌ها در داده زیر آمده است. عنوان لینک محصول را با لینک راهنما جابه‌جا نکن؛ href و متن هر لینک باید متعلق به همان مورد باشد.\n'
+ prompt+=json.dumps({'required_link_markup':['<a href=\"AFP_LINK_'+str(i)+'\">'+html.escape(link['anchor'])+'</a>' for i,link in enumerate(bundle['links'],1)],'evidence_plan':plan,'title':row['title'],'angle':m['angles'][row['angle_ref']],'source_bundle':bundle},ensure_ascii=False)
  print('Niloblog stage: independent article generation',flush=True)
  obj=bind_links(agnes(prompt,temperature=0.35),bundle)
  if obj.get('blocked'):raise PipelineStop('Editorial source insufficiency')
@@ -420,7 +430,7 @@ def main():
    used={read(p)['row']['angle_ref'] for p in A.glob('items/*.json')}
    pool=[r for r in m['titles'] if candidate_allowed(r,s.get('held',{}),used,runtime['revision'])]
    item=None
-   for row in pool[:3]:
+   for row in choose_candidates(pool,m,s.get('held',{})):
     try:item=generate(row,m,targets,media,s);break
     except Exception as e:
      previous=s.get('held',{}).get(row['id'],{})

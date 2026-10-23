@@ -79,3 +79,7 @@ Validation: 68 Niloblog regression tests passed, including mocked reject → rep
 ## Evidence identity repair (revision 14)
 
 An exact-quote gate correctly rejected model-paraphrased quotations. Source excerpts are now extracted deterministically and assigned IDs. Planning selects IDs; code restores the original source index and quotation, ignoring model-supplied replacements. Independent review must select an existing local evidence ID; its quotation is bound from the verified plan. Grounding, independent/local value, unsupported-claims, originality, structure, no-video and publication safeguards are unchanged. Raw plans are retained for diagnosis. 71 local tests passed. A one-hour live monitoring window is recorded separately; successful publication is not assumed.
+
+## Structural and candidate-selection repair (revision 15)
+
+Recognized link placeholders and approved URLs now bind their exact matching approved anchor as well as their URL. Unknown links remain untouched and are rejected by the existing link gate; missing/extra links are not silently inserted or removed. The generated markup is still reviewed independently. Each bounded cycle prefers fresh candidates and diverse clusters/localities instead of spending all three attempts on near-identical older failures. No candidate quality check or publication limit is relaxed. 73 regression tests passed.

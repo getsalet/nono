@@ -9,6 +9,15 @@ class EditorialTests(unittest.TestCase):
   self.bundle={'local':{'text':self.quote},'article':{'text':self.quote+' متن فنی'},'technical':[],'links':[]}
   self.plan={'blocked':False,'facts':[{'excerpt_id':'s0-e0','source_index':0,'claim':'گزارش محصول','quote':self.quote},{'excerpt_id':'s1-e0','source_index':1,'claim':'اطلاعات محصول','quote':self.quote}]}
   self.approved={'approved':True,'grounded':True,'locally_distinct':True,'semantic_duplicate':False,'unsupported_claims':[],'local_evidence_quote':self.quote,'local_evidence_id':'s0-e0'}
+ def test_bound_links_keep_exact_matching_anchor(self):
+  b={'links':[{'url':'https://x/a','anchor':'راهنما'},{'url':'https://x/b','anchor':'نوار تیپ'}]}
+  o=m.bind_links({'html':'<p><a href="AFP_LINK_1">عنوان اشتباه</a> و <a href="AFP_LINK_2">دیگر</a></p>'},b)
+  self.assertIn('href="https://x/a">راهنما</a>',o['html']);self.assertIn('href="https://x/b">نوار تیپ</a>',o['html'])
+ def test_cycle_prefers_new_and_diverse_candidates(self):
+  rows=[{'id':str(i),'angle_ref':str(i),'locality_ref':str(i%2)} for i in range(5)]
+  matrix={'angles':{str(i):{'cluster':'a' if i<3 else str(i)} for i in range(5)}}
+  selected=m.choose_candidates(rows,matrix,{'0':{}},3)
+  self.assertEqual([x['id'] for x in selected],['1','4','3']);self.assertEqual(len(selected),3)
  def test_catalog_quotes_are_source_substrings(self):
   for f in m.evidence_catalog(self.bundle):self.assertIn(f['quote'],m.canon([self.bundle['local'],self.bundle['article']][f['source_index']]['text']))
  def test_plan_resolves_ids_not_model_quotations(self):
