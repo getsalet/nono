@@ -26,6 +26,8 @@ on:
       - automation/check_blog_ready_image_handoff.py
       - tests/test_blog_ready_image_handoff.py
       - automation/build_roya_queue.py
+      - data/roya/approved-article-topics.json
+      - tests/test_roya_article_supplement.py
       - automation/roya_backlink_queue.py
       - tests/test_roya_capacity_recovery.py
       - tests/test_roya_queue_runtime.py
@@ -130,6 +132,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_roya_capacity_recovery.py' -v
           python -m unittest discover -s tests -p 'test_roya_queue_runtime.py' -v
+          python -m unittest discover -s tests -p 'test_roya_article_supplement.py' -v
           python -m unittest discover -s tests -p 'test_roya_domain_repair.py' -v
       - name: Build or refresh the city queue
         if: steps.control.outputs.proceed == '1'

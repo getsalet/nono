@@ -119,7 +119,7 @@ def targets_from_queue():
              'province_fa': i['province_fa'], 'city_fa': i['city_fa'], 'family': i['family'],
              'url': i['target_url'], 'hub_url': i.get('hub_url', ''), 'is_hub': i['family'] == 'hub',
              'site_title': i.get('site_title', '')}
-            for i in q.get('items', [])]
+            for i in q.get('items', []) if i.get('kind') != 'article']
 
 
 # Explicit non-secret runtime fields. Rebuilding source metadata must not erase
@@ -159,6 +159,56 @@ def retained_runtime(prev, key):
     return result
 
 
+def append_approved_articles(items, old, root):
+    """Bounded opt-in supplement; never reset historical failures or receipts."""
+    manifest = root / 'data/roya/approved-article-topics.json'
+    if not manifest.exists():
+        return items
+    config = json.loads(manifest.read_text(encoding='utf-8'))
+    keys = config.get('source_keys', [])
+    if config.get('enabled') is not True:
+        return items
+    if not isinstance(keys, list) or len(keys) > 12 or len(set(keys)) != len(keys):
+        raise ValueError('Invalid bounded Roya topic approval')
+    inventory = json.loads((root / 'data/blog-site-article-targets.json').read_text(encoding='utf-8'))
+    sources = {x['key']: x for x in inventory['targets']}
+    seen = {urllib.parse.unquote(x['target_url']).rstrip('/') for x in items}
+    for source_key in keys:
+        src = sources.get(source_key, {})
+        url = src.get('target_url', '')
+        parsed = urllib.parse.urlsplit(url)
+        if (src.get('kind') != 'article' or src.get('family') != 'tape20'
+            or parsed.scheme != 'https' or parsed.netloc != 'navar-abyari.ir'
+            or parsed.query or parsed.fragment or parsed.path in ('', '/')
+            or not src.get('site_title')):
+            raise ValueError('Unapproved Roya article source: ' + str(source_key))
+        key = 'article-' + hashlib.sha256(source_key.encode()).hexdigest()[:16]
+        canonical = urllib.parse.unquote(url).rstrip('/')
+        if canonical in seen:
+            continue
+        prev = old.get(key)
+        if prev is not None:
+            if prev.get('kind') != 'article' or prev.get('target_url') != url:
+                raise ValueError('Roya article identity conflict: ' + key)
+            item = copy.deepcopy(prev)
+        else:
+            item = dict(key=key, kind='article', source_key=source_key,
+                family='tape20', target_url=url, reference_url=url,
+                site_title=src['site_title'], page_title=src['site_title'],
+                topic=src['site_title'], province='technical', province_fa='', city_fa='',
+                hub_url='', status='pending', attempts=0, title='', prepared_title='',
+                slug='', generated_at=None, published=False, published_url=None,
+                pid=None, image_url=None)
+            from city_backlink_policy import title_candidates
+            candidates = title_candidates(item, 'royablog', root)
+            if not candidates:
+                raise ValueError('No approved Roya article title: ' + key)
+            item['prepared_title'] = candidates[0]
+        items.append(item)
+        seen.add(canonical)
+    return items
+
+
 def main():
     if TARGETS.exists():
         data = json.loads(TARGETS.read_text(encoding='utf-8'))
@@ -196,6 +246,7 @@ def main():
         item.update(retained_runtime(prev, key))
         items.append(item)
         counter += 1
+    items = append_approved_articles(items, old, ROOT)
     from blog_city_priority import prioritize_queue
     ranked=prioritize_queue({'items':items},ROOT);items=ranked['items']
     QUEUE.write_text(json.dumps({'city_priority_policy':ranked.get('city_priority_policy'),'generated_at': __import__('datetime').datetime.now(

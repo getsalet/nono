@@ -59,6 +59,7 @@ def build_queue(blog,root=None):
  root=Path(root or ROOT);path=root/'data'/blog/'backlink-queue.json';q=read(path,{'items':[]});keys={x['key']for x in q['items']}
  # Keep all legacy records and publications. Only city targets, not province hubs.
  for src in read(root/'data/roya/backlink-queue.json',{'items':[]})['items']:
+  if src.get('kind') == 'article':continue  # Technical supplements are not geographic targets.
   if src.get('family')not in ('tape20','hose')or src.get('target_url')==src.get('hub_url'):continue
   key='city-'+hashlib.sha256(src['key'].encode()).hexdigest()[:16]
   if key in keys:continue
