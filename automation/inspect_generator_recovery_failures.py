@@ -1,7 +1,7 @@
 """Read only failed-job log diagnostics; no generation or dispatch."""
 import os,json,re,urllib.request,urllib.error,urllib.parse,pathlib,datetime
 ROOT=pathlib.Path(__file__).resolve().parents[1]
-RUNS=[40005610417,40006690339]
+RUNS=[40008241523]
 class LogRedirect(urllib.request.HTTPRedirectHandler):
  def redirect_request(self,req,fp,code,msg,headers,newurl):
   host=urllib.parse.urlsplit(newurl).hostname or ''
