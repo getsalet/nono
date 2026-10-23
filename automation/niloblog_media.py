@@ -27,7 +27,7 @@ def validate_catalog(catalog):
     if not any(a['kind']=='image' and a.get('eligible_for_selection') for a in assets):
         raise ValueError('No usable image')
 
-def reserve(catalog,state,post_id,video_probability=0.25):
+def reserve(catalog,state,post_id,video_probability=0.0):
     """Return (new_state, selection). Same post is idempotent; no publishing."""
     validate_catalog(catalog)
     if not isinstance(post_id,str) or not post_id.strip(): raise ValueError('Post ID required')

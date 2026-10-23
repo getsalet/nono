@@ -89,4 +89,20 @@ class RuntimeTests(unittest.TestCase):
  def test_no_global_pause_bypass(self):
   import unittest.mock as mock
   with mock.patch('check_blog_pipeline_control.decision',return_value={'proceed':False}):self.assertFalse(m.allowed())
+ def test_new_publication_rejects_queued_video_before_browser_use(self):
+  import unittest.mock as mock
+  for item in [
+   {'post':{'html':'<p>متن</p><video controls src="x.mp4"></video>'}},
+   {'post':{'html':'<p>متن</p>'},'selection':{'video_id':'video-004'}},
+   {'post':{'html':'<iframe src="x"></iframe>'}},
+  ]:
+   page=mock.Mock()
+   with mock.patch.object(m,'scan') as scan:
+    with self.assertRaises(m.PipelineStop):m.publish_new(page,item,{})
+    scan.assert_not_called();self.assertEqual(page.mock_calls,[])
+ def test_new_generation_explicitly_disables_video(self):
+  code=(ROOT/'automation/niloblog_pipeline.py').read_text().split('def generate',1)[1].split('def verify_stored_body',1)[0]
+  self.assertIn('video_probability=0',code);self.assertNotIn('markup+=',code)
+ def test_image_only_item_passes_new_media_gate(self):
+  m.require_image_only({'selection':{'image_id':'image-001','video_id':None},'post':{'html':'<p>متن</p><img src="x.webp">'}})
 if __name__=='__main__':unittest.main()

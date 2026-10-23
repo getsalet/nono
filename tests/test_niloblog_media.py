@@ -30,4 +30,11 @@ class MediaTests(unittest.TestCase):
  def test_unverified_image_rejected(self):
   c=copy.deepcopy(self.c);next(a for a in c['assets'] if a['kind']=='image')['public_sha256_verified']=False
   with self.assertRaises(ValueError):m.validate_catalog(c)
+ def test_default_video_disabled_for_new_articles(self):
+  for post_id in ['p','fresh-post','another-post','nilo-new']:
+   self.assertIsNone(m.reserve(self.c,None,post_id)[1]['video_id'])
+ def test_historical_video_receipt_is_not_rewritten(self):
+  s,a=m.reserve(self.c,None,'old',1);self.assertIsNotNone(a['video_id'])
+  s=m.acknowledge(self.c,s,'old','https://afp.niloblog.com/p/3',public_receipt_verified=True)
+  s2,a2=m.reserve(self.c,s,'old');self.assertEqual(s,s2);self.assertEqual(a,a2)
 if __name__=='__main__':unittest.main()

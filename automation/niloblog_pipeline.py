@@ -148,12 +148,10 @@ def generate(row,m,targets,media,state):
  if not all(review.get(k) is True for k in ('approved','grounded','locally_distinct')) or review.get('semantic_duplicate') is not False or review.get('unsupported_claims')!=[]:raise PipelineStop('Independent editorial review rejected')
  q=canon(review.get('local_evidence_quote',''))
  if len(q)<20 or q not in canon(bundle['local']['text']):raise PipelineStop('Local evidence quote not verifiable')
- ms,selection=reserve(media,state.get('media'),row['id'])
+ ms,selection=reserve(media,state.get('media'),row['id'],video_probability=0)
+ if selection.get('video_id') is not None:raise PipelineStop('Video disabled by user; stale media reservation requires reconciliation')
  image=next(a for a in media['assets'] if a['id']==selection['image_id'])
  markup='<p><img src="'+html.escape(image['url'],quote=True)+'" alt="'+html.escape(image['alt'],quote=True)+'" width="'+str(image['width'])+'" height="'+str(image['height'])+'" loading="lazy"></p>'+obj['html']
- if selection['video_id']:
-  v=next(a for a in media['assets'] if a['id']==selection['video_id'])
-  markup+='<p><video controls preload="none" style="max-width:100%;height:auto" src="'+html.escape(v['url'],quote=True)+'"></video></p>'
  obj['html']=markup
  item={'key':row['id'],'row':row,'post':obj,'sources':bundle,'review':review,'words':words,'selection':selection,'status':'reviewed','created_at':now().isoformat()}
  save(A/'items'/f"{row['id']}.json",item);state['media']=ms;state['current']=row['id'];checkpoint(state);return item
@@ -299,7 +297,14 @@ def verify_public(page,item):
   return proof
  finally:public.close()
 
+def require_image_only(item):
+ # Historical receipts remain intact. Never publish a queued legacy video item.
+ markup=BeautifulSoup(item.get('post',{}).get('html',''),'html.parser')
+ if item.get('selection',{}).get('video_id') is not None or markup.find(['video','source','iframe','object','embed']):
+  raise PipelineStop('Video disabled by user; queued video item requires review before publication')
+
 def publish_new(page,item,s):
+ require_image_only(item)
  # Niloblog edit endpoint returned server-side errors. Use its working new-post
  # form only; the historical failed private draft is explicitly retained/held.
  found=scan(page,item['post']['title'])
