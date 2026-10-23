@@ -9,6 +9,11 @@ class EditorialTests(unittest.TestCase):
   self.bundle={'local':{'text':self.quote},'article':{'text':self.quote+' متن فنی'},'technical':[],'links':[]}
   self.plan={'blocked':False,'facts':[{'excerpt_id':'s0-e0','source_index':0,'claim':'گزارش محصول','quote':self.quote},{'excerpt_id':'s1-e0','source_index':1,'claim':'اطلاعات محصول','quote':self.quote}]}
   self.approved={'approved':True,'grounded':True,'locally_distinct':True,'semantic_duplicate':False,'unsupported_claims':[],'local_evidence_quote':self.quote,'local_evidence_id':'s0-e0'}
+ def test_known_mixed_script_typos_normalized_without_changing_urls(self):
+  result=m.prepare_article({'html':'<p>هکتar سir زraعی <a href="https://x/سir">منبع</a></p>'},{'links':[]})
+  self.assertIn('هکتار سیر زراعی',result['html']);self.assertIn('https://x/سir',result['html'])
+ def test_remaining_mixed_words_have_a_fail_closed_gate(self):
+  self.assertIn("raise PipelineStop('Mixed-script word requires editorial correction')",Path(m.__file__).read_text())
  def test_read_only_intent_recovery_never_resubmits(self):
   item={'key':'key','status':'reviewed'};state={'current':'key','intent':{'key':'key','operation':'create_public_post','at':'2026-10-23T07:14:00+00:00'},'media':{},'published':[]}
   receipt={'url':'https://afp.niloblog.com/p/4/test','at':'2026-10-23T07:20:00+00:00'}

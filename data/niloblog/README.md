@@ -103,3 +103,7 @@ The queue-assigned title is now bound by code instead of asking the writer to re
 ## Cached-home receipt recovery (revision 20)
 
 A real image-only article passed all gates and was submitted once, but its permalink was absent from the cached homepage during the original short verification window. Discovery now waits up to 16 read-only checks. A durable create_public_post intent can be reconciled by fetching and fully verifying the existing public article; it never navigates to a submission form or calls submit_once. Missing/mismatched public content retains the intent and media reservation. Unknown intent types still require manual review. Reconciliation uses the original submission timestamp for the rolling budget, records a verified receipt and ends the cycle without creating another post. 83 regression tests passed.
+
+## Typography follow-up
+
+Manual public inspection found the mixed-script spellings هکتar / سir / زraعی in the verified p/4 sample. Future drafts normalize these three known words in text nodes only, never in URLs. Other adjacent Persian/Latin letters fail closed before editorial approval. The already-published cached article was not silently rewritten; its typography is a documented remaining content issue, separate from verified image-only publication/reconciliation. 85 local tests passed. This code-only follow-up does not trigger another publication cycle or change runtime limits.

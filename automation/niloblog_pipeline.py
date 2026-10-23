@@ -107,6 +107,10 @@ def prepare_article(obj,bundle,row=None):
  if not isinstance(obj,dict) or obj.get('blocked'):return obj
  if row is not None:obj['title']=row['title']
  soup=BeautifulSoup(obj.get('html',''),'html.parser')
+ for node in list(soup.find_all(string=True)):
+  clean=str(node)
+  for bad,good in {'هکتar':'هکتار','سir':'سیر','زraعی':'زراعی'}.items():clean=clean.replace(bad,good)
+  if clean!=str(node):node.replace_with(clean)
  # Preserve every word: extra subtopics are h3, not extra top-level sections.
  headings=soup.find_all('h2')
  for heading in headings[5:]:heading.name='h3'
@@ -136,6 +140,7 @@ def validate_article(row,obj,bundle):
  if not 110<=len(obj.get('meta_description',''))<=165:raise PipelineStop('Description length check failed')
  from roya_backlink_queue import has_numeric_price
  text=soup.get_text(' ',strip=True)
+ if re.search(r'[\u0600-\u06ff][A-Za-z]|[A-Za-z][\u0600-\u06ff]',text):raise PipelineStop('Mixed-script word requires editorial correction')
  if has_numeric_price(text) or any(x in text for x in ['ارسال رایگان','تضمین افزایش','نمایندگی رسمی','تخفیف ویژه','تضمین','شرایط مناسب اقلیمی']):raise PipelineStop('Unsupported commercial claim')
  from content_originality import reuse_errors
  if reuse_errors(obj['html'],all_history(row['id'])):raise PipelineStop('Cross-blog content reuse')
