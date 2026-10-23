@@ -87,3 +87,7 @@ Recognized link placeholders and approved URLs now bind their exact matching app
 ## Complete configured research and scope checks (revision 16)
 
 Both configured research-only technical sources are now fetched (previously only the first was read), using the existing source URL/canonical safety checks. Deterministic excerpts distinguish local_report from technical_general. Review explicitly distinguishes a sourced general method from a location-specific claim and from a question requesting unknown farm data; unsupported local inferences, generic city swaps and duplicate content still fail. 74 regression tests passed; publication remains subject to all original gates and independent receipt verification.
+
+## Separate extraction from final editorial assessment (revision 17)
+
+The evidence planner now extracts directly supported local and technical facts and reports a blocked_reason when none exist, rather than pre-judging a not-yet-written article. Exact excerpt-ID checks remain mandatory. The writer may still block for insufficient article-level evidence; the independent final reviewer retains every grounding, unsupported-claims, local-value and semantic-duplicate gate. This corrects over-blocking during evidence collection without approving any article or manufacturing locality-specific recommendations. 75 regression tests passed.

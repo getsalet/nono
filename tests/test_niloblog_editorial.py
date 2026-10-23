@@ -9,6 +9,11 @@ class EditorialTests(unittest.TestCase):
   self.bundle={'local':{'text':self.quote},'article':{'text':self.quote+' متن فنی'},'technical':[],'links':[]}
   self.plan={'blocked':False,'facts':[{'excerpt_id':'s0-e0','source_index':0,'claim':'گزارش محصول','quote':self.quote},{'excerpt_id':'s1-e0','source_index':1,'claim':'اطلاعات محصول','quote':self.quote}]}
   self.approved={'approved':True,'grounded':True,'locally_distinct':True,'semantic_duplicate':False,'unsupported_claims':[],'local_evidence_quote':self.quote,'local_evidence_id':'s0-e0'}
+ def test_evidence_extraction_does_not_replace_final_editorial_gate(self):
+  code=Path(m.__file__).read_text()
+  self.assertIn('وظیفه تو فقط استخراج شواهد است',code)
+  self.assertIn('if review_passes(review,bundle):break',code)
+  self.assertIn("if review_attempt==1:raise PipelineStop('Independent editorial review rejected')",code)
  def test_both_configured_technical_sources_are_read(self):
   loc={'evidence_status':'previously_reviewed_county_crop','scope':'county','evidence_ref':'e','source_url':'https://news.example/a','crop':'سیب','city_fa':'شهر'}
   matrix={'localities':{'loc':loc},'link_plans':{'plan':{'required_links':[{'target_ref':'article'},{'target_ref':'product','anchor_keyword':'نوار'}],'research_only_target_refs':['tech1','tech2']}}}
