@@ -31,7 +31,25 @@ jobs:
       AGNES_KEY_ROTATE_EVERY: '1'
     steps:
       - uses: actions/checkout@v4
-        with: {ref: main, fetch-depth: 0}
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout: |
+            automation
+            data
+            state
+            tests
+            templates/niloblog
+            .github/workflows
+            artifacts/niloblog
+            artifacts/content-originality
+            artifacts/roya-backlink-queue/items
+            artifacts/farsiblog-backlink-queue/items
+            artifacts/rozblog-backlink-queue/items
+            artifacts/loxblog-backlink-queue/items
+            artifacts/blogsky-backlink-queue/items
+            artifacts/blogfa-backlink-queue/items
+            artifacts/parsiblog-backlink-queue/items
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - name: Respect global stop before dependencies or API work
