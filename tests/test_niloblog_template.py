@@ -51,5 +51,24 @@ class NiloblogTemplateTests(unittest.TestCase):
         self.assertIn('prefers-reduced-motion:reduce', self.html)
         self.assertIn('font-display:swap', self.html)
 
+    def test_article_layout_compact_and_readable(self):
+        for token in ['data-afp-template="article-layout-v2"', 'html[data-view=detail] .post{padding:28px;', 'max-width:760px', 'padding:20px 16px 32px', 'min-width:1600px']:
+            self.assertIn(token, self.html)
+        self.assertNotIn('inner', self.html)
+
+    def test_wide_article_index_is_native_content_only(self):
+        self.assertIn("querySelectorAll('.post-body h2')", self.html)
+        self.assertIn("link.textContent=section.textContent", self.html)
+        self.assertIn("index.setAttribute('aria-label','در این راهنما')", self.html)
+        self.assertIn("reading.className='post-reading'", self.html)
+        self.assertIn('.article-index{display:none}', self.html)
+
+    def test_hamburger_has_fixed_touch_target(self):
+        self.assertIn('.actions>#menu-toggle{display:grid;width:46px;height:46px}', self.html)
+
+    def test_mobile_backtop_does_not_overlay_article_text(self):
+        self.assertIn('.backtop{position:static;margin:0 16px 16px auto}', self.html)
+        self.assertIn('text-wrap:balance', self.html)
+
 if __name__ == '__main__':
     unittest.main()
