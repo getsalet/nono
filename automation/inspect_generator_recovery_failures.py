@@ -1,7 +1,7 @@
 """Read only failed-job log diagnostics; no generation or dispatch."""
 import os,json,re,urllib.request,urllib.error,urllib.parse,pathlib,datetime
 ROOT=pathlib.Path(__file__).resolve().parents[1]
-RUNS=[40008241523]
+RUNS=[40012027538]
 class LogRedirect(urllib.request.HTTPRedirectHandler):
  def redirect_request(self,req,fp,code,msg,headers,newurl):
   host=urllib.parse.urlsplit(newurl).hostname or ''
@@ -26,7 +26,7 @@ def main():
     text=api('/actions/jobs/'+str(j['id'])+'/logs',True);lines=text.splitlines();selected=[]
     for line in lines:
      if re.search(r'File "/home/runner/work/nono/nono/automation/[^"\s]+", line \d+',line):selected.append(clean(line))
-     elif re.search(r'(?:RuntimeError:|TimeoutError:|playwright\._impl\.[^:]+Error:)',line):
+     elif re.search(r'(?:RuntimeError:|TimeoutError:|subprocess.CalledProcessError:|playwright\._impl\.[^:]+Error:|fatal:|CONFLICT|cannot rebase)',line):
       value=clean(line)
       value=re.sub(r'https?://[^\s"<>]+','[URL omitted]',value)
       selected.append(value[:350])
