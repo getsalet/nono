@@ -1,16 +1,89 @@
 {
-  "at": "2026-10-23T17:09:01.880122+00:00",
+  "at": "2026-10-23T17:12:08.336919+00:00",
   "read_only": true,
   "runs": [
     {
       "id": 39991344453,
-      "failed_jobs": [],
-      "read_error": "HTTPError"
+      "failed_jobs": [
+        {
+          "name": "generate / generate",
+          "failed_steps": [
+            "Commit drafts and review exports; never record false publication"
+          ],
+          "diagnostics": [
+            "2026-10-23T17:02:57.3458411Z \u001b[36;1mdone\u001b[0m",
+            "2026-10-23T17:02:57.3458748Z \u001b[36;1mif git diff --cached --quiet; then exit 0; fi\u001b[0m",
+            "2026-10-23T17:02:57.3459357Z \u001b[36;1mgit commit -m 'Record Blogsky city drafts and QA-reviewed HTML exports (not published)'\u001b[0m",
+            "2026-10-23T17:02:57.3459937Z \u001b[36;1mif ! git diff --quiet; then\u001b[0m",
+            "2026-10-23T17:02:57.3460306Z \u001b[36;1m  git diff --name-only\u001b[0m",
+            "2026-10-23T17:02:57.3460999Z \u001b[36;1m  echo '::error::Unexpected tracked changes; recovery artifact retained.'\u001b[0m",
+            "2026-10-23T17:02:57.3461496Z \u001b[36;1m  exit 1\u001b[0m",
+            "2026-10-23T17:02:57.3461775Z \u001b[36;1mfi\u001b[0m",
+            "2026-10-23T17:02:57.3462061Z \u001b[36;1mfor attempt in 1 2 3; do\u001b[0m",
+            "2026-10-23T17:02:57.3462441Z \u001b[36;1m  git pull --rebase origin main || exit 1\u001b[0m",
+            "2026-10-23T17:02:57.3462873Z \u001b[36;1m  if git push origin main; then exit 0; fi\u001b[0m",
+            "2026-10-23T17:02:57.3463262Z \u001b[36;1m  sleep $((attempt * 5))\u001b[0m",
+            "2026-10-23T17:02:57.3463597Z \u001b[36;1mdone\u001b[0m",
+            "2026-10-23T17:02:57.3464479Z \u001b[36;1mecho '::error::Draft checkpoint push failed; recover from uploaded artifact.'\u001b[0m",
+            "2026-10-23T17:02:57.3465009Z \u001b[36;1mexit 1\u001b[0m",
+            "2026-10-23T17:02:57.3527790Z shell: /usr/bin/bash -e {0}",
+            "2026-10-23T17:02:57.3528135Z env:",
+            "2026-10-23T17:02:57.3528411Z   BLOGSKY_DRY_RUN: 0",
+            "2026-10-23T17:02:57.3528723Z   BLOGSKY_COUNT: 1",
+            "2026-10-23T17:02:57.3529016Z   BLOGSKY_TARGET: ",
+            "2026-10-23T17:02:57.3544025Z ##[endgroup]",
+            "2026-10-23T17:02:58.1500509Z [main c9eff4b5] Record Blogsky city drafts and QA-reviewed HTML exports (not published)",
+            "2026-10-23T17:02:58.1501549Z  8 files changed, 294 insertions(+), 36 deletions(-)",
+            "2026-10-23T17:02:58.1503037Z  create mode 100644 artifacts/blogsky-backlink-queue/exports/items/city-28809a1708be326d.678d875fac9a30ca.html",
+            "2026-10-23T17:02:58.2041338Z artifacts/niloblog/run-status.json",
+            "2026-10-23T17:02:58.2051416Z ##[error]Unexpected tracked changes; recovery artifact retained.",
+            "2026-10-23T17:02:58.2054920Z ##[error]Process completed with exit code 1.",
+            "2026-10-23T17:02:58.2093849Z ##[group]Run echo '## Blogsky: city generation and HTML review exports only' >> \"$GITHUB_STEP_SUMMARY\"",
+            "2026-10-23T17:02:58.2095193Z \u001b[36;1mecho '## Blogsky: city generation and HTML review exports only' >> \"$GITHUB_STEP_SUMMARY\"\u001b[0m",
+            "2026-10-23T17:02:58.2096450Z \u001b[36;1mecho 'No native Blogsky login, post submission, publication verification, schedule or automatic image handoff is enabled. A green configuration check is NOT generated/published content.' >> \"$GITHUB_STEP_SUMMARY\"\u001b[0m",
+            "2026-10-23T17:02:58.2160015Z shell: /usr/bin/bash -e {0}",
+            "2026-10-23T17:02:58.2160358Z env:",
+            "2026-10-23T17:02:58.2160787Z   BLOGSKY_DRY_RUN: 0"
+          ]
+        }
+      ]
     },
     {
       "id": 39991346907,
-      "failed_jobs": [],
-      "read_error": "HTTPError"
+      "failed_jobs": [
+        {
+          "name": "pipeline",
+          "failed_steps": [
+            "Run independent generator and native verification"
+          ],
+          "diagnostics": [
+            "2026-10-23T17:00:53.9746143Z   RUN_TARGET: pb-09c80b6703337d9bc817",
+            "2026-10-23T17:00:53.9746502Z   RETRY_PRE_SUBMIT: 1",
+            "2026-10-23T17:00:53.9746806Z ##[endgroup]",
+            "2026-10-23T17:01:00.8472518Z Parsiblog protected native form and AFP account verified",
+            "2026-10-23T17:01:38.5884727Z Parsiblog stopped safely: RuntimeError; see non-secret checkpoints and tests.",
+            "2026-10-23T17:01:38.6229095Z ##[error]Process completed with exit code 1.",
+            "2026-10-23T17:01:38.6352346Z ##[group]Run actions/upload-artifact@v4",
+            "2026-10-23T17:01:38.6352752Z with:",
+            "2026-10-23T17:01:38.6353054Z   name: parsiblog-recovery-39991346907-1",
+            "2026-10-23T17:01:38.6353433Z   retention-days: 14",
+            "2026-10-23T17:01:38.6353751Z   if-no-files-found: ignore",
+            "2026-10-23T17:01:38.6354576Z   path: state/parsiblog-progress.json",
+            "2026-10-23T17:01:40.2704250Z \u001b[36;1mfor path in state/parsiblog-progress.json data/parsiblog/control.json artifacts/parsiblog-backlink-queue artifacts/content-originality artifacts/blog-image-reviews; do\u001b[0m",
+            "2026-10-23T17:01:40.2705263Z \u001b[36;1m  if [ -e \"$path\" ]; then git add -f \"$path\"; fi\u001b[0m",
+            "2026-10-23T17:01:40.2705666Z \u001b[36;1mdone\u001b[0m",
+            "2026-10-23T17:01:40.2706008Z \u001b[36;1mif git diff --cached --quiet; then exit 0; fi\u001b[0m",
+            "2026-10-23T17:01:40.2706598Z \u001b[36;1mgit commit -m 'Record Parsiblog native verification and city generator checkpoints'\u001b[0m",
+            "2026-10-23T17:01:40.2707847Z \u001b[36;1mif ! git diff --quiet; then echo '::error::Unexpected tracked changes; artifact retained.'; git diff --name-only; exit 1; fi\u001b[0m",
+            "2026-10-23T17:01:40.2708722Z \u001b[36;1mfor attempt in 1 2 3; do\u001b[0m",
+            "2026-10-23T17:01:40.2709307Z \u001b[36;1m  git pull --rebase origin main || exit 1\u001b[0m",
+            "2026-10-23T17:01:40.2709749Z \u001b[36;1m  if git push origin HEAD:main; then exit 0; fi\u001b[0m",
+            "2026-10-23T17:01:40.2710163Z \u001b[36;1m  sleep $((attempt * 5))\u001b[0m",
+            "2026-10-23T17:01:40.2710507Z \u001b[36;1mdone\u001b[0m",
+            "2026-10-23T17:01:40.2710789Z \u001b[36;1mexit 1\u001b[0m"
+          ]
+        }
+      ]
     },
     {
       "id": 39991335478,
