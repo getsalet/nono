@@ -1,7 +1,53 @@
 {
-  "at": "2026-10-23T17:12:08.336919+00:00",
+  "at": "2026-10-23T17:19:11.330642+00:00",
   "read_only": true,
   "runs": [
+    {
+      "id": 39991341570,
+      "failed_jobs": [],
+      "active_jobs": []
+    },
+    {
+      "id": 39993013165,
+      "failed_jobs": [],
+      "active_jobs": []
+    },
+    {
+      "id": 39991115325,
+      "failed_jobs": [
+        {
+          "name": "pipeline",
+          "failed_steps": [
+            "Run one bounded guarded cycle"
+          ],
+          "diagnostics": [
+            "2026-10-23T16:57:58.4161961Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib",
+            "2026-10-23T16:57:58.4162332Z ##[endgroup]",
+            "2026-10-23T16:57:58.4905936Z Niloblog preflight allowed",
+            "2026-10-23T16:57:58.5006237Z ##[group]Run if [ -z \"$NILOBLOG_USERNAME\" ] || [ -z \"$NILOBLOG_PASSWORD\" ]; then",
+            "2026-10-23T16:57:58.5006842Z \u001b[36;1mif [ -z \"$NILOBLOG_USERNAME\" ] || [ -z \"$NILOBLOG_PASSWORD\" ]; then\u001b[0m",
+            "2026-10-23T16:57:58.5007401Z \u001b[36;1m  echo '::error::Set NILOBLOG_USERNAME and NILOBLOG_PASSWORD repository secrets.'\u001b[0m",
+            "2026-10-23T16:57:58.5007850Z \u001b[36;1m  exit 1\u001b[0m",
+            "2026-10-23T16:57:58.5008065Z \u001b[36;1mfi\u001b[0m",
+            "2026-10-23T16:57:58.5072704Z shell: /usr/bin/bash -e {0}",
+            "2026-10-23T16:57:58.5072981Z env:",
+            "2026-10-23T16:58:23.5530441Z Niloblog stage: fresh source review nilo-cd0196e059b5d0b2",
+            "2026-10-23T16:58:51.5076304Z Niloblog stage: independent article generation",
+            "2026-10-23T16:59:12.0371508Z Niloblog stage: factual and semantic review 1",
+            "2026-10-23T17:00:30.6590734Z Niloblog stage: factual and semantic review 2",
+            "2026-10-23T17:02:27.0725385Z Niloblog stopped safely: TimeoutError",
+            "2026-10-23T17:02:29.7257946Z ##[error]Process completed with exit code 1.",
+            "2026-10-23T17:02:29.7363948Z ##[group]Run actions/upload-artifact@v4",
+            "2026-10-23T17:02:29.7364283Z with:",
+            "2026-10-23T17:02:29.7364511Z   name: niloblog-recovery-39991115325-1",
+            "2026-10-23T17:02:29.7364808Z   retention-days: 14",
+            "2026-10-23T17:02:29.7365342Z   if-no-files-found: ignore",
+            "2026-10-23T17:02:29.7365735Z   path: data/niloblog/runtime-state.json"
+          ]
+        }
+      ],
+      "active_jobs": []
+    },
     {
       "id": 39991344453,
       "failed_jobs": [
@@ -46,56 +92,8 @@
             "2026-10-23T17:02:58.2160787Z   BLOGSKY_DRY_RUN: 0"
           ]
         }
-      ]
-    },
-    {
-      "id": 39991346907,
-      "failed_jobs": [
-        {
-          "name": "pipeline",
-          "failed_steps": [
-            "Run independent generator and native verification"
-          ],
-          "diagnostics": [
-            "2026-10-23T17:00:53.9746143Z   RUN_TARGET: pb-09c80b6703337d9bc817",
-            "2026-10-23T17:00:53.9746502Z   RETRY_PRE_SUBMIT: 1",
-            "2026-10-23T17:00:53.9746806Z ##[endgroup]",
-            "2026-10-23T17:01:00.8472518Z Parsiblog protected native form and AFP account verified",
-            "2026-10-23T17:01:38.5884727Z Parsiblog stopped safely: RuntimeError; see non-secret checkpoints and tests.",
-            "2026-10-23T17:01:38.6229095Z ##[error]Process completed with exit code 1.",
-            "2026-10-23T17:01:38.6352346Z ##[group]Run actions/upload-artifact@v4",
-            "2026-10-23T17:01:38.6352752Z with:",
-            "2026-10-23T17:01:38.6353054Z   name: parsiblog-recovery-39991346907-1",
-            "2026-10-23T17:01:38.6353433Z   retention-days: 14",
-            "2026-10-23T17:01:38.6353751Z   if-no-files-found: ignore",
-            "2026-10-23T17:01:38.6354576Z   path: state/parsiblog-progress.json",
-            "2026-10-23T17:01:40.2704250Z \u001b[36;1mfor path in state/parsiblog-progress.json data/parsiblog/control.json artifacts/parsiblog-backlink-queue artifacts/content-originality artifacts/blog-image-reviews; do\u001b[0m",
-            "2026-10-23T17:01:40.2705263Z \u001b[36;1m  if [ -e \"$path\" ]; then git add -f \"$path\"; fi\u001b[0m",
-            "2026-10-23T17:01:40.2705666Z \u001b[36;1mdone\u001b[0m",
-            "2026-10-23T17:01:40.2706008Z \u001b[36;1mif git diff --cached --quiet; then exit 0; fi\u001b[0m",
-            "2026-10-23T17:01:40.2706598Z \u001b[36;1mgit commit -m 'Record Parsiblog native verification and city generator checkpoints'\u001b[0m",
-            "2026-10-23T17:01:40.2707847Z \u001b[36;1mif ! git diff --quiet; then echo '::error::Unexpected tracked changes; artifact retained.'; git diff --name-only; exit 1; fi\u001b[0m",
-            "2026-10-23T17:01:40.2708722Z \u001b[36;1mfor attempt in 1 2 3; do\u001b[0m",
-            "2026-10-23T17:01:40.2709307Z \u001b[36;1m  git pull --rebase origin main || exit 1\u001b[0m",
-            "2026-10-23T17:01:40.2709749Z \u001b[36;1m  if git push origin HEAD:main; then exit 0; fi\u001b[0m",
-            "2026-10-23T17:01:40.2710163Z \u001b[36;1m  sleep $((attempt * 5))\u001b[0m",
-            "2026-10-23T17:01:40.2710507Z \u001b[36;1mdone\u001b[0m",
-            "2026-10-23T17:01:40.2710789Z \u001b[36;1mexit 1\u001b[0m"
-          ]
-        }
-      ]
-    },
-    {
-      "id": 39991335478,
-      "failed_jobs": []
-    },
-    {
-      "id": 39991339016,
-      "failed_jobs": []
-    },
-    {
-      "id": 39991341570,
-      "failed_jobs": []
+      ],
+      "active_jobs": []
     }
   ]
 }
