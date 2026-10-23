@@ -372,6 +372,14 @@ def product_semantics_errors(item,markup):
     errors = []
     if '\ufffd' in (markup or ''):
         errors.append('Replacement characters indicate corrupted article text')
+    if item.get('family') == 'tape20':
+        # No model datasheet is supplied to these generic blog generators.
+        # Reject invented numeric thickness/pressure even when framed as examples.
+        number = r'[0-9۰-۹٠-٩]+(?:[.,٫٬][0-9۰-۹٠-٩]+)*'
+        unit = r'(?:میلی[\s‌-]*متر(?:ی)?|میکرون(?:ی)?|بار|mm|psi)'
+        matches = re.findall(number + r'[\s‌-]*' + unit + r'(?![\w])', plain, flags=re.I)
+        if matches:
+            errors.append('Unsupported numeric tape thickness/pressure without model datasheet: ' + '، '.join(dict.fromkeys(matches))[:120])
     if item.get('family') == 'hose':
         if re.search(r'لوله[\s‌]+نخی[\s‌]*[（(][\s‌]*نوار[\s‌]+تیپ', plain):
             errors.append('Layflat transfer hose must not be defined as drip tape')
