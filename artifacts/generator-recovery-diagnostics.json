@@ -1,81 +1,40 @@
 {
-  "at": "2026-10-23T17:31:33.671218+00:00",
+  "at": "2026-10-23T18:59:39.786178+00:00",
   "read_only": true,
   "runs": [
     {
-      "id": 39993329355,
+      "id": 40005610417,
       "failed_jobs": [
         {
-          "name": "pipeline",
+          "name": "repair",
           "failed_steps": [
-            "Publish and verify native LoxBlog post"
+            "Correct only existing post 187, then reopen and verify"
           ],
           "diagnostics": [
-            "2026-10-23T17:17:53.1035561Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib",
-            "2026-10-23T17:17:53.1035881Z ##[endgroup]",
-            "2026-10-23T17:17:53.2650950Z {\"proceed\": true, \"remaining\": 2, \"next_eligible_at\": null}",
-            "2026-10-23T17:17:53.2783942Z ##[group]Run if [ -z \"$LOXBLOG_USERNAME\" ] || [ -z \"$LOXBLOG_PASSWORD\" ]; then",
-            "2026-10-23T17:17:53.2784442Z \u001b[36;1mif [ -z \"$LOXBLOG_USERNAME\" ] || [ -z \"$LOXBLOG_PASSWORD\" ]; then\u001b[0m",
-            "2026-10-23T17:17:53.2784947Z \u001b[36;1m  echo '::error::Set LOXBLOG_USERNAME and LOXBLOG_PASSWORD repository secrets.'\u001b[0m",
-            "2026-10-23T17:17:53.2785349Z \u001b[36;1m  exit 1\u001b[0m",
-            "2026-10-23T17:17:53.2785580Z \u001b[36;1mfi\u001b[0m",
-            "2026-10-23T17:17:53.2842209Z shell: /usr/bin/bash -e {0}",
-            "2026-10-23T17:17:53.2842495Z env:",
-            "2026-10-23T17:17:53.2843196Z   AGNES_API_BASE: https://apihub.agnes-ai.com/v1",
-            "2026-10-23T17:17:53.2843710Z   IMAGE_API_KEY: ***",
-            "2026-10-23T17:19:54.0100568Z Native LoxBlog response status: 200",
-            "2026-10-23T17:20:01.0688091Z Verified LoxBlog publication 55 -> https://afp.lxb.ir/tape-drip-bandarmahshahr-operation-maintenance",
-            "2026-10-23T17:20:01.9680839Z Native form verified: real summary/continuation, three FAQs, public immediate publication, comments off.",
-            "2026-10-23T17:20:03.6766508Z Native LoxBlog response status: 200",
-            "2026-10-23T17:20:07.3117910Z LoxBlog publisher stopped: Public archive unavailable; refuse partial dedup",
-            "2026-10-23T17:20:07.3422553Z ##[error]Process completed with exit code 1.",
-            "2026-10-23T17:20:07.3515692Z ##[group]Run actions/upload-artifact@v4",
-            "2026-10-23T17:20:07.3515998Z with:",
-            "2026-10-23T17:20:07.3516231Z   name: loxblog-recovery-39993329355-1",
-            "2026-10-23T17:20:07.3516511Z   retention-days: 14",
-            "2026-10-23T17:20:07.3516753Z   if-no-files-found: ignore",
-            "2026-10-23T17:20:07.3517603Z   path: data/loxblog/backlink-queue.json",
-            "2026-10-23T17:20:09.0692395Z \u001b[36;1mif git diff --cached --quiet; then exit 0; fi\u001b[0m",
-            "2026-10-23T17:20:09.0692804Z \u001b[36;1mgit commit -m 'Record original LoxBlog content and verified publication'\u001b[0m",
-            "2026-10-23T17:20:09.0693290Z \u001b[36;1m# Print paths only, never contents or secrets, if an unknown write appears.\u001b[0m",
-            "2026-10-23T17:20:09.0693686Z \u001b[36;1mif ! git diff --quiet; then\u001b[0m",
-            "2026-10-23T17:20:09.0693998Z \u001b[36;1m  git diff --name-only\u001b[0m",
-            "2026-10-23T17:20:09.0694387Z \u001b[36;1m  echo '::error::Unexpected unstaged tracked changes; recovery artifact retained.'\u001b[0m",
-            "2026-10-23T17:20:09.0694777Z \u001b[36;1m  exit 1\u001b[0m",
-            "2026-10-23T17:20:09.0695002Z \u001b[36;1mfi\u001b[0m",
-            "2026-10-23T17:20:09.0695225Z \u001b[36;1mfor attempt in 1 2 3; do\u001b[0m",
-            "2026-10-23T17:20:09.0695527Z \u001b[36;1m  git pull --rebase origin main || exit 1\u001b[0m",
-            "2026-10-23T17:20:09.0695859Z \u001b[36;1m  if git push origin main; then exit 0; fi\u001b[0m",
-            "2026-10-23T17:20:09.0696168Z \u001b[36;1m  sleep $((attempt * 5))\u001b[0m",
-            "2026-10-23T17:20:09.0696430Z \u001b[36;1mdone\u001b[0m",
-            "2026-10-23T17:20:09.0696800Z \u001b[36;1mecho '::error::Checkpoint push failed after three attempts; recovery artifact retained.'\u001b[0m",
-            "2026-10-23T17:20:09.0697444Z \u001b[36;1mexit 1\u001b[0m",
-            "2026-10-23T17:20:09.0752237Z shell: /usr/bin/bash -e {0}",
-            "2026-10-23T17:20:09.0752511Z env:",
-            "2026-10-23T17:20:09.0752789Z   AGNES_API_BASE: https://apihub.agnes-ai.com/v1",
-            "2026-10-23T17:20:09.0753234Z   IMAGE_API_KEY: ***",
-            "2026-10-23T17:20:09.0753492Z   IMAGE_KEY_SLOT: AGNES_API_KEY10"
+            "2026-10-23T18:56:02.1677030Z   File \"/home/runner/work/nono/nono/automation/repair_rozblog_editorial.py\", line 127, in <module>",
+            "2026-10-23T18:56:02.1678134Z   File \"/home/runner/work/nono/nono/automation/repair_rozblog_editorial.py\", line 90, in main",
+            "2026-10-23T18:56:02.1679306Z   File \"/home/runner/work/nono/nono/automation/repair_rozblog_editorial.py\", line 27, in corrected",
+            "2026-10-23T18:56:02.1680778Z RuntimeError: Expected source text must occur exactly once; no partial edit",
+            "2026-10-23T18:56:02.1964615Z ##[error]Process completed with exit code 1."
           ]
         }
       ],
       "active_jobs": []
     },
     {
-      "id": 39993835755,
-      "failed_jobs": [],
-      "active_jobs": [
+      "id": 40006690339,
+      "failed_jobs": [
         {
-          "name": "publish",
-          "status": "in_progress",
-          "started_at": "2026-10-23T17:20:53Z",
-          "active_steps": [
-            {
-              "name": "Install native browser dependencies",
-              "started_at": "2026-10-23T17:21:51Z"
-            }
+          "name": "recover",
+          "failed_steps": [
+            "Read existing article, verify and recover receipt without submission"
+          ],
+          "diagnostics": [
+            "2026-10-23T18:53:09.0701303Z ##[error]Process completed with exit code 1."
           ]
         }
-      ]
+      ],
+      "active_jobs": []
     }
   ]
 }
