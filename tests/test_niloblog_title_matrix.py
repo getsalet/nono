@@ -10,6 +10,12 @@ class NiloblogMatrixTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.m=json.loads((ROOT/'data/niloblog/title-matrix.json').read_text());cls.c=json.loads((ROOT/'data/niloblog/article-targets.json').read_text());cls.config=json.loads((ROOT/'data/niloblog/integration-plan.json').read_text())
+    def test_short_title_cap(self):
+        self.assertLessEqual(max(len(r['title']) for r in self.m['titles']),78)
+        m=copy.deepcopy(self.m);m['titles'][0]['title']+=' آبیاری'*30;self.assertTrue(mod.validate(m,self.c))
+    def test_article_length_profile(self):
+        self.assertEqual(self.m['editorial_contract']['seo']['article_target_words'],[600,900])
+        self.assertTrue(self.m['editorial_contract']['seo']['no_padding_to_hit_minimum'])
     def test_valid_matrix(self):self.assertEqual(mod.validate(self.m,self.c),[])
     def test_exactly_one_thousand_unique_titles(self):self.assertEqual(len({mod.normalize(r['title']) for r in self.m['titles']}),1000)
     def test_duplicate_rejected(self):
