@@ -27,3 +27,11 @@ class AtomicCheckpointTests(unittest.TestCase):
    base,root,remote=self.setup_repo(d)
    with self.assertRaises(RuntimeError):persist(root,['unrelated.txt'])
 if __name__=='__main__':unittest.main()
+
+
+class QueuedGeneratorCheckoutTests(unittest.TestCase):
+ def test_queued_generator_uses_current_main_under_existing_lock(self):
+  text=(Path(__file__).resolve().parents[1]/'.github/workflows/blogsky-content.yml').read_text()
+  self.assertIn('group: blogsky-city-export',text)
+  self.assertIn('cancel-in-progress: false',text)
+  self.assertIn('with: {ref: main, fetch-depth: 0}',text)

@@ -72,6 +72,8 @@ jobs:
       AGNES_API_KEY25: ${{ secrets.AGNES_API_KEY25 }}
     steps:
       - uses: actions/checkout@v4
+        # Acquire the workflow lock first, then use current code and receipts.
+        with: {ref: main, fetch-depth: 0}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
