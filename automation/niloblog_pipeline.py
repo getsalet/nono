@@ -197,7 +197,7 @@ def main():
   found=scan(page,item['post']['title'])
   if not found:raise PipelineStop('Draft receipt missing; intent retained, no blind retry')
   # Record row receipt for a human/agent readback; no claim of public publication.
-  save(A/'native-draft-receipt.json',found);item['status']='draft_saved';save(A/'items'/f"{item['key']}.json",item)
+  save(A/'native-draft-receipt.json',{'title':item['post']['title'],'exact_title_found':True,'checked_at':now().isoformat(),'public_post_submitted':False});item['status']='draft_saved';save(A/'items'/f"{item['key']}.json",item)
   s['intent']=None;s['draft_canary_verified_at']=now().isoformat();checkpoint(s)
   print('Native genuine-article draft saved and found by exact title. No public post submitted.')
   browser.close()
