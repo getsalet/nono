@@ -1,0 +1,54 @@
+name: RozBlog selected same-post editorial correction
+on:
+  push:
+    branches: [main]
+    paths: [automation/start-rozblog-editorial-repair.txt]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: rozblog-content-pipeline
+  cancel-in-progress: false
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Respect existing user stop
+        id: control
+        run: python automation/check_blog_pipeline_control.py rozblog
+      - name: Install bounded browser dependencies
+        if: steps.control.outputs.proceed == '1'
+        run: |
+          python -m pip install --quiet Pillow beautifulsoup4
+          bash automation/install_blog_browser.sh
+      - name: Test exact replacements and no-creation invariants
+        if: steps.control.outputs.proceed == '1'
+        run: python -m unittest discover -s tests -p test_rozblog_editorial_repair.py -v
+      - name: Correct only existing post 187, then reopen and verify
+        if: steps.control.outputs.proceed == '1'
+        env:
+          ROZBLOG_USERNAME: ${{ secrets.ROZBLOG_USERNAME }}
+          ROZBLOG_PASSWORD: ${{ secrets.ROZBLOG_PASSWORD }}
+        run: python automation/repair_rozblog_editorial.py
+      - name: Retain non-secret recovery evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rozblog-editorial-repair-${{ github.run_id }}
+          path: artifacts/rozblog-editorial-repair/
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Checkpoint retained evidence even after an unconfirmed edit
+        if: always()
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0,'automation')
+          from repair_rozblog_editorial import checkpoint
+          checkpoint(['artifacts/rozblog-editorial-repair'])
+          PY
