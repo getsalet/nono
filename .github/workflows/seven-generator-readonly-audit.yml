@@ -1,0 +1,34 @@
+name: One-hour read-only seven-generator audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [automation/start-seven-generator-audit.txt]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: seven-generator-readonly-audit
+  cancel-in-progress: false
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Observe seven active generators for one hour; report writes only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python automation/audit_seven_generators_one_hour.py
+      - name: Preserve observation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seven-generator-readonly-${{ github.run_id }}
+          retention-days: 14
+          path: artifacts/generator-hour-audit/
