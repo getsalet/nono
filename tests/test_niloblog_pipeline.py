@@ -72,6 +72,9 @@ class RuntimeTests(unittest.TestCase):
  def test_login_never_clicks_unscoped_ad_close_glyph(self):
   code=(ROOT/'automation/niloblog_pipeline.py').read_text().split('def login(',1)[1].split('def management_frame',1)[0]
   self.assertNotIn("get_by_text('×'",code)
+ def test_public_verification_uses_explicit_multi_page_context(self):
+  code=(ROOT/'automation/niloblog_pipeline.py').read_text().split('def main():',1)[1]
+  self.assertIn('context=browser.new_context()',code);self.assertIn('page=context.new_page()',code);self.assertNotIn('page=browser.new_page()',code)
  def test_no_global_pause_bypass(self):
   import unittest.mock as mock
   with mock.patch('check_blog_pipeline_control.decision',return_value={'proceed':False}):self.assertFalse(m.allowed())
