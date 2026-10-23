@@ -1,0 +1,32 @@
+name: Niloblog one-time public-read receipt reconciliation
+on:
+  push:
+    branches: [main]
+    paths: [automation/start-niloblog-public-reconcile.txt]
+permissions:
+  contents: write
+concurrency:
+  group: niloblog-guarded-content
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install public-page validation dependencies
+        run: bash automation/install_blog_browser.sh
+      - name: Verify existing public post only; never log in or submit
+        run: python automation/niloblog_public_reconcile_once.py
+      - name: Preserve reconciliation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: niloblog-public-reconcile-${{ github.run_id }}
+          path: |
+            data/niloblog/runtime-state.json
+            artifacts/niloblog
+          retention-days: 14
