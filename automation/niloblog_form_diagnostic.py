@@ -14,7 +14,10 @@ try:
   page.locator('iframe#frmleft,iframe[name=frmleft]').wait_for(timeout=30000)
   f=page.locator('iframe#frmleft,iframe[name=frmleft]').element_handle().content_frame()
   if not f:raise RuntimeError('Native iframe not attached')
-  with f.expect_navigation(wait_until='domcontentloaded',timeout=45000):page.get_by_text('ارسال مطلب جدید',exact=True).click()
+  link=page.get_by_text('ارسال مطلب جدید',exact=True)
+  report['new_post_link']={'count':link.count(),'visible':link.first.is_visible(),'target':link.first.get_attribute('target')}
+  from urllib.parse import urljoin
+  f.goto(urljoin(page.url,link.first.get_attribute('href')),wait_until='domcontentloaded',timeout=45000)
   f.locator('#mtitle').wait_for()
   report['form']=f.evaluate('''()=>({method:document.forms[0].method,onsubmit:document.forms[0].getAttribute('onsubmit'),controls:[...document.forms[0].elements].map(e=>({tag:e.tagName,type:e.type,name:e.name,id:e.id,disabled:e.disabled,checked:e.checked,options:e.tagName==='SELECT'?[...e.options].map(o=>({value:o.value,text:o.textContent,selected:o.selected})):undefined,value:e.type==='checkbox'?e.value:undefined})),scripts:[...document.scripts].filter(e=>!e.src).map(e=>e.textContent).filter(t=>t.includes('pars20_go')||t.includes('CKEDITOR.replace'))})''')
   for sel in ['select[name=pcm]']:
