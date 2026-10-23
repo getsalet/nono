@@ -74,6 +74,10 @@ class AutomaticBlogskyTests(unittest.TestCase):
         self.assertEqual(cron[1:],['*']*4)
         minutes=list(range(0,60,20)) if cron[0]=='*/20' else sorted(int(x)for x in cron[0].split(','))
         self.assertEqual(len(minutes),3);self.assertEqual([(minutes[(i+1)%3]-m)%60 for i,m in enumerate(minutes)],[20]*3)
+    def test_native_dependencies_use_bounded_ipv4_browser_installer(self):
+        text=(ROOT/'.github/workflows/blogsky-auto.yml').read_text()
+        self.assertIn('bash automation/install_blog_browser.sh',text)
+        self.assertNotIn('python -m playwright install --with-deps chromium',text)
     def test_export_adapter_stays_separate_and_does_not_bypass_native_gate(self):
         from blogsky_backlink_queue import control
         self.assertFalse(control(ROOT)['publication_enabled'])
