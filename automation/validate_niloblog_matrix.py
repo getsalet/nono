@@ -22,7 +22,8 @@ def validate(matrix,catalog,evidence=None):
     require(len({normalize(r.get('title','')) for r in rows})==len(rows),'duplicate normalized titles')
     contract=matrix.get('editorial_contract',{})
     require(contract.get('link_budget')==[2,3],'body link budget must be 2..3')
-    require(contract.get('image_status')=='awaiting_user_image_url','image must await user URL')
+    require(contract.get('image_status')=='catalog_verified_adapter_pending','media catalog ready, native adapter must remain pending')
+    require(contract.get('media_catalog_path')=='data/niloblog/media-catalog.json','media catalog path missing')
     require(contract.get('image_generation_enabled') is False,'image generation must stay disabled')
     require(contract.get('seo',{}).get('article_target_words')==[600,900],'article length profile missing')
     require(contract.get('seo',{}).get('title_hard_max_chars')==78,'short title cap missing')
@@ -66,8 +67,10 @@ def main():
     matrix=json.loads((root/'data/niloblog/title-matrix.json').read_text());catalog=json.loads((root/'data/niloblog/article-targets.json').read_text())
     ep=Path(args.evidence) if args.evidence else root/'data/blog-city-crop-evidence.json'
     if not ep.exists():raise SystemExit('Shared locality evidence is required; validation failed closed.')
+    from niloblog_media import validate_catalog
+    validate_catalog(json.loads((root/'data/niloblog/media-catalog.json').read_text()))
     errors=validate(matrix,catalog,json.loads(ep.read_text()))
     if errors:
         print(json.dumps({'status':'failed','errors':errors[:30]},ensure_ascii=False));raise SystemExit(1)
-    print(json.dumps({'status':'ok','title_count':len(matrix['titles']),'publication_enabled':False,'image_status':'awaiting_user_image_url'},ensure_ascii=False))
+    print(json.dumps({'status':'ok','title_count':len(matrix['titles']),'publication_enabled':False,'image_status':matrix['editorial_contract']['image_status']},ensure_ascii=False))
 if __name__=='__main__':main()

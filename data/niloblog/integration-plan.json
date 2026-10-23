@@ -15,7 +15,7 @@
   "publication_enabled": false,
   "workflow_enabled": false,
   "native_adapter_status": "not_implemented",
-  "image_status": "awaiting_user_image_url",
+  "image_status": "catalog_verified_adapter_pending",
   "image_generation_enabled": false,
   "content_style": "original_educational_article_not_link_farm",
   "activation_requires": [
@@ -24,7 +24,9 @@
     "local cultivation source review",
     "article destination and factual review",
     "cross-blog semantic originality check",
-    "global pause and publication budget enforcement"
+    "global pause and publication budget enforcement",
+    "native image/video render and playback test",
+    "persisted media reservation state with concurrency control"
   ],
   "seo_profile": {
     "title_target_chars": [
@@ -56,6 +58,22 @@
       2,
       3
     ],
-    "image_status": "awaiting_user_image_url"
+    "image_status": "catalog_verified_adapter_pending"
+  },
+  "media_catalog_path": "data/niloblog/media-catalog.json",
+  "media_policy": {
+    "image_selection": "round_robin_after_verified_publication",
+    "video_probability": 0.25,
+    "video_probability_note": "Configurable proposed default; not a guaranteed quota.",
+    "video_selection": "deterministic_per_post_id_for_idempotent_retry",
+    "image_format": "webp",
+    "webp_quality": 65,
+    "image_generation_enabled": false,
+    "native_media_rendering_tested": false,
+    "runtime_integration_enabled": false,
+    "selector_module": "automation/niloblog_media.py",
+    "state_requirement": "single writer lock + atomic durable state; ambiguous publications must be reconciled before retry",
+    "video_rendering": "controls; no autoplay; preload=none; responsive; validate native HTML preservation first",
+    "media_link_budget": "Image src/video src are media resources, not extra SEO anchors; any visible fallback link counts toward the 2..3 body link cap."
   }
 }
