@@ -24,8 +24,13 @@ class RuntimeTests(unittest.TestCase):
   with self.assertRaises(ValueError):m.budget({'published':[{'at':'invalid'}]})
  def test_local_checkpoint_never_allows_publish(self):
   import unittest.mock as mock
-  with tempfile.TemporaryDirectory() as d,mock.patch.object(m,'STATE',Path(d)/'state.json'),mock.patch.dict(m.os.environ,{'GITHUB_ACTIONS':'false'}):
+  with tempfile.TemporaryDirectory() as d,mock.patch.object(m,'STATE',Path(d)/'state.json'),mock.patch.object(m,'A',Path(d)/'artifacts'),mock.patch.dict(m.os.environ,{'GITHUB_ACTIONS':'false'}):
    with self.assertRaises(RuntimeError):m.checkpoint({'published':[]})
+ def test_non_runner_checkpoint_does_not_mutate_any_state(self):
+  import unittest.mock as mock
+  with mock.patch.dict(m.os.environ,{'GITHUB_ACTIONS':'false'}),mock.patch.object(m,'save') as save,mock.patch.object(m.subprocess,'run') as git:
+   with self.assertRaises(RuntimeError):m.checkpoint({'published':[]})
+   save.assert_not_called();git.assert_not_called()
  def test_initial_phase_not_live(self):
   c=json.loads((ROOT/'data/niloblog/runtime-control.json').read_text());self.assertEqual(c['rolling_hourly_limit'],2);self.assertTrue(c['publication_authorized_by_user']);self.assertIn(c['phase'],('draft_canary','live_canary','publish','native_server_blocked'))
  def test_public_intent_precedes_submit(self):

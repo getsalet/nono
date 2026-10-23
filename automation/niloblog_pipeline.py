@@ -28,9 +28,9 @@ def budget(s,current=None):
   if t>n-datetime.timedelta(hours=1):recent+=1
  return max(0,2-recent)
 def checkpoint(s):
+ if os.getenv('GITHUB_ACTIONS')!='true':raise RuntimeError('Durable checkpoint requires GitHub runner; no external write permitted')
  save(STATE,s)
  save(A/'run-status.json',{'at':now().isoformat(),'phase':read(D/'runtime-control.json')['phase'],'intent_pending':bool(s.get('intent'))})
- if os.getenv('GITHUB_ACTIONS')!='true':raise RuntimeError('Durable checkpoint requires GitHub runner; no external write permitted')
  subprocess.run(['git','config','user.name','github-actions[bot]'],check=True,capture_output=True)
  subprocess.run(['git','config','user.email','41898282+github-actions[bot]@users.noreply.github.com'],check=True,capture_output=True)
  subprocess.run(['git','add','-f','data/niloblog/runtime-state.json','artifacts/niloblog'],check=True,capture_output=True)

@@ -1,0 +1,8 @@
+{
+  "tests_passed": 1027,
+  "test_status_file_unchanged": true,
+  "root_cause": "Non-runner checkpoint unit test wrote artifacts/niloblog/run-status.json before refusing durable checkpoint; unrelated tracked write blocked Blogsky checkpoint persistence",
+  "fix": "Reject non-runner checkpoint before any state write; isolate all test paths; regression test asserts no save or Git operations",
+  "native_and_qa_guards_preserved": true,
+  "retry_scope": "One existing guarded Blogsky cycle; prior publish job skipped"
+}
