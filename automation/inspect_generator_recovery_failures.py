@@ -1,7 +1,7 @@
 """Read only failed-job log diagnostics; no generation or dispatch."""
 import os,json,re,urllib.request,urllib.error,urllib.parse,pathlib,datetime
 ROOT=pathlib.Path(__file__).resolve().parents[1]
-RUNS=[39993329355,39993835755]
+RUNS=[40005610417,40006690339]
 class LogRedirect(urllib.request.HTTPRedirectHandler):
  def redirect_request(self,req,fp,code,msg,headers,newurl):
   host=urllib.parse.urlsplit(newurl).hostname or ''
@@ -24,9 +24,13 @@ def main():
     if j['status']!='completed':row['active_jobs'].append({'name':j['name'],'status':j['status'],'started_at':j['started_at'],'active_steps':[{'name':x['name'],'started_at':x.get('started_at')}for x in j.get('steps',[])if x.get('status')=='in_progress']})
     if j['conclusion']!='failure':continue
     text=api('/actions/jobs/'+str(j['id'])+'/logs',True);lines=text.splitlines();selected=[]
-    for i,line in enumerate(lines):
-     if re.search(r'FAIL: |ERROR: |AssertionError:|RuntimeError:|PipelineStop:|::error::|##\[error\]|fatal:|Unexpected tracked changes|CONFLICT |cannot rebase|error: cannot|error: could not',line):
-      selected.extend(clean(x)for x in lines[max(0,i-5):min(len(lines),i+7)]if not re.search(r'(?:AGNES_API_KEY|PASSWORD|USERNAME|GH_TOKEN|ACCESS_TOKEN):',x))
+    for line in lines:
+     if re.search(r'File "/home/runner/work/nono/nono/automation/[^"\s]+", line \d+',line):selected.append(clean(line))
+     elif re.search(r'(?:RuntimeError:|TimeoutError:|playwright\._impl\.[^:]+Error:)',line):
+      value=clean(line)
+      value=re.sub(r'https?://[^\s"<>]+','[URL omitted]',value)
+      selected.append(value[:350])
+     elif re.search(r'##\[error\]Process completed with exit code',line):selected.append(clean(line))
     row['failed_jobs'].append({'name':j['name'],'failed_steps':[s['name']for s in j.get('steps',[])if s.get('conclusion')=='failure'],'diagnostics':list(dict.fromkeys(selected))[:110]})
   except urllib.error.HTTPError as e:
    row['read_error']='HTTPError';row['http_status']=e.code

@@ -54,10 +54,27 @@ def assert_management(page):
  target=page.locator('a[href]').evaluate_all('es=>es.filter(e=>e.textContent.trim()==="afp.lxb.ir").map(e=>e.href)')
  if not any(urlsplit(x).hostname=='afp.lxb.ir' for x in target):raise RuntimeError('Native session is not managing expected AFP blog')
 
+def read_login_page(page):
+ # GET-only resilience. No credential fill or POST is retried here.
+ import time
+ for attempt in range(3):
+  try:
+   response=page.goto(PANEL+'/login.php',wait_until='domcontentloaded',timeout=60000)
+  except Exception as exc:
+   if attempt<2:time.sleep(2*(attempt+1));continue
+   match=re.search(r'net::ERR_[A-Z_]+',str(exc))
+   code=match.group(0)if match else type(exc).__name__
+   raise RuntimeError('LoxBlog sign-in GET failed ('+code+'); no credentials submitted')from None
+  if urlsplit(page.url).hostname!='loxblog.com' or urlsplit(page.url).path!='/login.php':raise RuntimeError('Unexpected sign-in destination; no credentials submitted')
+  if response and response.status<400:return
+  status=response.status if response else None
+  if attempt<2 and (status is None or status in(408,429)or status>=500):time.sleep(2*(attempt+1));continue
+  raise RuntimeError('LoxBlog sign-in GET returned unavailable status; no credentials submitted')
+
 def login(page):
  user=os.getenv('LOXBLOG_USERNAME','');password=os.getenv('LOXBLOG_PASSWORD','')
  if not user or not password:raise RuntimeError('Missing dedicated LoxBlog repository secrets')
- page.goto(PANEL+'/login.php',wait_until='domcontentloaded',timeout=60000)
+ read_login_page(page)
  page.locator('#usern').wait_for(timeout=30000)
  image=page.locator('#loginForm .captcha-img');image.wait_for(timeout=30000)
  page.wait_for_function('()=>document.querySelector("#loginForm .captcha-img")?.complete && document.querySelector("#loginForm .captcha-img").naturalWidth>0',timeout=30000)
