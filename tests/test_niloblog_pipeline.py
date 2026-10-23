@@ -54,6 +54,24 @@ class RuntimeTests(unittest.TestCase):
   import unittest.mock as mock
   page=mock.Mock();slot=page.locator.return_value;slot.count.return_value=1;frame=slot.element_handle.return_value.content_frame.return_value
   self.assertIs(m.management_frame(page),frame);slot.wait_for.assert_called_once_with(state='attached',timeout=30000)
+ def test_no_public_write_without_durable_checkpoint(self):
+  import unittest.mock as mock
+  page=mock.Mock();page.context.new_page.return_value.locator.return_value.all_inner_texts.return_value=[];item={'key':'example','post':{'title':'عنوان'}};state={}
+  with mock.patch.object(m,'scan',return_value=None),mock.patch.object(m,'navigate'),mock.patch.object(m,'fill_form'),mock.patch.object(m,'verify_stored_body'),mock.patch.object(m,'checkpoint',side_effect=RuntimeError('not durable')),mock.patch.object(m,'submit_once') as submit:
+   with self.assertRaises(RuntimeError):m.publish_new(page,item,state)
+   submit.assert_not_called();self.assertEqual(state['intent']['operation'],'create_public_post')
+ def test_public_receipt_failure_retains_intent_and_media(self):
+  import unittest.mock as mock
+  page=mock.Mock();page.context.new_page.return_value.locator.return_value.all_inner_texts.return_value=[];item={'key':'example','post':{'title':'عنوان'}};state={}
+  with mock.patch.object(m,'scan',return_value=None),mock.patch.object(m,'navigate'),mock.patch.object(m,'fill_form'),mock.patch.object(m,'verify_stored_body'),mock.patch.object(m,'checkpoint'),mock.patch.object(m,'recheck'),mock.patch.object(m,'submit_once') as submit,mock.patch.object(m,'verify_public',side_effect=m.PipelineStop('missing receipt')),mock.patch.object(m,'acknowledge') as ack:
+   with self.assertRaises(ValueError):m.publish_new(page,item,state)
+   submit.assert_called_once();ack.assert_not_called();self.assertIsNotNone(state['intent'])
+ def test_native_editor_readback_guards_uninitialized_library(self):
+  code=(ROOT/'automation/niloblog_pipeline.py').read_text().split('def edit_existing',1)[1].split('def native_readback',1)[0]
+  self.assertIn('typeof CKEDITOR!=="undefined"',code)
+ def test_login_never_clicks_unscoped_ad_close_glyph(self):
+  code=(ROOT/'automation/niloblog_pipeline.py').read_text().split('def login(',1)[1].split('def management_frame',1)[0]
+  self.assertNotIn("get_by_text('×'",code)
  def test_no_global_pause_bypass(self):
   import unittest.mock as mock
   with mock.patch('check_blog_pipeline_control.decision',return_value={'proceed':False}):self.assertFalse(m.allowed())

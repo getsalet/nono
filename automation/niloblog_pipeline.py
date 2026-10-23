@@ -188,8 +188,9 @@ def login(page):
  if not page.get_by_text('ارسال مطلب جدید',exact=True).count():raise PipelineStop('Niloblog authentication failed; no credential retry')
  safe=page.get_by_text('مشاهده سایت ایمن',exact=True)
  if not safe.count() or safe.get_attribute('href').rstrip('/')!=BLOG:raise PipelineStop('Wrong active Niloblog account')
- overlay=page.get_by_text('×',exact=True)
- if overlay.count() and overlay.first.is_visible():overlay.first.click()
+ # Do not click a global × glyph: advertising overlays contain unstable close
+ # controls and previously caused the authenticated runner to time out. Native
+ # navigation follows observed links directly inside the protected iframe.
  return True
 
 def management_frame(page):
