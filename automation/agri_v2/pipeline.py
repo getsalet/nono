@@ -23,7 +23,9 @@ def fresh_inventory(path):
 
 def check_brief(topic,brief):
  if brief.get('topic_id')!=topic['id']:raise ValueError('Brief/topic mismatch')
- for key in ['editor','agronomy_reviewer','reviewed_at','novelty_note']:
+ ai_review=brief.get('review_mode')=='ai_source_review_qualitative'
+ if ai_review and (brief.get('human_agronomy_review_done') is not False or brief.get('agronomy_reviewer') is not None):raise ValueError('Do not fabricate human review')
+ for key in (['editor','reviewed_at','novelty_note'] if ai_review else ['editor','agronomy_reviewer','reviewed_at','novelty_note']):
   if not isinstance(brief.get(key),str) or not brief[key].strip() or brief[key].strip().lower() in ['todo','example','نام','test']:raise ValueError('Real research/reviewer fields required: '+key)
  age_hours(brief['reviewed_at'])
  if brief.get('approved_for_draft') is not True or brief.get('semantic_review_done') is not True or brief.get('sources_verified') is not True:raise ValueError('Research approval required; no implicit approvals')
@@ -36,6 +38,9 @@ def check_brief(topic,brief):
   if p.scheme!='https' or not p.hostname or p.username or p.password:raise ValueError('Unsafe source URL')
   if not s.get('locator') or len(s.get('excerpt',''))<80:raise ValueError('Specific source locator/excerpt required')
  if not isinstance(brief.get('approved_facts'),list) or not brief['approved_facts']:raise ValueError('Approved sourced facts required')
+ if ai_review:
+  if len(sources)<2 or any(urlparse(s['url']).hostname not in {'www.canr.msu.edu','vegetables.wsu.edu','www.extension.iastate.edu'} for s in sources):raise ValueError('AI-only pilot requires vetted university sources')
+  if numbers(' '.join(f.get('claim','') for f in brief['approved_facts'])):raise ValueError('AI-only pilot cannot approve numeric recommendations')
  allowed={s['url'] for s in sources}
  for f in brief['approved_facts']:
   if not f.get('claim') or f.get('source_url') not in allowed or not f.get('conditions'):raise ValueError('Every approved fact needs source and conditions')
@@ -106,7 +111,7 @@ def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,
     blob=client.image(prompt);tmp=target.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(target);state['images_done']=n;atomic_json(state_path,state)
    payload={'title':topic['title'],'slug':slug,'content':article['content_html'],'excerpt':article['excerpt'],'status':'draft'}
    atomic_json(folder/'wordpress-draft-payload.json',payload)
-   atomic_json(folder/'provenance.json',{'topic_id':ident,'origin':topic['origin'],'brief_sha256':bh,'sources':brief['sources'],'approved_facts':brief['approved_facts'],'editor':brief['editor'],'agronomy_reviewer':brief['agronomy_reviewer'],'text_model':'agnes-2.5-flash','image_model':'agnes-image-2.5-flash','images':'AI illustrations, not agronomic evidence','scientific_review_required':True,'not_uploaded':True})
+   atomic_json(folder/'provenance.json',{'topic_id':ident,'origin':topic['origin'],'brief_sha256':bh,'sources':brief['sources'],'approved_facts':brief['approved_facts'],'editor':brief['editor'],'agronomy_reviewer':brief['agronomy_reviewer'],'review_mode':brief.get('review_mode','human_review'),'human_agronomy_review_done':brief.get('human_agronomy_review_done',True),'text_model':'agnes-2.5-flash','image_model':'agnes-image-2.5-flash','images':'AI illustrations, not agronomic evidence','scientific_review_required':True,'not_uploaded':True})
    state.update(status='draft_created',images_done=3,updated_at=utcnow());atomic_json(state_path,state)
    return {'topic_id':ident,'status':'draft_created','publication':False,'wordpress_uploaded':False}
   except Exception:
