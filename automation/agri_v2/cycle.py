@@ -2,7 +2,7 @@
 import argparse,json,tempfile
 from pathlib import Path
 from .queue import DATA,OUT,load_json,atomic_json,get_topic,age_hours,utcnow
-from .pipeline import draft,check_brief
+from .pipeline import draft,check_brief,digest,validate_article
 from .wordpress import WordPress,WPError
 from .healthcheck import audit
 
@@ -37,7 +37,13 @@ def run(request_path=None,scheduled=False):
   with tempfile.TemporaryDirectory() as tmp:
    ip=Path(tmp)/'inventory.json';atomic_json(ip,inventory)
    print("Stage: generate or resume one draft and three images",flush=True)
-   draft(ident,bp,ip,hp,allow_calls=True)
+   folder=OUT/'new'/ident;sp=folder/'state.json'
+   staged=sp.exists() and load_json(sp).get('status')=='draft_created'
+   if staged:
+    if load_json(sp).get('brief_sha256')!=digest(brief):raise ValueError('Staged brief changed')
+    validate_article(load_json(folder/'article.json'),topic,brief)
+    if not (folder/'wordpress-draft-payload.json').exists() or not all((folder/f'image-{n}.webp').exists() for n in range(1,4)):raise ValueError('Staged artifacts incomplete')
+   else:draft(ident,bp,ip,hp,allow_calls=True)
   print("Stage: upload media, publish one owned post and verify public URL",flush=True)
   result=wp.publish(OUT/'new'/ident,topic,brief,authorized=True)
   atomic_json(OUT/'latest-cycle.json',{'status':'success','topic_id':ident,'result':result,'connection':connection,'inventory_count':len(inventory['records']),'completed_at':utcnow()})

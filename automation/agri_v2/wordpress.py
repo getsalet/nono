@@ -46,7 +46,7 @@ class WordPress:
   # Reconcile slug first, including this account's drafts; never overwrite another post.
   found=[]
   for status in ['publish','draft','pending','future','private']:
-   matches,_=self.call('posts?slug='+urllib.parse.quote(slug)+'&status='+status+'&author='+str(self.user_id)+'&context=edit')
+   matches,_=self.call('posts?slug='+urllib.parse.quote(slug)+'&status='+status+'&context=edit')
    found.extend(matches)
   if len(found)>1:raise WPError('Ambiguous slug; stop')
   if found:
@@ -63,9 +63,11 @@ class WordPress:
    post,_=self.call('posts','POST',draft);r.update(post_id=post['id'],status='draft_created');atomic_json(rp,r)
   for i in range(1,4):
    if any(x['index']==i for x in r['media']):continue
-   name=topic['id']+'-image-'+str(i);existing,_=self.call('media?slug='+name+'&author='+str(self.user_id)+'&context=edit')
+   name=topic['id']+'-image-'+str(i);existing,_=self.call('media?slug='+name+'&context=edit')
    if len(existing)>1:raise WPError('Ambiguous media slug')
-   if existing:media=existing[0]
+   if existing:
+    media=existing[0]
+    if media.get('author')!=self.user_id or media.get('post') not in (0,r['post_id']):raise WPError('Existing media is not owned by this job')
    else:
     data=(folder/f'image-{i}.webp').read_bytes()
     media,_=self.call('media','POST',blob=data,headers={'Content-Type':'image/webp','Content-Disposition':'attachment; filename="'+name+'.webp"'})
