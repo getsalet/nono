@@ -21,6 +21,7 @@ def run(request_path=None,scheduled=False):
    b=load_json(p)
    if b.get('publish_authorized') is True:candidates.append(b['topic_id'])
  for ident in candidates:
+  if ident in config.get('publication_holds',{}):continue
   get_topic('new',ident)
   rp=OUT/'new'/ident/'wordpress-receipt.json'
   if rp.exists() and load_json(rp).get('public_verified') is True:continue

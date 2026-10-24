@@ -82,6 +82,6 @@ def run():
 def main():
  try:print(json.dumps(run(),ensure_ascii=False));return 0
  except Exception as e:
-  failed()
+  failed('سرویس تصویر موقتاً در دسترس نیست؛ تصویر ساخته‌شده محفوظ است' if isinstance(e,CapabilityError) and 'provider_unavailable' in str(e) else 'متوقف؛ گزارش اجرای GitHub را بررسی کنید')
   print('Revision stopped safely: '+(str(e)[:160] if isinstance(e,(ValueError,WPError,CapabilityError)) else type(e).__name__));return 2
 if __name__=='__main__':raise SystemExit(main())
