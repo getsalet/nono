@@ -35,6 +35,9 @@ def run():
  if state.get('verified') is True:return {'status':'already_revised','model_calls':0}
  retry_review=req.get('inspected_transient_retry',{})
  max_attempts=3 if retry_review.get('failed_run_id')==40086065181 and retry_review.get('reason')=='provider_unavailable' and retry_review.get('max_additional_cycles')==1 else 2
+ recovery_request=load_json(DATA/'research-request.json') if (DATA/'research-request.json').exists() else {}
+ recovery=recovery_request.get('pilot_recovery',{})
+ if recovery.get('authorized') is True and recovery.get('topic_id')==ident and recovery.get('max_additional_cycles')==1 and recovery_request.get('request_id')=='research-feeder-rollout-v1':max_attempts=4
  if state['attempts']>=max_attempts:raise ValueError('Revision retry budget exhausted')
  update('اعتبارسنجی اصلاح همان مقاله',5,ident,topic['title'])
  wp=WordPress();wp.preflight();update('اتصال وردپرس تأیید شد',10);pid=req['post_id'];marker='<!-- afp-agri-v2:'+ident+' -->'

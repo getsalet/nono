@@ -26,7 +26,8 @@ def fresh_inventory(path):
 
 def check_brief(topic,brief):
  if brief.get('topic_id')!=topic['id']:raise ValueError('Brief/topic mismatch')
- ai_review=brief.get('review_mode')=='ai_source_review_qualitative'
+ auto_review=brief.get('review_mode')=='automated_source_review_qualitative_v1'
+ ai_review=brief.get('review_mode')=='ai_source_review_qualitative' or auto_review
  if ai_review and (brief.get('human_agronomy_review_done') is not False or brief.get('agronomy_reviewer') is not None):raise ValueError('Do not fabricate human review')
  for key in (['editor','reviewed_at','novelty_note'] if ai_review else ['editor','agronomy_reviewer','reviewed_at','novelty_note']):
   if not isinstance(brief.get(key),str) or not brief[key].strip() or brief[key].strip().lower() in ['todo','example','نام','test']:raise ValueError('Real research/reviewer fields required: '+key)
@@ -41,7 +42,16 @@ def check_brief(topic,brief):
   if p.scheme!='https' or not p.hostname or p.username or p.password:raise ValueError('Unsafe source URL')
   if not s.get('locator') or len(s.get('excerpt',''))<80:raise ValueError('Specific source locator/excerpt required')
  if not isinstance(brief.get('approved_facts'),list) or not brief['approved_facts']:raise ValueError('Approved sourced facts required')
- if ai_review:
+ if auto_review:
+  from .research import source_host,clean
+  if brief.get('evidence_validation_version')!=1:raise ValueError('Evidence validation required')
+  if len({'.'.join(source_host(s['url']).split('.')[-2:]) for s in sources})<2:raise ValueError('Independent institutions required')
+  by_url={s['url']:s for s in sources}
+  for f in brief['approved_facts']:
+   source=by_url.get(f.get('source_url'),{});q=f.get('evidence_quote','')
+   if len(q)<80 or clean(q) not in clean(source.get('excerpt','')):raise ValueError('Literal source quote required')
+  if numbers(' '.join(f.get('claim','')+' '+f.get('conditions','') for f in brief['approved_facts'])):raise ValueError('Automated qualitative review cannot approve numbers')
+ elif ai_review:
   if len(sources)<2 or any(urlparse(s['url']).hostname not in {'www.canr.msu.edu','vegetables.wsu.edu','www.extension.iastate.edu'} for s in sources):raise ValueError('AI-only pilot requires vetted university sources')
   if numbers(' '.join(f.get('claim','') for f in brief['approved_facts'])):raise ValueError('AI-only pilot cannot approve numeric recommendations')
  allowed={s['url'] for s in sources}

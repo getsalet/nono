@@ -7,7 +7,7 @@ from .wordpress import WordPress,WPError
 from .healthcheck import audit
 from .progress import update,failed
 
-def run(request_path=None,scheduled=False):
+def run(request_path=None,scheduled=False,_research_done=False):
  config=load_json(DATA/'config.json')
  if not config.get('publication_enabled'):return {'status':'publication_disabled','model_calls':0}
  if scheduled and not config.get('automatic_generation'):return {'status':'automatic_generation_disabled','model_calls':0}
@@ -22,13 +22,19 @@ def run(request_path=None,scheduled=False):
    if b.get('publish_authorized') is True:candidates.append(b['topic_id'])
  for ident in candidates:
   if ident in config.get('publication_holds',{}):continue
+  from .recovery import circuit_open
+  if circuit_open():
+   update('سرویس مدل در دوره انتظار یک‌ساعته است؛ انتشار انجام نشد',0,status='provider_cooldown')
+   return {'status':'provider_cooldown','published_posts':0,'model_calls':0}
   get_topic('new',ident)
   rp=OUT/'new'/ident/'wordpress-receipt.json'
   if rp.exists() and load_json(rp).get('public_verified') is True:continue
   bp=DATA/'briefs'/f'{ident}.json';brief=load_json(bp);topic=get_topic('new',ident);check_brief(topic,brief)
   if brief.get('publish_authorized') is not True:raise ValueError('Brief publication not authorized')
   attempts_path=OUT/'new'/ident/'cycle-attempts.json';attempts=load_json(attempts_path) if attempts_path.exists() else {'attempts':0}
-  if attempts['attempts']>=2:raise ValueError('Retry budget exhausted; human inspection required')
+  if attempts['attempts']>=2:
+   atomic_json(OUT/'research'/f'{ident}.json',{'topic_id':ident,'status':'needs_review','reason':'production_retry_budget_exhausted','at':utcnow()})
+   continue
   update('بررسی اتصال و موضوع آماده',5,ident,topic['title'])
   print("Stage: authenticated WordPress preflight",flush=True)
   wp=WordPress();connection=wp.preflight();update('اتصال وردپرس تأیید شد',10)
@@ -48,7 +54,14 @@ def run(request_path=None,scheduled=False):
     if load_json(sp).get('brief_sha256')!=digest(brief):raise ValueError('Staged brief changed')
     validate_article(load_json(folder/'article.json'),topic,brief)
     if not (folder/'wordpress-draft-payload.json').exists() or not all((folder/f'image-{n}.webp').exists() for n in range(1,4)):raise ValueError('Staged artifacts incomplete')
-   else:draft(ident,bp,ip,hp,allow_calls=True)
+   else:
+    try:draft(ident,bp,ip,hp,allow_calls=True)
+    except Exception as exc:
+     from .client import CapabilityError
+     if isinstance(exc,CapabilityError):
+      from .recovery import open_circuit
+      open_circuit()
+     raise
   print("Stage: upload media, publish one owned post and verify public URL",flush=True)
   validate_for_publication(load_json(OUT/'new'/ident/'article.json'))
   update('بارگذاری رسانه و انتشار یک نوشته',80)
@@ -56,7 +69,13 @@ def run(request_path=None,scheduled=False):
   atomic_json(OUT/'latest-cycle.json',{'status':'success','topic_id':ident,'result':result,'connection':connection,'inventory_count':len(inventory['records']),'completed_at':utcnow()})
   update('انتشار و صفحه عمومی تأیید شد',100,status='success')
   return result
- update('منتظر شرح مقاله آماده و دارای مجوز انتشار',0,status='idle')
+ if scheduled and not _research_done and config.get('research_feeder',{}).get('enabled'):
+  from .research import prepare_one
+  wp=WordPress();wp.preflight();inventory=wp.inventory()
+  result=prepare_one(inventory)
+  if result.get('status')=='brief_ready':return run(scheduled=True,_research_done=True)
+  return result
+ update('اجرای زمان‌بند پایان یافت؛ مقاله آماده برای انتشار وجود ندارد',0,topic_id='',topic_title='',status='idle')
  return {'status':'no_ready_unpublished_brief','model_calls':0,'published_posts':0}
 
 def main():
