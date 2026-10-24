@@ -15,4 +15,20 @@ class HealthTests(unittest.TestCase):
  def test_failure_no_raw_exception(self):
   def fail(key):raise ValueError('TEST_SECRET_SENTINEL')
   r=h.audit({'AGNES_API_KEY':'x'},fail);self.assertNotIn('TEST_SECRET_SENTINEL',json.dumps(r))
+class ResponseTests(unittest.TestCase):
+ def test_content_parts_and_budget(self):
+  from unittest.mock import patch
+  calls=[]
+  def fake(endpoint,key,payload,timeout):
+   calls.append(payload)
+   if endpoint=='/chat/completions':return {'state':'responded','http_status':200},{'model':h.TEXT_MODEL,'choices':[{'message':{'content':[{'text':'OK'}]},'finish_reason':'stop'}]}
+   return {'state':'responded','http_status':200},{'data':[]}
+  with patch.object(h,'post',side_effect=fake):r=h.probe('fixture-not-real')
+  self.assertEqual(r['text']['state'],'healthy');self.assertEqual(calls[0]['max_tokens'],256)
+ def test_empty_length_is_not_bad_auth(self):
+  from unittest.mock import patch
+  with patch.object(h,'post',return_value=({'state':'responded','http_status':200},{'choices':[{'message':{'content':''},'finish_reason':'length'}]})):
+   r=h.probe('fixture-not-real')
+  self.assertEqual(r['text']['state'],'output_truncated')
 if __name__=='__main__':unittest.main()
+

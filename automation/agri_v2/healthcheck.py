@@ -51,12 +51,18 @@ def verify_image(obj):
     except Exception:return False
 
 def probe(key):
-    txt,obj=post('/chat/completions',key,{'model':TEXT_MODEL,'messages':[{'role':'user','content':'Reply with OK only.'}],'temperature':0,'max_tokens':8},timeout=70)
+    txt,obj=post('/chat/completions',key,{'model':TEXT_MODEL,'messages':[{'role':'user','content':'Reply with OK only.'}],'temperature':0,'max_tokens':256},timeout=70)
     if obj is not None:
         try:content=obj['choices'][0]['message']['content']
         except (KeyError,IndexError,TypeError):content=None
+        if isinstance(content,list):content=''.join(x.get('text','') for x in content if isinstance(x,dict) and isinstance(x.get('text'),str))
         model=obj.get('model') if isinstance(obj,dict) else None
+        if isinstance(obj,dict) and isinstance(obj.get('choices'),list) and obj['choices']:
+            finish=obj['choices'][0].get('finish_reason')
+            if finish in {'stop','length','content_filter','tool_calls',None}:txt['finish_reason']=finish
+        txt['content_characters']=len(content) if isinstance(content,str) else 0
         txt['state']='healthy' if isinstance(content,str) and content.strip() else 'invalid_text_response'
+        if txt['state']=='invalid_text_response' and txt.get('finish_reason')=='length':txt['state']='output_truncated'
         if model and model!=TEXT_MODEL:txt['state']='model_mismatch'
     image={'state':'not_probed_text_not_healthy','http_status':None}
     if txt['state']=='healthy':
