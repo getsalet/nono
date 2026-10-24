@@ -21,7 +21,7 @@ def run():
  if state['attempts']>=2:raise ValueError('Revision retry budget exhausted')
  wp=WordPress();wp.preflight();pid=req['post_id'];marker='<!-- afp-agri-v2:'+ident+' -->'
  post,_=wp.call('posts/'+str(pid)+'?context=edit')
- if post['author']!=wp.user_id or marker not in post['content']['raw'] or post['status']!='publish':raise WPError('Revision ownership/status mismatch')
+ if post['author']!=wp.user_id or marker not in post['content']['raw'] or post['status']!='publish':raise WPError('Revision ownership/status mismatch: status='+str(post.get('status'))+'; own_author='+str(post.get('author')==wp.user_id)+'; marker='+str(marker in post.get('content',{}).get('raw','')))
  hp=load_json(DATA/'health/latest.json')
  if age_hours(hp['checked_at'])>24:raise ValueError('Health report expired')
  state['attempts']+=1;atomic_json(status_path,state)
