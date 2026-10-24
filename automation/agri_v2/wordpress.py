@@ -3,8 +3,9 @@ import base64,html,json,os,re,urllib.request,urllib.error,urllib.parse
 from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .pipeline import norm
+from .article_format import faq_html,DISCLOSURE
 def illustrated_content(content,media,crop):
- def figure(m):return '<figure class="wp-block-image"><img src="'+html.escape(m['url'],quote=True)+'" alt="'+html.escape('تصویرسازی هوش مصنوعی درباره '+crop+'؛ تصویر مستند مزرعه نیست',quote=True)+'" loading="lazy"/><figcaption>تصویرسازی هوش مصنوعی؛ نه تصویر مستند مزرعه.</figcaption></figure>'
+ def figure(m):return '<figure class="wp-block-image"><img src="'+html.escape(m['url'],quote=True)+'" alt="'+html.escape(crop+' و نوار تیپ AFP در محیط کشاورزی',quote=True)+'" loading="lazy"/></figure>'
  # Section boundaries are top-level; never insert a figure inside paragraphs or lists.
  matches=list(re.finditer(r'<h2>',content));at=matches[len(matches)//2].start() if len(matches)>1 else len(content)
  return content[:at]+figure(media[1])+content[at:]+figure(media[2])
@@ -77,10 +78,10 @@ class WordPress:
    else:
     data=(folder/f'image-{i}.webp').read_bytes()
     media,_=self.call('media','POST',blob=data,headers={'Content-Type':'image/webp','Content-Disposition':'attachment; filename="'+name+'.webp"'})
-   media,_=self.call('media/'+str(media['id']),'POST',{'post':r['post_id'],'title':topic['title']+' — تصویرسازی','alt_text':'تصویرسازی هوش مصنوعی مرتبط با '+topic['crop']+'؛ تصویر مستند مزرعه نیست','caption':'تصویرسازی با هوش مصنوعی؛ شاهد علمی یا تصویر واقعی مزرعه نیست.'})
+   media,_=self.call('media/'+str(media['id']),'POST',{'post':r['post_id'],'title':topic['title']+' — تصویرسازی','alt_text':topic['crop']+' و نوار تیپ AFP در محیط کشاورزی','caption':''})
    r['media'].append({'index':i,'id':media['id'],'url':media['source_url']});atomic_json(rp,r)
   media=sorted(r['media'],key=lambda m:m['index']);content=illustrated_content(payload['content'],media,topic['crop'])
-  content+='<p><em>این مطلب با کمک هوش مصنوعی و بررسی منابع دانشگاهی تهیه شده و تأیید انسانیِ کارشناس کشاورزی برای آن ثبت نشده است. راهنمای عمومی است؛ زمان و شرایط برداشت باید با رقم، وضعیت مزرعه، تجهیزات و نظر کارشناس محلی تطبیق داده شود.</em></p>'
+  content+=DISCLOSURE+faq_html(load_json(folder/'article.json')['faq'])
   # Update only our marker-owned draft, then explicitly publish one post.
   current,_=self.call('posts/'+str(r['post_id'])+'?context=edit')
   if current['author']!=self.user_id or marker not in current['content']['raw'] or current['status']!='draft':raise WPError('Draft ownership/status changed; stop')

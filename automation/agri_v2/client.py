@@ -2,6 +2,7 @@
 import base64,io,json,os,urllib.error,urllib.request
 from .healthcheck import SLOTS,TEXT_MODEL,IMAGE_MODEL,API_BASE,classify,MAX_RESPONSE
 from .queue import age_hours
+from .media_policy import reference_images,add_phone_watermark
 class CapabilityError(RuntimeError):pass
 class ModelClient:
  def __init__(self,report,env=None,allow_calls=False):
@@ -43,7 +44,7 @@ class ModelClient:
   return article
  def image(self,prompt):
   from PIL import Image
-  obj=self.request('image','/images/generations',{'model':IMAGE_MODEL,'prompt':prompt,'n':1,'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}},150)
+  obj=self.request('image','/images/generations',{'model':IMAGE_MODEL,'prompt':prompt,'n':1,'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':reference_images()}},180)
   try:blob=base64.b64decode(obj['data'][0]['b64_json'],validate=True)
   except (KeyError,IndexError,TypeError,ValueError):raise CapabilityError('No verified base64 image returned')
   if len(blob)>MAX_RESPONSE:raise CapabilityError('Image too large')
@@ -53,6 +54,6 @@ class ModelClient:
     im=im.convert('RGB');w,h=im.size;ratio=16/9
     if w/h>ratio:cut=int(h*ratio);left=(w-cut)//2;im=im.crop((left,0,left+cut,h))
     else:cut=int(w/ratio);top=(h-cut)//2;im=im.crop((0,top,w,top+cut))
-    im=im.resize((1200,675));buf=io.BytesIO();im.save(buf,'WEBP',quality=85,method=6);return buf.getvalue()
+    im=add_phone_watermark(im.resize((1200,675)));buf=io.BytesIO();im.save(buf,'WEBP',quality=85,method=6);return buf.getvalue()
   except CapabilityError:raise
   except Exception:raise CapabilityError('Generated image could not be decoded')
