@@ -1,11 +1,25 @@
 """Explicit one-post formatting/media revision, not a mass publisher or new-article generator."""
 import hashlib,json,re
+from urllib.parse import quote
 from .queue import DATA,OUT,load_json,atomic_json,get_topic,utcnow,age_hours
 from .pipeline import check_brief,validate_article,validate_for_publication
 from .client import ModelClient
 from .media_policy import image_prompt
 from .article_format import DISCLOSURE,faq_html
 from .wordpress import WordPress,WPError,illustrated_content
+
+def restore_owned_post(wp,post,req,marker,slug):
+ if post.get('id')!=req['post_id'] or post.get('author')!=wp.user_id or marker not in post.get('content',{}).get('raw',''):raise WPError('Restore ownership/marker mismatch')
+ if post['status']=='publish':return post
+ if req.get('restore_same_post_authorized') is not True or post['status'] not in ('trash','draft'):raise WPError('Restoration requires explicit owner permission')
+ if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*',slug):raise ValueError('Reviewed canonical slug required')
+ conflicts,_=wp.call('posts?slug='+quote(slug))
+ if any(x['id']!=post['id'] for x in conflicts):raise WPError('Canonical slug belongs to another post')
+ if post['status']=='trash':
+  print('Stage: restore the explicitly authorized same post as draft',flush=True)
+  post,_=wp.call('posts/'+str(post['id']),'POST',{'status':'draft','slug':slug})
+  if post.get('status')!='draft' or post.get('author')!=wp.user_id or marker not in post.get('content',{}).get('raw',''):raise WPError('Restore verification failed')
+ return post
 
 def run():
  req=load_json(DATA/'style-revision-request.json')
@@ -21,7 +35,11 @@ def run():
  if state['attempts']>=2:raise ValueError('Revision retry budget exhausted')
  wp=WordPress();wp.preflight();pid=req['post_id'];marker='<!-- afp-agri-v2:'+ident+' -->'
  post,_=wp.call('posts/'+str(pid)+'?context=edit')
- if post['author']!=wp.user_id or marker not in post['content']['raw'] or post['status']!='publish':raise WPError('Revision ownership/status mismatch: status='+str(post.get('status'))+'; own_author='+str(post.get('author')==wp.user_id)+'; marker='+str(marker in post.get('content',{}).get('raw','')))
+ before_status=post['status']
+ post=restore_owned_post(wp,post,req,marker,brief['slug'])
+ if before_status=='trash':
+  atomic_json(work/'restore-audit.json',{'post_id':pid,'from_status':'trash','to_status':'draft','canonical_slug':brief['slug'],'owner_authorized':True,'at':utcnow()})
+  receipt.update(status='draft_restored_for_revision',public_verified=False);atomic_json(rp,receipt)
  hp=load_json(DATA/'health/latest.json')
  if age_hours(hp['checked_at'])>24:raise ValueError('Health report expired')
  state['attempts']+=1;atomic_json(status_path,state)
@@ -43,9 +61,9 @@ def run():
  media=sorted(state['media'],key=lambda x:x['index'])
  body=marker+'\n'+illustrated_content(article['content_html'],media,topic['crop'])+DISCLOSURE+faq_html(article['faq'])
  current,_=wp.call('posts/'+str(pid)+'?context=edit')
- if current['modified_gmt']!=post['modified_gmt'] or current['author']!=wp.user_id:raise WPError('Post changed during generation; stop for review')
- wp.call('posts/'+str(pid),'POST',{'content':body,'excerpt':article['excerpt'],'featured_media':media[0]['id']})
- receipt.setdefault('media_history',[]).append({'revision':'before-'+rev,'media':receipt['media']});receipt.update(media=media,style_revision=rev);atomic_json(rp,receipt)
+ if current['modified_gmt']!=post['modified_gmt'] or current['author']!=wp.user_id or current['status'] not in ('draft','publish') or marker not in current['content']['raw']:raise WPError('Post changed during generation; stop for review')
+ wp.call('posts/'+str(pid),'POST',{'content':body,'excerpt':article['excerpt'],'featured_media':media[0]['id'],'status':'publish','slug':brief['slug']})
+ receipt.setdefault('media_history',[]).append({'revision':'before-'+rev,'media':receipt['media']});receipt.update(media=media,style_revision=rev,status='published');atomic_json(rp,receipt)
  wp.verify(pid,topic,rp)
  for m in receipt['media_history'][-1]['media']:
   old,_=wp.call('media/'+str(m['id'])+'?context=edit')
