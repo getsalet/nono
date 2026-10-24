@@ -4,6 +4,7 @@ from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .pipeline import norm
 from .article_format import faq_html,DISCLOSURE
+from .image_quality import require_all
 def illustrated_content(content,media,crop):
  def figure(m):return '<figure class="wp-block-image"><img src="'+html.escape(m['url'],quote=True)+'" alt="'+html.escape(crop+' و نوار تیپ AFP در محیط کشاورزی',quote=True)+'" loading="lazy"/></figure>'
  # Section boundaries are top-level; never insert a figure inside paragraphs or lists.
@@ -63,11 +64,13 @@ class WordPress:
    if post['status']=='publish':r.update(status='published',url=post['link']);atomic_json(rp,r);return self.verify(post['id'],topic,rp)
   elif r.get('post_id'):raise WPError('Receipt post missing; do not recreate automatically')
   else:
+   require_all(folder,topic,load_json(folder/'article.json'))
    # A public post owned by somebody else with this slug is also a hard conflict.
    public,_=self.call('posts?slug='+urllib.parse.quote(slug))
    if public:raise WPError('Public slug already exists')
    draft=dict(payload,content=marker+'\n'+payload['content'],categories=[35],comment_status='closed',ping_status='closed',status='draft')
    post,_=self.call('posts','POST',draft);r.update(post_id=post['id'],status='draft_created');atomic_json(rp,r)
+  require_all(folder,topic,load_json(folder/'article.json'))
   for i in range(1,4):
    if any(x['index']==i for x in r['media']):continue
    name=topic['id']+'-image-'+str(i);existing,_=self.call('media?slug='+name+'&context=edit')

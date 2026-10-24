@@ -41,6 +41,9 @@ class PipelineTests(unittest.TestCase):
   class Fake:
    def __init__(self,*a,**k):pass
    def text(self,prompt):calls['text']+=1;return article
+   def review_image(self,*a):
+    from automation.agri_v2.image_quality import CHECKS
+    return {'score':95,'checks':{k:True for k in CHECKS},'reasons':['fixture-only review']}
    def image(self,prompt):
     calls['image']+=1
     if calls['image']==2:raise CapabilityError('fixture failure')

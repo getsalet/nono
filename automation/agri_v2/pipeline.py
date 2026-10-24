@@ -7,6 +7,7 @@ from .queue import DATA,OUT,items,get_topic,load_json,atomic_json,locked,utcnow,
 from .client import ModelClient
 from .healthcheck import TEXT_MODEL,IMAGE_MODEL
 from .media_policy import image_prompt
+from .image_quality import ensure_review,require_all
 from .article_format import faq_html
 from .progress import update
 
@@ -164,9 +165,11 @@ def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,
    validate_article(article,topic,brief);validate_for_publication(article);update('متن، جدول و سه FAQ اعتبارسنجی شد',40,ident,topic['title']);state['status']='creating_images';atomic_json(state_path,state)
    for n in range(1,4):
     target=folder/f'image-{n}.webp'
-    if target.exists():continue
-    prompt=image_prompt(topic,n)
-    update('در حال ساخت تصویر '+str(n),40+(n-1)*12,ident,topic['title']);blob=client.image(prompt);tmp=target.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(target);state['images_done']=n;atomic_json(state_path,state);update('تصویر '+str(n)+' آماده شد',40+n*12,ident,topic['title'])
+    if target.exists():
+     ensure_review(client,target,topic,n,article);continue
+    prompt=image_prompt(topic,n,article)
+    update('در حال ساخت تصویر '+str(n),40+(n-1)*12,ident,topic['title']);blob=client.image(prompt);tmp=target.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(target);ensure_review(client,target,topic,n,article);state['images_done']=n;atomic_json(state_path,state);update('تصویر '+str(n)+' آماده شد',40+n*12,ident,topic['title'])
+   require_all(folder,topic,article)
    payload={'title':topic['title'],'slug':slug,'content':article['content_html'],'excerpt':article['excerpt'],'status':'draft'}
    atomic_json(folder/'wordpress-draft-payload.json',payload)
    atomic_json(folder/'provenance.json',{'topic_id':ident,'origin':topic['origin'],'brief_sha256':bh,'sources':brief['sources'],'approved_facts':brief['approved_facts'],'editor':brief['editor'],'agronomy_reviewer':brief['agronomy_reviewer'],'review_mode':brief.get('review_mode','human_review'),'human_agronomy_review_done':brief.get('human_agronomy_review_done',True),'text_model':TEXT_MODEL,'image_model':IMAGE_MODEL,'images':'AI illustrations with reference-conditioned AFP tape product and bottom-right phone label, not agronomic evidence','scientific_review_required':True,'not_uploaded':True})

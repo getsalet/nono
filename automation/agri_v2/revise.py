@@ -6,6 +6,7 @@ from .pipeline import check_brief,validate_article,validate_for_publication
 from .client import ModelClient,CapabilityError
 from .progress import update,failed
 from .media_policy import image_prompt
+from .image_quality import ensure_review,require_all
 from .article_format import DISCLOSURE,faq_html
 from .wordpress import WordPress,WPError,illustrated_content
 
@@ -59,7 +60,12 @@ def run(recovery_extension=None):
   if not path.exists():
    update('ساخت تصویر محصول‌دار '+str(i),20+(i-1)*20)
    print('Stage: reference-conditioned AFP product image '+str(i),flush=True)
-   blob=client.image(image_prompt(topic,i));tmp=path.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(path)
+   blob=client.image(image_prompt(topic,i,article));tmp=path.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(path)
+  ensure_review(client,path,topic,i,article)
+ require_all(work,topic,article)
+ # All three images must pass before any new media upload or post mutation.
+ for i in range(1,4):
+  path=work/f'image-{i}.webp'
   if any(x['index']==i for x in state['media']):continue
   name=ident+'-'+rev+'-image-'+str(i);found,_=wp.call('media?slug='+name+'&context=edit')
   if len(found)>1:raise WPError('Ambiguous revision media')
