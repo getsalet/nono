@@ -49,6 +49,14 @@ class PipelineTests(unittest.TestCase):
   self.assertEqual(calls,{'text':1,'image':2});p.draft(self.t['id'],b,inv,h,True,out,Fake)
   self.assertEqual(calls,{'text':1,'image':4});self.assertEqual(p.draft(self.t['id'],b,inv,h,True,out,Fake)['status'],'already_drafted');self.assertEqual(calls,{'text':1,'image':4})
   payload=q.load_json(out/'new'/self.t['id']/'wordpress-draft-payload.json');self.assertEqual(payload['status'],'draft')
+ def test_corrupt_faq_blocks_before_any_image_spend(self):
+  b=self.write('brief.json',self.b);inv=self.write('inventory.json',{'source_generated_at':q.utcnow(),'records':[{'id':1,'title':'unrelated','url':'https://example.org/unrelated/','status':'publish'}]});h=self.write('health.json',{});article=self.article();article['faq'][0]['answer']+=' 通用';calls={'image':0}
+  class Fake:
+   def __init__(self,*a,**k):pass
+   def text(self,prompt):return article
+   def image(self,prompt):calls['image']+=1;raise AssertionError('No image call should occur')
+  with self.assertRaises(ValueError):p.draft(self.t['id'],b,inv,h,True,self.root/'out',Fake)
+  self.assertEqual(calls['image'],0)
  def test_same_title_blocks_before_model(self):
   inv=self.write('inventory.json',{'source_generated_at':q.utcnow(),'records':[{'id':1,'title':self.t['title'],'url':'https://example.org/same/','status':'publish'}]})
   with self.assertRaises(ValueError):p.draft(self.t['id'],self.write('b.json',self.b),inv,'nonexistent',True,self.root/'out')
