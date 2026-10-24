@@ -2,12 +2,13 @@
 import argparse,json,tempfile
 from pathlib import Path
 from .queue import DATA,OUT,load_json,atomic_json,get_topic,age_hours,utcnow
-from .pipeline import draft,check_brief,digest,validate_article
+from .pipeline import draft,check_brief,digest,validate_article,validate_for_publication
 from .wordpress import WordPress,WPError
 from .healthcheck import audit
 
 def run(request_path=None,scheduled=False):
  config=load_json(DATA/'config.json')
+ if not config.get('publication_enabled'):return {'status':'publication_disabled','model_calls':0}
  if scheduled and not config.get('automatic_generation'):return {'status':'automatic_generation_disabled','model_calls':0}
  if request_path:
   request=load_json(request_path)
@@ -45,6 +46,7 @@ def run(request_path=None,scheduled=False):
     if not (folder/'wordpress-draft-payload.json').exists() or not all((folder/f'image-{n}.webp').exists() for n in range(1,4)):raise ValueError('Staged artifacts incomplete')
    else:draft(ident,bp,ip,hp,allow_calls=True)
   print("Stage: upload media, publish one owned post and verify public URL",flush=True)
+  validate_for_publication(load_json(OUT/'new'/ident/'article.json'))
   result=wp.publish(OUT/'new'/ident,topic,brief,authorized=True)
   atomic_json(OUT/'latest-cycle.json',{'status':'success','topic_id':ident,'result':result,'connection':connection,'inventory_count':len(inventory['records']),'completed_at':utcnow()})
   return result

@@ -60,6 +60,6 @@ class PipelineTests(unittest.TestCase):
   bp=self.write('mb.json',b);sp=self.write('snap.json',snap);out=self.root/'merge';r=p.merge_plan(t['id'],target,sp,bp,out);self.assertFalse(r['wordpress_updated']);proposal=q.load_json(out/'merge'/t['id']/'proposal.json');self.assertFalse(proposal['apply_implemented']);self.assertEqual(proposal['operation'],'enrich_existing')
   snap['content_sha256']='bad';self.write('snap.json',snap)
   with self.assertRaises(ValueError):p.merge_plan(t['id'],target,sp,bp,out)
- def test_configuration_no_publication(self):
-  c=q.load_json(q.DATA/'config.json');self.assertFalse(c['publication_enabled']);self.assertFalse(c['automatic_generation']);self.assertEqual(c['max_key_slot'],15);self.assertEqual(c['text_model'],TEXT_MODEL);self.assertEqual(c['image_model'],IMAGE_MODEL)
+ def test_configuration_bounded_publication(self):
+  c=q.load_json(q.DATA/'config.json');self.assertTrue(c['publication_enabled']);self.assertTrue(c['automatic_generation']);self.assertEqual(c['max_posts_per_run'],1);self.assertFalse(c['merge_apply_enabled']);self.assertEqual(c['automatic_scope'],'publication_authorized_source_ready_briefs_only');self.assertEqual(c['max_key_slot'],15);self.assertEqual(c['text_model'],TEXT_MODEL);self.assertEqual(c['image_model'],IMAGE_MODEL)
 if __name__=='__main__':unittest.main()

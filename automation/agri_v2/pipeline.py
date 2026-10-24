@@ -112,8 +112,15 @@ def validate_article(article,topic,brief):
  if not isinstance(article.get('excerpt'),str) or not 20<=len(article['excerpt'])<=500:raise ValueError('Excerpt required')
  return article
 
+def validate_for_publication(article):
+ text=re.sub(r'<[^>]+>',' ',article['content_html'])
+ if re.search(r'[\u3400-\u9fff]',text):raise ValueError('Unexpected mixed-language output; editorial revision required')
+ if any(x in text for x in ['این مقاله یک پیش‌نویس','پیش از انتشار نهایی','چیندن','ترکی مستقیم']):raise ValueError('Draft-only boilerplate or harvest terminology requires editorial review')
+ return article
+
 def plan():
- return {'counts':{k:len(items(k)) for k in ['new','merge','hold']},'mode':'draft_artifacts_only','publication':False,'wordpress':'not_connected','hosting':'not_connected','model_calls':0}
+ config=load_json(DATA/'config.json')
+ return {'counts':{k:len(items(k)) for k in ['new','merge','hold']},'mode':'bounded_source_ready_cycles','publication':config.get('publication_enabled',False),'automatic_generation':config.get('automatic_generation',False),'wordpress':config.get('wordpress_connection'),'hosting':config.get('hosting_connection'),'model_calls':0}
 
 def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,client_factory=ModelClient):
  topic=get_topic('new',ident);brief=load_json(brief_path);check_brief(topic,brief)
