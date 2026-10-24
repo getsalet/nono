@@ -80,7 +80,8 @@ class ModelClient:
   return article
  def image(self,prompt):
   from PIL import Image
-  obj=self.request('image','/images/generations',{'model':IMAGE_MODEL,'prompt':prompt,'n':1,'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':reference_images()}},180)
+  obj=self.request('image','/images/generations',{'model':IMAGE_MODEL,'prompt':prompt,'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':reference_images()}},180)
+  if obj.get('model') and obj['model']!=IMAGE_MODEL:raise CapabilityError('Image model mismatch')
   return render_image(obj)
 
 def render_image(obj):

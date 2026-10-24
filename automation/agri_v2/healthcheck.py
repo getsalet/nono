@@ -3,7 +3,13 @@ import base64,concurrent.futures,datetime,io,json,os,socket,time,ipaddress,urlli
 from pathlib import Path
 API_BASE='https://apihub.agnes-ai.com/v1'
 TEXT_MODEL='agnes-2.5-flash'
-IMAGE_MODEL='agnes-image-2.5-flash'
+SUPPORTED_IMAGE_MODELS=frozenset({'agnes-image-2.5-flash','agnes-image-2.1-flash','agnes-image-2.0-flash'})
+def configured_image_model(path=None):
+    path=Path(path) if path is not None else Path(__file__).resolve().parents[2]/'data/agri-v2/config.json'
+    model=json.loads(path.read_text()).get('image_model')
+    if model not in SUPPORTED_IMAGE_MODELS:raise ValueError('Unsupported configured image model; fail closed')
+    return model
+IMAGE_MODEL=configured_image_model()
 SLOTS=['AGNES_API_KEY']+[f'AGNES_API_KEY{i}' for i in range(2,16)]
 MAX_RESPONSE=18*1024*1024
 
@@ -66,7 +72,7 @@ def probe(key):
         if model and model!=TEXT_MODEL:txt['state']='model_mismatch'
     image={'state':'not_probed_text_not_healthy','http_status':None}
     if txt['state']=='healthy':
-        image,imobj=post('/images/generations',key,{'model':IMAGE_MODEL,'prompt':'A plain green leaf on a clean white background. No words, no logo, no people. Capability check.','n':1,'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}},timeout=100)
+        image,imobj=post('/images/generations',key,{'model':IMAGE_MODEL,'prompt':'A plain green leaf on a clean white background. No words, no logo, no people. Capability check.','size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}},timeout=100)
         if imobj is not None:image['state']='healthy' if verify_image(imobj) else 'image_not_verified'
     return {'text':txt,'image':image}
 

@@ -5,6 +5,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 from .queue import DATA,OUT,items,get_topic,load_json,atomic_json,locked,utcnow,age_hours
 from .client import ModelClient
+from .healthcheck import TEXT_MODEL,IMAGE_MODEL
 from .media_policy import image_prompt
 from .article_format import faq_html
 from .progress import update
@@ -168,7 +169,7 @@ def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,
     update('در حال ساخت تصویر '+str(n),40+(n-1)*12,ident,topic['title']);blob=client.image(prompt);tmp=target.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(target);state['images_done']=n;atomic_json(state_path,state);update('تصویر '+str(n)+' آماده شد',40+n*12,ident,topic['title'])
    payload={'title':topic['title'],'slug':slug,'content':article['content_html'],'excerpt':article['excerpt'],'status':'draft'}
    atomic_json(folder/'wordpress-draft-payload.json',payload)
-   atomic_json(folder/'provenance.json',{'topic_id':ident,'origin':topic['origin'],'brief_sha256':bh,'sources':brief['sources'],'approved_facts':brief['approved_facts'],'editor':brief['editor'],'agronomy_reviewer':brief['agronomy_reviewer'],'review_mode':brief.get('review_mode','human_review'),'human_agronomy_review_done':brief.get('human_agronomy_review_done',True),'text_model':'agnes-2.5-flash','image_model':'agnes-image-2.5-flash','images':'AI illustrations with reference-conditioned AFP tape product and bottom-right phone label, not agronomic evidence','scientific_review_required':True,'not_uploaded':True})
+   atomic_json(folder/'provenance.json',{'topic_id':ident,'origin':topic['origin'],'brief_sha256':bh,'sources':brief['sources'],'approved_facts':brief['approved_facts'],'editor':brief['editor'],'agronomy_reviewer':brief['agronomy_reviewer'],'review_mode':brief.get('review_mode','human_review'),'human_agronomy_review_done':brief.get('human_agronomy_review_done',True),'text_model':TEXT_MODEL,'image_model':IMAGE_MODEL,'images':'AI illustrations with reference-conditioned AFP tape product and bottom-right phone label, not agronomic evidence','scientific_review_required':True,'not_uploaded':True})
    state.update(status='draft_created',images_done=3,updated_at=utcnow());atomic_json(state_path,state)
    return {'topic_id':ident,'status':'draft_created','publication':False,'wordpress_uploaded':False}
   except Exception:

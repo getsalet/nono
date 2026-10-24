@@ -1,7 +1,9 @@
 """One same-key, same-model differential probe. No publication or secret export."""
 import hashlib,json,os,re,subprocess,time,urllib.error,urllib.request
 from .queue import DATA,OUT,ROOT,load_json,atomic_json,utcnow,age_hours,get_topic
-from .healthcheck import API_BASE,IMAGE_MODEL,SLOTS,MAX_RESPONSE
+from .healthcheck import API_BASE,SLOTS,MAX_RESPONSE
+# Historical differential diagnostic remains pinned to the originally tested model.
+IMAGE_MODEL='agnes-image-2.5-flash'
 from .client import render_image,CapabilityError
 from .media_policy import reference_images,image_prompt
 from .progress import update
