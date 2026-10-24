@@ -10,7 +10,7 @@ CLAIM='پیش از بازشدن غلاف و ریختن دانه باید وضع�
 COND='محدود به لوبیای خشک در شرایط منبع؛ تاریخ تقویمی یا نسخه عددی برای ایران تعیین نشده است.'
 def fixtures():
  docs=[{'url':'https://extension.msu.edu/beans','text':'Intro '+QUOTE+' end','fetched_at':utcnow(),'sha256':'a'*64},{'url':'https://extension.iastate.edu/beans','text':'Intro '+QUOTE+' end','fetched_at':utcnow(),'sha256':'b'*64}]
- candidate={'topic_id':TOPIC['id'],'slug':'bean-maturity-check','answers_intent':True,'local_or_numeric_prescription_required':False,'outline':['رسیدگی','پایش','بازار'],'facts':[{'claim':CLAIM,'conditions':COND,'source_url':docs[i%2]['url'],'evidence_quote':QUOTE} for i in range(4)]}
+ candidate={'topic_id':TOPIC['id'],'slug':'bean-maturity-check','answers_intent':True,'local_or_numeric_prescription_required':False,'outline':['رسیدگی','پایش','بازار'],'facts':[{'claim':CLAIM,'conditions':COND,'source_url':docs[i%2]['url'],'evidence_quote':QUOTE,'evidence_id':f'd{i%2}-e0'} for i in range(4)]}
  review={'grounded':True,'all_claims_supported':True,'crop_and_intent_match':True,'safe_qualitative':True,'overlap_decision':'distinct','novelty_reason':'این بررسی درباره نشانه رسیدگی است و با موضوع عملکرد در هکتار یکی نیست.','source_scope_limitations':'این منابع خارجی هستند و تقویم یا دستور محلی برای تمام مناطق ایران ارائه نمی‌کنند.'}
  inventory={'source_generated_at':utcnow(),'scope':'all published titles','records':[{'id':1,'title':'موضوع دیگر','url':'https://navar-abyari.ir/other/','status':'publish'}]}
  return docs,candidate,review,inventory
@@ -21,6 +21,13 @@ class ResearchTests(unittest.TestCase):
  def test_invented_quote_rejected(self):
   d,c,r,i=fixtures();c['facts'][0]['evidence_quote']='fabricated quote '*12
   with self.assertRaisesRegex(research.ResearchBlocked,'quote_not'):research.validate_evidence(TOPIC,c,d)
+ def test_evidence_id_resolves_to_original_text_not_model_quote(self):
+  d,c,r,i=fixtures();c['facts'][0]['evidence_quote']='invented model paraphrase'
+  resolved=research.resolve_evidence(c,research.evidence_catalog(d))
+  self.assertEqual(resolved['facts'][0]['evidence_quote'],d[0]['text']);research.validate_evidence(TOPIC,resolved,d)
+ def test_unknown_evidence_id_rejected(self):
+  d,c,r,i=fixtures();c['facts'][0]['evidence_id']='nonexistent'
+  with self.assertRaisesRegex(research.ResearchBlocked,'unknown_evidence'):research.resolve_evidence(c,research.evidence_catalog(d))
  def test_numeric_recommendation_rejected(self):
   d,c,r,i=fixtures();c['facts'][0]['claim']+=' ۲۰ درصد'
   with self.assertRaisesRegex(research.ResearchBlocked,'numeric'):research.validate_evidence(TOPIC,c,d)
@@ -64,6 +71,27 @@ class ResearchTests(unittest.TestCase):
    with patch.object(research,'items',return_value=[TOPIC]),patch.object(research,'update'):
     result=research.prepare_one(i,client_factory=Client,data=data,out=out)
    self.assertEqual(result['status'],'research_needs_review');self.assertFalse((data/'briefs').exists())
+ def test_new_verified_catalog_allows_only_bounded_source_refresh(self):
+  d,c,r,i=fixtures()
+  class Client:
+   def __init__(self,*a,**k):self.answers=iter([c,r])
+   def text(self,p):return next(self.answers)
+  with tempfile.TemporaryDirectory() as t:
+   data=Path(t)/'data';out=Path(t)/'out'
+   atomic_json(data/'config.json',{'research_feeder':{'enabled':True}});atomic_json(data/'health/latest.json',{'checked_at':utcnow()})
+   atomic_json(data/'research-source-catalog.json',{'version':1,'entries':[{'crops':[TOPIC['crop']],'intents':['maturity'],'urls':[x['url'] for x in d]}]})
+   atomic_json(out/'research'/f"{TOPIC['id']}.json",{'status':'needs_review','reason':'insufficient_fetchable_institutional_sources','attempts':1,'attempted_at':utcnow()})
+   with patch.object(research,'items',return_value=[TOPIC]),patch.object(research,'update'):
+    result=research.prepare_one(i,client_factory=Client,fetcher=lambda u:next(x for x in d if x['url']==u),data=data,out=out)
+   self.assertEqual(result['status'],'brief_ready');state=load_json(out/'research'/f"{TOPIC['id']}.json");self.assertEqual(state['attempts'],2);self.assertEqual(state['source_catalog_version'],1)
+ def test_catalog_refresh_never_resets_exhausted_budget(self):
+  d,c,r,i=fixtures()
+  with tempfile.TemporaryDirectory() as t:
+   data=Path(t)/'data';out=Path(t)/'out';atomic_json(data/'config.json',{'research_feeder':{'enabled':True}})
+   atomic_json(data/'research-source-catalog.json',{'version':2,'entries':[{'crops':[TOPIC['crop']],'intents':['maturity'],'urls':[x['url'] for x in d]}]})
+   atomic_json(out/'research'/f"{TOPIC['id']}.json",{'status':'needs_review','reason':'insufficient_fetchable_institutional_sources','attempts':2,'source_catalog_version':0})
+   with patch.object(research,'items',return_value=[TOPIC]),patch.object(research,'update'),patch.object(research,'ModelClient') as client:
+    result=research.prepare_one(i,client_factory=client,data=data,out=out);client.assert_not_called();self.assertEqual(result['status'],'no_research_candidate')
  def test_scheduled_cycle_invokes_feeder_once_when_no_brief(self):
   with tempfile.TemporaryDirectory() as t:
    data=Path(t);atomic_json(data/'config.json',{'publication_enabled':True,'automatic_generation':True,'research_feeder':{'enabled':True}})
