@@ -46,7 +46,7 @@ def update(stage,percent,topic_id=None,topic_title=None,status='running'):
  if os.environ.get('AFP_PROGRESS_ENABLED')!='1':return
  try:
   old=load_json(STATUS_PATH) if STATUS_PATH.exists() else {}
-  obj={'version':1,'status':status,'stage':stage,'percent':max(0,min(100,int(percent))),'topic_id':old.get('topic_id') if topic_id is None else topic_id,'topic_title':old.get('topic_title') if topic_title is None else topic_title,'updated_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'run_url':('https://github.com/getsalet/nono/actions/runs/'+os.environ['GITHUB_RUN_ID']) if os.environ.get('GITHUB_RUN_ID') else None,'schedule_cron':'*/5 * * * *','max_posts_per_run':1,'metrics':metrics()}
+  obj={'version':1,'status':status,'stage':stage,'percent':max(0,min(100,int(percent))),'topic_id':old.get('topic_id') if topic_id is None else topic_id,'topic_title':(old.get('topic_title') if topic_id is None or topic_id==old.get('topic_id') else None) if topic_title is None else topic_title,'updated_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'run_url':('https://github.com/getsalet/nono/actions/runs/'+os.environ['GITHUB_RUN_ID']) if os.environ.get('GITHUB_RUN_ID') else None,'schedule_cron':'*/5 * * * *','max_posts_per_run':1,'metrics':metrics()}
   obj['last_task']=old.get('last_task') or ({k:old.get(k) for k in ['status','stage','percent','topic_id','topic_title','updated_at','run_url']} if old.get('status') not in (None,'idle') else None)
   if status!='idle':obj['last_task']={k:obj.get(k) for k in ['status','stage','percent','topic_id','topic_title','updated_at','run_url']}
   atomic_json(STATUS_PATH,obj);md=markdown(obj);p=ROOT/REMOTE_PATHS[1];p.parent.mkdir(parents=True,exist_ok=True);p.write_text(md)
