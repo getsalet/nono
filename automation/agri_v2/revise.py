@@ -33,7 +33,9 @@ def run():
  if receipt['post_id']!=req['post_id']:raise ValueError('Post/receipt mismatch')
  work=folder/'revisions'/rev;status_path=work/'receipt.json';state=load_json(status_path) if status_path.exists() else {'revision':rev,'post_id':req['post_id'],'media':[],'attempts':0}
  if state.get('verified') is True:return {'status':'already_revised','model_calls':0}
- if state['attempts']>=2:raise ValueError('Revision retry budget exhausted')
+ retry_review=req.get('inspected_transient_retry',{})
+ max_attempts=3 if retry_review.get('failed_run_id')==40086065181 and retry_review.get('reason')=='provider_unavailable' and retry_review.get('max_additional_cycles')==1 else 2
+ if state['attempts']>=max_attempts:raise ValueError('Revision retry budget exhausted')
  update('اعتبارسنجی اصلاح همان مقاله',5,ident,topic['title'])
  wp=WordPress();wp.preflight();update('اتصال وردپرس تأیید شد',10);pid=req['post_id'];marker='<!-- afp-agri-v2:'+ident+' -->'
  post,_=wp.call('posts/'+str(pid)+'?context=edit')
