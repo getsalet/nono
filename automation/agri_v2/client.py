@@ -69,14 +69,18 @@ class ModelClient:
  def image(self,prompt):
   from PIL import Image
   obj=self.request('image','/images/generations',{'model':IMAGE_MODEL,'prompt':prompt,'n':1,'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':reference_images()}},180)
-  blob=image_bytes(obj)
-  if len(blob)>MAX_RESPONSE:raise CapabilityError('Image too large')
-  try:
-   with Image.open(io.BytesIO(blob)) as im:
-    if im.width*im.height>20_000_000:raise CapabilityError('Image dimensions too large')
-    im=im.convert('RGB');w,h=im.size;ratio=16/9
-    if w/h>ratio:cut=int(h*ratio);left=(w-cut)//2;im=im.crop((left,0,left+cut,h))
-    else:cut=int(w/ratio);top=(h-cut)//2;im=im.crop((0,top,w,top+cut))
-    im=add_phone_watermark(im.resize((1200,675)));buf=io.BytesIO();im.save(buf,'WEBP',quality=85,method=6);return buf.getvalue()
-  except CapabilityError:raise
-  except Exception:raise CapabilityError('Generated image could not be decoded')
+  return render_image(obj)
+
+def render_image(obj):
+ from PIL import Image
+ blob=image_bytes(obj)
+ if len(blob)>MAX_RESPONSE:raise CapabilityError('Image too large')
+ try:
+  with Image.open(io.BytesIO(blob)) as im:
+   if im.width*im.height>20_000_000:raise CapabilityError('Image dimensions too large')
+   im=im.convert('RGB');w,h=im.size;ratio=16/9
+   if w/h>ratio:cut=int(h*ratio);left=(w-cut)//2;im=im.crop((left,0,left+cut,h))
+   else:cut=int(w/ratio);top=(h-cut)//2;im=im.crop((0,top,w,top+cut))
+   im=add_phone_watermark(im.resize((1200,675)));buf=io.BytesIO();im.save(buf,'WEBP',quality=85,method=6);return buf.getvalue()
+ except CapabilityError:raise
+ except Exception:raise CapabilityError('Generated image could not be decoded')
