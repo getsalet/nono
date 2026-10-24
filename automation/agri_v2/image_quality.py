@@ -4,7 +4,7 @@ from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .media_policy import POLICY,contract_hash,reference_images
 from .healthcheck import TEXT_MODEL
-CHECKS=('crop_stage_match','role_camera_match','topic_evidence_match','product_identity_match','single_product','product_scale_match','product_fully_in_frame','package_separate_from_plumbing','physical_geometry_plausible','no_people','no_added_text','phone_label_correct')
+CHECKS=('crop_stage_match','role_camera_match','topic_evidence_match','product_identity_match','single_product','product_scale_match','product_fully_in_frame','package_separate_from_plumbing','physical_geometry_plausible','packaging_closed_no_protruding_material','no_people','no_added_text','phone_label_correct')
 class ImageQualityError(ValueError):pass
 def verdict(value):
  if not isinstance(value,dict):raise ImageQualityError('Vision verdict must be an object')

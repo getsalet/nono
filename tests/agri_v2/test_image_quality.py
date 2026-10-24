@@ -15,7 +15,7 @@ class ImageQualityTests(unittest.TestCase):
  def test_pinto_distinct_seed_color(self):
   t=self.topic();t.update(crop='لوبیا چیتی',title='برداشت لوبیا چیتی');self.assertIn('brown mottling',m.crop_spec(t));self.assertNotIn('deep burgundy',m.crop_spec(t))
  def test_green_bean_not_dry_kidney(self):
-  t=self.topic();t.update(crop='لوبیا سبز',title='برداشت لوبیا سبز');self.assertIn('attached green pods',m.crop_spec(t));self.assertNotIn('straw-brown',m.crop_spec(t))
+  t=self.topic();t.update(crop='لوبیا سبز',title='برداشت لوبیا سبز');self.assertIn('attached green pods',m.crop_spec(t));self.assertNotIn('straw-brown',m.crop_spec(t));self.assertNotIn('straw-brown',m.scene_plan(t,2)['evidence'])
  def test_other_crop_never_forced_to_dry_beans(self):
   p=m.image_prompt({'crop':'گندم','title':'برداشت گندم'},2);self.assertIn('wheat',p);self.assertNotIn('dry bean',p)
  def test_word_boundary_prevents_garlic_from_masir(self):
@@ -31,7 +31,7 @@ class ImageQualityTests(unittest.TestCase):
   for value in ({},{'pass':True,'score':100},None,{'checks':{k:'true' for k in q.CHECKS},'score':100,'reasons':['x']}):
    with self.assertRaises(q.ImageQualityError):q.verdict(value)
  def test_one_failed_critical_check_overrides_score(self):
-  v=self.good();v['checks']['crop_stage_match']=False;v['score']=100;self.assertFalse(q.verdict(v)['passed'])
+  v=self.good();v['checks']['packaging_closed_no_protruding_material']=False;v['score']=100;self.assertFalse(q.verdict(v)['passed'])
  def test_no_fast_mode_or_vision_failure_pass(self):
   with tempfile.TemporaryDirectory() as d:
    p=Path(d)/'image-2.webp';p.write_bytes(b'fixture');c=Mock();c.review_image.side_effect=TimeoutError()
