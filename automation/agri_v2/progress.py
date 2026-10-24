@@ -1,5 +1,5 @@
 """Near-live, credential-free stage telemetry. Reporting failures never override production safety."""
-import base64,json,os,urllib.request,urllib.error
+import base64,datetime,json,os,urllib.request,urllib.error
 from pathlib import Path
 from .queue import DATA,OUT,ROOT,load_json,atomic_json,utcnow
 STATUS_PATH=DATA/'status/live.json'
@@ -18,6 +18,13 @@ def metrics():
  incomplete=sum(load_json(p).get('status')=='incomplete' for p in (OUT/'new').glob('*/state.json'))
  research=[load_json(p) for p in (OUT/'research').glob('*.json')]
  return {'research_briefs_ready':sum(r.get('status')=='brief_ready' for r in research),'research_needs_review':sum(r.get('status')=='needs_review' for r in research),'research_transient_failures':sum(r.get('status')=='transient_failure' for r in research),'new_topics':2905,'original_new_topics':948,'review_origin_topics':1957,'merge_topics':593,'hold_topics':370,'published_verified':published,'remaining_topics':max(0,2905-published),'authorized_unpublished_briefs':ready,'incomplete_topics':incomplete,'publication_held_topics':len(held),'verified_revisions':sum(load_json(p).get('verified') is True for p in (OUT/'new').glob('*/revisions/*/receipt.json'))}
+
+def provider_snapshot():
+ p=OUT/'provider-circuit.json';c=load_json(p) if p.exists() else {}
+ r=OUT/'pilot-resume/queue-aware-pilot-resume-v1/receipt.json';recovery=load_json(r) if r.exists() else {}
+ deadline=c.get('retry_at_epoch')
+ if deadline is None and c.get('open') and c.get('at'):deadline=datetime.datetime.fromisoformat(c['at']).timestamp()+3600
+ return {'open':c.get('open') is True,'reason':c.get('reason','provider_transient_failure'),'retry_at':datetime.datetime.fromtimestamp(deadline,datetime.timezone.utc).isoformat() if isinstance(deadline,(int,float)) else None,'recovery_cycles_used':recovery.get('cycles_started',0),'recovery_cycles_limit':2}
 
 def markdown(obj):
  m=obj['metrics'];run=obj.get('run_url','');runline='[مشاهده اجرای جاری]('+run+')' if run else 'اجرای محلی/اولیه'
@@ -46,7 +53,7 @@ def update(stage,percent,topic_id=None,topic_title=None,status='running'):
  if os.environ.get('AFP_PROGRESS_ENABLED')!='1':return
  try:
   old=load_json(STATUS_PATH) if STATUS_PATH.exists() else {}
-  obj={'version':1,'status':status,'stage':stage,'percent':max(0,min(100,int(percent))),'topic_id':old.get('topic_id') if topic_id is None else topic_id,'topic_title':(old.get('topic_title') if topic_id is None or topic_id==old.get('topic_id') else None) if topic_title is None else topic_title,'updated_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'run_url':('https://github.com/getsalet/nono/actions/runs/'+os.environ['GITHUB_RUN_ID']) if os.environ.get('GITHUB_RUN_ID') else None,'schedule_cron':'*/5 * * * *','max_posts_per_run':1,'metrics':metrics()}
+  obj={'version':1,'status':status,'stage':stage,'percent':max(0,min(100,int(percent))),'topic_id':old.get('topic_id') if topic_id is None else topic_id,'topic_title':(old.get('topic_title') if topic_id is None or topic_id==old.get('topic_id') else None) if topic_title is None else topic_title,'updated_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'run_url':('https://github.com/getsalet/nono/actions/runs/'+os.environ['GITHUB_RUN_ID']) if os.environ.get('GITHUB_RUN_ID') else None,'schedule_cron':'*/5 * * * *','max_posts_per_run':1,'metrics':metrics(),'provider':provider_snapshot()}
   obj['last_task']=old.get('last_task') or ({k:old.get(k) for k in ['status','stage','percent','topic_id','topic_title','updated_at','run_url']} if old.get('status') not in (None,'idle') else None)
   if status!='idle':obj['last_task']={k:obj.get(k) for k in ['status','stage','percent','topic_id','topic_title','updated_at','run_url']}
   atomic_json(STATUS_PATH,obj);md=markdown(obj);p=ROOT/REMOTE_PATHS[1];p.parent.mkdir(parents=True,exist_ok=True);p.write_text(md)
