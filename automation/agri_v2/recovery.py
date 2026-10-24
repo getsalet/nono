@@ -1,11 +1,15 @@
 """One explicitly requested recovery, never a scheduled infinite retry."""
 from .queue import DATA,OUT,load_json,atomic_json,utcnow,age_hours
+import datetime,time
 from .client import CapabilityError
 from .progress import update
 
 def circuit_open():
  p=OUT/'provider-circuit.json'
- return p.exists() and load_json(p).get('open') is True and age_hours(load_json(p)['at'])<1
+ if not p.exists():return False
+ d=load_json(p)
+ if d.get('open') is not True:return False
+ return d['retry_at_epoch']>time.time() if 'retry_at_epoch' in d else age_hours(d['at'])<1
 
 def open_circuit():
  atomic_json(OUT/'provider-circuit.json',{'open':True,'at':utcnow(),'cooldown_hours':1,'reason':'provider_transient_failure','no_secrets':True})

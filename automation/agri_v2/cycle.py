@@ -11,6 +11,10 @@ def run(request_path=None,scheduled=False,_research_done=False):
  config=load_json(DATA/'config.json')
  if not config.get('publication_enabled'):return {'status':'publication_disabled','model_calls':0}
  if scheduled and not config.get('automatic_generation'):return {'status':'automatic_generation_disabled','model_calls':0}
+ if scheduled and (DATA/'pilot-resume-request.json').exists():
+  from .pilot_resume import run as resume_pilot
+  recovery=resume_pilot()
+  if recovery is not None:return recovery
  if request_path:
   request=load_json(request_path)
   if request.get('publish_authorized') is not True or request.get('max_new_posts')!=1:raise ValueError('Single-post authorization required')

@@ -11,17 +11,7 @@ REQUEST_ID='pilot-image-differential-v1'
 TOPIC='agri-af1a4b491d83'
 class DiagnosticBlocked(ValueError):pass
 
-def shared_guard(slot):
- # Read latest public routing/cooldown evidence; never read secret values from Git.
- subprocess.run(['git','fetch','--quiet','origin','main:refs/remotes/origin/main'],cwd=ROOT,check=True,capture_output=True)
- for path in ['data/blog-image-provider-backpressure.json','data/blog-image-key-pool-state.json']:
-  p=subprocess.run(['git','show','origin/main:'+path],cwd=ROOT,check=True,capture_output=True)
-  try:d=json.loads(p.stdout)
-  except ValueError:raise DiagnosticBlocked('Unreadable shared provider evidence') from None
-  if d.get('shared_block')=='billing_required':raise DiagnosticBlocked('Shared billing hold; no provider request')
-  deadline=max(d.get('retry_at_epoch',0),d.get('shared_retry_at_epoch',0),d.get('keys',{}).get(slot,{}).get('retry_at_epoch',0))
-  if not isinstance(deadline,(int,float)) or deadline>time.time():raise DiagnosticBlocked('Shared cooldown active; no provider request')
-  if d.get('keys',{}).get(slot,{}).get('status') in ('authentication_rejected','image_scope_denied'):raise DiagnosticBlocked('Credential unavailable for image scope')
+from .image_transport import shared_guard
 
 def payload(prompt,refs=True,omit_n=False):
  d={'model':IMAGE_MODEL,'prompt':prompt,'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}}

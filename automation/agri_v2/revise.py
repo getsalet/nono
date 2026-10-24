@@ -22,7 +22,7 @@ def restore_owned_post(wp,post,req,marker,slug):
   if post.get('status')!='draft' or post.get('author')!=wp.user_id or marker not in post.get('content',{}).get('raw',''):raise WPError('Restore verification failed')
  return post
 
-def run():
+def run(recovery_extension=None):
  req=load_json(DATA/'style-revision-request.json')
  if req.get('publish_revision_authorized') is not True or req.get('max_posts')!=1 or req.get('rebuild_images')!=3:raise ValueError('Explicit single-post revision required')
  ident=req['topic_id'];rev=req['request_id']
@@ -38,6 +38,9 @@ def run():
  recovery_request=load_json(DATA/'research-request.json') if (DATA/'research-request.json').exists() else {}
  recovery=recovery_request.get('pilot_recovery',{})
  if recovery.get('authorized') is True and recovery.get('topic_id')==ident and recovery.get('max_additional_cycles')==1 and recovery_request.get('request_id')=='research-feeder-rollout-v1':max_attempts=4
+ if recovery_extension is not None:
+  from .pilot_resume import validate_request
+  validate_request(recovery_extension);max_attempts=6
  if state['attempts']>=max_attempts:raise ValueError('Revision retry budget exhausted')
  update('اعتبارسنجی اصلاح همان مقاله',5,ident,topic['title'])
  wp=WordPress();wp.preflight();update('اتصال وردپرس تأیید شد',10);pid=req['post_id'];marker='<!-- afp-agri-v2:'+ident+' -->'
