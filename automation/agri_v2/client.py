@@ -1,9 +1,33 @@
 """First-15-only, capability-gated model client with redacted errors."""
-import base64,io,json,os,urllib.error,urllib.request
+import base64,io,json,os,urllib.error,urllib.request,urllib.parse,socket,ipaddress
 from .healthcheck import SLOTS,TEXT_MODEL,IMAGE_MODEL,API_BASE,classify,MAX_RESPONSE
 from .queue import age_hours
 from .media_policy import reference_images,add_phone_watermark
 class CapabilityError(RuntimeError):pass
+def image_bytes(obj):
+ try:row=obj['data'][0]
+ except (KeyError,IndexError,TypeError):raise CapabilityError('Image response missing data')
+ if not isinstance(row,dict):raise CapabilityError('Invalid image response row')
+ if isinstance(row.get('b64_json'),str) and row['b64_json']:
+  try:return base64.b64decode(row['b64_json'],validate=True)
+  except ValueError:raise CapabilityError('Invalid base64 image')
+ url=row.get('url')
+ if not isinstance(url,str):raise CapabilityError('No verified base64 image or HTTPS image URL returned')
+ p=urllib.parse.urlsplit(url)
+ if p.scheme!='https' or not p.hostname or p.username or p.password or p.port not in (None,443):raise CapabilityError('Unsafe image URL rejected')
+ try:
+  addresses=socket.getaddrinfo(p.hostname,443,type=socket.SOCK_STREAM)
+  if not addresses or any(not ipaddress.ip_address(a[4][0]).is_global for a in addresses):raise CapabilityError('Private image host rejected')
+  class NoRedirect(urllib.request.HTTPRedirectHandler):
+   def redirect_request(self,*a,**kw):return None
+  # No authentication headers are sent to the provider-supplied image URL.
+  with urllib.request.build_opener(NoRedirect()).open(url,timeout=90) as response:
+   blob=response.read(MAX_RESPONSE+1)
+   if len(blob)>MAX_RESPONSE:raise CapabilityError('Image download too large')
+   return blob
+ except CapabilityError:raise
+ except Exception:raise CapabilityError('HTTPS image download failed') from None
+
 class ModelClient:
  def __init__(self,report,env=None,allow_calls=False):
   if not allow_calls:raise CapabilityError('Explicit model-call confirmation is required')
@@ -45,8 +69,7 @@ class ModelClient:
  def image(self,prompt):
   from PIL import Image
   obj=self.request('image','/images/generations',{'model':IMAGE_MODEL,'prompt':prompt,'n':1,'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':reference_images()}},180)
-  try:blob=base64.b64decode(obj['data'][0]['b64_json'],validate=True)
-  except (KeyError,IndexError,TypeError,ValueError):raise CapabilityError('No verified base64 image returned')
+  blob=image_bytes(obj)
   if len(blob)>MAX_RESPONSE:raise CapabilityError('Image too large')
   try:
    with Image.open(io.BytesIO(blob)) as im:

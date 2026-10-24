@@ -5,6 +5,7 @@ from .queue import DATA,OUT,load_json,atomic_json,get_topic,age_hours,utcnow
 from .pipeline import draft,check_brief,digest,validate_article,validate_for_publication
 from .wordpress import WordPress,WPError
 from .healthcheck import audit
+from .progress import update,failed
 
 def run(request_path=None,scheduled=False):
  config=load_json(DATA/'config.json')
@@ -27,10 +28,12 @@ def run(request_path=None,scheduled=False):
   if brief.get('publish_authorized') is not True:raise ValueError('Brief publication not authorized')
   attempts_path=OUT/'new'/ident/'cycle-attempts.json';attempts=load_json(attempts_path) if attempts_path.exists() else {'attempts':0}
   if attempts['attempts']>=2:raise ValueError('Retry budget exhausted; human inspection required')
+  update('بررسی اتصال و موضوع آماده',5,ident,topic['title'])
   print("Stage: authenticated WordPress preflight",flush=True)
-  wp=WordPress();connection=wp.preflight()
+  wp=WordPress();connection=wp.preflight();update('اتصال وردپرس تأیید شد',10)
   print("Stage: fresh public inventory",flush=True)
   inventory=wp.inventory() # failure/empty/pagination errors stop before any paid model call
+  update('موجودی تازه سایت دریافت شد',20)
   hp=DATA/'health/latest.json'
   if not hp.exists() or age_hours(load_json(hp)['checked_at'])>24:
    report=audit();atomic_json(hp,report)
@@ -47,15 +50,19 @@ def run(request_path=None,scheduled=False):
    else:draft(ident,bp,ip,hp,allow_calls=True)
   print("Stage: upload media, publish one owned post and verify public URL",flush=True)
   validate_for_publication(load_json(OUT/'new'/ident/'article.json'))
+  update('بارگذاری رسانه و انتشار یک نوشته',80)
   result=wp.publish(OUT/'new'/ident,topic,brief,authorized=True)
   atomic_json(OUT/'latest-cycle.json',{'status':'success','topic_id':ident,'result':result,'connection':connection,'inventory_count':len(inventory['records']),'completed_at':utcnow()})
+  update('انتشار و صفحه عمومی تأیید شد',100,status='success')
   return result
+ update('منتظر شرح مقاله آماده و دارای مجوز انتشار',0,status='idle')
  return {'status':'no_ready_unpublished_brief','model_calls':0,'published_posts':0}
 
 def main():
  p=argparse.ArgumentParser();p.add_argument('--request');p.add_argument('--scheduled',action='store_true');a=p.parse_args()
  try:r=run(a.request,a.scheduled);print(json.dumps(r,ensure_ascii=False));return 0
  except Exception as e:
+  failed()
   if isinstance(e,WPError):print("WordPress stage: "+str(e),flush=True)
   elif isinstance(e,ValueError):print("Validation blocked: "+str(e)[:160],flush=True)
   atomic_json(OUT/'latest-cycle-error.json',{'status':'blocked_or_failed','at':utcnow(),'reason':'Inspect sanitized job stages and tests; no raw provider/auth messages persisted.'})
