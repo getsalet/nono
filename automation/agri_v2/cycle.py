@@ -19,7 +19,15 @@ def handle_generation_failure(exc):
   from .recovery import open_circuit
   open_circuit(kind='text',reason=exc.category,retry_after=exc.retry_after_seconds)
 
-def run(request_path=None,scheduled=False,_research_done=False):
+def fresh_inventory(wp,snapshot=None):
+ # Reuse only the immediately preceding research snapshot, never a cross-run cache.
+ if isinstance(snapshot,dict) and snapshot.get('records') and snapshot.get('scope'):
+  try:
+   if 0<=age_hours(snapshot['source_generated_at'])<5/60:return snapshot
+  except (KeyError,ValueError,TypeError):pass
+ return wp.inventory()
+
+def run(request_path=None,scheduled=False,_research_done=False,_research_inventory=None):
  from .safe_activation import authorized as activation_authorized,skip_completed_tuning
  safe_active=scheduled and activation_authorized(DATA)
  if scheduled and (DATA/'image-key-audit-request.json').exists():
@@ -81,7 +89,7 @@ def run(request_path=None,scheduled=False,_research_done=False):
   print("Stage: authenticated WordPress preflight",flush=True)
   wp=WordPress();connection=wp.preflight();update('اتصال وردپرس تأیید شد',10)
   print("Stage: fresh public inventory",flush=True)
-  inventory=wp.inventory() # failure/empty/pagination errors stop before any paid model call
+  inventory=fresh_inventory(wp,_research_inventory) # full inventory, at most five minutes old
   update('موجودی تازه سایت دریافت شد',20)
   hp=DATA/'health/latest.json'
   if not hp.exists() or age_hours(load_json(hp)['checked_at'])>24:
@@ -113,7 +121,7 @@ def run(request_path=None,scheduled=False,_research_done=False):
   from .research import prepare_one
   wp=WordPress();wp.preflight();inventory=wp.inventory()
   result=prepare_one(inventory)
-  if result.get('status')=='brief_ready':return run(scheduled=True,_research_done=True)
+  if result.get('status')=='brief_ready':return run(scheduled=True,_research_done=True,_research_inventory=inventory)
   return result
  update('اجرای زمان‌بند پایان یافت؛ مقاله آماده برای انتشار وجود ندارد',0,topic_id='',topic_title='',status='idle')
  return {'status':'no_ready_unpublished_brief','model_calls':0,'published_posts':0}
