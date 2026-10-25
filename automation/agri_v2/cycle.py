@@ -8,11 +8,13 @@ from .healthcheck import audit
 from .progress import update,failed
 
 def run(request_path=None,scheduled=False,_research_done=False):
+ from .safe_activation import authorized as activation_authorized,skip_completed_tuning
+ safe_active=scheduled and activation_authorized(DATA)
  if scheduled and (DATA/'image-key-audit-request.json').exists():
   from .image_key_audit import run as audit_images
   audit_result=audit_images()
   if audit_result is not None:return audit_result
- if scheduled and (DATA/'image-tuning-resume-request.json').exists():
+ if scheduled and (DATA/'image-tuning-resume-request.json').exists() and not (safe_active and skip_completed_tuning()):
   from .tuning_resume import run as resume_tuning
   tuning=resume_tuning()
   if tuning is not None:return tuning
@@ -22,7 +24,7 @@ def run(request_path=None,scheduled=False,_research_done=False):
  if scheduled and (DATA/'pilot-resume-request.json').exists():
   from .pilot_resume import run as resume_pilot
   recovery=resume_pilot()
-  if recovery is not None:return recovery
+  if recovery is not None and not (safe_active and recovery.get('status')=='pilot_recovery_budget_exhausted'):return recovery
  if request_path:
   request=load_json(request_path)
   if request.get('publish_authorized') is not True or request.get('max_new_posts')!=1:raise ValueError('Single-post authorization required')
@@ -55,7 +57,8 @@ def run(request_path=None,scheduled=False,_research_done=False):
   update('موجودی تازه سایت دریافت شد',20)
   hp=DATA/'health/latest.json'
   if not hp.exists() or age_hours(load_json(hp)['checked_at'])>24:
-   report=audit();atomic_json(hp,report)
+   update('شواهد سلامت منقضی شده؛ بررسی انبوه کلیدها خودکار اجرا نمی‌شود',0,status='health_refresh_required')
+   return {'status':'health_evidence_expired','model_calls':0,'published_posts':0}
   attempts['attempts']+=1;attempts['last_started_at']=utcnow();atomic_json(attempts_path,attempts)
   with tempfile.TemporaryDirectory() as tmp:
    ip=Path(tmp)/'inventory.json';atomic_json(ip,inventory)
