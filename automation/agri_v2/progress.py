@@ -14,7 +14,8 @@ def metrics():
  for p in (DATA/'briefs').glob('*.json'):
   b=load_json(p);r=OUT/'new'/b['topic_id']/'wordpress-receipt.json'
   ap=OUT/'new'/b['topic_id']/'cycle-attempts.json'
-  exhausted=ap.exists() and load_json(ap).get('attempts',0)>=2
+  from .production_recovery import eligible
+  exhausted=ap.exists() and load_json(ap).get('attempts',0)>=2 and not eligible(r.parent)
   if not exhausted and b.get('topic_id') not in held and b.get('publish_authorized') is True and (not r.exists() or not load_json(r).get('public_verified')):ready+=1
  incomplete=sum(load_json(p).get('status')=='incomplete' for p in (OUT/'new').glob('*/state.json'))
  research=[load_json(p) for p in (OUT/'research').glob('*.json')]

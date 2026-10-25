@@ -8,7 +8,8 @@ def pending_briefs(data=DATA,out=OUT):
   if brief.get('publish_authorized') is not True or ident in held:continue
   folder=out/'new'/ident;receipt=folder/'wordpress-receipt.json';attempts=folder/'cycle-attempts.json'
   if receipt.exists() and load_json(receipt).get('public_verified') is True:continue
-  if attempts.exists() and load_json(attempts).get('attempts',0)>=2:continue
+  from .production_recovery import eligible
+  if attempts.exists() and load_json(attempts).get('attempts',0)>=2 and not eligible(folder):continue
   pending.append(ident)
  return pending
 

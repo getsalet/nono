@@ -92,7 +92,9 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
   bp=DATA/'briefs'/f'{ident}.json';brief=load_json(bp);topic=get_topic('new',ident);check_brief(topic,brief)
   if brief.get('publish_authorized') is not True:raise ValueError('Brief publication not authorized')
   attempts_path=OUT/'new'/ident/'cycle-attempts.json';attempts=load_json(attempts_path) if attempts_path.exists() else {'attempts':0}
-  if attempts['attempts']>=2:
+  from .production_recovery import eligible as recovery_eligible,reserve as reserve_recovery,finish as finish_recovery
+  recovering=attempts['attempts']>=2 and recovery_eligible(OUT/'new'/ident)
+  if attempts['attempts']>=2 and not recovering:
    research_path=OUT/'research'/f'{ident}.json';prior=load_json(research_path) if research_path.exists() else {}
    if prior.get('reason')!='production_retry_budget_exhausted':atomic_json(research_path,dict(prior,topic_id=ident,status='needs_review',reason='production_retry_budget_exhausted',production_attempts=attempts['attempts'],at=utcnow()))
    continue
@@ -113,7 +115,9 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
   if not hp.exists() or age_hours(load_json(hp)['checked_at'])>24:
    update('شواهد سلامت منقضی شده؛ بررسی انبوه کلیدها خودکار اجرا نمی‌شود',0,status='health_refresh_required')
    return {'status':'health_evidence_expired','model_calls':0,'published_posts':0}
-  attempts['attempts']+=1;attempts['last_started_at']=utcnow();atomic_json(attempts_path,attempts)
+  if recovering:reserve_recovery(folder)
+  else:
+   attempts['attempts']+=1;attempts['last_started_at']=utcnow();atomic_json(attempts_path,attempts)
   with tempfile.TemporaryDirectory() as tmp:
    ip=Path(tmp)/'inventory.json';atomic_json(ip,inventory)
    print("Stage: generate or resume one draft and two images",flush=True)
@@ -127,11 +131,26 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
     try:draft(ident,bp,ip,hp,allow_calls=True,translate=True)
     except Exception as exc:
      handle_generation_failure(exc)
+     failure=failure_details(exc)
+     from .client import ImageProviderError,TextProviderError
+     from .image_transport import AdmissionBlocked
+     from automation.blog_image_queue import ImageQueueBusy
+     transient=isinstance(exc,(ImageProviderError,TextProviderError)) and exc.category in {'provider_unavailable','network_or_timeout','rate_limited'}
+     admission=isinstance(exc,(AdmissionBlocked,ImageQueueBusy))
+     if admission:
+      failure={'kind':'image_admission','category':'admission_deferred'}
+      state=load_json(folder/'state.json');state['failure']=failure;atomic_json(folder/'state.json',state)
+     if recovering:finish_recovery(folder,'provider_deferred' if transient or admission else 'blocked',failure)
+     if transient or admission:
+      atomic_json(OUT/'latest-cycle-deferred.json',{'status':'provider_deferred','topic_id':ident,'at':utcnow(),'failure':failure,'original_attempts':attempts['attempts']})
+      update('سرویس موقتاً در دسترس نیست؛ متن و تصاویر محفوظ، ادامه محدود پس از مهلت انتظار',40,ident,topic['title'],status='provider_cooldown')
+      return {'status':'provider_deferred','topic_id':ident,'failure':failure,'published_posts':0}
      raise
   print("Stage: upload media, publish one owned post and verify public URL",flush=True)
   validate_for_publication(load_json(OUT/'new'/ident/'article.json'))
   update('بارگذاری رسانه و انتشار یک نوشته',80)
   result=wp.publish(OUT/'new'/ident,topic,brief,authorized=True)
+  if recovering:finish_recovery(folder,'publication_verified')
   atomic_json(OUT/'latest-cycle.json',{'status':'success','topic_id':ident,'result':result,'connection':connection,'inventory_count':len(inventory['records']),'completed_at':utcnow()})
   update('انتشار و صفحه عمومی تأیید شد',100,status='success')
   return result
