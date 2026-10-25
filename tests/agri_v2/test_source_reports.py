@@ -23,3 +23,10 @@ class SourceReportTests(unittest.TestCase):
   c=load_json(DATA/'research-source-catalog.json');self.assertEqual(c['version'],3)
   for intent in ('maturity','grading','storage'):
    e=next(e for e in c['entries'] if intent in e['intents']);self.assertTrue(e['scope']);self.assertGreaterEqual(len({'.'.join(source_host(u).split('.')[-2:]) for u in e['urls']}),2)
+
+ def test_extraction_prompt_explicitly_excludes_numeric_grade_labels(self):
+  import inspect
+  from automation.agri_v2 import research
+  text=inspect.getsource(research.prepare_one)
+  self.assertIn('including grade/class labels such as U.S. No.1',text)
+  self.assertIn('catalog_scope_limitations',text)
