@@ -111,3 +111,18 @@ class SourcePriorityTests(unittest.TestCase):
    with patch.object(research,'items',return_value=[other,TOPIC]),patch.object(research,'update'):
     result=research.prepare_one(i,client_factory=Client,fetcher=lambda url:next(x for x in d if x['url']==url),data=data,out=out)
    self.assertEqual(result['topic_id'],TOPIC['id']);self.assertEqual(result['status'],'brief_ready');self.assertFalse((out/'research'/f"{other['id']}.json").exists())
+
+class ReviewShapeTests(unittest.TestCase):
+ def test_known_nested_review_is_extracted_without_generated_draft(self):
+  d,c,r,i=fixtures();wrapped={'draft':{'content':'Unrequested numbers and mixed language are NOT an article input'},'review':r}
+  normalized=research.normalize_review(wrapped);self.assertEqual(normalized,r);self.assertNotIn('draft',normalized)
+  brief=research.build_brief(TOPIC,d,c,wrapped,i);self.assertTrue(brief['publish_authorized']);self.assertNotIn('draft',brief)
+ def test_wrapping_never_changes_a_false_or_uncertain_decision(self):
+  d,c,r,i=fixtures();r['safe_qualitative']=False
+  with self.assertRaisesRegex(research.ResearchBlocked,'independent_review_rejected'):research.build_brief(TOPIC,d,c,{'review':r},i)
+  r['safe_qualitative']=True;r['overlap_decision']='uncertain'
+  with self.assertRaisesRegex(research.ResearchBlocked,'independent_review_rejected'):research.build_brief(TOPIC,d,c,{'review':r},i)
+ def test_unknown_wrapper_and_truthy_string_never_approve(self):
+  d,c,r,i=fixtures()
+  for bad in [{'draft':r},{'review':{'grounded':True}},dict(r,grounded='true')]:
+   with self.assertRaisesRegex(research.ResearchBlocked,'review_response_schema_invalid'):research.normalize_review(bad)
