@@ -124,6 +124,20 @@ class Tests(unittest.TestCase):
   x,p=self.fixture();p['html']=p['html'].replace('بررسی مشخصات','بررسی، مشخصات，',1);actual=copy.deepcopy(p);actual['html']=actual['html'].replace('，',',')
   self.assertEqual(native.persisted_errors(x,p,actual),[])
   actual['html']=actual['html'].replace('بررسی، مشخصات','حذف مشخصات',1);self.assertTrue(native.persisted_errors(x,p,actual))
+ def test_readback_digit_glyphs_preserve_values(self):
+  x,p=self.fixture();p['html']+='<table><tr><td>۱</td><td>۲</td><td>۳</td></tr></table><p>مدل ۲۰، مقدار ۱٫۵ و شناسه ۰۰۷</p>'
+  actual=copy.deepcopy(p);actual['html']=actual['html'].translate(str.maketrans('۰۱۲۳۴۵۶۷۸۹','0123456789'))
+  self.assertEqual(native.persisted_errors(x,p,actual),[])
+  self.assertEqual(native.normalized_body('۰۱۲۳۴۵۶۷۸۹'),'0123456789')
+ def test_readback_numeric_value_change_still_rejected(self):
+  x,p=self.fixture();p['html']+='<p>ردیف ۱۲، مقدار ۱٫۵</p>'
+  for changed in ('ردیف 13، مقدار 1٫5','ردیف 12، مقدار 15','ردیف 12، مقدار 1.5','ردیف ، مقدار 1٫5'):
+   actual=copy.deepcopy(p);actual['html']=actual['html'].replace('ردیف ۱۲، مقدار ۱٫۵',changed)
+   self.assertIn('Saved article text differs from approved draft',native.persisted_errors(x,p,actual))
+ def test_readback_digit_normalization_does_not_change_destinations(self):
+  x,p=self.fixture();p['html']=p['html'].replace(x['image_url'],x['image_url']+'?id=۱۲');x['image_url']+='?id=۱۲'
+  actual=copy.deepcopy(p);actual['html']=actual['html'].replace('?id=۱۲','?id=12')
+  self.assertIn('Saved image missing or changed',native.persisted_errors(x,p,actual))
  def test_readback_normalizes_letters(self):
   x,p=self.fixture();q=copy.deepcopy(p);q['html']=q['html'].replace('ی','ي').replace('ک','ك');q['title']=q['title'].replace('ی','ي');self.assertEqual(native.persisted_errors(x,p,q),[])
  def test_budget(self):
