@@ -80,3 +80,6 @@ class ImageQualityTests(unittest.TestCase):
    w=WordPress({'AFP_WP_BASE_URL':'https://navar-abyari.ir','AFP_WP_USERNAME':'fixture','AFP_WP_APP_PASSWORD':'fixture'});w.preflight=Mock();w.call=Mock(return_value=([],{}))
    with self.assertRaises(q.ImageQualityError):w.publish(p,self.topic(),{'publish_authorized':True},True)
    self.assertTrue(all(len(x.args)<2 or x.args[1]=='GET' for x in w.call.call_args_list))
+
+ def test_exposed_spool_cannot_pass_as_enclosed_filter(self):
+  v=self.good();v['checks']['hardware_identity_match']=False;v['score']=100;self.assertFalse(q.verdict(v)['passed'])

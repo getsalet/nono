@@ -4,7 +4,8 @@ from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .media_policy import POLICY,contract_hash,reference_images
 from .healthcheck import TEXT_MODEL
-CHECKS=('crop_stage_match','role_camera_match','topic_evidence_match','product_identity_match','single_product','product_scale_match','product_fully_in_frame','package_separate_from_plumbing','physical_geometry_plausible','packaging_closed_no_protruding_material','no_people','no_added_text','phone_label_correct')
+REVIEW_POLICY='agri-vision-qa-v4-hardware-identity'
+CHECKS=('hardware_identity_match','crop_stage_match','role_camera_match','topic_evidence_match','product_identity_match','single_product','product_scale_match','product_fully_in_frame','package_separate_from_plumbing','physical_geometry_plausible','packaging_closed_no_protruding_material','no_people','no_added_text','phone_label_correct')
 class ImageQualityError(ValueError):pass
 def verdict(value):
  if not isinstance(value,dict):raise ImageQualityError('Vision verdict must be an object')
@@ -14,7 +15,7 @@ def verdict(value):
  if not isinstance(reasons,list) or not reasons or any(not isinstance(x,str) or not x.strip() for x in reasons):raise ImageQualityError('Vision review reasons required')
  return {'passed':all(checks[k] for k in CHECKS) and score>=85,'checks':{k:checks[k] for k in CHECKS},'score':score,'reasons':[x[:500] for x in reasons[:12]]}
 def binding(path,topic,kind,article=None):
- return {'image_sha256':hashlib.sha256(Path(path).read_bytes()).hexdigest(),'contract_sha256':contract_hash(topic,kind,article),'reference_sha256':hashlib.sha256(reference_images()[0].encode()).hexdigest(),'policy':POLICY,'role':kind,'topic_id':topic.get('id'),'review_model':TEXT_MODEL}
+ return {'image_sha256':hashlib.sha256(Path(path).read_bytes()).hexdigest(),'contract_sha256':contract_hash(topic,kind,article),'reference_sha256':hashlib.sha256(reference_images()[0].encode()).hexdigest(),'policy':POLICY,'role':kind,'topic_id':topic.get('id'),'review_model':TEXT_MODEL,'review_policy':REVIEW_POLICY}
 def review_path(path):return Path(path).with_suffix('.quality.json')
 def valid_record(path,topic,kind,article=None):
  rp=review_path(path)
