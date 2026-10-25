@@ -71,7 +71,8 @@ class ModelClient:
      if kind=='image':
       from automation.agnes_key_pool import AgnesProviderError
       safe=AgnesProviderError(code,body,retry)
-      raise ImageProviderError(code,safe.provider_code,last,safe.rate_limit_retry_after_seconds) from None
+      from .provider_retry import retry_seconds
+      raise ImageProviderError(code,safe.provider_code,last,retry_seconds(retry)) from None
      if code in (402,429):raise CapabilityError('Text request paused: '+last) from None
     except (urllib.error.URLError,TimeoutError,OSError):last='network_or_timeout'
   raise CapabilityError('Model request failed: '+last)

@@ -34,5 +34,9 @@ def run():
  result=backtest()
  if result.get('no_request_reserved'):state['runs_started']=0
  state.update(status=result['status'],at=utcnow());atomic_json(sp,state)
- update('آزمون محدود تیون اجرا شد؛ نتیجه نیازمند بررسی است',75,TOPIC,status='image_tuning_review_required')
+ if result.get('status')=='stopped_provider_limit_or_failure':
+  update('آزمون تصویر با محدودیت سرویس متوقف شد؛ تولید و انتشار تأیید نشده است',15,TOPIC,status='provider_cooldown')
+ elif result.get('status')=='completed_requires_agent_visual_review':
+  update('آزمون محدود تیون اجرا شد؛ نتیجه نیازمند بررسی است',75,TOPIC,status='image_tuning_review_required')
+ else:update('آزمون تصویر بدون تأیید کامل متوقف شد؛ گزارش نیازمند بررسی است',15,TOPIC,status='image_tuning_blocked')
  return {'status':'image_tuning_attempt_finished','result':result,'published_posts':0}
