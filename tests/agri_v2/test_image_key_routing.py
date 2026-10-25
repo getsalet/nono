@@ -26,3 +26,10 @@ class RoutingTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d,patch.object(r,'OUT',Path(d)),patch.object(recovery,'circuit_open',return_value=False),patch.object(image_transport,'shared_evidence',return_value=[]):
    r.route([('AGNES_API_KEY','private-secret-value')],0,{'GITHUB_ACTIONS':'true'})
    text=(Path(d)/'image-key-routing.json').read_text();self.assertNotIn('private-secret-value',text);self.assertIn('AGNES_API_KEY',text)
+ def test_pool_change_still_continues_after_last_verified_slot(self):
+  from automation.agri_v2 import recovery,image_transport
+  from automation.agri_v2.queue import atomic_json
+  with tempfile.TemporaryDirectory() as tmp,patch.object(r,'OUT',Path(tmp)),patch.object(recovery,'circuit_open',return_value=False),patch.object(image_transport,'shared_evidence',return_value=[]):
+   atomic_json(Path(tmp)/'image-key-routing.json',{'cursor':2,'last_selected_slot':'AGNES_API_KEY2'})
+   picked=r.route([('AGNES_API_KEY2','b'),('AGNES_API_KEY3','c')],0,{'GITHUB_ACTIONS':'true'})
+   self.assertEqual(picked[0],'AGNES_API_KEY3')

@@ -99,7 +99,8 @@ def prepare_one(inventory,client_factory=ModelClient,fetcher=fetch_source,data=D
  catalog=load_json(catalog_path) if catalog_path.exists() else {'version':0,'entries':[]}
  states=out/'research';states.mkdir(parents=True,exist_ok=True)
  held=config.get('publication_holds',{});chosen=None
- for topic in sorted(items('new',data),key=lambda t:(t.get('priority','P9'),t.get('origin')!='NEW')):
+ def covered(t):return any(t['crop'] in e['crops'] and t['intent'] in e['intents'] for e in catalog['entries'])
+ for topic in sorted(items('new',data),key=lambda t:(not covered(t) if config.get('research_feeder',{}).get('prefer_verified_source_catalog') else False,t.get('priority','P9'),t.get('origin')!='NEW')):
   ident=topic['id'];bp=data/'briefs'/f'{ident}.json';sp=states/f'{ident}.json'
   if ident in held or bp.exists():continue
   old=load_json(sp) if sp.exists() else {}

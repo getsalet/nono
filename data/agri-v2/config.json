@@ -4,7 +4,7 @@
   "image_model": "agnes-image-2.1-flash",
   "api_base": "https://apihub.agnes-ai.com/v1",
   "max_key_slot": 15,
-  "images_per_article": 3,
+  "images_per_article": 2,
   "automatic_generation": true,
   "publication_enabled": true,
   "wordpress_connection": "verified_author_application_password",
@@ -33,6 +33,13 @@
     "max_research_attempts_per_topic": 2,
     "retry_cooldown_hours": 6,
     "scope": "source_grounded_qualitative_only; numeric/local prescriptions and unresolved overlap require review",
-    "human_review_claimed": false
+    "human_review_claimed": false,
+    "prefer_verified_source_catalog": true
+  },
+  "runtime_health": {
+    "enabled": true,
+    "max_text_probes_per_6h": 1,
+    "max_image_probes": 0,
+    "scope": "Refresh expired health only from real unexpired image evidence and a verified text response; no whole-pool audit"
   }
 }

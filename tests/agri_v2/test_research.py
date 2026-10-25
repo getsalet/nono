@@ -98,3 +98,16 @@ class ResearchTests(unittest.TestCase):
    with patch.object(cycle,'DATA',data),patch.object(cycle,'WordPress') as wp,patch.object(research,'prepare_one',return_value={'status':'no_research_candidate'}) as prep:
     result=cycle.run(scheduled=True);prep.assert_called_once();wp.return_value.preflight.assert_called_once();self.assertEqual(result['status'],'no_research_candidate')
 if __name__=='__main__':unittest.main()
+
+class SourcePriorityTests(unittest.TestCase):
+ def test_covered_topic_precedes_unverified_discovery_without_changing_approvals(self):
+  d,c,r,i=fixtures();other=dict(TOPIC,id='agri-aaaaaaaaaaaa',crop='کدو آجیلی',title='کاهش تلفات برداشت کدو آجیلی')
+  class Client:
+   def __init__(self,*a,**kw):self.answers=iter([c,r])
+   def text(self,p):return next(self.answers)
+  with tempfile.TemporaryDirectory() as tmp:
+   data=Path(tmp)/'data';out=Path(tmp)/'out';atomic_json(data/'config.json',{'research_feeder':{'enabled':True,'prefer_verified_source_catalog':True}});atomic_json(data/'health/latest.json',{'checked_at':utcnow()})
+   atomic_json(data/'research-source-catalog.json',{'version':2,'entries':[{'crops':[TOPIC['crop']],'intents':[TOPIC['intent']],'urls':[x['url'] for x in d]}]})
+   with patch.object(research,'items',return_value=[other,TOPIC]),patch.object(research,'update'):
+    result=research.prepare_one(i,client_factory=Client,fetcher=lambda url:next(x for x in d if x['url']==url),data=data,out=out)
+   self.assertEqual(result['topic_id'],TOPIC['id']);self.assertEqual(result['status'],'brief_ready');self.assertFalse((out/'research'/f"{other['id']}.json").exists())

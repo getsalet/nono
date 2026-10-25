@@ -42,6 +42,12 @@ def run(request_path=None,scheduled=False,_research_done=False):
  config=load_json(DATA/'config.json')
  if not config.get('publication_enabled'):return {'status':'publication_disabled','model_calls':0}
  if scheduled and not config.get('automatic_generation'):return {'status':'automatic_generation_disabled','model_calls':0}
+ if safe_active and config.get('runtime_health',{}).get('enabled'):
+  from .runtime_health import ensure_fresh
+  health=ensure_fresh()
+  if health['status'] not in {'health_current','health_refreshed_from_actual_evidence'}:
+   update('اتصال نیازمند بررسی محدود است؛ تولید بی‌دلیل اجرا نشد',0,status='health_refresh_required')
+   return health
  if scheduled and (DATA/'pilot-resume-request.json').exists():
   from .pilot_resume import run as resume_pilot
   recovery=resume_pilot()

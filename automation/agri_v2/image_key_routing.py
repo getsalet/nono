@@ -31,7 +31,12 @@ def route(pool,cursor,env):
  from .image_transport import shared_evidence
  if circuit_open():raise AdmissionBlocked('Local shared provider cooldown active')
  path=OUT/'image-key-routing.json';state=load_json(path) if path.exists() else {}
- selected,next_cursor=choose(pool,state.get('cursor',cursor),shared_evidence(),time.time())
+ # Continue after the last selected unique slot even if the verified pool changed.
+ seen=set();names=[]
+ for name,key in pool:
+  if key and key not in seen:names.append(name);seen.add(key)
+ prior=state.get('last_selected_slot');position=names.index(prior)+1 if prior in names else state.get('cursor',cursor)
+ selected,next_cursor=choose(pool,position,shared_evidence(),time.time())
  # Slot names only. Never save credentials or fingerprints. Shared workflow
  # concurrency serializes this cursor; the lease rechecks admission afterward.
  atomic_json(path,{'version':1,'cursor':next_cursor,'last_selected_slot':selected[0],'selected_at_epoch':time.time(),'scope':'owner-selected persistent verified round-robin; shared cooldowns and per-key holds enforced; no immediate error failover'})
