@@ -23,6 +23,10 @@ def metrics():
 def provider_snapshot():
  p=OUT/'provider-circuit.json';c=load_json(p) if p.exists() else {}
  r=OUT/'pilot-resume/queue-aware-pilot-resume-v1/receipt.json';recovery=load_json(r) if r.exists() else {}
+ continuation=OUT/'curated-continuations/pinto-practical85-remaining-images-v1/receipt.json'
+ if continuation.exists():
+  row=load_json(continuation)
+  if row.get('status')!='publication_verified':recovery={'cycles_started':row.get('recovery_resumes',0)}
  deadline=c.get('retry_at_epoch')
  if deadline is None and c.get('open') and c.get('at'):deadline=datetime.datetime.fromisoformat(c['at']).timestamp()+3600
  return {'open':c.get('open') is True and isinstance(deadline,(int,float)) and deadline>datetime.datetime.now(datetime.timezone.utc).timestamp(),'reason':c.get('reason','provider_transient_failure'),'retry_at':datetime.datetime.fromtimestamp(deadline,datetime.timezone.utc).isoformat() if isinstance(deadline,(int,float)) else None,'recovery_cycles_used':recovery.get('cycles_started',0),'recovery_cycles_limit':2}

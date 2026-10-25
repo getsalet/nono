@@ -22,14 +22,11 @@ def resumable(row,req):
 class BoundedClient(ModelClient):
  def __init__(self,*a,**kw):
   self.limit=kw.pop('call_limit',3);self.review_limit=kw.pop('review_limit',self.limit)
-  self.accounting_path=kw.pop('accounting_path',None);pin=kw.pop('pinned_slot',None)
+  self.accounting_path=kw.pop('accounting_path',None)
   super().__init__(*a,**kw)
   old=load_json(self.accounting_path) if self.accounting_path and self.accounting_path.exists() else {}
   self.reserved={'image':old.get('image_calls_reserved',0),'text':old.get('visual_review_calls_reserved',0)}
   if any(type(v)is not int or v<0 for v in self.reserved.values()):raise CapabilityError('Invalid cumulative accounting')
-  if pin:
-   self.keys['image']=[pair for pair in self.keys['image'] if pair[0]==pin]
-   if not self.keys['image']:raise CapabilityError('Previous image slot is unavailable; no retry rotation')
  def text(self,prompt):raise CapabilityError('This continuation permits no article generation')
  def request(self,kind,*a,**kw):
   limit=self.review_limit if kind=='text' else self.limit
@@ -44,8 +41,8 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def validate(req):
  remaining=req.get('request_id')==REMAINING_ID
  expected=4 if remaining else 3
- reviews=2 if remaining else 3
- if remaining and (req.get('max_provider_resumes')!=2 or req.get('max_new_image_outputs')!=2):raise ValueError('Bounded two-role recovery required')
+ reviews=1 if remaining else 3
+ if remaining and (req.get('max_provider_resumes')!=2 or req.get('max_new_image_outputs')!=1 or req.get('key_distribution')!='verified_round_robin'):raise ValueError('Bounded featured-plus-one-inline recovery required')
  if (req.get('request_id') not in {ID,REMAINING_ID} or req.get('topic_id')!=TOPIC or req.get('authorized') is not True
      or req.get('max_image_calls')!=expected or req.get('max_visual_reviews')!=reviews or req.get('max_text_generation_calls')!=0
      or req.get('max_new_posts')!=1 or req.get('preserve_existing_attempts') is not True
@@ -75,32 +72,27 @@ def run():
  topic=get_topic('new',TOPIC);brief=load_json(pairs['brief_sha256']);article=load_json(pairs['article_sha256']);check_brief(topic,brief);validate_article(article,topic,brief);validate_for_publication(article)
  state={'request_id':req['request_id'],'topic_id':TOPIC,'status':'reserved','started_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'old_attempts_preserved':load_json(folder/'cycle-attempts.json'),'max_image_calls':req['max_image_calls'],'max_visual_reviews':req['max_visual_reviews'],'max_text_generation_calls':0,'max_new_posts':1,'repair_origin':'source-bound Notion AI editorial revision; not human agronomy approval'}
  state['recovery_resumes']=previous_run.get('recovery_resumes',0)+(1 if previous_run else 0)
- pin=previous_run.get('retry_image_slot')
- if previous_run and not pin:
-  routing=load_json(OUT/'image-key-routing.json')
-  pin=routing.get('last_selected_slot')
- if previous_run and not pin:raise ValueError('Retry slot evidence missing')
- state['retry_image_slot']=pin
+ state['key_distribution']='verified_round_robin'
  atomic_json(rp,state)
  try:
   from .wordpress import WordPress
   wp=WordPress();wp.preflight();inventory=wp.inventory()
   with tempfile.TemporaryDirectory() as tmp:
    ip=Path(tmp)/'inventory.json';atomic_json(ip,inventory)
-   draft(TOPIC,DATA/'briefs'/f'{TOPIC}.json',ip,DATA/'health/latest.json',allow_calls=True,client_factory=lambda *a,**kw:BoundedClient(*a,call_limit=req['max_image_calls'],review_limit=req['max_visual_reviews'],pinned_slot=pin,accounting_path=rp.with_name('calls.json'),**kw))
+   draft(TOPIC,DATA/'briefs'/f'{TOPIC}.json',ip,DATA/'health/latest.json',allow_calls=True,client_factory=lambda *a,**kw:BoundedClient(*a,call_limit=req['max_image_calls'],review_limit=req['max_visual_reviews'],accounting_path=rp.with_name('calls.json'),**kw))
   if sha(folder/'cycle-attempts.json')!=req['original_cycle_attempts_sha256']:raise ValueError('Original production attempt receipt changed')
   require_all(folder,topic,article)
-  state.update(status='publishing_after_three_current_quality_passes',at=utcnow());atomic_json(rp,state)
+  state.update(status='publishing_after_two_current_quality_passes',at=utcnow());atomic_json(rp,state)
   result=wp.publish(folder,topic,brief,authorized=True)
   state.update(status='publication_verified',result=result,completed_at=utcnow());atomic_json(rp,state)
-  update('سه تصویر و انتشار صفحه عمومی تأیید شد',100,TOPIC,topic['title'],status='success')
+  update('تصویر شاخص، تصویر داخل متن و انتشار صفحه عمومی تأیید شد',100,TOPIC,topic['title'],status='success')
   return {'status':state['status'],'result':result}
  except Exception as exc:
   from .cycle import handle_generation_failure
   handle_generation_failure(exc)
   state.update(status='stopped_safely',failure=failure_details(exc),completed_at=utcnow())
   counts=load_json(rp.with_name('calls.json')) if rp.with_name('calls.json').exists() else {}
-  state['retry_image_slot']=counts.get('last_image_slot') or pin
+  state['last_image_slot']=counts.get('last_image_slot')
   if resumable(state,req):state['status']='provider_deferred'
   atomic_json(rp,state)
   if state['status']=='provider_deferred':update('صف سرویس تصویر پر است؛ ادامه محدود پس از پایان مهلت انتظار',52,TOPIC,status='provider_cooldown')

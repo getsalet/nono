@@ -14,12 +14,12 @@ class DeferredContinuationTests(unittest.TestCase):
  def test_cooldown_never_reserves_another_call(self):
   with patch.object(c,'authorized',return_value=True),patch.object(c,'circuit_open',return_value=True),patch.object(c,'BoundedClient') as client,patch.object(c,'atomic_json') as write:
    self.assertEqual(c.run()['status'],'provider_cooldown');client.assert_not_called();write.assert_not_called()
- def test_cumulative_counts_and_same_slot(self):
+ def test_cumulative_counts_keep_entire_verified_pool(self):
   def init(obj,*a,**kw):obj.keys={'image':[('AGNES_API_KEY','redacted'),('AGNES_API_KEY2','redacted2')]}
   with tempfile.TemporaryDirectory() as tmp,patch.object(ModelClient,'__init__',init),patch.object(ModelClient,'request',return_value={}):
    path=Path(tmp)/'calls.json';atomic_json(path,{'image_calls_reserved':1,'visual_review_calls_reserved':0})
-   x=c.BoundedClient({},call_limit=4,review_limit=2,accounting_path=path,pinned_slot='AGNES_API_KEY')
-   self.assertEqual(x.keys['image'],[('AGNES_API_KEY','redacted')]);self.assertEqual(x.reserved['image'],1)
+   x=c.BoundedClient({},call_limit=4,review_limit=2,accounting_path=path)
+   self.assertEqual(len(x.keys['image']),2);self.assertEqual(x.reserved['image'],1)
    for _ in range(3):x.request('image','/',{},1)
    with self.assertRaises(c.CapabilityError):x.request('image','/',{},1)
    for _ in range(2):x.request('text','/',{},1)

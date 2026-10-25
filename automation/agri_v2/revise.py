@@ -1,5 +1,6 @@
 """Explicit one-post formatting/media revision, not a mass publisher or new-article generator."""
 import hashlib,json,re
+from .image_layout import PRODUCTION_IMAGE_ROLES,IMAGE_LAYOUT
 from urllib.parse import quote
 from .queue import DATA,OUT,load_json,atomic_json,get_topic,utcnow,age_hours
 from .pipeline import check_brief,validate_article,validate_for_publication
@@ -55,7 +56,7 @@ def run(recovery_extension=None):
  if age_hours(hp['checked_at'])>24:raise ValueError('Health report expired')
  state['attempts']+=1;atomic_json(status_path,state)
  client=ModelClient(hp,allow_calls=True)
- for i in range(1,4):
+ for i in PRODUCTION_IMAGE_ROLES:
   path=work/f'image-{i}.webp'
   if not path.exists():
    update('ساخت تصویر محصول‌دار '+str(i),20+(i-1)*20)
@@ -63,8 +64,8 @@ def run(recovery_extension=None):
    blob=generate_role(client,topic,i,article);tmp=path.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(path)
   ensure_review(client,path,topic,i,article)
  require_all(work,topic,article)
- # All three images must pass before any new media upload or post mutation.
- for i in range(1,4):
+ # Both production images must pass before any new media upload or post mutation.
+ for i in PRODUCTION_IMAGE_ROLES:
   path=work/f'image-{i}.webp'
   if any(x['index']==i for x in state['media']):continue
   name=ident+'-'+rev+'-image-'+str(i);found,_=wp.call('media?slug='+name+'&context=edit')
@@ -75,7 +76,7 @@ def run(recovery_extension=None):
   else:m,_=wp.call('media','POST',blob=path.read_bytes(),headers={'Content-Type':'image/webp','Content-Disposition':'attachment; filename="'+name+'.webp"'})
   m,_=wp.call('media/'+str(m['id']),'POST',{'post':pid,'title':topic['title']+' — نوار تیپ AFP','alt_text':topic['crop']+' و نوار تیپ AFP در محیط کشاورزی','caption':''})
   state['media'].append({'index':i,'id':m['id'],'url':m['source_url'],'revision_path':str(path.relative_to(OUT.parent.parent))});atomic_json(status_path,state);update('تصویر '+str(i)+' ساخته، برچسب‌گذاری و بارگذاری شد',20+i*20)
- media=sorted(state['media'],key=lambda x:x['index'])
+ media=sorted((m for m in state['media'] if m['index'] in PRODUCTION_IMAGE_ROLES),key=lambda x:x['index'])
  body=marker+'\n'+illustrated_content(article['content_html'],media,topic['crop'])+DISCLOSURE+faq_html(article['faq'])
  current,_=wp.call('posts/'+str(pid)+'?context=edit')
  if current['modified_gmt']!=post['modified_gmt'] or current['author']!=wp.user_id or current['status'] not in ('draft','publish') or marker not in current['content']['raw']:raise WPError('Post changed during generation; stop for review')
@@ -89,7 +90,7 @@ def run(recovery_extension=None):
  state.update(verified=True,completed_at=utcnow(),content_sha256=hashlib.sha256(body.encode()).hexdigest());atomic_json(status_path,state)
  prov=load_json(folder/'provenance.json');prov.update(image_revision=rev,images='AI reference-conditioned AFP tape product, bottom-right phone label; illustrations, not agronomic evidence',format={'table':True,'faq_count':3,'faq_markup':'faq-section details/summary','visible_image_caption':False});atomic_json(folder/'provenance.json',prov)
  update('اصلاح مقاله و صفحه عمومی تأیید شد',100,status='success')
- return {'status':'revised','post_id':pid,'url':receipt['url'],'images':3,'faq_count':3,'table':True}
+ return {'status':'revised','post_id':pid,'url':receipt['url'],'images':len(PRODUCTION_IMAGE_ROLES),'faq_count':3,'table':True}
 
 def main():
  try:print(json.dumps(run(),ensure_ascii=False));return 0

@@ -50,7 +50,9 @@ class PipelineTests(unittest.TestCase):
     return b'fixture-image'
   with self.assertRaises(CapabilityError):p.draft(self.t['id'],b,inv,h,True,out,Fake)
   self.assertEqual(calls,{'text':1,'image':2});p.draft(self.t['id'],b,inv,h,True,out,Fake)
-  self.assertEqual(calls,{'text':1,'image':4});self.assertEqual(p.draft(self.t['id'],b,inv,h,True,out,Fake)['status'],'already_drafted');self.assertEqual(calls,{'text':1,'image':4})
+  self.assertEqual(calls,{'text':1,'image':3});self.assertEqual(p.draft(self.t['id'],b,inv,h,True,out,Fake)['status'],'already_drafted');self.assertEqual(calls,{'text':1,'image':3})
+  self.assertFalse((out/'new'/self.t['id']/'image-3.webp').exists())
+  self.assertEqual(q.load_json(out/'new'/self.t['id']/'state.json')['images_done'],2)
   payload=q.load_json(out/'new'/self.t['id']/'wordpress-draft-payload.json');self.assertEqual(payload['status'],'draft')
  def test_corrupt_faq_blocks_before_any_image_spend(self):
   b=self.write('brief.json',self.b);inv=self.write('inventory.json',{'source_generated_at':q.utcnow(),'records':[{'id':1,'title':'unrelated','url':'https://example.org/unrelated/','status':'publish'}]});h=self.write('health.json',{});article=self.article();article['faq'][0]['answer']+=' 通用';calls={'image':0}

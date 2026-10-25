@@ -1,5 +1,6 @@
 """One bounded, explicit production cycle; schedules accept only publication-authorized briefs."""
 import argparse,json,tempfile
+from .image_layout import PRODUCTION_IMAGE_ROLES,IMAGE_LAYOUT
 from pathlib import Path
 from .queue import DATA,OUT,load_json,atomic_json,get_topic,age_hours,utcnow
 from .pipeline import draft,check_brief,digest,validate_article,validate_for_publication
@@ -79,13 +80,13 @@ def run(request_path=None,scheduled=False,_research_done=False):
   attempts['attempts']+=1;attempts['last_started_at']=utcnow();atomic_json(attempts_path,attempts)
   with tempfile.TemporaryDirectory() as tmp:
    ip=Path(tmp)/'inventory.json';atomic_json(ip,inventory)
-   print("Stage: generate or resume one draft and three images",flush=True)
+   print("Stage: generate or resume one draft and two images",flush=True)
    folder=OUT/'new'/ident;sp=folder/'state.json'
    staged=sp.exists() and load_json(sp).get('status')=='draft_created'
    if staged:
     if load_json(sp).get('brief_sha256')!=digest(brief):raise ValueError('Staged brief changed')
     validate_article(load_json(folder/'article.json'),topic,brief)
-    if not (folder/'wordpress-draft-payload.json').exists() or not all((folder/f'image-{n}.webp').exists() for n in range(1,4)):raise ValueError('Staged artifacts incomplete')
+    if not (folder/'wordpress-draft-payload.json').exists() or not all((folder/f'image-{n}.webp').exists() for n in PRODUCTION_IMAGE_ROLES):raise ValueError('Staged artifacts incomplete')
    else:
     try:draft(ident,bp,ip,hp,allow_calls=True)
     except Exception as exc:

@@ -34,5 +34,5 @@ def route(pool,cursor,env):
  selected,next_cursor=choose(pool,state.get('cursor',cursor),shared_evidence(),time.time())
  # Slot names only. Never save credentials or fingerprints. Shared workflow
  # concurrency serializes this cursor; the lease rechecks admission afterward.
- atomic_json(path,{'version':1,'cursor':next_cursor,'last_selected_slot':selected[0],'selected_at_epoch':time.time(),'scope':'pre-request verified-pool selection; no automatic retry after provider error'})
+ atomic_json(path,{'version':1,'cursor':next_cursor,'last_selected_slot':selected[0],'selected_at_epoch':time.time(),'scope':'owner-selected persistent verified round-robin; shared cooldowns and per-key holds enforced; no immediate error failover'})
  return selected

@@ -20,5 +20,5 @@ class FormatTests(unittest.TestCase):
   content='<p>intro</p><h2>one</h2><ul><li>x</li></ul><h2>two</h2><p>end</p>'
   media=[{'url':'https://example.org/'+str(i)} for i in range(3)]
   result=illustrated_content(content,media,'لوبیا')
-  self.assertEqual(result.count('<figure '),2);self.assertIn('</ul><figure ',result);self.assertNotIn('<li><figure',result)
+  self.assertEqual(result.count('<figure '),1);self.assertIn('</ul><figure ',result);self.assertNotIn('<li><figure',result)
 if __name__=='__main__':unittest.main()

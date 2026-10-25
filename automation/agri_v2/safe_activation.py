@@ -54,5 +54,5 @@ def owner_authorized(req,data):
      or report.get('wordpress_connection',{}).get('can_publish') is not True):raise ValueError('Missing source and connection readiness proof')
  health=load_json(data/'health/latest.json')
  if health.get('image_model')!=IMAGE_MODEL or not health.get('eligible_image_slots'):raise ValueError('No matching image capability pool')
- # Normal cycle still rechecks freshness, inventory, source brief and all three images.
+ # Normal cycle still rechecks freshness, inventory, source brief and both production images.
  return True

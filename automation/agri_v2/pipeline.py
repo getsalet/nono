@@ -1,5 +1,6 @@
 """Draft artifacts only. No WordPress/SQL/FTP writes, schedules or publishing."""
 import hashlib,html,json,re,unicodedata
+from .image_layout import PRODUCTION_IMAGE_ROLES,IMAGE_LAYOUT
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
@@ -163,7 +164,7 @@ def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,
     else:article=client.text(prompt);atomic_json(candidate_path,article)
     article=normalize_article(article,brief);validate_article(article,topic,brief);atomic_json(article_path,article)
    validate_article(article,topic,brief);validate_for_publication(article);update('متن، جدول و سه FAQ اعتبارسنجی شد',40,ident,topic['title']);state['status']='creating_images';atomic_json(state_path,state)
-   for n in range(1,4):
+   for n in PRODUCTION_IMAGE_ROLES:
     target=folder/f'image-{n}.webp'
     if target.exists():
      ensure_review(client,target,topic,n,article);continue
@@ -173,7 +174,7 @@ def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,
    payload={'title':topic['title'],'slug':slug,'content':article['content_html'],'excerpt':article['excerpt'],'status':'draft'}
    atomic_json(folder/'wordpress-draft-payload.json',payload)
    atomic_json(folder/'provenance.json',{'topic_id':ident,'origin':topic['origin'],'brief_sha256':bh,'sources':brief['sources'],'approved_facts':brief['approved_facts'],'editor':brief['editor'],'agronomy_reviewer':brief['agronomy_reviewer'],'review_mode':brief.get('review_mode','human_review'),'human_agronomy_review_done':brief.get('human_agronomy_review_done',True),'text_model':TEXT_MODEL,'image_model':IMAGE_MODEL,'images':'AI illustrations with reference-conditioned AFP tape product and bottom-right phone label, not agronomic evidence','scientific_review_required':True,'not_uploaded':True})
-   state.update(status='draft_created',images_done=3,updated_at=utcnow());atomic_json(state_path,state)
+   state.update(status='draft_created',images_done=len(PRODUCTION_IMAGE_ROLES),image_layout=IMAGE_LAYOUT,updated_at=utcnow());atomic_json(state_path,state)
    return {'topic_id':ident,'status':'draft_created','publication':False,'wordpress_uploaded':False}
   except Exception as exc:
    from .failure_diagnostics import failure_details

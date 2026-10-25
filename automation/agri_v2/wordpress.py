@@ -1,5 +1,6 @@
 """Restricted WordPress Author connection. No SQL, redirects, deletion or edits to unrelated posts."""
 import base64,html,json,os,re,urllib.request,urllib.error,urllib.parse
+from .image_layout import PRODUCTION_IMAGE_ROLES,IMAGE_LAYOUT
 from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .pipeline import norm
@@ -9,7 +10,7 @@ def illustrated_content(content,media,crop):
  def figure(m):return '<figure class="wp-block-image"><img src="'+html.escape(m['url'],quote=True)+'" alt="'+html.escape(crop+' و نوار تیپ AFP در محیط کشاورزی',quote=True)+'" loading="lazy"/></figure>'
  # Section boundaries are top-level; never insert a figure inside paragraphs or lists.
  matches=list(re.finditer(r'<h2>',content));at=matches[len(matches)//2].start() if len(matches)>1 else len(content)
- return content[:at]+figure(media[1])+content[at:]+figure(media[2])
+ return content[:at]+figure(media[1])+content[at:]
 
 class WPError(RuntimeError):pass
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -71,7 +72,7 @@ class WordPress:
    draft=dict(payload,content=marker+'\n'+payload['content'],categories=[35],comment_status='closed',ping_status='closed',status='draft')
    post,_=self.call('posts','POST',draft);r.update(post_id=post['id'],status='draft_created');atomic_json(rp,r)
   require_all(folder,topic,load_json(folder/'article.json'))
-  for i in range(1,4):
+  for i in PRODUCTION_IMAGE_ROLES:
    if any(x['index']==i for x in r['media']):continue
    name=topic['id']+'-image-'+str(i);existing,_=self.call('media?slug='+name+'&context=edit')
    if len(existing)>1:raise WPError('Ambiguous media slug')
@@ -83,7 +84,7 @@ class WordPress:
     media,_=self.call('media','POST',blob=data,headers={'Content-Type':'image/webp','Content-Disposition':'attachment; filename="'+name+'.webp"'})
    media,_=self.call('media/'+str(media['id']),'POST',{'post':r['post_id'],'title':topic['title']+' — تصویرسازی','alt_text':topic['crop']+' و نوار تیپ AFP در محیط کشاورزی','caption':''})
    r['media'].append({'index':i,'id':media['id'],'url':media['source_url']});atomic_json(rp,r)
-  media=sorted(r['media'],key=lambda m:m['index']);content=illustrated_content(payload['content'],media,topic['crop'])
+  media=sorted((m for m in r['media'] if m['index'] in PRODUCTION_IMAGE_ROLES),key=lambda m:m['index']);r['image_layout']=IMAGE_LAYOUT;content=illustrated_content(payload['content'],media,topic['crop'])
   content+=DISCLOSURE+faq_html(load_json(folder/'article.json')['faq'])
   # Update only our marker-owned draft, then explicitly publish one post.
   current,_=self.call('posts/'+str(r['post_id'])+'?context=edit')
@@ -94,8 +95,10 @@ class WordPress:
  def verify(self,post_id,topic,receipt_path):
   post,_=self.call('posts/'+str(post_id));r=load_json(receipt_path)
   if post['status']!='publish' or norm(html.unescape(post['title']['rendered']))!=norm(topic['title']) or not post.get('featured_media'):raise WPError('Published post verification failed')
-  if len(r.get('media',[]))!=3:raise WPError('Media receipt incomplete')
-  for m in r['media'][1:]:
+  media=sorted((m for m in r.get('media',[]) if m.get('index') in PRODUCTION_IMAGE_ROLES),key=lambda m:m['index'])
+  if [m['index'] for m in media]!=list(PRODUCTION_IMAGE_ROLES) or len({m['id'] for m in media})!=2:raise WPError('Media receipt incomplete')
+  if post['featured_media']!=media[0]['id']:raise WPError('Featured image verification failed')
+  for m in media[1:]:
    if m['url'] not in post['content']['rendered']:raise WPError('Inline image verification failed')
   if not post['link'].startswith(self.site+'/'):raise WPError('Unexpected public origin')
   try:

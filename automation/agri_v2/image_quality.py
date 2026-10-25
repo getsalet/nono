@@ -1,5 +1,6 @@
 """Fail-closed vision gate bound to exact image, topic, role, recipe and reference bytes."""
 import hashlib,json
+from .image_layout import PRODUCTION_IMAGE_ROLES,IMAGE_LAYOUT
 from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .media_policy import POLICY,contract_hash,reference_images
@@ -59,4 +60,4 @@ def ensure_review(client,path,topic,kind,article=None):
  return row
 
 def require_all(folder,topic,article=None):
- for kind in (1,2,3):valid_record(Path(folder)/f'image-{kind}.webp',topic,kind,article)
+ for kind in PRODUCTION_IMAGE_ROLES:valid_record(Path(folder)/f'image-{kind}.webp',topic,kind,article)
