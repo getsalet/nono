@@ -139,8 +139,12 @@ def publish_family(wp,folder,topic,source_result):
   marker='<!-- afp-agri-v2:'+topic['id']+':'+lang+' -->'
   content=localized_body(row,media,policy)
   matches=[]
-  for state in ('publish','draft','pending','future','private'):
-   found,_=wp.call('posts?slug='+slug+'&status='+state+'&context=edit');matches+=found
+  if rp.exists():
+   known=load_json(rp);post,_=wp.call('posts/'+str(known['post_id'])+'?context=edit');matches=[post]
+   if post.get('slug')!=slug:raise ValueError('Receipt slug changed')
+  else:
+   for state in ('publish','draft','pending','future','private'):
+    found,_=wp.call('posts?slug='+slug+'&status='+state+'&context=edit');matches+=found
   if len(matches)>1:raise ValueError('Ambiguous translated slug')
   if matches:
    post=matches[0]

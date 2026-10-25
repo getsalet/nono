@@ -6,7 +6,7 @@ from .runtime_health import ensure_fresh
 from .wordpress import WordPress
 TOPIC='agri-a4f1fee1e3ee'
 def run(req):
- if req.get('multilingual_source_topic')!=TOPIC or req.get('max_translation_calls')!=4 or req.get('max_new_source_posts')!=0 or req.get('max_new_image_calls')!=0:raise ValueError('Exact existing-source four-translation request required')
+ if req.get('multilingual_source_topic')!=TOPIC or req.get('max_translation_calls') not in (0,4) or req.get('max_new_source_posts')!=0 or req.get('max_new_image_calls')!=0:raise ValueError('Exact existing-source four-translation request required')
  from .safe_activation import authorized
  if not authorized(DATA):raise ValueError('Owner activation required')
  if ensure_fresh()['status'] not in {'health_current','health_refreshed_from_actual_evidence'}:raise ValueError('Current health required')
@@ -17,8 +17,13 @@ def run(req):
  source,_=wp.call('posts/524170')
  if source.get('status')!='publish' or source.get('afp_language')!='fa-IR':raise ValueError('Persian source no longer public')
  topic=get_topic('new',TOPIC)
- update('ترجمهٔ چهار زبان از فارسی؛ دو تصویر مشترک و بدون ساخت تصویر تازه',20,TOPIC,topic['title'])
- finish(start(load_json(folder/'article.json'),folder,load_json(DATA/'health/latest.json')),folder)
+ update('ترجمهٔ چهار زبان از فارسی؛ دو تصویر مشترک و بدون ساخت تصویر تازه' if req['max_translation_calls']==4 else 'تکمیل نسخهٔ روسی از متن اصلاح‌شده؛ بدون درخواست تازه از مدل',20,TOPIC,topic['title'])
+ if req['max_translation_calls']==4:
+  finish(start(load_json(folder/'article.json'),folder,load_json(DATA/'health/latest.json')),folder)
+ else:
+  import hashlib
+  pp=folder/'translations/ru-RU.json'
+  if req.get('prepared_translation_language')!='ru-RU' or hashlib.sha256(pp.read_bytes()).hexdigest()!=req.get('prepared_translation_sha256'):raise ValueError('Exact zero-call prepared Russian output required')
  result=publish_family(wp,folder,topic,receipt)
  state=load_json(folder/'translations/publication-status.json')
  if state.get('status')=='complete':update('چهار ترجمه با تصاویر مشترک و لینک‌های هم‌زبان منتشر و تأیید شد',100,TOPIC,topic['title'],status='success')
