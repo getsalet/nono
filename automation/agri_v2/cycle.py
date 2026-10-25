@@ -56,6 +56,10 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
   if health['status'] not in {'health_current','health_refreshed_from_actual_evidence'}:
    update('اتصال نیازمند بررسی محدود است؛ تولید بی‌دلیل اجرا نشد',0,status='health_refresh_required')
    return health
+ if safe_active and (DATA/'production-start-request.json').exists():
+  from .prepared_continuation import scheduled_resume
+  continuation=scheduled_resume()
+  if continuation is not None:return continuation
  if scheduled and (DATA/'pilot-resume-request.json').exists():
   from .pilot_resume import run as resume_pilot
   recovery=resume_pilot()
