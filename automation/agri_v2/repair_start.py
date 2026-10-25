@@ -3,7 +3,7 @@ import json,time
 from .queue import DATA,OUT,load_json,atomic_json,utcnow
 from .recovery import circuit_open
 from .safe_activation import authorized
-from .image_quality import REVIEW_POLICY
+from .image_quality import REVIEW_POLICY,PREVIOUS_REVIEW_POLICY
 from .media_policy import POLICY
 from .progress import update,failed
 from .failure_diagnostics import failure_details
@@ -12,7 +12,7 @@ def validate(req):
  if (req.get('request_id')!=ID or req.get('authorized') is not True
      or req.get('max_cycle_invocations')!=1 or req.get('max_posts_per_run')!=1
      or req.get('preserve_publication_holds') is not True
-     or req.get('review_policy')!=REVIEW_POLICY or req.get('scene_policy')!=POLICY
+     or req.get('review_policy') not in {REVIEW_POLICY,PREVIOUS_REVIEW_POLICY} or req.get('scene_policy')!=POLICY
      or req.get('max_wait_seconds')!=2700):raise ValueError('Exact bounded repaired-cycle request required')
 def deadline():
  p=OUT/'provider-circuit.json';row=load_json(p) if p.exists() else {}
@@ -27,6 +27,7 @@ def run():
  path=OUT/'repair-start'/ID/'receipt.json'
  old=load_json(path) if path.exists() else {}
  if old.get('cycle_invocations',0)>=1:return {'status':'repair_cycle_already_reserved','model_calls':0}
+ if req.get('review_policy')!=REVIEW_POLICY:raise ValueError('Historical repair cannot consume new-policy budget')
  end=time.time()+req['max_wait_seconds']
  state={'request_id':ID,'status':'waiting_existing_provider_deadline','cycle_invocations':0,'started_at':utcnow(),'scene_policy':POLICY,'review_policy':REVIEW_POLICY,'no_budget_reset':True}
  atomic_json(path,state)

@@ -4,9 +4,10 @@ from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .media_policy import POLICY,contract_hash,reference_images
 from .healthcheck import TEXT_MODEL
-REVIEW_POLICY='agri-vision-qa-v9-topic-routed-gt90'
-MIN_SCORE_EXCLUSIVE=90
-COSMETIC_CHECKS=frozenset({'product_scale_match'})
+REVIEW_POLICY='agri-vision-qa-v10-practical85'
+PREVIOUS_REVIEW_POLICY='agri-vision-qa-v9-topic-routed-gt90'
+MIN_SCORE_EXCLUSIVE=84
+COSMETIC_CHECKS=frozenset({'product_scale_match','role_camera_match','product_fully_in_frame'})
 EXPLICIT_REJECTIONS=frozenset({'4935cbd90642507446c0f5bd91c61e7e33e631d32de4292b9b0a148a2f10d49a'})
 CHECKS=('hardware_identity_match','hardware_sealed_all_ports_connected','crop_stage_match','role_camera_match','topic_evidence_match','product_identity_match','single_product','product_scale_match','product_fully_in_frame','package_separate_from_plumbing','physical_geometry_plausible','packaging_closed_no_protruding_material','no_people','no_added_text','phone_label_correct')
 class ImageQualityError(ValueError):pass
@@ -23,13 +24,21 @@ def review_path(path):return Path(path).with_suffix('.quality.json')
 def reject_known(path):
  if hashlib.sha256(Path(path).read_bytes()).hexdigest() in EXPLICIT_REJECTIONS:raise ImageQualityError('Independently rejected image; a historical model score cannot approve it')
 
+def matching_evidence(row,expected):
+ return all(row.get(k)==v for k,v in expected.items() if k!='review_policy') and row.get('review_policy') in {REVIEW_POLICY,PREVIOUS_REVIEW_POLICY}
+
 def valid_record(path,topic,kind,article=None):
  reject_known(path)
  rp=review_path(path)
  if not rp.exists():raise ImageQualityError('Image has no current visual review')
  row=load_json(rp);expected=binding(path,topic,kind,article)
- if any(row.get(k)!=v for k,v in expected.items()):raise ImageQualityError('Image/contract/reference review binding changed')
- if row.get('status')!='reviewed' or row.get('verdict',{}).get('passed') is not True or not verdict(row.get('verdict'))['passed']:raise ImageQualityError('Image rejected or visual review unavailable; no upload')
+ if not matching_evidence(row,expected):raise ImageQualityError('Image/contract/reference review binding changed')
+ if row.get('status')!='reviewed':raise ImageQualityError('Image review unavailable; no upload')
+ evaluated=verdict(row.get('verdict'))
+ if not evaluated['passed']:raise ImageQualityError('Image rejected under current practical policy; no upload')
+ if row.get('review_policy')==REVIEW_POLICY and row.get('verdict',{}).get('passed') is not True:raise ImageQualityError('Explicit current-policy rejection retained')
+ if row.get('review_policy')==PREVIOUS_REVIEW_POLICY:
+  return {**row,'verdict':evaluated,'acceptance':'owner_authorized_global_policy_reassessment','evaluated_under_policy':REVIEW_POLICY,'new_visual_review_claimed':False}
  return row
 
 def ensure_review(client,path,topic,kind,article=None):
@@ -37,7 +46,7 @@ def ensure_review(client,path,topic,kind,article=None):
  path=Path(path);rp=review_path(path);expected=binding(path,topic,kind,article)
  if rp.exists():
   row=load_json(rp)
-  if all(row.get(k)==v for k,v in expected.items()):return valid_record(path,topic,kind,article)
+  if matching_evidence(row,expected):return valid_record(path,topic,kind,article)
  row={**expected,'checked_at':utcnow(),'reviewer':'automated_multimodal_model','human_review_claimed':False,'status':'review_started','no_auto_regeneration':True}
  atomic_json(rp,row) # reserve before call: crash or unavailable review never becomes pass
  try:

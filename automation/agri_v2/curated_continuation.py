@@ -9,7 +9,7 @@ from .safe_activation import authorized
 from .recovery import circuit_open
 from .progress import update,failed
 from .media_policy import POLICY
-from .image_quality import REVIEW_POLICY,require_all
+from .image_quality import REVIEW_POLICY,PREVIOUS_REVIEW_POLICY,require_all
 ID='pinto-source-bound-continuation-v1';TOPIC='agri-a4f1fee1e3ee'
 class BoundedClient(ModelClient):
  def __init__(self,*a,**kw):
@@ -25,7 +25,7 @@ def validate(req):
  if (req.get('request_id')!=ID or req.get('topic_id')!=TOPIC or req.get('authorized') is not True
      or req.get('max_image_calls')!=3 or req.get('max_visual_reviews')!=3 or req.get('max_text_generation_calls')!=0
      or req.get('max_new_posts')!=1 or req.get('preserve_existing_attempts') is not True
-     or req.get('scene_policy')!=POLICY or req.get('review_policy')!=REVIEW_POLICY):raise ValueError('Exact source-bound editorial continuation required')
+     or req.get('scene_policy')!=POLICY or req.get('review_policy') not in {REVIEW_POLICY,PREVIOUS_REVIEW_POLICY}):raise ValueError('Exact source-bound editorial continuation required')
  for key in ('article_sha256','brief_sha256','original_candidate_sha256','original_cycle_attempts_sha256'):
   if not isinstance(req.get(key),str) or len(req[key])!=64:raise ValueError('Exact repair evidence hashes required')
 def run():
@@ -33,6 +33,7 @@ def run():
  if not authorized(DATA):raise ValueError('Owner activation required')
  folder=OUT/'new'/TOPIC;rp=OUT/'curated-continuations'/ID/'receipt.json'
  if rp.exists():return {'status':'already_reserved','model_calls':0}
+ if req.get('review_policy')!=REVIEW_POLICY:raise ValueError('Historical continuation cannot consume new-policy budget')
  if circuit_open():return {'status':'provider_cooldown','model_calls':0}
  config=load_json(DATA/'config.json')
  if TOPIC in config.get('publication_holds',{}) or config.get('max_posts_per_run')!=1:raise ValueError('Publication scope changed')

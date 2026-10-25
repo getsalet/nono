@@ -5,7 +5,7 @@ import hashlib
 from .queue import DATA,OUT,ROOT,load_json,get_topic
 from .image_quality import valid_record,REVIEW_POLICY,MIN_SCORE_EXCLUSIVE
 from .healthcheck import IMAGE_MODEL
-OWNER_ID='owner-score90-source-ready-activation-v1'
+OWNER_ID='owner-practical85-source-ready-activation-v1'
 ID='one-hour-source-ready-activation-v1';TOPIC='agri-af1a4b491d83'
 def authorized(data_path=None):
  data=DATA if data_path is None else data_path
@@ -40,8 +40,8 @@ def skip_completed_tuning():
 
 def owner_authorized(req,data):
  # Owner authorizes starting the normal pipeline, NOT approving the failed canary.
- if (req.get('authorized') is not True or req.get('mode')!='source_ready_gt90_critical_checks'
-     or req.get('score_strictly_greater_than')!=90 or MIN_SCORE_EXCLUSIVE!=90
+ if (req.get('authorized') is not True or req.get('mode')!='source_ready_practical85_critical_checks'
+     or req.get('score_strictly_greater_than')!=84 or MIN_SCORE_EXCLUSIVE!=84
      or req.get('review_policy')!=REVIEW_POLICY or req.get('max_posts_per_run')!=1
      or req.get('preserve_publication_holds') is not True):raise ValueError('Explicit owner quality policy authorization required')
  config=load_json(data/'config.json')

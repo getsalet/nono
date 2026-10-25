@@ -97,9 +97,9 @@ class ImageQualityTests(unittest.TestCase):
   c=object.__new__(ModelClient);c.request=Mock(return_value={'choices':[{'message':{'content':'{"title":"fixture"}'}}]})
   self.assertEqual(c.text('fixture'),{'title':'fixture'})
 
- def test_owner_threshold_is_strictly_above_90(self):
-  v=self.good();v['score']=90;self.assertFalse(q.verdict(v)['passed'])
-  v['score']=91;self.assertTrue(q.verdict(v)['passed'])
+ def test_owner_practical_threshold_is_85_inclusive(self):
+  v=self.good();v['score']=84;self.assertFalse(q.verdict(v)['passed'])
+  v['score']=85;self.assertTrue(q.verdict(v)['passed'])
  def test_cosmetic_scale_does_not_veto_92(self):
   v=self.good();v['score']=92;v['checks']['product_scale_match']=False
   self.assertTrue(q.verdict(v)['passed'])
