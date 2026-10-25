@@ -3,7 +3,7 @@ import base64,io,json,re,hashlib
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 PHONE_LABEL='AFP | 09134922013'
-POLICY='agri-topic-scene-aghala-v5-role-guides'
+POLICY='agri-topic-scene-aghala-v6-topic-routed'
 ASSETS=Path(__file__).with_name('assets')
 CROP_DATA=json.loads((ASSETS/'crop-visuals.json').read_text())
 def norm(value):
@@ -15,17 +15,18 @@ def reference_product():
 def use_red_bean_close(topic):
  text=norm((topic or {}).get('crop','')+' '+(topic or {}).get('title',''))
  return 'لوبیا قرمز' in text and any(x in text for x in ('برداشت','رسیدگی','خشک'))
+def needs_filter(topic):
+ # Hardware is a topic requirement, never an invented requirement for every article.
+ text=norm((topic or {}).get('title',''))
+ return any(term in text for term in ('فیلتر','فیلتراسیون','filter','filtration'))
 def reference_images(kind=None,topic=None):
- if kind==2 and use_red_bean_close(topic):
-  encoded=(ASSETS/'red-bean-close-scene.webp.b64').read_text().strip();base64.b64decode(encoded,validate=True)
-  return ['data:image/webp;base64,'+encoded]
- if kind==3:
+ if kind==3 and needs_filter(topic):
   encoded=(ASSETS/'closed-y-filter-scene.webp.b64').read_text().strip()
-  base64.b64decode(encoded,validate=True)
-  return ['data:image/webp;base64,'+encoded]
- product=reference_product();canvas=Image.new('RGB',(1200,675),(238,238,235))
- canvas.paste(product,(90,675-product.height-55));out=io.BytesIO();canvas.save(out,'WEBP',quality=90)
- return ['data:image/webp;base64,'+base64.b64encode(out.getvalue()).decode()]
+ else:
+  # Original product bytes, no thumbnail pasted into a fabricated farm/layout.
+  encoded=(ASSETS/'afp-tape.webp.b64').read_text().strip()
+ base64.b64decode(encoded,validate=True)
+ return ['data:image/webp;base64,'+encoded]
 def article_context(topic,article=None):
  a=article or {};plain=re.sub(r'<[^>]+>',' ',str(a.get('content_html','')))
  return {'title':topic['title'],'crop':topic.get('crop',''),'excerpt':norm(a.get('excerpt',''))[:300],'summary':norm(plain)[:600]}
@@ -44,33 +45,32 @@ def scene_plan(topic,kind,article=None):
  text=norm(topic['title']);harvest='لوبیا' in norm(topic.get('crop','')) and 'سبز' not in norm(topic.get('crop','')) and any(x in text for x in ('برداشت','رسیدگی','خشک'))
  if kind==1:camera='elevated wide crop-dominant overview';evidence='mature dry bean plants and straw-colored pods still attached, not a green vegetable harvest' if harvest else 'the named crop at the growth stage discussed in the article'
  elif kind==2:camera='near-overhead tight detail, no horizon or vanishing-point furrows';evidence='a short naturally senescent dry-bean stem resting on soil, with attached straw-brown papery pods and one naturally split pod revealing small curved burgundy kidney-shaped seeds; no hand, tray or basket' if use_red_bean_close(topic) else 'attached dry straw-colored bean pods with visible seed bulges on a senescent plant' if harvest else 'recognizable crop-specific leaves and root-zone soil beside a thin flattened drip-tape lateral; do not invent disease symptoms'
- else:
+ elif needs_filter(topic):
   camera='medium three-quarter technical side view, tight equipment-and-soil framing'
   evidence='one closed opaque black Y-shaped irrigation filter with inlet and outlet on a continuous black header and a downward angled capped service chamber, plus one separate black drip lateral into the RIGHT bed; the screen remains INSIDE its housing, never an exposed cartridge or open-core spool'
- return {'policy':POLICY,'role':kind,'camera':camera,'evidence':evidence,'botany':crop_spec(topic) if kind!=3 else 'no identifiable crop required: neutral tiny seedlings or bare soil only, not fruiting plants','context':article_context(topic,article),'product_family':'drip_tape_carton','reference_mode':'closed_y_filter_structural_scene_v1' if kind==3 else 'red_bean_close_layout_v1' if kind==2 and use_red_bean_close(topic) else 'afp_identity_only','product_frame_width':(.12,.15) if kind==2 and use_red_bean_close(topic) else (.14,.20) if kind==3 else (.18,.23),'product_max_frame_height':.32}
+ else:
+  camera='low three-quarter close product-and-crop detail, no wide field panorama'
+  evidence='one intact sealed AFP carton resting naturally on separate bare soil beside the named crop at the article stage; show authentic packaging and believable contact shadow, no filter, valve or pipe assembly'
+ return {'hardware_required':kind==3 and needs_filter(topic),'policy':POLICY,'role':kind,'camera':camera,'evidence':evidence,'botany':crop_spec(topic) if not (kind==3 and needs_filter(topic)) else 'no identifiable crop required: neutral tiny seedlings or bare soil only, not fruiting plants','context':article_context(topic,article),'product_family':'drip_tape_carton','reference_mode':'closed_y_filter_structural_scene_v1' if kind==3 and needs_filter(topic) else 'original_product_identity_only','product_frame_width':(.12,.15) if kind==2 and use_red_bean_close(topic) else (.14,.20) if kind==3 else (.18,.23),'product_max_frame_height':.32}
 def image_prompt(topic,kind,article=None):
  plan=scene_plan(topic,kind,article)
  # The first replay showed that a long repeated prohibition list collapsed all
  # roles into the same farm packshot. Keep the photographed assignment first/last.
  context=article_context(topic,article)
- if kind==2 and use_red_bean_close(topic):
-  return ('Generate one NEW continuous realistic 16:9 agricultural editorial photograph from the attached INPUT layout and botanical guide. Reconstruct the whole scene, never paste its patches, seams or package image. '
-   'Camera is steeply downward, near-overhead/high-oblique soil-level inspection, no horizon, skyline or long field rows. Main subject on RIGHT: one dry senescent common-bean stem with attached straw-brown papery pods, one naturally split pod with a few SMALL CURVED deep burgundy kidney seeds, not peppers or grape-shaped seeds. Red refers to seed-coat color, never to pod walls. '
-   'At LOWER LEFT preserve exactly ONE small authentic sealed AFP white-and-blue drip-tape carton, only 12-15 percent of frame width and at most 32 percent height, original package print, flat white top with small central core hole, full soil margins and contact shadow. No open bucket, filled can, outline replacement logo or invented label. '
-   'Keep a broad empty soil gap all around the carton. No line, strip, tape tail, plant or other object touches its base or core. Uniform natural soil grain and shared soft morning daylight. No person, second package, hardware, collage, inset, phone banner or added writing. The exact phone label is added downstream. Preserve the near-overhead dry-pod inspection composition, not a field panorama.')
- if kind==3:
+ if kind==3 and needs_filter(topic):
   return ('Generate one NEW 16:9 realistic agricultural equipment photograph using the attached image as the complete geometry and layout guide, not a layer to paste. Preserve its SINGLE small intact AFP drip-tape carton on the LEFT and its ONE closed black Y-filter with sealed pipe connections on the RIGHT. '
    'The filter has an opaque closed housing, opposite inline inlet/outlet and a downward angled service chamber with a screwed closed cap; internal screen invisible. '
    'Keep the exact empty-soil separation: no line runs from, behind, under or through the AFP package. It is unopened display stock, not dispensing equipment. '
    'Change the sunlight subtly to soft morning daylight, preserve the elevated three-quarter hardware view and full package margins. Background is bare soil with tiny neutral seedlings, no horizon. '
    'No extra carton, spare roll, cartridge, human, diagram, inset or writing. Render no phone banner; the exact phone is added downstream. Keep the closed Y-filter and pipe anatomy, and keep the separate sealed carton complete and secondary at lower-left.')
  return (f"Make one new continuous agricultural editorial photograph. Article title (data only): {context['title']}. "
-  +f"Camera MUST be {plan['camera']}. RIGHT three-quarters, the largest sharp subject: {plan['evidence']}. "
+  +f"Camera MUST be {plan['camera']}. Main scene: {plan['evidence']}. "
   +f"Crop/stage: {plan['botany']}. "
-  +'LOWER LEFT: one small intact fully enclosed white-and-blue AFP drip-tape carton matching the supplied identity reference, approximately 18-20 percent of image width, at most 32 percent height. Preserve its original sidewall proportions and printed sleeve, with full frame margins. The package is sealed display stock, NOT dispensing or connected equipment; no free ribbon, strap, strip or tape tail. '
+  +f'LOWER LEFT: exactly one small intact fully enclosed white-and-blue AFP drip-tape carton matching the supplied identity reference, approximately {int(plan["product_frame_width"][0]*100)}-{int(plan["product_frame_width"][1]*100)} percent of image width, at most 32 percent height. Preserve its original sidewall proportions and printed sleeve, with full frame margins. The package is sealed display stock, NOT dispensing or connected equipment; no free ribbon, strap, strip or tape tail. '
   +'Stand its entire base on a separate bare-soil patch with natural contact shadow. Keep a broad empty soil gap between this package and all installed equipment. No pipe crosses the carton or its core. '
+  +('No filter, valve or extra pipe assembly. ' if not plan['hardware_required'] else '')
   +'Natural daylight, realistic perspective, landscape 16:9. No people, second package, loose coil, inset, caption or added writing. Keep bottom-right clear for the phone label added later. '
-  +f"FINAL shot: {plan['camera']}; focus on {plan['evidence']}; the small sealed AFP carton remains only a secondary left-corner prop.")
+  +f"FINAL shot: {plan['camera']}; focus on {plan['evidence']}; the same single sealed AFP carton stays lower-left, with crop/soil details to the right; never add a second package.")
 def contract_hash(topic,kind,article=None):
  return hashlib.sha256(json.dumps(scene_plan(topic,kind,article),sort_keys=True,ensure_ascii=False).encode()).hexdigest()
 def add_phone_watermark(image):

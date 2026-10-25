@@ -48,8 +48,9 @@ def run(request_path=None,scheduled=False,_research_done=False):
  for ident in candidates:
   if ident in config.get('publication_holds',{}):continue
   from .recovery import circuit_open
+  waiting_topic=get_topic('new',ident)
   if circuit_open():
-   update('سرویس مدل در دوره انتظار یک‌ساعته است؛ انتشار انجام نشد',0,status='provider_cooldown')
+   update('سرویس مدل در دوره انتظار است؛ انتشار انجام نشد',0,ident,waiting_topic['title'],status='provider_cooldown')
    return {'status':'provider_cooldown','published_posts':0,'model_calls':0}
   get_topic('new',ident)
   rp=OUT/'new'/ident/'wordpress-receipt.json'

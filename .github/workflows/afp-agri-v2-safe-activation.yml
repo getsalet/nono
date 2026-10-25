@@ -2,7 +2,7 @@ name: AFP agri v2 - evidence-gated safe activation
 on:
   push:
     branches: [feat/agri-generator-v2-2905-merge593]
-    paths: [data/agri-v2/safe-activation-request.json]
+    paths: [data/agri-v2/safe-activation-request.json, data/agri-v2/repair-start-request.json]
   workflow_dispatch:
 permissions:
   contents: write
@@ -13,7 +13,7 @@ jobs:
   cycle:
     if: github.repository == 'getsalet/nono'
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 90
     env:
       GITHUB_TOKEN: ${{ github.token }}
       BLOG_IMAGE_QUEUE_TOKEN: ${{ github.token }}
@@ -49,7 +49,11 @@ jobs:
       - name: Validate activation proof then one source-ready quality-gated cycle
         run: |
           python -c "from automation.agri_v2.safe_activation import authorized; assert authorized(), 'Explicit owner authorization and quality policy required'"
-          AFP_PROGRESS_ENABLED=1 python -m automation.agri_v2.cycle --scheduled
+          if [ -f data/agri-v2/repair-start-request.json ]; then
+            AFP_PROGRESS_ENABLED=1 python -m automation.agri_v2.repair_start
+          else
+            AFP_PROGRESS_ENABLED=1 python -m automation.agri_v2.cycle --scheduled
+          fi
       - name: Preserve receipts and partial progress
         if: always()
         run: bash .github/scripts/persist-agri-v2.sh

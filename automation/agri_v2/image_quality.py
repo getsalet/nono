@@ -4,7 +4,7 @@ from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .media_policy import POLICY,contract_hash,reference_images
 from .healthcheck import TEXT_MODEL
-REVIEW_POLICY='agri-vision-qa-v8-owner-gt90-critical'
+REVIEW_POLICY='agri-vision-qa-v9-topic-routed-gt90'
 MIN_SCORE_EXCLUSIVE=90
 COSMETIC_CHECKS=frozenset({'product_scale_match'})
 EXPLICIT_REJECTIONS=frozenset({'4935cbd90642507446c0f5bd91c61e7e33e631d32de4292b9b0a148a2f10d49a'})

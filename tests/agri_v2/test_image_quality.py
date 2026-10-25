@@ -23,7 +23,7 @@ class ImageQualityTests(unittest.TestCase):
  def test_article_content_binds_context_not_only_title(self):
   t=self.topic();self.assertNotEqual(m.contract_hash(t,2),m.contract_hash(t,2,{'content_html':'<p>ویژگی خاص مقاله</p>'}))
  def test_three_roles_are_distinct(self):
-  plans=[m.scene_plan(self.topic(),i) for i in (1,2,3)];self.assertEqual(len({p['camera'] for p in plans}),3);self.assertIn('filter',plans[2]['evidence']);self.assertIn('no identifiable crop required',plans[2]['botany'])
+  plans=[m.scene_plan(self.topic(),i) for i in (1,2,3)];self.assertEqual(len({p['camera'] for p in plans}),3);self.assertFalse(plans[2]['hardware_required']);self.assertIn('authentic packaging',plans[2]['evidence']);self.assertIn('dry common bean',plans[2]['botany'])
  def test_invalid_role_fail_closed(self):
   for i in (0,4,'1',True):
    with self.assertRaises(ValueError):m.scene_plan(self.topic(),i)
@@ -84,14 +84,14 @@ class ImageQualityTests(unittest.TestCase):
  def test_exposed_spool_cannot_pass_as_enclosed_filter(self):
   v=self.good();v['checks']['hardware_identity_match']=False;v['score']=100;self.assertFalse(q.verdict(v)['passed'])
  def test_technical_role_uses_actual_structural_reference_not_just_identity(self):
-  self.assertNotEqual(m.reference_images(3),m.reference_images());self.assertEqual(m.reference_images(1),m.reference_images())
-  p=m.image_prompt(self.topic(),3);self.assertIn('complete geometry and layout guide',p);self.assertIn('closed black Y-filter',p)
+  self.assertNotEqual(m.reference_images(3,{'title':'نصب فیلتر'}),m.reference_images());self.assertEqual(m.reference_images(1),m.reference_images())
+  p=m.image_prompt({'title':'نصب فیلتر'},3);self.assertIn('complete geometry and layout guide',p);self.assertIn('closed black Y-filter',p)
  def test_generate_role_passes_exact_role_references(self):
-  c=Mock();c.image.return_value=b'image';self.assertEqual(m.generate_role(c,self.topic(),3),b'image');self.assertEqual(c.image.call_args.kwargs['references'],m.reference_images(3))
+  c=Mock();c.image.return_value=b'image';self.assertEqual(m.generate_role(c,self.topic(),3),b'image');self.assertEqual(c.image.call_args.kwargs['references'],m.reference_images(3,self.topic()))
  def test_quality_binding_changes_with_structural_guide(self):
   with tempfile.TemporaryDirectory() as d:
    p=Path(d)/'image.webp';p.write_bytes(b'fixture')
-   self.assertNotEqual(q.binding(p,self.topic(),2)['reference_sha256'],q.binding(p,self.topic(),3)['reference_sha256'])
+   self.assertNotEqual(q.binding(p,self.topic(),2)['reference_sha256'],q.binding(p,{'title':'نصب فیلتر','id':'fixture'},3)['reference_sha256'])
  def test_writer_still_accepts_plain_text_without_undefined_role(self):
   from automation.agri_v2.client import ModelClient
   c=object.__new__(ModelClient);c.request=Mock(return_value={'choices':[{'message':{'content':'{"title":"fixture"}'}}]})

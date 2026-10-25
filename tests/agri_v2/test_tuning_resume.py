@@ -34,7 +34,7 @@ class TuningResumeTests(unittest.TestCase):
    with patch.object(cycle,'DATA',data),patch.object(t,'run',return_value={'status':'waiting','model_calls':0}) as run,patch.object(cycle,'WordPress') as wp:
     self.assertEqual(cycle.run(scheduled=True)['model_calls'],0);wp.assert_not_called();run.assert_called_once()
  def test_red_harvest_guide_does_not_leak_to_green_or_pinto_or_other_crop(self):
-  red={'crop':'لوبیا قرمز','title':'برداشت لوبیا قرمز'};self.assertNotEqual(m.reference_images(2,red),m.reference_images())
+  red={'crop':'لوبیا قرمز','title':'برداشت لوبیا قرمز'};self.assertEqual(m.reference_images(2,red),m.reference_images())
   for crop in ('لوبیا سبز','لوبیا چیتی','گندم','گوجه فرنگی'):
    self.assertEqual(m.reference_images(2,{'crop':crop,'title':'برداشت '+crop}),m.reference_images())
  def test_provider_deadline_and_retry_after_preserved(self):

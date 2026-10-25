@@ -15,7 +15,7 @@ POOL_REQUEST={'request_id': 'verified-pool-scene-v1', 'topic_id': 'agri-af1a4b49
 FIRST_SHA='f37936695d3c9f27396ba8ff69c3fe55c464d666ead3a5c5488954a11ed88591'
 NEGATIVES={2:('artifacts/agri-v2/model-switch/image-model-switch-21-v1/agnes-image-2.1-flash.webp','37e3543b9ecdae528c90f7a31bb7e14668cf666e07f00474bab85e3326e1d169'),3:('artifacts/agri-v2/image-backtests/aghala-image-tune-backtest-v3/role-3.webp','dd203fca78eb9f2d65b1f7476167956626f2b3cdefeb26aa3806a4d2c4a537fa')}
 def validate(req):
- if req!=POOL_REQUEST and req!={'request_id':ID,'topic_id':TOPIC,'policy':POLICY,'model':'agnes-image-2.1-flash','roles':[2,3],'max_image_calls':2,'max_review_calls':5,'publication_authorized':False}:raise ValueError('Exact bounded, non-publication role-guided replay required')
+ if req!=POOL_REQUEST and req!={'request_id':ID,'topic_id':TOPIC,'policy':'agri-topic-scene-aghala-v5-role-guides','model':'agnes-image-2.1-flash','roles':[2,3],'max_image_calls':2,'max_review_calls':5,'publication_authorized':False}:raise ValueError('Exact bounded, non-publication role-guided replay required')
 def verify_pool_evidence(req,health):
  if req['request_id']!=POOL_ID:return
  source=OUT/'image-key-audit/unique-image-capability-v1/report.json'
@@ -39,6 +39,7 @@ def run():
  if rp.exists():return {'status':'already_reserved','image_calls':0,'post_submissions':0}
  # A cooldown is not an attempted test and must not consume its unique reservation.
  if circuit_open():return {'status':'provider_cooldown_honored','image_calls':0,'post_submissions':0,'no_request_reserved':True}
+ if req['policy']!=POLICY:return {'status':'historical_recipe_changed_no_replay','image_calls':0,'post_submissions':0}
  report={'request_id':req['request_id'],'policy':POLICY,'started_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'model':IMAGE_MODEL,'image_calls':0,'review_calls':0,'max_image_calls':2,'max_review_calls':5,'post_submissions':0,'cases':[],'negative_controls':[],'human_review_claimed':False,'visual_agent_review_complete':False,'sample_scope':'red kidney bean dry-harvest detail and neutral technical role only; independently authored references are not counted as Agnes outputs'}
  atomic_json(rp,report)
  try:
