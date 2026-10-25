@@ -10,7 +10,7 @@ class CuratedContinuationTests(unittest.TestCase):
  def test_exact_separate_budget_and_bound_source_hashes(self):
   r=self.req();c.validate(r);f=OUT/'new'/c.TOPIC
   self.assertEqual(c.sha(f/'article.json'),r['article_sha256']);self.assertEqual(c.sha(f/'model-candidate.json'),r['original_candidate_sha256']);self.assertEqual(load_json(f/'cycle-attempts.json')['attempts'],2)
-  r['max_image_calls']=4
+  r['max_image_calls']=5
   with self.assertRaises(ValueError):c.validate(r)
  def test_curated_article_existing_scientific_and_language_gates(self):
   a=load_json(OUT/'new'/c.TOPIC/'article.json');b=load_json(DATA/'briefs'/f'{c.TOPIC}.json');validate_article(a,get_topic('new',c.TOPIC),b);validate_for_publication(a)

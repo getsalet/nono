@@ -30,9 +30,10 @@ def run(request_path=None,scheduled=False,_research_done=False):
   tuning=resume_tuning()
   if tuning is not None:return tuning
  if safe_active and (DATA/'curated-continuation-request.json').exists():
-  from .curated_continuation import REMAINING_ID,run as continue_curated
+  from .curated_continuation import REMAINING_ID,resumable,run as continue_curated
   continuation=load_json(DATA/'curated-continuation-request.json')
-  if continuation.get('request_id')==REMAINING_ID and not (OUT/'curated-continuations'/REMAINING_ID/'receipt.json').exists():return continue_curated()
+  receipt=OUT/'curated-continuations'/REMAINING_ID/'receipt.json'
+  if continuation.get('request_id')==REMAINING_ID and (not receipt.exists() or resumable(load_json(receipt),continuation)):return continue_curated()
  config=load_json(DATA/'config.json')
  if not config.get('publication_enabled'):return {'status':'publication_disabled','model_calls':0}
  if scheduled and not config.get('automatic_generation'):return {'status':'automatic_generation_disabled','model_calls':0}
