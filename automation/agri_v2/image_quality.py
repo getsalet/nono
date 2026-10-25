@@ -5,10 +5,10 @@ from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .media_policy import POLICY,contract_hash,reference_images
 from .healthcheck import TEXT_MODEL
-REVIEW_POLICY='agri-vision-qa-v11-illustrative85'
-LEGACY_REVIEW_POLICIES=frozenset({'agri-vision-qa-v9-topic-routed-gt90','agri-vision-qa-v10-practical85'})
+REVIEW_POLICY='agri-vision-qa-v12-critical-checks'
+LEGACY_REVIEW_POLICIES=frozenset({'agri-vision-qa-v9-topic-routed-gt90','agri-vision-qa-v10-practical85','agri-vision-qa-v11-illustrative85'})
 PREVIOUS_REVIEW_POLICY='agri-vision-qa-v9-topic-routed-gt90'
-MIN_SCORE_EXCLUSIVE=84
+SCORE_POLICY='advisory_only'
 COSMETIC_CHECKS=frozenset({'product_scale_match','role_camera_match','product_fully_in_frame'})
 EXPLICIT_REJECTIONS=frozenset({'4935cbd90642507446c0f5bd91c61e7e33e631d32de4292b9b0a148a2f10d49a'})
 CHECKS=('hardware_identity_match','hardware_sealed_all_ports_connected','crop_stage_match','role_camera_match','topic_evidence_match','product_identity_match','single_product','product_scale_match','product_fully_in_frame','package_separate_from_plumbing','physical_geometry_plausible','packaging_closed_no_protruding_material','no_people','no_added_text','phone_label_correct')
@@ -19,7 +19,7 @@ def verdict(value):
  if not isinstance(checks,dict) or any(type(checks.get(k))is not bool for k in CHECKS):raise ImageQualityError('Missing, unknown or non-boolean vision check')
  if type(score)is not int or not 0<=score<=100:raise ImageQualityError('Invalid vision score')
  if not isinstance(reasons,list) or not reasons or any(not isinstance(x,str) or not x.strip() for x in reasons):raise ImageQualityError('Vision review reasons required')
- return {'passed':all(checks[k] for k in CHECKS if k not in COSMETIC_CHECKS) and score>MIN_SCORE_EXCLUSIVE,'checks':{k:checks[k] for k in CHECKS},'score':score,'reasons':[x[:500] for x in reasons[:12]]}
+ return {'passed':all(checks[k] for k in CHECKS if k not in COSMETIC_CHECKS),'checks':{k:checks[k] for k in CHECKS},'score':score,'reasons':[x[:500] for x in reasons[:12]]}
 def binding(path,topic,kind,article=None):
  return {'image_sha256':hashlib.sha256(Path(path).read_bytes()).hexdigest(),'contract_sha256':contract_hash(topic,kind,article),'reference_sha256':hashlib.sha256(json.dumps({'generation':reference_images(kind,topic),'identity':reference_images()},sort_keys=True).encode()).hexdigest(),'policy':POLICY,'role':kind,'topic_id':topic.get('id'),'review_model':TEXT_MODEL,'review_policy':REVIEW_POLICY}
 def review_path(path):return Path(path).with_suffix('.quality.json')
@@ -38,7 +38,7 @@ def valid_record(path,topic,kind,article=None):
  if row.get('status')!='reviewed':raise ImageQualityError('Image review unavailable; no upload')
  evaluated=verdict(row.get('verdict'))
  if not evaluated['passed']:raise ImageQualityError('Image rejected under current practical policy; no upload')
- if row.get('review_policy')!=PREVIOUS_REVIEW_POLICY and row.get('verdict',{}).get('passed') is not True:raise ImageQualityError('Explicit current-policy rejection retained')
+ if row.get('review_policy') not in {PREVIOUS_REVIEW_POLICY,'agri-vision-qa-v11-illustrative85'} and row.get('verdict',{}).get('passed') is not True:raise ImageQualityError('Explicit current-policy rejection retained')
  if row.get('review_policy') in LEGACY_REVIEW_POLICIES:
   return {**row,'verdict':evaluated,'acceptance':'owner_authorized_global_policy_reassessment','evaluated_under_policy':REVIEW_POLICY,'new_visual_review_claimed':False}
  return row

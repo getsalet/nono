@@ -11,10 +11,13 @@ ID='pinto-illustration-recheck-v1';TOPIC='agri-a4f1fee1e3ee'
 def validate(req):
  if (req.get('request_id')!=ID or req.get('topic_id')!=TOPIC or req.get('authorized') is not True
   or req.get('max_image_calls')!=0 or req.get('max_visual_reviews')!=1 or req.get('max_text_generation_calls')!=0
-  or req.get('max_new_posts')!=1 or req.get('review_policy')!=REVIEW_POLICY):raise ValueError('Exact existing-image review authorization required')
+  or req.get('max_new_posts')!=1 or req.get('review_policy') not in {REVIEW_POLICY,'agri-vision-qa-v11-illustrative85'}):raise ValueError('Exact existing-image review authorization required')
  for k in ('article_sha256','brief_sha256','image_1_sha256','image_2_sha256','prior_quality_sha256','attempts_sha256'):
   if not isinstance(req.get(k),str) or len(req[k])!=64:raise ValueError('Exact existing artifact hashes required')
 def run():
+ if (DATA/'practical-finalize-request.json').exists():
+  from .practical_finalize import run as finalize
+  return finalize()
  req=load_json(DATA/'practical-recheck-request.json');validate(req)
  rp=OUT/'practical-rechecks'/ID/'receipt.json'
  if rp.exists():

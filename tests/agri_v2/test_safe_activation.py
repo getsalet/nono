@@ -28,11 +28,11 @@ class SafeActivationTests(unittest.TestCase):
    atomic_json(proof,{'article_validation_passed':True,'post_mutations':0,'wordpress_connection':{'can_publish':True}})
    config={'publication_holds':{a.TOPIC:{'reason':'failed pilot'}},'max_posts_per_run':1,'automatic_generation':True,'publication_enabled':True}
    atomic_json(data/'config.json',config);atomic_json(data/'health/latest.json',{'image_model':a.IMAGE_MODEL,'eligible_image_slots':['AGNES_API_KEY3']})
-   req={'request_id':a.OWNER_ID,'authorized':True,'mode':'source_ready_practical85_critical_checks','score_strictly_greater_than':84,'review_policy':a.REVIEW_POLICY,'max_posts_per_run':1,'preserve_publication_holds':True,'readiness_report_sha256':hashlib.sha256(proof.read_bytes()).hexdigest()}
+   req={'request_id':a.OWNER_ID,'authorized':True,'mode':'source_ready_critical_checks','score_policy':'advisory_only','review_policy':a.REVIEW_POLICY,'max_posts_per_run':1,'preserve_publication_holds':True,'readiness_report_sha256':hashlib.sha256(proof.read_bytes()).hexdigest()}
    def save(value):atomic_json(data/'safe-activation-request.json',value)
    with patch.object(a,'OUT',out):
     save(req);self.assertTrue(a.authorized(data))
-    for key,value in [('authorized',False),('score_strictly_greater_than',89),('review_policy','old'),('max_posts_per_run',2),('preserve_publication_holds',False),('readiness_report_sha256','wrong')]:
+    for key,value in [('authorized',False),('score_policy','automatic_pass'),('review_policy','old'),('max_posts_per_run',2),('preserve_publication_holds',False),('readiness_report_sha256','wrong')]:
      bad=copy.deepcopy(req);bad[key]=value;save(bad)
      with self.assertRaises(ValueError,msg=key):a.authorized(data)
     save(req);config['publication_holds']={};atomic_json(data/'config.json',config)

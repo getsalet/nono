@@ -8,7 +8,7 @@ class PracticalQualityPolicyTests(unittest.TestCase):
  def test_cosmetic_differences_not_hard_rejections(self):
   v=self.good()
   for key in q.COSMETIC_CHECKS:v['checks'][key]=False
-  self.assertTrue(q.verdict(v)['passed']);v['score']=84;self.assertFalse(q.verdict(v)['passed'])
+  self.assertTrue(q.verdict(v)['passed']);v['score']=72;self.assertTrue(q.verdict(v)['passed'])
  def test_every_critical_defect_still_blocks(self):
   for key in q.CHECKS:
    if key in q.COSMETIC_CHECKS:continue
