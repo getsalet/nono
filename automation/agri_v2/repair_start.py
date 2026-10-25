@@ -47,4 +47,5 @@ def run():
   return {'status':state['status'],'failure':state['failure']}
  state.update(status='cycle_finished',result=result,completed_at=utcnow());atomic_json(path,state)
  return {'status':state['status'],'result':result}
-if __name__=='__main__':print(json.dumps(run(),ensure_ascii=False))
+if __name__=='__main__':
+ result=run();print(json.dumps(result,ensure_ascii=False));raise SystemExit(2 if result['status']=='cycle_stopped_safely' else 0)

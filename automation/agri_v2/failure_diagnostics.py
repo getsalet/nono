@@ -10,7 +10,9 @@ def failure_details(exc):
  elif isinstance(exc,ValueError):kind='validation'
  else:kind='unexpected'
  allowed={'invalid_auth','forbidden','quota_limited','rate_limited','model_unavailable','request_rejected','provider_unavailable','http_error','network_or_timeout','text_empty_or_invalid_content','text_json_invalid','text_model_mismatch','text_content_missing'}
- category=getattr(exc,'category',None)
+ validation_codes={'Draft must cite approved sources inline':'missing_approved_inline_citation','Unexpected mixed-language output; editorial revision required':'unexpected_mixed_language','Draft must contain 550–2500 meaningful words':'article_length_out_of_bounds','Unapproved numeric token in draft':'unapproved_numeric_claim'}
+ category=validation_codes.get(str(exc)) if type(exc)is ValueError else getattr(exc,'category',None)
+ allowed.update(validation_codes.values())
  row={'kind':kind,'category':category if category in allowed else 'unspecified'}
  status=getattr(exc,'http_status',None)
  if type(status)is int and 100<=status<=599:row['http_status']=status
