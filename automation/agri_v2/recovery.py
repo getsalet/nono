@@ -11,8 +11,10 @@ def circuit_open():
  if d.get('open') is not True:return False
  return d['retry_at_epoch']>time.time() if 'retry_at_epoch' in d else age_hours(d['at'])<1
 
-def open_circuit():
- atomic_json(OUT/'provider-circuit.json',{'open':True,'at':utcnow(),'cooldown_hours':1,'reason':'provider_transient_failure','no_secrets':True})
+def open_circuit(kind='unspecified',reason='provider_transient_failure',retry_after=None):
+ row={'open':True,'at':utcnow(),'cooldown_hours':1,'reason':reason,'request_kind':kind,'no_secrets':True}
+ if isinstance(retry_after,(int,float)) and retry_after>0:row['retry_at_epoch']=time.time()+max(3600,retry_after)
+ atomic_json(OUT/'provider-circuit.json',row)
 
 def recover_once():
  from .revise import run

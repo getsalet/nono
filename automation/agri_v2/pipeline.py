@@ -175,7 +175,9 @@ def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,
    atomic_json(folder/'provenance.json',{'topic_id':ident,'origin':topic['origin'],'brief_sha256':bh,'sources':brief['sources'],'approved_facts':brief['approved_facts'],'editor':brief['editor'],'agronomy_reviewer':brief['agronomy_reviewer'],'review_mode':brief.get('review_mode','human_review'),'human_agronomy_review_done':brief.get('human_agronomy_review_done',True),'text_model':TEXT_MODEL,'image_model':IMAGE_MODEL,'images':'AI illustrations with reference-conditioned AFP tape product and bottom-right phone label, not agronomic evidence','scientific_review_required':True,'not_uploaded':True})
    state.update(status='draft_created',images_done=3,updated_at=utcnow());atomic_json(state_path,state)
    return {'topic_id':ident,'status':'draft_created','publication':False,'wordpress_uploaded':False}
-  except Exception:
+  except Exception as exc:
+   from .failure_diagnostics import failure_details
+   state['failure']=failure_details(exc)
    state.update(status='incomplete',updated_at=utcnow(),last_error='Generation/validation failed; inspect sanitized job status. Existing staged output preserved.');atomic_json(state_path,state);raise
 
 def merge_plan(ident,target_id,snapshot_path,brief_path,out=OUT):

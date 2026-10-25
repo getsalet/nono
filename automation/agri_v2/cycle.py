@@ -6,6 +6,17 @@ from .pipeline import draft,check_brief,digest,validate_article,validate_for_pub
 from .wordpress import WordPress,WPError
 from .healthcheck import audit
 from .progress import update,failed
+from .failure_diagnostics import failure_details
+
+def handle_generation_failure(exc):
+ # Local parsing/validation/capability errors are NOT provider outages.
+ from .client import ImageProviderError,TextProviderError
+ if isinstance(exc,ImageProviderError):
+  from .pilot_resume import defer_provider
+  defer_provider(exc)
+ elif isinstance(exc,TextProviderError) and exc.category in {'provider_unavailable','network_or_timeout','rate_limited','quota_limited'}:
+  from .recovery import open_circuit
+  open_circuit(kind='text',reason=exc.category,retry_after=exc.retry_after_seconds)
 
 def run(request_path=None,scheduled=False,_research_done=False):
  from .safe_activation import authorized as activation_authorized,skip_completed_tuning
@@ -72,13 +83,7 @@ def run(request_path=None,scheduled=False,_research_done=False):
    else:
     try:draft(ident,bp,ip,hp,allow_calls=True)
     except Exception as exc:
-     from .client import CapabilityError,ImageProviderError
-     if isinstance(exc,ImageProviderError):
-      from .pilot_resume import defer_provider
-      defer_provider(exc)
-     elif isinstance(exc,CapabilityError):
-      from .recovery import open_circuit
-      open_circuit()
+     handle_generation_failure(exc)
      raise
   print("Stage: upload media, publish one owned post and verify public URL",flush=True)
   validate_for_publication(load_json(OUT/'new'/ident/'article.json'))
@@ -103,6 +108,6 @@ def main():
   failed()
   if isinstance(e,WPError):print("WordPress stage: "+str(e),flush=True)
   elif isinstance(e,ValueError):print("Validation blocked: "+str(e)[:160],flush=True)
-  atomic_json(OUT/'latest-cycle-error.json',{'status':'blocked_or_failed','at':utcnow(),'reason':'Inspect sanitized job stages and tests; no raw provider/auth messages persisted.'})
+  atomic_json(OUT/'latest-cycle-error.json',{'status':'blocked_or_failed','at':utcnow(),'failure':failure_details(e),'reason':'Inspect sanitized failure category and staged state; no raw provider/auth messages persisted.'})
   print('Cycle stopped safely; staged state preserved. No raw credential/provider error is logged.');return 2
 if __name__=='__main__':raise SystemExit(main())
