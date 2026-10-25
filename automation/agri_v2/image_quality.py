@@ -21,7 +21,7 @@ def valid_record(path,topic,kind,article=None):
  if not rp.exists():raise ImageQualityError('Image has no current visual review')
  row=load_json(rp);expected=binding(path,topic,kind,article)
  if any(row.get(k)!=v for k,v in expected.items()):raise ImageQualityError('Image/contract/reference review binding changed')
- if row.get('status')!='reviewed' or not verdict(row.get('verdict'))['passed']:raise ImageQualityError('Image rejected or visual review unavailable; no upload')
+ if row.get('status')!='reviewed' or row.get('verdict',{}).get('passed') is not True or not verdict(row.get('verdict'))['passed']:raise ImageQualityError('Image rejected or visual review unavailable; no upload')
  return row
 
 def ensure_review(client,path,topic,kind,article=None):

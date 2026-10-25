@@ -10,7 +10,7 @@ class ImageResponseTests(unittest.TestCase):
   with patch('automation.agri_v2.client.socket.getaddrinfo',return_value=[(2,1,6,'',('127.0.0.1',443))]):
    with self.assertRaises(CapabilityError):image_bytes({'data':[{'url':'https://example.org/a'}]})
  def test_image_decode_and_label_end_to_end_without_network(self):
-  out=io.BytesIO();Image.new('RGB',(1024,768),'green').save(out,'PNG');obj={'data':[{'b64_json':base64.b64encode(out.getvalue()).decode()}]}
+  out=io.BytesIO();Image.new('RGB',(1312,736),'green').save(out,'PNG');obj={'data':[{'b64_json':base64.b64encode(out.getvalue()).decode()}]}
   c=object.__new__(ModelClient);c.request=lambda *a,**kw:obj
   im=Image.open(io.BytesIO(c.image('fixture')));self.assertEqual(im.size,(1200,675));self.assertEqual(im.format,'WEBP')
 if __name__=='__main__':unittest.main()

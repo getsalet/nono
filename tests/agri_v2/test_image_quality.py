@@ -55,3 +55,28 @@ class ImageQualityTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    for k in (1,2,3):(Path(d)/f'image-{k}.webp').write_bytes(b'fixture')
    with self.assertRaises(q.ImageQualityError):q.require_all(d,self.topic())
+ def test_explicit_negative_receipt_cannot_be_overridden_by_score(self):
+  with tempfile.TemporaryDirectory() as d:
+   p=Path(d)/'image-2.webp';p.write_bytes(b'fixture');v=q.verdict(self.good());v['passed']=False
+   atomic_json(q.review_path(p),{**q.binding(p,self.topic(),2),'status':'reviewed','verdict':v})
+   with self.assertRaises(q.ImageQualityError):q.valid_record(p,self.topic(),2)
+ def test_native_landscape_pipeline_never_center_crops_wrong_ratio(self):
+  from automation.agri_v2.client import render_image,ImageAspectRatioError
+  out=io.BytesIO();Image.new('RGB',(1024,768),'green').save(out,'PNG');obj={'data':[{'b64_json':base64.b64encode(out.getvalue()).decode()}]}
+  with self.assertRaises(ImageAspectRatioError):render_image(obj,require_landscape=True)
+ def test_native_landscape_preserves_bottom_edge_of_whole_scene(self):
+  from automation.agri_v2.client import render_image
+  im=Image.new('RGB',(1312,736),'white');im.paste('red',(0,700,350,736));out=io.BytesIO();im.save(out,'PNG');obj={'data':[{'b64_json':base64.b64encode(out.getvalue()).decode()}]}
+  result=Image.open(io.BytesIO(render_image(obj,require_landscape=True)));self.assertGreater(result.getpixel((50,660))[0],220);self.assertLess(result.getpixel((50,660))[1],60)
+ def test_vision_review_has_one_http_attempt_and_closed_package_check(self):
+  from automation.agri_v2.client import ModelClient
+  c=object.__new__(ModelClient);c.request=Mock(return_value={'choices':[{'message':{'content':json.dumps(self.good())}}]})
+  c.review_image(b'fixture',self.topic(),2);self.assertEqual(c.request.call_args.kwargs['attempts'],1);self.assertIn('packaging_closed_no_protruding_material',str(c.request.call_args))
+ def test_wordpress_no_new_post_or_upload_for_unreviewed_images(self):
+  from automation.agri_v2.wordpress import WordPress
+  with tempfile.TemporaryDirectory() as d:
+   p=Path(d);atomic_json(p/'wordpress-draft-payload.json',{'slug':'fixture','content':'<p>x</p>'});atomic_json(p/'article.json',{'content_html':'fixture'})
+   for i in (1,2,3):(p/f'image-{i}.webp').write_bytes(b'fixture')
+   w=WordPress({'AFP_WP_BASE_URL':'https://navar-abyari.ir','AFP_WP_USERNAME':'fixture','AFP_WP_APP_PASSWORD':'fixture'});w.preflight=Mock();w.call=Mock(return_value=([],{}))
+   with self.assertRaises(q.ImageQualityError):w.publish(p,self.topic(),{'publish_authorized':True},True)
+   self.assertTrue(all(len(x.args)<2 or x.args[1]=='GET' for x in w.call.call_args_list))

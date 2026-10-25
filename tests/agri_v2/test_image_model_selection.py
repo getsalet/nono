@@ -17,7 +17,7 @@ class ImageModelSelectionTests(unittest.TestCase):
   c=object.__new__(ModelClient)
   with patch.object(c,'request',return_value={'model':h.IMAGE_MODEL}) as req,patch('automation.agri_v2.client.render_image',return_value=b'ok'):
    self.assertEqual(c.image('test'),b'ok');body=req.call_args.args[2]
-   self.assertEqual(body['model'],h.IMAGE_MODEL);self.assertNotIn('n',body)
+   self.assertEqual(body['model'],h.IMAGE_MODEL);self.assertNotIn('n',body);self.assertEqual(body['size'],'1K');self.assertEqual(body['ratio'],'16:9')
    self.assertTrue(body['extra_body']['image'][0].startswith('data:image/'))
  def test_wrong_response_model_rejected(self):
   c=object.__new__(ModelClient)

@@ -4,6 +4,7 @@ from .healthcheck import SLOTS,TEXT_MODEL,IMAGE_MODEL,API_BASE,classify,MAX_RESP
 from .queue import age_hours
 from .media_policy import reference_images,add_phone_watermark
 class CapabilityError(RuntimeError):pass
+class ImageAspectRatioError(CapabilityError):pass
 class ImageProviderError(CapabilityError):
  def __init__(self,status,provider_code,category,retry_after=None):
   self.http_status=status;self.provider_code=provider_code;self.category=category;self.retry_after_seconds=retry_after
@@ -105,11 +106,12 @@ class ModelClient:
   except (KeyError,IndexError,TypeError,ValueError,AttributeError):raise CapabilityError('Malformed visual reviewer response') from None
  def image(self,prompt):
   from PIL import Image
-  obj=self.request('image','/images/generations',{'model':IMAGE_MODEL,'prompt':prompt,'size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json','image':reference_images()}},180)
+  body={'model':IMAGE_MODEL,'prompt':prompt,'size':'1K','ratio':'16:9','return_base64':True,'extra_body':{'response_format':'b64_json','image':reference_images()}}
+  obj=self.request('image','/images/generations',body,180)
   if obj.get('model') and obj['model']!=IMAGE_MODEL:raise CapabilityError('Image model mismatch')
-  return render_image(obj)
+  return render_image(obj,require_landscape=True)
 
-def render_image(obj):
+def render_image(obj,require_landscape=False):
  from PIL import Image
  blob=image_bytes(obj)
  if len(blob)>MAX_RESPONSE:raise CapabilityError('Image too large')
@@ -117,7 +119,9 @@ def render_image(obj):
   with Image.open(io.BytesIO(blob)) as im:
    if im.width*im.height>20_000_000:raise CapabilityError('Image dimensions too large')
    im=im.convert('RGB');w,h=im.size;ratio=16/9
-   if w/h>ratio:cut=int(h*ratio);left=(w-cut)//2;im=im.crop((left,0,left+cut,h))
+   if require_landscape and abs(w/h-ratio)/ratio>.02:raise ImageAspectRatioError('Provider did not honor requested 16:9; refuse destructive center crop')
+   if require_landscape:pass # Native 1312x736 is very close to 16:9; resize full scene, never cut product edges.
+   elif w/h>ratio:cut=int(h*ratio);left=(w-cut)//2;im=im.crop((left,0,left+cut,h))
    else:cut=int(w/ratio);top=(h-cut)//2;im=im.crop((0,top,w,top+cut))
    im=add_phone_watermark(im.resize((1200,675)));buf=io.BytesIO();im.save(buf,'WEBP',quality=85,method=6);return buf.getvalue()
  except CapabilityError:raise

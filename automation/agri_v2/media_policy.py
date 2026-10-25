@@ -3,7 +3,7 @@ import base64,io,json,re,hashlib
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 PHONE_LABEL='AFP | 09134922013'
-POLICY='agri-topic-scene-aghala-v2'
+POLICY='agri-topic-scene-aghala-v3-native16x9'
 ASSETS=Path(__file__).with_name('assets')
 CROP_DATA=json.loads((ASSETS/'crop-visuals.json').read_text())
 def norm(value):
@@ -36,7 +36,7 @@ def scene_plan(topic,kind,article=None):
  elif kind==2:camera='near-overhead tight detail, no horizon or vanishing-point furrows';evidence='a few attached straw-brown dry pods with distinct seed bulges and one naturally split pod showing mature bean seeds; plants senescent, no hand, tray or basket' if harvest else 'recognizable crop-specific leaves and root-zone soil beside a thin flattened drip-tape lateral; do not invent disease symptoms'
  else:
   camera='medium three-quarter technical side view, tight equipment-and-soil framing'
-  evidence='one unattended compact filter with closed ordinary connections in a continuous header; a separate thin flattened drip-tape lateral runs into the adjacent crop bed; no readable gauge scale or invented specifications'
+  evidence='one compact dark unbranded screen filter installed with closed connections in a continuous black irrigation header, plus one thin BLACK flattened drip-tape lateral at the crop bed; this filter is ordinary operating hardware, NEVER a white AFP carton or a branded roll'
  return {'policy':POLICY,'role':kind,'camera':camera,'evidence':evidence,'botany':crop_spec(topic) if kind!=3 else 'no identifiable crop required: neutral tiny seedlings or bare soil only, not fruiting plants','context':article_context(topic,article),'product_family':'drip_tape_carton'}
 def image_prompt(topic,kind,article=None):
  plan=scene_plan(topic,kind,article)

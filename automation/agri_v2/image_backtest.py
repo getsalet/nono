@@ -8,16 +8,16 @@ from .media_policy import POLICY,image_prompt,scene_plan
 from .image_quality import ensure_review,ImageQualityError,review_path
 from .recovery import circuit_open
 from automation.blog_image_queue import ImageQueueBusy
-ID='aghala-image-tune-backtest-v2';TOPIC='agri-af1a4b491d83'
+ID='aghala-image-tune-backtest-v3';TOPIC='agri-af1a4b491d83'
 BASELINE='artifacts/agri-v2/model-switch/image-model-switch-21-v1/agnes-image-2.1-flash.webp'
 BASELINE_SHA='37e3543b9ecdae528c90f7a31bb7e14668cf666e07f00474bab85e3326e1d169'
 FIRST_SHA='f37936695d3c9f27396ba8ff69c3fe55c464d666ead3a5c5488954a11ed88591'
 def validate(req):
- if req!={'request_id':ID,'topic_id':TOPIC,'policy':POLICY,'model':'agnes-image-2.1-flash','roles':[2,3],'max_image_calls':2,'max_review_calls':3,'publication_authorized':False}:raise ValueError('Exact bounded, non-publication backtest request required')
+ if req!={'request_id':ID,'topic_id':TOPIC,'policy':POLICY,'model':'agnes-image-2.1-flash','roles':[3],'max_image_calls':1,'max_review_calls':2,'publication_authorized':False}:raise ValueError('Exact bounded, non-publication backtest request required')
 def run():
  req=load_json(DATA/'image-backtest-request.json');validate(req);dest=OUT/'image-backtests'/ID;rp=dest/'report.json'
  if rp.exists():return {'status':'already_reserved','image_calls':0,'post_submissions':0}
- report={'request_id':ID,'policy':POLICY,'started_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'model':IMAGE_MODEL,'image_calls':0,'review_calls':0,'max_image_calls':2,'max_review_calls':3,'post_submissions':0,'cases':[],'human_review_claimed':False,'visual_agent_review_complete':False,'sample_scope':'one dry red kidney bean harvest topic, corrected agronomic detail and technical roles; not a general crop benchmark'}
+ report={'request_id':ID,'policy':POLICY,'started_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'model':IMAGE_MODEL,'image_calls':0,'review_calls':0,'max_image_calls':1,'max_review_calls':2,'post_submissions':0,'cases':[],'human_review_claimed':False,'visual_agent_review_complete':False,'sample_scope':'one dry red kidney bean harvest topic, native 16:9 technical role only after destructive-crop fix; not a general crop benchmark'}
  atomic_json(rp,report)
  try:
   if IMAGE_MODEL!=req['model']:raise ValueError('Requested/active model mismatch')

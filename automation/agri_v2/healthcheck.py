@@ -72,7 +72,7 @@ def probe(key):
         if model and model!=TEXT_MODEL:txt['state']='model_mismatch'
     image={'state':'not_probed_text_not_healthy','http_status':None}
     if txt['state']=='healthy':
-        image,imobj=post('/images/generations',key,{'model':IMAGE_MODEL,'prompt':'A plain green leaf on a clean white background. No words, no logo, no people. Capability check.','size':'1024x768','return_base64':True,'extra_body':{'response_format':'b64_json'}},timeout=100)
+        image,imobj=post('/images/generations',key,{'model':IMAGE_MODEL,'prompt':'A plain green leaf on a clean white background. No words, no logo, no people. Capability check.','size':'1K','ratio':'16:9','return_base64':True,'extra_body':{'response_format':'b64_json'}},timeout=100)
         if imobj is not None:image['state']='healthy' if verify_image(imobj) else 'image_not_verified'
     return {'text':txt,'image':image}
 
