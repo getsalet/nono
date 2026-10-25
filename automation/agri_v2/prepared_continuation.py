@@ -47,7 +47,7 @@ def run(req,allow_recovery=False):
   atomic_json(folder/'article.json',article)
   with tempfile.TemporaryDirectory() as d:
    ip=Path(d)/'inventory.json';atomic_json(ip,inventory)
-   draft(TOPIC,bp,ip,DATA/'health/latest.json',allow_calls=True,client_factory=BoundedClient)
+   draft(TOPIC,bp,ip,DATA/'health/latest.json',allow_calls=True,client_factory=BoundedClient,translate=True)
   update('متن و دو تصویر آماده؛ انتشار در وردپرس',80,TOPIC,topic['title'])
   result=wp.publish(folder,topic,brief,authorized=True)
   state.update(status='publication_verified',result=result,completed_at=utcnow());atomic_json(rp,state)

@@ -60,6 +60,10 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
   from .prepared_continuation import scheduled_resume
   continuation=scheduled_resume()
   if continuation is not None:return continuation
+ if safe_active and config.get('multilingual',{}).get('enabled'):
+  from .multilingual import backfill_one
+  family=backfill_one(WordPress())
+  if family is not None:return family
  if scheduled and (DATA/'pilot-resume-request.json').exists():
   from .pilot_resume import run as resume_pilot
   recovery=resume_pilot()
@@ -110,7 +114,7 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
     validate_article(load_json(folder/'article.json'),topic,brief)
     if not (folder/'wordpress-draft-payload.json').exists() or not all((folder/f'image-{n}.webp').exists() for n in PRODUCTION_IMAGE_ROLES):raise ValueError('Staged artifacts incomplete')
    else:
-    try:draft(ident,bp,ip,hp,allow_calls=True)
+    try:draft(ident,bp,ip,hp,allow_calls=True,translate=True)
     except Exception as exc:
      handle_generation_failure(exc)
      raise

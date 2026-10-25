@@ -64,7 +64,7 @@ class WordPress:
    post=found[0]
    if marker not in post.get('content',{}).get('raw','') or post.get('author')!=self.user_id:raise WPError('Existing post is not owned by this job')
    r['post_id']=post['id']
-   if post['status']=='publish':r.update(status='published',url=post['link']);atomic_json(rp,r);return self.verify(post['id'],topic,rp)
+   if post['status']=='publish':r.update(status='published',url=post['link']);atomic_json(rp,r);return self.publish_family(folder,topic,self.verify(post['id'],topic,rp))
   elif r.get('post_id'):raise WPError('Receipt post missing; do not recreate automatically')
   else:
    require_all(folder,topic,load_json(folder/'article.json'))
@@ -95,7 +95,10 @@ class WordPress:
   if current['author']!=self.user_id or marker not in current['content']['raw'] or current['status']!='draft':raise WPError('Draft ownership/status changed; stop')
   self.call('posts/'+str(r['post_id']),'POST',{'content':marker+'\n'+content,'featured_media':media[0]['id'],'categories':[35],'status':'draft'})
   post,_=self.call('posts/'+str(r['post_id']),'POST',{'status':'publish'});r.update(status='published',url=post['link'],published_at=utcnow());atomic_json(rp,r)
-  return self.verify(post['id'],topic,rp)
+  return self.publish_family(folder,topic,self.verify(post['id'],topic,rp))
+ def publish_family(self,folder,topic,result):
+  from .multilingual import publish_family
+  return publish_family(self,folder,topic,result)
  def verify(self,post_id,topic,receipt_path):
   post,_=self.call('posts/'+str(post_id));r=load_json(receipt_path)
   if post['status']!='publish' or norm(html.unescape(post['title']['rendered']))!=norm(topic['title']) or not post.get('featured_media'):raise WPError('Published post verification failed')

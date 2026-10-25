@@ -139,7 +139,7 @@ def plan():
  config=load_json(DATA/'config.json')
  return {'counts':{k:len(items(k)) for k in ['new','merge','hold']},'mode':'bounded_source_ready_cycles','publication':config.get('publication_enabled',False),'automatic_generation':config.get('automatic_generation',False),'wordpress':config.get('wordpress_connection'),'hosting':config.get('hosting_connection'),'model_calls':0}
 
-def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,client_factory=ModelClient):
+def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,client_factory=ModelClient,translate=False):
  topic=get_topic('new',ident);brief=load_json(brief_path);check_brief(topic,brief)
  inventory=fresh_inventory(inventory_path)
  if any(norm(r['title'])==norm(topic['title']) for r in inventory['records']):raise ValueError('Live inventory has same normalized title; review overlap instead')
@@ -165,12 +165,16 @@ def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,
     from .article_revision import checked_candidate
     article=checked_candidate(article,topic,brief,folder,client);atomic_json(article_path,article)
    validate_article(article,topic,brief);validate_for_publication(article);update('متن، جدول و سه FAQ اعتبارسنجی شد',40,ident,topic['title']);state['status']='creating_images';atomic_json(state_path,state)
-   for n in PRODUCTION_IMAGE_ROLES:
-    target=folder/f'image-{n}.webp'
-    if target.exists():
-     ensure_review(client,target,topic,n,article);continue
-    prompt=image_prompt(topic,n,article)
-    update('در حال ساخت تصویر '+str(n),40+(n-1)*12,ident,topic['title']);blob=generate_role(client,topic,n,article);tmp=target.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(target);ensure_review(client,target,topic,n,article);state['images_done']=n;atomic_json(state_path,state);update('تصویر '+str(n)+' آماده شد',40+n*12,ident,topic['title'])
+   from .multilingual import start as start_translations,finish as finish_translations
+   translations=start_translations(article,folder,load_json(health_path)) if translate and allow_calls else None
+   try:
+    for n in PRODUCTION_IMAGE_ROLES:
+     target=folder/f'image-{n}.webp'
+     if target.exists():
+      ensure_review(client,target,topic,n,article);continue
+     prompt=image_prompt(topic,n,article)
+     update('در حال ساخت تصویر '+str(n),40+(n-1)*12,ident,topic['title']);blob=generate_role(client,topic,n,article);tmp=target.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(target);ensure_review(client,target,topic,n,article);state['images_done']=n;atomic_json(state_path,state);update('تصویر '+str(n)+' آماده شد',40+n*12,ident,topic['title'])
+   finally:finish_translations(translations,folder)
    require_all(folder,topic,article)
    payload={'title':topic['title'],'slug':slug,'content':article['content_html'],'excerpt':article['excerpt'],'status':'draft'}
    atomic_json(folder/'wordpress-draft-payload.json',payload)

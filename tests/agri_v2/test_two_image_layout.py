@@ -36,7 +36,7 @@ class TwoImageLayoutTests(unittest.TestCase):
    atomic_json(folder/'article.json',{'faq':[{'question':'این یک پرسش آزمایشی است؟','answer':'این پاسخ صرفاً برای آزمون قالب نوشته شده و توصیه علمی نیست.'}]*3})
    for i in (1,2):(folder/f'image-{i}.webp').write_bytes(b'fixture')
    wp=WordPress({'AFP_WP_BASE_URL':'https://navar-abyari.ir','AFP_WP_USERNAME':'fixture','AFP_WP_APP_PASSWORD':'fixture'})
-   wp.user_id=7;wp.preflight=Mock();wp.verify=Mock(return_value={'public_verified':True});requests=[];uploads=[]
+   wp.user_id=7;wp.preflight=Mock();wp.verify=Mock(return_value={'public_verified':True});wp.publish_family=lambda folder,topic,result:result;requests=[];uploads=[]
    def call(path,method='GET',data=None,blob=None,headers=None):
     requests.append((path,method,data))
     if path.startswith('posts?') or path.startswith('media?'):return [],{}
