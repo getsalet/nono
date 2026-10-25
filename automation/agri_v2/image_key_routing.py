@@ -29,7 +29,7 @@ def route(pool,cursor,env):
  if env.get('GITHUB_ACTIONS')!='true':return choose(pool,cursor,[],time.time())[0]
  from .recovery import circuit_open
  from .image_transport import shared_evidence
- if circuit_open():raise AdmissionBlocked('Local shared provider cooldown active')
+ if circuit_open('image'):raise AdmissionBlocked('Local shared provider cooldown active')
  path=OUT/'image-key-routing.json';state=load_json(path) if path.exists() else {}
  # Continue after the last selected unique slot even if the verified pool changed.
  seen=set();names=[]

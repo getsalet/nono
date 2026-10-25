@@ -33,3 +33,9 @@ class RoutingTests(unittest.TestCase):
    atomic_json(Path(tmp)/'image-key-routing.json',{'cursor':2,'last_selected_slot':'AGNES_API_KEY2'})
    picked=r.route([('AGNES_API_KEY2','b'),('AGNES_API_KEY3','c')],0,{'GITHUB_ACTIONS':'true'})
    self.assertEqual(picked[0],'AGNES_API_KEY3')
+
+ def test_text_only_outage_does_not_block_image_routing(self):
+  from automation.agri_v2 import recovery,image_transport
+  with tempfile.TemporaryDirectory() as d,patch.object(r,'OUT',Path(d)),patch.object(recovery,'circuit_open',side_effect=lambda kind=None:kind!='image') as circuit,patch.object(image_transport,'shared_evidence',return_value=[]):
+   self.assertEqual(r.route(self.pool,0,{'GITHUB_ACTIONS':'true'})[0],'AGNES_API_KEY')
+   circuit.assert_called_once_with('image')

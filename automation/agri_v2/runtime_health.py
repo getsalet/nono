@@ -50,7 +50,7 @@ def ensure_fresh(data=DATA,out=OUT,env=None,post_fn=None):
  if not ev['text']:
   probe_path=out/'runtime-health/text-probe-reservation.json';previous=load_json(probe_path) if probe_path.exists() else {}
   if previous.get('at') and age_hours(previous['at'])<6:return {'status':'text_probe_cooldown','model_calls':0}
-  if circuit_open():return {'status':'provider_cooldown','model_calls':0}
+  if circuit_open('text'):return {'status':'provider_cooldown','model_calls':0}
   slot=next((s for s in old.get('eligible_text_slots',[]) if s in SLOTS and env.get(s,'').strip()),None)
   if not slot:return {'status':'no_verified_text_credential','model_calls':0}
   atomic_json(probe_path,{'at':utcnow(),'slot':slot,'max_calls':1,'image_calls':0,'status':'reserved'})

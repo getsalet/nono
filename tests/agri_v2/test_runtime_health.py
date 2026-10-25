@@ -42,3 +42,9 @@ class RuntimeHealthTests(unittest.TestCase):
    out=Path(tmp);atomic_json(out/'runtime-health/image/AGNES_API_KEY2.json',{'kind':'image','slot':'AGNES_API_KEY2','model':h.IMAGE_MODEL,'api_base':h.API_BASE,'verified_at':utcnow(),'verification':'actual_successful_production_response'})
    atomic_json(out/'runtime-health/text/AGNES_API_KEY16.json',{'kind':'text','slot':'AGNES_API_KEY16','model':h.TEXT_MODEL,'api_base':h.API_BASE,'verified_at':utcnow(),'verification':'actual_successful_production_response'})
    ev=h.evidence(out);self.assertIn('AGNES_API_KEY2',ev['image']);self.assertFalse(ev['text'])
+ def test_image_only_cooldown_does_not_prevent_text_health_probe(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   data=Path(tmp)/'data';out=Path(tmp)/'out';self.fixture(data)
+   probe=Mock(return_value=({'http_status':200},{'model':h.TEXT_MODEL,'choices':[{'message':{'content':'OK'}}]}))
+   with patch.object(h,'evidence',return_value=self.images()),patch.object(h,'circuit_open',side_effect=lambda kind=None:kind!='text') as circuit:
+    self.assertEqual(h.ensure_fresh(data,out,{'AGNES_API_KEY':'fixture'},probe)['model_calls'],1);circuit.assert_called_once_with('text')

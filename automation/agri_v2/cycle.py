@@ -161,7 +161,7 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
    update('سرویس متن در مهلت انتظار است؛ پژوهش تازه انجام نشد',0,status='provider_cooldown')
    return {'status':'text_provider_cooldown','model_calls':0,'published_posts':0}
   if len(pending_briefs(DATA,OUT))>=buffer_limit(config):
-   update('بافر شرح‌های آماده پر است؛ منتظر سرویس تصویر، بدون درخواست تازه',0,status='provider_cooldown' if deferred else 'idle')
+   update('بافر شرح‌های آماده پر است؛ منتظر سرویس تصویر، بدون درخواست تازه',0,topic_id='',topic_title='',status='provider_cooldown' if deferred else 'idle')
    return {'status':'provider_cooldown' if deferred else 'research_buffer_full','model_calls':0,'published_posts':0}
   from .research import prepare_one
   wp=WordPress();wp.preflight();inventory=wp.inventory()
