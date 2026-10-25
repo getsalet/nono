@@ -2,6 +2,7 @@
 import base64,datetime,json,os,urllib.request,urllib.error
 from pathlib import Path
 from .queue import DATA,OUT,ROOT,load_json,atomic_json,utcnow
+from .publication_index import verified_publications
 STATUS_PATH=DATA/'status/live.json'
 REMOTE_PATHS=('data/agri-v2/status/live.json','docs/agri-v2/PROGRESS.md')
 BRANCH='feat/agri-generator-v2-2905-merge593'
@@ -29,7 +30,7 @@ def provider_snapshot():
 def markdown(obj):
  m=obj['metrics'];run=obj.get('run_url','');runline='[مشاهده اجرای جاری]('+run+')' if run else 'اجرای محلی/اولیه'
  last=obj.get('last_task') or {};lastline=('آخرین کار: '+str(last.get('stage',''))+' — '+str(last.get('percent',0))+'٪') if last else ''
- return '\n'.join(['# وضعیت زنده جنراتور کشاورزی AFP','','[داشبورد با به‌روزرسانی خودکار](https://getsalet.github.io/nono/)','',f"**وضعیت:** {obj['status']} — **پیشرفت مرحله‌ای:** {obj['percent']}٪",f"**مرحله:** {obj['stage']}",f"**موضوع:** {obj.get('topic_title') or obj.get('topic_id') or '—'}",f"**آخرین ثبت UTC:** {obj['updated_at']}",runline,lastline,'','| شاخص | مقدار |','|---|---:|',f"| موضوع مقاله جدید | {m['new_topics']} |",f"| انتشار تأییدشده توسط این جنراتور | {m['published_verified']} |",f"| موضوع باقی‌مانده | {m['remaining_topics']} |",f"| شرح آماده و دارای مجوز، هنوز منتشرنشده | {m['authorized_unpublished_briefs']} |",f"| شرح‌های ساخته‌شده توسط پژوهشگر | {m.get('research_briefs_ready',0)} |",f"| موضوع پژوهش نیازمند بررسی | {m.get('research_needs_review',0)} |",f"| پژوهش با خطای موقت | {m.get('research_transient_failures',0)} |",f"| موضوع با خروجی ناقص | {m['incomplete_topics']} |",f"| موضوع با انتشار متوقف‌شده | {m.get('publication_held_topics',0)} |",f"| اصلاح تأییدشده | {m['verified_revisions']} |",f"| صف ادغام؛ غیرفعال | {m['merge_topics']} |",f"| بلاتکلیف؛ غیرفعال | {m['hold_topics']} |",'', 'زمان‌بندی: هر ۵ دقیقه، حداکثر یک پست آماده. GitHub ممکن است اجرای زمان‌بندی را با تأخیر شروع کند.','درصد مربوط به مراحل واقعی کار جاری است، نه درصد گذشت زمان یا میزان تکمیل کل ماتریس.','این صفحه داخل مخزن برای دیدن تغییر جدید به بازخوانی نیاز دارد؛ داشبورد وب هر ۱۵ ثانیه داده را می‌خواند.',''])
+ return '\n'.join(['# وضعیت زنده جنراتور کشاورزی AFP','','[داشبورد با به‌روزرسانی خودکار](https://getsalet.github.io/nono/)','',f"**وضعیت:** {obj['status']} — **پیشرفت مرحله‌ای:** {obj['percent']}٪",f"**مرحله:** {obj['stage']}",f"**موضوع:** {obj.get('topic_title') or obj.get('topic_id') or '—'}",f"**آخرین ثبت UTC:** {obj['updated_at']}",runline,lastline,('آخرین نوشته منتشرشده: ['+obj['latest_publication']['title']+']('+obj['latest_publication']['url']+')' if obj.get('latest_publication') else 'هنوز نوشته منتشرشده و تأییدشده‌ای توسط این جنراتور ثبت نشده است.'),'','| شاخص | مقدار |','|---|---:|',f"| موضوع مقاله جدید | {m['new_topics']} |",f"| انتشار تأییدشده توسط این جنراتور | {m['published_verified']} |",f"| موضوع باقی‌مانده | {m['remaining_topics']} |",f"| شرح آماده و دارای مجوز، هنوز منتشرنشده | {m['authorized_unpublished_briefs']} |",f"| شرح‌های ساخته‌شده توسط پژوهشگر | {m.get('research_briefs_ready',0)} |",f"| موضوع پژوهش نیازمند بررسی | {m.get('research_needs_review',0)} |",f"| پژوهش با خطای موقت | {m.get('research_transient_failures',0)} |",f"| موضوع با خروجی ناقص | {m['incomplete_topics']} |",f"| موضوع با انتشار متوقف‌شده | {m.get('publication_held_topics',0)} |",f"| اصلاح تأییدشده | {m['verified_revisions']} |",f"| صف ادغام؛ غیرفعال | {m['merge_topics']} |",f"| بلاتکلیف؛ غیرفعال | {m['hold_topics']} |",'', 'زمان‌بندی: هر ۵ دقیقه، حداکثر یک پست آماده. GitHub ممکن است اجرای زمان‌بندی را با تأخیر شروع کند.','درصد مربوط به مراحل واقعی کار جاری است، نه درصد گذشت زمان یا میزان تکمیل کل ماتریس.','این صفحه داخل مخزن برای دیدن تغییر جدید به بازخوانی نیاز دارد؛ داشبورد وب هر ۱۵ ثانیه داده را می‌خواند.',''])
 
 def publish_file(path,text):
  token=os.environ.get('GITHUB_TOKEN','')
@@ -54,6 +55,9 @@ def update(stage,percent,topic_id=None,topic_title=None,status='running'):
  try:
   old=load_json(STATUS_PATH) if STATUS_PATH.exists() else {}
   obj={'version':1,'status':status,'stage':stage,'percent':max(0,min(100,int(percent))),'topic_id':old.get('topic_id') if topic_id is None else topic_id,'topic_title':(old.get('topic_title') if topic_id is None or topic_id==old.get('topic_id') else None) if topic_title is None else topic_title,'updated_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'run_url':('https://github.com/getsalet/nono/actions/runs/'+os.environ['GITHUB_RUN_ID']) if os.environ.get('GITHUB_RUN_ID') else None,'schedule_cron':'*/5 * * * *','max_posts_per_run':1,'metrics':metrics(),'provider':provider_snapshot()}
+  publications=verified_publications(OUT)
+  obj['latest_publication']=publications[0] if publications else None
+  obj['recent_publications']=publications
   obj['last_task']=old.get('last_task') or ({k:old.get(k) for k in ['status','stage','percent','topic_id','topic_title','updated_at','run_url']} if old.get('status') not in (None,'idle') else None)
   if status!='idle':obj['last_task']={k:obj.get(k) for k in ['status','stage','percent','topic_id','topic_title','updated_at','run_url']}
   atomic_json(STATUS_PATH,obj);md=markdown(obj);p=ROOT/REMOTE_PATHS[1];p.parent.mkdir(parents=True,exist_ok=True);p.write_text(md)
