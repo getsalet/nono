@@ -47,7 +47,7 @@ class ImageQualityTests(unittest.TestCase):
    with self.assertRaises(q.ImageQualityError):q.valid_record(p,self.topic(),2)
  def test_rejected_image_preserved_not_regenerated_or_reapproved(self):
   with tempfile.TemporaryDirectory() as d:
-   p=Path(d)/'image-2.webp';p.write_bytes(b'fixture');c=Mock();v=self.good();v['checks']['product_scale_match']=False;c.review_image.return_value=v
+   p=Path(d)/'image-2.webp';p.write_bytes(b'fixture');c=Mock();v=self.good();v['checks']['product_identity_match']=False;c.review_image.return_value=v
    for _ in range(2):
     with self.assertRaises(q.ImageQualityError):q.ensure_review(c,p,self.topic(),2)
    self.assertEqual(p.read_bytes(),b'fixture');self.assertEqual(c.review_image.call_count,1)
@@ -96,3 +96,15 @@ class ImageQualityTests(unittest.TestCase):
   from automation.agri_v2.client import ModelClient
   c=object.__new__(ModelClient);c.request=Mock(return_value={'choices':[{'message':{'content':'{"title":"fixture"}'}}]})
   self.assertEqual(c.text('fixture'),{'title':'fixture'})
+
+ def test_owner_threshold_is_strictly_above_90(self):
+  v=self.good();v['score']=90;self.assertFalse(q.verdict(v)['passed'])
+  v['score']=91;self.assertTrue(q.verdict(v)['passed'])
+ def test_cosmetic_scale_does_not_veto_92(self):
+  v=self.good();v['score']=92;v['checks']['product_scale_match']=False
+  self.assertTrue(q.verdict(v)['passed'])
+ def test_every_critical_failure_vetoes_100(self):
+  for key in q.CHECKS:
+   if key in q.COSMETIC_CHECKS:continue
+   v=self.good();v['score']=100;v['checks'][key]=False
+   self.assertFalse(q.verdict(v)['passed'],key)

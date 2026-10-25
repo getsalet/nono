@@ -72,8 +72,11 @@ def run(request_path=None,scheduled=False,_research_done=False):
    else:
     try:draft(ident,bp,ip,hp,allow_calls=True)
     except Exception as exc:
-     from .client import CapabilityError
-     if isinstance(exc,CapabilityError):
+     from .client import CapabilityError,ImageProviderError
+     if isinstance(exc,ImageProviderError):
+      from .pilot_resume import defer_provider
+      defer_provider(exc)
+     elif isinstance(exc,CapabilityError):
       from .recovery import open_circuit
       open_circuit()
      raise

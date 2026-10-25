@@ -48,7 +48,7 @@ jobs:
         run: python -m unittest discover -s tests/agri_v2 -v
       - name: Validate activation proof then one source-ready quality-gated cycle
         run: |
-          python -c "from automation.agri_v2.safe_activation import authorized; assert authorized(), 'Explicit hash-bound activation approval required'"
+          python -c "from automation.agri_v2.safe_activation import authorized; assert authorized(), 'Explicit owner authorization and quality policy required'"
           AFP_PROGRESS_ENABLED=1 python -m automation.agri_v2.cycle --scheduled
       - name: Preserve receipts and partial progress
         if: always()

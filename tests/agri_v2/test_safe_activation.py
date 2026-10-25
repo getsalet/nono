@@ -20,3 +20,20 @@ class SafeActivationTests(unittest.TestCase):
    with patch.object(a,'DATA',data),patch.object(a,'OUT',out):self.assertTrue(a.skip_completed_tuning())
  def test_source_ready_cycle_no_longer_runs_unbudgeted_full_audit(self):
   source=inspect.getsource(cycle.run);self.assertNotIn('report=audit()',source);self.assertIn('health_evidence_expired',source)
+ def test_owner_start_preserves_hold_and_binds_policy_and_proof(self):
+  import copy,hashlib
+  with tempfile.TemporaryDirectory() as d:
+   data=Path(d)/'data';out=Path(d)/'out'
+   proof=out/'activation-health/one-hour-activation-health-v1/report.json'
+   atomic_json(proof,{'article_validation_passed':True,'post_mutations':0,'wordpress_connection':{'can_publish':True}})
+   config={'publication_holds':{a.TOPIC:{'reason':'failed pilot'}},'max_posts_per_run':1,'automatic_generation':True,'publication_enabled':True}
+   atomic_json(data/'config.json',config);atomic_json(data/'health/latest.json',{'image_model':a.IMAGE_MODEL,'eligible_image_slots':['AGNES_API_KEY3']})
+   req={'request_id':a.OWNER_ID,'authorized':True,'mode':'source_ready_gt90_critical_checks','score_strictly_greater_than':90,'review_policy':a.REVIEW_POLICY,'max_posts_per_run':1,'preserve_publication_holds':True,'readiness_report_sha256':hashlib.sha256(proof.read_bytes()).hexdigest()}
+   def save(value):atomic_json(data/'safe-activation-request.json',value)
+   with patch.object(a,'OUT',out):
+    save(req);self.assertTrue(a.authorized(data))
+    for key,value in [('authorized',False),('score_strictly_greater_than',89),('review_policy','old'),('max_posts_per_run',2),('preserve_publication_holds',False),('readiness_report_sha256','wrong')]:
+     bad=copy.deepcopy(req);bad[key]=value;save(bad)
+     with self.assertRaises(ValueError,msg=key):a.authorized(data)
+    save(req);config['publication_holds']={};atomic_json(data/'config.json',config)
+    with self.assertRaises(ValueError):a.authorized(data)
