@@ -162,7 +162,8 @@ def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,
     candidate_path=folder/'model-candidate.json'
     if candidate_path.exists():article=load_json(candidate_path)
     else:article=client.text(prompt);atomic_json(candidate_path,article)
-    article=normalize_article(article,brief);validate_article(article,topic,brief);atomic_json(article_path,article)
+    from .article_revision import checked_candidate
+    article=checked_candidate(article,topic,brief,folder,client);atomic_json(article_path,article)
    validate_article(article,topic,brief);validate_for_publication(article);update('متن، جدول و سه FAQ اعتبارسنجی شد',40,ident,topic['title']);state['status']='creating_images';atomic_json(state_path,state)
    for n in PRODUCTION_IMAGE_ROLES:
     target=folder/f'image-{n}.webp'
