@@ -24,7 +24,7 @@ def provider_snapshot():
  r=OUT/'pilot-resume/queue-aware-pilot-resume-v1/receipt.json';recovery=load_json(r) if r.exists() else {}
  deadline=c.get('retry_at_epoch')
  if deadline is None and c.get('open') and c.get('at'):deadline=datetime.datetime.fromisoformat(c['at']).timestamp()+3600
- return {'open':c.get('open') is True,'reason':c.get('reason','provider_transient_failure'),'retry_at':datetime.datetime.fromtimestamp(deadline,datetime.timezone.utc).isoformat() if isinstance(deadline,(int,float)) else None,'recovery_cycles_used':recovery.get('cycles_started',0),'recovery_cycles_limit':2}
+ return {'open':c.get('open') is True and isinstance(deadline,(int,float)) and deadline>datetime.datetime.now(datetime.timezone.utc).timestamp(),'reason':c.get('reason','provider_transient_failure'),'retry_at':datetime.datetime.fromtimestamp(deadline,datetime.timezone.utc).isoformat() if isinstance(deadline,(int,float)) else None,'recovery_cycles_used':recovery.get('cycles_started',0),'recovery_cycles_limit':2}
 
 def markdown(obj):
  m=obj['metrics'];run=obj.get('run_url','');runline='[مشاهده اجرای جاری]('+run+')' if run else 'اجرای محلی/اولیه'

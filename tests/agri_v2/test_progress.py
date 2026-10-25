@@ -16,4 +16,17 @@ class ProgressTests(unittest.TestCase):
    with patch.dict('os.environ',{'AFP_PROGRESS_ENABLED':'1'}),patch.object(progress,'ROOT',root),patch.object(progress,'STATUS_PATH',status),patch.object(progress,'publish_file',return_value=False):
     progress.update('Waiting',20,topic_id='new',status='provider_cooldown')
    self.assertEqual(json.loads(status.read_text())['topic_id'],'new');self.assertIsNone(json.loads(status.read_text())['topic_title'])
+
+ def test_expired_circuit_is_not_reported_as_active_cooldown(self):
+  from automation.agri_v2.queue import atomic_json
+  with tempfile.TemporaryDirectory() as d,patch.object(progress,'OUT',Path(d)):
+   atomic_json(Path(d)/'provider-circuit.json',{'open':True,'at':'2026-01-01T00:00:00+00:00','retry_at_epoch':1})
+   self.assertFalse(progress.provider_snapshot()['open'])
+ def test_future_circuit_is_reported_active(self):
+  import time
+  from automation.agri_v2.queue import atomic_json
+  with tempfile.TemporaryDirectory() as d,patch.object(progress,'OUT',Path(d)):
+   atomic_json(Path(d)/'provider-circuit.json',{'open':True,'at':'2026-01-01T00:00:00+00:00','retry_at_epoch':time.time()+3600})
+   self.assertTrue(progress.provider_snapshot()['open'])
+
 if __name__=='__main__':unittest.main()
