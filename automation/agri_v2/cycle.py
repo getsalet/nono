@@ -30,6 +30,10 @@ def run(request_path=None,scheduled=False,_research_done=False):
   from .tuning_resume import run as resume_tuning
   tuning=resume_tuning()
   if tuning is not None:return tuning
+ if safe_active and (DATA/'practical-recheck-request.json').exists():
+  from .practical_recheck import run as recheck_existing
+  result=recheck_existing()
+  if result is not None:return result
  if safe_active and (DATA/'curated-continuation-request.json').exists():
   from .curated_continuation import REMAINING_ID,resumable,run as continue_curated
   continuation=load_json(DATA/'curated-continuation-request.json')

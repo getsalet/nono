@@ -5,7 +5,8 @@ from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .media_policy import POLICY,contract_hash,reference_images
 from .healthcheck import TEXT_MODEL
-REVIEW_POLICY='agri-vision-qa-v10-practical85'
+REVIEW_POLICY='agri-vision-qa-v11-illustrative85'
+LEGACY_REVIEW_POLICIES=frozenset({'agri-vision-qa-v9-topic-routed-gt90','agri-vision-qa-v10-practical85'})
 PREVIOUS_REVIEW_POLICY='agri-vision-qa-v9-topic-routed-gt90'
 MIN_SCORE_EXCLUSIVE=84
 COSMETIC_CHECKS=frozenset({'product_scale_match','role_camera_match','product_fully_in_frame'})
@@ -26,7 +27,7 @@ def reject_known(path):
  if hashlib.sha256(Path(path).read_bytes()).hexdigest() in EXPLICIT_REJECTIONS:raise ImageQualityError('Independently rejected image; a historical model score cannot approve it')
 
 def matching_evidence(row,expected):
- return all(row.get(k)==v for k,v in expected.items() if k!='review_policy') and row.get('review_policy') in {REVIEW_POLICY,PREVIOUS_REVIEW_POLICY}
+ return all(row.get(k)==v for k,v in expected.items() if k!='review_policy') and row.get('review_policy') in LEGACY_REVIEW_POLICIES|{REVIEW_POLICY}
 
 def valid_record(path,topic,kind,article=None):
  reject_known(path)
@@ -37,8 +38,8 @@ def valid_record(path,topic,kind,article=None):
  if row.get('status')!='reviewed':raise ImageQualityError('Image review unavailable; no upload')
  evaluated=verdict(row.get('verdict'))
  if not evaluated['passed']:raise ImageQualityError('Image rejected under current practical policy; no upload')
- if row.get('review_policy')==REVIEW_POLICY and row.get('verdict',{}).get('passed') is not True:raise ImageQualityError('Explicit current-policy rejection retained')
- if row.get('review_policy')==PREVIOUS_REVIEW_POLICY:
+ if row.get('review_policy')!=PREVIOUS_REVIEW_POLICY and row.get('verdict',{}).get('passed') is not True:raise ImageQualityError('Explicit current-policy rejection retained')
+ if row.get('review_policy') in LEGACY_REVIEW_POLICIES:
   return {**row,'verdict':evaluated,'acceptance':'owner_authorized_global_policy_reassessment','evaluated_under_policy':REVIEW_POLICY,'new_visual_review_claimed':False}
  return row
 

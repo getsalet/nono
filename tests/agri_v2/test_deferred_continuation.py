@@ -12,7 +12,11 @@ class DeferredContinuationTests(unittest.TestCase):
    self.assertEqual(c.resumable(row,req),expected)
    row['recovery_resumes']=2;self.assertFalse(c.resumable(row,req))
  def test_cooldown_never_reserves_another_call(self):
-  with patch.object(c,'authorized',return_value=True),patch.object(c,'circuit_open',return_value=True),patch.object(c,'BoundedClient') as client,patch.object(c,'atomic_json') as write:
+  original=c.load_json
+  def fixture(path):
+   if str(path).endswith('receipt.json'):return {'status':'provider_deferred','recovery_resumes':1,'failure':{'kind':'image_provider','http_status':503}}
+   return original(path)
+  with patch.object(c,'load_json',side_effect=fixture),patch.object(c,'authorized',return_value=True),patch.object(c,'circuit_open',return_value=True),patch.object(c,'BoundedClient') as client,patch.object(c,'atomic_json') as write:
    self.assertEqual(c.run()['status'],'provider_cooldown');client.assert_not_called();write.assert_not_called()
  def test_cumulative_counts_keep_entire_verified_pool(self):
   def init(obj,*a,**kw):obj.keys={'image':[('AGNES_API_KEY','redacted'),('AGNES_API_KEY2','redacted2')]}
