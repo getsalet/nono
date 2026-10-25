@@ -80,7 +80,7 @@ class SafeHTML(HTMLParser):
 class NormalizeHTML(HTMLParser):
  """Normalize inert model formatting only; never admit active HTML or new URLs."""
  MAP={'h1':'h2','h4':'h3','h5':'h3','h6':'h3','b':'strong','i':'em'}
- UNWRAP={'div','section','article','main','header','footer','span','small','sup','sub','caption'}
+ UNWRAP={'div','section','article','main','header','footer','span','small','sup','sub','caption','cite'}
  def __init__(self,links):super().__init__(convert_charrefs=True);self.links=links;self.output=[]
  def handle_starttag(self,tag,attrs):
   if tag not in SafeHTML.ALLOWED and tag not in self.MAP and tag not in self.UNWRAP:raise ValueError('Unsafe model HTML tag: '+tag[:32])

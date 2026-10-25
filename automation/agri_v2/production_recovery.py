@@ -10,9 +10,10 @@ def eligible(folder):
  state_path=folder/'state.json'
  if not state_path.exists() or not (folder/'article.json').exists():return False
  state=load_json(state_path);failure=state.get('failure',{})
- if state.get('status')!='incomplete':return False
- if failure.get('kind') not in {'image_provider','text_provider','image_admission'}:return False
- if failure.get('category') not in TRANSIENT|{'admission_deferred'}:return False
+ staged=(state.get('status')=='draft_created' and (folder/'wordpress-draft-payload.json').exists() and all((folder/f'image-{n}.webp').exists() for n in (1,2)))
+ if not staged and state.get('status')!='incomplete':return False
+ if not staged and failure.get('kind') not in {'image_provider','text_provider','image_admission'}:return False
+ if not staged and failure.get('category') not in TRANSIENT|{'admission_deferred'}:return False
  rp=folder/'production-recovery.json';row=load_json(rp) if rp.exists() else {}
  return row.get('cycles_started',0)<MAX_RECOVERY_CYCLES
 

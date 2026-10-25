@@ -74,3 +74,24 @@ class RecoveryTests(unittest.TestCase):
     wp.return_value.preflight.return_value={'can_publish':True};wp.return_value.inventory.return_value={'records':[{'id':1}]};wp.return_value.publish.return_value={'public_verified':True}
     self.assertTrue(cycle.run(scheduled=True)['public_verified']);draft.assert_called_once();wp.return_value.publish.assert_called_once()
    self.assertEqual(load_json(f/'production-recovery.json')['status'],'publication_verified');self.assertEqual(load_json(f/'cycle-attempts.json')['attempts'],2)
+
+ def test_complete_draft_can_retry_publication_without_more_model_calls(self):
+  with tempfile.TemporaryDirectory() as d:
+   f=self.put(d);atomic_json(f/'state.json',{'status':'draft_created'})
+   atomic_json(f/'wordpress-draft-payload.json',{})
+   for n in (1,2):(f/f'image-{n}.webp').write_bytes(b'staged')
+   self.assertTrue(recovery.eligible(f));recovery.reserve(f)
+   self.assertEqual(load_json(f/'cycle-attempts.json')['attempts'],2)
+
+class InertCiteTests(unittest.TestCase):
+ def test_cite_wrapper_preserves_approved_source_link(self):
+  from automation.agri_v2.pipeline import normalize_article
+  url='https://example.edu/source'
+  row=normalize_article({'content_html':'<cite><a href="'+url+'">منبع</a></cite>'},{'sources':[{'url':url}]})
+  self.assertEqual(row['content_html'],'<a href="'+url+'">منبع</a>')
+ def test_cite_wrapper_does_not_admit_active_attributes(self):
+  from automation.agri_v2.pipeline import normalize_article
+  with self.assertRaises(ValueError):normalize_article({'content_html':'<cite onclick="evil()">text</cite>'},{'sources':[]})
+ def test_cite_wrapper_does_not_admit_unapproved_links(self):
+  from automation.agri_v2.pipeline import normalize_article
+  with self.assertRaises(ValueError):normalize_article({'content_html':'<cite><a href="https://evil.example">text</a></cite>'},{'sources':[]})
