@@ -8,6 +8,10 @@ from .healthcheck import audit
 from .progress import update,failed
 
 def run(request_path=None,scheduled=False,_research_done=False):
+ if scheduled and (DATA/'image-key-audit-request.json').exists():
+  from .image_key_audit import run as audit_images
+  audit_result=audit_images()
+  if audit_result is not None:return audit_result
  if scheduled and (DATA/'image-tuning-resume-request.json').exists():
   from .tuning_resume import run as resume_tuning
   tuning=resume_tuning()
