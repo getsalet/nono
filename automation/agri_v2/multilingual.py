@@ -75,6 +75,8 @@ def translate_one(article,lang,folder,health,client_factory=TranslationClient):
 def start(article,folder,health):
  cfg=load_json(DATA/'config.json').get('multilingual',{})
  if not cfg.get('enabled'):return None
+ from .recovery import circuit_open
+ if circuit_open('text'):return None
  pool=concurrent.futures.ThreadPoolExecutor(max_workers=2)
  futures={lang:pool.submit(translate_one,article,lang,folder,health) for lang in LANGUAGES}
  return pool,futures
@@ -179,6 +181,8 @@ def backfill_one(wp,out=OUT):
   schema,_=wp.call('posts',method='OPTIONS')
   if not {'afp_language','afp_source_post_id'}<=schema.get('schema',{}).get('properties',{}).keys():return None
   if not all((folder/'translations'/f'{lang}.json').exists() for lang in LANGUAGES):
+   from .recovery import circuit_open
+   if circuit_open('text'):continue
    if all((folder/'translations'/f'{lang}.receipt.json').exists() for lang in LANGUAGES) and status.exists():continue
    finish(start(load_json(folder/'article.json'),folder,load_json(DATA/'health/latest.json')),folder)
   from .queue import get_topic

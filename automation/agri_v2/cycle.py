@@ -30,6 +30,7 @@ def fresh_inventory(wp,snapshot=None):
 def run(request_path=None,scheduled=False,_research_done=False,_research_inventory=None):
  from .safe_activation import authorized as activation_authorized,skip_completed_tuning
  safe_active=scheduled and activation_authorized(DATA)
+ deferred=[]
  if scheduled and (DATA/'image-key-audit-request.json').exists():
   from .image_key_audit import run as audit_images
   audit_result=audit_images()
@@ -46,7 +47,10 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
   from .curated_continuation import REMAINING_ID,resumable,run as continue_curated
   continuation=load_json(DATA/'curated-continuation-request.json')
   receipt=OUT/'curated-continuations'/REMAINING_ID/'receipt.json'
-  if continuation.get('request_id')==REMAINING_ID and (not receipt.exists() or resumable(load_json(receipt),continuation)):return continue_curated()
+  if continuation.get('request_id')==REMAINING_ID and (not receipt.exists() or resumable(load_json(receipt),continuation)):
+   result=continue_curated()
+   if result.get('status') in {'provider_cooldown','provider_deferred'}:deferred.append(result)
+   else:return result
  config=load_json(DATA/'config.json')
  if not config.get('publication_enabled'):return {'status':'publication_disabled','model_calls':0}
  if scheduled and not config.get('automatic_generation'):return {'status':'automatic_generation_disabled','model_calls':0}
@@ -59,7 +63,9 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
  if safe_active and (DATA/'production-start-request.json').exists():
   from .prepared_continuation import scheduled_resume
   continuation=scheduled_resume()
-  if continuation is not None:return continuation
+  if continuation is not None:
+   if continuation.get('status') in {'provider_cooldown','provider_deferred'}:deferred.append(continuation)
+   else:return continuation
  if safe_active and config.get('multilingual',{}).get('enabled'):
   from .multilingual import backfill_one
   family=backfill_one(WordPress())
@@ -67,7 +73,9 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
  if scheduled and (DATA/'pilot-resume-request.json').exists():
   from .pilot_resume import run as resume_pilot
   recovery=resume_pilot()
-  if recovery is not None and not (safe_active and recovery.get('status')=='pilot_recovery_budget_exhausted'):return recovery
+  if recovery is not None:
+   if safe_active and recovery.get('status') in {'pilot_recovery_budget_exhausted','provider_cooldown','shared_image_admission_deferred','provider_deferred'}:deferred.append(recovery)
+   else:return recovery
  if request_path:
   request=load_json(request_path)
   if request.get('publish_authorized') is not True or request.get('max_new_posts')!=1:raise ValueError('Single-post authorization required')
@@ -79,20 +87,22 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
    if b.get('publish_authorized') is True:candidates.append(b['topic_id'])
  for ident in candidates:
   if ident in config.get('publication_holds',{}):continue
-  from .recovery import circuit_open
-  waiting_topic=get_topic('new',ident)
-  if circuit_open():
-   update('سرویس مدل در دوره انتظار است؛ انتشار انجام نشد',0,ident,waiting_topic['title'],status='provider_cooldown')
-   return {'status':'provider_cooldown','published_posts':0,'model_calls':0}
-  get_topic('new',ident)
   rp=OUT/'new'/ident/'wordpress-receipt.json'
   if rp.exists() and load_json(rp).get('public_verified') is True:continue
   bp=DATA/'briefs'/f'{ident}.json';brief=load_json(bp);topic=get_topic('new',ident);check_brief(topic,brief)
   if brief.get('publish_authorized') is not True:raise ValueError('Brief publication not authorized')
   attempts_path=OUT/'new'/ident/'cycle-attempts.json';attempts=load_json(attempts_path) if attempts_path.exists() else {'attempts':0}
   if attempts['attempts']>=2:
-   atomic_json(OUT/'research'/f'{ident}.json',{'topic_id':ident,'status':'needs_review','reason':'production_retry_budget_exhausted','at':utcnow()})
+   research_path=OUT/'research'/f'{ident}.json';prior=load_json(research_path) if research_path.exists() else {}
+   if prior.get('reason')!='production_retry_budget_exhausted':atomic_json(research_path,dict(prior,topic_id=ident,status='needs_review',reason='production_retry_budget_exhausted',production_attempts=attempts['attempts'],at=utcnow()))
    continue
+  # Eligibility first. Published/exhausted work must not freeze the whole queue.
+  folder=OUT/'new'/ident;sp=folder/'state.json'
+  staged=sp.exists() and load_json(sp).get('status')=='draft_created'
+  from .recovery import circuit_open
+  blocked=(not staged and circuit_open('image')) or (not staged and not (folder/'article.json').exists() and circuit_open('text'))
+  if blocked:
+   deferred.append({'status':'provider_cooldown','topic_id':ident});continue
   update('بررسی اتصال و موضوع آماده',5,ident,topic['title'])
   print("Stage: authenticated WordPress preflight",flush=True)
   wp=WordPress();connection=wp.preflight();update('اتصال وردپرس تأیید شد',10)
@@ -126,11 +136,22 @@ def run(request_path=None,scheduled=False,_research_done=False,_research_invento
   update('انتشار و صفحه عمومی تأیید شد',100,status='success')
   return result
  if scheduled and not _research_done and config.get('research_feeder',{}).get('enabled'):
+  from .queue_planner import pending_briefs,buffer_limit
+  from .recovery import circuit_open
+  if circuit_open('text'):
+   update('سرویس متن در مهلت انتظار است؛ پژوهش تازه انجام نشد',0,status='provider_cooldown')
+   return {'status':'text_provider_cooldown','model_calls':0,'published_posts':0}
+  if len(pending_briefs(DATA,OUT))>=buffer_limit(config):
+   update('بافر شرح‌های آماده پر است؛ منتظر سرویس تصویر، بدون درخواست تازه',0,status='provider_cooldown' if deferred else 'idle')
+   return {'status':'provider_cooldown' if deferred else 'research_buffer_full','model_calls':0,'published_posts':0}
   from .research import prepare_one
   wp=WordPress();wp.preflight();inventory=wp.inventory()
   result=prepare_one(inventory)
   if result.get('status')=='brief_ready':return run(scheduled=True,_research_done=True,_research_inventory=inventory)
   return result
+ if deferred:
+  update('کار تصویر به تعویق افتاد؛ صف پژوهش و ترجمه مستقل است',0,status='provider_cooldown')
+  return {'status':'provider_cooldown','published_posts':0,'model_calls':0}
  update('اجرای زمان‌بند پایان یافت؛ مقاله آماده برای انتشار وجود ندارد',0,topic_id='',topic_title='',status='idle')
  return {'status':'no_ready_unpublished_brief','model_calls':0,'published_posts':0}
 

@@ -4,7 +4,7 @@ from .queue import DATA,OUT,load_json,atomic_json,utcnow
 from .safe_activation import authorized
 from .failure_diagnostics import failure_details
 from .progress import failed
-ID='existing-pinto-russian-format-finalize-v2'
+ID='queue-scheduler-parity-start-v1'
 def run():
  req=load_json(DATA/'production-start-request.json')
  if (req.get('request_id')!=ID or req.get('authorized') is not True or req.get('max_new_posts')!=1 or req.get('max_topics_per_cycle')!=1 or req.get('max_text_health_probes_per_6h')!=1 or req.get('max_image_health_probes')!=0):raise ValueError('Exact bounded normal-cycle start required')
@@ -14,6 +14,8 @@ def run():
  state={'request_id':ID,'status':'started','started_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'max_new_posts':1};atomic_json(rp,state)
  try:
   from .cycle import run as cycle
+  if req.get('normal_queue_only'):
+   result=cycle(scheduled=True);state.update(status='cycle_completed',result=result,completed_at=utcnow());atomic_json(rp,state);return result
   if req.get('multilingual_only'):
    from .translation_start import run as translations
    result=translations(req);state.update(status='cycle_completed',result=result,completed_at=utcnow());atomic_json(rp,state);return result

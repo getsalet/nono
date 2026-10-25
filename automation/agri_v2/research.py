@@ -108,6 +108,10 @@ def build_brief(topic,documents,candidate,review,inventory):
 def prepare_one(inventory,client_factory=ModelClient,fetcher=fetch_source,data=DATA,out=OUT):
  config=load_json(data/'config.json')
  if not config.get('research_feeder',{}).get('enabled'):return {'status':'research_disabled'}
+ from .queue_planner import pending_briefs,buffer_limit
+ if len(pending_briefs(data,out))>=buffer_limit(config):return {'status':'research_buffer_full','model_calls':0,'published_posts':0}
+ from .recovery import circuit_open
+ if circuit_open('text'):return {'status':'text_provider_cooldown','model_calls':0,'published_posts':0}
  catalog_path=data/'research-source-catalog.json'
  catalog=load_json(catalog_path) if catalog_path.exists() else {'version':0,'entries':[]}
  states=out/'research';states.mkdir(parents=True,exist_ok=True)

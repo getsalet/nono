@@ -4,11 +4,15 @@ import datetime,time
 from .client import CapabilityError
 from .progress import update
 
-def circuit_open():
+def circuit_open(kind=None):
  p=OUT/'provider-circuit.json'
  if not p.exists():return False
  d=load_json(p)
+ if kind not in (None,'text','image'):raise ValueError('Unknown provider capability')
  if d.get('open') is not True:return False
+ scope=d.get('request_kind')
+ if scope not in {'text','image'} and str(d.get('scope','')).startswith('image generation only'):scope='image'
+ if kind is not None and scope in {'text','image'} and scope!=kind:return False
  return d['retry_at_epoch']>time.time() if 'retry_at_epoch' in d else age_hours(d['at'])<1
 
 def open_circuit(kind='unspecified',reason='provider_transient_failure',retry_after=None):
