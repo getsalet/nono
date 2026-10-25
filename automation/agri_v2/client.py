@@ -43,13 +43,19 @@ class ModelClient:
   for kind in ['text','image']:
    names=report.get('eligible_'+kind+'_slots',[])
    if any(x not in SLOTS for x in names):raise CapabilityError('Out-of-scope slot rejected')
-   self.keys[kind]=[(name,self.env.get(name,'').strip()) for name in names if self.env.get(name,'').strip()]
+   seen=set();self.keys[kind]=[]
+   for name in names:
+    value=self.env.get(name,'').strip()
+    if value and value not in seen:self.keys[kind].append((name,value));seen.add(value)
    if not self.keys[kind]:raise CapabilityError('No configured healthy '+kind+' credential')
  def request(self,kind,path,payload,timeout,attempts=None):
   pool=self.keys[kind];start=self.used[kind]%len(pool);self.used[kind]+=1;last='no_response'
   limit=1 if kind=='image' or attempts==1 else min(2,len(pool))
   for step in range(limit):
-   name,key=pool[(start+step)%len(pool)]
+   if kind=='image':
+    from .image_key_routing import route
+    name,key=route(pool,start,self.env)
+   else:name,key=pool[(start+step)%len(pool)]
    request=urllib.request.Request(API_BASE+path,data=json.dumps(payload).encode(),headers={'Authorization':'Bearer '+key,'Content-Type':'application/json','User-Agent':'AFP-agri-v2-draft-only'})
    from .image_transport import admission
    with admission(name,payload,self.env) if kind=='image' else contextlib.nullcontext():
