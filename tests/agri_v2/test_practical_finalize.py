@@ -16,6 +16,7 @@ class FinalizeTests(unittest.TestCase):
    root=Path(tmp);data=root/'data';out=root/'out';folder=out/'new'/f.TOPIC;folder.mkdir(parents=True);(data/'briefs').mkdir(parents=True)
    source=OUT/'new'/f.TOPIC
    for name in ['article.json','image-1.webp','image-1.quality.json','image-2.webp','image-2.quality.json','cycle-attempts.json']:shutil.copyfile(source/name,folder/name)
+   shutil.copyfile(OUT/'practical-finalizations'/f.ID/'prior-image-2.quality.json',folder/'image-2.quality.json')
    for name in ['config.json','practical-finalize-request.json']:shutil.copyfile(DATA/name,data/name)
    shutil.copyfile(DATA/'briefs'/f'{f.TOPIC}.json',data/'briefs'/f'{f.TOPIC}.json')
    relative=Path('practical-rechecks/pinto-illustration-recheck-v1/fresh-image-2.quality.json');fresh=out/relative;fresh.parent.mkdir(parents=True);shutil.copyfile(OUT/relative,fresh)

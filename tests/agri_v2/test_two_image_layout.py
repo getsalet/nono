@@ -30,7 +30,7 @@ class TwoImageLayoutTests(unittest.TestCase):
    with self.assertRaises(routing.AdmissionBlocked):routing.route([('AGNES_API_KEY2','fixture')],0,{'GITHUB_ACTIONS':'true'})
    evidence.assert_not_called()
  def test_wordpress_uploads_only_two_and_sets_featured(self):
-  with tempfile.TemporaryDirectory() as tmp,patch('automation.agri_v2.wordpress.require_all'):
+  with tempfile.TemporaryDirectory() as tmp,patch('automation.agri_v2.wordpress.require_all'),patch('automation.agri_v2.wordpress.validate_targets'):
    folder=Path(tmp);topic={'id':'fixture','title':'عنوان آزمایشی','crop':'لوبیا'}
    atomic_json(folder/'wordpress-draft-payload.json',{'slug':'fixture','content':'<p>Intro</p><h2>A</h2><p>B</p>'})
    atomic_json(folder/'article.json',{'faq':[{'question':'این یک پرسش آزمایشی است؟','answer':'این پاسخ صرفاً برای آزمون قالب نوشته شده و توصیه علمی نیست.'}]*3})

@@ -9,7 +9,7 @@ class PracticalRecheckTests(unittest.TestCase):
  def test_exact_existing_bytes_and_zero_new_images(self):
   req=load_json(DATA/'practical-recheck-request.json');r.validate(req);folder=OUT/'new'/r.TOPIC
   self.assertEqual(req['max_image_calls'],0);self.assertEqual(req['image_2_sha256'],r.sha(folder/'image-2.webp'))
-  self.assertEqual(req['prior_quality_sha256'],r.sha(folder/'image-2.quality.json'))
+  self.assertEqual(req['prior_quality_sha256'],r.sha(OUT/'practical-rechecks'/r.ID/'prior-image-2.quality.json'))
   req['max_image_calls']=1
   with self.assertRaises(ValueError):r.validate(req)
  def test_zero_image_budget_never_calls_provider(self):
@@ -18,14 +18,18 @@ class PracticalRecheckTests(unittest.TestCase):
    with self.assertRaises(CapabilityError):x.request('image','/',{},1)
    provider.assert_not_called()
  def test_old_62_not_silently_reapproved(self):
-  f=OUT/'new'/r.TOPIC;p=f/'image-2.webp';before=q.review_path(p).read_bytes()
-  with self.assertRaises(q.ImageQualityError):q.valid_record(p,get_topic('new',r.TOPIC),2,load_json(f/'article.json'))
-  self.assertEqual(q.review_path(p).read_bytes(),before)
+  with tempfile.TemporaryDirectory() as tmp:
+   source=OUT/'new'/r.TOPIC;p=Path(tmp)/'image-2.webp';shutil.copyfile(source/'image-2.webp',p)
+   archive=OUT/'practical-rechecks'/r.ID/'prior-image-2.quality.json';shutil.copyfile(archive,q.review_path(p));before=q.review_path(p).read_bytes()
+   self.assertEqual(load_json(archive)['verdict']['score'],62)
+   with self.assertRaises(q.ImageQualityError):q.valid_record(p,get_topic('new',r.TOPIC),2,load_json(source/'article.json'))
+   self.assertEqual(q.review_path(p).read_bytes(),before)
  def exercise_review(self,passed):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);data=root/'data';out=root/'out';folder=out/'new'/r.TOPIC;folder.mkdir(parents=True);(data/'briefs').mkdir(parents=True)
    source=OUT/'new'/r.TOPIC
    for name in ['article.json','image-1.webp','image-1.quality.json','image-2.webp','image-2.quality.json','cycle-attempts.json']:shutil.copyfile(source/name,folder/name)
+   shutil.copyfile(OUT/'practical-rechecks'/r.ID/'prior-image-2.quality.json',folder/'image-2.quality.json')
    for name in ['practical-recheck-request.json','config.json']:shutil.copyfile(DATA/name,data/name)
    shutil.copyfile(DATA/'briefs'/f'{r.TOPIC}.json',data/'briefs'/f'{r.TOPIC}.json');(data/'health').mkdir();shutil.copyfile(DATA/'health/latest.json',data/'health/latest.json')
    old=(folder/'image-2.quality.json').read_bytes();images=[(folder/f'image-{i}.webp').read_bytes() for i in (1,2)]
