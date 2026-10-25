@@ -4,8 +4,9 @@ from pathlib import Path
 from .queue import atomic_json,load_json,utcnow
 from .media_policy import POLICY,contract_hash,reference_images
 from .healthcheck import TEXT_MODEL
-REVIEW_POLICY='agri-vision-qa-v6-role-guides'
-CHECKS=('hardware_identity_match','crop_stage_match','role_camera_match','topic_evidence_match','product_identity_match','single_product','product_scale_match','product_fully_in_frame','package_separate_from_plumbing','physical_geometry_plausible','packaging_closed_no_protruding_material','no_people','no_added_text','phone_label_correct')
+REVIEW_POLICY='agri-vision-qa-v7-sealed-hardware-ports'
+EXPLICIT_REJECTIONS=frozenset({'4935cbd90642507446c0f5bd91c61e7e33e631d32de4292b9b0a148a2f10d49a'})
+CHECKS=('hardware_identity_match','hardware_sealed_all_ports_connected','crop_stage_match','role_camera_match','topic_evidence_match','product_identity_match','single_product','product_scale_match','product_fully_in_frame','package_separate_from_plumbing','physical_geometry_plausible','packaging_closed_no_protruding_material','no_people','no_added_text','phone_label_correct')
 class ImageQualityError(ValueError):pass
 def verdict(value):
  if not isinstance(value,dict):raise ImageQualityError('Vision verdict must be an object')
@@ -17,7 +18,11 @@ def verdict(value):
 def binding(path,topic,kind,article=None):
  return {'image_sha256':hashlib.sha256(Path(path).read_bytes()).hexdigest(),'contract_sha256':contract_hash(topic,kind,article),'reference_sha256':hashlib.sha256(json.dumps({'generation':reference_images(kind,topic),'identity':reference_images()},sort_keys=True).encode()).hexdigest(),'policy':POLICY,'role':kind,'topic_id':topic.get('id'),'review_model':TEXT_MODEL,'review_policy':REVIEW_POLICY}
 def review_path(path):return Path(path).with_suffix('.quality.json')
+def reject_known(path):
+ if hashlib.sha256(Path(path).read_bytes()).hexdigest() in EXPLICIT_REJECTIONS:raise ImageQualityError('Independently rejected image; a historical model score cannot approve it')
+
 def valid_record(path,topic,kind,article=None):
+ reject_known(path)
  rp=review_path(path)
  if not rp.exists():raise ImageQualityError('Image has no current visual review')
  row=load_json(rp);expected=binding(path,topic,kind,article)
@@ -26,6 +31,7 @@ def valid_record(path,topic,kind,article=None):
  return row
 
 def ensure_review(client,path,topic,kind,article=None):
+ reject_known(path)
  path=Path(path);rp=review_path(path);expected=binding(path,topic,kind,article)
  if rp.exists():
   row=load_json(rp)

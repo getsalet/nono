@@ -13,7 +13,14 @@ def run():
  state=load_json(sp) if sp.exists() else {'request_id':req['request_id'],'runs_started':0,'max_runs':1,'post_submissions':0}
  if rp.exists():
   report=load_json(rp);state.update(status='awaiting_agent_visual_review' if report.get('status')=='completed_requires_agent_visual_review' else 'stopped_after_one_reserved_test',backtest_status=report.get('status'),backtest_run_id=report.get('run_id'),at=utcnow());atomic_json(sp,state)
-  if report.get('status')=='stopped_provider_limit_or_failure':
+  canary=OUT/'health-canary/one-hour-final-technical-canary-v1/report.json';agent=canary.with_name('agent-visual-review.json')
+  quality_blocked=False
+  if canary.exists() and agent.exists():
+   transport=load_json(canary);inspection=load_json(agent)
+   quality_blocked=transport.get('valid_image_bytes') is True and inspection.get('image_sha256')==transport.get('image_sha256') and inspection.get('canary_visual_pass') is False
+  if quality_blocked:
+   update('پاسخ سرویس تأیید شد، اما کیفیت تصویر فنی رد شد؛ انتشار متوقف است',15,TOPIC,status='image_quality_blocked')
+  elif report.get('status')=='stopped_provider_limit_or_failure':
    update('آزمون تصویر به‌دلیل محدودیت سرویس متوقف شد؛ انتشار همچنان بسته است',15,TOPIC,status='provider_cooldown' if circuit_open() else 'awaiting_provider_recovery')
   elif report.get('status')=='completed_requires_agent_visual_review':
    update('آزمون تیون ثبت شد؛ تصاویر و رسیدها نیازمند بررسی مستقل هستند',75,TOPIC,status='image_tuning_review_required')
