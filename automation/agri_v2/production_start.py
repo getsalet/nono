@@ -4,7 +4,7 @@ from .queue import DATA,OUT,load_json,atomic_json,utcnow
 from .safe_activation import authorized
 from .failure_diagnostics import failure_details
 from .progress import failed
-ID='queue-scheduler-parity-start-v1'
+ID='verified-source-catalog-start-v1'
 def run():
  req=load_json(DATA/'production-start-request.json')
  if (req.get('request_id')!=ID or req.get('authorized') is not True or req.get('max_new_posts')!=1 or req.get('max_topics_per_cycle')!=1 or req.get('max_text_health_probes_per_6h')!=1 or req.get('max_image_health_probes')!=0):raise ValueError('Exact bounded normal-cycle start required')

@@ -1,5 +1,5 @@
 """Bounded parallel source I/O; cache is fetched evidence, never model output."""
-import hashlib
+import hashlib,urllib.error
 from concurrent.futures import ThreadPoolExecutor
 from .queue import load_json,atomic_json,age_hours
 
@@ -14,19 +14,30 @@ def valid_document(doc,url,source_host):
    and 0<=age_hours(doc['fetched_at'])<TTL_HOURS)
  except (KeyError,TypeError,ValueError):return False
 
-def load_documents(urls,fetcher,out,source_host):
+def load_documents(urls,fetcher,out,source_host,report_path=None):
  # No model calls in workers. Unique URLs and input order keep evidence IDs stable.
  urls=list(dict.fromkeys(u for u in urls if isinstance(u,str)))[:6]
+ reports={}
  def one(url):
   path=out/'source-cache'/(hashlib.sha256(url.encode()).hexdigest()+'.json')
   try:
    source_host(url)
    try:cached=load_json(path)
    except (OSError,ValueError):cached=None
-   if isinstance(cached,dict) and valid_document(cached,url,source_host):return cached
+   if isinstance(cached,dict) and valid_document(cached,url,source_host):
+    reports[url]={'url':url,'status':'cache_valid'};return cached
    doc=fetcher(url) # original fetcher still enforces public DNS, no redirects and size limit
    if valid_document(doc,url,source_host):atomic_json(path,doc)
+   reports[url]={'url':url,'status':'fetched'}
    return doc
-  except Exception:return None # no negative caching or extra retries
+  except Exception as exc:
+   row={'url':url,'status':'unavailable','category':'fetch_or_validation_failed'}
+   if isinstance(exc,urllib.error.HTTPError):row.update(category='http_error',http_status=exc.code)
+   elif isinstance(exc,(TimeoutError,urllib.error.URLError)):row['category']='network_or_timeout'
+   elif isinstance(exc,ValueError):row['category']='source_policy_or_content_rejected'
+   reports[url]=row
+   return None # no negative caching or extra retries
  with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-  return [d for d in pool.map(one,urls) if d is not None]
+  documents=[d for d in pool.map(one,urls) if d is not None]
+ if report_path is not None:atomic_json(report_path,{'requested':len(urls),'loaded':len(documents),'sources':[reports[u] for u in urls]})
+ return documents
