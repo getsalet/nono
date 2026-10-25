@@ -13,7 +13,11 @@ def run():
  state=load_json(sp) if sp.exists() else {'request_id':req['request_id'],'runs_started':0,'max_runs':1,'post_submissions':0}
  if rp.exists():
   report=load_json(rp);state.update(status='awaiting_agent_visual_review' if report.get('status')=='completed_requires_agent_visual_review' else 'stopped_after_one_reserved_test',backtest_status=report.get('status'),backtest_run_id=report.get('run_id'),at=utcnow());atomic_json(sp,state)
-  update('آزمون تیون ثبت شد؛ تصاویر و رسیدها نیازمند بررسی مستقل هستند',75,TOPIC,status='image_tuning_review_required')
+  if report.get('status')=='stopped_provider_limit_or_failure':
+   update('آزمون تصویر به‌دلیل محدودیت سرویس متوقف شد؛ انتشار همچنان بسته است',15,TOPIC,status='provider_cooldown' if circuit_open() else 'awaiting_provider_recovery')
+  elif report.get('status')=='completed_requires_agent_visual_review':
+   update('آزمون تیون ثبت شد؛ تصاویر و رسیدها نیازمند بررسی مستقل هستند',75,TOPIC,status='image_tuning_review_required')
+  else:update('آزمون تیون بدون تأیید کامل متوقف شد؛ گزارش نیازمند بررسی است',15,TOPIC,status='image_tuning_blocked')
   return {'status':state['status'],'model_calls':0,'published_posts':0}
  if state['runs_started']>=1:
   update('بودجه آزمون تیون مصرف شده؛ تکرار خودکار انجام نمی‌شود',0,TOPIC,status='awaiting_review');return {'status':'image_tuning_budget_exhausted','model_calls':0,'published_posts':0}

@@ -68,7 +68,8 @@ def run():
    atomic_json(dest/f'role-{role}-contract.json',scene_plan(topic,role,article));(dest/f'role-{role}-prompt.txt').write_text(prompt);row['prompt_sha256']=hashlib.sha256(prompt.encode()).hexdigest();report['image_calls']+=1;atomic_json(rp,report)
    try:blob=generate_role(client,topic,role,article)
    except (ImageProviderError,AdmissionBlocked,ImageQueueBusy):raise
-   except Exception as exc:row.update(status='generation_failed',error_type=type(exc).__name__);atomic_json(rp,report);continue
+   except Exception as exc:
+    row.update(status='generation_failed',error_type=type(exc).__name__);report['status']='stopped_generation_uncertain';atomic_json(rp,report);return report
    finally:row['generation_slot']=getattr(client,'last_image_slot',None);atomic_json(rp,report)
    path=dest/f'role-{role}.webp';path.write_bytes(blob);row.update(path=str(path.relative_to(ROOT)),image_sha256=hashlib.sha256(blob).hexdigest(),status='awaiting_review');report['review_calls']+=1;atomic_json(rp,report)
    review=inspect(client,path,topic,role,article);row.update(status='reviewed' if review['status']=='reviewed' else 'review_unavailable',automated_pass=review.get('verdict',{}).get('passed',False),review=str(review_path(path).relative_to(ROOT)),finished_at=utcnow());atomic_json(rp,report)
