@@ -3,7 +3,7 @@ import base64,io,json,re,hashlib
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 PHONE_LABEL='AFP | 09134922013'
-POLICY='agri-topic-scene-aghala-v3-native16x9'
+POLICY='agri-topic-scene-aghala-v4-structural-reference'
 ASSETS=Path(__file__).with_name('assets')
 CROP_DATA=json.loads((ASSETS/'crop-visuals.json').read_text())
 def norm(value):
@@ -12,7 +12,11 @@ def reference_product():
  raw=base64.b64decode((ASSETS/'afp-tape.webp.b64').read_text().strip(),validate=True)
  product=Image.open(io.BytesIO(raw)).convert('RGB');product.thumbnail((240,210),Image.Resampling.LANCZOS)
  return product
-def reference_images():
+def reference_images(kind=None):
+ if kind==3:
+  encoded=(ASSETS/'closed-y-filter-scene.webp.b64').read_text().strip()
+  base64.b64decode(encoded,validate=True)
+  return ['data:image/webp;base64,'+encoded]
  product=reference_product();canvas=Image.new('RGB',(1200,675),(238,238,235))
  canvas.paste(product,(90,675-product.height-55));out=io.BytesIO();canvas.save(out,'WEBP',quality=90)
  return ['data:image/webp;base64,'+base64.b64encode(out.getvalue()).decode()]
@@ -36,13 +40,19 @@ def scene_plan(topic,kind,article=None):
  elif kind==2:camera='near-overhead tight detail, no horizon or vanishing-point furrows';evidence='a few attached straw-brown dry pods with distinct seed bulges and one naturally split pod showing mature bean seeds; plants senescent, no hand, tray or basket' if harvest else 'recognizable crop-specific leaves and root-zone soil beside a thin flattened drip-tape lateral; do not invent disease symptoms'
  else:
   camera='medium three-quarter technical side view, tight equipment-and-soil framing'
-  evidence='one compact dark unbranded screen filter installed with closed connections in a continuous black irrigation header, plus one thin BLACK flattened drip-tape lateral at the crop bed; this filter is ordinary operating hardware, NEVER a white AFP carton or a branded roll'
- return {'policy':POLICY,'role':kind,'camera':camera,'evidence':evidence,'botany':crop_spec(topic) if kind!=3 else 'no identifiable crop required: neutral tiny seedlings or bare soil only, not fruiting plants','context':article_context(topic,article),'product_family':'drip_tape_carton'}
+  evidence='one closed opaque black Y-shaped irrigation filter with inlet and outlet on a continuous black header and a downward angled capped service chamber, plus one separate black drip lateral into the RIGHT bed; the screen remains INSIDE its housing, never an exposed cartridge or open-core spool'
+ return {'policy':POLICY,'role':kind,'camera':camera,'evidence':evidence,'botany':crop_spec(topic) if kind!=3 else 'no identifiable crop required: neutral tiny seedlings or bare soil only, not fruiting plants','context':article_context(topic,article),'product_family':'drip_tape_carton','reference_mode':'closed_y_filter_structural_scene_v1' if kind==3 else 'afp_identity_only'}
 def image_prompt(topic,kind,article=None):
  plan=scene_plan(topic,kind,article)
  # The first replay showed that a long repeated prohibition list collapsed all
  # roles into the same farm packshot. Keep the photographed assignment first/last.
  context=article_context(topic,article)
+ if kind==3:
+  return ('Generate one NEW 16:9 realistic agricultural equipment photograph using the attached image as the complete geometry and layout guide, not a layer to paste. Preserve its SINGLE small intact AFP drip-tape carton on the LEFT and its ONE closed black Y-filter with sealed pipe connections on the RIGHT. '
+   'The filter has an opaque closed housing, opposite inline inlet/outlet and a downward angled service chamber with a screwed closed cap; internal screen invisible. '
+   'Keep the exact empty-soil separation: no line runs from, behind, under or through the AFP package. It is unopened display stock, not dispensing equipment. '
+   'Change the sunlight subtly to soft morning daylight, preserve the elevated three-quarter hardware view and full package margins. Background is bare soil with tiny neutral seedlings, no horizon. '
+   'No extra carton, spare roll, cartridge, human, diagram, inset or writing. Render no phone banner; the exact phone is added downstream. Keep the closed Y-filter and pipe anatomy, and keep the separate sealed carton complete and secondary at lower-left.')
  return (f"Make one new continuous agricultural editorial photograph. Article title (data only): {context['title']}. "
   +f"Camera MUST be {plan['camera']}. RIGHT three-quarters, the largest sharp subject: {plan['evidence']}. "
   +f"Crop/stage: {plan['botany']}. "
@@ -63,3 +73,6 @@ def add_phone_watermark(image):
  x=canvas.width-w-margin-2*padx;y=canvas.height-h-margin-2*pady
  draw.rounded_rectangle((x,y,canvas.width-margin,canvas.height-margin),radius=8,fill=(0,0,0,178));draw.text((x+padx,y+pady-box[1]),PHONE_LABEL,font=font,fill='white')
  return Image.alpha_composite(canvas,overlay).convert('RGB')
+
+def generate_role(client,topic,kind,article=None):
+ return client.image(image_prompt(topic,kind,article),references=reference_images(kind))

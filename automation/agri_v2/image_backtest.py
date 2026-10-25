@@ -1,23 +1,23 @@
 """One-shot replay of the rejected old image and three tuned editorial roles; no WordPress."""
-import hashlib,json,os
+import base64,hashlib,json,os
 from .queue import DATA,OUT,ROOT,load_json,atomic_json,get_topic,utcnow,age_hours
 from .healthcheck import IMAGE_MODEL
-from .client import ModelClient,ImageProviderError
+from .client import ModelClient,ImageProviderError,render_image
 from .image_transport import AdmissionBlocked
-from .media_policy import POLICY,image_prompt,scene_plan
+from .media_policy import POLICY,image_prompt,scene_plan,generate_role,reference_images
 from .image_quality import ensure_review,ImageQualityError,review_path
 from .recovery import circuit_open
 from automation.blog_image_queue import ImageQueueBusy
-ID='aghala-image-tune-backtest-v3';TOPIC='agri-af1a4b491d83'
-BASELINE='artifacts/agri-v2/model-switch/image-model-switch-21-v1/agnes-image-2.1-flash.webp'
-BASELINE_SHA='37e3543b9ecdae528c90f7a31bb7e14668cf666e07f00474bab85e3326e1d169'
+ID='aghala-image-tune-backtest-v4-reference';TOPIC='agri-af1a4b491d83'
+BASELINE='artifacts/agri-v2/image-backtests/aghala-image-tune-backtest-v3/role-3.webp'
+BASELINE_SHA='dd203fca78eb9f2d65b1f7476167956626f2b3cdefeb26aa3806a4d2c4a537fa'
 FIRST_SHA='f37936695d3c9f27396ba8ff69c3fe55c464d666ead3a5c5488954a11ed88591'
 def validate(req):
- if req!={'request_id':ID,'topic_id':TOPIC,'policy':POLICY,'model':'agnes-image-2.1-flash','roles':[3],'max_image_calls':1,'max_review_calls':2,'publication_authorized':False}:raise ValueError('Exact bounded, non-publication backtest request required')
+ if req!={'request_id':ID,'topic_id':TOPIC,'policy':POLICY,'model':'agnes-image-2.1-flash','roles':[3],'max_image_calls':1,'max_review_calls':3,'publication_authorized':False}:raise ValueError('Exact bounded, non-publication backtest request required')
 def run():
  req=load_json(DATA/'image-backtest-request.json');validate(req);dest=OUT/'image-backtests'/ID;rp=dest/'report.json'
  if rp.exists():return {'status':'already_reserved','image_calls':0,'post_submissions':0}
- report={'request_id':ID,'policy':POLICY,'started_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'model':IMAGE_MODEL,'image_calls':0,'review_calls':0,'max_image_calls':1,'max_review_calls':2,'post_submissions':0,'cases':[],'human_review_claimed':False,'visual_agent_review_complete':False,'sample_scope':'one dry red kidney bean harvest topic, native 16:9 technical role only after destructive-crop fix; not a general crop benchmark'}
+ report={'request_id':ID,'policy':POLICY,'started_at':utcnow(),'run_id':os.environ.get('GITHUB_RUN_ID'),'model':IMAGE_MODEL,'image_calls':0,'review_calls':0,'max_image_calls':1,'max_review_calls':3,'post_submissions':0,'cases':[],'human_review_claimed':False,'visual_agent_review_complete':False,'sample_scope':'one dry red kidney bean harvest topic, reference-guided closed Y-filter technical role; guide generated independently, tested output must come from Agnes; not a general crop benchmark'}
  atomic_json(rp,report)
  try:
   if IMAGE_MODEL!=req['model']:raise ValueError('Requested/active model mismatch')
@@ -32,17 +32,25 @@ def run():
   client=ModelClient(health,allow_calls=True)
   # First calibrate on a real known-bad control. Never accept a reviewer outage as approval.
   control=dest/'rejected-control.webp';control.write_bytes(baseline);report['review_calls']+=1;atomic_json(rp,report)
-  try:ensure_review(client,control,topic,2,article)
+  try:ensure_review(client,control,topic,3,article)
   except ImageQualityError:pass
   cr=load_json(review_path(control));report['control']={'image_sha256':BASELINE_SHA,'expected':'reject','review':str(review_path(control).relative_to(ROOT)),'review_status':cr['status'],'rejected':cr.get('verdict',{}).get('passed') is False}
   if cr['status']!='reviewed':report['status']='reviewer_unavailable_control';return report
   if not report['control']['rejected']:report['status']='reviewer_failed_known_bad_control';return report
+  # Positive calibration is independently generated guide, NOT an Agnes output.
+  good=dest/'positive-structural-control.webp';encoded=reference_images(3)[0].split(',',1)[1]
+  good.write_bytes(render_image({'data':[{'b64_json':encoded}]},require_landscape=True))
+  report['review_calls']+=1;atomic_json(rp,report)
+  try:ensure_review(client,good,topic,3,article)
+  except ImageQualityError:pass
+  gr=load_json(review_path(good));report['positive_control']={'origin':'independently generated AI structural guide, not Agnes production output','expected':'pass','review_status':gr['status'],'passed':gr.get('verdict',{}).get('passed') is True,'review':str(review_path(good).relative_to(ROOT))}
+  if not report['positive_control']['passed']:report['status']='reviewer_or_positive_reference_needs_inspection';return report
   atomic_json(rp,report)
   for kind in req['roles']:
    row={'role':kind,'started_at':utcnow(),'status':'reserved'};report['cases'].append(row)
    prompt=image_prompt(topic,kind,article);atomic_json(dest/f'role-{kind}-contract.json',scene_plan(topic,kind,article));(dest/f'role-{kind}-prompt.txt').write_text(prompt)
    row['prompt_sha256']=hashlib.sha256(prompt.encode()).hexdigest();report['image_calls']+=1;atomic_json(rp,report)
-   try:blob=client.image(prompt)
+   try:blob=generate_role(client,topic,kind,article)
    except (ImageProviderError,AdmissionBlocked,ImageQueueBusy):raise
    except Exception as exc:
     row.update(status='generation_failed',error_type=type(exc).__name__);atomic_json(rp,report);continue

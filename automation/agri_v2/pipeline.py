@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 from .queue import DATA,OUT,items,get_topic,load_json,atomic_json,locked,utcnow,age_hours
 from .client import ModelClient
 from .healthcheck import TEXT_MODEL,IMAGE_MODEL
-from .media_policy import image_prompt
+from .media_policy import image_prompt,generate_role
 from .image_quality import ensure_review,require_all
 from .article_format import faq_html
 from .progress import update
@@ -168,7 +168,7 @@ def draft(ident,brief_path,inventory_path,health_path,allow_calls=False,out=OUT,
     if target.exists():
      ensure_review(client,target,topic,n,article);continue
     prompt=image_prompt(topic,n,article)
-    update('در حال ساخت تصویر '+str(n),40+(n-1)*12,ident,topic['title']);blob=client.image(prompt);tmp=target.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(target);ensure_review(client,target,topic,n,article);state['images_done']=n;atomic_json(state_path,state);update('تصویر '+str(n)+' آماده شد',40+n*12,ident,topic['title'])
+    update('در حال ساخت تصویر '+str(n),40+(n-1)*12,ident,topic['title']);blob=generate_role(client,topic,n,article);tmp=target.with_suffix('.tmp');tmp.write_bytes(blob);tmp.replace(target);ensure_review(client,target,topic,n,article);state['images_done']=n;atomic_json(state_path,state);update('تصویر '+str(n)+' آماده شد',40+n*12,ident,topic['title'])
    require_all(folder,topic,article)
    payload={'title':topic['title'],'slug':slug,'content':article['content_html'],'excerpt':article['excerpt'],'status':'draft'}
    atomic_json(folder/'wordpress-draft-payload.json',payload)

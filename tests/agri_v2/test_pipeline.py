@@ -44,7 +44,7 @@ class PipelineTests(unittest.TestCase):
    def review_image(self,*a):
     from automation.agri_v2.image_quality import CHECKS
     return {'score':95,'checks':{k:True for k in CHECKS},'reasons':['fixture-only review']}
-   def image(self,prompt):
+   def image(self,prompt,**kwargs):
     calls['image']+=1
     if calls['image']==2:raise CapabilityError('fixture failure')
     return b'fixture-image'
@@ -57,7 +57,7 @@ class PipelineTests(unittest.TestCase):
   class Fake:
    def __init__(self,*a,**k):pass
    def text(self,prompt):return article
-   def image(self,prompt):calls['image']+=1;raise AssertionError('No image call should occur')
+   def image(self,prompt,**kwargs):calls['image']+=1;raise AssertionError('No image call should occur')
   with self.assertRaises(ValueError):p.draft(self.t['id'],b,inv,h,True,self.root/'out',Fake)
   self.assertEqual(calls['image'],0)
  def test_same_title_blocks_before_model(self):
