@@ -12,7 +12,7 @@ class TuningResumeTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    data=Path(d)/'data';out=Path(d)/'out';r=self.req();r['not_before_epoch']=time.time()+600;atomic_json(data/'image-tuning-resume-request.json',r)
    with patch.object(t,'DATA',data),patch.object(t,'OUT',out),patch.object(t,'update'),patch.object(b,'run') as run:
-    self.assertEqual(t.run()['model_calls'],0);run.assert_not_called();self.assertEqual(load_json(out/'image-tuning-resume'/t.REQUEST/'receipt.json')['runs_started'],0)
+    self.assertEqual(t.run()['model_calls'],0);run.assert_not_called();self.assertEqual(load_json(out/'image-tuning-resume'/self.req()['request_id']/'receipt.json')['runs_started'],0)
  def test_existing_report_never_retried_even_if_capacity_recovered(self):
   with tempfile.TemporaryDirectory() as d:
    data=Path(d)/'data';out=Path(d)/'out';r=self.req();atomic_json(data/'image-tuning-resume-request.json',r);atomic_json(out/'image-backtests'/r['backtest_request_id']/'report.json',{'status':'stopped_provider_limit_or_failure'})

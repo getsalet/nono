@@ -3,14 +3,14 @@ import time
 from .queue import DATA,OUT,load_json,atomic_json,utcnow,age_hours
 from .recovery import circuit_open
 from .progress import update
-REQUEST='reference-guided-resume-v1';TOPIC='agri-af1a4b491d83'
+REQUEST='reference-guided-resume-v1';POOL_RESUME='verified-pool-scene-resume-v1';TOPIC='agri-af1a4b491d83'
 def validate(req):
- if req.get('request_id')!=REQUEST or req.get('topic_id')!=TOPIC or req.get('backtest_request_id')!='reference-guided-close-and-technical-v1' or req.get('max_runs')!=1 or req.get('max_image_calls')!=2 or req.get('max_new_posts')!=0 or req.get('publication_authorized') is not False or not isinstance(req.get('not_before_epoch'),(int,float)):raise ValueError('Exact one-shot non-publication tuning authorization required')
+ if (req.get('request_id'),req.get('backtest_request_id')) not in ((REQUEST,'reference-guided-close-and-technical-v1'),(POOL_RESUME,'verified-pool-scene-v1')) or req.get('topic_id')!=TOPIC or req.get('max_runs')!=1 or req.get('max_image_calls')!=2 or req.get('max_new_posts')!=0 or req.get('publication_authorized') is not False or not isinstance(req.get('not_before_epoch'),(int,float)):raise ValueError('Exact one-shot non-publication tuning authorization required')
 def run():
  request_path=DATA/'image-tuning-resume-request.json'
  if not request_path.exists():return None
- req=load_json(request_path);validate(req);rp=OUT/'image-backtests'/req['backtest_request_id']/'report.json';sp=OUT/'image-tuning-resume'/REQUEST/'receipt.json'
- state=load_json(sp) if sp.exists() else {'request_id':REQUEST,'runs_started':0,'max_runs':1,'post_submissions':0}
+ req=load_json(request_path);validate(req);rp=OUT/'image-backtests'/req['backtest_request_id']/'report.json';sp=OUT/'image-tuning-resume'/req['request_id']/'receipt.json'
+ state=load_json(sp) if sp.exists() else {'request_id':req['request_id'],'runs_started':0,'max_runs':1,'post_submissions':0}
  if rp.exists():
   report=load_json(rp);state.update(status='awaiting_agent_visual_review' if report.get('status')=='completed_requires_agent_visual_review' else 'stopped_after_one_reserved_test',backtest_status=report.get('status'),backtest_run_id=report.get('run_id'),at=utcnow());atomic_json(sp,state)
   update('آزمون تیون ثبت شد؛ تصاویر و رسیدها نیازمند بررسی مستقل هستند',75,TOPIC,status='image_tuning_review_required')

@@ -55,6 +55,7 @@ class ModelClient:
    if kind=='image':
     from .image_key_routing import route
     name,key=route(pool,start,self.env)
+    self.last_image_slot=name
    else:name,key=pool[(start+step)%len(pool)]
    request=urllib.request.Request(API_BASE+path,data=json.dumps(payload).encode(),headers={'Authorization':'Bearer '+key,'Content-Type':'application/json','User-Agent':'AFP-agri-v2-draft-only'})
    from .image_transport import admission
