@@ -97,6 +97,39 @@ class ResearchTests(unittest.TestCase):
    data=Path(t);atomic_json(data/'config.json',{'publication_enabled':True,'automatic_generation':True,'research_feeder':{'enabled':True}})
    with patch.object(cycle,'DATA',data),patch.object(cycle,'WordPress') as wp,patch.object(research,'prepare_one',return_value={'status':'no_research_candidate'}) as prep:
     result=cycle.run(scheduled=True);prep.assert_called_once();wp.return_value.preflight.assert_called_once();self.assertEqual(result['status'],'no_research_candidate')
+
+class FactFilterTests(unittest.TestCase):
+ def _cand(self,n=5):
+  d,c,r,i=fixtures();cat=research.evidence_catalog(d)
+  c['facts']=[{'claim':CLAIM+' مورد '+'یکدوسه‌چهارپنج'[k],'conditions':COND,'evidence_id':f'd{k%2}-e0'} for k in range(n)]
+  return d,c,r,i,cat
+ def test_single_numeric_fact_dropped_not_topic(self):
+  d,c,r,i,cat=self._cand();c['facts'][0]['claim']+=' U.S. No.1'
+  kept,dropped=research.filter_facts(c,cat,d)
+  self.assertEqual(len(kept['facts']),4);self.assertEqual(dropped[0]['reason'],'numeric_recommendation_requires_review')
+  research.validate_evidence(TOPIC,kept,d);research.build_brief(TOPIC,d,kept,r,i)
+ def test_unknown_id_dropped_when_enough_remain(self):
+  d,c,r,i,cat=self._cand();c['facts'][1]['evidence_id']='nope'
+  kept,dropped=research.filter_facts(c,cat,d);self.assertEqual(len(kept['facts']),4);self.assertEqual(dropped[0]['reason'],'unknown_evidence_id')
+ def test_too_few_valid_facts_still_blocks(self):
+  d,c,r,i,cat=self._cand(4);c['facts'][0]['claim']+=' ۲۰ درصد'
+  with self.assertRaisesRegex(research.ResearchBlocked,'numeric'):research.filter_facts(c,cat,d)
+ def test_saved_extraction_salvaged_once_without_extraction_call(self):
+  d,c,r,i,cat=self._cand();c['facts'][0]['claim']+=' U.S. No.1'
+  calls=[]
+  class Client:
+   def __init__(self,*a,**k):pass
+   def text(self,p):calls.append(p);return r
+  with tempfile.TemporaryDirectory() as t:
+   data=Path(t)/'data';out=Path(t)/'out';atomic_json(data/'config.json',{'research_feeder':{'enabled':True}});atomic_json(data/'health/latest.json',{'checked_at':utcnow()})
+   ev=out/'research-evidence'/TOPIC['id'];atomic_json(ev/'candidate-raw.json',c);atomic_json(ev/'sources.json',{'documents':d})
+   atomic_json(out/'research'/f"{TOPIC['id']}.json",{'topic_id':TOPIC['id'],'status':'needs_review','reason':'numeric_recommendation_requires_review','attempts':2,'attempted_at':utcnow()})
+   with patch.object(research,'items',return_value=[TOPIC]),patch.object(research,'update'):
+    result=research.prepare_one(i,client_factory=Client,fetcher=lambda u:self.fail('no refetch'),data=data,out=out)
+    self.assertEqual(result['status'],'brief_ready');self.assertEqual(len(calls),1)
+    st=load_json(out/'research'/f"{TOPIC['id']}.json");self.assertTrue(st['salvaged_saved_extraction']);self.assertEqual(st['attempts'],2)
+    self.assertTrue((ev/'dropped-facts.json').exists())
+
 if __name__=='__main__':unittest.main()
 
 class SourcePriorityTests(unittest.TestCase):
