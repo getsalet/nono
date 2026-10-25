@@ -8,6 +8,10 @@ from .healthcheck import audit
 from .progress import update,failed
 
 def run(request_path=None,scheduled=False,_research_done=False):
+ if scheduled and (DATA/'image-tuning-resume-request.json').exists():
+  from .tuning_resume import run as resume_tuning
+  tuning=resume_tuning()
+  if tuning is not None:return tuning
  config=load_json(DATA/'config.json')
  if not config.get('publication_enabled'):return {'status':'publication_disabled','model_calls':0}
  if scheduled and not config.get('automatic_generation'):return {'status':'automatic_generation_disabled','model_calls':0}

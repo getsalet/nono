@@ -3,7 +3,7 @@ import base64,io,json,re,hashlib
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
 PHONE_LABEL='AFP | 09134922013'
-POLICY='agri-topic-scene-aghala-v4-structural-reference'
+POLICY='agri-topic-scene-aghala-v5-role-guides'
 ASSETS=Path(__file__).with_name('assets')
 CROP_DATA=json.loads((ASSETS/'crop-visuals.json').read_text())
 def norm(value):
@@ -12,7 +12,13 @@ def reference_product():
  raw=base64.b64decode((ASSETS/'afp-tape.webp.b64').read_text().strip(),validate=True)
  product=Image.open(io.BytesIO(raw)).convert('RGB');product.thumbnail((240,210),Image.Resampling.LANCZOS)
  return product
-def reference_images(kind=None):
+def use_red_bean_close(topic):
+ text=norm((topic or {}).get('crop','')+' '+(topic or {}).get('title',''))
+ return 'لوبیا قرمز' in text and any(x in text for x in ('برداشت','رسیدگی','خشک'))
+def reference_images(kind=None,topic=None):
+ if kind==2 and use_red_bean_close(topic):
+  encoded=(ASSETS/'red-bean-close-scene.webp.b64').read_text().strip();base64.b64decode(encoded,validate=True)
+  return ['data:image/webp;base64,'+encoded]
  if kind==3:
   encoded=(ASSETS/'closed-y-filter-scene.webp.b64').read_text().strip()
   base64.b64decode(encoded,validate=True)
@@ -37,16 +43,21 @@ def scene_plan(topic,kind,article=None):
  if type(kind)is not int or kind not in (1,2,3):raise ValueError('Only three approved image roles')
  text=norm(topic['title']);harvest='لوبیا' in norm(topic.get('crop','')) and 'سبز' not in norm(topic.get('crop','')) and any(x in text for x in ('برداشت','رسیدگی','خشک'))
  if kind==1:camera='elevated wide crop-dominant overview';evidence='mature dry bean plants and straw-colored pods still attached, not a green vegetable harvest' if harvest else 'the named crop at the growth stage discussed in the article'
- elif kind==2:camera='near-overhead tight detail, no horizon or vanishing-point furrows';evidence='a few attached straw-brown dry pods with distinct seed bulges and one naturally split pod showing mature bean seeds; plants senescent, no hand, tray or basket' if harvest else 'recognizable crop-specific leaves and root-zone soil beside a thin flattened drip-tape lateral; do not invent disease symptoms'
+ elif kind==2:camera='near-overhead tight detail, no horizon or vanishing-point furrows';evidence='a short naturally senescent dry-bean stem resting on soil, with attached straw-brown papery pods and one naturally split pod revealing small curved burgundy kidney-shaped seeds; no hand, tray or basket' if use_red_bean_close(topic) else 'attached dry straw-colored bean pods with visible seed bulges on a senescent plant' if harvest else 'recognizable crop-specific leaves and root-zone soil beside a thin flattened drip-tape lateral; do not invent disease symptoms'
  else:
   camera='medium three-quarter technical side view, tight equipment-and-soil framing'
   evidence='one closed opaque black Y-shaped irrigation filter with inlet and outlet on a continuous black header and a downward angled capped service chamber, plus one separate black drip lateral into the RIGHT bed; the screen remains INSIDE its housing, never an exposed cartridge or open-core spool'
- return {'policy':POLICY,'role':kind,'camera':camera,'evidence':evidence,'botany':crop_spec(topic) if kind!=3 else 'no identifiable crop required: neutral tiny seedlings or bare soil only, not fruiting plants','context':article_context(topic,article),'product_family':'drip_tape_carton','reference_mode':'closed_y_filter_structural_scene_v1' if kind==3 else 'afp_identity_only'}
+ return {'policy':POLICY,'role':kind,'camera':camera,'evidence':evidence,'botany':crop_spec(topic) if kind!=3 else 'no identifiable crop required: neutral tiny seedlings or bare soil only, not fruiting plants','context':article_context(topic,article),'product_family':'drip_tape_carton','reference_mode':'closed_y_filter_structural_scene_v1' if kind==3 else 'red_bean_close_layout_v1' if kind==2 and use_red_bean_close(topic) else 'afp_identity_only','product_frame_width':(.12,.15) if kind==2 and use_red_bean_close(topic) else (.14,.20) if kind==3 else (.18,.23),'product_max_frame_height':.32}
 def image_prompt(topic,kind,article=None):
  plan=scene_plan(topic,kind,article)
  # The first replay showed that a long repeated prohibition list collapsed all
  # roles into the same farm packshot. Keep the photographed assignment first/last.
  context=article_context(topic,article)
+ if kind==2 and use_red_bean_close(topic):
+  return ('Generate one NEW continuous realistic 16:9 agricultural editorial photograph from the attached INPUT layout and botanical guide. Reconstruct the whole scene, never paste its patches, seams or package image. '
+   'Camera is steeply downward, near-overhead/high-oblique soil-level inspection, no horizon, skyline or long field rows. Main subject on RIGHT: one dry senescent common-bean stem with attached straw-brown papery pods, one naturally split pod with a few SMALL CURVED deep burgundy kidney seeds, not peppers or grape-shaped seeds. Red refers to seed-coat color, never to pod walls. '
+   'At LOWER LEFT preserve exactly ONE small authentic sealed AFP white-and-blue drip-tape carton, only 12-15 percent of frame width and at most 32 percent height, original package print, flat white top with small central core hole, full soil margins and contact shadow. No open bucket, filled can, outline replacement logo or invented label. '
+   'Keep a broad empty soil gap all around the carton. No line, strip, tape tail, plant or other object touches its base or core. Uniform natural soil grain and shared soft morning daylight. No person, second package, hardware, collage, inset, phone banner or added writing. The exact phone label is added downstream. Preserve the near-overhead dry-pod inspection composition, not a field panorama.')
  if kind==3:
   return ('Generate one NEW 16:9 realistic agricultural equipment photograph using the attached image as the complete geometry and layout guide, not a layer to paste. Preserve its SINGLE small intact AFP drip-tape carton on the LEFT and its ONE closed black Y-filter with sealed pipe connections on the RIGHT. '
    'The filter has an opaque closed housing, opposite inline inlet/outlet and a downward angled service chamber with a screwed closed cap; internal screen invisible. '
@@ -75,4 +86,4 @@ def add_phone_watermark(image):
  return Image.alpha_composite(canvas,overlay).convert('RGB')
 
 def generate_role(client,topic,kind,article=None):
- return client.image(image_prompt(topic,kind,article),references=reference_images(kind))
+ return client.image(image_prompt(topic,kind,article),references=reference_images(kind,topic))
