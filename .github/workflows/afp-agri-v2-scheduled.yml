@@ -1,7 +1,5 @@
 name: AFP agriculture - every 5 minutes bounded production
 on:
-  schedule:
-    - cron: '*/5 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -10,7 +8,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   cycle:
-    if: github.repository == 'getsalet/nono'
+    if: ${{ false }} # Production moved to kapitansaman/afp-pipe
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
