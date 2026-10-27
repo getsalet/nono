@@ -1,5 +1,5 @@
 """Only real native verification checkpoints count toward the rolling target."""
-import copy,datetime as dt,json,sys,tempfile,unittest
+import contextlib,io,copy,datetime as dt,json,sys,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'automation'))
@@ -37,9 +37,10 @@ class PublicationThroughputTests(unittest.TestCase):
   self.states['roya']['published']=[self.row(recovered_existing=True)]
   r=t.evaluate(self.states,self.now);self.assertEqual(r['count'],0);self.assertEqual(r['status'],'unverified')
  def test_main_is_read_only_and_shortfall_does_not_fail_handoff(self):
-  with tempfile.TemporaryDirectory()as d,patch('blog_image_stock.refresh')as refresh,patch('blog_image_stock.read',side_effect=lambda root,path:self.states[path.split('/')[1].split('-')[0]]):
+  with tempfile.TemporaryDirectory()as d,patch('blog_image_stock.refresh')as refresh,patch('blog_image_stock.read',side_effect=lambda root,path:self.states[path.split('/')[1].split('-')[0]]),contextlib.redirect_stdout(io.StringIO())as captured:
    self.assertEqual(t.main(Path(d)),0)
    r=json.loads((Path(d)/'artifacts/blog-throughput/latest.json').read_text());self.assertEqual(r['count'],0);refresh.assert_called_once()
+   self.assertIn('::warning::Verified publisher checkpoints',captured.getvalue())
  def test_summary_exposes_each_blog_not_just_aggregate(self):
   import contextlib,io,os
   with tempfile.TemporaryDirectory()as d,patch('blog_image_stock.refresh'),patch('blog_image_stock.read',side_effect=lambda root,path:self.states[path.split('/')[1].split('-')[0]]),patch.dict(os.environ,{'GITHUB_STEP_SUMMARY':str(Path(d)/'summary.md')}),contextlib.redirect_stdout(io.StringIO()):
