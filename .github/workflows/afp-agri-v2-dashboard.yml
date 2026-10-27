@@ -22,6 +22,16 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            docs/agri-v2-dashboard
+            docs/status
+            tests
+            .github/workflows
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Test status panel data contracts
+        run: node --test tests/status_data.test.cjs
       - uses: actions/configure-pages@v5
       - name: Prepare combined Pages artifact
         run: |
@@ -29,7 +39,7 @@ jobs:
           rm -rf _site
           mkdir -p _site/status
           cp -R docs/agri-v2-dashboard/. _site/
-          cp docs/status/index.html _site/status/index.html
+          cp -R docs/status/. _site/status/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
