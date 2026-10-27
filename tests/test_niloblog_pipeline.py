@@ -14,6 +14,11 @@ class RuntimeTests(unittest.TestCase):
   body='<p>متن فارسی <a href="https://navar-abyari.ir/a">راهنما</a></p><img src="https://navar-abyari.ir/a.webp" alt="رول نوار تیپ">'
   item={'post':{'html':body}};self.assertTrue(m.verify_stored_body(item,body)['webp_verified'])
   with self.assertRaises(ValueError):m.verify_stored_body(item,body.replace('راهنما','متن دیگر'))
+ def test_provider_numeric_range_dash_sanitization_is_accepted(self):
+  expected='<p>در سال ۱۴۰۴–۱۴۰۵ بررسی شد</p><img src="https://navar-abyari.ir/a.webp" alt="محصول">'
+  actual='<p>در سال ۱۴۰۴ ۱۴۰۵ بررسی شد</p><img src="https://navar-abyari.ir/a.webp" alt="محصول">'
+  self.assertTrue(m.verify_stored_body({'post':{'html':expected}},actual)['body_text_verified'])
+
  def test_native_video_must_not_disappear(self):
   body='<p>متن</p><img src="https://navar-abyari.ir/a.webp" alt="محصول"><video src="https://navar-abyari.ir/a.mp4" controls></video>'
   with self.assertRaises(ValueError):m.verify_stored_body({'post':{'html':body}},body.split('<video')[0])

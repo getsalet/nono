@@ -13,6 +13,10 @@ def read(p):return json.loads(p.read_text())
 def save(p,obj):
  p.parent.mkdir(parents=True,exist_ok=True);t=p.with_suffix('.tmp');t.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n');t.replace(p)
 def canon(s):return re.sub(r'\s+',' ',str(s).replace('ي','ی').replace('ك','ک').replace('\u200c',' ')).strip()
+def canon_body(s):
+ # Niloblog strips typographic range dashes between numeric characters.
+ text=canon(s)
+ return re.sub(r'(?<=\d)\s*[-‐‑‒–—―]\s*(?=\d)',' ',text)
 def safeurl(u):
  x=urlsplit(u);return urlunsplit((x.scheme,x.netloc,quote(unquote(x.path),safe='/'),x.query,''))
 def allowed(root=ROOT):
@@ -266,7 +270,7 @@ def generate(row,m,targets,media,state):
 def verify_stored_body(item,markup):
  expected=BeautifulSoup(item['post']['html'],'html.parser');actual=BeautifulSoup(markup,'html.parser')
  if actual.find(['script','iframe','object','embed']) or any(any(k.lower().startswith('on') for k in t.attrs) for t in actual.find_all(True)):raise PipelineStop('Unsafe stored article markup')
- if canon(expected.get_text(' ',strip=True))!=canon(actual.get_text(' ',strip=True)):
+ if canon_body(expected.get_text(' ',strip=True))!=canon_body(actual.get_text(' ',strip=True)):
   raise PipelineStop('Stored body text differs from reviewed article')
  pairs=lambda soup:sorted((unquote(a.get('href','')).rstrip('/'),canon(a.get_text(' ',strip=True))) for a in soup.find_all('a'))
  if pairs(expected)!=pairs(actual):raise PipelineStop('Stored contextual links changed')
