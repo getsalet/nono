@@ -82,6 +82,7 @@ class AutomaticBlogskyTests(unittest.TestCase):
         self.assertEqual(len(minutes),3);self.assertEqual([(minutes[(i+1)%3]-m)%60 for i,m in enumerate(minutes)],[20]*3)
     def test_native_dependencies_use_bounded_ipv4_browser_installer(self):
         text=(ROOT/'.github/workflows/blogsky-auto.yml').read_text()
+        self.assertIn('pip install --quiet Pillow beautifulsoup4 playwright',text)
         self.assertIn('bash automation/install_blog_browser.sh',text)
         self.assertNotIn('python -m playwright install --with-deps chromium',text)
     def test_export_adapter_stays_separate_and_does_not_bypass_native_gate(self):
