@@ -240,10 +240,13 @@ def generate(row,m,targets,media,state):
  if obj.get('blocked'):raise PipelineStop('Editorial source insufficiency')
  try:words=validate_article(row,obj,bundle)
  except PipelineStop as error:
-  # One bounded format repair; never relax grounding/originality or claim success.
+  # One bounded pre-publication repair; full validation and factual review still apply.
   save(A/'rejected'/f"{row['id']}-format.json",{'post':obj,'reason':str(error),'at':now().isoformat()})
-  if str(error) not in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed'}:raise
-  obj=prepare_article(agnes(prompt+'\nفقط خطای ساختاری زیر را در مقاله اصلاح کن؛ هیچ ادعای تازه یا متن تکراری برای پرکردن حجم اضافه نکن. اگر امکان اصلاح مستند نیست blocked=true بده.\n'+json.dumps({'error':str(error),'measured_counts':article_metrics(obj),'required_counts':{'persian_word_groups_min':500,'persian_word_groups_max':1100,'h2_min':3,'h2_max':5,'meta_min':110,'meta_max':165},'previous':obj},ensure_ascii=False),temperature=0.2),bundle,row)
+  if str(error) not in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim'}:raise
+  from blog_text_feedback import language_feedback
+  feedback=language_feedback(obj,allowed={'afp'})
+  obj=prepare_article(agnes(prompt+'\nخطای مشخص زیر را در همان مقاله اصلاح کن؛ کل واژه مخدوش را فارسی بازنویسی کن و ادعای تجاری بی‌شاهد را حذف کن. هیچ ادعای جایگزین یا متن تکراری برای پرکردن حجم اضافه نکن. اگر امکان اصلاح مستند نیست blocked=true بده.\n'+json.dumps({'error':str(error),'invalid_visible_tokens':feedback,'measured_counts':article_metrics(obj),'required_counts':{'persian_word_groups_min':500,'persian_word_groups_max':1100,'h2_min':3,'h2_max':5,'meta_min':110,'meta_max':165},'previous':obj},ensure_ascii=False),temperature=0.2),bundle,row)
+  if obj.get('blocked'):raise PipelineStop('Editorial source insufficiency')
   words=validate_article(row,obj,bundle)
  # A separate low-temperature factual and semantic gate, not a publish-all switch.
  reviews=[]

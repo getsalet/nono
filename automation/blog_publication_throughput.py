@@ -58,9 +58,11 @@ def main(root=None):
  (out/'latest.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
  message=('Verified publisher checkpoints in rolling 30 minutes: '+str(result['count'])+' / '+str(MINIMUM_POSTS)+'; '+result['status'])if 'count'in result else'Publication throughput observation unavailable; not a success finding'
  print(message)
+ breakdown=('Counts by blog (combined target, not this workflow alone): '+json.dumps(result['by_blog'],ensure_ascii=False,sort_keys=True))if 'by_blog'in result else'Per-blog counts unavailable; do not infer individual blog health.'
+ print(breakdown)
  if result['status']!='target_met':print('::warning::'+message)
  if os.getenv('GITHUB_STEP_SUMMARY'):
-  with open(os.environ['GITHUB_STEP_SUMMARY'],'a')as stream:stream.write('\n## Actual publication target\n\n'+message+'\n\nNo native post submitted. A successful worker run is not proof that this target was met.\n')
+  with open(os.environ['GITHUB_STEP_SUMMARY'],'a')as stream:stream.write('\n## Actual publication target\n\n'+message+'\n\n'+breakdown+'\n\nNo native post submitted. A successful worker run is not proof that this target was met.\n')
  # This observation must not prevent a ready-image handoff during a shortfall.
  return 0
 if __name__=='__main__':raise SystemExit(main())

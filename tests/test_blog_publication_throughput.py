@@ -40,6 +40,12 @@ class PublicationThroughputTests(unittest.TestCase):
   with tempfile.TemporaryDirectory()as d,patch('blog_image_stock.refresh')as refresh,patch('blog_image_stock.read',side_effect=lambda root,path:self.states[path.split('/')[1].split('-')[0]]):
    self.assertEqual(t.main(Path(d)),0)
    r=json.loads((Path(d)/'artifacts/blog-throughput/latest.json').read_text());self.assertEqual(r['count'],0);refresh.assert_called_once()
+ def test_summary_exposes_each_blog_not_just_aggregate(self):
+  import contextlib,io,os
+  with tempfile.TemporaryDirectory()as d,patch('blog_image_stock.refresh'),patch('blog_image_stock.read',side_effect=lambda root,path:self.states[path.split('/')[1].split('-')[0]]),patch.dict(os.environ,{'GITHUB_STEP_SUMMARY':str(Path(d)/'summary.md')}),contextlib.redirect_stdout(io.StringIO()):
+   self.assertEqual(t.main(Path(d)),0)
+   summary=(Path(d)/'summary.md').read_text();self.assertIn('combined target, not this workflow alone',summary)
+   for blog in t.BLOGS:self.assertIn('"'+blog+'": 0',summary)
  def test_worker_reports_target_without_extra_provider_or_native_actions(self):
   s=(ROOT/'.github/workflows/blog-image-stock.yml').read_text()
   self.assertIn('run: python automation/blog_publication_throughput.py',s)
