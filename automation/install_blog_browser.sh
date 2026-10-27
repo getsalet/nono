@@ -8,7 +8,7 @@ python -m pip install --quiet playwright
 # Preserve repository signature/security validation and all configured sources.
 printf 'Acquire::ForceIPv4 "true";\n' | sudo tee /etc/apt/apt.conf.d/99afp-force-ipv4 >/dev/null
 for attempt in 1 2 3; do
-  if python -m playwright install --with-deps "$browser"; then exit 0; fi
+  if timeout --foreground --kill-after=30s 240s python -m playwright install --with-deps "$browser"; then exit 0; fi
   if [ "$attempt" = 3 ]; then echo 'Browser dependency installation failed after three bounded attempts.' >&2; exit 1; fi
   sleep 15
 done
