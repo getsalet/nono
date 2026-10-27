@@ -124,6 +124,16 @@ class Tests(unittest.TestCase):
   x,p=self.fixture();p['html']=p['html'].replace('بررسی مشخصات','بررسی، مشخصات，',1);actual=copy.deepcopy(p);actual['html']=actual['html'].replace('，',',')
   self.assertEqual(native.persisted_errors(x,p,actual),[])
   actual['html']=actual['html'].replace('بررسی، مشخصات','حذف مشخصات',1);self.assertTrue(native.persisted_errors(x,p,actual))
+ def test_readback_only_observed_fullwidth_colon_canonicalization(self):
+  x,p=self.fixture();p['html']+='<p>برگه بازدید： ردیف ۱۲</p>';actual=copy.deepcopy(p);actual['html']=actual['html'].replace('：',':')
+  self.assertEqual(native.persisted_errors(x,p,actual),[])
+  for replacement in ('؛','',': ردیف ۱۳'):
+   changed=copy.deepcopy(actual);changed['html']=changed['html'].replace(': ردیف ۱۲',replacement)
+   self.assertIn('Saved article text differs from approved draft',native.persisted_errors(x,p,changed))
+ def test_colon_normalization_does_not_change_image_or_link_destinations(self):
+  x,p=self.fixture();x['image_url']+='?tag=：';p['html']=p['html'].replace('src="'+self.item['image_url']+'"','src="'+x['image_url']+'"')
+  actual=copy.deepcopy(p);actual['html']=actual['html'].replace('?tag=：','?tag=:')
+  self.assertIn('Saved image missing or changed',native.persisted_errors(x,p,actual))
  def test_readback_digit_glyphs_preserve_values(self):
   x,p=self.fixture();p['html']+='<table><tr><td>۱</td><td>۲</td><td>۳</td></tr></table><p>مدل ۲۰، مقدار ۱٫۵ و شناسه ۰۰۷</p>'
   actual=copy.deepcopy(p);actual['html']=actual['html'].translate(str.maketrans('۰۱۲۳۴۵۶۷۸۹','0123456789'))

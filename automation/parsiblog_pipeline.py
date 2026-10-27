@@ -78,7 +78,7 @@ def generate(item):
  item.update(post=obj,link_render=link_report,qa=dict(report,passed=True),generated_at=stamp(),status='ready');save(itemfile(item['key']),item);return item
 
 def main(argv=None):
- parser=argparse.ArgumentParser();parser.add_argument('--mode',choices=['probe','draft','publish','generate','scheduled','repair'],default='draft');parser.add_argument('--target',default='');parser.add_argument('--retry-pre-submit',action='store_true');args=parser.parse_args(argv)
+ parser=argparse.ArgumentParser();parser.add_argument('--mode',choices=['probe','draft','publish','generate','scheduled','repair','reconcile'],default='draft');parser.add_argument('--target',default='');parser.add_argument('--retry-pre-submit',action='store_true');args=parser.parse_args(argv)
  prior_report=load(ART/'run-report.json',{})
  RUN.clear();run_report(run_id=os.getenv('GITHUB_RUN_ID','local'),started_at=stamp(),status='started',mode=args.mode,target=args.target,native_write_attempted=False)
  control=load(DATA/'control.json',{});global_control=load(ROOT/'data/blog-generated-image-control.json',{})
@@ -87,7 +87,8 @@ def main(argv=None):
  if args.mode=='scheduled':
   if control.get('enabled')is not True:run_report(status='blocked',reason='Schedule disabled');print('Parsiblog schedule remains disabled pending verified canary.');return 0
   args.mode='publish'
- if args.mode in ('probe','draft','publish','repair')and not os.getenv('AGENT_BROWSER_CDP')and not(os.getenv('PARSIBLOG_USERNAME')and os.getenv('PARSIBLOG_PASSWORD')):raise RuntimeError('Parsiblog repository login secrets are missing')
+ if args.mode=='reconcile'and not args.target:raise RuntimeError('Read-only reconciliation requires one explicit target')
+ if args.mode in ('probe','draft','publish','repair','reconcile')and not os.getenv('AGENT_BROWSER_CDP')and not(os.getenv('PARSIBLOG_USERNAME')and os.getenv('PARSIBLOG_PASSWORD')):raise RuntimeError('Parsiblog repository login secrets are missing')
  matrix=load(DATA/'title-matrix.json',{});assert matrix.get('approved')is True and matrix.get('count')==1000
  state=load(STATE,{'items':{},'published':[]});rows=matrix['items'];statuses=state['items']
  limit=control.get('max_verified_posts_per_rolling_hour')
@@ -135,6 +136,7 @@ def main(argv=None):
     save(ART/'login-probe.json',details);run_report(status='probe_verified',completed_at=stamp());return 0
    # Recover an uncertain prior response before any costly generation or write.
    pid=saved.get('id')
+   if args.mode=='reconcile'and(not pid or not item.get('post')or item.get('qa',{}).get('passed')is not True):raise NativeError('Read-only reconciliation requires recorded native ID and approved saved body')
    if not pid:
     matches=[x for x in first_page_posts(page)if title_matches(row['assigned_title'],x['title'])]
     if len(matches)>1:raise NativeError('Multiple native titles match; manual reconciliation required')
@@ -151,7 +153,7 @@ def main(argv=None):
    if not item.get('qa',{}).get('passed'):item=generate(item)
    errors,report=qa(item,item['post'],ROOT)
    if errors:raise NativeError('Saved draft no longer passes SEO checks')
-   desired=args.mode in('publish','repair')
+   desired=args.mode in('publish','repair','reconcile')
    if pid:
     actual=read_post(page,pid);errors=persisted_errors(item,item['post'],actual)
     if errors and not force_repair:raise NativeError('Previously saved native draft changed; manual review required')
@@ -161,8 +163,10 @@ def main(argv=None):
      manifest=load(DATA/'repairs'/(key+'.json'),{})
      if actual.get('published')is not True or snapshot_digest(actual)!=manifest.get('observed_native_sha256'):raise NativeError('Remote post changed during repair QA; no write allowed')
     if actual['published']and not desired:raise NativeError('Draft mode cannot unpublish an existing public post')
+    if args.mode=='reconcile'and actual.get('published')is not True:raise NativeError('Read-only reconciliation cannot publish a private draft')
     already=actual['published']==desired and not force_repair
    else:already=False
+   if args.mode=='reconcile'and not already:raise NativeError('Read-only reconciliation never submits a native post')
    if not already:
     # A full local item and uncertainty checkpoint are written before each one-shot submission.
     save(itemfile(key),item);statuses[key]={'status':'submitting_publish'if desired else'submitting_draft','id':pid,'at':stamp()};save(STATE,state)
@@ -176,7 +180,7 @@ def main(argv=None):
     # Automation is activated only after an actual verified public canary.
     if control.get('activate_after_verified_canary')is True:
      control.update(enabled=True,verified_canary={'key':key,'id':str(pid),'url':receipt['url'],'at':stamp()});save(DATA/'control.json',control)
-   statuses[key]=receipt;item.update(status=receipt['status'],native_id=str(pid),published=desired,published_url=receipt.get('url'));save(itemfile(key),item);save(STATE,state);save(ART/'latest-receipt.json',dict(receipt,key=key,publication_attempted=desired))
+   statuses[key]=receipt;item.update(status=receipt['status'],native_id=str(pid),published=desired,published_url=receipt.get('url'));save(itemfile(key),item);save(STATE,state);save(ART/'latest-receipt.json',dict(receipt,key=key,publication_attempted=bool(RUN.get('native_write_attempted',False))))
    run_report(status=receipt['status'],completed_at=stamp(),receipt=receipt,qa_errors=[])
    print('Parsiblog '+receipt['status']+' verified: '+str(pid),flush=True)
   except Exception as exc:

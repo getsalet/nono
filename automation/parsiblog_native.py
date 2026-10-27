@@ -44,11 +44,12 @@ def first_page_posts(page):
  if len(ids)>100:raise NativeError('Unexpected native listing size')
  return [read_post(page,pid)for pid in ids]
 def normalized_body(value):
- # Observed persistence canonicalization: fullwidth comma and Persian digit glyphs.
+ # Observed persistence canonicalization: fullwidth comma/colon and Persian digit glyphs.
+ # Public post 36 preserved all text except U+FF1A becoming an ASCII colon.
  # 8027891/public post 30 changed table row labels ۱ ۲ ۳ to 1 2 3.
  # Preserve numeric values, separators, words, links and image URLs exactly.
  # No broad Unicode folding or deletion of numbers is allowed.
- return normalized_title(value).replace('\uff0c',',').translate(str.maketrans('۰۱۲۳۴۵۶۷۸۹','0123456789'))
+ return normalized_title(value).replace('\uff0c',',').replace('\uff1a',':').translate(str.maketrans('۰۱۲۳۴۵۶۷۸۹','0123456789'))
 def persisted_errors(item,expected,actual):
  errors=[]
  if not title_matches(expected['title'],actual['title']):errors.append('Saved title mismatch')

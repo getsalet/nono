@@ -5,7 +5,7 @@ on:
       mode:
         description: Native probe, generate, draft, or verified public canary
         type: choice
-        options: [probe, draft, generate, publish, repair]
+        options: [probe, draft, generate, publish, repair, reconcile]
         default: draft
       target:
         description: Optional approved pb-key
@@ -86,8 +86,9 @@ jobs:
           retry=False if event=='schedule' else os.environ.get('REQUESTED_RETRY')=='1' if event=='workflow_dispatch' else marker.get('retry_pre_submit') is True
           if target and not re.fullmatch(r'pb-[0-9a-f]{20}',target):raise SystemExit('Invalid matrix target')
           if retry and (not target or mode not in ('draft','publish','generate')):raise SystemExit('Explicit QA retry needs one target')
+          if mode=='reconcile' and not target:raise SystemExit('Read-only reconciliation needs one target')
           if mode=='repair' and not target:raise SystemExit('Explicit same-ID repair requires one target')
-          if mode not in ('probe','draft','generate','publish','scheduled','repair'):raise SystemExit('Invalid requested mode')
+          if mode not in ('probe','draft','generate','publish','scheduled','repair','reconcile'):raise SystemExit('Invalid requested mode')
           proceed=global_control.get('pause_image_production') is False and (mode!='scheduled' or local.get('enabled') is True)
           with open(os.environ['GITHUB_OUTPUT'],'a')as out:out.write('proceed='+('1'if proceed else'0')+'\nmode='+mode+'\ntarget='+target+'\nretry='+('1'if retry else'0')+'\n')
           print('Parsiblog preflight:',mode,'allowed'if proceed else'blocked')

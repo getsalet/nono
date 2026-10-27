@@ -4,6 +4,12 @@ on:
     branches: [main]
     paths: [automation/start-loxblog-selected-recovery.txt]
   workflow_dispatch:
+    inputs:
+      target:
+        description: Exact approved uncertain item; verify existing article only, never submit
+        type: string
+        required: true
+        default: 'city-2c396c586e4fb71a'
 permissions:
   contents: write
 concurrency:
@@ -36,6 +42,7 @@ jobs:
       - name: Read existing article, verify and recover receipt without submission
         if: steps.control.outputs.proceed == '1' && steps.release.outputs.proceed == '1'
         env:
+          RECOVERY_TARGET: ${{ inputs.target || 'city-2c396c586e4fb71a' }}
           LOXBLOG_USERNAME: ${{ secrets.LOXBLOG_USERNAME }}
           LOXBLOG_PASSWORD: ${{ secrets.LOXBLOG_PASSWORD }}
           AGNES_API_BASE: https://apihub.agnes-ai.com/v1
@@ -46,10 +53,15 @@ jobs:
           AGNES_MODEL: agnes-2.5-flash
         run: |
           python - <<'PY'
-          import sys,json
+          import sys,json,os,re
+          from pathlib import Path
           sys.path.insert(0,'automation')
           import recover_existing_blog_receipt as recovery
-          recovery.TARGETS={'loxblog':'city-2c396c586e4fb71a'}
+          key=os.environ['RECOVERY_TARGET']
+          if not re.fullmatch(r'(?:city|article)-[0-9a-f]{16}',key):raise SystemExit('Invalid exact recovery key')
+          journal=json.loads(Path('artifacts/loxblog-backlink-queue/submission-attempts.json').read_text())
+          if journal.get(key,{}).get('phase') not in ('submitting','unconfirmed','reconciled_absent','verified'):raise SystemExit('Target has no prior native submission; no recovery allowed')
+          recovery.TARGETS={'loxblog':key}
           report=recovery.recover('loxblog')
           print(json.dumps(report,ensure_ascii=False))
           sys.exit(0 if report.get('passed') else 1)
