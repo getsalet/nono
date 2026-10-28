@@ -16,7 +16,11 @@ FOLDER='artifacts/blogsky-backlink-queue/home-card-images'
 
 def valid_image(url):
  p=urlsplit(url or '')
- return p.scheme=='https' and p.netloc=='navar-abyari.ir' and p.path.startswith('/wp-content/uploads/') and not p.query and not p.fragment
+ if p.scheme!='https' or p.query or p.fragment:return False
+ if p.netloc=='navar-abyari.ir' and p.path.startswith('/wp-content/uploads/'):return True
+ # Generated covers must be the same immutable, owner-scoped Blogsky asset
+ # already present in the actual verified article; mutable refs are forbidden.
+ return p.netloc=='raw.githubusercontent.com' and bool(re.fullmatch(r'/getsalet/nono/[0-9a-f]{40}/assets/blog-generated/blogsky/[0-9a-f]{32}\.webp',p.path))
 
 def cover_css(rows):
  from blogsky_native import public_url

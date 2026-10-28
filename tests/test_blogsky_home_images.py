@@ -17,6 +17,12 @@ class HomeImageTests(unittest.TestCase):
   with self.assertRaises(RuntimeError):images.cover_css([self.row(),self.row()])
   with self.assertRaises(RuntimeError):images.cover_css([])
   row={**self.row(),'image':'https://navar-abyari.ir/wp-content/uploads/a\"b.jpg'};self.assertIn('a%22b.jpg',images.cover_css([row]))
+ def test_generated_cover_accepts_only_immutable_blogsky_owned_asset(self):
+  url='https://raw.githubusercontent.com/getsalet/nono/'+'a'*40+'/assets/blog-generated/blogsky/'+'b'*32+'.webp'
+  self.assertTrue(images.valid_image(url));self.assertIn(url,images.cover_css([{**self.row(),'image':url}]))
+  for bad in [url.replace('a'*40,'main'),url.replace('/nono/','/other/'),url.replace('/blogsky/','/roya/'),url+'?download=1',url+'#x',url.replace('raw.githubusercontent.com','raw.githubusercontent.com.evil.test')]:
+   self.assertFalse(images.valid_image(bad))
+   with self.assertRaises(RuntimeError):images.cover_css([{**self.row(),'image':bad}])
  def test_reject_ambiguous_boundaries_and_wrong_homepage(self):
   with self.assertRaises(RuntimeError):images.patch_body('<div>wrong page</div>','css')
   with self.assertRaises(RuntimeError):images.without_mapping(images.START+'x'+images.START+images.END)
