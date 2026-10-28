@@ -13,3 +13,6 @@
 - Add exact run/attempt and idle/rejected/publication status to the existing durable run report, so a zero-publication successful workflow need not be represented as a fresh successful generation.
 
 No model, runtime revision, schedule, publication budget, native submission, duplicate protection, held-record eligibility or media policy changes. Existing held items are not reset. Fresh candidates are still bounded to the original maximum per cycle. Videos remain disabled. Rejected/insufficient/duplicate content is not published.
+
+## Live-cycle follow-up
+The first patched cycle (40623828666) correctly reported idle with three rejected candidates and no publication. It revealed a generator/validator contract mismatch: the bare guarantee term remained blocked even in a source-backed negative sentence, while rewrite prompts only received a generic commercial-claim error. Keep that strict gate unchanged; share its exact blocked terms with the writer, and supply bounded matching text plus visible-language tokens to both existing repair prompts. No new repair attempts or approvals are introduced. Also correct two damaged Persian instruction words and prohibit internal editorial commentary in reader-facing prose. Duplicate or insufficiently local content still fails independent review.

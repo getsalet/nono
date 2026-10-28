@@ -38,3 +38,25 @@ class ContextRepairTests(unittest.TestCase):
  def test_no_held_reset_or_new_model_in_patch(self):
   code=Path(n.__file__).read_text();self.assertNotIn("s['held']={}",code);self.assertIn("hold.get('pipeline_revision',0)<revision",code)
 if __name__=='__main__':unittest.main()
+
+class GenerationContractTests(unittest.TestCase):
+ def test_negated_guarantee_is_reported_not_auto_approved(self):
+  p={'html':'<p>تضمینی برای سودآوری نیست.</p>'}
+  out=n.generation_feedback(p)
+  self.assertTrue(any(x['term']=='تضمین' for x in out['blocked_phrase_hits']))
+  self.assertIn('تضمینی برای سودآوری نیست',out['blocked_phrase_hits'][0]['context'])
+ def test_mixed_token_from_live_editorial_repair_is_reported(self):
+  out=n.generation_feedback({'html':'<p>در_operation_mزارعی</p>'})
+  self.assertTrue(any('operation' in x['invalid_visible_token'] for x in out['invalid_visible_tokens']))
+ def test_clean_persian_has_no_false_feedback(self):
+  out=n.generation_feedback({'html':'<p>درباره سودآوری نمی توان نتیجه گرفت.</p>'})
+  self.assertEqual(out['blocked_phrase_hits'],[]);self.assertEqual(out['invalid_visible_tokens'],[])
+ def test_context_is_bounded(self):
+  out=n.generation_feedback({'html':'<p>'+('الف '*10000)+'تضمین'+('ب '*10000)+'</p>'})
+  self.assertLessEqual(len(out['blocked_phrase_hits'][0]['context']),180)
+ def test_contract_and_validator_share_the_exact_original_terms(self):
+  self.assertEqual(n.generation_contract()['blocked_visible_phrases'],['ارسال رایگان','تضمین افزایش','نمایندگی رسمی','تخفیف ویژه','تضمین','شرایط مناسب اقلیمی'])
+  code=Path(n.__file__).read_text();self.assertIn('any(x in text for x in COMMERCIAL_BLOCK_TERMS)',code)
+ def test_both_existing_repair_prompts_receive_specific_feedback(self):
+  code=Path(n.__file__).read_text();self.assertIn("'validation_feedback':feedback",code);self.assertIn("'validation_feedback':generation_feedback(obj)",code)
+  self.assertNotIn('\ufffd',code)
