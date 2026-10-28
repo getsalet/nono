@@ -13,7 +13,9 @@ def transcribe_captcha(raw):
  from agnes_json_client import parse_object
  key=roya.BASE.next_agnes_key() if hasattr(roya.BASE,'next_agnes_key') else roya.BASE.AGNES_KEY
  if not key:raise RuntimeError('Vision credential required for native visual challenge')
- payload={'model':roya.BASE.AGNES_MODEL,'messages':[{'role':'user','content':[{'type':'text','text':'Read the five decimal digits in this ordinary login verification image, left to right. Return only JSON {"digits":"12345"}. Do not infer unseen digits.'},{'type':'image_url','image_url':{'url':'data:image/png;base64,'+base64.b64encode(raw).decode()}}]}],'temperature':0,'max_tokens':1024,'response_format':{'type':'json_object'}}
+ # Keep visual verification separate from the unchanged article-generation model.
+ model=os.getenv('LOXBLOG_CAPTCHA_MODEL') or os.getenv('IMAGE_REVIEW_MODEL') or 'agnes-3.0-flash'
+ payload={'model':model,'messages':[{'role':'user','content':[{'type':'text','text':'Read the five decimal digits in this ordinary login verification image, left to right. Return only JSON {"digits":"12345"}. Do not infer unseen digits.'},{'type':'image_url','image_url':{'url':'data:image/png;base64,'+base64.b64encode(raw).decode()}}]}],'temperature':0,'max_tokens':1024,'response_format':{'type':'json_object'}}
  req=urllib.request.Request(roya.BASE.AGNES_BASE+'/chat/completions',data=json.dumps(payload).encode(),headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'})
  try:
   with urllib.request.urlopen(req,timeout=90)as r:obj=json.loads(r.read())

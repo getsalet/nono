@@ -24,6 +24,17 @@ class LoginReadTests(unittest.TestCase):
   page=SimpleNamespace(url=n.PANEL+'/login.php',goto=Mock(return_value=SimpleNamespace(status=403)))
   with self.assertRaises(RuntimeError):n.read_login_page(page)
   self.assertEqual(page.goto.call_count,1)
+ def test_visual_model_does_not_inherit_article_model(self):
+  import json,os
+  import roya_backlink_queue as roya
+  response=Mock();response.read.return_value=json.dumps({'choices':[{'message':{'content':'{"digits":"12345"}'}}]}).encode()
+  manager=Mock();manager.__enter__=Mock(return_value=response);manager.__exit__=Mock(return_value=False)
+  with patch.dict(os.environ,{'IMAGE_REVIEW_MODEL':'agnes-3.0-flash'},clear=True),patch.object(roya.BASE,'next_agnes_key',return_value='test-only'),patch.object(n.urllib.request,'urlopen',return_value=manager)as send:
+   self.assertEqual(n.transcribe_captcha(b'test-image'),'12345')
+   self.assertEqual(json.loads(send.call_args.args[0].data)['model'],'agnes-3.0-flash')
+  with patch.dict(os.environ,{'LOXBLOG_CAPTCHA_MODEL':'explicit-vision'},clear=True),patch.object(roya.BASE,'next_agnes_key',return_value='test-only'),patch.object(n.urllib.request,'urlopen',return_value=manager)as send:
+   n.transcribe_captcha(b'test-image')
+   self.assertEqual(json.loads(send.call_args.args[0].data)['model'],'explicit-vision')
  def test_credential_post_is_outside_retry_helper(self):
   import inspect
   body=inspect.getsource(n.read_login_page)
