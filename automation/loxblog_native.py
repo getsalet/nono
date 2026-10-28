@@ -52,9 +52,25 @@ def read_captcha(raw):
 def launch_browser(pw):return pw.chromium.launch(headless=True)
 
 def assert_management(page):
- if urlsplit(page.url).hostname!='loxblog.com' or urlsplit(page.url).path!='/adminnew.php':raise RuntimeError('Native management session not active')
- target=page.locator('a[href]').evaluate_all('es=>es.filter(e=>e.textContent.trim()==="afp.lxb.ir").map(e=>e.href)')
- if not any(urlsplit(x).hostname=='afp.lxb.ir' for x in target):raise RuntimeError('Native session is not managing expected AFP blog')
+ def route_ok():return urlsplit(page.url).hostname=='loxblog.com' and urlsplit(page.url).path=='/adminnew.php'
+ def identity_ok():
+  target=page.locator('a[href]').evaluate_all('es=>es.filter(e=>e.textContent.trim()==="afp.lxb.ir").map(e=>e.href)')
+  return any(urlsplit(x).hostname=='afp.lxb.ir' for x in target)
+ if not route_ok():raise RuntimeError('Native management session not active')
+ if not identity_ok():
+  # domcontentloaded is not proof the native menu has finished rendering.
+  # Wait for the SAME strict identity, without navigation, credentials or POST.
+  from playwright.sync_api import TimeoutError as NativeWaitTimeout
+  try:
+   page.wait_for_function('''()=>location.hostname==='loxblog.com' && location.pathname==='/adminnew.php' && Array.from(document.querySelectorAll('a[href]')).some(a=>a.textContent.trim()==='afp.lxb.ir' && new URL(a.href).hostname==='afp.lxb.ir')''',timeout=10000)
+  except NativeWaitTimeout:
+   # Fixed boolean categories only. Never log native body/account/form data.
+   flags=page.evaluate('''()=>({server_error:/Data too long for column|Fatal error:|SQLSTATE\\[/.test(document.body?.innerText||''),login_form:!!document.querySelector('#loginForm'),access_denied:/Access Denied|403 Forbidden/i.test(document.body?.innerText||'')})''')
+   safe={k:flags.get(k)is True for k in ('server_error','login_form','access_denied')}if isinstance(flags,dict)else{}
+   print('LoxBlog strict identity unavailable: '+json.dumps(safe,sort_keys=True),flush=True)
+   raise RuntimeError('Native session is not managing expected AFP blog; bounded read-only identity wait exhausted')from None
+ if not route_ok():raise RuntimeError('Native management session not active')
+ if not identity_ok():raise RuntimeError('Native session is not managing expected AFP blog')
 
 def read_login_page(page):
  # GET-only resilience. No credential fill or POST is retried here.
