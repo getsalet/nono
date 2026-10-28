@@ -48,12 +48,12 @@
       const verified=dateMs(x.at);if(verified!==null)group.verifiedAt=Math.max(group.verifiedAt||0,verified);
       group.title=x.title||state.items?.[key]?.title||titles.get(key)||group.title;
     }
-    const rows=groups.map(g=>({...g,publishedAt:g.recovered?null:(g.dates.length?Math.min(...g.dates):null),title:g.title||titleFallback(g)}));
+    const rows=groups.map(g=>({...g,publishedAt:g.recovered?null:(g.dates.length?Math.min(...g.dates):null),title:g.title||titleFallback(g),titleKnown:!!g.title}));
     rows.sort((a,b)=>(b.publishedAt??-1)-(a.publishedAt??-1));
     return {rows,total:rows.length,invalid};
   }
   function queueSummary(c,state,queue,journal) {
-    const published=new Set((state?.published||[]).map(x=>String(x?.key||'')));
+    const published=new Set((Array.isArray(state?.published)?state.published:[]).map(x=>String(x?.key||'')));
     const items=values(queue?.items);for(const x of items)if(published.has(String(x.key||x.id||''))&&x.source_key)published.add(String(x.source_key));const records=new Map(items.map(x=>[String(x.key||x.id),x]));
     for(const [key,x]of Object.entries(state?.items||{}))records.set(key,{...(records.get(key)||{}),...x,key});
     const counts={ready:0,pending:0,failed:0,ambiguous:0};
@@ -77,7 +77,7 @@
   }
   function repairCandidate(c,input) {
     if(input.stale||input.globalControl?.pause_image_production!==false)return null;
-    const published=new Set((input.state?.published||[]).map(x=>x.key));
+    const published=new Set((Array.isArray(input.state?.published)?input.state.published:[]).map(x=>x?.key));
     if(c.id==='parsiblog'){
       const entries=Object.entries(input.state?.items||{}).filter(([key,x])=>/^pb-[a-f0-9]{20}$/.test(key)&&!published.has(key)&&x.status==='failed'&&!x.id&&!x.native_phase&&String(x.reason||'').startsWith('Text SEO preflight rejected:'));
       const selected=entries.find(([key])=>key===input.generation?.key)||entries[0];
@@ -170,9 +170,41 @@
     const latest=relevant[0]||null,last=pub.rows.find(x=>x.publishedAt!==null)||null;
     const paused=globalControl?.pause_image_production===true || control?.enabled===false || automationControl?.enabled?.[c.id]===false;
     const status=diagnosis(c,input,pub,q,last,latest,paused,now);
-    return {...c,input,pub,q,last,latest,runReport:matchedRunReport(c,input,latest),runs:relevant,status,paused,generation,schedules:schedule(yaml),model:String(yaml||'').match(/AGNES_MODEL:\s*['"]?([^\s'"\n]+)/)?.[1]||null,
+    return {...c,input,pub,q,last,latest,publication:publicationFreshness(pub,last,now),quality:dataQuality(input,pub),runReport:matchedRunReport(c,input,latest),runs:relevant,status,paused,generation,schedules:schedule(yaml),model:String(yaml||'').match(/AGNES_MODEL:\s*['"]?([^\s'"\n]+)/)?.[1]||null,
       today:pub.total===null?null:pub.rows.filter(x=>x.publishedAt!==null&&x.publishedAt>now-86400000&&x.publishedAt<=now).length,
       week:pub.total===null?null:pub.rows.filter(x=>x.publishedAt!==null&&x.publishedAt>now-7*86400000&&x.publishedAt<=now).length};
+  }
+  // Independent dimensions: a running workflow cannot hide old publications.
+  function publicationFreshness(pub,last,now=Date.now()) {
+    if(pub.total===null)return {code:'unknown',label:'تازگی انتشار نامشخص',tone:'neutral'};
+    if(!last)return {code:'unknown',label:'زمان انتشار نامشخص',tone:'neutral'};
+    return now-last.publishedAt>86400000
+      ?{code:'overdue',label:'بیش از ۲۴ ساعت بدون انتشار ثبت‌شده',tone:'warn'}
+      :{code:'recent',label:'رسید انتشار در ۲۴ ساعت اخیر',tone:'good'};
+  }
+  function dataQuality(input,pub) {
+    if(pub.total===null)return {code:'missing',label:'داده رسید ناموجود / نامعتبر',tone:'warn',sourceAt:input.sourceAt||null};
+    if(input.stale)return {code:'stale',label:'داده قدیمی؛ دریافت جدید ناموفق',tone:'warn',sourceAt:input.sourceAt||null};
+    return {code:'current',label:'فایل رسید خوانده شد',tone:'good',sourceAt:input.sourceAt||null};
+  }
+  function needsAttention(r) {
+    return r.quality.code!=='current'||r.publication.code!=='recent'||['warn','bad'].includes(r.status.tone)||['run_unknown','publication_unknown'].includes(r.status.code);
+  }
+  function aggregate(rows,field) {
+    const get=r=>field==='publications'?r.pub.total:r[field];
+    const known=rows.filter(r=>get(r)!==null&&get(r)!==undefined);
+    return {value:known.length?known.reduce((n,r)=>n+get(r),0):null,
+      missing:rows.length-known.length,stale:known.filter(r=>r.quality.code==='stale').length};
+  }
+  function timeCoverage(rows) {
+    const known=rows.filter(r=>r.pub.total!==null);
+    const total=known.reduce((n,r)=>n+r.pub.total,0);
+    const timed=known.reduce((n,r)=>n+r.pub.rows.filter(p=>p.publishedAt!==null).length,0);
+    return {total,timed,unknown:total-timed,missing:rows.length-known.length,stale:known.filter(r=>r.quality.code==='stale').length};
+  }
+  function filterPublications(posts,state) {
+    const q=String(state.query||'').trim().toLowerCase();
+    return posts.filter(p=>(state.blog==='all'||p.blogId===state.blog)&&(!q||[p.title,p.key,p.blog,p.url].join(' ').toLowerCase().includes(q)));
   }
   function relative(value,now=Date.now()) {
     if(value===null||value===undefined)return 'زمان نامشخص';
@@ -182,5 +214,5 @@
     const h=Math.floor(m/60);if(h<24)return h+' ساعت'+(m%60?' و '+m%60+' دقیقه':'')+' پیش';
     const d=Math.floor(h/24);return d+' روز'+(h%24?' و '+h%24+' ساعت':'')+' پیش';
   }
-  return {REPO,CONFIG,repairCandidate,generationPath,runReportPath,matchedRunReport,issueAdvice,diagnosis,dateMs,safeUrl,canonicalUrl,publications,queueSummary,schedule,cronDescription,runState,build,relative};
+  return {REPO,CONFIG,repairCandidate,generationPath,runReportPath,matchedRunReport,issueAdvice,diagnosis,dateMs,safeUrl,canonicalUrl,publications,queueSummary,schedule,cronDescription,runState,build,publicationFreshness,dataQuality,needsAttention,aggregate,timeCoverage,filterPublications,relative};
 });
