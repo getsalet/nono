@@ -31,6 +31,9 @@ class PreflightRecoveryTests(unittest.TestCase):
     self.assertEqual(r.pick({'items':[self.item]},{},1),[self.item])
    with patch.multiple(r,ROOT=root,ITEMS=root,RETRY_FAILED=False,ONLY=''),patch('blog_generated_image.family_enabled',return_value=False):
     self.assertEqual(r.pick({'items':[self.item]},{},1),[])
+ def test_publisher_installs_its_html_parser(self):
+  workflow=(ROOT/'.github/workflows/roya-backlink-publish.yml').read_text()
+  self.assertIn('pip install --quiet Pillow beautifulsoup4',workflow)
  def test_prompt_and_full_quality_gates_remain(self):
   source=inspect.getsource(r.build_prompt);self.assertIn('<summary>پرسش</summary><p>پاسخ</p></details>',source)
   self.assertNotIn('\ufffd',source)
