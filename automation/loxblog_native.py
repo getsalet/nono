@@ -51,6 +51,21 @@ def read_captcha(raw):
 
 def launch_browser(pw):return pw.chromium.launch(headless=True)
 
+def management_diagnostics(page):
+ # Aggregate only fixed booleans/counts; no titles, account text, URLs or forms.
+ raw=page.evaluate("""()=>{const links=Array.from(document.querySelectorAll('a[href]'));
+ const own=links.filter(a=>{try{return new URL(a.href).hostname==='afp.lxb.ir'}catch{return false}});
+ const normalize=s=>s.replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g,'').replace(/\s+/g,'').replace(/\/$/,'');
+ const query=new URLSearchParams(location.search).get('page');
+ return {archive_route:query==='postslist',editor_route:query==='sendpost',
+ expected_href_count:own.length,exact_label_count:own.filter(a=>a.textContent.trim()==='afp.lxb.ir').length,
+ normalized_label_count:own.filter(a=>normalize(a.textContent)==='afp.lxb.ir').length,
+ archive_search:!!document.querySelector('input[name=search]'),editor_title:!!document.querySelector('#ptitle')};}""")
+ raw=raw if isinstance(raw,dict)else{}
+ result={k:raw.get(k)is True for k in ('archive_route','editor_route','archive_search','editor_title')}
+ result.update({k:raw.get(k)if type(raw.get(k))is int and 0<=raw[k]<=1000 else None for k in ('expected_href_count','exact_label_count','normalized_label_count')})
+ return result
+
 def assert_management(page):
  def route_ok():return urlsplit(page.url).hostname=='loxblog.com' and urlsplit(page.url).path=='/adminnew.php'
  def identity_ok():
@@ -68,6 +83,8 @@ def assert_management(page):
    flags=page.evaluate('''()=>({server_error:/Data too long for column|Fatal error:|SQLSTATE\\[/.test(document.body?.innerText||''),login_form:!!document.querySelector('#loginForm'),access_denied:/Access Denied|403 Forbidden/i.test(document.body?.innerText||'')})''')
    safe={k:flags.get(k)is True for k in ('server_error','login_form','access_denied')}if isinstance(flags,dict)else{}
    print('LoxBlog strict identity unavailable: '+json.dumps(safe,sort_keys=True),flush=True)
+   try:print('LoxBlog identity aggregate: '+json.dumps(management_diagnostics(page),sort_keys=True),flush=True)
+   except Exception:print('LoxBlog identity aggregate unavailable',flush=True)
    raise RuntimeError('Native session is not managing expected AFP blog; bounded read-only identity wait exhausted')from None
  if not route_ok():raise RuntimeError('Native management session not active')
  if not identity_ok():raise RuntimeError('Native session is not managing expected AFP blog')
@@ -122,9 +139,11 @@ def main():
   browser=launch_browser(pw)
   try:
    page=browser.new_page();login(page)
+   print('Read-only diagnosis: editor identity',flush=True)
    page.goto(NEW,wait_until='domcontentloaded',timeout=60000);assert_management(page)
    page.locator('#ptitle').wait_for(timeout=30000)
    page.wait_for_function('()=>window.tinymce?.get("editor1")?.initialized && window.tinymce?.get("editor2")?.initialized',timeout=60000)
+   print('Read-only diagnosis: archive identity',flush=True)
    page.goto(ARCHIVE,wait_until='domcontentloaded',timeout=60000);assert_management(page)
    page.locator('input[name=search]').wait_for(timeout=30000)
    print('Read-only diagnosis passed: expected blog, native summary/continuation editor, archive available. No publication.',flush=True)
