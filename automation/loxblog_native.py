@@ -53,7 +53,7 @@ def launch_browser(pw):return pw.chromium.launch(headless=True)
 
 def management_diagnostics(page):
  # Aggregate only fixed booleans/counts; no titles, account text, URLs or forms.
- raw=page.evaluate("""()=>{const links=Array.from(document.querySelectorAll('a[href]'));
+ raw=page.evaluate(r"""()=>{const links=Array.from(document.querySelectorAll('a[href]'));
  const own=links.filter(a=>{try{return new URL(a.href).hostname==='afp.lxb.ir'}catch{return false}});
  const normalize=s=>s.replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g,'').replace(/\s+/g,'').replace(/\/$/,'');
  const query=new URLSearchParams(location.search).get('page');
@@ -133,6 +133,21 @@ def login(page):
  print('LoxBlog native login verified for expected blog.',flush=True)
  return {'new':NEW,'archive':ARCHIVE}
 
+def diagnostic_ready_title(root):
+ # One saved, completed, unpublished title; no generation or checkpoint writes.
+ from pathlib import Path
+ root=Path(root)
+ try:queue=json.loads((root/'data/loxblog/backlink-queue.json').read_text())
+ except (OSError,ValueError):return None
+ for row in queue.get('items',[]):
+  key=row.get('key','')
+  if row.get('status')!='completed'or row.get('published')or not isinstance(key,str)or not re.fullmatch(r'city-[0-9a-f]{16}',key):continue
+  try:item=json.loads((root/'artifacts/loxblog-backlink-queue/items'/(key+'.json')).read_text())
+  except (OSError,ValueError):continue
+  title=item.get('post',{}).get('title')
+  if isinstance(title,str)and 12<=len(title)<=200 and not any(c in title for c in '<>\r\n'):return title
+ return None
+
 def main():
  from playwright.sync_api import sync_playwright
  with sync_playwright()as pw:
@@ -146,6 +161,14 @@ def main():
    print('Read-only diagnosis: archive identity',flush=True)
    page.goto(ARCHIVE,wait_until='domcontentloaded',timeout=60000);assert_management(page)
    page.locator('input[name=search]').wait_for(timeout=30000)
+   from pathlib import Path
+   title=diagnostic_ready_title(Path(__file__).resolve().parents[1])
+   if title:
+    from publish_loxblog_posts import scan_public,find_native_record
+    print('Read-only diagnosis: publisher public scan then exact-title all-status lookup',flush=True)
+    public=browser.new_page();scan_public(public);record=find_native_record(page,title)
+    print('Read-only publisher lookup passed; existing native match: '+str(record is not None),flush=True)
+   else:print('Read-only publisher lookup skipped: no saved ready title; base identity only.',flush=True)
    print('Read-only diagnosis passed: expected blog, native summary/continuation editor, archive available. No publication.',flush=True)
   finally:browser.close()
  return 0

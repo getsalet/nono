@@ -22,6 +22,18 @@ class DiagnosticsTests(unittest.TestCase):
   publish=workflow.split('      - name: Publish and verify native LoxBlog post',1)[1].split('      - name:',1)[0]
   self.assertIn('LOXBLOG_LOGIN_DIAGNOSTIC',publish)
   self.assertLess(publish.index('python automation/loxblog_native.py'),publish.index('else'))
+ def test_saved_ready_title_lookup_never_uses_arbitrary_paths_or_published_rows(self):
+  import tempfile,json
+  with tempfile.TemporaryDirectory()as td:
+   root=Path(td);q=root/'data/loxblog/backlink-queue.json';q.parent.mkdir(parents=True)
+   p=root/'artifacts/loxblog-backlink-queue/items/city-0123456789abcdef.json';p.parent.mkdir(parents=True);p.write_text(json.dumps({'post':{'title':'عنوان کامل آماده انتشار'}}))
+   row={'key':'city-0123456789abcdef','status':'completed'};q.write_text(json.dumps({'items':[row]}));self.assertEqual(n.diagnostic_ready_title(root),'عنوان کامل آماده انتشار')
+   for bad in (dict(row,published=True),dict(row,key='../../secret'),dict(row,status='failed')):
+    q.write_text(json.dumps({'items':[bad]}));self.assertIsNone(n.diagnostic_ready_title(root))
+ def test_read_only_diagnosis_covers_publisher_search_not_only_empty_archive(self):
+  code=inspect.getsource(n.main)
+  self.assertIn('scan_public(public);record=find_native_record(page,title)',code)
+  for unsafe in ('save_post(','.click(','.fill(','.checkpoint(','.begin('):self.assertNotIn(unsafe,code)
  def test_read_only_no_acceptance_or_secret_collection(self):
   source=inspect.getsource(n.management_diagnostics)
   for bad in ('.click(','.fill(','.goto(','.reload(','.innerText','innerHTML','input_value','cookie','localStorage','storage_state'):self.assertNotIn(bad,source)
