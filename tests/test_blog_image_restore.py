@@ -97,3 +97,23 @@ class FailureDetailsTests(unittest.TestCase):
    self.assertEqual(result['failed_review_flags'],['packaging_not_used_as_hardware']);self.assertEqual(result['review_score'],97);self.assertNotIn('private',json.dumps(result))
  def test_queue_misconfiguration_has_explicit_safe_code(self):
   self.assertEqual(restore.failure_details({},RuntimeError('Hosted image queue not configured; no provider request'))['code'],'image_queue_not_configured')
+
+class CorrectiveCandidateTests(unittest.TestCase):
+ def fixture(self,root):
+  cfg=json.loads((restore.ROOT/restore.CONFIG).read_text());cfg['enabled']=True
+  p=root/restore.CONFIG;p.parent.mkdir(parents=True);p.write_text(json.dumps(cfg))
+  item={'key':'bounded-fixture','family':'tape20','site_title':'نوار تیپ'}
+  post={'title':'پایش آبیاری با نوار تیپ','html':'<p>'+('متن آموزشی درباره پایش رطوبت و نوار تیپ '*15)+'</p>'}
+  return item,post
+ def test_restored_entry_point_has_two_candidate_ceiling_and_no_asset_on_rejection(self):
+  with tempfile.TemporaryDirectory()as tmp:
+   root=Path(tmp);item,post=self.fixture(root)
+   with patch('blog_generated_image.rollout_enabled',return_value=True),patch('blog_generated_image.family_enabled',return_value=True),patch('blog_generated_image.existing_asset',return_value=None),patch('blog_generated_image.reconsider_candidate',return_value=None),patch('blog_image_backpressure.require_open'),patch('blog_generated_image.generate',return_value=b'fixture')as generate,patch('blog_image_gate.review',side_effect=RuntimeError('Product image rejected: fixture')),patch('blog_generated_image.checkpoint_asset')as checkpoint:
+    with self.assertRaisesRegex(RuntimeError,'Product image rejected:'):restore.prepare(item,post,'roya',root)
+   self.assertEqual(generate.call_count,2);checkpoint.assert_not_called();self.assertNotIn('image_url',item)
+ def test_provider_failure_is_never_retried_as_visual_rejection(self):
+  with tempfile.TemporaryDirectory()as tmp:
+   root=Path(tmp);item,post=self.fixture(root)
+   with patch('blog_generated_image.rollout_enabled',return_value=True),patch('blog_generated_image.family_enabled',return_value=True),patch('blog_generated_image.existing_asset',return_value=None),patch('blog_generated_image.reconsider_candidate',return_value=None),patch('blog_image_backpressure.require_open'),patch('blog_generated_image.generate',side_effect=RuntimeError('Image provider HTTP 429; raw response withheld'))as generate,patch('blog_generated_image.checkpoint_asset')as checkpoint:
+    with self.assertRaisesRegex(RuntimeError,'HTTP 429'):restore.prepare(item,post,'roya',root)
+   self.assertEqual(generate.call_count,1);checkpoint.assert_not_called()
