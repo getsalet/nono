@@ -57,20 +57,21 @@
     const items=values(queue?.items);for(const x of items)if(published.has(String(x.key||x.id||''))&&x.source_key)published.add(String(x.source_key));const records=new Map(items.map(x=>[String(x.key||x.id),x]));
     for(const [key,x]of Object.entries(state?.items||{}))records.set(key,{...(records.get(key)||{}),...x,key});
     const counts={ready:0,pending:0,failed:0,ambiguous:0};
-    const issues=[];
+    const issues=[],ambiguousKeys=new Set();
     for(const x of records.values()){
       const key=String(x.key||x.id||'');if(published.has(key)||x.published===true||x.status==='published')continue;
       const s=String(x.status||x.phase||'');
       if(['ready','approved','completed','generated','draft_saved'].includes(s))counts.ready++;
       if(s==='pending')counts.pending++;
       if(s==='failed'||s==='held'||s==='deferred')counts.failed++;
-      if(/^(submitting|unconfirmed|uncertain|request_pending)/.test(s)){counts.ambiguous++;issues.push({key,reason:'ارسال قبلی هنوز نیاز به تطبیق رسید دارد.'});}
+      if(/^(submitting|unconfirmed|uncertain|request_pending)/.test(s)){ambiguousKeys.add(key||'record:unknown');issues.push({key,reason:'ارسال قبلی هنوز نیاز به تطبیق رسید دارد.'});}
     }
     const failures=new Map(Object.entries(state?.failed||{}).filter(([key])=>!published.has(key)));
     for(const [key,v]of Object.entries(state?.held||{}))if(!published.has(key))failures.set(key,v?.reason||v);
     for(const [key,v]of failures)issues.push({key,reason:typeof v==='string'?v:String(v?.last_error||v?.reason||'کنترل کیفیت نیاز به بررسی دارد.')});
-    if(state?.intent){counts.ambiguous++;issues.unshift({key:state.intent.key||'',reason:'یک قصد ارسال ثبت‌شده در انتظار تطبیق است؛ ارسال دوباره نکنید.'});}
-    for(const [key,x]of Object.entries(journal?.items||journal?.attempts||journal||{}))if(/^(submitting|unconfirmed|uncertain|reconciled_absent)$/.test(x?.phase||'')){counts.ambiguous++;issues.unshift({key,reason:'دفتر ارسال، رسید حل‌نشده دارد.'});}
+    if(state?.intent){ambiguousKeys.add(state.intent.key||'intent:unknown');issues.unshift({key:state.intent.key||'',reason:'یک قصد ارسال ثبت‌شده در انتظار تطبیق است؛ ارسال دوباره نکنید.'});}
+    for(const [key,x]of Object.entries(journal?.items||journal?.attempts||journal||{}))if(/^(submitting|unconfirmed|uncertain|reconciled_absent)$/.test(x?.phase||'')){ambiguousKeys.add(key||'journal:unknown');issues.unshift({key,reason:'دفتر ارسال، رسید حل‌نشده دارد.'});}
+    counts.ambiguous=ambiguousKeys.size;
     counts.failed=Math.max(counts.failed,failures.size);
     return {...counts,loaded:!!queue,total:queue?items.length:null,issues};
   }
@@ -94,21 +95,54 @@
     if(run.status==='in_progress'||run.status==='waiting')return {label:'در حال اجرا',tone:'info'};
     return ({success:{label:'اجرای موفق',tone:'good'},failure:{label:'اجرای ناموفق',tone:'bad'},cancelled:{label:'لغوشده',tone:'neutral'},skipped:{label:'اجرا نشده',tone:'neutral'},timed_out:{label:'پایان مهلت اجرا',tone:'bad'},action_required:{label:'نیازمند اقدام',tone:'warn'}})[run.conclusion]||{label:'وضعیت نامشخص',tone:'neutral'};
   }
+  function generationPath(c) {return c.id==='niloblog'?'artifacts/niloblog/run-status.json':c.id==='parsiblog'?'artifacts/parsiblog-backlink-queue/run-report.json':'artifacts/'+c.id+'-backlink-queue/generation-status.json';}
+  function issueAdvice(reason) {
+    const text=String(reason||'');
+    if(/visual_challenge|captcha|کپچا/i.test(text))return {category:'login',label:'ورود / کپچا',action:'گزارش ورود را بررسی کنید؛ پس از رفع علت، فقط یک آزمون ورود بدون انتشار اجرا کنید.'};
+    if(/authentication|credential|login rejected|unauthorized|Missing.*secret/i.test(text))return {category:'login',label:'ورود / دسترسی',action:'اعتبار دسترسی را در تنظیمات امن گیت‌هاب بررسی کنید؛ رمز یا کلید را در پنل وارد نکنید.'};
+    if(/unconfirmed|uncertain|reconciliation|تطبیق|قصد ارسال|رسید حل/i.test(text))return {category:'receipt',label:'رسید نامشخص',action:'ابتدا آرشیو بومی و صفحه عمومی را تطبیق دهید؛ تا تعیین نتیجه، مطلب را دوباره ارسال نکنید.'};
+    if(/hourly|rolling.*limit|budget|rate.limit|429/i.test(text))return {category:'limit',label:'محدودیت / سهمیه',action:'زمان مجاز تلاش بعدی و نوع محدودیت را بررسی کنید؛ سقف انتشار را دور نزنید.'};
+    if(/image|تصویر/i.test(text))return {category:'image',label:'مرحله تصویر',action:'موجودی تصویر و گزارش تأیید تصویر را بررسی کنید؛ تصویر ردشده را بدون تأیید منتشر نکنید.'};
+    if(/quality|preflight|editorial|evidence|claim|word count|foreign.language|کنترل کیفیت|Text validation/i.test(text))return {category:'quality',label:'رد کنترل کیفیت',action:'فقط پیش‌نویس و شواهد همان مورد را اصلاح و دوباره ارزیابی کنید؛ کنترل کیفیت را غیرفعال نکنید.'};
+    return {category:'unknown',label:'علت فنی نیازمند بررسی',action:'مرحله ناموفق و پیام خطا را در گزارش اجرا بررسی کنید؛ از روی رنگ اجرا علت را حدس نزنید.'};
+  }
+  function diagnosis(c,input,pub,q,last,latest,paused,now) {
+    const result=(code,label,tone,message,action,evidence,source,confidence='ثبت‌شده',observedAt=null)=>({code,label,tone,message,action,evidence,source,confidence,observedAt});
+    const file=p=>REPO+'/blob/'+(input.revision||'main')+'/'+p;
+    const runUrl=safeUrl(latest?.html_url)||REPO+'/actions/workflows/'+c.workflow;
+    const gen=input.generation,at=dateMs(gen?.completed_at||gen?.updated_at||gen?.at),start=dateMs(latest?.run_started_at||latest?.created_at),end=dateMs(latest?.updated_at);
+    // A report is not the cause of a later run unless its run ID matches or its
+    // timestamp falls inside that run. Old held drafts are background, not outages.
+    const sameRun=!!latest && (gen?.run_id?String(gen.run_id)===String(latest.id):at!==null&&start!==null&&end!==null&&at>=start&&at<=end+120000);
+    const current=sameRun&&at!==null&&at<=now+120000;
+    if(!input.state||input.stale)return result('data_missing',input.stale?'داده قبلی':'داده ناقص','neutral','تازگی فایل رسید تأیید نشده است؛ وضعیت سلامت قابل نتیجه‌گیری نیست.','خواندن منابع را تازه‌سازی کنید؛ در صورت تداوم خطا، منبع رسید را مستقیم باز کنید.',input.stale?'خواندن نسخه فعلی ناموفق؛ داده قبلی حفظ شده است.':'فایل رسید خوانده نشد.',file(c.state),'نامشخص');
+    if(paused)return result('paused','توقف تنظیم‌شده','neutral','توقف از تنظیمات خوانده شده؛ خطای جنراتور فرض نمی‌شود.','اگر توقف عمدی است، اقدامی لازم نیست؛ فقط با مجوز، تنظیم توقف را تغییر دهید.','حداقل یک کنترل توقف فعال است.',file(input.control?.enabled===false?c.control:input.automationControl?.enabled?.[c.id]===false?'data/blog-automation-control.json':'data/blog-generated-image-control.json'));
+    if(q.ambiguous)return result('receipt','رسید در انتظار تطبیق','warn','برای یک ارسال قبلی هنوز نتیجه قطعی نداریم.',issueAdvice('reconciliation').action,'قصد ارسال یا وضعیت حل‌نشده در دفتر ارسال ثبت شده است.',file(c.journal||c.state));
+    if(current && (gen.status==='failed'||gen.reason||gen.error_type) && runState(latest).tone==='bad') {
+      const reason=String(gen.reason||(Array.isArray(gen.qa_errors)?gen.qa_errors:[]).join('؛ ')||gen.error_type||'');const a=issueAdvice(reason);
+      return result(a.category,a.label,'bad',a.category==='quality'?'این اجرا در کنترل کیفیت متوقف شد؛ این مدرک خرابی کل جنراتور نیست.':'گزارش همین اجرا یک مانع ثبت کرده است.',a.action,reason||'گزارش اجرا ناموفق است.',file(generationPath(c)),'همین اجرا',at);
+    }
+    if(runState(latest).tone==='bad')return result('run_failed','نیازمند بررسی اجرا','bad','آخرین اجرای مرتبط ناموفق است؛ علت دقیق از این داده‌ها مشخص نیست.',issueAdvice('').action,'نتیجه workflow: '+String(latest.conclusion),runUrl,'علت نامشخص',dateMs(latest.updated_at));
+    if(['queued','in_progress','waiting'].includes(latest?.status))return result('running',runState(latest).label,'info','این اجرا هنوز تمام نشده است؛ انتشار فقط با رسید تأیید می‌شود.','تا پایان اجرا صبر کنید؛ سپس رسید و نتیجه همان اجرا را بررسی کنید.','وضعیت workflow: '+latest.status,runUrl,'ثبت‌شده',dateMs(latest.updated_at));
+    const limit=Number(input.control?.rolling_hourly_limit||input.control?.max_verified_posts_per_rolling_hour);
+    const recent=pub.rows.filter(x=>x.publishedAt!==null&&x.publishedAt>now-3600000&&x.publishedAt<=now);
+    if(Number.isInteger(limit)&&limit>0&&recent.length>=limit){const next=recent.map(x=>x.publishedAt).sort((a,b)=>b-a)[limit-1]+3600000;
+      return {...result('budget','سقف ساعتی پر است','info','تعداد رسیدهای یک ساعت اخیر به سقف صریح فایل کنترل رسیده است؛ این خطا نیست.','تا آزادشدن ظرفیت صبر کنید؛ اجرای دستی محدودیت را دور نمی‌زند.','رسیدهای یک ساعت اخیر: '+recent.length+'؛ سقف تنظیم‌شده: '+limit,file(c.control),'محاسبه از رسیدها'),retryAt:next};}
+    if(current && ['waiting_image','waiting_provider'].includes(gen?.status))return result('waiting',gen.status==='waiting_image'?'در انتظار تصویر':'در انتظار سرویس تولید','info','آخرین گزارش مرتبط، انتظار را ثبت کرده است؛ انتشار تأیید نشده است.','گزارش سرویس و زمان مجاز تلاش بعدی را بررسی کنید؛ ارسال موازی راه نیندازید.','وضعیت گزارش: '+gen.status,file(generationPath(c)),'همین اجرا',at);
+    if(current && gen?.status==='idle')return result('idle','بدون کار آماده','info','گزارش همین اجرا حالت بی‌کاری را ثبت کرده است؛ خالی بودن کل صف هنوز اثبات نمی‌شود.','صف را باز کنید: موضوع در انتظار، پیش‌نویس آماده و موارد ردشده را جداگانه بررسی کنید.','گزارش تولید: idle؛ '+(q.loaded?'جزئیات صف خوانده شده است.':'جزئیات صف هنوز خوانده نشده است.'),file(generationPath(c)),'همین اجرا',at);
+    if(q.loaded&&q.total===0)return result('empty_queue','صف موضوع خالی است','info','فایل صف خوانده شده و هیچ موضوعی ندارد.','در صورت نیاز، موضوع‌های مجاز جدید به صف اضافه کنید؛ اجرای مجدد به‌تنهایی کاری تولید نمی‌کند.','تعداد موضوع‌های فایل صف: ۰',file(c.queue));
+    if(!last)return result('publication_unknown','زمان انتشار نامشخص','neutral','رسید زمان‌دار معتبر برای آخرین انتشار نداریم.','آرشیو عمومی و رسیدها را تطبیق دهید؛ نبود مدرک را نبود پست فرض نکنید.','رسید زمان‌دار معتبر موجود نیست.',file(c.state),'نامشخص');
+    if(now-last.publishedAt>86400000)return result('stale_publication','بدون انتشار تازه','warn','بیش از ۲۴ ساعت از آخرین انتشار ثبت‌شده گذشته است؛ علت هنوز معلوم نیست.','صف و گزارش آخرین اجرا را باز کنید؛ پیش از تشخیص علت، تولید یا ارسال تکراری نکنید.','آخرین زمان انتشار از رسید اتوماسیون خوانده شده است.',file(c.state),'نیازمند بررسی',last.publishedAt);
+    if(!latest)return result('run_unknown','وضعیت اجرا نامشخص','neutral','رسید انتشار خوانده شده، اما اجرای مرتبط در نمونه API موجود نیست.','برای نتیجه اجرا، GitHub Actions را مستقیم بررسی کنید.','نمونه اجراهای مرتبط در دسترس نیست.',runUrl,'نامشخص');
+    return result('recent_receipt','انتشار تازه ثبت شده','good','رسید انتشار در ۲۴ ساعت اخیر وجود دارد؛ این تضمین سلامت همه اجراها نیست.','فعلاً اقدام فوری لازم نیست؛ روند انتشار و خطاهای بعدی را دنبال کنید.','رسید زمان‌دار انتشار موجود است.',last.url,'رسید انتشار',last.publishedAt);
+  }
   function build(c,input={},now=Date.now()) {
     const {state,queue,control,globalControl,automationControl,journal,generation,yaml,runs=[]}=input;
     const pub=publications(c,state,queue,now),q=queueSummary(c,state,queue,journal);
     const relevant=runs.filter(x=>[c.workflow,c.generationWorkflow].filter(Boolean).some(w=>String(x.path||'').split('@')[0].endsWith('/'+w))).sort((a,b)=>(dateMs(b.created_at)||0)-(dateMs(a.created_at)||0));
     const latest=relevant[0]||null,last=pub.rows.find(x=>x.publishedAt!==null)||null;
     const paused=globalControl?.pause_image_production===true || control?.enabled===false || automationControl?.enabled?.[c.id]===false;
-    let status={label:'بدون خطای اجرای تازه',tone:'good',message:'در آخرین اجرای مشاهده‌شده خطایی ثبت نشده است؛ انتشارها را جداگانه ببینید.'};
-    if(!state)status={label:'داده ناقص',tone:'neutral',message:'فایل رسیدها خوانده نشد؛ صفر پست یا سلامت سیستم فرض نمی‌شود.'};
-    else if(paused)status={label:'توقف تنظیم‌شده',tone:'neutral',message:'انتشار طبق تنظیمات متوقف است؛ این توقف لزوماً خطا نیست.'};
-    else if(q.ambiguous)status={label:'رسید در انتظار تطبیق',tone:'warn',message:'ارسال قبلی باید با صفحه عمومی تطبیق داده شود؛ ارسال مجدد خودکار راه‌حل نیست.'};
-    else if(runState(latest).tone==='bad')status={label:'نیازمند بررسی اجرا',tone:'bad',message:'آخرین اجرای مشاهده‌شده ناموفق بوده است. جزئیات اجرا را باز کنید.'};
-    else if(latest?.status==='in_progress'||latest?.status==='queued')status={label:runState(latest).label,tone:'info',message:'اجرا هنوز تمام نشده است؛ نتیجه انتشار پس از ثبت رسید مشخص می‌شود.'};
-    else if(!last)status={label:'زمان انتشار نامشخص',tone:'neutral',message:'رسید زمان‌دار معتبری برای آخرین انتشار نداریم؛ این یعنی نبود مدرک، نه نبود پست.'};
-    else if(now-last.publishedAt>86400000)status={label:'بدون انتشار تازه',tone:'warn',message:'بیش از ۲۴ ساعت از آخرین انتشار ثبت‌شده می‌گذرد. صف و آخرین اجرا را بررسی کنید؛ این به‌تنهایی اثبات خرابی نیست.'};
-    else if(!latest)status={label:'وضعیت اجرا نامشخص',tone:'neutral',message:'رسید انتشار خوانده شد، اما اجرای مرتبط در نمونه API موجود نیست یا API در دسترس نیست.'};
+    const status=diagnosis(c,input,pub,q,last,latest,paused,now);
     return {...c,input,pub,q,last,latest,runs:relevant,status,paused,generation,schedules:schedule(yaml),model:String(yaml||'').match(/AGNES_MODEL:\s*['"]?([^\s'"\n]+)/)?.[1]||null,
       today:pub.total===null?null:pub.rows.filter(x=>x.publishedAt!==null&&x.publishedAt>now-86400000&&x.publishedAt<=now).length,
       week:pub.total===null?null:pub.rows.filter(x=>x.publishedAt!==null&&x.publishedAt>now-7*86400000&&x.publishedAt<=now).length};
@@ -121,5 +155,5 @@
     const h=Math.floor(m/60);if(h<24)return h+' ساعت'+(m%60?' و '+m%60+' دقیقه':'')+' پیش';
     const d=Math.floor(h/24);return d+' روز'+(h%24?' و '+h%24+' ساعت':'')+' پیش';
   }
-  return {REPO,CONFIG,dateMs,safeUrl,canonicalUrl,publications,queueSummary,schedule,cronDescription,runState,build,relative};
+  return {REPO,CONFIG,generationPath,issueAdvice,diagnosis,dateMs,safeUrl,canonicalUrl,publications,queueSummary,schedule,cronDescription,runState,build,relative};
 });
