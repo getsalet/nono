@@ -1,0 +1,119 @@
+name: Panel targeted repair - no new publication
+run-name: Repair ${{ inputs.blog }} / ${{ inputs.target }} / ${{ inputs.mode }}
+on:
+  workflow_dispatch:
+    inputs:
+      blog:
+        description: Blog with supported repair
+        required: true
+        type: choice
+        options: [parsiblog, loxblog]
+      target:
+        description: Exact failed item key copied from dashboard
+        required: true
+        type: string
+      mode:
+        description: inspect checks only; repair rewrites draft or recovers existing receipt
+        type: choice
+        options: [inspect, repair]
+        default: inspect
+      confirm:
+        description: Type REPAIR to authorize real repair (never new publication)
+        type: string
+        default: ''
+permissions:
+  contents: write
+concurrency:
+  group: ${{ inputs.blog == 'parsiblog' && 'parsiblog-city-native' || 'loxblog-content-pipeline' }}
+  cancel-in-progress: false
+jobs:
+  repair:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Respect existing pipeline controls
+        run: |
+          python - <<'PYCODE'
+          import json, os
+          from pathlib import Path
+          control = json.loads(Path('data/blog-generated-image-control.json').read_text())
+          allowed = os.environ['REPAIR_BLOG'] in ('parsiblog', 'loxblog') and control.get('pause_image_production') is False and os.environ['REPAIR_BLOG'] not in control.get('retired_blogs', [])
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out: out.write('proceed=' + ('1' if allowed else '0') + '\n')
+          PYCODE
+        id: control
+        env:
+          REPAIR_BLOG: ${{ inputs.blog }}
+      - name: Respect LoxBlog release
+        if: inputs.blog == 'loxblog' && steps.control.outputs.proceed == '1'
+        id: release
+        run: python automation/check_loxblog_release.py
+        env:
+          RELEASE_EVENT_NAME: workflow_dispatch
+          RELEASE_REPOSITORY_SWITCH: ${{ vars.LOXBLOG_AUTOMATION_ENABLED }}
+      - name: Install validation dependencies
+        if: steps.control.outputs.proceed == '1' && (inputs.blog != 'loxblog' || steps.release.outputs.proceed == '1')
+        run: python -m pip install --quiet Pillow beautifulsoup4 playwright
+      - name: Test repair safety rules
+        run: python -m unittest discover -s tests -p test_panel_repair.py -v
+      - name: Install existing-post verification browser
+        if: inputs.mode == 'repair' && inputs.blog == 'loxblog' && steps.control.outputs.proceed == '1' && steps.release.outputs.proceed == '1'
+        run: bash automation/install_blog_browser.sh
+      - name: Repair exact target and verify outcome
+        if: steps.control.outputs.proceed == '1' && (inputs.blog != 'loxblog' || steps.release.outputs.proceed == '1')
+        env:
+          REPAIR_BLOG: ${{ inputs.blog }}
+          REPAIR_TARGET: ${{ inputs.target }}
+          REPAIR_MODE: ${{ inputs.mode }}
+          REPAIR_CONFIRM: ${{ inputs.confirm }}
+          AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+          AGNES_MODEL: agnes-2.5-flash
+          IMAGE_REVIEW_MODEL: agnes-3.0-flash
+          AGNES_HEALTHY_SLOTS_ONLY: '1'
+          AGNES_PREFERRED_KEY_SLOTS: AGNES_API_KEY14,AGNES_API_KEY15
+          AGNES_API_KEY14: ${{ secrets.AGNES_API_KEY14 }}
+          AGNES_API_KEY15: ${{ secrets.AGNES_API_KEY15 }}
+          IMAGE_API_KEY: ${{ secrets.AGNES_API_KEY10 || secrets.AGNES_API_KEY }}
+          LOXBLOG_USERNAME: ${{ inputs.blog == 'loxblog' && secrets.LOXBLOG_USERNAME || '' }}
+          LOXBLOG_PASSWORD: ${{ inputs.blog == 'loxblog' && secrets.LOXBLOG_PASSWORD || '' }}
+        run: python automation/panel_repair.py
+      - name: Explain blocked controls
+        if: steps.control.outputs.proceed != '1' || (inputs.blog == 'loxblog' && steps.release.outputs.proceed != '1')
+        run: |
+          echo 'Repair blocked by existing stop or release controls. No repair executed.' >> "$GITHUB_STEP_SUMMARY"
+          exit 1
+      - name: Preserve non-secret repair checkpoints
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: targeted-repair-${{ github.run_id }}
+          path: |
+            artifacts/panel-repairs/
+            artifacts/parsiblog-backlink-queue/
+            artifacts/loxblog-backlink-queue/existing-receipt-recovery.json
+          retention-days: 14
+      - name: Persist only selected repair checkpoints
+        if: always()
+        env:
+          REPAIR_BLOG: ${{ inputs.blog }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f artifacts/panel-repairs/ 2>/dev/null || true
+          if [ "$REPAIR_BLOG" = parsiblog ]; then
+            git add -f state/parsiblog-progress.json artifacts/parsiblog-backlink-queue/
+          else
+            git add -f state/loxblog-backlink-progress.json data/loxblog/backlink-queue.json artifacts/loxblog-backlink-queue/
+          fi
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record exact-item panel repair outcome [skip ci]'
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || exit 1
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 5))
+          done
+          exit 1

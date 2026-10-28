@@ -1,0 +1,10 @@
+const test=require('node:test'),assert=require('node:assert/strict'),D=require('../docs/status/data.js');
+const p=D.CONFIG.find(c=>c.id==='parsiblog'),l=D.CONFIG.find(c=>c.id==='loxblog'),key='pb-'+'a'.repeat(20),lox='city-'+'b'.repeat(16);
+const input=()=>({globalControl:{pause_image_production:false},state:{items:{[key]:{status:'failed',reason:'Text SEO preflight rejected: language'}},published:[]}});
+test('real repair selects exact rejected item',()=>assert.deepEqual(D.repairCandidate(p,input()),{blog:'parsiblog',target:key,operation:'rewrite_and_validate_draft'}));
+test('stale, paused or missing controls cannot offer repair',()=>{for(const patch of [{stale:true},{globalControl:{}},{globalControl:{pause_image_production:true}}])assert.equal(D.repairCandidate(p,{...input(),...patch}),null)});
+test('unknown error is not offered as repair',()=>{const i=input();i.state.items[key].reason='timeout';assert.equal(D.repairCandidate(p,i),null)});
+test('native write uncertainty never offers rewrite',()=>{const i=input();i.state.items[key].native_phase='request_pending';assert.equal(D.repairCandidate(p,i),null)});
+test('existing receipt cannot offer rewrite',()=>{const i=input();i.state.published=[{key}];assert.equal(D.repairCandidate(p,i),null)});
+test('Lox uncertainty offers receipt verification only',()=>assert.equal(D.repairCandidate(l,{...input(),journal:{[lox]:{phase:'unconfirmed'}}}).operation,'verify_existing_and_recover_receipt'));
+test('unimplemented blogs have no magic repair button',()=>assert.equal(D.repairCandidate(D.CONFIG[0],input()),null));
