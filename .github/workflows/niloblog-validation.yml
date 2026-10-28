@@ -1,0 +1,72 @@
+name: Niloblog foundation validation (no publication)
+on:
+  workflow_dispatch:
+    inputs:
+      samples:
+        description: Maximum independent topics to validate; never publishes
+        type: choice
+        options: ['1', '2', '3']
+        default: '3'
+permissions:
+  contents: read
+concurrency:
+  group: niloblog-guarded-content
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      AGNES_API_BASE: https://apihub.agnes-ai.com/v1
+      AGNES_MODEL: agnes-2.5-flash
+      AGNES_JSON_ATTEMPTS: '2'
+      AGNES_REQUEST_TIMEOUT: '90'
+      AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+      AGNES_API_KEY14: ${{ secrets.AGNES_API_KEY14 }}
+      AGNES_API_KEY15: ${{ secrets.AGNES_API_KEY15 }}
+      AGNES_HEALTHY_SLOTS_ONLY: '1'
+      AGNES_PREFERRED_KEY_SLOTS: AGNES_API_KEY14,AGNES_API_KEY15
+      AGNES_KEY_ROTATE_EVERY: '1'
+      VALIDATION_SAMPLES: ${{ inputs.samples }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout: |
+            automation
+            data
+            state
+            tests
+            templates/niloblog
+            .github/workflows
+            artifacts/niloblog
+            artifacts/content-originality
+            artifacts/roya-backlink-queue/items
+            artifacts/farsiblog-backlink-queue/items
+            artifacts/rozblog-backlink-queue/items
+            artifacts/loxblog-backlink-queue/items
+            artifacts/blogsky-backlink-queue/items
+            artifacts/blogfa-backlink-queue/items
+            artifacts/parsiblog-backlink-queue/items
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install validation dependencies (no browser)
+        run: python -m pip install --quiet beautifulsoup4 Pillow
+      - name: Run Niloblog regression tests
+        run: python -m unittest discover -s tests -p 'test_niloblog*.py'
+      - name: Validate bounded topics without native login or publication
+        run: python automation/niloblog_pipeline.py --validate-only --limit "$VALIDATION_SAMPLES"
+      - name: Retain non-secret validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: niloblog-validation-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: ignore
+          path: |
+            artifacts/niloblog/validation
+            artifacts/niloblog/briefs
+            artifacts/niloblog/reviews
+            artifacts/niloblog/rejected
+            artifacts/niloblog/evidence-plans

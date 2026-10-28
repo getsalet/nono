@@ -15,7 +15,7 @@ class BoundedTextRepairTests(unittest.TestCase):
   if review_rejected:outputs += [copy.deepcopy(fixed),copy.deepcopy(review)]
   validations=[n.PipelineStop(reason),n.PipelineStop(reason)if second_failure else 600]
   if review_rejected:validations.append(600)
-  with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'source_bundle',return_value=bundle),patch.object(n,'all_history',return_value=[]),patch.object(n,'validate_article',side_effect=validations)as validate,patch('roya_backlink_queue.agnes',side_effect=outputs)as ai,patch.object(n,'reserve',return_value=({}, {'image_id':'img','video_id':None}))as reserve,patch.object(n,'checkpoint'):
+  with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'source_bundle',return_value=bundle),patch.object(n,'all_history',return_value=[]),patch.object(n,'plan_article',return_value={'outline':[]}),patch.object(n,'validate_article',side_effect=validations)as validate,patch('roya_backlink_queue.agnes',side_effect=outputs)as ai,patch.object(n,'reserve',return_value=({}, {'image_id':'img','video_id':None}))as reserve,patch.object(n,'checkpoint'):
    args=({'id':'test','title':'عنوان','angle_ref':'angle'},{'angles':{'angle':{}}},{},{'assets':[{'id':'img','url':'https://x/a.webp','alt':'محصول','width':100,'height':100}]},{})
    if second_failure or blocked or review_rejected or reason=='Cross-blog content reuse':
     with self.assertRaises(n.PipelineStop):n.generate(*args)

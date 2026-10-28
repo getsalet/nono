@@ -107,7 +107,7 @@ class EditorialTests(unittest.TestCase):
   rejected=dict(self.approved,approved=False,unsupported_claims=['ادعای حذف شدنی'],reason='حذف ادعا')
   outputs=[self.plan,article,rejected,{'blocked':True} if repair_blocked else fixed]
   if not repair_blocked:outputs.append(second_review or self.approved)
-  with tempfile.TemporaryDirectory() as tmp,mock.patch.object(m,'A',Path(tmp)),mock.patch.object(m,'source_bundle',return_value=self.bundle),mock.patch.object(m,'all_history',return_value=[]),mock.patch.object(m,'validate_article',return_value=600) as validate,mock.patch('roya_backlink_queue.agnes',side_effect=outputs) as ai,mock.patch.object(m,'reserve',return_value=({}, {'image_id':'img','video_id':None})) as reserve,mock.patch.object(m,'checkpoint'):
+  with tempfile.TemporaryDirectory() as tmp,mock.patch.object(m,'A',Path(tmp)),mock.patch.object(m,'source_bundle',return_value=self.bundle),mock.patch.object(m,'all_history',return_value=[]),mock.patch.object(m,'plan_article',return_value={'outline':[]}),mock.patch.object(m,'validate_article',return_value=600) as validate,mock.patch('roya_backlink_queue.agnes',side_effect=outputs) as ai,mock.patch.object(m,'reserve',return_value=({}, {'image_id':'img','video_id':None})) as reserve,mock.patch.object(m,'checkpoint'):
    args=(row,{'angles':{'angle':{}}},{},{'assets':[{'id':'img','url':'https://x/a.webp','alt':'محصول','width':100,'height':100}]},{})
    if repair_blocked or (second_review and not m.review_passes(second_review,self.bundle)):
     with self.assertRaises(m.PipelineStop):m.generate(*args)
