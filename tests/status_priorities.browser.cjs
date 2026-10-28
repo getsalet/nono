@@ -4,7 +4,7 @@ const {chromium}=require('playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const D=require('../docs/status/data.js'),root=path.resolve(__dirname,'../docs/status');
 (async()=>{
- const server=http.createServer((req,res)=>{const name=req.url.split('?')[0].replace(/^\/status\/?/,'')||'index.html';if(!['index.html','app.js','data.js','styles.css'].includes(name)){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':name.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(path.join(root,name)));});
+ const server=http.createServer((req,res)=>{const name=req.url.split('?')[0].replace(/^\/status\/?/,'')||'index.html';if(!['index.html','app.js','data.js','styles.css','fonts/vazir.css','fonts/OFL.txt'].includes(name)){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',name.endsWith('.js')?'application/javascript':name.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(path.join(root,name)));});
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||undefined,headless:true,args:['--no-sandbox']});
  try{
@@ -32,6 +32,8 @@ const D=require('../docs/status/data.js'),root=path.resolve(__dirname,'../docs/s
  await page.goto(base+'#publications');
  await page.getByText('در حال تکمیل عنوان‌ها',{exact:false}).waitFor();
  await page.getByText('عنوان همه رسیدهای موجود بارگذاری شد.',{exact:true}).waitFor();
+ await page.evaluate(()=>document.fonts.ready);assert(await page.evaluate(()=>document.fonts.check('600 16px Vazir','سلام ۱۲۳')));assert((await page.locator('body').evaluate(el=>getComputedStyle(el).fontFamily)).includes('Vazir'));
+ if(process.env.AFP_PREVIEW_HTML){const rendered=await page.content();fs.writeFileSync(process.env.AFP_PREVIEW_HTML,rendered.replace(/<script[\s\S]*?<\/script>/g,'').replace(/<link[^>]*rel="stylesheet"[^>]*>/g,'')+'<style>'+fs.readFileSync(path.join(root,'fonts/vazir.css'),'utf8')+fs.readFileSync(path.join(root,'styles.css'),'utf8')+'</style>');}
  assert(D.CONFIG.every(c=>counts.get(c.queue)===1),'all title queues automatically loaded once');
  const search=page.getByRole('searchbox',{name:'جست‌وجو در انتشارها',exact:true});
  await search.fill('  عنوان اختصاصی blogsky  ');

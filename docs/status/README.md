@@ -18,9 +18,9 @@
 
 ## آزمون و استقرار
 ```sh
-node --test tests/status_data.test.cjs tests/status_repair.test.cjs tests/status_priorities.test.cjs
+node --test tests/status_data.test.cjs tests/status_repair.test.cjs tests/status_priorities.test.cjs tests/status_font.test.cjs
 ```
-۶۳ آزمون قرارداد داده و استقرار، شامل آزمون‌های مستقل تازگی انتشار/وضعیت اجرا، جمع داده قدیمی و ناموجود، پوشش زمانی و یکسانی فیلتر جست‌وجو/CSV.
+۶۶ آزمون قرارداد داده و استقرار، شامل آزمون‌های مستقل تازگی انتشار/وضعیت اجرا، جمع داده قدیمی و ناموجود، پوشش زمانی و یکسانی فیلتر جست‌وجو/CSV.
 
 آزمون اختیاری مرورگر با Playwright و Chromium:
 ```sh
@@ -36,3 +36,6 @@ CHROMIUM_PATH=/path/to/chromium node tests/status_priorities.browser.cjs
 - تعداد رسید دارای زمان معتبر و بدون زمان معتبر در نمای کلی و جزئیات وبلاگ نمایش داده می‌شود. رسیدهای بدون زمان معتبر در بازه ۲۴ ساعت/۷ روز شمرده نمی‌شوند.
 
 گردش‌کار `afp-agri-v2-dashboard.yml` ابتدا آزمون‌ها را اجرا و سپس تمام فایل‌های این پوشه را کنار داشبورد کشاورزی موجود منتشر می‌کند.
+
+## فونت فارسی
+فونت رابط، عنوان‌ها، کنترل‌ها و اعداد **وزیر (Vazir v30.1.0)** است و از `fonts/vazir.css` در همین سایت ارائه می‌شود. فونت در CSS تعبیه شده و به CDN یا نصب محلی وابسته نیست؛ `font-display: swap` فعال است. شناسه‌ها و کدها monospace باقی می‌مانند. مجوز کامل و مشخصات منبع در پوشه `fonts/` نگهداری می‌شود.
