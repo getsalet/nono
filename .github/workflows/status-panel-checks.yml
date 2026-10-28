@@ -1,0 +1,34 @@
+name: Status panel regression checks
+on:
+  pull_request:
+    paths:
+      - docs/status/**
+      - automation/build_status_snapshot.cjs
+      - automation/publish_status_snapshot.cjs
+      - tests/status_*
+      - .github/workflows/status-*.yml
+      - .github/workflows/afp-agri-v2-dashboard.yml
+permissions:
+  contents: read
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            docs/status
+            automation
+            tests
+            .github/workflows
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Check browser and generator syntax
+        run: |
+          node --check docs/status/app.js
+          node --check docs/status/data.js
+          node --check automation/build_status_snapshot.cjs
+          node --check automation/publish_status_snapshot.cjs
+      - name: Test all status contracts
+        run: node --test tests/status_*.test.cjs
