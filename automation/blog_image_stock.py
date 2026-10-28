@@ -51,7 +51,7 @@ def rows(root):
   if not re.fullmatch(DIRECTORY+r'/[a-f0-9]{32}\.json',path):raise RuntimeError('Invalid image stock request path')
   row=read(root,path)
   if not isinstance(row,dict)or row.get('policy')!=POLICY or path!=request_path(row.get('asset_id','')):raise RuntimeError('Invalid image stock request')
-  if row.get('blog')not in('roya','farsiblog','rozblog','blogfa','loxblog')or row.get('status')not in ACTIVE|{'consumed','cancelled','superseded','rejected','needs_text_repair'}or not isinstance(row.get('key'),str):raise RuntimeError('Invalid stock owner or status')
+  if row.get('blog')not in('roya','farsiblog','rozblog','blogfa','loxblog','blogsky','parsiblog','niloblog')or row.get('status')not in ACTIVE|{'consumed','cancelled','superseded','rejected','needs_text_repair'}or not isinstance(row.get('key'),str):raise RuntimeError('Invalid stock owner or status')
   result.append(row)
  return result
 

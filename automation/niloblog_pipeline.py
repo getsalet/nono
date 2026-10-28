@@ -386,12 +386,21 @@ def generate(row,m,targets,media,state,validation_only=False):
   result={'key':row['id'],'status':'validated_not_published','post':obj,'review':review,'brief':brief,'words':words,'publication_verified':False}
   save(A/'validation/items'/f"{row['id']}.json",result)
   return result
- ms,selection=reserve(media,state.get('media'),row['id'],video_probability=0)
+ from blog_image_restore import enabled as restored,prepare as generated_image
+ generated=None
+ if restored('niloblog',ROOT):
+  generated={'key':row['id'],'family':'tape20','site_title':row['title'],'angle':str(m['angles'][row['angle_ref']].get('seo_short_label',''))}
+  url=generated_image(generated,obj,'niloblog',ROOT)
+  image={'url':url,'alt':generated['image_alt'],'width':generated['image_width'],'height':generated['image_height']}
+  ms=copy.deepcopy(state.get('media')or{});selection={'image_id':generated['image_generation']['asset_id'],'video_id':None,'generated':True}
+ else:
+  ms,selection=reserve(media,state.get('media'),row['id'],video_probability=0)
  if selection.get('video_id') is not None:raise PipelineStop('Video disabled by user; stale media reservation requires reconciliation')
- image=next(a for a in media['assets'] if a['id']==selection['image_id'])
+ if generated is None:image=next(a for a in media['assets'] if a['id']==selection['image_id'])
  markup='<p><img src="'+html.escape(image['url'],quote=True)+'" alt="'+html.escape(image['alt'],quote=True)+'" width="'+str(image['width'])+'" height="'+str(image['height'])+'" loading="lazy"></p>'+obj['html']
  obj['html']=markup
  item={'key':row['id'],'row':row,'post':obj,'sources':bundle,'review':review,'words':words,'selection':selection,'status':'reviewed','created_at':now().isoformat()}
+ if generated is not None:item['generated_image']=generated
  save(A/'items'/f"{row['id']}.json",item);state['media']=ms;state['current']=row['id'];checkpoint(state);return item
 
 def verify_stored_body(item,markup):
@@ -536,6 +545,10 @@ def verify_public(page,item):
  finally:public.close()
 
 def require_image_only(item):
+ if item.get('selection',{}).get('generated'):
+  from blog_image_restore import contract_errors
+  errors=contract_errors(item.get('generated_image',{}),item.get('post',{}),'niloblog',ROOT)
+  if errors:raise PipelineStop('; '.join(errors))
  # Historical receipts remain intact. Never publish a queued legacy video item.
  markup=BeautifulSoup(item.get('post',{}).get('html',''),'html.parser')
  if item.get('selection',{}).get('video_id') is not None or markup.find(['video','source','iframe','object','embed']):
@@ -561,7 +574,7 @@ def publish_new(page,item,s):
  s['intent']={'key':item['key'],'operation':'create_public_post','at':now().isoformat()};checkpoint(s);recheck(s,True)
  set_native_checkbox(f,'cdraft',False);submit_once(f)
  receipt=verify_public(page,item)
- s['media']=acknowledge(read(D/'media-catalog.json'),s['media'],item['key'],receipt['url'],public_receipt_verified=True)
+ if not item.get('selection',{}).get('generated'):s['media']=acknowledge(read(D/'media-catalog.json'),s['media'],item['key'],receipt['url'],public_receipt_verified=True)
  s.setdefault('published',[]).append({'key':item['key'],'url':receipt['url'],'at':receipt['at']})
  item.update(status='published',receipt=receipt);save(A/'items'/f"{item['key']}.json",item)
  save(A/'receipts'/f"{item['key']}.json",receipt)
@@ -577,7 +590,7 @@ def reconcile_public_intent(page,s):
  if item.get('key')!=key or item.get('status') not in ('reviewed','published'):raise PipelineStop('Intent item identity/status mismatch')
  # READ ONLY against the provider. Missing/ambiguous content retains the intent.
  receipt=verify_public(page,item)
- s['media']=acknowledge(read(D/'media-catalog.json'),s['media'],key,receipt['url'],public_receipt_verified=True)
+ if not item.get('selection',{}).get('generated'):s['media']=acknowledge(read(D/'media-catalog.json'),s['media'],key,receipt['url'],public_receipt_verified=True)
  if not any(p['key']==key for p in s.setdefault('published',[])):
   s['published'].append({'key':key,'url':receipt['url'],'at':intent.get('at') or receipt['at']})
  item.update(status='published',receipt=receipt);save(A/'items'/f"{key}.json",item);save(A/'receipts'/f"{key}.json",receipt)

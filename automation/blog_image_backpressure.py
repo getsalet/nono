@@ -33,7 +33,17 @@ def retry_at(root):
 def require_open(root,current=None):
  stamp=retry_at(root)
  from blog_image_key_router import enabled,available_at
- if enabled():stamp=max(stamp,available_at(root,current=current))
+ if enabled():
+  from blog_image_restore import load as restore_policy
+  restore=restore_policy(root)
+  if restore and restore['enabled']:
+   # Pair eligibility is checked by the per-blog router under the provider lock.
+   # Do not require the superseded global pool's text/capability audit first.
+   from blog_image_key_router import state
+   shared=state(root)
+   if shared.get('shared_block'):raise RuntimeError('Image account billing/quota requires review; no credential rotation')
+   stamp=max(stamp,shared.get('shared_retry_at_epoch',0))
+  else:stamp=max(stamp,available_at(root,current=current))
  if stamp>(time.time()if current is None else current):raise ImageProviderBusy(stamp)
 def latest_failure(root):
  values=states(root)

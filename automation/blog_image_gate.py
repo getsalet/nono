@@ -59,7 +59,7 @@ def family(item):
  return f
 
 def approved_url(url):
- return isinstance(url,str)and (url.startswith('https://navar-abyari.ir/wp-content/uploads/')or bool(re.fullmatch(r'https://raw\.githubusercontent\.com/getsalet/nono/[a-f0-9]{40}/assets/blog-generated/(?:roya|farsiblog|rozblog|blogfa|loxblog)/[a-f0-9]{32}\.webp',url)))
+ return isinstance(url,str)and (url.startswith('https://navar-abyari.ir/wp-content/uploads/')or bool(re.fullmatch(r'https://raw\.githubusercontent\.com/getsalet/nono/[a-f0-9]{40}/assets/blog-generated/(?:roya|farsiblog|rozblog|blogfa|loxblog|blogsky|parsiblog|niloblog)/[a-f0-9]{32}\.webp',url)))
 
 def fetch(url):
  if not approved_url(url):raise RuntimeError('Image URL outside approved uploads')

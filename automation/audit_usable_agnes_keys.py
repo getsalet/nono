@@ -46,6 +46,8 @@ def image_probe(key,item,cfg):
   exc.close()
   row={'status':{401:'authentication_rejected',402:'billing_required',403:'image_scope_denied',429:'rate_limited',503:'temporarily_unavailable'}.get(code,'provider_error'),'http_status':code,'attempts':1}
   if error.provider_code:row['provider_code']=error.provider_code
+  retry=error.rate_limit_retry_after_seconds if code==429 else error.retry_after_seconds
+  if retry is not None:row['retry_after_seconds']=retry
   return row
  except Exception:return {'status':'transport_or_format_failure','attempts':1}
 def main():

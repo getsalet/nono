@@ -8,7 +8,7 @@ from pathlib import Path
 from PIL import Image,ImageOps
 import roya_backlink_queue as roya
 from blog_reference_scene import POLICY
-BLOGS={'roya','farsiblog','rozblog','blogfa','loxblog'}
+BLOGS={'roya','farsiblog','rozblog','blogfa','loxblog','blogsky','parsiblog','niloblog'}
 RAW='https://raw.githubusercontent.com/getsalet/nono/'
 
 def blog_retired(blog,root=None):
@@ -186,7 +186,9 @@ def generate(item,blog,slots=None,max_attempts=3):
    require_open(roya.ROOT)
   try:
    from blog_image_key_router import enabled as pool_enabled,generate as route_image
-   if slots is None and pool_enabled():raw=route_image(item,blog,roya.ROOT,roya.BASE._key_pool,_generate,checkpoint_asset,lease)
+   from blog_image_restore import enabled as restore_enabled,pool as pair_pool
+   routing_pool=pair_pool(roya.ROOT)if restore_enabled(blog,roya.ROOT)else roya.BASE._key_pool
+   if slots is None and (pool_enabled()or restore_enabled(blog,roya.ROOT)):raw=route_image(item,blog,roya.ROOT,routing_pool,_generate,checkpoint_asset,lease)
    else:raw=_generate(item,blog,slots,max_attempts)
   except ImageProviderBusy as busy:
    if getattr(busy,'key_scoped',False):raise
@@ -226,6 +228,11 @@ def _generate(item,blog,slots=None,max_attempts=3):
   from agnes_key_pool import NAMES
   if approved_slot not in NAMES or not dedicated_key or dedicated_key!=os.getenv(approved_slot,'').strip():
    raise RuntimeError('Approved image credential binding unavailable; no legacy credential fallback')
+ from blog_image_restore import enabled as restore_enabled,pool as pair_pool
+ key_pool=pair_pool(roya.ROOT)if restore_enabled(blog,roya.ROOT)else roya.BASE._key_pool
+ if restore_enabled(blog,roya.ROOT):
+  from blog_image_restore import assigned
+  if dedicated_key or slots is None or any(n not in assigned(blog,roya.ROOT)for n in slots):raise RuntimeError('Dedicated blog pair required; no outside or direct credential fallback')
  names=[]
  if not dedicated_key:
   names=slots if slots is not None else capability_slots()
@@ -237,7 +244,7 @@ def _generate(item,blog,slots=None,max_attempts=3):
  if names:
   from agnes_key_pool import NAMES
   if any(n not in NAMES for n in names):raise RuntimeError('Unknown image credential slot name')
-  selected=[k for name in names for k in roya.BASE._key_pool.keys if roya.BASE._key_pool.slots.get(k)==name]
+  selected=[k for name in names for k in key_pool.keys if key_pool.slots.get(k)==name]
   selected=list(dict.fromkeys(selected))
   if not selected:raise RuntimeError('No audited healthy credential in the requested image pool')
  else:selected=[dedicated_key]if dedicated_key else None
@@ -247,11 +254,11 @@ def _generate(item,blog,slots=None,max_attempts=3):
  attempts=item.setdefault('_image_provider_attempts',[])
  for attempt in range(max_attempts):
   key=selected[attempt%len(selected)]
-  row={'requested_secret_slot':(approved_slot or 'IMAGE_API_KEY')if key==dedicated_key else roya.BASE._key_pool.slots.get(key,'unknown'),'attempt':attempt+1,'route':'configured_image_connection'if key==dedicated_key else'audited_image_pool','timeout_seconds':connection['timeout_seconds']}
+  row={'requested_secret_slot':(approved_slot or 'IMAGE_API_KEY')if key==dedicated_key else key_pool.slots.get(key,'unknown'),'attempt':attempt+1,'route':'configured_image_connection'if key==dedicated_key else'audited_image_pool','timeout_seconds':connection['timeout_seconds']}
   attempts.append(row)
   if not key:raise RuntimeError('Existing image API credential required')
   try:
-   data=roya.BASE._key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0'},payload,timeout=connection['timeout_seconds'],allowed_keys=selected)
+   data=key_pool.fetch_json(endpoint,{'Authorization':'Bearer '+key,'Content-Type':'application/json','Accept':'application/json','User-Agent':'AFP-blog-image-queue/2.0'},payload,timeout=connection['timeout_seconds'],allowed_keys=selected)
    row.update(http_status=200,status='generation_response_received')
    break
   except RuntimeError as exc:
@@ -272,9 +279,9 @@ def _generate(item,blog,slots=None,max_attempts=3):
     try:audited=set(capability_slots())
     except RuntimeError:audited=set()
     preferred=[n for n in re.split(r'[,\s]+',os.getenv('AGNES_IMAGE_PREFERRED_KEY_SLOTS',''))if n]
-    fallback_keys=sorted(roya.BASE._key_pool.keys,key=lambda k:preferred.index(roya.BASE._key_pool.slots.get(k))if roya.BASE._key_pool.slots.get(k)in preferred else len(preferred))
+    fallback_keys=sorted(key_pool.keys,key=lambda k:preferred.index(key_pool.slots.get(k))if key_pool.slots.get(k)in preferred else len(preferred))
     for fallback in fallback_keys:
-     if roya.BASE._key_pool.slots.get(fallback)in audited and fallback not in selected:selected.append(fallback)
+     if key_pool.slots.get(fallback)in audited and fallback not in selected:selected.append(fallback)
    if attempt<max_attempts-1 and((code in(429,500,502,503,504)or(code==403 and not dedicated_key and selected and len(selected)>1))or str(exc)=='Agnes/provider transport failure; private details withheld'):
     delay=max(min(120,30*(2**attempt)),getattr(exc,'retry_after_seconds',None)or 0)
     row['retry_delay_seconds']=delay;time.sleep(delay);continue

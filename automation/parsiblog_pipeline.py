@@ -70,7 +70,8 @@ def generate(item):
  save(ART/'text-ready'/(item['key']+'.json'),{'key':item['key'],'post':obj,'post_sha256':post_digest(obj),'editorial_review':review,'link_render':link_report,'at':stamp()})
  run_report(phase='image_preflight',qa_errors=[])
  # Separate real-product scope: never claim an invented local farm scene.
- item['image_url']=retry_transient(lambda:prepare_image(item,ROOT));item['image_alt']='نمای محصول AFP برای بررسی مشخصات '+('نوار تیپ'if item['family']=='tape20'else'لوله انتقال آب')
+ from blog_image_restore import enabled as restored,prepare as generated_image
+ item['image_url']=retry_transient(lambda:generated_image(item,obj,'parsiblog',ROOT)if restored('parsiblog',ROOT)else prepare_image(item,ROOT));item['image_alt']='نمای محصول AFP برای بررسی مشخصات '+('نوار تیپ'if item['family']=='tape20'else'لوله انتقال آب')
  obj['html']='<p><img src="'+html.escape(item['image_url'],quote=True)+'" alt="'+item['image_alt']+'"></p>'+obj['html']
  item['editorial_review']={'policy':'parsiblog-evidence-review-v2','passed':True,'post_sha256':post_digest(obj),'at':stamp(),'reviewer':'agnes independent review','errors':[]}
  errors,report=qa(item,obj,ROOT)

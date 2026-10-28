@@ -5,7 +5,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'automation'))
 from agnes_key_pool import AgnesKeyPool,NAMES,DEFAULT_BASE
 class KeyPoolTests(unittest.TestCase):
  def test_all_slots_and_duplicate(self):
-  self.assertEqual(len(NAMES),25);env={n:f'fake-{i}'for i,n in enumerate(NAMES)};env['AGNES_API_KEY8']=env['AGNES_API_KEY'];p=AgnesKeyPool(env,report_path='/absent');self.assertEqual(len(p.keys),24);self.assertIn('fake-24',p.keys)
+  self.assertEqual(len(NAMES),27);env={n:f'fake-{i}'for i,n in enumerate(NAMES)};env['AGNES_API_KEY8']=env['AGNES_API_KEY'];p=AgnesKeyPool(env,report_path='/absent');self.assertEqual(len(p.keys),26);self.assertIn('fake-26',p.keys)
  def test_fresh_health_filter_and_expiration(self):
   now=dt.datetime.now(dt.timezone.utc)
   with tempfile.TemporaryDirectory()as d:

@@ -1,7 +1,7 @@
 """Secret-name-only credential routing. Never persist credentials or fingerprints."""
 import datetime as dt,json,os,re,threading,urllib.error,urllib.request
 from pathlib import Path
-NAMES=('AGNES_API_KEY',*(f'AGNES_API_KEY{i}' for i in range(2,26)))
+NAMES=('AGNES_API_KEY',*(f'AGNES_API_KEY{i}' for i in range(2,28)))
 DEFAULT_BASE='https://apihub.agnes-ai.com/v1'
 
 SAFE_PROVIDER_CODES={'invalid_request_error','invalid_parameter','invalid_size','invalid_image_size','unsupported_size','unsupported_parameter','invalid_value','rate_limit_exceeded','rate_limit_error','model_not_found','insufficient_quota','permission_denied','authentication_error','overloaded','server_error','internal_error','service_unavailable','upstream_error','timeout','content_policy_violation'}
@@ -31,6 +31,11 @@ class AgnesKeyPool:
    if value and not re.search(r'[,\s]',value):entries.append((name,value));self.slots.setdefault(value,name)
   for i,value in enumerate(re.split(r'[,\s]+',env.get('AGNES_API_KEYS',''))):
    if value:entries.append((f'AGNES_API_KEYS[{i+1}]',value));self.slots.setdefault(value,f'AGNES_API_KEYS[{i+1}]')
+  # Production image pairs are unavailable to the text pool, including aliases.
+  from blog_image_restore import reserved
+  image_names=reserved()
+  image_values={v for n,v in entries if n in image_names}
+  if env.get('AGNES_IMAGE_PAIR_POOL')!='1':entries=[(n,v)for n,v in entries if n not in image_names and v not in image_values]
   blocked=set();healthy_names=None
   try:
    path=Path(report_path)if report_path else Path(__file__).resolve().parents[1]/'data/agnes-key-health/latest.json'

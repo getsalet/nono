@@ -24,6 +24,8 @@ def validate(value):
  return value
 _UNSET=object()
 def optional(item,blog,root=ROOT,config=_UNSET):
+ from blog_image_restore import enabled as restored
+ if restored(blog,root):return False
  value=load(root)if config is _UNSET else (validate(config)if config is not None else None)
  return bool(value and blog in value['blogs']+value.get('additional_blogs',[]) and item.get('family')in value['families'])
 def required(item,blog,root=ROOT,post=None,config=_UNSET):
@@ -50,6 +52,8 @@ def saved_optional(record,item,blog,root=ROOT):
  return bool(isinstance(post,dict)and all(isinstance(post.get(k),str)and post[k].strip()for k in ('title','slug','html'))and not required(item,blog,root,post))
 def prepare_article(item,post,blog,root,prepare):
  """Reuse the linked source first when authorized; no generation fallback."""
+ from blog_image_restore import enabled as restored,prepare as prepare_generated
+ if restored(blog,root):return prepare_generated(item,post,blog,root)
  from blog_source_image import source_preferred,prepare_source
  if source_preferred(item,blog,root):return prepare_source(item,post,blog,root)
  if required(item,blog,root,post):

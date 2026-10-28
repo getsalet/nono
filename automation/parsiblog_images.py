@@ -61,6 +61,8 @@ def prepare_image(item,root=ROOT):
  item['image_review']=record;item['image_selection']=SCOPE+'-vision-approved'
  return url
 def validate_record(item,root=ROOT):
+ from blog_image_restore import enabled as restored
+ if restored('parsiblog',root):return controls(item,root)+shared.validate_record(item)+shared.generated_record_errors(item,'parsiblog',root)
  root=Path(root);errors=controls(item,root)
  try:expected=shared.family(item)
  except RuntimeError:return errors+['Image preflight rejected: unknown/conflicting product family']

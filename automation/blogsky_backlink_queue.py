@@ -127,7 +127,8 @@ def main(root=ROOT):
         if not family_enabled(row, root):
             raise RuntimeError('Named city product family is held; no provider request')
     from blog_source_image import source_preferred
-    if not source_preferred({'family': 'tape20'}, 'blogsky', root):
+    from blog_image_restore import enabled as restored
+    if not restored('blogsky',root) and not source_preferred({'family': 'tape20'}, 'blogsky', root):
         raise RuntimeError('Explicit exact-source image policy required for Blogsky')
     if dry:
         print(json.dumps({'blog': BLOG, 'mode': 'configuration_check',

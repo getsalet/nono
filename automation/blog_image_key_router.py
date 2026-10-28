@@ -11,7 +11,9 @@ def enabled():return os.getenv('IMAGE_KEY_POOL_ENABLED')=='1'
 def read_json(path):
  try:return json.loads(Path(path).read_text())
  except (OSError,ValueError):raise RuntimeError('Image key-pool evidence unreadable; no request')from None
-def evidence(root):
+def evidence(root,blog=None):
+ from blog_image_restore import enabled as restore_enabled,evidence as pair_evidence
+ if blog is not None and restore_enabled(blog,root):return pair_evidence(blog,root)
  root=Path(root);cfg=read_json(root/CONFIG)
  if cfg.get('policy')!=POLICY or cfg.get('enabled')is not True:raise RuntimeError('Audited image key pool unavailable; no legacy fallback')
  names=cfg.get('slots',[])
@@ -91,7 +93,7 @@ def persist(root,s,checkpoint,lease):
 
 def generate(item,blog,root,pool,operation,checkpoint,lease):
  from blog_image_backpressure import ImageProviderBusy
- names=evidence(root)
+ names=evidence(root,blog)
  # Runtime de-duplication also protects against changed/duplicate secret bindings.
  seen=set();configured=[]
  for name in names:
