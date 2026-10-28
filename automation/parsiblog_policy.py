@@ -36,13 +36,22 @@ def resolve_link_tokens(obj,links):
 
 def post_digest(obj):
  return hashlib.sha256(json.dumps(obj,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
+# A narrow data-collection phrase is not a measured local soil classification.
+# Mask only its parenthesized examples, never the rest of the sentence/article.
+SOIL_TYPE=r'(?:لومی|لوم|رسی|شنی)'
+SOIL_SAMPLING_CHECKLIST=re.compile(
+ r'(?P<lead>(?:بررسی|ثبت|تعیین|شناسایی) (?:بافت|نوع) خاک )'
+ r'(?P<examples>\(\s*'+SOIL_TYPE+r'(?:\s*(?:،|,|یا|و)\s*'+SOIL_TYPE+r'){1,3}\s*\))'
+ r'(?= (?:از طریق|با) (?:نمونه برداری|آزمایش)(?![آ-ی]))')
+def soil_claim_text(text):
+ return SOIL_SAMPLING_CHECKLIST.sub(lambda m:m['lead']+'(گزینه های نیازمند بررسی)',text)
 def factual_errors(plain):
  text=normalized_title(plain);errors=[]
  errors+=language_errors(text)
  if re.search(r'[0-9۰-۹٠-٩]+(?:[\s./–—تا-]*[0-9۰-۹٠-٩]+)?\s*(?:میکرون|سانتی\s*متر|میلی\s*متر|متر|بار|درصد|لیتر|مش)(?![آ-ی])',text):errors.append('Unreviewed numeric technical prescription')
  if re.search(r'(?:برگه|کاتالوگ|فایل|فرم).{0,100}(?:منتشر می شود|قابل دانلود|دانلود است|قابل مشاهده و دانلود|همیشه موجود)',text):errors.append('Unverified product-page document/download availability claim')
  if re.search(r'اسید|اسیدی|اسیدشویی|جوهر\s*نمک',text):errors.append('Chemical cleaning requires a reviewed model-specific procedure; omit it')
- if re.search(r'(?<![آ-ی])(?:لومی|لوم|رسی|شنی)(?![آ-ی])|هیبرید|تالاب|بحران کم آبی|سختی متوسط|روزنه.{0,15}لیزری|فاقد قطره چکان|قطب.{0,25}کشت|(?:مناطق|مراکز) (?:مهم|اصلی|عمده).{0,35}کشت',text):errors.append('Unverified locality, soil, crop importance, or categorical product construction claim')
+ if re.search(r'(?<![آ-ی])(?:لومی|لوم|رسی|شنی)(?![آ-ی])|هیبرید|تالاب|بحران کم آبی|سختی متوسط|روزنه.{0,15}لیزری|فاقد قطره چکان|قطب.{0,25}کشت|(?:مناطق|مراکز) (?:مهم|اصلی|عمده).{0,35}کشت',soil_claim_text(text)):errors.append('Unverified locality, soil, crop importance, or categorical product construction claim')
  for sentence in re.split(r'[.!؟؛\n]',text):
   if re.search(r'دشت|منطقه|شهرستان|استان|محلی',sentence) and re.search(r'(?<![آ-ی])(?:خاک|آب|شوری|سختی|بارندگی)(?![آ-ی])',sentence) and re.search(r'عمدتا|معمولا|دارای|هستند|است|افزایش می|کاهش می',sentence) and not re.search(r'باید|لازم|بررسی|اندازه گیری|آزمایش|نمی توان|نمی شود|نباید|اگر|ممکن',sentence):errors.append('Unsupported categorical local soil/water assertion')
  return list(dict.fromkeys(errors))

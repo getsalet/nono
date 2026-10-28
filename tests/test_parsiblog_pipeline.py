@@ -87,6 +87,26 @@ class Tests(unittest.TestCase):
   self.assertTrue(policy.factual_errors('خاک این شهرستان دارای سختی بالا است.'))
  def test_conditional_checklist_not_fabricated_local_fact(self):
   self.assertEqual(policy.factual_errors('پیش از انتخاب محصول برای این شهرستان باید کیفیت آب و خاک همان زمین بررسی شود. برگه فنی همان مدل را بخوانید.'),[])
+ def test_observed_sampling_checklist_is_not_a_soil_claim(self):
+  text='بررسی بافت خاک (لومی، رسی یا شنی) از طریق نمونه‌برداری عملی'
+  self.assertEqual(policy.factual_errors(text),[])
+  x,p=self.text_fixture();p['html']=p['html'].replace('<li>ثبت نیاز واقعی زمین</li>','<li>'+text+'</li>')
+  self.assertEqual(policy.qa(x,p,require_image=False,originality=False)[0],[])
+  # Passing static QA never supplies the independent editorial approval.
+  self.assertTrue(policy.review_errors(x,p))
+ def test_sampling_exception_does_not_hide_separate_assertions(self):
+  safe='بررسی بافت خاک (لومی، رسی یا شنی) از طریق نمونه‌برداری عملی'
+  for claim in ('خاک خنجین رسی است.', 'خاک شنی مناسب این منطقه است.',
+                'نوار فاقد قطره چکان است.', 'دشت این شهرستان دارای شوری بالا است.'):
+   for text in (safe+'؛ '+claim,claim+'؛ '+safe):
+    with self.subTest(text=text):self.assertTrue(policy.factual_errors(text))
+ def test_soil_labels_without_explicit_sampling_stay_rejected(self):
+  for text in ('خاک این شهرستان رسی است', 'خاک لومی و رسی',
+               'بررسی بافت خاک (لومی، رسی یا شنی)',
+               'بررسی بافت خاک (لومی، رسی یا شنی) در خنجین',
+               'بررسی بافت خاک (رسی) از طریق نمونه‌برداری',
+               'بررسی بافت خاک (لومی، رسی یا شنی) از طریق نمونه‌برداری؛ خاک این شهر رسی است'):
+   with self.subTest(text=text):self.assertTrue(policy.factual_errors(text))
  def test_current_editorial_review_bound_to_body(self):
   x,p=self.fixture();self.assertEqual(policy.review_errors(x,p),[]);p['html']+='<p>تغییر متن</p>';self.assertTrue(policy.review_errors(x,p))
  def test_unknown_hash_token_rejected(self):
