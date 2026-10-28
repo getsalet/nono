@@ -196,7 +196,7 @@ jobs:
           BLOG_IMAGE_QUEUE_TOKEN: ${{ github.token }}
         run: python automation/loxblog_backlink_queue.py
       - name: Install Playwright
-        if: steps.control.outputs.proceed == '1' && (steps.release.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && env.LOXBLOG_PUBLISH == '1' && env.LOXBLOG_DRY_RUN != '1'))
+        if: steps.control.outputs.proceed == '1' && (steps.release.outputs.proceed == '1' && (steps.budget.outputs.proceed == '1' && (env.LOXBLOG_PUBLISH == '1' || env.LOXBLOG_LOGIN_DIAGNOSTIC == '1') && env.LOXBLOG_DRY_RUN != '1'))
         run: |
           bash automation/install_blog_browser.sh "$LOXBLOG_BROWSER"
       - name: Publish and verify native LoxBlog post
