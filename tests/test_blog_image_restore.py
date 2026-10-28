@@ -66,7 +66,7 @@ class RestoreTests(unittest.TestCase):
   item={'key':'example','family':'tape20'};post={'title':'عنوان آموزشی','html':'<p>'+('متن واقعی مقاله '*20)+'</p>'}
   with patch('blog_generated_image.rollout_enabled',return_value=True),patch('blog_generated_image.prepare_now',return_value='https://example.invalid/image.webp')as generate:
    url=restore.prepare(item,post,'niloblog',self.root)
-  self.assertEqual(item['image_url'],url);self.assertEqual(item['_image_article_context']['title'],post['title']);generate.assert_called_once_with(item,'niloblog',self.root,max_rounds=1)
+  self.assertEqual(item['image_url'],url);self.assertEqual(item['_image_article_context']['title'],post['title']);generate.assert_called_once_with(item,'niloblog',self.root,max_rounds=2)
  def test_text_pool_cannot_recover_image_slot_through_alias(self):
   from agnes_key_pool import AgnesKeyPool
   env={'AGNES_API_KEY12':'fake-image','AGNES_API_KEY14':'fake-text','AGNES_API_KEYS':'fake-image,fake-alias'}
@@ -84,3 +84,16 @@ class RestoreTests(unittest.TestCase):
    url='https://raw.githubusercontent.com/getsalet/nono/'+'a'*40+'/assets/blog-generated/'+blog+'/'+'b'*32+'.webp'
    self.assertTrue(approved_url(url));self.assertFalse(approved_url(url.replace('a'*40,'main')))
 if __name__=='__main__':unittest.main()
+
+class FailureDetailsTests(unittest.TestCase):
+ def test_private_error_text_never_enters_report(self):
+  result=restore.failure_details({'_generation_stage':'generation_api'},RuntimeError('Authorization: fake-secret provider payload'))
+  self.assertEqual(result['code'],'image_pipeline_failed');self.assertNotIn('fake-secret',json.dumps(result))
+ def test_quality_flags_use_saved_matching_digest_only(self):
+  with tempfile.TemporaryDirectory()as tmp:
+   root=Path(tmp);digest='a'*64;p=root/'artifacts/blog-image-reviews'/('tape20-'+digest+'.json');p.parent.mkdir(parents=True)
+   p.write_text(json.dumps({'sha256':digest,'verdict':{'score':97,'packaging_not_used_as_hardware':False,'reasons':'private model output'}}))
+   result=restore.failure_details({'_generation_stage':'local_vision_qa','_image_rejections':[{'sha256':digest}]},RuntimeError('Product image rejected: private output'),root)
+   self.assertEqual(result['failed_review_flags'],['packaging_not_used_as_hardware']);self.assertEqual(result['review_score'],97);self.assertNotIn('private',json.dumps(result))
+ def test_queue_misconfiguration_has_explicit_safe_code(self):
+  self.assertEqual(restore.failure_details({},RuntimeError('Hosted image queue not configured; no provider request'))['code'],'image_queue_not_configured')

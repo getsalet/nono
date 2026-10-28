@@ -128,9 +128,9 @@ class QueueIntegrationTests(unittest.TestCase):
   with patch.object(q,'provider_slot',return_value=contextlib.nullcontext(lease)),patch.object(g,'git'),patch.object(b,'require_open'),patch.object(g,'_generate',side_effect=b.ImageProviderBusy(time.time()+300)),patch.object(b,'defer',side_effect=RuntimeError('fixture')):
    with self.assertRaises(b.ImageProviderBusy)as busy:g.generate({'key':'k','family':'tape20'},'roya')
    self.assertTrue(lease.retain);self.assertTrue(busy.exception.shared_cooldown_attempted)
- def test_all_five_generation_steps_receive_same_queue_gate(self):
+ def test_all_active_generation_steps_receive_same_queue_gate(self):
   root=Path(__file__).resolve().parents[1]
-  for name in ['roya-backlink-queue','farsiblog-content','rozblog-content','blogfa-content','loxblog-content']:
+  for name in ['roya-backlink-queue','farsiblog-content','rozblog-content','blogfa-content','loxblog-content','blogsky-content','parsiblog-content','niloblog-content']:
    source=(root/'.github/workflows'/(name+'.yml')).read_text()
    self.assertIn("BLOG_IMAGE_QUEUE_ENABLED: '1'",source);self.assertIn('BLOG_IMAGE_QUEUE_TOKEN: ${{ github.token }}',source);self.assertIn('actions: read',source)
 class AdaptiveBackoffTests(unittest.TestCase):
@@ -145,3 +145,9 @@ class AdaptiveBackoffTests(unittest.TestCase):
    with patch.object(b.time,'time',return_value=clock):b.mark_success(root,checkpoint)
    with patch.object(b.time,'time',return_value=clock+1):stamp=b.defer(root,clock+301,checkpoint)
    self.assertEqual(stamp,clock+301)
+
+class BlogskyWorkflowPermissionTests(unittest.TestCase):
+ def test_reusable_caller_grants_read_permission_for_shared_queue(self):
+  root=Path(__file__).resolve().parents[1]
+  source=(root/'.github/workflows/blogsky-auto.yml').read_text()
+  self.assertIn('actions: read',source)

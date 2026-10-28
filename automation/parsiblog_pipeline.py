@@ -192,7 +192,11 @@ def main(argv=None):
    if statuses.get(key,{}).get('status','').startswith('submitting'):
     statuses[key]['last_error_type']=type(exc).__name__
     if isinstance(exc,NativeError):statuses[key]['last_native_error']=str(exc)[:700]
-   run_report(status='failed',completed_at=failed_at,error_type=type(exc).__name__,reason=statuses.get(key,{}).get('last_native_error')or statuses.get(key,{}).get('reason')or type(exc).__name__)
+   from blog_image_restore import failure_details
+   detail=failure_details(item,exc,ROOT)if RUN.get('phase')=='image_preflight'else None
+   if detail is not None and not RUN.get('native_write_attempted'):
+    statuses[key]['reason']='Image preflight rejected: '+detail['code'];statuses[key]['image_failure']=detail
+   run_report(status='failed',completed_at=failed_at,error_type=type(exc).__name__,reason=statuses.get(key,{}).get('last_native_error')or statuses.get(key,{}).get('reason')or type(exc).__name__,image_failure=detail)
    save(STATE,state);raise
   finally:
    page.close()

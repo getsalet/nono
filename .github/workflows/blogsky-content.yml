@@ -39,6 +39,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: write
+      actions: read
     env:
       BLOGSKY_DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
       BLOGSKY_COUNT: ${{ inputs.count }}
@@ -88,6 +89,10 @@ jobs:
         run: env -u GITHUB_STEP_SUMMARY python -m unittest discover -s tests
       - name: Generate or check configuration; never submit a native post
         if: steps.control.outputs.proceed == '1'
+        env:
+          BLOG_IMAGE_QUEUE_ENABLED: '1'
+          BLOG_IMAGE_QUEUE_TOKEN: ${{ github.token }}
+          IMAGE_KEY_POOL_ENABLED: '1'
         run: python automation/blogsky_backlink_queue.py
       - name: Preserve generation/review recovery checkpoints
         if: always() && steps.control.outputs.proceed == '1' && !inputs.dry_run

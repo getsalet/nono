@@ -58,3 +58,9 @@ Blogfa stays retired. Hose-family holds/cancellations and all publication budget
 independent text review, native/public verification and uncertain-intent handling
 remain in force. Existing Niloblog static catalog reservations remain reconcilable;
 new generated-image receipts do not consume unrelated catalog reservations.
+
+## Bounded visual repair and hosted queue
+
+All seven hosted adapters use the same authenticated cross-runner image queue. Blogsky caller and reusable callee explicitly allow Actions read access for completed-owner recovery. Regression tests do not receive the hosted runtime queue switches.
+
+A restored article may produce at most two image candidates in one call: the second is allowed only after a definitive local visual rejection, using saved structured feedback. It still publishes exactly one accepted image. Provider errors, ambiguous transports, billing, rate limits and public-byte/checkpoint failures never enter this visual retry loop. Parsiblog stores fixed non-secret image failure codes and matching review flags; arbitrary provider exception text is not logged.

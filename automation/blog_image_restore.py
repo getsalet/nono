@@ -82,8 +82,10 @@ def prepare(item,post,blog,root=ROOT):
  item['_image_article_context']=context_from_post(post)
  item['editorial_image_decision']='mandatory_generated_1_to_2'
  # Exactly one image is the economical default within the owner's 1..2 range.
+ # One corrective candidate is allowed ONLY after a definitive local visual
+ # rejection. Existing prepare_now never retries transport/auth/quota as QA.
  # Full candidate, product, topic, watermark and immutable public-byte QA apply.
- url=prepare_now(item,blog,root,max_rounds=1)
+ url=prepare_now(item,blog,root,max_rounds=2)
  item['image_url']=url
  # Do not retain incompatible trusted-source provenance on an unpublished draft.
  item.pop('image_source',None);item.pop('source_image_review',None)
@@ -99,3 +101,29 @@ def contract_errors(item,post,blog,root=ROOT):
  # Current adapter produces one; a second cannot be inserted without its own QA.
  if len(imgs)!=1 or any(x.get('src')!=item.get('image_url')for x in imgs):e.append('Image count/URL does not match reviewed generated asset')
  return e+validate_record(item)+generated_record_errors(item,blog,root)
+
+
+def failure_details(item,exc,root=ROOT):
+ """Fixed diagnostic codes and saved review flags only; never remote exception text."""
+ stage=item.get('_generation_stage')
+ if stage not in ('remote_cache','generation_api','local_vision_qa','asset_checkpoint','public_vision_qa'):stage='unknown'
+ text=str(exc)
+ code='image_pipeline_failed'
+ if text=='Hosted image queue not configured; no provider request':code='image_queue_not_configured'
+ elif text.startswith('Product image rejected:'):code='image_quality_rejected'
+ elif text.startswith('Image provider HTTP '):code='image_provider_failed'
+ elif stage=='asset_checkpoint':code='image_checkpoint_failed'
+ elif stage=='public_vision_qa':code='public_image_verification_failed'
+ result={'code':code,'stage':stage,'exception_type':type(exc).__name__}
+ rejections=item.get('_image_rejections',[])
+ if rejections:
+  digest=rejections[-1].get('sha256')
+  if re.fullmatch('[a-f0-9]{64}',str(digest)):
+   result['rejected_sha256']=digest
+   try:row=json.loads((Path(root)/'artifacts/blog-image-reviews'/('tape20-'+digest+'.json')).read_text())
+   except (OSError,ValueError):row={}
+   verdict=row.get('verdict',{})if row.get('sha256')==digest else{}
+   flags=('topic_match','technical_evidence_match','packaging_not_used_as_hardware','product_role_plausible','package_soil_gap_visible','irrigation_geometry_plausible','product_count_match','product_fully_in_frame')
+   result['failed_review_flags']=[k for k in flags if verdict.get(k)is False]
+   if type(verdict.get('score'))in (int,float):result['review_score']=verdict['score']
+ return result
