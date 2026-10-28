@@ -1,0 +1,68 @@
+name: Refresh public status snapshot
+on:
+  push:
+    branches: [main]
+    paths:
+      - automation/build_status_snapshot.cjs
+      - automation/publish_status_snapshot.cjs
+      - docs/status/data.js
+      - .github/workflows/status-public-data.yml
+      - tests/status_snapshot.test.cjs
+  workflow_run:
+    workflows:
+      - Publish Roya backlink posts
+      - Roya blog city backlink queue
+      - FarsiBlog original content pipeline
+      - RozBlog independent city content pipeline
+      - LoxBlog independent city content pipeline
+      - Blogsky automatic generation and verified publication
+      - Parsiblog evidence-bound city generator
+      - Niloblog guarded original articles
+    types: [completed]
+    branches: [main]
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: public-status-snapshot
+  cancel-in-progress: false
+jobs:
+  refresh:
+    # Never execute code from an upstream PR or an untrusted workflow artifact.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            automation
+            tests
+            .github/workflows
+            docs/status
+            state
+            data/roya
+            data/farsiblog
+            data/rozblog
+            data/loxblog
+            data/blogsky
+            data/parsiblog
+            data/niloblog
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Test public snapshot contracts
+        run: node --test tests/status_snapshot.test.cjs
+      - name: Build minimal public snapshot from current main
+        env:
+          STATUS_SNAPSHOT_TOKEN: ${{ github.token }}
+        run: node automation/build_status_snapshot.cjs --revision "$(git rev-parse HEAD)" --output "$RUNNER_TEMP/status-snapshot.json"
+      - name: Publish only to status-data branch
+        env:
+          STATUS_SNAPSHOT_TOKEN: ${{ github.token }}
+        run: node automation/publish_status_snapshot.cjs "$RUNNER_TEMP/status-snapshot.json"

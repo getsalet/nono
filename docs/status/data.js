@@ -26,14 +26,16 @@
     try {const u=new URL(value); let path=u.pathname;try{path=decodeURIComponent(path);}catch{}return u.hostname.toLowerCase()+path.replace(/\/+$/,'');}catch{return '';}
   }
   function values(obj) {return obj && typeof obj === 'object' ? Object.values(obj) : [];}
+  function queueItems(c,queue){return values(queue?.items??(c.id==='niloblog'?queue?.titles:null));}
   function titleFallback(row) {
     try {const u=new URL(row.url);const tail=decodeURIComponent(u.pathname.split('/').filter(Boolean).pop()||'').replace(/[+-]/g,' ');if(/[\u0600-\u06ff]/.test(tail))return tail;}catch{}
     const ordinal=String(row.url||'').match(/\/(?:post[-\/]|Posts\/|p\/)(\d+)/i);
     return 'پست '+(ordinal?.[1]||row.pid||'ثبت‌شده');
   }
-  function publications(c,state,queue,now=Date.now()) {
+  function publications(c,state,queue,now=Date.now(),indexRows=[]) {
     if(!state || !Array.isArray(state.published))return {rows:[],total:null,invalid:0};
-    const titles=new Map(values(queue?.items).map(x=>[String(x.key||x.id),x.title||x.assigned_title||x.matrix_title||'']));
+    const titles=new Map(queueItems(c,queue).map(x=>[String(x.key||x.id),x.title||x.assigned_title||x.matrix_title||'']));
+    const index=new Map(indexRows.map(p=>[publicationIdentity(p),p]));
     const groups=[],byKey=new Map(),byUrl=new Map();let invalid=0;
     for(const x of state.published) {
       if(!x || typeof x!=='object'){invalid++;continue;}
@@ -48,13 +50,13 @@
       const verified=dateMs(x.at);if(verified!==null)group.verifiedAt=Math.max(group.verifiedAt||0,verified);
       group.title=x.title||state.items?.[key]?.title||titles.get(key)||group.title;
     }
-    const rows=groups.map(g=>({...g,publishedAt:g.recovered?null:(g.dates.length?Math.min(...g.dates):null),title:g.title||titleFallback(g),titleKnown:!!g.title}));
+    const rows=groups.map(g=>{const title=g.title||index.get(publicationIdentity(g))?.title||'';return {...g,publishedAt:g.recovered?null:(g.dates.length?Math.min(...g.dates):null),title:title||titleFallback(g),titleKnown:!!title};});
     rows.sort((a,b)=>(b.publishedAt??-1)-(a.publishedAt??-1));
     return {rows,total:rows.length,invalid};
   }
   function queueSummary(c,state,queue,journal) {
     const published=new Set((Array.isArray(state?.published)?state.published:[]).map(x=>String(x?.key||'')));
-    const items=values(queue?.items);for(const x of items)if(published.has(String(x.key||x.id||''))&&x.source_key)published.add(String(x.source_key));const records=new Map(items.map(x=>[String(x.key||x.id),x]));
+    const items=queueItems(c,queue);for(const x of items)if(published.has(String(x.key||x.id||''))&&x.source_key)published.add(String(x.source_key));const records=new Map(items.map(x=>[String(x.key||x.id),x]));
     for(const [key,x]of Object.entries(state?.items||{}))records.set(key,{...(records.get(key)||{}),...x,key});
     const counts={ready:0,pending:0,failed:0,ambiguous:0};
     const issues=[],ambiguousKeys=new Set();
@@ -160,12 +162,12 @@
     if(q.loaded&&q.total===0)return result('empty_queue','صف موضوع خالی است','info','فایل صف خوانده شده و هیچ موضوعی ندارد.','در صورت نیاز، موضوع‌های مجاز جدید به صف اضافه کنید؛ اجرای مجدد به‌تنهایی کاری تولید نمی‌کند.','تعداد موضوع‌های فایل صف: ۰',file(c.queue));
     if(!last)return result('publication_unknown','زمان انتشار نامشخص','neutral','رسید زمان‌دار معتبر برای آخرین انتشار نداریم.','آرشیو عمومی و رسیدها را تطبیق دهید؛ نبود مدرک را نبود پست فرض نکنید.','رسید زمان‌دار معتبر موجود نیست.',file(c.state),'نامشخص');
     if(now-last.publishedAt>86400000)return result('stale_publication','بدون انتشار تازه','warn','بیش از ۲۴ ساعت از آخرین انتشار ثبت‌شده گذشته است؛ علت هنوز معلوم نیست.','صف و گزارش آخرین اجرا را باز کنید؛ پیش از تشخیص علت، تولید یا ارسال تکراری نکنید.','آخرین زمان انتشار از رسید اتوماسیون خوانده شده است.',file(c.state),'نیازمند بررسی',last.publishedAt);
-    if(!latest)return result('run_unknown','وضعیت اجرا نامشخص','neutral','رسید انتشار خوانده شده، اما اجرای مرتبط در نمونه API موجود نیست.','برای نتیجه اجرا، GitHub Actions را مستقیم بررسی کنید.','نمونه اجراهای مرتبط در دسترس نیست.',runUrl,'نامشخص');
+    if(!latest)return result('run_unknown','وضعیت اجرا نامشخص','neutral','رسید انتشار خوانده شده، اما آخرین اجرای مستقل این وبلاگ تأیید نشد.','برای نتیجه اجرا، GitHub Actions را مستقیم بررسی کنید.','منبع مستقل اجرای مرتبط در دسترس نیست.',runUrl,'نامشخص');
     return result('recent_receipt','انتشار تازه ثبت شده','good','رسید انتشار در ۲۴ ساعت اخیر وجود دارد؛ این تضمین سلامت همه اجراها نیست.','فعلاً اقدام فوری لازم نیست؛ روند انتشار و خطاهای بعدی را دنبال کنید.','رسید زمان‌دار انتشار موجود است.',last.url,'رسید انتشار',last.publishedAt);
   }
   function build(c,input={},now=Date.now()) {
     const {state,queue,control,globalControl,automationControl,journal,generation,yaml,runs=[]}=input;
-    const pub=publications(c,state,queue,now),q=queueSummary(c,state,queue,journal);
+    const pub=publications(c,state,queue,now,input.titleIndex||[]),q=queueSummary(c,state,queue,journal);
     const relevant=runs.filter(x=>[c.workflow,c.generationWorkflow].filter(Boolean).some(w=>String(x.path||'').split('@')[0].endsWith('/'+w))).sort((a,b)=>(dateMs(b.created_at)||0)-(dateMs(a.created_at)||0));
     const latest=relevant[0]||null,last=pub.rows.find(x=>x.publishedAt!==null)||null;
     const paused=globalControl?.pause_image_production===true || control?.enabled===false || automationControl?.enabled?.[c.id]===false;
@@ -173,6 +175,32 @@
     return {...c,input,pub,q,last,latest,publication:publicationFreshness(pub,last,now),quality:dataQuality(input,pub),runReport:matchedRunReport(c,input,latest),runs:relevant,status,paused,generation,schedules:schedule(yaml),model:String(yaml||'').match(/AGNES_MODEL:\s*['"]?([^\s'"\n]+)/)?.[1]||null,
       today:pub.total===null?null:pub.rows.filter(x=>x.publishedAt!==null&&x.publishedAt>now-86400000&&x.publishedAt<=now).length,
       week:pub.total===null?null:pub.rows.filter(x=>x.publishedAt!==null&&x.publishedAt>now-7*86400000&&x.publishedAt<=now).length};
+  }
+  const SNAPSHOT_MAX_AGE=15*60000;
+  function publicationIdentity(p){return String(p.key||'')+'|'+canonicalUrl(p.url);}
+  function workflowNames(c){return [c.workflow,c.generationWorkflow].filter(Boolean);}
+  function validWorkflowObservation(entry,workflow,now=Date.now()){
+    const at=dateMs(entry?.observed_at);
+    if(entry?.ok!==true||at===null||at>now+120000||now-at>SNAPSHOT_MAX_AGE)return false;
+    const r=entry.run;if(r===null)return true;
+    return !!r&&Number.isSafeInteger(r.id)&&r.path==='.github/workflows/'+workflow&&r.head_branch==='main'&&dateMs(r.created_at)!==null&&dateMs(r.updated_at)!==null&&safeUrl(r.html_url)!==''&&r.html_url==='https://github.com/getsalet/nono/actions/runs/'+r.id;
+  }
+  function readPublicSnapshot(value,now=Date.now()){
+    const at=dateMs(value?.generated_at);
+    if(value?.schema!=='afp-status-snapshot-v1'||!/^([a-f0-9]{40})$/.test(value.source_revision||'')||at===null||at>now+120000||now-at>SNAPSHOT_MAX_AGE||!value.blogs||!value.workflows)return null;
+    for(const c of CONFIG){
+      const entries=value.blogs[c.id];if(!Array.isArray(entries))return null;
+      const seen=new Set();
+      for(const p of entries){
+        if(!p||typeof p.key!=='string'||!safeUrl(p.url,c.host)||new URL(p.url).pathname==='/'||!(p.title===null||typeof p.title==='string')||!(p.published_at===null||dateMs(p.published_at)!==null))return null;
+        const key=publicationIdentity(p);if(seen.has(key))return null;seen.add(key);
+      }
+    }
+    return value;
+  }
+  function missingIndexCoverage(publications,indexRows){
+    const keys=new Set(indexRows.map(publicationIdentity));
+    return publications.rows.some(p=>!p.titleKnown&&!keys.has(publicationIdentity(p)));
   }
   // Independent dimensions: a running workflow cannot hide old publications.
   function publicationFreshness(pub,last,now=Date.now()) {
@@ -214,5 +242,5 @@
     const h=Math.floor(m/60);if(h<24)return h+' ساعت'+(m%60?' و '+m%60+' دقیقه':'')+' پیش';
     const d=Math.floor(h/24);return d+' روز'+(h%24?' و '+h%24+' ساعت':'')+' پیش';
   }
-  return {REPO,CONFIG,repairCandidate,generationPath,runReportPath,matchedRunReport,issueAdvice,diagnosis,dateMs,safeUrl,canonicalUrl,publications,queueSummary,schedule,cronDescription,runState,build,publicationFreshness,dataQuality,needsAttention,aggregate,timeCoverage,filterPublications,relative};
+  return {REPO,CONFIG,repairCandidate,generationPath,runReportPath,matchedRunReport,issueAdvice,diagnosis,dateMs,safeUrl,canonicalUrl,publications,queueSummary,schedule,cronDescription,runState,build,queueItems,publicationIdentity,workflowNames,validWorkflowObservation,readPublicSnapshot,missingIndexCoverage,SNAPSHOT_MAX_AGE,publicationFreshness,dataQuality,needsAttention,aggregate,timeCoverage,filterPublications,relative};
 });

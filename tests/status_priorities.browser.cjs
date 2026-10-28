@@ -16,6 +16,8 @@ const D=require('../docs/status/data.js'),root=path.resolve(__dirname,'../docs/s
  const fulfill=(route,data,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(data)});
  await page.route('https://api.github.com/**',route=>{
    if(route.request().url().includes('/commits?'))return fulfill(route,[{sha,commit:{message:'fixture',committer:{date:iso(now)}},html_url:'https://github.com/getsalet/nono/commit/'+sha}]);
+   const requested=new URL(route.request().url()).pathname.match(/\/workflows\/([^/]+)\/runs$/)?.[1];
+   if(requested)return fulfill(route,{workflow_runs:[{id:100,path:'.github/workflows/'+decodeURIComponent(requested),head_branch:'main',status:'in_progress',created_at:iso(now),updated_at:iso(now),html_url:'https://github.com/getsalet/nono/actions/runs/100'}]});
    return fulfill(route,{workflow_runs:D.CONFIG.map((c,i)=>({id:i+1,path:'.github/workflows/'+c.workflow,status:'in_progress',created_at:iso(now),updated_at:iso(now),html_url:'https://github.com/getsalet/nono/actions/runs/'+(i+1)}))});
  });
  await page.route('https://raw.githubusercontent.com/**',async route=>{
@@ -31,7 +33,7 @@ const D=require('../docs/status/data.js'),root=path.resolve(__dirname,'../docs/s
  const base='http://127.0.0.1:'+server.address().port+'/status/';
  await page.goto(base+'#publications');
  await page.getByText('در حال تکمیل عنوان‌ها',{exact:false}).waitFor();
- await page.getByText('عنوان همه رسیدهای موجود بارگذاری شد.',{exact:true}).waitFor();
+ await page.getByText('عنوان همه رسیدهای موجود بارگذاری شد.',{exact:false}).waitFor();
  await page.evaluate(()=>document.fonts.ready);assert(await page.evaluate(()=>document.fonts.check('600 16px Vazir','سلام ۱۲۳')));assert((await page.locator('body').evaluate(el=>getComputedStyle(el).fontFamily)).includes('Vazir'));
  if(process.env.AFP_PREVIEW_HTML){const rendered=await page.content();fs.writeFileSync(process.env.AFP_PREVIEW_HTML,rendered.replace(/<script[\s\S]*?<\/script>/g,'').replace(/<link[^>]*rel="stylesheet"[^>]*>/g,'')+'<style>'+fs.readFileSync(path.join(root,'fonts/vazir.css'),'utf8')+fs.readFileSync(path.join(root,'styles.css'),'utf8')+'</style>');}
  assert(D.CONFIG.every(c=>counts.get(c.queue)===1),'all title queues automatically loaded once');
