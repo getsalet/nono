@@ -1,0 +1,3 @@
+
+## Bounded pre-write text recovery
+When active-family fresh topics are exhausted, a matched saved text-preflight failure may be repaired once under `roya-prewrite-text-repair-v1`. It must have the same key/timestamp, a failed static QA report and a complete saved draft, with no native identity, publication receipt or prior recovery marker. The original failure is archived before model calls and the marker survives queue rebuilds. It is input to full current text/originality/image/publisher QA, never approval. Unknown-stage, image, published, ambiguous, held-family and future-timer records are not reset. The prompt now shows the required complete details/summary/p FAQ and explicitly names the assigned technical topic in the introduction.

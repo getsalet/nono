@@ -107,3 +107,6 @@ A real image-only article passed all gates and was submitted once, but its perma
 ## Typography follow-up
 
 Manual public inspection found the mixed-script spellings هکتar / سir / زraعی in the verified p/4 sample. Future drafts normalize these three known words in text nodes only, never in URLs. Other adjacent Persian/Latin letters fail closed before editorial approval. The already-published cached article was not silently rewritten; its typography is a documented remaining content issue, separate from verified image-only publication/reconciliation. 85 local tests passed. This code-only follow-up does not trigger another publication cycle or change runtime limits.
+
+## Bounded evidence-count repair (revision 21)
+Observed source plans returned 15–16 facts despite the 2–12 contract. Plans with 13–24 otherwise valid facts get exactly one model request to select a 2–12-fact subset. Every original excerpt and claim is validated first; repaired claims must be unchanged pairs from the original response. No truncation, invented evidence, increased limit or final approval occurs. Static evidence validation and full independent article/semantic/media/native/public QA remain mandatory. Existing count-related holds are eligible for one later-policy retry only, with their audit history retained. Video remains disabled and publication limits unchanged.

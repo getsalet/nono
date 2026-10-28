@@ -32,6 +32,7 @@ on:
       - tests/test_roya_capacity_recovery.py
       - tests/test_roya_queue_runtime.py
       - tests/test_roya_domain_repair.py
+      - tests/test_roya_preflight_recovery.py
       - .github/workflows/roya-backlink-queue.yml
   workflow_run:
     workflows: ['Independent AFP article image stock (no publication)']
@@ -134,6 +135,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_roya_queue_runtime.py' -v
           python -m unittest discover -s tests -p 'test_roya_article_supplement.py' -v
           python -m unittest discover -s tests -p 'test_roya_domain_repair.py' -v
+          python -m unittest discover -s tests -p 'test_roya_preflight_recovery.py' -v
       - name: Build or refresh the city queue
         if: steps.control.outputs.proceed == '1'
         run: python automation/build_roya_queue.py

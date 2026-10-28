@@ -201,7 +201,7 @@ def build_prompt(item, links):
 
 قواعد محتوا:
 1. طول متن بین {MIN_WORDS} و {MAX_WORDS} کلمه فارسی باشد (نه کمتر، نه بیشتر).
-2. ساختار: یک پاراگراف مقدمه، سپس حداقل ۳ بخش با تگ h2 (و در صورت نیاز h3)، یک لیست ul یا ol برای نکات فنی، و در پایان بخش «سوالات متداول» با دقیقاً ۳ سوال که هر کدام در ساختار <details><summary>پرسش</summary>پاسخ</details> نوشته شود. بعد از بخش سوالات متداول هیچ بخش h2 یا h3 جدیدی نساز.
+2. ساختار: یک پاراگراف مقدمه، سپس حداقل ۳ بخش با تگ h2 (و در صورت نیاز h3)، یک لیست ul یا ol برای نکات فنی، و در پایان بخش «سوالات متداول» با دقیقاً ۳ سوال که هر کدام در ساختار <details><summary>پرسش</summary><p>پاسخ</p></details> نوشته شود. بعد از بخش سوالات متداول هیچ بخش h2 یا h3 جدیدی نساز.
 3. دقیقاً دو لینک در بدنه بیاور: لینک کلیدواژه اصلی و لینک صفحه شهری متناظر. لینک استان، تماس یا خدمات اضافه نکن. هر لینک بالا را با لنگر طبیعی در متن پخش کن؛ لنگر لینک صفحه شهری باید همان «عنوان پست مقصد» یا نزدیک‌ترین عبارت طبیعی به آن باشد (مثلاً «خرید نوار تیپ ۲۰ سانتی در قندمان») تا بک‌لینک معنادار شود. لنگر باید شامل نام شهر باشد، معنادار باشد (نه «اینجا کلیک کنید») و برای هر URL حداکثر یک بار بیاید. در متن به موضوع همان پست مقصد اشاره کن تا لینک زمینه‌دار شود.
 4. هیچ قیمت، عدد ریالی/تومانی، تخفیف، موجودی، نمایندگی، زمان قطعی ارسال یا ادعای محلی درباره خاک، آب، شوری، اقلیم و فصل کشت شهر را ننویس؛ به جای آن بنویس که کارشناس AFP شرایط زمین را بررسی می‌کند و قیمت روز را استعلام بگیرد.
 5. {technical}
@@ -211,7 +211,7 @@ def build_prompt(item, links):
 8. اگر لینک با نقش home در فهرست مجاز هست، آن را فقط یک بار در یک پاراگراف توضیحی مرتبط با انتخاب تجهیزات نوار تیپ بیاور؛ متن لنگر همین لینک را دقیقاً همان «لنگر پیشنهادی» آن بنویس. عبارت مستقل «نوار تیپ» یا «نوار آبیاری» فقط به صفحه نخست اشاره کند؛ لینک شهر همچنان نام شهر و زمینه محصول خود را داشته باشد؛ لینک استان اضافه نکن. دو کلیدواژه اصلی را کنار هم به شکل دو لینک تکراری به صفحه نخست نچین. لینک صفحه نخست را در سوالات متداول یا یک پاراگراف صرفاً تبلیغاتی قرار نده. اگر لینک home در فهرست نیست، آن را اضافه نکن و کلمات نوار تیپ را به متن مربوط به لوله تحمیل نکن.
 9. اولویت مقاله پاسخ دقیق به نیاز خواننده است، نه تکرار کلیدواژه یا افزایش تعداد بک‌لینک. بدون مقدمه و جمله تبلیغاتی قالبی، توصیه کاربردی مرتبط با موضوع بده.
 10. عنوان دقیق از ماتریس مستقل رویابلاگ: {item['assigned_title']}. آن را بدون تغییر استفاده کن؛ حداکثر ۶۵ کاراکتر است و نام شهر را دارد.
-موضوع و مسئله فنی عنوان باید از مقدمه در متن واقعی حاضر باشد؛ مقاله قیمت و خرید عمومی را فقط با تعویض عنوان تحویل نده.
+در همان پاراگراف اول، واژه فنی اصلی عنوان (مثل نگهداری، پایش یا فشار) را عیناً و در توضیح کاربردی بیاور؛ موضوع و مسئله فنی عنوان باید از مقدمه در متن واقعی حاضر باشد؛ مقاله قیمت و خرید عمومی را فقط با تعویض عنوان تحویل نده.
 11. اگر عنوان نام محصول کشت ردیفی دارد، متن، چک‌لیست و FAQ به کاربرد آبیاری همان محصول پاسخ دهند. مثال‌ها مشروط باشند؛ رایج بودن کشت آن در شهر یا تناسب قطعی با خاک و اقلیم را ادعا نکن. فاصله، فشار، دبی و نیاز آبی را بدون مرجع معتبر به محصول نسبت نده.
 12الف. اگر عنوان نام محصول ندارد، کشت محصول مشخصی را در شهر ادعا نکن. قبل از سوالات متداول، بخش «جمع‌بندی» با حداقل ۳۰ کلمه فارسی بنویس: نتیجه کاربردی و اقدام بعدی مرتبط با عنوان را مشخص کن و برای بررسی مشخصات یا راهنمای شهری به وب‌سایت اصلی AFP هدایت کن. لینک سوم اضافه نکن؛ همان دو لینک در پاراگراف‌های مرتبط بدنه باشند. سوالات متداول دقیقاً سه details/summary/p کامل و آخرین محتوای مقاله باشند.
 12. زاویه اختصاصی رویا: برنامه‌ریزی آبیاری، نیازسنجی مزرعه، تناسب تجهیزات و تصمیم‌های پیش از اجرا. مقدمه، مثال، چک‌لیست و FAQ را از صفر و با همین زاویه بنویس؛ متن فارسی‌بلاگ، رز‌بلاگ و سایت اصلی را کپی یا بازنویسی سطحی نکن. نام شهر فقط زمینه مخاطب است، نه شاهد ویژگی‌های اقلیم یا خاک.
@@ -595,6 +595,33 @@ def domain_repair_draft(record, item, current=None):
     return clean(post)  # Not a QA pass; corrected prompt + full text/image QA still run.
 
 
+PREFLIGHT_RECOVERY_POLICY = 'roya-prewrite-text-repair-v1'
+def preflight_repair_draft(record, item, state):
+    """One auditable repair of a matched pre-write text failure, never a QA pass."""
+    if (item.get('status') != 'failed' or item.get('failure_stage') != 'text_validation'
+        or record.get('status') != 'failed' or record.get('failure_stage') != 'text_validation'
+        or record.get('key') != item.get('key') or not item.get('generated_at')
+        or record.get('generated_at') != item['generated_at']
+        or item.get('preflight_recovery') or record.get('preflight_recovery')
+        or any(x.get('key') == item.get('key') for x in state.get('published', []))):
+        return None
+    for row in (item, record):
+        if any(row.get(k) for k in ('published', 'published_url', 'pid', 'native_id', 'intent')):
+            return None
+    if item.get('next_retry_at'):
+        try:
+            due = datetime.datetime.fromisoformat(item['next_retry_at'].replace('Z', '+00:00'))
+            if due.tzinfo is None or due > datetime.datetime.now(datetime.timezone.utc):return None
+        except (TypeError, ValueError, AttributeError):return None
+    qa_report = record.get('qa', {})
+    if not isinstance(qa_report, dict) or qa_report.get('passed') is not False:return None
+    errors = qa_report.get('errors')
+    if not isinstance(errors, list) or not errors or not all(isinstance(e, str) and e for e in errors):return None
+    post = record.get('post')
+    if not isinstance(post, dict) or not all(isinstance(post.get(k), str) and post[k].strip() for k in ('title', 'slug', 'html')):return None
+    from blog_draft_preflight import clean
+    return clean(post)
+
 def pick(queue, state, count):
     from blog_image_draft_recovery import capacity_retry_due,recover
     pending=[]
@@ -611,6 +638,7 @@ def pick(queue, state, count):
         if not eligible and item.get('failure_stage')=='text_validation':
             path=ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json')
             eligible=domain_repair_draft(load_json(path,{}),item) is not None
+            if not eligible:eligible=preflight_repair_draft(load_json(path,{}),item,state) is not None
         if eligible:pending.append(item)
     if ONLY:
         pending = [i for i in pending if i['key'] == ONLY]
@@ -698,6 +726,15 @@ def main():
             saved_record=load_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'),{})
             image_retry_draft=domain_repair_draft(saved_record,item)
             if image_retry_draft is not None:item['text_policy_retry']=DOMAIN_REPAIR_POLICY
+        if image_retry_draft is None and item.get('failure_stage') == 'text_validation':
+            saved_record = load_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'), {})
+            image_retry_draft = preflight_repair_draft(saved_record, item, state)
+            if image_retry_draft is not None:
+                # Persist ownership/audit before any model call; interrupted runs cannot reset it.
+                filename = re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'
+                save_json(ART / 'preflight-recovery-history' / filename, {'policy': PREFLIGHT_RECOVERY_POLICY, 'at': now(), 'original': saved_record})
+                item['preflight_recovery'] = {'policy': PREFLIGHT_RECOVERY_POLICY, 'at': now()}
+                save_json(QUEUE_PATH, queue)
         item['status'] = 'processing'
         item['attempts'] = int(item.get('attempts', 0)) + 1
         state['in_progress'] = item['key']

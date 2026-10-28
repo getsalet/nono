@@ -70,7 +70,7 @@
     for(const [key,v]of Object.entries(state?.held||{}))if(!published.has(key))failures.set(key,v?.reason||v);
     for(const [key,v]of failures)issues.push({key,reason:typeof v==='string'?v:String(v?.last_error||v?.reason||'کنترل کیفیت نیاز به بررسی دارد.')});
     if(state?.intent){counts.ambiguous++;issues.unshift({key:state.intent.key||'',reason:'یک قصد ارسال ثبت‌شده در انتظار تطبیق است؛ ارسال دوباره نکنید.'});}
-    for(const [key,x]of Object.entries(journal?.items||journal?.attempts||{}))if(/^(submitting|unconfirmed|uncertain)$/.test(x?.phase||'')){counts.ambiguous++;issues.unshift({key,reason:'دفتر ارسال، رسید حل‌نشده دارد.'});}
+    for(const [key,x]of Object.entries(journal?.items||journal?.attempts||journal||{}))if(/^(submitting|unconfirmed|uncertain|reconciled_absent)$/.test(x?.phase||'')){counts.ambiguous++;issues.unshift({key,reason:'دفتر ارسال، رسید حل‌نشده دارد.'});}
     counts.failed=Math.max(counts.failed,failures.size);
     return {...counts,loaded:!!queue,total:queue?items.length:null,issues};
   }

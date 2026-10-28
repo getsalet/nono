@@ -125,7 +125,7 @@ def targets_from_queue():
 # Explicit non-secret runtime fields. Rebuilding source metadata must not erase
 # async ownership, retry controls or the reviewed-image provenance.
 RUNTIME_FIELDS = (
-    'failure_stage', 'last_error', 'next_retry_at', 'image_retry_at',
+    'failure_stage', 'last_error', 'next_retry_at', 'image_retry_at', 'preflight_recovery',
     '_image_stock_request', '_image_article_context', '_image_qa_feedback',
     '_image_rejections', 'image_generation', 'image_review', 'image_width',
     'image_height', 'image_alt', 'image_policy_retry', 'text_policy_retry',
