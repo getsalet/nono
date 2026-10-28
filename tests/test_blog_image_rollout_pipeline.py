@@ -12,6 +12,9 @@ import roya_backlink_queue as roya
 
 class ImageRolloutTests(unittest.TestCase):
  def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
   self.focused=patch.object(gate,'focused_physical_check',return_value={'clear_soil_gap':True,'line_touches_or_crosses_package':False,'extra_loose_product_coil':False,'package_has_protruding_strip':False});self.focused.start();self.addCleanup(self.focused.stop)
   self.image_env=patch.dict('os.environ',{'IMAGE_API_KEY':''});self.image_env.start();self.addCleanup(self.image_env.stop)
   self.queue=patch('blog_image_queue.provider_slot',side_effect=lambda *a:__import__('contextlib').nullcontext());self.queue.start();self.addCleanup(self.queue.stop)

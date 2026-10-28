@@ -8,7 +8,7 @@ import validate_blog_image_pairs as audit
 class PairValidationTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
-  self.cfg=json.loads((restore.ROOT/restore.CONFIG).read_text());self.request={'policy':restore.POLICY,'request_id':'a'*32,'max_image_requests':14}
+  self.cfg=json.loads((restore.ROOT/restore.CONFIG).read_text());self.cfg['enabled']=False;self.request={'policy':restore.POLICY,'request_id':'a'*32,'max_image_requests':14}
   for name,v in [(restore.CONFIG,self.cfg),(audit.REQUEST,self.request)]:
    p=self.root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(v))
   self.names=[n for p in self.cfg['key_pairs'].values()for n in p];self.bindings={n:'fixture-'+n for n in self.names}

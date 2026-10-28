@@ -18,6 +18,9 @@ if __name__=='__main__':unittest.main()
 
 class ConditioningTests(unittest.TestCase):
  def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
   from unittest.mock import patch
   self.image_env=patch.dict('os.environ',{'IMAGE_API_KEY':''});self.image_env.start();self.addCleanup(self.image_env.stop)
   import contextlib

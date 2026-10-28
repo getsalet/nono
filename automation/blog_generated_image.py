@@ -78,7 +78,8 @@ def rollout_enabled(blog,root=None):
    if row.get('request_contract',{}).get('family_recipe')!=recipe_for({'family':row['family']}):raise RuntimeError('Current enabled-family recipe required')
    visual=json.loads((root/'data/blog-generated-image-visual-review.json').read_text())
    if digest not in visual.get('approved_sha256',[]):raise RuntimeError('Directly inspected enabled-family sample required')
- return blog in control.get('blogs',[])
+ from blog_image_restore import enabled as restored
+ return blog in control.get('blogs',[])or restored(blog,root)
 
 def capability_slots(root=None):
  root=Path(root or roya.ROOT)

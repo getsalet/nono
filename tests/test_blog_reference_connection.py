@@ -7,6 +7,9 @@ import blog_generated_image as generated
 from blog_image_connection import settings
 class ReferenceConnectionTests(unittest.TestCase):
  def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
   self.queue=patch('blog_image_queue.provider_slot',side_effect=lambda *a:__import__('contextlib').nullcontext());self.queue.start();self.addCleanup(self.queue.stop)
  def item(self):return {'key':'reference-connection','family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'نوار تیپ پیاز؛ فاصله کشت','summary':'مقاله درباره فاصله خطوط کشت پیاز و یکنواختی آبیاری در مزرعه است و از همان موضوع برای صحنه استفاده می‌شود.'}}
  def response(self):

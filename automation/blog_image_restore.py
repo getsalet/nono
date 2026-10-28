@@ -55,13 +55,22 @@ def evidence(blog,root=ROOT,current=None):
  if not c or v.get('policy')!=POLICY or v.get('status')!='completed' or v.get('connection')!=settings('https://apihub.agnes-ai.com/v1')or v.get('post_submissions')!=0 or v.get('key_pairs')!=c['key_pairs']:raise RuntimeError('Matching completed image-pair validation required')
  try:stamp=datetime.datetime.fromisoformat(v['finished_at'].replace('Z','+00:00')).timestamp()
  except (KeyError,TypeError,ValueError):raise RuntimeError('Image pair validation timestamp invalid')from None
- if not 0<=(time.time()if current is None else current)-stamp<=72*3600:raise RuntimeError('Fresh image pair validation required')
+ clock=time.time()if current is None else current
+ if clock<stamp:raise RuntimeError('Image pair validation timestamp is in the future')
+ fresh=clock-stamp<=72*3600;recent=set()
+ if not fresh:
+  # Ongoing successful image requests are fresher capability proof than a
+  # periodic paid probe. A never-used/stale backup is not silently re-admitted.
+  from blog_image_key_router import state
+  for name,row in state(root)['keys'].items():
+   when=row.get('last_success_at_epoch')
+   if type(when)in(int,float)and 0<=clock-when<=72*3600:recent.add(name)
  rows=v.get('keys',[])
  if not isinstance(rows,list)or any(not isinstance(x,dict)for x in rows)or len({x.get('secret_name')for x in rows})!=len(rows):raise RuntimeError('Invalid image pair evidence')
  byname={x.get('secret_name'):x for x in rows};result=[]
  for name in assigned(blog,root):
   row=byname.get(name,{});image=row.get('image',{})
-  if (not row.get('duplicate_of') and image.get('status')=='image_healthy' and image.get('http_status')==200 and type(image.get('width'))is int and type(image.get('height'))is int and 512<=image['height']<image['width']<=10000 and re.fullmatch('[a-f0-9]{64}',str(image.get('image_sha256','')))):result.append(name)
+  if ((fresh or name in recent) and not row.get('duplicate_of') and image.get('status')=='image_healthy' and image.get('http_status')==200 and type(image.get('width'))is int and type(image.get('height'))is int and 512<=image['height']<image['width']<=10000 and re.fullmatch('[a-f0-9]{64}',str(image.get('image_sha256','')))):result.append(name)
  if not result:raise RuntimeError('No image-proven credential in this blog pair; no outside fallback')
  return result
 

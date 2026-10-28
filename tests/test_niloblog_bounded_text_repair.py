@@ -4,6 +4,10 @@ from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'automation'))
 import niloblog_pipeline as n
 class BoundedTextRepairTests(unittest.TestCase):
+ def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
  def run_case(self,reason,*,second_failure=False,blocked=False,review_rejected=False):
   quote='این نقل دقیق و مستند درباره محصول شهرستان است'
   bundle={'local':{'text':quote},'article':{'text':quote+' راهنمای فنی'},'technical':[],'links':[]}

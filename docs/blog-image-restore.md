@@ -44,10 +44,14 @@ around a provider/account limit. Failures and missing/duplicate slots are not
 reported as healthy. Real image bytes prove capability, not visual approval.
 
 Before enabling: inspect the report, require the intended pairs to have real
-image proofs, add all seven blogs to the existing accepted rollout control, and
+image proofs, use the explicit seven-blog restore registry under the unchanged accepted family
+and reference controls, and
 run an article-specific generated-image canary with unchanged visual QA.
-The normal routing gate requires matching completed pair evidence ≤72 hours old.
-Missing/stale evidence stops image work, never falls back to a text-only post.
+The routing gate requires matching completed pair evidence ≤72 hours old or a
+real successful runtime generation by that previously proven slot within 72 hours.
+Thus healthy ongoing publication does not require repeated paid capability probes.
+Unused stale slots are not re-admitted without evidence. Missing/stale evidence
+stops image work, never falls back to a text-only post.
 Do not enable first and discover eligibility by failing production posts.
 
 Blogfa stays retired. Hose-family holds/cancellations and all publication budgets,

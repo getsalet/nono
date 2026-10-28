@@ -4,6 +4,9 @@ from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'automation'))
 from agnes_key_pool import AgnesKeyPool,NAMES,DEFAULT_BASE
 class KeyPoolTests(unittest.TestCase):
+ def setUp(self):
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.reserved',return_value=set());legacy.start();self.addCleanup(legacy.stop)
  def test_all_slots_and_duplicate(self):
   self.assertEqual(len(NAMES),27);env={n:f'fake-{i}'for i,n in enumerate(NAMES)};env['AGNES_API_KEY8']=env['AGNES_API_KEY'];p=AgnesKeyPool(env,report_path='/absent');self.assertEqual(len(p.keys),26);self.assertIn('fake-26',p.keys)
  def test_fresh_health_filter_and_expiration(self):

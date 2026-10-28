@@ -102,6 +102,10 @@ class SharedQueueTests(unittest.TestCase):
    with q.provider_slot('roya','f'*32)as lease:self.assertIsNone(lease)
    client.assert_not_called()
 class QueueIntegrationTests(unittest.TestCase):
+ def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
  def test_shared_cooldown_is_rechecked_after_lock_before_image_api(self):
   with tempfile.TemporaryDirectory()as tmp:
    root=Path(tmp);(root/'data').mkdir();(root/b.STATE).write_text(json.dumps({'retry_at_epoch':time.time()+300}))

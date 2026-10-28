@@ -5,6 +5,10 @@ from PIL import Image
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'automation'))
 import blog_generated_image as g
 class Key10ActivationTests(unittest.TestCase):
+ def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
  def item(self):return {'key':'key10-test','family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'نوار تیپ پیاز','summary':'بررسی فاصله خطوط نوار تیپ برای کشت پیاز و یکنواختی آبیاری و نصب درست خطوط در خاک'}}
  def test_five_generators_bind_only_proven_key(self):
   for name in ['roya-backlink-queue.yml','farsiblog-content.yml','rozblog-content.yml','blogfa-content.yml','loxblog-content.yml']:

@@ -8,6 +8,9 @@ import blog_image_key_router as router
 from blog_image_backpressure import ImageProviderBusy
 class ImageKeyRouterTests(unittest.TestCase):
  def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
   self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
   # Deterministic offline evidence; live audit results must not redefine fixtures.
   self.names=['AGNES_API_KEY10','AGNES_API_KEY6','AGNES_API_KEY7','AGNES_API_KEY11']

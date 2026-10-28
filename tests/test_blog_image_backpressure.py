@@ -6,6 +6,10 @@ import blog_image_backpressure as b
 import blog_generated_image as g
 from agnes_key_pool import AgnesProviderError
 class BackpressureTests(unittest.TestCase):
+ def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
  def item(self):return {'key':'capacity-fixture','family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'پایش آبیاری پیاز','summary':'این مقاله درباره یکنواختی آبیاری، خطوط نصب شده و ناحیه ریشه پیاز است و تصویر باید همان موضوع را نشان دهد.'}}
  def test_exact_error_is_classified_without_retaining_message(self):
   e=AgnesProviderError(503,b'{"error":{"message":"image queue is full, please retry later (request id: private-id)"}}')

@@ -7,6 +7,10 @@ sys.path.insert(0,str(ROOT/'automation'))
 import blog_reference_scene as scene
 import blog_generated_image as generated
 class HoseFullReferenceTests(unittest.TestCase):
+ def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
  def item(self,family='hose'):
   return {'key':'hose-fullrefs-fixture','family':family,'site_title':'لوله نخی'if family=='hose'else'نوار تیپ','_image_article_context':{'title':'پایش اتصال لوله نخی ذرت'if family=='hose'else'نوار تیپ بامیه؛ مراقبت','summary':'این مقاله درباره بررسی اتصال آبیاری و یکنواختی جریان در مزرعه است و صحنه باید شاهد اتصال سالم داشته باشد.'}}
  def test_hose_supplies_two_byte_exact_full_originals_then_guide(self):

@@ -49,6 +49,12 @@ class RestoreTests(unittest.TestCase):
   with self.assertRaises(RuntimeError):restore.evidence('roya',self.root)
   p,v=self.proof(self.cfg['key_pairs']['roya']);v['finished_at']='2000-01-01T00:00:00+00:00';p.write_text(json.dumps(v))
   with self.assertRaises(RuntimeError):restore.evidence('roya',self.root)
+ def test_real_runtime_success_keeps_live_key_eligible_without_paid_reaudits(self):
+  import blog_image_key_router as router,time
+  p,v=self.proof(self.cfg['key_pairs']['roya']);v['finished_at']='2000-01-01T00:00:00+00:00';p.write_text(json.dumps(v))
+  key=self.cfg['key_pairs']['roya'][0]
+  q=self.root/router.STATE;q.parent.mkdir(parents=True,exist_ok=True);q.write_text(json.dumps({'policy':router.POLICY,'keys':{key:{'last_success_at_epoch':time.time(),'status':'image_healthy'}},'updated_at_epoch':time.time()}))
+  self.assertEqual(restore.evidence('roya',self.root),[key])
  def test_duplicate_binding_not_eligible(self):
   p,v=self.proof(self.cfg['key_pairs']['roya']);v['keys'][0]['duplicate_of']='AGNES_API_KEY14';v['keys'][1]['duplicate_of']='AGNES_API_KEY14';p.write_text(json.dumps(v))
   with self.assertRaises(RuntimeError):restore.evidence('roya',self.root)

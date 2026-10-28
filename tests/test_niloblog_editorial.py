@@ -5,6 +5,9 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'automation'))
 import niloblog_pipeline as m
 class EditorialTests(unittest.TestCase):
  def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
   self.quote='این یک نقل دقیق و مستند درباره محصول شهرستان است'
   self.bundle={'local':{'text':self.quote},'article':{'text':self.quote+' متن فنی'},'technical':[],'links':[]}
   self.plan={'blocked':False,'facts':[{'excerpt_id':'s0-e0','source_index':0,'claim':'گزارش محصول','quote':self.quote},{'excerpt_id':'s1-e0','source_index':1,'claim':'اطلاعات محصول','quote':self.quote}]}

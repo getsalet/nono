@@ -27,6 +27,10 @@ class TopicSceneContractTests(unittest.TestCase):
   self.assertNotEqual(a,prompt(item,'roya'));self.assertIn(item['_image_qa_feedback'],prompt(item,'roya'))
 
 class PreferredImagePoolTests(unittest.TestCase):
+ def setUp(self):
+  # This fixture exercises the legacy transport/media contract, not live rollout.
+  from unittest.mock import patch
+  legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
  def test_preferred_audited_image_slots_are_not_rotated_into_unrelated_slots(self):
   import base64,io
   from PIL import Image
