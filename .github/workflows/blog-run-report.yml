@@ -1,0 +1,57 @@
+name: Record generator run outcomes (no publication)
+on:
+  workflow_run:
+    workflows: ['Roya blog city backlink queue', 'Publish Roya backlink posts', 'FarsiBlog original content pipeline', 'RozBlog independent city content pipeline', 'LoxBlog independent city content pipeline', 'Blogsky automatic generation and verified publication', 'Parsiblog evidence-bound city generator', 'Niloblog guarded original articles']
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      run_id: {description: 'Completed generator run ID; observe only, never rerun', required: true}
+permissions:
+  actions: read
+  contents: write
+concurrency:
+  group: observed-blog-run-report-${{ github.event.workflow_run.id || inputs.run_id }}-${{ github.event.workflow_run.run_attempt || github.run_attempt }}
+  cancel-in-progress: false
+jobs:
+  report:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          sparse-checkout: |
+            automation
+            tests/test_blog_run_report.py
+            .github/workflows/blog-run-report.yml
+            state
+            data/niloblog
+            artifacts/blog-run-reports
+            artifacts/roya-backlink-queue/generation-status.json
+            artifacts/farsiblog-backlink-queue/generation-status.json
+            artifacts/rozblog-backlink-queue/generation-status.json
+            artifacts/loxblog-backlink-queue/generation-status.json
+            artifacts/blogsky-backlink-queue/generation-status.json
+            artifacts/parsiblog-backlink-queue/run-report.json
+            artifacts/niloblog/run-status.json
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Test report safety and atomic checkpoint isolation
+        run: python -m unittest discover -s tests -p 'test_blog_run_report.py'
+      - name: Record allowlisted public facts without reading logs or retrying work
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OBSERVED_RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
+        run: python automation/blog_run_report.py --run-id "$OBSERVED_RUN_ID" --persist
+      - name: Retain report if repository checkpoint failed
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: observed-run-report-${{ github.run_id }}
+          path: artifacts/blog-run-reports/
+          retention-days: 14
+          if-no-files-found: ignore

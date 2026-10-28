@@ -96,6 +96,11 @@
     return ({success:{label:'اجرای موفق',tone:'good'},failure:{label:'اجرای ناموفق',tone:'bad'},cancelled:{label:'لغوشده',tone:'neutral'},skipped:{label:'اجرا نشده',tone:'neutral'},timed_out:{label:'پایان مهلت اجرا',tone:'bad'},action_required:{label:'نیازمند اقدام',tone:'warn'}})[run.conclusion]||{label:'وضعیت نامشخص',tone:'neutral'};
   }
   function generationPath(c) {return c.id==='niloblog'?'artifacts/niloblog/run-status.json':c.id==='parsiblog'?'artifacts/parsiblog-backlink-queue/run-report.json':'artifacts/'+c.id+'-backlink-queue/generation-status.json';}
+  function runReportPath(c){return 'artifacts/blog-run-reports/'+c.id+'/latest.json';}
+  function matchedRunReport(c,input,latest){
+    const r=input.runReport;
+    return r?.schema==='blog-run-report-v1'&&r.blog===c.id&&latest&&String(r.run_id)===String(latest.id)&&Number(r.run_attempt)===Number(latest.run_attempt||1)&&r.workflow_path===String(latest.path||'').split('@')[0]&&r.workflow_conclusion===latest.conclusion&&dateMs(r.completed_at)!==null&&dateMs(latest.updated_at)!==null&&Math.abs(dateMs(r.completed_at)-dateMs(latest.updated_at))<=120000?r:null;
+  }
   function issueAdvice(reason) {
     const text=String(reason||'');
     if(/visual_challenge|captcha|کپچا/i.test(text))return {category:'login',label:'ورود / کپچا',action:'گزارش ورود را بررسی کنید؛ پس از رفع علت، فقط یک آزمون ورود بدون انتشار اجرا کنید.'};
@@ -122,6 +127,14 @@
       const reason=String(gen.reason||(Array.isArray(gen.qa_errors)?gen.qa_errors:[]).join('؛ ')||gen.error_type||'');const a=issueAdvice(reason);
       return result(a.category,a.label,'bad',a.category==='quality'?'این اجرا در کنترل کیفیت متوقف شد؛ این مدرک خرابی کل جنراتور نیست.':'گزارش همین اجرا یک مانع ثبت کرده است.',a.action,reason||'گزارش اجرا ناموفق است.',file(generationPath(c)),'همین اجرا',at);
     }
+    const observed=matchedRunReport(c,input,latest);
+    if(observed && runState(latest).tone==='bad'){
+      const causes={quality:'رد کنترل کیفیت',login:'ورود / دسترسی',receipt:'رسید نامشخص',limit:'محدودیت / سهمیه',image:'مرحله تصویر'};
+      const hints={quality:'quality',login:'authentication',receipt:'reconciliation',limit:'budget',image:'image'};
+      const stages={generation:'تولید',publication:'انتشار / تأیید بومی',dependencies:'نصب وابستگی‌ها',tests:'آزمون‌ها',checkpoint:'ذخیره رسیدها',admission:'بررسی اجازه اجرا',unknown:'مرحله نامشخص'};
+      const cause=Object.hasOwn(causes,observed.reason_code)?observed.reason_code:'unknown';
+      return result(cause==='unknown'?'run_failed':cause,causes[cause]||'اجرای ناموفق؛ علت نامشخص','bad','مرحله توقف ثبت‌شده: '+(stages[observed.phase]||'نامشخص')+'؛ '+(cause==='unknown'?'متن لاگ خوانده نشده و علت دقیق مشخص نیست.':'علت از گزارش مرتبط همین اجرا دسته‌بندی شده است.'),issueAdvice(hints[cause]||'').action,'گزارش یکپارچه اجرا '+String(observed.run_id)+'، نوبت '+String(observed.run_attempt)+'؛ نتیجه: '+String(observed.workflow_conclusion),file(runReportPath(c)),cause==='unknown'?'مرحله مشخص؛ علت نامشخص':'همین اجرا',dateMs(observed.completed_at));
+    }
     if(runState(latest).tone==='bad')return result('run_failed','نیازمند بررسی اجرا','bad','آخرین اجرای مرتبط ناموفق است؛ علت دقیق از این داده‌ها مشخص نیست.',issueAdvice('').action,'نتیجه workflow: '+String(latest.conclusion),runUrl,'علت نامشخص',dateMs(latest.updated_at));
     if(['queued','in_progress','waiting'].includes(latest?.status))return result('running',runState(latest).label,'info','این اجرا هنوز تمام نشده است؛ انتشار فقط با رسید تأیید می‌شود.','تا پایان اجرا صبر کنید؛ سپس رسید و نتیجه همان اجرا را بررسی کنید.','وضعیت workflow: '+latest.status,runUrl,'ثبت‌شده',dateMs(latest.updated_at));
     const limit=Number(input.control?.rolling_hourly_limit||input.control?.max_verified_posts_per_rolling_hour);
@@ -143,7 +156,7 @@
     const latest=relevant[0]||null,last=pub.rows.find(x=>x.publishedAt!==null)||null;
     const paused=globalControl?.pause_image_production===true || control?.enabled===false || automationControl?.enabled?.[c.id]===false;
     const status=diagnosis(c,input,pub,q,last,latest,paused,now);
-    return {...c,input,pub,q,last,latest,runs:relevant,status,paused,generation,schedules:schedule(yaml),model:String(yaml||'').match(/AGNES_MODEL:\s*['"]?([^\s'"\n]+)/)?.[1]||null,
+    return {...c,input,pub,q,last,latest,runReport:matchedRunReport(c,input,latest),runs:relevant,status,paused,generation,schedules:schedule(yaml),model:String(yaml||'').match(/AGNES_MODEL:\s*['"]?([^\s'"\n]+)/)?.[1]||null,
       today:pub.total===null?null:pub.rows.filter(x=>x.publishedAt!==null&&x.publishedAt>now-86400000&&x.publishedAt<=now).length,
       week:pub.total===null?null:pub.rows.filter(x=>x.publishedAt!==null&&x.publishedAt>now-7*86400000&&x.publishedAt<=now).length};
   }
@@ -155,5 +168,5 @@
     const h=Math.floor(m/60);if(h<24)return h+' ساعت'+(m%60?' و '+m%60+' دقیقه':'')+' پیش';
     const d=Math.floor(h/24);return d+' روز'+(h%24?' و '+h%24+' ساعت':'')+' پیش';
   }
-  return {REPO,CONFIG,generationPath,issueAdvice,diagnosis,dateMs,safeUrl,canonicalUrl,publications,queueSummary,schedule,cronDescription,runState,build,relative};
+  return {REPO,CONFIG,generationPath,runReportPath,matchedRunReport,issueAdvice,diagnosis,dateMs,safeUrl,canonicalUrl,publications,queueSummary,schedule,cronDescription,runState,build,relative};
 });
