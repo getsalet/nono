@@ -32,8 +32,18 @@ jobs:
       target: ${{ steps.ready.outputs.target }}
       automation_enabled: ${{ steps.ready.outputs.automation_enabled }}
     steps:
+      # Admission is read-only: retain controls, saved drafts and owned images,
+      # but never download historical SQL/ZIP exports or unrelated artifacts.
       - uses: actions/checkout@v4
-        with: {ref: main}
+        with:
+          ref: main
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /automation/
+            /data/
+            /state/
+            /artifacts/rozblog-backlink-queue/items/
+            /assets/blog-generated/rozblog/
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - id: ready

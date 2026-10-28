@@ -45,7 +45,7 @@ class ReadyImageHandoffTests(unittest.TestCase):
   text=(ROOT/'.github/workflows/rozblog-content.yml').read_text()
   for value in ('workflow_run:',"workflows: ['Independent AFP article image stock (no publication)']",'needs: [tests, image_handoff]','head_repository.full_name == github.repository','BLOG_READY_IMAGE_HANDOFF:','needs.image_handoff.outputs.target','check_blog_run_budget.py rozblog','check_blog_pipeline_control.py rozblog','publish_rozblog_posts.py'):
    self.assertIn(value,text)
-  self.assertIn('ROZBLOG_AUTOMATION_ENABLED',text);self.assertIn("with: {ref: main}",text)
+  self.assertIn('ROZBLOG_AUTOMATION_ENABLED',text);self.assertIn("with:\n          ref: main\n          sparse-checkout-cone-mode: false",text)
  def install_blog(self,blog,key='city-existing'):
   import re
   self.row['blog']=blog;self.row['key']=key;self.source['key']=key

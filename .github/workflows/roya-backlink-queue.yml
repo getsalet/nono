@@ -58,8 +58,18 @@ jobs:
       cached_only: ${{ steps.ready.outputs.cached_only }}
       target: ${{ steps.ready.outputs.target }}
     steps:
+      # Admission is read-only: retain controls, saved drafts and owned images,
+      # but never download historical SQL/ZIP exports or unrelated artifacts.
       - uses: actions/checkout@v4
-        with: {ref: main}
+        with:
+          ref: main
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /automation/
+            /data/
+            /state/
+            /artifacts/roya-backlink-queue/items/
+            /assets/blog-generated/roya/
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - id: ready
