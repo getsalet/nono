@@ -25,20 +25,23 @@ class AccountExpansionTests(unittest.TestCase):
   r=self.report();r['keys']*=2;self.assertEqual(a.successful(r,r['connection']),[])
   r=self.report();r['keys'][0]['secret_name']='AGNES_API_KEY8';self.assertEqual(a.successful(r,r['connection']),[])
  def test_router_consumes_expansion_without_replacing_old_audit(self):
-  root=Path(__file__).resolve().parents[1]
   with tempfile.TemporaryDirectory()as d,patch.dict('os.environ',{'GITHUB_ACTIONS':'false'}):
-   out=Path(d)
-   for path in (router.CONFIG,'data/agnes-usable-key-audit/latest.json','data/agnes-image-key-health/latest.json'):
-    p=out/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((root/path).read_bytes())
-   # This test checks expansion admission, not expiry of repository snapshots.
-   # Only temporary fixtures get fresh dates; production audits stay untouched.
-   for path,field in (('data/agnes-usable-key-audit/latest.json','finished_at'),('data/agnes-image-key-health/latest.json','tested_at')):
-    fixture=out/path;value=json.loads(fixture.read_text());value[field]=datetime.datetime.now(datetime.timezone.utc).isoformat();fixture.write_text(json.dumps(value))
-   cfg=json.loads((out/router.CONFIG).read_text());cfg['slots'].append('AGNES_API_KEY4');(out/router.CONFIG).write_text(json.dumps(cfg))
+   out=Path(d);stamp=datetime.datetime.now(datetime.timezone.utc).isoformat()
+   # Capability of a live repository slot may change at any time. This isolated
+   # fixture deliberately has a proven baseline key7 and an unproven key4.
+   fixtures={router.CONFIG:{'enabled':True,'policy':router.POLICY,'slots':['AGNES_API_KEY7','AGNES_API_KEY4']},
+    'data/agnes-usable-key-audit/latest.json':{'complete_text':True,'complete_image':True,'finished_at':stamp,'connection':self.report()['connection'],'keys':[
+     {'secret_name':'AGNES_API_KEY7','text':{'status':'healthy','http_status':200},'image':self.image()},
+     {'secret_name':'AGNES_API_KEY4','text':{'status':'healthy','http_status':200},'image':{'status':'temporarily_unavailable','http_status':503,'provider_code':'image_queue_full'}}]},
+    'data/agnes-image-key-health/latest.json':{'complete':True,'tested_at':stamp,'endpoint':self.report()['connection']['endpoint'],'model':self.report()['connection']['model'],'keys':[{'secret_name':'AGNES_API_KEY7','status':'image_healthy','http_status':200}]}}
+   for path,value in fixtures.items():
+    p=out/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(value))
+   old=(out/'data/agnes-usable-key-audit/latest.json').read_bytes()
    self.assertNotIn('AGNES_API_KEY4',router.evidence(out))
    p=out/a.LATEST;p.parent.mkdir(parents=True);p.write_text(json.dumps(self.report()))
    self.assertIn('AGNES_API_KEY4',router.evidence(out))
    r=self.report();r['keys'][0]['image']={'status':'temporarily_unavailable','http_status':503};p.write_text(json.dumps(r));self.assertNotIn('AGNES_API_KEY4',router.evidence(out))
+   self.assertEqual((out/'data/agnes-usable-key-audit/latest.json').read_bytes(),old)
  def request(self):return {'policy':a.POLICY,'request_id':'b'*32,'slots':list(a.CANDIDATES),'max_image_requests':6,'minimum_interval_seconds':60,'account_ownership_confirmed_by_user':True}
  def test_request_cannot_expand_budget_or_include_slot8(self):
   self.assertIn('b'*32,a.validate_request(self.request()))
