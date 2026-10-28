@@ -91,6 +91,12 @@ class EditorialTests(unittest.TestCase):
   for field,value in [('quote','یک نقل ساختگی که در هیچ کدام از منابع وجود ندارد'),('source_index',9),('source_index',True)]:
    bad=copy.deepcopy(self.plan);bad['facts'][0][field]=value
    with self.assertRaises(m.PipelineStop):m.verify_evidence_plan(bad,self.bundle)
+ def test_missing_claim_is_rejected_not_synthesized_from_quote(self):
+  for value in (None,'','   ',123):
+   with self.subTest(value=value):
+    bad=copy.deepcopy(self.plan);bad['facts'][0]['claim']=value;before=copy.deepcopy(bad)
+    with self.assertRaisesRegex(m.PipelineStop,'Evidence claim missing'):m.verify_evidence_plan(bad,self.bundle)
+    self.assertEqual(bad,before)
  def test_local_fact_and_sufficient_evidence_required(self):
   for plan in [{'blocked':True},{'facts':[]},{'facts':[dict(f,source_index=1) for f in self.plan['facts']]}]:
    with self.assertRaises(m.PipelineStop):m.verify_evidence_plan(plan,self.bundle)

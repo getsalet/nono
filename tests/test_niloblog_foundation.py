@@ -47,6 +47,12 @@ class FoundationTests(unittest.TestCase):
   self.assertEqual(n.failure_policy(n.PipelineStop('Topic brief rejected'))['category'],'evidence_or_topic')
   self.assertEqual(n.failure_policy(n.PipelineStop('Mixed-script word requires editorial correction'))['category'],'format_or_language')
   self.assertTrue(n.failure_policy(n.PipelineStop('Independent editorial review rejected'))['continue_candidates'])
+ def test_evidence_schema_rejection_holds_only_candidate_not_entire_cycle(self):
+  for reason in ('Evidence claim missing','Invalid evidence source'):
+   with self.subTest(reason=reason):
+    policy=n.failure_policy(n.PipelineStop(reason))
+    self.assertEqual(policy,{'category':'evidence_or_topic','action':'hold_topic_select_different','continue_candidates':True})
+    self.assertFalse(n.failure_policy(RuntimeError(reason))['continue_candidates'])
  def run_validation(self,error=None,paused=False):
   state={'held':{},'published':[],'intent':None};before=copy.deepcopy(state)
   runtime={'enabled':True,'revision':21}
