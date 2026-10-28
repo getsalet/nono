@@ -35,7 +35,33 @@ def budget(state,now=None,limit=2):
   if when.tzinfo is None:raise RuntimeError('Publication receipt lacks timezone')
   if when>now-dt.timedelta(hours=1):n+=1
  return max(0,limit-n)
+def approved_assigned_title(item):
+ # The approved matrix, not the prose model, owns title metadata. Never use
+ # this binding to approve body claims or alter an already published post.
+ from parsiblog_policy import title_errors
+ from parsiblog_text import language_errors
+ matrix=load(DATA/'title-matrix.json',{})
+ rows=[r for r in matrix.get('items',[])if r.get('key')==item.get('key')]
+ if matrix.get('approved')is not True or matrix.get('count')!=1000 or len(rows)!=1:
+  raise RuntimeError('One approved matrix row required before generation')
+ row=rows[0];title=row.get('assigned_title')
+ if any(item.get(k)!=row.get(k)for k in ('assigned_title','family','city_fa','target_url')):
+  raise RuntimeError('Generation metadata differs from approved matrix')
+ if not isinstance(title,str)or not 12<=len(title.strip())<=65 or any(c in title for c in '<>\r\n')or language_errors(title)or title_errors(row,title,ROOT):
+  raise RuntimeError('Approved matrix title failed preflight')
+ return title
+
+def bind_assigned_title(obj,title):
+ # Only well-shaped title metadata is bound. Invalid JSON still fails QA.
+ if not isinstance(obj,dict)or not isinstance(obj.get('title'),str):return None
+ import hashlib
+ previous=obj['title'];obj['title']=title
+ return {'policy':'approved-matrix-title-v1','changed':previous!=title,
+         'model_title_sha256':hashlib.sha256(previous.encode()).hexdigest(),
+         'assigned_title_sha256':hashlib.sha256(title.encode()).hexdigest()}
+
 def generate(item):
+ assigned_title=approved_assigned_title(item)
  from roya_backlink_queue import agnes,normalize_approved_hrefs
  import roya_backlink_queue as roya
  roya.IMAGE_CACHE=ART/'source-target-images.json'
@@ -64,6 +90,8 @@ def generate(item):
     obj,repair=apply_language_patch(obj,edits);item.setdefault('language_repairs',[]).append(repair)
    except ValueError:pass # Original rejected text remains; never accept bad patches.
   else:obj=copy.deepcopy(seed_post)if attempt==0 and seed_post else agnes(request,temperature=.1 if attempt else .35)
+  title_binding=bind_assigned_title(obj,assigned_title)
+  if title_binding is not None:item['title_binding']=title_binding
   render_city_token(item,obj)
   link_errors,link_report=render_contextual_links(item,obj);errors,report=qa(item,obj,ROOT,require_image=False);errors=link_errors+errors
   run_report(phase='text_preflight',generation_attempt=attempt+1,qa_errors=errors[:12])
