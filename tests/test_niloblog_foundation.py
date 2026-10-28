@@ -88,4 +88,16 @@ class FoundationTests(unittest.TestCase):
   with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'allowed',return_value=True),patch.object(n,'read',side_effect=read),patch.object(n,'validate_catalog'),patch.object(n,'generate',side_effect=RuntimeError('private-provider-response'))as generate,patch.object(n,'checkpoint'),patch.object(n,'login')as login:
    with self.assertRaises(RuntimeError):n.main()
    self.assertEqual(generate.call_count,1);login.assert_not_called();self.assertEqual(n.CYCLE['status'],'failed');self.assertNotIn('private-provider-response',json.dumps(state))
+ def test_observed_instructional_angles_do_not_assert_field_results(self):
+  for brief in ['چرا ثبت وضعیت اولیه برای عیب‌یابی بعدی مهم است؟','برای مقایسه وضعیت ابتدا و انتهای ردیف چه داده‌هایی لازم است؟','پیش از نسبت دادن افت آبدهی به گرفتگی چه چیزهایی بررسی شود؟']:
+   scope=n.topic_scope({'title':'کشت محصول در شهرستان؛ بررسی نوار تیپ'},{'brief':brief})
+   self.assertEqual(scope['mode'],'conditional_instruction');self.assertFalse(scope['field_measurements_required_for_explaining_required_documents']);self.assertTrue(scope['do_not_assume_local_installation_or_fault']);self.assertTrue(scope['distinct_usefulness_still_required'])
+ def test_factual_title_cannot_be_reclassified_by_question(self):
+  for title in ['گزارش اجرای نوار تیپ در شهرستان','نتایج اندازه‌گیری نوار تیپ','گزارش خرابی در مزرعه']:
+   scope=n.topic_scope({'title':title},{'brief':'چه داده هایی لازم است؟'})
+   self.assertEqual(scope['mode'],'factual_report');self.assertTrue(scope['field_measurements_required_for_reported_local_results'])
+ def test_scope_contract_reaches_extraction_brief_writer_and_reviewer(self):
+  code=Path(n.__file__).read_text();self.assertIn("'claim_scope':topic_scope(row,m['angles'][row['angle_ref']])",code)
+  contract=n.article_contract(self.row,self.bundle,{'brief':'چه مدارکی لازم است؟'})
+  self.assertEqual(contract['claim_scope']['mode'],'conditional_instruction');self.assertTrue(contract['independent_review_required'])
 if __name__=='__main__':unittest.main()
