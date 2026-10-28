@@ -100,7 +100,7 @@ def topic_scope(row,angle):
  # Purpose comes from the assigned editorial question, never from invented events.
  title=canon(row.get('title',''));question=canon(angle.get('brief',''))
  factual=any(t in title for t in ('گزارش اجرای','نتایج اندازه گیری','اندازه گیری ثبت شده','میزان واقعی','نتیجه اجرای','گزارش خرابی'))
- instructional=not factual and ('؟' in question or any(t in question for t in ('چه داده','چه مدارک','چه چیز','چرا ','چگونه ')))
+ instructional=not factual and (row.get('title_policy_version')==2 or '؟' in question or any(t in question for t in ('چه داده','چه مدارک','چه چیز','چرا ','چگونه ')))
  return {'mode':'conditional_instruction' if instructional else 'factual_report','assigned_reader_question':question,'title_is_not_evidence':True,'local_context_requires_local_source':True,'technical_methods_require_technical_source':True,'do_not_assume_local_installation_or_fault':True,'field_measurements_required_for_reported_local_results':True,'field_measurements_required_for_explaining_required_documents':False if instructional else True,'distinct_usefulness_still_required':True}
 
 def article_contract(row,bundle,angle=None):
