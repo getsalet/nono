@@ -16,6 +16,13 @@ class ContextRepairTests(unittest.TestCase):
   with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'validate_article',side_effect=n.PipelineStop('Mixed-script word requires editorial correction')):
    with self.assertRaises(n.PipelineStop):n.validate_candidate(row,obj,{},'repaired-validation')
    saved=json.loads((Path(tmp)/'rejected/test-repaired-validation.json').read_text());self.assertEqual(saved['post'],obj);self.assertEqual(saved['stage'],'repaired-validation')
+ def test_editorial_repair_receives_measured_counts_and_unchanged_limits(self):
+  post={'html':'<h2>موضوع</h2><p>نوار تیپ و ثبت فشار</p>','meta_description':'شرح کوتاه'};review={'approved':False,'unsupported_claims':['ادعای بی شاهد']}
+  ctx=n.editorial_repair_context(post,review)
+  self.assertEqual(ctx['measured_counts'],n.article_metrics(post));self.assertEqual(ctx['required_counts'],n.ARTICLE_LIMITS)
+  self.assertEqual(ctx['previous'],post);self.assertIn('blocked=true',ctx['repair_policy'])
+  ctx['previous']['html']='changed';ctx['required_counts']['word_groups_min']=0
+  self.assertNotEqual(post['html'],'changed');self.assertEqual(n.ARTICLE_LIMITS['word_groups_min'],500)
  def test_successful_validation_unchanged(self):
   with patch.object(n,'validate_article',return_value=750),patch.object(n,'save')as save:
    self.assertEqual(n.validate_candidate({}, {}, {}, 'initial'),750);save.assert_not_called()

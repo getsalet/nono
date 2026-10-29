@@ -81,6 +81,15 @@ def generation_feedback(post):
   if match:hits.append({'term':term,'context':body[max(0,match.start()-70):match.end()+100]})
  return {'invalid_visible_tokens':language_feedback(post,allowed={'afp'}),'blocked_phrase_hits':hits,'numeric_price_detected':has_numeric_price(body),'technical_prose_feedback':draft_quality_feedback(post.get('html','')if isinstance(post,dict)else''),'contract':generation_contract()}
 
+def editorial_repair_context(obj,review):
+ # The single editorial repair still has to satisfy every format gate.
+ # Supply actual measurements so deleting unsupported claims cannot silently
+ # turn a reviewed draft into an under-length article. Never pad with new facts.
+ return {'previous':copy.deepcopy(obj),'editorial_feedback':copy.deepcopy(review),
+         'validation_feedback':generation_feedback(obj),'measured_counts':article_metrics(obj),
+         'required_counts':copy.deepcopy(ARTICLE_LIMITS),
+         'repair_policy':'Keep only supported claims. Meet the same format limits without repetition or invented facts; otherwise return blocked=true.'}
+
 def validate_candidate(row,obj,bundle,stage):
  try:return validate_article(row,obj,bundle)
  except PipelineStop as error:
@@ -560,7 +569,7 @@ def generate(row,m,targets,media,state,validation_only=False):
   save(A/'reviews'/f"{row['id']}.json",{'review':review,'candidate':obj,'sources':bundle,'attempts':reviews,'at':now().isoformat()})
   if review_passes(review,bundle):break
   if review_attempt==1:raise PipelineStop('Independent editorial review rejected')
-  obj=prepare_article(agnes(prompt+'\nاین مقاله رد شده است. فقط یک فرصت اصلاح داری: ادعاهای بی‌شاهد را حذف کن، هر ادعای باقی‌مانده را به شواهد واقعی محدود کن و دلیل رد زیر را رفع کن. منبع یا نقل جعلی نساز. کنترل کیفیت تغییر نمی‌کند؛ اگر تمایز یا حجم مستند ممکن نیست blocked=true بده.\n'+json.dumps({'previous':obj,'editorial_feedback':review,'validation_feedback':generation_feedback(obj)},ensure_ascii=False),temperature=0.1),bundle,row)
+  obj=prepare_article(agnes(prompt+'\nاین مقاله رد شده است. فقط یک فرصت اصلاح داری: ادعاهای بی‌شاهد را حذف کن، هر ادعای باقی‌مانده را به شواهد واقعی محدود کن و دلیل رد زیر را رفع کن. منبع یا نقل جعلی نساز. کنترل کیفیت تغییر نمی‌کند؛ اگر تمایز یا حجم مستند ممکن نیست blocked=true بده.\n'+json.dumps(editorial_repair_context(obj,review),ensure_ascii=False),temperature=0.1),bundle,row)
   if obj.get('blocked'):raise PipelineStop('Editorial source insufficiency')
   words=validate_candidate(row,obj,bundle,'repaired-validation')
  if validation_only:
