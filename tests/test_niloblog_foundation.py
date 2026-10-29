@@ -17,6 +17,12 @@ class FoundationTests(unittest.TestCase):
  def test_valid_brief_does_not_approve_publication(self):
   self.assertEqual(n.validate_brief(self.brief,self.plan),self.brief)
   self.assertNotIn('publication_verified',self.brief)
+ def test_planner_receives_explicit_outline_evidence_placement(self):
+  with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch('roya_backlink_queue.agnes',return_value=self.brief)as ai:
+   n.plan_article(self.row,self.matrix,self.bundle,self.plan,[])
+   prompt=ai.call_args.args[0]
+   self.assertIn('outline_evidence_requirements',prompt);self.assertIn('local_fact_ids',prompt)
+   self.assertIn('Mentioning local evidence only in reason does not count',prompt)
  def test_brief_flags_require_exact_booleans(self):
   for key,value in [('eligible','true'),('grounded',1),('locally_distinct',False),('semantic_duplicate',True)]:
    with self.subTest(key=key),self.assertRaises(n.PipelineStop):n.validate_brief(dict(self.brief,**{key:value}),self.plan)
