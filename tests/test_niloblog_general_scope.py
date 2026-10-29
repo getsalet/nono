@@ -42,6 +42,12 @@ class GeneralScopeTests(unittest.TestCase):
   callback=unittest.mock.Mock(side_effect=AssertionError('do not silently repair invalid evidence'))
   with self.assertRaises(n.PipelineStop):validate_or_complete_outline(bad,self.plan,callback,n.PipelineStop)
   callback.assert_not_called()
+ def test_writing_budget_matches_unchanged_validator_and_preserves_headings(self):
+  budget=general_writing_budget(self.brief,n.ARTICLE_LIMITS)
+  self.assertEqual(budget['hard_min'],500);self.assertEqual(budget['hard_max'],1100)
+  self.assertEqual([x['heading']for x in budget['section_targets']],[x['heading']for x in self.brief['outline']])
+  self.assertGreaterEqual(sum(x['target_groups']for x in budget['section_targets']),800)
+  self.assertTrue(budget['no_padding_or_new_claims']);self.assertEqual(budget['insufficient_evidence_action'],'blocked=true')
  def test_reader_readiness_and_causal_consistency_are_mandatory(self):
   for key in ['reader_ready','causal_consistency']:
    for value in [False,None,'true']:

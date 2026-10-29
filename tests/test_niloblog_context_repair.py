@@ -23,6 +23,11 @@ class ContextRepairTests(unittest.TestCase):
   self.assertEqual(ctx['previous'],post);self.assertIn('blocked=true',ctx['repair_policy'])
   ctx['previous']['html']='changed';ctx['required_counts']['word_groups_min']=0
   self.assertNotEqual(post['html'],'changed');self.assertEqual(n.ARTICLE_LIMITS['word_groups_min'],500)
+ def test_length_repair_uses_specific_measurements_not_generic_language_fix(self):
+  obj={'html':'<h2>آزمون</h2><p>متن کوتاه</p>'};instruction=n.format_repair_instruction(n.PipelineStop('Article length/section check failed'),obj)
+  self.assertIn(str(n.article_metrics(obj)['persian_word_groups']),instruction);self.assertIn('500',instruction);self.assertIn('1100',instruction)
+  self.assertIn('اصلاح صرف متا',instruction);self.assertIn('blocked=true',instruction)
+  self.assertNotIn('کوتاه سازی',instruction)
  def test_successful_validation_unchanged(self):
   with patch.object(n,'validate_article',return_value=750),patch.object(n,'save')as save:
    self.assertEqual(n.validate_candidate({}, {}, {}, 'initial'),750);save.assert_not_called()

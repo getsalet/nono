@@ -81,6 +81,15 @@ def generation_feedback(post):
   if match:hits.append({'term':term,'context':body[max(0,match.start()-70):match.end()+100]})
  return {'invalid_visible_tokens':language_feedback(post,allowed={'afp'}),'blocked_phrase_hits':hits,'numeric_price_detected':has_numeric_price(body),'technical_prose_feedback':draft_quality_feedback(post.get('html','')if isinstance(post,dict)else''),'contract':generation_contract()}
 
+def format_repair_instruction(error,obj):
+ metrics=article_metrics(obj)
+ if str(error)=='Article length/section check failed':
+  return ('خطا مربوط به طول متن یا تعداد بخش هاست؛ اصلاح صرف متا یا برگرداندن همان متن کافی نیست. '
+   f"متن فعلی {metrics['persian_word_groups']} گروه واژه فارسی و {metrics['h2_count']} بخش h2 دارد. "
+   f"حداقل الزامی {ARTICLE_LIMITS['word_groups_min']} و حداکثر {ARTICLE_LIMITS['word_groups_max']} گروه فارسی و تعداد بخش مجاز {ARTICLE_LIMITS['h2_min']} تا {ARTICLE_LIMITS['h2_max']} است. "
+   'هدف نگارش حدود ۸۰۰ گروه فارسی در همان ۳ تا ۵ بخش است. همه بخش ها را با شرح روشنِ همان شواهد و چک لیست مستند بازنویسی کن؛ واقعیت تازه، مقدمه عمومی یا تکرار برای پرکردن حجم ممنوع است. اگر شواهد برای حجم لازم کافی نیست blocked=true بده. شمارش متا و برچسب ها در حجم متن حساب نمی شود. هیچ کنترل یا حدی تغییر نمی کند.\n')
+ return 'خطای مشخص زیر را در همان مقاله اصلاح کن؛ فقط خطای اعلام شده را رفع کن. ادعای جایگزین یا متن تکراری نساز؛ اگر اصلاح مستند ممکن نیست blocked=true بده.\n'
+
 def editorial_repair_context(obj,review):
  # The single editorial repair still has to satisfy every format gate.
  # Supply actual measurements so deleting unsupported claims cannot silently
@@ -553,7 +562,7 @@ def generate(row,m,targets,media,state,validation_only=False):
   save(A/'rejected'/f"{row['id']}-format.json",{'post':obj,'reason':str(error),'at':now().isoformat()})
   if str(error) not in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim','Causal polarity contradicts maintenance source','Internal evidence label exposed','Malformed technical prose'}:raise
   feedback=generation_feedback(obj)
-  obj=prepare_article(agnes(prompt+'\nخطای مشخص زیر را در همان مقاله اصلاح کن؛ کل واژه مخدوش را فارسی بازنویسی کن و ادعای تجاری بی‌شاهد را حذف کن. هیچ ادعای جایگزین یا متن تکراری برای پرکردن حجم اضافه نکن. اگر امکان اصلاح مستند نیست blocked=true بده.\n'+json.dumps({'error':str(error),'validation_feedback':feedback,'measured_counts':article_metrics(obj),'required_counts':ARTICLE_LIMITS,'previous':obj},ensure_ascii=False),temperature=0.2),bundle,row)
+  obj=prepare_article(agnes(prompt+'\n'+format_repair_instruction(error,obj)+json.dumps({'error':str(error),'validation_feedback':feedback,'measured_counts':article_metrics(obj),'required_counts':ARTICLE_LIMITS,'previous':obj},ensure_ascii=False),temperature=0.2),bundle,row)
   if obj.get('blocked'):raise PipelineStop('Editorial source insufficiency')
   words=validate_candidate(row,obj,bundle,'repaired-validation')
  # A separate low-temperature factual and semantic gate, not a publish-all switch.
