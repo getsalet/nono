@@ -14,7 +14,16 @@ class GeneralScopeTests(unittest.TestCase):
   self.plan=n.source_evidence_plan({'angle_ref':'a'},{'angles':{'a':{'brief':'نگهداری'}}},n.evidence_catalog(self.bundle),self.bundle)
   ids=[f['excerpt_id']for f in self.plan['facts']]
   self.brief={'eligible':True,'grounded':True,'scope_appropriate':True,'independently_useful':True,'semantic_duplicate':False,'contains_local_claims':False,'reader_question':'هزینه های نگهداری از چه بخش هایی تشکیل شده است؟','distinct_value':'طبقه بندی محدود هزینه ها با شرح مستند و بدون تکرار موضوع های قبلی','outline':[{'heading':h,'fact_ids':ids}for h in ['دسته نخست','دسته دوم','حدود ادعا']]}
-  self.review={'approved':True,'grounded':True,'scope_appropriate':True,'independently_useful':True,'semantic_duplicate':False,'contains_local_claims':False,'unsupported_claims':[],'technical_evidence_ids':ids}
+  self.review={'reader_ready':True,'causal_consistency':True,'approved':True,'grounded':True,'scope_appropriate':True,'independently_useful':True,'semantic_duplicate':False,'contains_local_claims':False,'unsupported_claims':[],'technical_evidence_ids':ids}
+ def test_internal_labels_and_observed_corrupt_prose_are_blocked(self):
+  for text in ['منبع س2 صراحتا بیان می کند','منبع s2 درباره هزینه','s2-contract0','از سرهنگ کردن هزینه ها جلوگیری می کند','تعویض از جلوگیری از افت کارایی و ضایعات بیشتر جلوگیری می کند']:
+   with self.assertRaises(n.PipelineStop):validate_general_visible_prose('<p>'+text+'</p>',n.canon,n.PipelineStop)
+  validate_general_visible_prose('<p>مقاله نگهداری نوار تیپ و هزینه های آن سه دسته هزینه را توضیح می دهد.</p>',n.canon,n.PipelineStop)
+ def test_reader_readiness_and_causal_consistency_are_mandatory(self):
+  for key in ['reader_ready','causal_consistency']:
+   for value in [False,None,'true']:
+    review=copy.deepcopy(self.review);review[key]=value
+    self.assertFalse(n.review_passes(n.bind_review_evidence(review,self.plan),self.bundle))
  def test_overlay_preserves_original_thousand_rows_and_state(self):
   m=copy.deepcopy(self.matrix);s=copy.deepcopy(self.state);out,a=apply_general_queue(m,s,self.queue)
   self.assertEqual(m,self.matrix);self.assertEqual(s,self.state);self.assertEqual(out['titles'][:1000],self.matrix['titles']);self.assertEqual(len(out['titles']),1002)

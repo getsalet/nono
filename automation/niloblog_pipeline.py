@@ -93,7 +93,7 @@ def failure_policy(error):
   return {'category':'evidence_or_topic','action':'hold_topic_select_different','continue_candidates':True}
  if reason in {'Independent editorial review rejected','Cross-blog content reuse','Niloblog content reuse'}:
   return {'category':'editorial_or_duplicate','action':'hold_topic_select_different','continue_candidates':True}
- if reason in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim'}:
+ if reason in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim','Internal evidence label exposed','Malformed technical prose'}:
   return {'category':'format_or_language','action':'bounded_repair_exhausted_hold','continue_candidates':True}
  return {'category':'infrastructure_or_unclassified','action':'stop_and_investigate_no_blind_retry','continue_candidates':False}
 
@@ -277,6 +277,9 @@ def validate_causal_polarity(markup):
 def validate_article(row,obj,bundle):
  if not isinstance(obj,dict):raise PipelineStop('Object required')
  if obj.get('title')!=row['title'] or len(obj['title'])>78:raise PipelineStop('Exact matrix title required')
+ if is_general(row):
+  from niloblog_general_scope import validate_general_visible_prose
+  validate_general_visible_prose(obj.get('html',''),canon,PipelineStop)
  validate_causal_polarity(obj.get('html',''))
  soup=BeautifulSoup(obj.get('html',''),'html.parser');allowed_tags=ARTICLE_ALLOWED_TAGS
  for t in soup.find_all(True):
@@ -514,7 +517,7 @@ def generate(row,m,targets,media,state,validation_only=False):
  except PipelineStop as error:
   # One bounded pre-publication repair; full validation and factual review still apply.
   save(A/'rejected'/f"{row['id']}-format.json",{'post':obj,'reason':str(error),'at':now().isoformat()})
-  if str(error) not in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim','Causal polarity contradicts maintenance source'}:raise
+  if str(error) not in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim','Causal polarity contradicts maintenance source','Internal evidence label exposed','Malformed technical prose'}:raise
   feedback=generation_feedback(obj)
   obj=prepare_article(agnes(prompt+'\nخطای مشخص زیر را در همان مقاله اصلاح کن؛ کل واژه مخدوش را فارسی بازنویسی کن و ادعای تجاری بی‌شاهد را حذف کن. هیچ ادعای جایگزین یا متن تکراری برای پرکردن حجم اضافه نکن. اگر امکان اصلاح مستند نیست blocked=true بده.\n'+json.dumps({'error':str(error),'validation_feedback':feedback,'measured_counts':article_metrics(obj),'required_counts':ARTICLE_LIMITS,'previous':obj},ensure_ascii=False),temperature=0.2),bundle,row)
   if obj.get('blocked'):raise PipelineStop('Editorial source insufficiency')
