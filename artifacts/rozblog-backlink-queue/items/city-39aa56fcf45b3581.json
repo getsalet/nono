@@ -25,7 +25,7 @@
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
   "_generation_stage": "local_vision_qa",
-  "_image_generation_round": 1,
+  "_image_generation_round": 0,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
     "slot": "AGNES_API_KEY20",
@@ -33,6 +33,14 @@
     "max_provider_requests": 1
   },
   "_image_provider_attempts": [
+    {
+      "requested_secret_slot": "AGNES_API_KEY20",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
     {
       "requested_secret_slot": "AGNES_API_KEY20",
       "attempt": 1,
@@ -153,10 +161,10 @@
   ],
   "_image_qa_feedback": "Show this exact installed evidence: one small pressure gauge on a short normal threaded port of a continuous irrigation header, and a separate thin flattened drip-tape lateral connected by a normal small take-off fitting; gauge face angled away so no readable scale or pressure rating is invented. Separate the commercial carton from all installed plumbing. Use normal connected header fittings and a thin flattened drip-tape lateral; 20 cm describes emitter spacing, never line width or diameter.",
   "failure_stage": "image",
-  "attempts": 4,
-  "generated_at": "2026-10-29T03:00:48Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Image score below 90 or invalid; Core image condition not met: product_integrated; Core image condition not met: technical_evidence_match",
-  "next_retry_at": "2026-10-29T11:00:48.425163Z",
+  "attempts": 5,
+  "generated_at": "2026-10-29T12:06:39Z",
+  "last_error": "generation/source/validation failed: TimeoutError [stage=image]; TimeoutError",
+  "next_retry_at": "2026-10-30T04:06:39.152077Z",
   "post": {
     "title": "نوار تیپ در لوندویل؛ کنترل فشار آب",
     "slug": "navar-tip-dar-lavandvil-control-e-feshar-e-ab",
@@ -175,7 +183,7 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Image score below 90 or invalid; Core image condition not met: product_integrated; Core image condition not met: technical_evidence_match"
+      "generation/source/validation failed: TimeoutError [stage=image]; TimeoutError"
     ],
     "words": 793,
     "links": [
