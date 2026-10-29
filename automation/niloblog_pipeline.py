@@ -133,8 +133,12 @@ def plan_article(row,m,bundle,plan,history):
  if is_general(row):
   from niloblog_general_scope import general_plan_prompt
   prompt=general_plan_prompt()
+ contrast=novelty_context(history,row,m['angles'][row['angle_ref']])
+ if is_general(row):
+  from niloblog_general_scope import general_contrast_view
+  contrast=general_contrast_view(contrast)
  placement={'allowed_fact_ids':[f['excerpt_id']for f in plan['facts']],'technical_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']>0],'required_placement':'Use facts from at least two distinct technical sources in outline sections; no local facts or city references are allowed.'}if is_general(row)else None
- brief=agnes(prompt+json.dumps({'title':row['title'],'angle':m['angles'][row['angle_ref']],'evidence_plan':plan,'contrast_only_not_evidence':novelty_context(history,row,m['angles'][row['angle_ref']]),'contract':article_contract(row,bundle,m['angles'][row['angle_ref']]),'outline_evidence_requirements':placement or {'allowed_fact_ids':[f['excerpt_id']for f in plan['facts']],'local_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']==0],'technical_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']>0],'required_placement':'At least one outline section fact_ids must contain a local_fact_id, and at least one must contain a technical_fact_id. Mentioning local evidence only in reason does not count. Keep local context short and dated; never infer local installation or faults.'}},ensure_ascii=False),temperature=0.05)
+ brief=agnes(prompt+json.dumps({'title':row['title'],'angle':m['angles'][row['angle_ref']],'evidence_plan':plan,'contrast_only_not_evidence':contrast,'contract':article_contract(row,bundle,m['angles'][row['angle_ref']]),'outline_evidence_requirements':placement or {'allowed_fact_ids':[f['excerpt_id']for f in plan['facts']],'local_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']==0],'technical_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']>0],'required_placement':'At least one outline section fact_ids must contain a local_fact_id, and at least one must contain a technical_fact_id. Mentioning local evidence only in reason does not count. Keep local context short and dated; never infer local installation or faults.'}},ensure_ascii=False),temperature=0.05)
  if is_general(row):
   from niloblog_general_scope import validate_or_complete_outline
   original=copy.deepcopy(brief)

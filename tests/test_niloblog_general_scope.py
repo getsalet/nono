@@ -31,6 +31,17 @@ class GeneralScopeTests(unittest.TestCase):
   prompt=general_review_prompt()
   self.assertIn('متن را اصلاح یا بازنویسی نکن',prompt)
   self.assertIn('اگر اصلاح لازم است approved=false',prompt)
+ def test_general_comparison_context_preserves_prose_not_old_article_ids(self):
+  examples=[{'label':'rozblog:article-51d0fbccb1b93b06','text':'نمونه قبلی فقط برای مقایسه است','contrast_only_not_evidence':True}]
+  before=copy.deepcopy(examples);out=general_contrast_view(examples)
+  self.assertEqual(examples,before);self.assertEqual(out[0]['text'],examples[0]['text'])
+  self.assertTrue(out[0]['contrast_only_not_evidence']);self.assertEqual(out[0]['comparison_number'],1)
+  self.assertNotIn('rozblog:article-',json.dumps(out))
+ def test_comparison_id_in_fact_ids_still_fails_closed(self):
+  bad=copy.deepcopy(self.brief);bad['outline'][0]['fact_ids'].append('rozblog:article-51d0fbccb1b93b06')
+  callback=unittest.mock.Mock(side_effect=AssertionError('do not silently repair invalid evidence'))
+  with self.assertRaises(n.PipelineStop):validate_or_complete_outline(bad,self.plan,callback,n.PipelineStop)
+  callback.assert_not_called()
  def test_reader_readiness_and_causal_consistency_are_mandatory(self):
   for key in ['reader_ready','causal_consistency']:
    for value in [False,None,'true']:
