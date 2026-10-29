@@ -28,6 +28,16 @@ class ContextRepairTests(unittest.TestCase):
   self.assertIn(str(n.article_metrics(obj)['persian_word_groups']),instruction);self.assertIn('500',instruction);self.assertIn('1100',instruction)
   self.assertIn('اصلاح صرف متا',instruction);self.assertIn('blocked=true',instruction)
   self.assertNotIn('کوتاه سازی',instruction)
+ def test_one_foreign_token_repair_does_not_rewrite_or_shorten_article(self):
+  post={'title':'عنوان فارسی ثابت','meta_description':'شرح فارسی ثابت','tags':['نوار تیپ'],'html':'<h2>نگهداری</h2><p>'+('متن فارسی '*300)+' likewise، <a href="https://example.org/latin-slug">پیوند</a></p>'}
+  before=n.article_metrics(post);result,audit=n.repair_visible_language(post,lambda prompt:{'edits':[{'field':'body','old':'likewise،','new':'همچنین،'}]})
+  self.assertEqual(result['html'],post['html'].replace('likewise،','همچنین،'));self.assertEqual(result['title'],post['title']);self.assertEqual(result['meta_description'],post['meta_description'])
+  self.assertGreaterEqual(n.article_metrics(result)['persian_word_groups'],before['persian_word_groups']);self.assertIn('likewise،',post['html']);self.assertIn('before_sha256',audit)
+ def test_language_repair_rejects_unlisted_edits_and_markup(self):
+  post={'title':'عنوان','html':'<p>likewise، متن ثابت</p>'}
+  for edits in [[{'field':'body','old':'متن','new':'تغییر'}],[{'field':'body','old':'likewise،','new':'<script>'}],[]]:
+   with self.assertRaises(n.PipelineStop):n.repair_visible_language(post,lambda prompt:{'edits':edits})
+  self.assertEqual(post['html'],'<p>likewise، متن ثابت</p>')
  def test_successful_validation_unchanged(self):
   with patch.object(n,'validate_article',return_value=750),patch.object(n,'save')as save:
    self.assertEqual(n.validate_candidate({}, {}, {}, 'initial'),750);save.assert_not_called()

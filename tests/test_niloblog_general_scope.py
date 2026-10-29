@@ -48,6 +48,10 @@ class GeneralScopeTests(unittest.TestCase):
   self.assertEqual([x['heading']for x in budget['section_targets']],[x['heading']for x in self.brief['outline']])
   self.assertGreaterEqual(sum(x['target_groups']for x in budget['section_targets']),800)
   self.assertTrue(budget['no_padding_or_new_claims']);self.assertEqual(budget['insufficient_evidence_action'],'blocked=true')
+ def test_source_groups_count_documents_not_number_of_quotes(self):
+  plan={'facts':[{'excerpt_id':'s2-contract'+str(i),'source_index':2}for i in range(3)]+[{'excerpt_id':'s3-contract3','source_index':3}]}
+  groups=general_source_groups(plan);self.assertEqual(len(groups),2);self.assertEqual([len(g['fact_ids'])for g in groups],[3,1])
+  self.assertEqual([g['source_index']for g in groups],[2,3])
  def test_reader_readiness_and_causal_consistency_are_mandatory(self):
   for key in ['reader_ready','causal_consistency']:
    for value in [False,None,'true']:

@@ -81,6 +81,13 @@ def generation_feedback(post):
   if match:hits.append({'term':term,'context':body[max(0,match.start()-70):match.end()+100]})
  return {'invalid_visible_tokens':language_feedback(post,allowed={'afp'}),'blocked_phrase_hits':hits,'numeric_price_detected':has_numeric_price(body),'technical_prose_feedback':draft_quality_feedback(post.get('html','')if isinstance(post,dict)else''),'contract':generation_contract()}
 
+def repair_visible_language(obj,repair):
+ # Use the existing exact-token patch policy; no full-article rewrite or
+ # extra attempt. All format, evidence, novelty and editorial gates still run.
+ from parsiblog_text import language_patch_prompt,apply_language_patch
+ try:return apply_language_patch(obj,repair(language_patch_prompt(obj)))
+ except ValueError as error:raise PipelineStop('Mixed-script word requires editorial correction')from error
+
 def format_repair_instruction(error,obj):
  metrics=article_metrics(obj)
  if str(error)=='Article length/section check failed':
@@ -151,11 +158,13 @@ def plan_article(row,m,bundle,plan,history):
  if is_general(row):
   from niloblog_general_scope import general_plan_prompt
   prompt=general_plan_prompt()
+  from niloblog_general_scope import general_source_groups
+  source_groups=general_source_groups(plan)
  contrast=novelty_context(history,row,m['angles'][row['angle_ref']])
  if is_general(row):
   from niloblog_general_scope import general_contrast_view
   contrast=general_contrast_view(contrast)
- placement={'allowed_fact_ids':[f['excerpt_id']for f in plan['facts']],'technical_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']>0],'required_placement':'Use facts from at least two distinct technical sources in outline sections; no local facts or city references are allowed.'}if is_general(row)else None
+ placement={'distinct_technical_source_count':len(source_groups),'source_groups':source_groups,'allowed_fact_ids':[f['excerpt_id']for f in plan['facts']],'technical_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']>0],'required_placement':'Use facts from at least two distinct technical sources in outline sections; no local facts or city references are allowed.'}if is_general(row)else None
  brief=agnes(prompt+json.dumps({'title':row['title'],'angle':m['angles'][row['angle_ref']],'evidence_plan':plan,'contrast_only_not_evidence':contrast,'contract':article_contract(row,bundle,m['angles'][row['angle_ref']]),'outline_evidence_requirements':placement or {'allowed_fact_ids':[f['excerpt_id']for f in plan['facts']],'local_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']==0],'technical_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']>0],'required_placement':'At least one outline section fact_ids must contain a local_fact_id, and at least one must contain a technical_fact_id. Mentioning local evidence only in reason does not count. Keep local context short and dated; never infer local installation or faults.'}},ensure_ascii=False),temperature=0.05)
  if is_general(row):
   from niloblog_general_scope import validate_or_complete_outline
@@ -562,7 +571,11 @@ def generate(row,m,targets,media,state,validation_only=False):
   save(A/'rejected'/f"{row['id']}-format.json",{'post':obj,'reason':str(error),'at':now().isoformat()})
   if str(error) not in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim','Causal polarity contradicts maintenance source','Internal evidence label exposed','Malformed technical prose'}:raise
   feedback=generation_feedback(obj)
-  obj=prepare_article(agnes(prompt+'\n'+format_repair_instruction(error,obj)+json.dumps({'error':str(error),'validation_feedback':feedback,'measured_counts':article_metrics(obj),'required_counts':ARTICLE_LIMITS,'previous':obj},ensure_ascii=False),temperature=0.2),bundle,row)
+  if str(error)=='Mixed-script word requires editorial correction':
+   obj,language_audit=repair_visible_language(obj,lambda request:agnes(request,temperature=0))
+   save(A/'language-repairs'/f"{row['id']}.json",dict(language_audit,at=now().isoformat()))
+  else:
+   obj=prepare_article(agnes(prompt+'\n'+format_repair_instruction(error,obj)+json.dumps({'error':str(error),'validation_feedback':feedback,'measured_counts':article_metrics(obj),'required_counts':ARTICLE_LIMITS,'previous':obj},ensure_ascii=False),temperature=0.2),bundle,row)
   if obj.get('blocked'):raise PipelineStop('Editorial source insufficiency')
   words=validate_candidate(row,obj,bundle,'repaired-validation')
  # A separate low-temperature factual and semantic gate, not a publish-all switch.
