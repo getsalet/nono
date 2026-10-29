@@ -7,10 +7,10 @@ from niloblog_general_scope import *
 class GeneralScopeTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
-  cls.matrix=n.read(n.D/'title-matrix.json');cls.queue=n.read(n.D/'general-source-queue.json')
+  cls.matrix=n.read(n.D/'title-matrix.json');cls.queue=n.read(n.D/'general-source-queue.json');cls.active_count=sum(t.get('source_review_required')is not True for t in cls.queue['topics'])
  def setUp(self):
   self.state={'held':{},'published':[],'current':None,'intent':None}
-  self.bundle={'content_scope':SCOPE,'local':None,'locality':{},'article':{'text':'مقاله عمومی فنی معتبر با اطلاعات درباره نگهداری نوار تیپ'},'technical':[{'text':'منبع فنی دوم با دستورهای روشن درباره نگهداری و تمیزی خطوط'}],'links':[]}
+  self.bundle={'content_scope':SCOPE,'local':None,'locality':{},'article':{'url':'https://example.org/article','text':'مقاله عمومی فنی معتبر با اطلاعات درباره نگهداری نوار تیپ'},'technical':[{'url':'https://example.org/technical','text':'منبع فنی دوم با دستورهای روشن درباره نگهداری و تمیزی خطوط'}],'links':[]}
   self.plan=n.source_evidence_plan({'angle_ref':'a'},{'angles':{'a':{'brief':'نگهداری'}}},n.evidence_catalog(self.bundle),self.bundle)
   ids=[f['excerpt_id']for f in self.plan['facts']]
   self.brief={'eligible':True,'grounded':True,'scope_appropriate':True,'independently_useful':True,'semantic_duplicate':False,'contains_local_claims':False,'reader_question':'هزینه های نگهداری از چه بخش هایی تشکیل شده است؟','distinct_value':'طبقه بندی محدود هزینه ها با شرح مستند و بدون تکرار موضوع های قبلی','outline':[{'heading':h,'fact_ids':ids}for h in ['دسته نخست','دسته دوم','حدود ادعا']]}
@@ -54,7 +54,7 @@ class GeneralScopeTests(unittest.TestCase):
   with self.assertRaises(n.PipelineStop):validate_general_visible_prose(bad['html'],n.canon,n.PipelineStop)
  def test_overlay_preserves_original_thousand_rows_and_state(self):
   m=copy.deepcopy(self.matrix);s=copy.deepcopy(self.state);out,a=apply_general_queue(m,s,self.queue)
-  self.assertEqual(m,self.matrix);self.assertEqual(s,self.state);self.assertEqual(out['titles'][:1000],self.matrix['titles']);self.assertEqual(len(out['titles']),1002)
+  self.assertEqual(m,self.matrix);self.assertEqual(s,self.state);self.assertEqual(out['titles'][:1000],self.matrix['titles']);self.assertEqual(len(out['titles']),1000+self.active_count)
   for row in out['titles'][1000:]:self.assertNotIn('locality_ref',row);self.assertNotIn('شهرستان',row['title'])
   self.assertFalse(a['publication_permission_granted']);self.assertFalse(a['retry_permission_granted'])
  def test_one_stable_identity_per_question_not_per_county(self):
@@ -67,7 +67,7 @@ class GeneralScopeTests(unittest.TestCase):
    out,_=apply_general_queue(self.matrix,s,self.queue,protected);self.assertNotIn(key,[r['id']for r in out['titles'][1000:]])
  def test_legacy_holds_preserved_and_general_failure_stops_same_question(self):
   s={'held':{'legacy':{'editorial_source_contract_id':'maintenance-cost-components-v2'}}};before=copy.deepcopy(s)
-  out,_=apply_general_queue(self.matrix,s,self.queue);self.assertEqual(len(out['titles']),1002);self.assertEqual(s,before)
+  out,_=apply_general_queue(self.matrix,s,self.queue);self.assertEqual(len(out['titles']),1000+self.active_count);self.assertEqual(s,before)
   s['held']['general']={'editorial_source_contract_id':self.queue['topics'][0]['id']}
   out,a=apply_general_queue(self.matrix,s,self.queue);self.assertEqual(a['topics'][0]['pending_rows'],0)
  def test_manifest_cannot_grant_permissions_or_duplicate_topic_identity(self):
