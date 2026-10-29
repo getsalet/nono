@@ -12,9 +12,10 @@ class AdmissionTests(unittest.TestCase):
   self.choice={'id':'1','technical_evidence':[{'source_ref':'t','excerpt_id':'t:e0'}]}
  def run_case(self,choices):
   before=copy.deepcopy(self.rows)
-  with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'fetch',return_value=self.source)as fetch,patch('roya_backlink_queue.agnes',return_value={'candidates':choices})as ai,patch.object(n,'login')as login,patch.object(n,'checkpoint')as checkpoint:
+  with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'fetch',return_value=self.source)as fetch,patch.object(n,'all_history',return_value=[{'label':'previous','html':'<p>پرسش و متن قبلی درباره فشارسنج و آبیاری است.</p>'}]),patch('roya_backlink_queue.agnes',return_value={'candidates':choices})as ai,patch.object(n,'login')as login,patch.object(n,'checkpoint')as checkpoint:
    result=n.evidence_first_candidates(self.rows,self.m,{},self.targets)
-   fetch.assert_called_once();self.assertEqual(len(__import__('json').loads(ai.call_args.args[0].split('\n',1)[1])['questions']),2)
+   fetch.assert_called_once();request=__import__('json').loads(ai.call_args.args[0].split('\n',1)[1]);self.assertEqual(len(request['questions']),2)
+   self.assertTrue(request['contrast_only_not_evidence'][0]['contrast_only_not_evidence']);self.assertLessEqual(len(request['contrast_only_not_evidence'][0]['text']),900)
    login.assert_not_called();checkpoint.assert_not_called();self.assertEqual(before,self.rows)
    return result
  def test_selects_existing_question_only_not_matrix_order(self):self.assertEqual(self.run_case([self.choice]),[self.rows[1]])
