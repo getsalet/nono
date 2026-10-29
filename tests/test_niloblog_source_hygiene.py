@@ -86,7 +86,7 @@ class SourceHygieneTests(unittest.TestCase):
  def test_storage_resolution_preserves_identity_and_does_not_waive_two_sources(self):
   queue=n.read(n.D/'general-source-queue.json');topic=queue['topics'][1]
   self.assertEqual(topic['id'],'coil-storage-hazards-v1-general-v1');self.assertFalse(topic['source_review_required'])
-  self.assertEqual(topic['research_refs'],['site-post-900','site-post-35907'])
+  self.assertEqual(topic['research_refs'],['site-post-900','research-access-ttape-handling-i108'])
   self.assertIn('حیوانات خردکننده',topic['source_review_resolution']['excluded_quote'])
   self.assertNotIn('حیوانات خردکننده',' '.join(e['quote']for e in topic['evidence']))
   self.assertEqual({e['source_ref']for e in topic['evidence']},set(topic['research_refs']))

@@ -81,7 +81,7 @@ jobs:
           fi
       - name: Install runtime dependencies
         if: steps.gate.outputs.proceed == '1'
-        run: python -m pip install --quiet beautifulsoup4 Pillow playwright
+        run: python -m pip install --quiet beautifulsoup4 Pillow pypdf playwright
       - name: Run Niloblog regression tests
         if: steps.gate.outputs.proceed == '1'
         run: python -m unittest discover -s tests -p 'test_niloblog*.py'

@@ -40,7 +40,8 @@ def general_source_bundle(row,m,targets,fetch,safeurl):
  for x in m['link_plans'][row['link_plan_ref']]['required_links']:
   t=targets[x['target_ref']];links.append({'url':safeurl(t['target_url']),'anchor':x.get('anchor_keyword')or t['site_title']})
  article=dict(fetch(links[0]['url'],'navar-abyari.ir'),source_label=links[0]['anchor'])
- technical=[dict(fetch(targets[ref]['target_url'],'navar-abyari.ir'),research_ref=ref,source_label=targets[ref]['site_title'])for ref in research_refs(row,m,targets)]
+ from niloblog_research_documents import registered,fetch_document
+ technical=[fetch_document(ref)if registered(ref)else dict(fetch(targets[ref]['target_url'],'navar-abyari.ir'),research_ref=ref,source_label=targets[ref]['site_title'])for ref in research_refs(row,m,targets)]
  required=verify_source_contract(row['editorial_source_contract'],technical,canon)
  return {'content_scope':SCOPE,'local':None,'locality':{},'article':article,'technical':technical,'links':links,'required_evidence':required}
 

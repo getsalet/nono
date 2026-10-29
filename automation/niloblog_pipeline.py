@@ -228,6 +228,8 @@ def research_refs(row,m,targets):
  refs=list(contract['research_refs']if contract else routes.get(cluster,plan.get('research_only_target_refs',[])[:2]))
  if len(refs)>2 or len(refs)!=len(set(refs)):raise PipelineStop('Invalid research routing')
  for ref in refs:
+  from niloblog_research_documents import registered
+  if is_general(row)and registered(ref):continue
   target=targets.get(ref,{})
   if target.get('kind')!='article' or target.get('family')!='tape20' or urlsplit(target.get('target_url','')).hostname!='navar-abyari.ir':raise PipelineStop('Unapproved research source')
  return refs
@@ -875,16 +877,30 @@ def main():
    if s.get('intent'):reconcile_public_intent(page,s)
    else:publish_new(page,item,s)
   finally:browser.close()
-def validate_only(limit=3):
+def validate_only(limit=3,review_key=None):
  # No browser, login, media reservation, publication intent, state save or git push.
  if isinstance(limit,bool) or not isinstance(limit,int) or not 1<=limit<=3:raise ValueError('Validation sample limit must be 1..3')
  report={'run_id':os.getenv('GITHUB_RUN_ID'),'run_attempt':os.getenv('GITHUB_RUN_ATTEMPT'),'mode':'validate_only','publication_verified':False,'results':[],'at':now().isoformat()}
  runtime=read(D/'runtime-control.json')
  if not allowed() or runtime.get('enabled') is not True:
   report.update(status='stopped',reason_code='control_paused');save(A/'validation/report.json',report);return report
- state=read(STATE);m=load_runtime_matrix(state);targets={t['key']:t for t in read(D/'article-targets.json')['targets']}
+ state=read(STATE)
+ if review_key:
+  # Explicit diagnostic view only: retains the original hold in the report.
+  # Never changes STATE, permission, production eligibility or publication IDs.
+  if not re.fullmatch(r'nilo-general-[0-9a-f]{16}',review_key):raise ValueError('Invalid review key')
+  if review_key not in state.get('held',{}):raise ValueError('Review key is not held')
+  if state.get('intent')or state.get('current')or review_key in {x['key']for x in state.get('published',[])}or(A/'items'/f'{review_key}.json').exists():raise ValueError('Protected publication cannot be revalidated')
+  report['read_only_held_review']={'key':review_key,'original_hold':copy.deepcopy(state['held'][review_key]),'state_changed':False,'retry_permission_granted':False}
+  diagnostic_state=copy.deepcopy(state);diagnostic_state['held'].pop(review_key)
+  m=load_runtime_matrix(diagnostic_state)
+  m['titles']=[r for r in m['titles']if r['id']==review_key]
+  if not m['titles']:raise ValueError('Held topic unavailable for source review')
+ else:
+  diagnostic_state=state;m=load_runtime_matrix(state)
+ targets={t['key']:t for t in read(D/'article-targets.json')['targets']}
  used={read(p)['row']['angle_ref'] for p in A.glob('items/*.json')}
- pool=[r for r in m['titles'] if candidate_allowed(r,state.get('held',{}),used,runtime['revision'])and(not m.get('source_queue_required')or r.get('editorial_source_contract'))]
+ pool=[r for r in m['titles'] if candidate_allowed(r,diagnostic_state.get('held',{}),used,runtime['revision'])and(not m.get('source_queue_required')or r.get('editorial_source_contract'))]
  try:candidates=evidence_first_candidates(pool,m,state.get('held',{}),targets,limit)
  except Exception as error:
   report.update(status='blocked',stage='source_admission',validated_count=0,diagnostic=candidate_diagnostic(error),reason=str(error)if isinstance(error,PipelineStop)else'private error details withheld')
@@ -903,9 +919,9 @@ def validate_only(limit=3):
 if __name__=='__main__':
  if '--validate-only' in sys.argv:
   import argparse
-  parser=argparse.ArgumentParser();parser.add_argument('--validate-only',action='store_true');parser.add_argument('--limit',type=int,choices=(1,2,3),default=3);args=parser.parse_args()
+  parser=argparse.ArgumentParser();parser.add_argument('--validate-only',action='store_true');parser.add_argument('--limit',type=int,choices=(1,2,3),default=3);parser.add_argument('--review-key',default=None);args=parser.parse_args()
   try:
-   result=validate_only(args.limit);print('Validation-only result:',result['status']);sys.exit(0 if result['status'] in ('passed','stopped') else 2)
+   result=validate_only(args.limit,args.review_key);print('Validation-only result:',result['status']);sys.exit(0 if result['status'] in ('passed','stopped') else 2)
   except Exception as error:
    print('Validation-only stopped:',type(error).__name__);sys.exit(1)
  try:main()

@@ -7,6 +7,11 @@ on:
         type: choice
         options: ['1', '2', '3']
         default: '3'
+      review_key:
+        description: Optional held general-topic key; read-only revalidation, never releases hold
+        type: string
+        required: false
+        default: ''
 permissions:
   contents: read
 concurrency:
@@ -17,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
+      VALIDATION_REVIEW_KEY: ${{ inputs.review_key }}
       AGNES_API_BASE: https://apihub.agnes-ai.com/v1
       AGNES_MODEL: agnes-2.5-flash
       AGNES_JSON_ATTEMPTS: '2'
@@ -52,11 +58,14 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - name: Install validation dependencies (no browser)
-        run: python -m pip install --quiet beautifulsoup4 Pillow
+        run: python -m pip install --quiet beautifulsoup4 Pillow pypdf
       - name: Run Niloblog regression tests
         run: python -m unittest discover -s tests -p 'test_niloblog*.py'
       - name: Validate bounded topics without native login or publication
-        run: python automation/niloblog_pipeline.py --validate-only --limit "$VALIDATION_SAMPLES"
+        run: |
+          args=(--validate-only --limit "$VALIDATION_SAMPLES")
+          if [ -n "$VALIDATION_REVIEW_KEY" ]; then args+=(--review-key "$VALIDATION_REVIEW_KEY"); fi
+          python automation/niloblog_pipeline.py "${args[@]}
       - name: Retain non-secret validation evidence
         if: always()
         uses: actions/upload-artifact@v4
