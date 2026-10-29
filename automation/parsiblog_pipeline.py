@@ -60,6 +60,18 @@ def bind_assigned_title(obj,title):
          'model_title_sha256':hashlib.sha256(previous.encode()).hexdigest(),
          'assigned_title_sha256':hashlib.sha256(title.encode()).hexdigest()}
 
+def bind_generated_slug(item,obj):
+ # Slug is machine metadata, not article prose. Preserve every already valid
+ # slug; only repair malformed strings on unpublished preflight candidates.
+ if not isinstance(obj,dict)or not isinstance(obj.get('slug'),str):return None
+ if re.fullmatch('[a-z0-9][a-z0-9-]{2,59}',obj['slug']):return None
+ if item.get('published')or item.get('id')or item.get('native_phase'):raise RuntimeError('Protected native article slug cannot be rebound')
+ key=item.get('key','')
+ if not re.fullmatch('pb-[0-9a-f]{20}',key):raise RuntimeError('Approved stable topic key required for slug metadata')
+ import hashlib
+ old=obj['slug'];obj['slug']=key
+ return {'policy':'stable-topic-slug-v1','changed':True,'previous_sha256':hashlib.sha256(old.encode()).hexdigest(),'assigned_slug':key}
+
 def generate(item):
  assigned_title=approved_assigned_title(item)
  from roya_backlink_queue import agnes,normalize_approved_hrefs
@@ -95,6 +107,8 @@ def generate(item):
   else:obj=copy.deepcopy(seed_post)if attempt==0 and seed_post else agnes(request,temperature=.1 if attempt else .35)
   title_binding=bind_assigned_title(obj,assigned_title)
   if title_binding is not None:item['title_binding']=title_binding
+  slug_binding=bind_generated_slug(item,obj)
+  if slug_binding is not None:item['slug_binding']=slug_binding
   render_city_token(item,obj)
   from parsiblog_text import render_native_ezafe
   ezafe_count=render_native_ezafe(obj)

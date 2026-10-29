@@ -89,6 +89,31 @@ def assert_management(page):
  if not route_ok():raise RuntimeError('Native management session not active')
  if not identity_ok():raise RuntimeError('Native session is not managing expected AFP blog')
 
+def empty_archive_document(page):
+ # Classification only. Never export account text or accept a missing identity.
+ from urllib.parse import parse_qs
+ part=urlsplit(page.url)
+ if part.scheme!='https'or part.hostname!='loxblog.com'or part.path!='/adminnew.php'or parse_qs(part.query).get('page')!=['postslist']:return False
+ flags=page.evaluate("""()=>({empty:!(document.body?.innerText||'').trim(),forms:document.forms.length,password:!!document.querySelector('input[type=password]')})""")
+ return isinstance(flags,dict)and flags.get('empty')is True and type(flags.get('forms'))is int and flags['forms']==0 and flags.get('password')is False
+
+def read_native_archive(page,url):
+ # Two GETs at most, only retry an actually empty archive after the unchanged
+ # strict identity wait. No login, credential, submit or uncertainty reset path.
+ from urllib.parse import parse_qs
+ part=urlsplit(url)
+ if part.scheme!='https'or part.hostname!='loxblog.com'or part.path!='/adminnew.php'or parse_qs(part.query).get('page')!=['postslist']:raise RuntimeError('Unexpected native archive read destination')
+ for attempt in range(2):
+  response=page.goto(url,wait_until='domcontentloaded',timeout=60000)
+  try:assert_management(page)
+  except RuntimeError:
+   if attempt or not empty_archive_document(page):raise
+   print('Empty native archive document after strict identity wait; one GET-only reread, no credential or content retry.',flush=True)
+   continue
+  if not response or response.status>=400:raise RuntimeError('Native archive read unavailable')
+  return response
+ raise RuntimeError('Native archive identity unresolved; no publication')
+
 def read_login_page(page):
  # GET-only resilience. No credential fill or POST is retried here.
  import time

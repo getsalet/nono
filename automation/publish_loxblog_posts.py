@@ -4,7 +4,7 @@ import os,re,sys,time
 from urllib.parse import urlsplit,unquote,urlencode,parse_qs
 import loxblog_backlink_queue as wrapper
 import publish_roya_posts as state
-from loxblog_native import login,launch_browser,assert_management,BLOG,NEW,ARCHIVE
+from loxblog_native import login,launch_browser,assert_management,read_native_archive,BLOG,NEW,ARCHIVE
 from city_backlink_policy import qa,links_for,matrix_ready
 from blog_post_excerpt import native_split
 from content_originality import text
@@ -56,7 +56,7 @@ def scan_public(page):
 
 def assert_no_native_match(page,title):
  url=ARCHIVE+'&'+urlencode({'search':title,'cat':'0','status':'','sort':'newest'})
- r=page.goto(url,wait_until='domcontentloaded',timeout=60000);assert_management(page)
+ r=read_native_archive(page,url)
  if not r or r.status>=400:raise RuntimeError('Native archive unavailable')
  page.locator('input[name=search]').wait_for(timeout=30000)
  if page.locator('input[name=search]').input_value()!=title or page.locator('select[name=status]').input_value()!='':raise RuntimeError('Native all-status search was not applied')
@@ -66,7 +66,7 @@ def assert_no_native_match(page,title):
 def find_native_record(page,title):
  # All-status native search also covers posts outside the six-card homepage.
  url=ARCHIVE+'&'+urlencode({'search':title,'cat':'0','status':'','sort':'newest'})
- r=page.goto(url,wait_until='domcontentloaded',timeout=60000);assert_management(page)
+ r=read_native_archive(page,url)
  if not r or r.status>=400:raise RuntimeError('Native lookup unavailable')
  page.locator('input[name=search]').wait_for(timeout=30000)
  if page.locator('input[name=search]').input_value()!=title or page.locator('select[name=status]').input_value()!='':raise RuntimeError('Native all-status lookup did not apply')
