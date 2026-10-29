@@ -9,7 +9,7 @@ class AdmissionTests(unittest.TestCase):
   self.m={'titles':self.rows,'angles':{'a0':{'cluster':'x','brief':'پرسش اول'},'a1':{'cluster':'x','brief':'پرسش دوم'}},'link_plans':{'p':{'required_links':[{'target_ref':'t'}],'research_only_target_refs':[]}}}
   self.targets={'t':{'kind':'article','family':'tape20','target_url':'https://navar-abyari.ir/guide/'}}
   self.source={'url':self.targets['t']['target_url'],'text':'این نقل دقیق از راهنمای فنی درباره روش اجرا است و فقط شاهد روش عمومی است.','sha256':'digest','checked_at':'today'}
-  self.choice={'id':'1','technical_evidence':[{'source_ref':'t','quote':self.source['text']}]}
+  self.choice={'id':'1','technical_evidence':[{'source_ref':'t','excerpt_id':'t:e0'}]}
  def run_case(self,choices):
   before=copy.deepcopy(self.rows)
   with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'fetch',return_value=self.source)as fetch,patch('roya_backlink_queue.agnes',return_value={'candidates':choices})as ai,patch.object(n,'login')as login,patch.object(n,'checkpoint')as checkpoint:
@@ -19,8 +19,8 @@ class AdmissionTests(unittest.TestCase):
    return result
  def test_selects_existing_question_only_not_matrix_order(self):self.assertEqual(self.run_case([self.choice]),[self.rows[1]])
  def test_zero_coverage_stops_without_fallback(self):self.assertEqual(self.run_case([]),[])
- def test_fabricated_quote_or_unknown_target_fails_closed(self):
-  for change in [{'source_ref':'unknown','quote':self.source['text']},{'source_ref':'t','quote':'نقل ساختگی و غیرموجود در متن راهنمای فنی اصلی است'}]:
+ def test_fabricated_excerpt_or_unknown_target_fails_closed(self):
+  for change in [{'source_ref':'unknown','excerpt_id':'t:e0'},{'source_ref':'t','excerpt_id':'invented'}]:
    choice=copy.deepcopy(self.choice);choice['technical_evidence']=[change]
    with self.assertRaisesRegex(n.PipelineStop,'Invalid source admission'):self.run_case([choice])
  def test_duplicate_or_new_candidate_fails_closed(self):
