@@ -9,6 +9,11 @@ DOCUMENTS={
   'scope':'T-Tape reels only; do not generalize proprietary packaging instructions to other products',
  }
 }
+DOCUMENTS['research-arizona-sdi-maintenance']={
+ 'url':'https://extension.arizona.edu/publication/seasonal-maintenance-practices-drip-and-sprinkler-irrigation-systems-arizona',
+ 'format':'html','source_label':'راهنمای نگهداری فصلی سامانه های آبیاری؛ ترویج دانشگاه آریزونا',
+ 'scope':'Published SDI maintenance guidance; table lists POSSIBLE problems, not conclusive diagnosis or farm-specific prescriptions',
+}
 MAX_BYTES=2_000_000
 
 def registered(ref):return ref in DOCUMENTS
@@ -33,6 +38,13 @@ def verify_pdf(raw,ref,final_url,content_type,extract=None):
 
 def fetch_document(ref):
  if ref not in DOCUMENTS:raise ValueError('Unapproved research document')
+ doc=DOCUMENTS[ref]
+ if doc.get('format')=='html':
+  # Existing bounded HTTPS host-checked reader; exact contract quotes are
+  # independently verified by verify_source_contract on every fresh fetch.
+  from niloblog_pipeline import fetch
+  source=fetch(doc['url'],urlsplit(doc['url']).hostname)
+  return dict(source,research_ref=ref,source_label=doc['source_label'],document_scope=doc['scope'],research_only=True,publication_target=False)
  request=urllib.request.Request(DOCUMENTS[ref]['url'],headers={'User-Agent':'AFP-Niloblog-editorial/1.0'})
  with urllib.request.urlopen(request,timeout=45)as response:
   if response.status!=200:raise ValueError('Research document HTTP status changed')

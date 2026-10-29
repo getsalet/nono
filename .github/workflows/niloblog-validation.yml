@@ -65,7 +65,7 @@ jobs:
         run: |
           args=(--validate-only --limit "$VALIDATION_SAMPLES")
           if [ -n "$VALIDATION_REVIEW_KEY" ]; then args+=(--review-key "$VALIDATION_REVIEW_KEY"); fi
-          python automation/niloblog_pipeline.py "${args[@]}
+          python automation/niloblog_pipeline.py "${args[@]}"
       - name: Retain non-secret validation evidence
         if: always()
         uses: actions/upload-artifact@v4

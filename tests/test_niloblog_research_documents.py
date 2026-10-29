@@ -47,3 +47,29 @@ class HeldReviewTests(unittest.TestCase):
  def test_publication_intents_items_and_published_keys_cannot_be_overridden(self):
   for k in ['published','intent','current','item']:self.run_case(**{k:True})
 if __name__=='__main__':unittest.main()
+
+class DistinctQuestionTests(unittest.TestCase):
+ def test_research_html_is_read_from_only_the_exact_registered_url(self):
+  ref='research-arizona-sdi-maintenance';doc=r.DOCUMENTS[ref]
+  with patch.object(n,'fetch',return_value={'text':'original','url':doc['url'],'sha256':'hash'})as fetch:
+   out=r.fetch_document(ref)
+  fetch.assert_called_once_with(doc['url'],'extension.arizona.edu');self.assertTrue(out['research_only']);self.assertFalse(out['publication_target']);self.assertIn('POSSIBLE',out['document_scope'])
+ def test_original_duplicate_question_is_not_renamed_or_retried(self):
+  q=n.read(n.D/'general-source-queue.json');old=next(t for t in q['topics']if t['id']=='working-pressure-log-versus-universal-number-general-v1');new=next(t for t in q['topics']if t['id']=='sdi-flow-pressure-patterns-v1-general-v1')
+  self.assertTrue(old['source_review_required']);self.assertFalse(old['editorial_disposition']['hold_changed']);self.assertNotEqual(new['title'],old['title']);self.assertTrue(new['editorial_distinction']['previous_hold_not_released'])
+  self.assertIn('Possible problems',next(e['quote']for e in new['evidence']if e['quote'].startswith('Table 1.')))
+
+class WorkflowShellTests(unittest.TestCase):
+ def test_validation_workflow_shell_blocks_parse_without_running(self):
+  import subprocess
+  path=Path(__file__).resolve().parents[1]/'.github/workflows/niloblog-validation.yml'
+  lines=path.read_text().splitlines();blocks=[];current=None
+  for line in lines:
+   if line=='        run: |':current=[];blocks.append(current)
+   elif current is not None:
+    if line.startswith('          '):current.append(line[10:])
+    else:current=None
+  self.assertTrue(blocks)
+  for block in blocks:
+   result=subprocess.run(['bash','-n'],input='\n'.join(block),capture_output=True,text=True)
+   self.assertEqual(result.returncode,0,result.stderr)
