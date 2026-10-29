@@ -33,6 +33,17 @@ class LanguagePatchTests(unittest.TestCase):
   with self.assertRaises(ValueError):apply_language_patch(self.post,bad)
  def test_prompt_requests_patch_not_article_rewrite(self):
   prompt=language_patch_prompt(self.post);self.assertIn('field',prompt);self.assertIn('حداکثر چهار',prompt);self.assertIn('نه بازنویسی',prompt)
+ def test_observed_cyrillic_preposition_is_exact_token_not_article_rewrite(self):
+  self.post['html']='<p>اطلاعات یک مزرعه مبنای تصمیم گیری для مزرعه دیگر نیست.</p><a href="https://x/для">منبع</a>'
+  out,audit=apply_language_patch(self.post,{'edits':[{'field':'body','old':'для','new':'برای'}]})
+  self.assertEqual(out['html'],'<p>اطلاعات یک مزرعه مبنای تصمیم گیری برای مزرعه دیگر نیست.</p><a href="https://x/для">منبع</a>');self.assertEqual(audit['edits'][0]['count'],1)
+ def test_prompt_and_validator_use_same_field_and_old_names(self):
+  import json
+  prompt=language_patch_prompt(self.post);data=json.loads(prompt.split('\n')[-1]);self.assertEqual(data['editable_tokens'],[{'field':'body','old':'или'}])
+ def test_rejected_patch_has_bounded_audit_not_silent_failure(self):
+  from parsiblog_text import language_patch_rejection
+  audit=language_patch_rejection(ValueError('Exact language edit required'),{'secret':'not logged'})
+  self.assertEqual(audit['reason_code'],'Exact language edit required');self.assertFalse(audit['applied']);self.assertNotIn('not logged',str(audit))
  def test_patch_budget_inside_existing_loop_before_qa_and_review(self):
   import inspect,parsiblog_pipeline as p
   code=inspect.getsource(p.generate);self.assertIn('for attempt in range(3)',code);self.assertLess(code.index('apply_language_patch(obj,edits)'),code.index('errors,report=qa('));self.assertLess(code.index('apply_language_patch(obj,edits)'),code.index('review=agnes('));self.assertIn("errors==['Unexpected foreign-language text in Persian article']",code)

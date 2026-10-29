@@ -88,7 +88,10 @@ def generate(item):
    edits=agnes(language_patch_prompt(obj),temperature=0)
    try:
     obj,repair=apply_language_patch(obj,edits);item.setdefault('language_repairs',[]).append(repair)
-   except ValueError:pass # Original rejected text remains; never accept bad patches.
+   except ValueError as error:
+    from parsiblog_text import language_patch_rejection
+    item.setdefault('language_patch_rejections',[]).append(dict(language_patch_rejection(error,edits),generation_attempt=attempt+1))
+    # Original rejected text remains; never accept bad patches.
   else:obj=copy.deepcopy(seed_post)if attempt==0 and seed_post else agnes(request,temperature=.1 if attempt else .35)
   title_binding=bind_assigned_title(obj,assigned_title)
   if title_binding is not None:item['title_binding']=title_binding
@@ -104,7 +107,7 @@ def generate(item):
     errors=['Independent editorial review: '+str(e) for e in review.get('errors',[])]if isinstance(review,dict)else[]
     if not errors:errors=['Independent editorial reviewer did not approve']
    else:break
-  save(ART/'rejected'/(item['key']+'.json'),{'key':item['key'],'at':stamp(),'post':obj,'errors':errors,'passed':False})
+  save(ART/'rejected'/(item['key']+'.json'),{'key':item['key'],'at':stamp(),'post':obj,'errors':errors,'passed':False,'language_feedback':__import__('parsiblog_text').language_feedback(obj),'language_repairs':item.get('language_repairs',[]),'language_patch_rejections':item.get('language_patch_rejections',[])})
  if errors:raise RuntimeError('Text SEO preflight rejected: '+','.join(errors[:5]))
  # Preserve approved text before image/network work; reuse only through full QA/review.
  save(ART/'text-ready'/(item['key']+'.json'),{'key':item['key'],'post':obj,'post_sha256':post_digest(obj),'editorial_review':review,'link_render':link_report,'at':stamp()})
