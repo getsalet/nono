@@ -48,6 +48,9 @@ class EditorialPatchTests(unittest.TestCase):
     self.assertEqual(result['status'],'validated_not_published');self.assertEqual(validate.call_count,2);self.assertEqual(gate.call_count,2);self.assertEqual(ai.call_count,4)
     self.assertEqual(result['post']['html'],'<h2>بخش</h2><p>دستور مستند</p><p>بند سالم</p>');self.assertTrue((Path(tmp)/'editorial-patches/general-test.json').exists())
    reserve.assert_not_called()
+   if invalid_patch:
+    audit=json.load(open(Path(tmp)/'editorial-patches/general-test-rejected.json'))
+    self.assertEqual(audit['reason_code'],'Invalid editorial patch schema');self.assertFalse(audit['applied']);self.assertFalse(audit['publication_authorized']);self.assertNotIn('بازنویسی کامل',str(audit))
  def test_single_patch_is_fully_revalidated_and_independently_reviewed(self):self.run_pipeline()
  def test_duplicate_verdict_is_not_repaired_into_a_paraphrase(self):self.run_pipeline(duplicate=True)
  def test_invalid_patch_stops_without_extra_model_attempt(self):self.run_pipeline(invalid_patch=True)

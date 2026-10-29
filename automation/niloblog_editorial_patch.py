@@ -22,6 +22,8 @@ def patch_prompt(post,review,plan,sources,contract,brief):
   'علت فنی از دستور احتیاط استنتاج نکن: دوری از جوندگان شاهد مکانیسم جویدن نیست؛ '
   'اجتناب از پیچاندن شاهد اعوجاج یا فشار متمرکز نیست. فقط دستور موجود در شاهد را بیان کن. '
   'هیچ ادعای تازه یا بند پرکننده نساز. اگر تمایز، حجم یا اصلاح مستند ممکن نیست blocked=true. '
+  'فقط بندهای تغییرکرده را برگردان؛ بند بدون تغییر یا block_id تکراری نفرست. مثال ساختار: '+json.dumps({'edits':[{'block_id':'b1','html':'<p>بند اصلاح شده با شواهد مجاز</p>'}]},ensure_ascii=False)+'. '
+  'حجم بندهای سالم را حفظ کن؛ حذف یک ادعای بی شاهد مجوز حذف توضیح مستند نیست. اگر فقط یک جمله معیوب است همان جمله را در همان بند اصلاح کن. '
   'این یک فرصت اصلاح است؛ همه کنترل های طول، لینک، اصالت و بازبینی مستقل دوباره اجرا می شوند.\n'
   +json.dumps({'blocks':blocks(post),'title':post.get('title'),'meta_description':post.get('meta_description'),
    'review':review,'evidence_plan':plan,'sources':sources,'contract':contract,'brief':brief},ensure_ascii=False))
@@ -56,3 +58,11 @@ def apply_patch(post,payload):
   result['meta_description']=payload['meta_description']
  digest=lambda x:hashlib.sha256(json.dumps(x,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
  return result,{'policy':'named-block-patch-v1','before_sha256':digest(post),'after_sha256':digest(result),'changed_blocks':sorted(seen),'metadata_changed':'meta_description'in payload}
+
+
+def rejection_audit(payload,error):
+ # Persist only bounded structural diagnostics, never arbitrary exception/model text.
+ allowed={'Editorial patch object required','Invalid editorial patch schema','Empty editorial patch','Invalid block edit','Unknown or repeated block','Ambiguous or no-op block','Replacement must retain one block','Editorial patch changed approved links','Editorial patch changed article links','Invalid metadata edit'}
+ reason=str(error)if str(error)in allowed else 'Unclassified editorial patch failure'
+ digest=hashlib.sha256(json.dumps(payload,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
+ return {'policy':'named-block-patch-v1','status':'rejected','reason_code':reason,'payload_sha256':digest,'applied':False,'publication_authorized':False}

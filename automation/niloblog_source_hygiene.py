@@ -60,7 +60,10 @@ def model_source_view(bundle):
   if source is None:continue
   safe,excluded=partition_source(source['text'])
   admitted=[e['quote']for e in required if e['source_index']==index]if required else safe
+  from niloblog_source_tables import admitted_tables
+  tables=admitted_tables(source,admitted)
   source['text']='\n'.join(admitted)
+  source['tables']=tables
   source['source_quality']={'excluded_sentence_count':len(excluded),'excluded_sentences_must_not_be_reconstructed':True,'contract_excerpts_only':bool(required)}
  return result
 

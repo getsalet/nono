@@ -198,7 +198,8 @@ def fetch(url,host=None):
  main=soup.select_one('article') or soup.select_one('main') or soup
  text=canon(main.get_text(' ',strip=True))
  if len(text)<400:raise PipelineStop('Source content incomplete')
- return {'url':u,'text':text[:26000],'sha256':hashlib.sha256(raw.encode()).hexdigest(),'checked_at':now().isoformat()}
+ from niloblog_source_tables import extract_tables
+ return {'url':u,'text':text[:26000],'tables':extract_tables(main),'sha256':hashlib.sha256(raw.encode()).hexdigest(),'checked_at':now().isoformat()}
 # Research-only routing follows the editorial question, not the rotating backlink plan.
 # It changes neither publication links nor evidence/review requirements.
 RESEARCH_BY_CLUSTER = {
@@ -600,7 +601,10 @@ def generate(row,m,targets,media,state,validation_only=False):
    repair_request=patch_prompt(obj,review,plan,model_source_view(bundle),contract,brief)
    payload=agnes(repair_request,temperature=0.1)
    try:obj,patch_audit=apply_patch(obj,payload)
-   except ValueError:raise PipelineStop('Editorial patch contract violation')from None
+   except ValueError as error:
+    from niloblog_editorial_patch import rejection_audit
+    save(A/'editorial-patches'/f"{row['id']}-rejected.json",dict(rejection_audit(payload,error),at=now().isoformat()))
+    raise PipelineStop('Editorial patch contract violation')from None
    save(A/'editorial-patches'/f"{row['id']}.json",dict(patch_audit,at=now().isoformat()))
    obj=prepare_article(obj,bundle,row)
   else:
