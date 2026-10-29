@@ -425,17 +425,23 @@ def evidence_first_candidates(pool,m,held,targets,limit=3):
  save(A/'selection/attempt.json',{'at':now().isoformat(),'run_id':os.getenv('GITHUB_RUN_ID'),'response':response,'publication_authorized':False})
  choices=response.get('candidates')if isinstance(response,dict)else None
  if not isinstance(choices,list) or len(choices)>limit:raise PipelineStop('Invalid source admission')
- lookup={r['id']:r for r in unique};selected=[];chosen=set()
+ lookup={r['id']:r for r in unique};selected=[];chosen=set();accepted=[];rejected=[]
  for choice in choices:
-  if not isinstance(choice,dict) or choice.get('id') not in lookup or choice['id'] in chosen:raise PipelineStop('Invalid source admission')
-  witnesses=choice.get('technical_evidence')
-  if not isinstance(witnesses,list) or not 1<=len(witnesses)<=4:raise PipelineStop('Invalid source admission')
-  for witness in witnesses:
-   if not isinstance(witness,dict) or witness.get('source_ref') not in row_refs[choice['id']]:raise PipelineStop('Invalid source admission')
-   excerpt=next((e for e in catalogs[witness['source_ref']]if e['excerpt_id']==witness.get('excerpt_id')),None)
-   if excerpt is None:raise PipelineStop('Invalid source admission')
-  selected.append(lookup[choice['id']]);chosen.add(choice['id'])
- save(A/'selection/report.json',{'at':now().isoformat(),'run_id':os.getenv('GITHUB_RUN_ID'),'candidate_count':len(unique),'source_count':len(refs),'selected':choices,'publication_authorized':False,'source_checks':{ref:{k:sources[ref][k]for k in ('url','sha256','checked_at')}for ref in refs}})
+  try:
+   if not isinstance(choice,dict) or choice.get('id') not in lookup or choice['id'] in chosen:raise PipelineStop('Invalid source admission')
+   witnesses=choice.get('technical_evidence')
+   if not isinstance(witnesses,list) or not 1<=len(witnesses)<=4:raise PipelineStop('Invalid source admission')
+   for witness in witnesses:
+    if not isinstance(witness,dict) or witness.get('source_ref') not in row_refs[choice['id']]:raise PipelineStop('Invalid source admission')
+    excerpt=next((e for e in catalogs[witness['source_ref']]if e['excerpt_id']==witness.get('excerpt_id')),None)
+    if excerpt is None:raise PipelineStop('Invalid source admission')
+  except PipelineStop:
+   # An invalid suggestion cannot poison a separately verified suggestion.
+   # Never substitute a source, repair an ID, or approve the invalid question.
+   rejected.append({'id':choice.get('id')if isinstance(choice,dict)else None,'reason':'invalid_candidate_or_source_reference'});continue
+  selected.append(lookup[choice['id']]);chosen.add(choice['id']);accepted.append(choice)
+ save(A/'selection/report.json',{'at':now().isoformat(),'run_id':os.getenv('GITHUB_RUN_ID'),'candidate_count':len(unique),'source_count':len(refs),'selected':accepted,'rejected_suggestions':rejected,'publication_authorized':False,'source_checks':{ref:{k:sources[ref][k]for k in ('url','sha256','checked_at')}for ref in refs}})
+ if choices and not selected:raise PipelineStop('Invalid source admission')
  return selected
 
 def generate(row,m,targets,media,state,validation_only=False):

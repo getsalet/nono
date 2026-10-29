@@ -24,8 +24,11 @@ class AdmissionTests(unittest.TestCase):
    choice=copy.deepcopy(self.choice);choice['technical_evidence']=[change]
    with self.assertRaisesRegex(n.PipelineStop,'Invalid source admission'):self.run_case([choice])
  def test_duplicate_or_new_candidate_fails_closed(self):
-  for choices in [[self.choice,self.choice],[dict(self.choice,id='invented')]]:
+  for choices in [[dict(self.choice,id='invented')]]:
    with self.assertRaisesRegex(n.PipelineStop,'Invalid source admission'):self.run_case(choices)
+ def test_invalid_suggestion_cannot_poison_valid_one(self):
+  invalid=dict(self.choice,id='invented')
+  self.assertEqual(self.run_case([invalid,self.choice,self.choice]),[self.rows[1]])
  def test_no_source_admission_is_publication_approval(self):
   self.assertFalse(n.failure_policy(n.PipelineStop('Invalid source admission'))['continue_candidates'])
 if __name__=='__main__':unittest.main()
