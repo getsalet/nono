@@ -31,6 +31,10 @@ class SourceLedgerTests(unittest.TestCase):
   plan=n.source_evidence_plan(row,self.matrix,n.evidence_catalog(self.bundle),self.bundle)
   self.assertFalse(plan['publication_authorized']);self.assertEqual(n.topic_scope(row,self.matrix['angles']['a'])['mode'],'factual_report')
   with self.assertRaisesRegex(n.PipelineStop,'Topic brief rejected'):n.validate_brief({'eligible':False,'grounded':False,'locally_distinct':False,'semantic_duplicate':False},plan)
+ def test_reporting_guide_is_not_a_claim_that_event_occurred(self):
+  scope=n.topic_scope({'title':'راهنمای گزارش خرابی نوار تیپ؛ شهرستان','title_policy_version':2},{'brief':'چه مدارکی ثبت کنیم؟'})
+  self.assertEqual(scope['mode'],'conditional_instruction')
+  self.assertEqual(n.topic_scope({'title':'گزارش خرابی نوار تیپ'},{'brief':'چه مدارکی لازم است؟'})['mode'],'factual_report')
  def test_echoed_input_is_invalid_not_editorial_rejection(self):
   with self.assertRaisesRegex(n.PipelineStop,'Topic brief invalid'):n.validate_brief({'title':self.row['title'],'contract':{}},{'facts':[]})
 if __name__=='__main__':unittest.main()
