@@ -23,4 +23,17 @@ class Tests(unittest.TestCase):
   for field,value in [('target_url','https://example.org/fake'),('family','hose'),('kind','product')]:
    targets=copy.deepcopy(self.targets);targets['site-post-900'][field]=value
    with self.assertRaises(n.PipelineStop):n.research_refs(row,self.m,targets)
+class SelectionTests(unittest.TestCase):
+ def fixture(self):
+  rows=[{'id':'old','angle_ref':'a','locality_ref':'l0'},{'id':'same-question-new-town','angle_ref':'a','locality_ref':'l1'},{'id':'new-question','angle_ref':'b','locality_ref':'l2'}]
+  return rows,{'titles':rows,'angles':{'a':{'cluster':'a'},'b':{'cluster':'b'}}}
+ def test_topic_rejection_deprioritizes_other_town_same_question(self):
+  rows,m=self.fixture();held={'old':{'reason':'Topic brief rejected'}}
+  self.assertEqual(n.choose_candidates(rows[1:],m,held,1)[0]['id'],'new-question')
+ def test_infrastructure_error_does_not_blacklist_angle(self):
+  rows,m=self.fixture();held={'old':{'reason':'private error details withheld','failure_policy':{'category':'infrastructure_or_unclassified'}}}
+  self.assertEqual(n.choose_candidates(rows[1:],m,held,1)[0]['id'],'same-question-new-town')
+ def test_no_state_reset_and_bounded_fallback(self):
+  rows,m=self.fixture();held={'old':{'reason':'Editorial source insufficiency'}};before=copy.deepcopy(held)
+  self.assertEqual(len(n.choose_candidates(rows[1:2],m,held,3)),1);self.assertEqual(held,before)
 if __name__=='__main__':unittest.main()

@@ -354,9 +354,16 @@ def candidate_allowed(row,held,used,revision):
 
 def choose_candidates(pool,m,held,limit=3):
  # New evidence/angles first; avoid spending a whole cycle on near-identical topics.
+ from collections import Counter
+ # A failed question is still the same question in another county. Prefer an
+ # untried angle instead of walking all locality variants of an unsupported one.
+ known={r['id']:r['angle_ref'] for r in m.get('titles',[])}
+ rejected=Counter()
+ for key,hold in held.items():
+  if key in known and (hold.get('failure_policy',{}).get('category') in ('evidence_or_topic','editorial_or_duplicate') or hold.get('reason') in ('Topic brief rejected','Editorial source insufficiency','Independent editorial review rejected','Cross-blog content reuse','Niloblog content reuse')):rejected[known[key]]+=1
  pending=list(enumerate(pool));chosen=[];clusters=set();localities=set()
  while pending and len(chosen)<limit:
-  index,row=min(pending,key=lambda pair:(pair[1]['id'] in held,m['angles'][pair[1]['angle_ref']]['cluster'] in clusters,pair[1]['locality_ref'] in localities,pair[0]))
+  index,row=min(pending,key=lambda pair:(pair[1]['id'] in held,rejected[pair[1]['angle_ref']],m['angles'][pair[1]['angle_ref']]['cluster'] in clusters,pair[1]['locality_ref'] in localities,pair[0]))
   pending.remove((index,row));chosen.append(row)
   clusters.add(m['angles'][row['angle_ref']]['cluster']);localities.add(row['locality_ref'])
  return chosen
