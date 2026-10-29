@@ -6,6 +6,8 @@ This is a narrow deterministic regression barrier, not semantic fact checking.
 """
 import copy,re
 RULES=(
+ ('encoding_replacement_character',r'\ufffd'),
+ ('malformed_manometer_description',r'شاخه نمایشگر فشار ولترهای'),
  ('double_prevention_negation',r'از جلوگیری از افت کارایی[^.؟!\n]{0,80}جلوگیری می کند'),
  ('cleanliness_causes_wear',r'(?:تمیزی|پاکسازی|پاک سازی|تمیز نگه)[^.؟!\n]{0,180}به سایش[^.؟!\n]{0,80}کمک می کند'),
  ('ambiguous_clogging_assurance',r'از مسدود شدن قطره چکان ها و حفظ جریان آب اطمینان حاصل'),

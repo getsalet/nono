@@ -14,6 +14,22 @@ class SourceHygieneTests(unittest.TestCase):
   inputs=[self.bad,'حفظ تمیزی و آزاد بودن قطره چکان ها از خاک و ذرات معلق به سایش و کاهش کارایی نوار تیپ کمک می کند.','از پاکسازی دقیق برخوردار بوده تا از مسدود شدن قطره چکان ها و حفظ جریان آب اطمینان حاصل شود.','از حیوانات خردکننده دور نگه دارید.']
   for text in inputs:
    safe,excluded=partition_source(text);self.assertEqual(safe,[]);self.assertEqual(excluded[0]['text'],text)
+ def test_corrupt_encoding_and_observed_instrument_term_are_quarantined(self):
+  for bad in ['در سراسر ��وار توزیع شود.','مانومترها به شکل یک دستگاه با شاخه نمایشگر فشار ولترهای مختلف تولید می شوند.']:
+   safe,excluded=partition_source(bad)
+   self.assertEqual(safe,[]);self.assertEqual(excluded[0]['text'],bad)
+   with self.assertRaises(n.PipelineStop):validate_general_visible_prose('<p>'+bad+'</p>',n.canon,n.PipelineStop)
+ def test_new_questions_have_distinct_ids_and_protected_legacy_topics(self):
+  from niloblog_general_scope import apply_general_queue
+  q=n.read(n.D/'general-source-queue.json');matrix=n.read(n.D/'title-matrix.json')
+  self.assertEqual(len({t['id']for t in q['topics']}),len(q['topics']))
+  for t in q['topics'][2:]:
+   self.assertEqual({e['source_ref']for e in t['evidence']},set(t['research_refs']))
+   for e in t['evidence']:self.assertEqual(sentence_quality(e['quote']),[])
+  topic=q['topics'][0];key='nilo-general-'+__import__('hashlib').sha256(topic['id'].encode()).hexdigest()[:16]
+  state={'held':{},'published':[{'key':key}],'current':None,'intent':None};before=copy.deepcopy(state)
+  out,audit=apply_general_queue(matrix,state,q)
+  self.assertEqual(state,before);self.assertNotIn(key,audit['changed_keys']);self.assertEqual(audit['eligible_pending_rows'],2)
  def test_correct_prevention_sentences_are_preserved(self):
   for text in ['پاکسازی از گرفتگی جلوگیری می کند و به حفظ جریان آب کمک می کند.','حفظ تمیزی از سایش زودرس جلوگیری می کند.']:
    safe,excluded=partition_source(text);self.assertEqual(safe,[text]);self.assertEqual(excluded,[])
