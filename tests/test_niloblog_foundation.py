@@ -6,6 +6,7 @@ import niloblog_pipeline as n
 
 class FoundationTests(unittest.TestCase):
  def setUp(self):
+  matrix_loader=patch.object(n,'load_runtime_matrix',side_effect=lambda state:n.read(n.D/'title-matrix.json'));matrix_loader.start();self.addCleanup(matrix_loader.stop)
   self.quote='این یک نقل دقیق و مستند درباره محصول شهرستان است'
   self.bundle={'local':{'text':self.quote},'article':{'text':self.quote+' متن فنی'},'technical':[],'links':[]}
   self.plan={'facts':[{'excerpt_id':'s0-e0','source_index':0,'claim':'گزارش محلی','quote':self.quote},{'excerpt_id':'s1-e0','source_index':1,'claim':'روش عمومی','quote':self.quote}]}
