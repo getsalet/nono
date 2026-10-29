@@ -117,6 +117,8 @@ def failure_policy(error):
  reason=str(error) if isinstance(error,PipelineStop) else ''
  if reason in {'Topic brief rejected','Topic brief invalid','Editorial source insufficiency','Local evidence missing','Evidence plan requires bounded sourced facts','Evidence quote not verifiable','Unknown evidence excerpt','Evidence claim missing','Invalid evidence source','Source contract quote quarantined','Source contract quote not verifiable'}:
   return {'category':'evidence_or_topic','action':'hold_topic_select_different','continue_candidates':True}
+ if reason=='Generated image quality rejected':
+  return {'category':'image_quality','action':'bounded_image_repair_exhausted_hold','continue_candidates':False}
  if reason in {'Independent editorial review rejected','Cross-blog content reuse','Niloblog content reuse'}:
   return {'category':'editorial_or_duplicate','action':'hold_topic_select_different','continue_candidates':True}
  if reason in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim','Internal evidence label exposed','Malformed technical prose','Editorial patch contract violation'}:
@@ -619,7 +621,7 @@ def generate(row,m,targets,media,state,validation_only=False):
  generated=None
  if restored('niloblog',ROOT):
   generated={'key':row['id'],'family':'tape20','site_title':row['title'],'angle':str(m['angles'][row['angle_ref']].get('seo_short_label',''))}
-  url=generated_image(generated,obj,'niloblog',ROOT)
+  url=prepare_reviewed_image(generated,obj,'niloblog',ROOT)
   image={'url':url,'alt':generated['image_alt'],'width':generated['image_width'],'height':generated['image_height']}
   ms=copy.deepcopy(state.get('media')or{});selection={'image_id':generated['image_generation']['asset_id'],'video_id':None,'generated':True}
  else:
@@ -631,6 +633,16 @@ def generate(row,m,targets,media,state,validation_only=False):
  item={'key':row['id'],'row':row,'post':obj,'sources':bundle,'review':review,'words':words,'selection':selection,'status':'reviewed','created_at':now().isoformat()}
  if generated is not None:item['generated_image']=generated
  save(A/'items'/f"{row['id']}.json",item);state['media']=ms;state['current']=row['id'];checkpoint(state);return item
+
+def prepare_reviewed_image(item,post,blog,root=ROOT):
+ # Save fixed failure categories, never provider text, credentials or raw frames.
+ from blog_image_restore import prepare,failure_details
+ try:return prepare(item,post,blog,root)
+ except RuntimeError as error:
+  detail=failure_details(item,error,root)
+  save(Path(root)/'artifacts/niloblog/image-failures'/f"{item['key']}.json",dict(detail,key=item['key'],run_id=os.getenv('GITHUB_RUN_ID'),at=now().isoformat(),publication_verified=False))
+  if detail['code']=='image_quality_rejected':raise PipelineStop('Generated image quality rejected')from None
+  raise
 
 def verify_stored_body(item,markup):
  expected=BeautifulSoup(item['post']['html'],'html.parser');actual=BeautifulSoup(markup,'html.parser')
@@ -908,6 +920,9 @@ def validate_only(limit=3,review_key=None):
  try:candidates=evidence_first_candidates(pool,m,state.get('held',{}),targets,limit)
  except Exception as error:
   report.update(status='blocked',stage='source_admission',validated_count=0,diagnostic=candidate_diagnostic(error),reason=str(error)if isinstance(error,PipelineStop)else'private error details withheld')
+  save(A/'validation/report.json',report);return report
+ if not candidates:
+  report.update(status='blocked',validated_count=0,reason_code='no_eligible_candidates',held_count=len(state.get('held',{})),pool_count=len(pool),state_changed=False,retry_permission_granted=False)
   save(A/'validation/report.json',report);return report
  for row in candidates:
   try:
