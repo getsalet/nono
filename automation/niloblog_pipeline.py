@@ -119,7 +119,7 @@ def failure_policy(error):
   return {'category':'evidence_or_topic','action':'hold_topic_select_different','continue_candidates':True}
  if reason in {'Independent editorial review rejected','Cross-blog content reuse','Niloblog content reuse'}:
   return {'category':'editorial_or_duplicate','action':'hold_topic_select_different','continue_candidates':True}
- if reason in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim','Internal evidence label exposed','Malformed technical prose'}:
+ if reason in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim','Internal evidence label exposed','Malformed technical prose','Editorial patch contract violation'}:
   return {'category':'format_or_language','action':'bounded_repair_exhausted_hold','continue_candidates':True}
  return {'category':'infrastructure_or_unclassified','action':'stop_and_investigate_no_blind_retry','continue_candidates':False}
 
@@ -569,7 +569,7 @@ def generate(row,m,targets,media,state,validation_only=False):
  except PipelineStop as error:
   # One bounded pre-publication repair; full validation and factual review still apply.
   save(A/'rejected'/f"{row['id']}-format.json",{'post':obj,'reason':str(error),'at':now().isoformat()})
-  if str(error) not in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim','Causal polarity contradicts maintenance source','Internal evidence label exposed','Malformed technical prose'}:raise
+  if str(error) not in {'Exact matrix title required','Unsafe generated markup','Exactly two approved contextual links required','Required natural keyword anchor missing','Article length/section check failed','Description length check failed','Mixed-script word requires editorial correction','Unsupported commercial claim','Causal polarity contradicts maintenance source','Internal evidence label exposed','Malformed technical prose','Editorial patch contract violation'}:raise
   feedback=generation_feedback(obj)
   if str(error)=='Mixed-script word requires editorial correction':
    obj,language_audit=repair_visible_language(obj,lambda request:agnes(request,temperature=0))
@@ -591,7 +591,18 @@ def generate(row,m,targets,media,state,validation_only=False):
   save(A/'reviews'/f"{row['id']}.json",{'review':review,'candidate':obj,'sources':bundle,'attempts':reviews,'at':now().isoformat()})
   if review_passes(review,bundle):break
   if review_attempt==1:raise PipelineStop('Independent editorial review rejected')
-  obj=prepare_article(agnes(prompt+'\nاین مقاله رد شده است. فقط یک فرصت اصلاح داری: ادعاهای بی‌شاهد را حذف کن، هر ادعای باقی‌مانده را به شواهد واقعی محدود کن و دلیل رد زیر را رفع کن. منبع یا نقل جعلی نساز. کنترل کیفیت تغییر نمی‌کند؛ اگر تمایز یا حجم مستند ممکن نیست blocked=true بده.\n'+json.dumps(editorial_repair_context(obj,review),ensure_ascii=False),temperature=0.1),bundle,row)
+  if is_general(row):
+   # Semantic duplication is a topic barrier, not a request to paraphrase it.
+   if review.get('semantic_duplicate')is True:raise PipelineStop('Independent editorial review rejected')
+   from niloblog_editorial_patch import patch_prompt,apply_patch
+   repair_request=patch_prompt(obj,review,plan,model_source_view(bundle),contract,brief)
+   payload=agnes(repair_request,temperature=0.1)
+   try:obj,patch_audit=apply_patch(obj,payload)
+   except ValueError:raise PipelineStop('Editorial patch contract violation')from None
+   save(A/'editorial-patches'/f"{row['id']}.json",dict(patch_audit,at=now().isoformat()))
+   obj=prepare_article(obj,bundle,row)
+  else:
+   obj=prepare_article(agnes(prompt+'\nاین مقاله رد شده است. فقط یک فرصت اصلاح داری: ادعاهای بی‌شاهد را حذف کن، هر ادعای باقی‌مانده را به شواهد واقعی محدود کن و دلیل رد زیر را رفع کن. منبع یا نقل جعلی نساز. کنترل کیفیت تغییر نمی‌کند؛ اگر تمایز یا حجم مستند ممکن نیست blocked=true بده.\n'+json.dumps(editorial_repair_context(obj,review),ensure_ascii=False),temperature=0.1),bundle,row)
   if obj.get('blocked'):raise PipelineStop('Editorial source insufficiency')
   words=validate_candidate(row,obj,bundle,'repaired-validation')
  if validation_only:
