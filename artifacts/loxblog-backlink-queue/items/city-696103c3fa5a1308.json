@@ -15,11 +15,11 @@
   "assigned_title": "نوار تیپ در رامسر؛ مراقبت حین بهره‌برداری",
   "_image_blog": "loxblog",
   "matrix_title": "نوار تیپ در رامسر؛ مراقبت حین بهره‌برداری",
-  "attempts": 3,
-  "generated_at": "2026-10-29T11:36:56Z",
-  "last_error": "generation/source/validation failed: TimeoutError [stage=image]; TimeoutError",
+  "attempts": 4,
+  "generated_at": "2026-10-29T16:26:49Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Image score below 90 or invalid; Core image condition not met: technical_evidence_match; Core image condition not met: packaging_not_used_as_hardware",
   "failure_stage": "image",
-  "next_retry_at": "2026-10-29T15:36:56.696957Z",
+  "next_retry_at": "2026-10-30T00:26:49.373913Z",
   "_image_article_context": {
     "title": "نوار تیپ در رامسر؛ مراقبت حین بهره‌برداری",
     "meta_description": "راهنمای پایش و مراقبت حین بهره‌برداری نوار تیپ؛ تشخیص نشانه‌های تغییر، چک‌لیست نگهداری و پیشگیری از مسدودشدگی برای حفظ عملکرد سیستم آبیاری.",
@@ -27,11 +27,11 @@
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
   "_generation_stage": "local_vision_qa",
-  "_image_generation_round": 0,
+  "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
     "slot": "AGNES_API_KEY23",
-    "mode": "controlled_recovery",
+    "mode": "verified",
     "max_provider_requests": 1
   },
   "_image_provider_attempts": [
@@ -43,6 +43,14 @@
       "http_status": 503,
       "status": "provider_queue_full_deferred",
       "provider_code": "image_queue_full"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY23",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     },
     {
       "requested_secret_slot": "AGNES_API_KEY23",
@@ -73,6 +81,17 @@
     ],
     "cropped": false
   },
+  "_image_rejections": [
+    {
+      "sha256": "08398dbe45271d5b9bf0b7f73fcd8a3e2308e2965fab57bce70105e986620933",
+      "reason": "Product image rejected: Image score below 90 or invalid; Image score below 90 or invalid; Core image condition not met: technical_evidence_match"
+    },
+    {
+      "sha256": "565345e6e742308165dea7ae2c614647c927b639e5482d5a87309d914ce45f9d",
+      "reason": "Product image rejected: Image score below 90 or invalid; Image score below 90 or invalid; Core image condition not met: technical_evidence_match; Core image condition not met: packaging_not_used_as_hardware"
+    }
+  ],
+  "_image_qa_feedback": "Show this exact installed evidence: continuous thin flattened installed drip tape beside crop roots, with a clearly visible continuous dark wet-soil strip along the root zone, strongly contrasting with lighter dry soil outside the strip. The single AFP carton stands separately on soil; no pipe through it.",
   "post": {
     "title": "نوار تیپ در رامسر؛ مراقبت حین بهره‌برداری",
     "slug": "drip-tape-maintenance-operation-ramsar",
@@ -90,7 +109,7 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: TimeoutError [stage=image]; TimeoutError"
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Image score below 90 or invalid; Core image condition not met: technical_evidence_match; Core image condition not met: packaging_not_used_as_hardware"
     ],
     "words": 815,
     "links": [
