@@ -78,8 +78,10 @@ class AutomaticBlogskyTests(unittest.TestCase):
             self.assertIn(required,text)
         cron=re.search(r"cron: '([^']+)'",text).group(1).split()
         self.assertEqual(cron[1:],['*']*4)
-        minutes=list(range(0,60,20)) if cron[0]=='*/20' else sorted(int(x)for x in cron[0].split(','))
-        self.assertEqual(len(minutes),3);self.assertEqual([(minutes[(i+1)%3]-m)%60 for i,m in enumerate(minutes)],[20]*3)
+        minutes=sorted(int(x)for x in cron[0].split(','))
+        self.assertEqual(len(minutes),12);self.assertEqual([(minutes[(i+1)%12]-m)%60 for i,m in enumerate(minutes)],[5]*12)
+        # Faster polling does not change the separate 20-minute admission or hourly budget.
+        self.assertEqual(auto.AUTOMATIC['min_interval_minutes'],20)
     def test_native_dependencies_use_bounded_ipv4_browser_installer(self):
         text=(ROOT/'.github/workflows/blogsky-auto.yml').read_text()
         self.assertIn('pip install --quiet Pillow beautifulsoup4 playwright',text)
