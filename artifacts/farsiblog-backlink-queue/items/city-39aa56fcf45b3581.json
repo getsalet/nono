@@ -22,7 +22,7 @@
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
   "_generation_stage": "local_vision_qa",
-  "_image_generation_round": 0,
+  "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
     "slot": "AGNES_API_KEY18",
@@ -30,6 +30,14 @@
     "max_provider_requests": 1
   },
   "_image_provider_attempts": [
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
     {
       "requested_secret_slot": "AGNES_API_KEY18",
       "attempt": 1,
@@ -59,10 +67,21 @@
     "cropped": false
   },
   "failure_stage": "image",
-  "attempts": 1,
-  "generated_at": "2026-10-29T12:31:01Z",
-  "last_error": "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError",
-  "next_retry_at": "2026-10-29T13:31:01.444247Z",
+  "attempts": 2,
+  "generated_at": "2026-10-29T17:59:04Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo",
+  "next_retry_at": "2026-10-29T19:59:04.555171Z",
+  "_image_rejections": [
+    {
+      "sha256": "c797925222aea502e759f3476d918254b2eaa255c765b99a82c793637bbfb60e",
+      "reason": "Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo"
+    },
+    {
+      "sha256": "ca406e5d58849fa371ccfbedfa2639374b893c35bde5ccc88804a1b848b6aa71",
+      "reason": "Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo"
+    }
+  ],
+  "_image_qa_feedback": "Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo",
   "post": {
     "title": "نوار تیپ در لوندویل؛ مقایسه پیش از خرید",
     "slug": "nar-var-tip-londveil-mqayse-pish-kharid",
@@ -81,7 +100,14 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError"
-    ]
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo"
+    ],
+    "words": 980,
+    "links": [
+      "https://navar-abyari.ir/gilan/%d9%84%d9%88%d9%86%d8%af%d9%88%db%8c%d9%84-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm/",
+      "https://navar-abyari.ir/"
+    ],
+    "checked_against": "Roya + FarsiBlog + RozBlog + Blogfa + LoxBlog + Blogsky corpus",
+    "title_matrix": "نوار تیپ در لوندویل؛ مقایسه پیش از خرید"
   }
 }
