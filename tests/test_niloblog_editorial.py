@@ -53,7 +53,8 @@ class EditorialTests(unittest.TestCase):
   self.assertEqual(metrics,{'persian_word_groups':4,'h2_count':1,'meta_characters':3})
  def test_evidence_extraction_does_not_replace_final_editorial_gate(self):
   code=Path(m.__file__).read_text()
-  self.assertIn('وظیفه تو فقط استخراج شواهد است',code)
+  self.assertIn('plan=source_evidence_plan(row,m,catalog,bundle)',code)
+  self.assertIn('brief=plan_article(row,m,bundle,plan,history)',code)
   self.assertIn('if review_passes(review,bundle):break',code)
   self.assertIn("if review_attempt==1:raise PipelineStop('Independent editorial review rejected')",code)
  def test_both_configured_technical_sources_are_read(self):
@@ -114,7 +115,7 @@ class EditorialTests(unittest.TestCase):
   row={'id':'test','title':'عنوان','angle_ref':'angle'}
   article={'title':'عنوان','html':'<p>متن اولیه</p>'};fixed={'title':'عنوان','html':'<p>متن اصلاح شده</p>'}
   rejected=dict(self.approved,approved=False,unsupported_claims=['ادعای حذف شدنی'],reason='حذف ادعا')
-  outputs=[self.plan,article,rejected,{'blocked':True} if repair_blocked else fixed]
+  outputs=[article,rejected,{'blocked':True} if repair_blocked else fixed]
   if not repair_blocked:outputs.append(second_review or self.approved)
   with tempfile.TemporaryDirectory() as tmp,mock.patch.object(m,'A',Path(tmp)),mock.patch.object(m,'source_bundle',return_value=self.bundle),mock.patch.object(m,'all_history',return_value=[]),mock.patch.object(m,'plan_article',return_value={'outline':[]}),mock.patch.object(m,'validate_article',return_value=600) as validate,mock.patch('roya_backlink_queue.agnes',side_effect=outputs) as ai,mock.patch.object(m,'reserve',return_value=({}, {'image_id':'img','video_id':None})) as reserve,mock.patch.object(m,'checkpoint'):
    args=(row,{'angles':{'angle':{}}},{},{'assets':[{'id':'img','url':'https://x/a.webp','alt':'محصول','width':100,'height':100}]},{})
@@ -124,8 +125,8 @@ class EditorialTests(unittest.TestCase):
    else:
     result=m.generate(*args);self.assertIn('متن اصلاح شده',result['post']['html']);self.assertEqual(result['selection']['video_id'],None)
     self.assertEqual(validate.call_count,2)
-   self.assertEqual(ai.call_count,4 if repair_blocked else 5)
-   self.assertIn('editorial_feedback',ai.call_args_list[3].args[0])
+   self.assertEqual(ai.call_count,3 if repair_blocked else 4)
+   self.assertIn('editorial_feedback',ai.call_args_list[2].args[0])
  def test_rejected_article_repaired_then_independently_reviewed(self):self.run_generation()
  def test_second_rejection_never_reserves_or_publishes(self):self.run_generation(dict(self.approved,approved=False))
  def test_insufficient_evidence_after_repair_stays_held(self):self.run_generation(repair_blocked=True)

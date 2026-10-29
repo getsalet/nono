@@ -31,15 +31,15 @@ class FoundationTests(unittest.TestCase):
   for outline in [[],self.brief['outline'][:2],self.brief['outline']*2,[{'heading':'بخش','fact_ids':[]}]*3]:
    with self.assertRaises(n.PipelineStop):n.validate_brief(dict(self.brief,outline=outline),self.plan)
  def test_rejected_brief_never_calls_writer_or_reserves_media(self):
-  with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'source_bundle',return_value=self.bundle),patch.object(n,'all_history',return_value=[]),patch('roya_backlink_queue.agnes',side_effect=[self.plan,dict(self.brief,eligible=False)])as ai,patch.object(n,'reserve')as reserve,patch.object(n,'checkpoint')as checkpoint:
+  with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'source_bundle',return_value=self.bundle),patch.object(n,'all_history',return_value=[]),patch('roya_backlink_queue.agnes',side_effect=[dict(self.brief,eligible=False)])as ai,patch.object(n,'reserve')as reserve,patch.object(n,'checkpoint')as checkpoint:
    with self.assertRaisesRegex(n.PipelineStop,'Topic brief rejected'):n.generate(self.row,self.matrix,{},{},{})
-   self.assertEqual(ai.call_count,2);reserve.assert_not_called();checkpoint.assert_not_called()
+   self.assertEqual(ai.call_count,1);reserve.assert_not_called();checkpoint.assert_not_called()
  def test_validation_generation_does_not_mutate_state_or_reserve(self):
   state={'published':[],'media':{},'held':{}};before=copy.deepcopy(state)
-  with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'source_bundle',return_value=self.bundle),patch.object(n,'all_history',return_value=[]),patch('roya_backlink_queue.agnes',side_effect=[self.plan,self.brief,{'title':'عنوان','html':'<p>متن مستند</p>'},self.review])as ai,patch.object(n,'validate_article',return_value=650),patch.object(n,'reserve')as reserve,patch.object(n,'checkpoint')as checkpoint:
+  with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'source_bundle',return_value=self.bundle),patch.object(n,'all_history',return_value=[]),patch('roya_backlink_queue.agnes',side_effect=[self.brief,{'title':'عنوان','html':'<p>متن مستند</p>'},self.review])as ai,patch.object(n,'validate_article',return_value=650),patch.object(n,'reserve')as reserve,patch.object(n,'checkpoint')as checkpoint:
    result=n.generate(self.row,self.matrix,{},{},state,validation_only=True)
    self.assertEqual(result['status'],'validated_not_published');self.assertFalse(result['publication_verified']);self.assertEqual(state,before);reserve.assert_not_called();checkpoint.assert_not_called()
-   for call in [ai.call_args_list[2],ai.call_args_list[3]]:self.assertIn('independent_review_required',call.args[0]);self.assertIn('word_groups_min',call.args[0])
+   for call in [ai.call_args_list[1],ai.call_args_list[2]]:self.assertIn('independent_review_required',call.args[0]);self.assertIn('word_groups_min',call.args[0])
  def test_failure_policy_stops_unexpected_provider_errors(self):
   p=n.failure_policy(RuntimeError('private response'))
   self.assertFalse(p['continue_candidates']);self.assertNotIn('private',json.dumps(p))
@@ -103,7 +103,7 @@ class FoundationTests(unittest.TestCase):
    scope=n.topic_scope({'title':title},{'brief':'چه داده هایی لازم است؟'})
    self.assertEqual(scope['mode'],'factual_report');self.assertTrue(scope['field_measurements_required_for_reported_local_results'])
  def test_scope_contract_reaches_extraction_brief_writer_and_reviewer(self):
-  code=Path(n.__file__).read_text();self.assertIn("'claim_scope':topic_scope(row,m['angles'][row['angle_ref']])",code)
+  code=Path(n.__file__).read_text();self.assertIn('plan=source_evidence_plan(row,m,catalog,bundle)',code)
   contract=n.article_contract(self.row,self.bundle,{'brief':'چه مدارکی لازم است؟'})
   self.assertEqual(contract['claim_scope']['mode'],'conditional_instruction');self.assertTrue(contract['independent_review_required'])
 if __name__=='__main__':unittest.main()

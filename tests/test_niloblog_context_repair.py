@@ -31,8 +31,10 @@ class ContextRepairTests(unittest.TestCase):
    self.assertEqual(out['run_id'],'123');self.assertEqual(out['run_attempt'],'2');self.assertEqual(out['status'],'idle');self.assertFalse(out['publication_verified_by_this_report'])
   finally:n.CYCLE.clear();n.CYCLE.update(old)
  def test_missing_installation_not_required_for_requesting_documents(self):
-  code=Path(n.__file__).read_text();self.assertIn('وجود شاهد نصب واقعی نوار تیپ شرط استخراج نیست',code)
-  self.assertIn('اگر عنوان واقعاً مدعی اجرای ثبت شده یا اندازه گیری محلی است و منبع ندارد، blocked=true بماند',code)
+  scope=n.topic_scope({'title':'راهنمای بررسی اتصال','title_policy_version':2},{'brief':'چه مدارکی لازم است؟'})
+  self.assertFalse(scope['field_measurements_required_for_explaining_required_documents'])
+  self.assertTrue(scope['field_measurements_required_for_reported_local_results'])
+  self.assertTrue(scope['do_not_assume_local_installation_or_fault'])
  def test_independent_review_and_no_video_not_changed(self):
   code=Path(n.__file__).read_text();self.assertIn("if review_attempt==1:raise PipelineStop('Independent editorial review rejected')",code);self.assertIn('video_probability=0',code);self.assertIn('require_image_only(item)',code)
  def test_no_held_reset_or_new_model_in_patch(self):

@@ -14,7 +14,7 @@ class BoundedTextRepairTests(unittest.TestCase):
   plan={'blocked':False,'facts':[{'excerpt_id':'s0-e0','claim':'گزارش محدود'},{'excerpt_id':'s1-e0','claim':'روش عمومی'}]}
   review={'approved':not review_rejected,'grounded':True,'locally_distinct':True,'semantic_duplicate':False,'unsupported_claims':[],'local_evidence_id':'s0-e0'}
   article={'title':'عنوان','html':'<p>انتخaب و ادعای ردشده</p>'};fixed={'blocked':True}if blocked else{'title':'عنوان','html':'<p>انتخاب مستند</p>'}
-  outputs=[plan,article,fixed,review]
+  outputs=[article,fixed,review]
   # A rejected independent review gets its original bounded second chance, then still fails.
   if review_rejected:outputs += [copy.deepcopy(fixed),copy.deepcopy(review)]
   validations=[n.PipelineStop(reason),n.PipelineStop(reason)if second_failure else 600]
@@ -25,8 +25,8 @@ class BoundedTextRepairTests(unittest.TestCase):
     with self.assertRaises(n.PipelineStop):n.generate(*args)
     reserve.assert_not_called()
    else:
-    result=n.generate(*args);self.assertIn('انتخاب مستند',result['post']['html']);self.assertIsNone(result['selection']['video_id']);self.assertEqual(validate.call_count,2);self.assertEqual(ai.call_count,4)
-   if reason!='Cross-blog content reuse':self.assertIn('invalid_visible_tokens',ai.call_args_list[2].args[0])
+    result=n.generate(*args);self.assertIn('انتخاب مستند',result['post']['html']);self.assertIsNone(result['selection']['video_id']);self.assertEqual(validate.call_count,2);self.assertEqual(ai.call_count,3)
+   if reason!='Cross-blog content reuse':self.assertIn('invalid_visible_tokens',ai.call_args_list[1].args[0])
  def test_mixed_script_repaired_then_revalidated_and_reviewed(self):self.run_case('Mixed-script word requires editorial correction')
  def test_unsupported_claim_repaired_then_revalidated_and_reviewed(self):self.run_case('Unsupported commercial claim')
  def test_second_validation_failure_does_not_reserve_media(self):self.run_case('Unsupported commercial claim',second_failure=True)
