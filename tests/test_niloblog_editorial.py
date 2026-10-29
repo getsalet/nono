@@ -58,11 +58,11 @@ class EditorialTests(unittest.TestCase):
   self.assertIn("if review_attempt==1:raise PipelineStop('Independent editorial review rejected')",code)
  def test_both_configured_technical_sources_are_read(self):
   loc={'evidence_status':'previously_reviewed_county_crop','scope':'county','evidence_ref':'e','source_url':'https://news.example/a','crop':'سیب','city_fa':'شهر'}
-  matrix={'localities':{'loc':loc},'link_plans':{'plan':{'required_links':[{'target_ref':'article'},{'target_ref':'product','anchor_keyword':'نوار'}],'research_only_target_refs':['tech1','tech2']}}}
-  targets={k:{'target_url':'https://navar-abyari.ir/'+k,'site_title':k} for k in ['article','product','tech1','tech2']}
+  matrix={'angles':{'angle':{'cluster':'unknown'}},'localities':{'loc':loc},'link_plans':{'plan':{'required_links':[{'target_ref':'article'},{'target_ref':'product','anchor_keyword':'نوار'}],'research_only_target_refs':['tech1','tech2']}}}
+  targets={k:{'kind':'article','family':'tape20','target_url':'https://navar-abyari.ir/'+k,'site_title':k} for k in ['article','product','tech1','tech2']}
   evidence={'approved_records':[{'id':'e','approved':True,'source_url':loc['source_url'],'scope':'county'}]}
   with mock.patch.object(m,'read',return_value=evidence),mock.patch.object(m,'fetch',side_effect=lambda url,*args:{'url':url,'text':'گزارش سیب در شهر'}) as fetch:
-   bundle=m.source_bundle({'locality_ref':'loc','link_plan_ref':'plan'},matrix,targets)
+   bundle=m.source_bundle({'angle_ref':'angle','locality_ref':'loc','link_plan_ref':'plan'},matrix,targets)
   self.assertEqual(len(bundle['technical']),2);self.assertEqual(fetch.call_count,4)
  def test_bound_links_keep_exact_matching_anchor(self):
   b={'links':[{'url':'https://x/a','anchor':'راهنما'},{'url':'https://x/b','anchor':'نوار تیپ'}]}

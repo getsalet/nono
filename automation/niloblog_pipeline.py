@@ -151,6 +151,38 @@ def fetch(url,host=None):
  text=canon(main.get_text(' ',strip=True))
  if len(text)<400:raise PipelineStop('Source content incomplete')
  return {'url':u,'text':text[:26000],'sha256':hashlib.sha256(raw.encode()).hexdigest(),'checked_at':now().isoformat()}
+# Research-only routing follows the editorial question, not the rotating backlink plan.
+# It changes neither publication links nor evidence/review requirements.
+RESEARCH_BY_CLUSTER = {
+ 'شناخت زمین':('site-post-1002','site-post-34963'),
+ 'انتخاب محصول':('site-post-1013','site-post-895'),
+ 'طراحی ردیف‌ها':('site-post-34963','site-post-1002'),
+ 'فشار و اندازه‌گیری':('site-post-34967','site-post-895'),
+ 'فیلتراسیون':('site-post-35888','site-post-939'),
+ 'آماده‌سازی و نصب':('site-post-35903','site-post-952'),
+ 'اتصالات و لوله‌رسانی':('site-post-35896','site-post-35888'),
+ 'راه‌اندازی و تحویل':('site-post-952','site-post-900'),
+ 'پایش حین بهره‌برداری':('site-post-1002','site-post-34967'),
+ 'گرفتگی و رسوب':('site-post-939','site-post-900'),
+ 'نشتی و آسیب':('site-post-900','site-post-939'),
+ 'برنامه آبیاری':('site-post-34963','site-post-35883'),
+ 'نگهداری و پایان فصل':('site-post-900','site-post-939'),
+ 'سفارش و هزینه':('site-post-35891','site-post-895'),
+ 'بازبینی و تصمیم‌گیری':('site-post-1002','site-post-1013'),
+ 'بررسی اولیه و محلی':('site-post-1002','site-post-34963'),
+ 'انتخاب آگاهانه':('site-post-1013','site-post-895'),
+}
+def research_refs(row,m,targets):
+ plan=m['link_plans'][row['link_plan_ref']]
+ cluster=canon(m['angles'][row['angle_ref']]['cluster'])
+ routes={canon(k):v for k,v in RESEARCH_BY_CLUSTER.items()}
+ refs=list(routes.get(cluster,plan.get('research_only_target_refs',[])[:2]))
+ if len(refs)>2 or len(refs)!=len(set(refs)):raise PipelineStop('Invalid research routing')
+ for ref in refs:
+  target=targets.get(ref,{})
+  if target.get('kind')!='article' or target.get('family')!='tape20' or urlsplit(target.get('target_url','')).hostname!='navar-abyari.ir':raise PipelineStop('Unapproved research source')
+ return refs
+
 def source_bundle(row,m,targets):
  loc=m['localities'][row['locality_ref']]
  if loc.get('evidence_status')!='previously_reviewed_county_crop' or loc.get('scope')!='county':raise PipelineStop('Unverified locality stays held')
@@ -162,7 +194,7 @@ def source_bundle(row,m,targets):
  for x in plan['required_links']:
   t=targets[x['target_ref']];links.append({'url':safeurl(t['target_url']),'anchor':x.get('anchor_keyword') or t['site_title']})
  article=fetch(links[0]['url'],'navar-abyari.ir');technical=[]
- for ref in plan.get('research_only_target_refs',[])[:2]:technical.append(fetch(targets[ref]['target_url'],'navar-abyari.ir'))
+ for ref in research_refs(row,m,targets):technical.append(fetch(targets[ref]['target_url'],'navar-abyari.ir'))
  return {'local':local,'article':article,'technical':technical,'locality':loc,'links':links}
 def all_history(exclude_key=None):
  from content_originality import corpus
