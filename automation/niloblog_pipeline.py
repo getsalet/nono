@@ -227,7 +227,7 @@ def research_refs(row,m,targets):
  routes={canon(k):v for k,v in RESEARCH_BY_CLUSTER.items()}
  contract=row.get('editorial_source_contract')
  refs=list(contract['research_refs']if contract else routes.get(cluster,plan.get('research_only_target_refs',[])[:2]))
- if len(refs)>2 or len(refs)!=len(set(refs)):raise PipelineStop('Invalid research routing')
+ if len(refs)>(4 if is_general(row)else 2) or len(refs)!=len(set(refs)):raise PipelineStop('Invalid research routing')
  for ref in refs:
   from niloblog_research_documents import registered
   if is_general(row)and registered(ref):continue

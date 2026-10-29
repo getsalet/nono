@@ -110,13 +110,13 @@ class GeneralScopeTests(unittest.TestCase):
   q=copy.deepcopy(self.queue);q['topics'].append(q['topics'][0])
   with self.assertRaises(ValueError):apply_general_queue(self.matrix,self.state,q)
  def test_general_source_bundle_never_fetches_local_news(self):
-  m,_=apply_general_queue(self.matrix,self.state,self.queue);row=m['titles'][1000];targets={t['key']:t for t in n.read(n.D/'article-targets.json')['targets']}
+  m,_=apply_general_queue(self.matrix,self.state,self.queue);row=next(r for r in m['titles']if r['id']=='nilo-general-a468fb68d3399c4b');targets={t['key']:t for t in n.read(n.D/'article-targets.json')['targets']}
   topic=row['editorial_source_contract'];quotes={e['source_url']:' '.join(x['quote']for x in topic['evidence']if x['source_url']==e['source_url'])for e in topic['evidence']}
   def fetch(url,host=None):return {'url':url,'text':quotes.get(url,'منبع فنی عمومی با اطلاعات معتبر درباره نوار تیپ و نگهداری'),'checked_at':'test'}
   with patch.object(n,'fetch',side_effect=fetch)as f:
    bundle=n.source_bundle(row,m,targets)
-   self.assertIsNone(bundle['local']);self.assertEqual(len(f.call_args_list),3)
-   self.assertTrue(all(c.args[1]=='navar-abyari.ir'for c in f.call_args_list))
+   self.assertIsNone(bundle['local']);self.assertEqual(len(f.call_args_list),4)
+   self.assertEqual({c.args[1]for c in f.call_args_list},{'navar-abyari.ir','extension.arizona.edu','wra.areeo.ac.ir'});self.assertEqual(len(bundle['research_policy']['source_groups']),2)
  def test_general_ledger_has_no_local_fact(self):
   self.assertTrue(is_general(self.plan));self.assertTrue(all(f['source_index']>0 and f['scope']=='technical_general'for f in self.plan['facts']))
   self.assertFalse(self.plan['publication_authorized'])

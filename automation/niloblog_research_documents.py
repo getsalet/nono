@@ -14,6 +14,15 @@ DOCUMENTS['research-arizona-sdi-maintenance']={
  'format':'html','source_label':'راهنمای نگهداری فصلی سامانه های آبیاری؛ ترویج دانشگاه آریزونا',
  'scope':'Published SDI maintenance guidance; table lists POSSIBLE problems, not conclusive diagnosis or farm-specific prescriptions',
 }
+DOCUMENTS['research-iran-swri-irrigation-evaluation-128814']={
+ 'url':'https://wra.areeo.ac.ir/article_128814.html','format':'html',
+ 'source_label':'پژوهش آب در کشاورزی؛ ارزیابی آبیاری نواری و شیاری؛ شاهین رخسار و اسدی، ۱۳۹۲',
+ 'scope':'For this question admit only the Persian definition of field irrigation evaluation, not the historical experiment outcomes, savings percentages or extrapolated local conditions',
+ 'authority_class':'iran_public_research','publisher':'مؤسسه تحقیقات خاک و آب، سازمان تحقیقات آموزش و ترویج کشاورزی',
+ 'published_date':'2013-05-22','doi':'10.22092/jwra.2013.128814',
+ 'study_context':{'place':'ایستگاه تحقیقات کشاورزی گرگان','crop':'سویا','study_years_fa':'۱۳۸۵ و ۱۳۸۶','publication_year_fa':'۱۳۹۲','historical_not_current_observation':True},
+}
+DOCUMENTS['research-arizona-sdi-maintenance'].update(authority_class='international_public_research',publisher='University of Arizona Cooperative Extension',publication_month='2025-08',publication_number='az2155')
 MAX_BYTES=2_000_000
 
 def registered(ref):return ref in DOCUMENTS
@@ -44,9 +53,32 @@ def fetch_document(ref):
   # independently verified by verify_source_contract on every fresh fetch.
   from niloblog_pipeline import fetch
   source=fetch(doc['url'],urlsplit(doc['url']).hostname)
-  return dict(source,research_ref=ref,source_label=doc['source_label'],document_scope=doc['scope'],research_only=True,publication_target=False)
+  return dict(source,research_ref=ref,source_label=doc['source_label'],document_scope=doc['scope'],research_only=True,publication_target=False,research_citation={k:doc[k]for k in ('authority_class','publisher','published_date','publication_month','doi','publication_number','study_context')if k in doc})
  request=urllib.request.Request(DOCUMENTS[ref]['url'],headers={'User-Agent':'AFP-Niloblog-editorial/1.0'})
  with urllib.request.urlopen(request,timeout=45)as response:
   if response.status!=200:raise ValueError('Research document HTTP status changed')
   raw=response.read(MAX_BYTES+1)
   return verify_pdf(raw,ref,response.url,response.headers.get('Content-Type',''))
+
+
+def required_authority_coverage(bundle):
+ # Authority is registered against the exact original URL, never model supplied.
+ # A commercial Persian source cannot impersonate an Iranian public institution.
+ groups={};sources=[bundle.get('local'),bundle['article']]+bundle.get('technical',[])
+ for index,source in enumerate(sources):
+  if not source:continue
+  ref=source.get('research_ref');doc=DOCUMENTS.get(ref,{})
+  role=doc.get('authority_class')
+  if role not in ('iran_public_research','international_public_research')or source.get('url')!=doc.get('url'):continue
+  admitted=[e for e in bundle.get('required_evidence',[])if e.get('source_index')==index and e.get('quote')]
+  if not admitted:continue
+  groups.setdefault(role,[]).append({'source_index':index,'research_ref':ref,'url':doc['url'],'publisher':doc['publisher'],'source_label':doc['source_label'],'citation':source.get('research_citation',{}),'fact_ids':[e['excerpt_id']for e in admitted]})
+ missing=[k for k in ('iran_public_research','international_public_research')if not groups.get(k)]
+ if missing:raise ValueError('Iranian and international research evidence required: '+','.join(missing))
+ return {'policy':'iran-public-and-international-research-v1','source_groups':groups,'publication_authorized':False,'historical_studies_are_not_current_local_observations':True,'commercial_sources_do_not_satisfy_public_research_requirement':True}
+
+def review_covers_required_authorities(review,bundle):
+ policy=bundle.get('research_policy')
+ if policy is None:return True # Legacy fixtures; live general_source_bundle always enforces policy.
+ indexes={f.get('source_index')for f in review.get('bound_technical_evidence',[])}
+ return all(any(source['source_index']in indexes for source in group)for group in policy['source_groups'].values())
