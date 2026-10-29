@@ -134,7 +134,14 @@ def plan_article(row,m,bundle,plan,history):
   prompt=general_plan_prompt()
  placement={'allowed_fact_ids':[f['excerpt_id']for f in plan['facts']],'technical_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']>0],'required_placement':'Use facts from at least two distinct technical sources in outline sections; no local facts or city references are allowed.'}if is_general(row)else None
  brief=agnes(prompt+json.dumps({'title':row['title'],'angle':m['angles'][row['angle_ref']],'evidence_plan':plan,'contrast_only_not_evidence':novelty_context(history,row,m['angles'][row['angle_ref']]),'contract':article_contract(row,bundle,m['angles'][row['angle_ref']]),'outline_evidence_requirements':placement or {'allowed_fact_ids':[f['excerpt_id']for f in plan['facts']],'local_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']==0],'technical_fact_ids':[f['excerpt_id']for f in plan['facts']if f['source_index']>0],'required_placement':'At least one outline section fact_ids must contain a local_fact_id, and at least one must contain a technical_fact_id. Mentioning local evidence only in reason does not count. Keep local context short and dated; never infer local installation or faults.'}},ensure_ascii=False),temperature=0.05)
- save(A/'briefs'/f"{row['id']}.json",{'brief':brief,'run_id':os.getenv('GITHUB_RUN_ID'),'at':now().isoformat()})
+ if is_general(row):
+  from niloblog_general_scope import validate_or_complete_outline
+  original=copy.deepcopy(brief)
+  def complete_shape(data):
+   return agnes('فقط شکل طرح ناقص را کامل کن. خروجی JSON با outline آرایه اشیای heading و fact_ids باشد. عنوان های بخش ها عین headings و با همان ترتیب بمانند. تنها شناسه واقعی شواهد متناسب همان بخش را انتخاب کن. هیچ عنوان، واقعیت، منبع یا verdict جدید نساز. اگر برای عنوانی شاهد نداری blocked=true بده. این مرحله تأیید موضوع یا انتشار نیست. همه کنترل ها دوباره اجرا می شوند.\n'+json.dumps(data,ensure_ascii=False),temperature=0.05)
+  try:brief=validate_or_complete_outline(brief,plan,complete_shape,PipelineStop)
+  finally:save(A/'briefs'/f"{row['id']}.json",{'brief':brief,'original_brief':original,'run_id':os.getenv('GITHUB_RUN_ID'),'at':now().isoformat()})
+ else:save(A/'briefs'/f"{row['id']}.json",{'brief':brief,'run_id':os.getenv('GITHUB_RUN_ID'),'at':now().isoformat()})
  return validate_brief(brief,plan)
 
 def candidate_diagnostic(error):

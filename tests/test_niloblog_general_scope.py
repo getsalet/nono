@@ -24,6 +24,21 @@ class GeneralScopeTests(unittest.TestCase):
    for value in [False,None,'true']:
     review=copy.deepcopy(self.review);review[key]=value
     self.assertFalse(n.review_passes(n.bind_review_evidence(review,self.plan),self.bundle))
+ def test_outline_completion_is_bounded_and_preserves_admission_verdict(self):
+  raw=copy.deepcopy(self.brief);raw['outline']=[s['heading']for s in self.brief['outline']]
+  repair=lambda data:{'outline':self.brief['outline']}
+  fixed=validate_or_complete_outline(raw,self.plan,repair,n.PipelineStop)
+  self.assertEqual(fixed['outline'],self.brief['outline']);self.assertEqual(raw['outline'],[s['heading']for s in self.brief['outline']])
+  for k in ['eligible','grounded','scope_appropriate','independently_useful']:
+   bad=copy.deepcopy(raw);bad[k]=False
+   with patch('builtins.print')as unused:
+    callback=unittest.mock.Mock(side_effect=AssertionError('must not retry rejected topic'))
+    with self.assertRaises(n.PipelineStop):validate_or_complete_outline(bad,self.plan,callback,n.PipelineStop)
+    callback.assert_not_called()
+ def test_outline_completion_cannot_change_headings_or_invent_evidence(self):
+  raw=copy.deepcopy(self.brief);raw['outline']=[s['heading']for s in self.brief['outline']]
+  for bad in [{'outline':[{'heading':'عنوان تازه','fact_ids':['invented']}]*3},{'outline':[{'heading':h,'fact_ids':['invented']}for h in raw['outline']]},{'blocked':True}]:
+   with self.assertRaises(n.PipelineStop):validate_or_complete_outline(raw,self.plan,lambda data:bad,n.PipelineStop)
  def test_overlay_preserves_original_thousand_rows_and_state(self):
   m=copy.deepcopy(self.matrix);s=copy.deepcopy(self.state);out,a=apply_general_queue(m,s,self.queue)
   self.assertEqual(m,self.matrix);self.assertEqual(s,self.state);self.assertEqual(out['titles'][:1000],self.matrix['titles']);self.assertEqual(len(out['titles']),1002)
