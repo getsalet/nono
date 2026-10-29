@@ -27,7 +27,19 @@ def partition_source(text):
   elif segment.strip():safe.append(segment)
  return safe,excluded
 
+def contract_evidence(bundle):
+ required=copy.deepcopy(bundle.get('required_evidence',[]))
+ sources=[bundle.get('local'),bundle['article']]+bundle.get('technical',[])
+ for e in required:
+  if sentence_quality(e.get('quote','')):raise ValueError('Source contract quote quarantined')
+  i=e.get('source_index');quote=normalize(e.get('quote',''))
+  if type(i)is not int or not 0<i<len(sources)or sources[i]is None or e.get('scope')!='technical_general'or len(quote)<20 or quote not in normalize(sources[i]['text']):raise ValueError('Source contract quote not verifiable')
+ return required
+
 def clean_catalog(bundle):
+ required=contract_evidence(bundle)
+ # Contract-bound questions admit no extra claims from unrelated raw sections.
+ if required:return required
  catalog=[]
  for index,source in enumerate([bundle.get('local'),bundle['article']]+bundle.get('technical',[])):
   if source is None:continue
@@ -43,12 +55,13 @@ def clean_catalog(bundle):
  return catalog
 
 def model_source_view(bundle):
- result=copy.deepcopy(bundle)
- for source in [result.get('local'),result['article']]+result.get('technical',[]):
+ result=copy.deepcopy(bundle);required=contract_evidence(bundle)
+ for index,source in enumerate([result.get('local'),result['article']]+result.get('technical',[])):
   if source is None:continue
   safe,excluded=partition_source(source['text'])
-  source['text']='\n'.join(safe)
-  source['source_quality']={'excluded_sentence_count':len(excluded),'excluded_sentences_must_not_be_reconstructed':True}
+  admitted=[e['quote']for e in required if e['source_index']==index]if required else safe
+  source['text']='\n'.join(admitted)
+  source['source_quality']={'excluded_sentence_count':len(excluded),'excluded_sentences_must_not_be_reconstructed':True,'contract_excerpts_only':bool(required)}
  return result
 
 def source_quality_audit(bundle):

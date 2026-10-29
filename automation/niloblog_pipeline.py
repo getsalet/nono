@@ -99,7 +99,7 @@ def validate_candidate(row,obj,bundle,stage):
 
 def failure_policy(error):
  reason=str(error) if isinstance(error,PipelineStop) else ''
- if reason in {'Topic brief rejected','Topic brief invalid','Editorial source insufficiency','Local evidence missing','Evidence plan requires bounded sourced facts','Evidence quote not verifiable','Unknown evidence excerpt','Evidence claim missing','Invalid evidence source','Source contract quote quarantined'}:
+ if reason in {'Topic brief rejected','Topic brief invalid','Editorial source insufficiency','Local evidence missing','Evidence plan requires bounded sourced facts','Evidence quote not verifiable','Unknown evidence excerpt','Evidence claim missing','Invalid evidence source','Source contract quote quarantined','Source contract quote not verifiable'}:
   return {'category':'evidence_or_topic','action':'hold_topic_select_different','continue_candidates':True}
  if reason in {'Independent editorial review rejected','Cross-blog content reuse','Niloblog content reuse'}:
   return {'category':'editorial_or_duplicate','action':'hold_topic_select_different','continue_candidates':True}

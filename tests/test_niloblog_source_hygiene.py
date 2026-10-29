@@ -29,7 +29,7 @@ class SourceHygieneTests(unittest.TestCase):
   topic=q['topics'][0];key='nilo-general-'+__import__('hashlib').sha256(topic['id'].encode()).hexdigest()[:16]
   state={'held':{},'published':[{'key':key}],'current':None,'intent':None};before=copy.deepcopy(state)
   out,audit=apply_general_queue(matrix,state,q)
-  self.assertEqual(state,before);self.assertNotIn(key,audit['changed_keys']);self.assertEqual(audit['eligible_pending_rows'],2)
+  self.assertEqual(state,before);self.assertNotIn(key,audit['changed_keys']);self.assertEqual(audit['eligible_pending_rows'],sum(t.get('source_review_required')is not True for t in q['topics'])-1)
  def test_correct_prevention_sentences_are_preserved(self):
   for text in ['پاکسازی از گرفتگی جلوگیری می کند و به حفظ جریان آب کمک می کند.','حفظ تمیزی از سایش زودرس جلوگیری می کند.']:
    safe,excluded=partition_source(text);self.assertEqual(safe,[text]);self.assertEqual(excluded,[])
@@ -66,10 +66,31 @@ class SourceHygieneTests(unittest.TestCase):
     for e in topic['evidence']:self.assertEqual(sentence_quality(e['quote']),[])
  def test_known_defective_topic_is_preserved_but_not_generated(self):
   from niloblog_general_scope import apply_general_queue
-  q=n.read(n.D/'general-source-queue.json');matrix=n.read(n.D/'title-matrix.json');before=copy.deepcopy(q)
+  q=n.read(n.D/'general-source-queue.json');matrix=n.read(n.D/'title-matrix.json')
+  # Fixture proves the quarantine gate survives a resolved production topic.
+  q['topics'][1]['source_review_required']=True;before=copy.deepcopy(q)
   out,audit=apply_general_queue(matrix,{'held':{},'published':[]},q)
   self.assertEqual(q,before);self.assertEqual(audit['topics'][1]['reason'],'source_quality_review_required');self.assertEqual(audit['topics'][1]['pending_rows'],0)
   self.assertFalse(any(r.get('editorial_source_contract',{}).get('id')==q['topics'][1]['id']for r in out['titles']))
+ def test_contract_scoped_catalog_and_model_view_exclude_unreviewed_claims(self):
+  bundle=copy.deepcopy(self.bundle);required={'excerpt_id':'s1-contract0','source_index':1,'scope':'technical_general','quote':self.good};bundle['required_evidence']=[required]
+  before=copy.deepcopy(bundle);catalog=n.evidence_catalog(bundle);view=model_source_view(bundle)
+  self.assertEqual(catalog,[required]);self.assertEqual(bundle,before)
+  self.assertEqual(view['article']['text'],self.good);self.assertEqual(view['technical'][0]['text'],'')
+  self.assertNotIn(self.after,view['article']['text']);self.assertEqual(view['article']['sha256'],'raw-hash')
+  self.assertTrue(view['article']['source_quality']['contract_excerpts_only'])
+ def test_contract_quote_must_verify_against_its_own_raw_source(self):
+  for index,quote in [(2,self.good),(999,self.good),(1,'این جمله در هیچ منبع اصلی بررسی شده وجود ندارد.')]:
+   bundle=copy.deepcopy(self.bundle);bundle['required_evidence']=[{'excerpt_id':'s1-contract0','source_index':index,'scope':'technical_general','quote':quote}]
+   with self.assertRaisesRegex(n.PipelineStop,'Source contract quote not verifiable'):n.evidence_catalog(bundle)
+ def test_storage_resolution_preserves_identity_and_does_not_waive_two_sources(self):
+  queue=n.read(n.D/'general-source-queue.json');topic=queue['topics'][1]
+  self.assertEqual(topic['id'],'coil-storage-hazards-v1-general-v1');self.assertFalse(topic['source_review_required'])
+  self.assertEqual(topic['research_refs'],['site-post-900','site-post-35907'])
+  self.assertIn('حیوانات خردکننده',topic['source_review_resolution']['excluded_quote'])
+  self.assertNotIn('حیوانات خردکننده',' '.join(e['quote']for e in topic['evidence']))
+  self.assertEqual({e['source_ref']for e in topic['evidence']},set(topic['research_refs']))
+  self.assertFalse(topic['source_review_resolution']['publication_authorized'])
  def test_local_ledger_path_is_not_silently_changed(self):
   bundle=copy.deepcopy(self.bundle);bundle.pop('content_scope');bundle['local']={'text':'این یک گزارش معتبر محلی درباره کشت محصول و شهرستان مورد نظر است'}
   self.assertTrue(any(e['scope']=='local_report'for e in n.evidence_catalog(bundle)))
