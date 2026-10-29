@@ -194,7 +194,10 @@ def main(argv=None):
    desired=args.mode in('publish','repair','reconcile')
    if pid:
     actual=read_post(page,pid);errors=persisted_errors(item,item['post'],actual)
-    if errors and not force_repair:raise NativeError('Previously saved native draft changed; manual review required')
+    if errors and not force_repair:
+     from parsiblog_native import persisted_diagnostic
+     run_report(native_mismatch=persisted_diagnostic(item,item['post'],actual),native_id=str(pid))
+     raise NativeError('Previously saved native draft changed; manual review required: '+', '.join(errors))
     if force_repair:
      # Reconfirm exact remote snapshot immediately before the one-shot update.
      from parsiblog_repair import snapshot_digest
