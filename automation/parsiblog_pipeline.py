@@ -93,6 +93,9 @@ def generate(item):
   title_binding=bind_assigned_title(obj,assigned_title)
   if title_binding is not None:item['title_binding']=title_binding
   render_city_token(item,obj)
+  from parsiblog_text import render_native_ezafe
+  ezafe_count=render_native_ezafe(obj)
+  if ezafe_count:item['native_orthography']={'policy':'persian-ezafe-native-v1','replacements':ezafe_count}
   link_errors,link_report=render_contextual_links(item,obj);errors,report=qa(item,obj,ROOT,require_image=False);errors=link_errors+errors
   run_report(phase='text_preflight',generation_attempt=attempt+1,qa_errors=errors[:12])
   if not errors:

@@ -8,6 +8,7 @@ def language_errors(text):
  # Cyrillic, Greek, CJK and isolated foreign letters, not just Latin words.
  value=re.sub(r'(?<!\w)AFP(?!\w)','',str(text),flags=re.I)
  if any(unicodedata.category(c).startswith('L')and 'ARABIC'not in unicodedata.name(c,'')for c in value):return ['Unexpected foreign-language text in Persian article']
+ if '\u0654'in value:return ['Unsupported combining hamza requires native-safe Persian spelling']
  if '\ufffd'in value or re.search(r'\?{2,}',value):return ['Corrupt replacement characters in Persian article']
  return []
 def post_language_errors(post):
@@ -102,3 +103,28 @@ def apply_language_patch(post,payload):
  if any(e['count']==0 for e in changes.values()):raise ValueError('Language patch did not match visible token')
  digest=lambda obj:hashlib.sha256(json.dumps(obj,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
  return candidate,{'policy':'exact-visible-language-token-v1','before_sha256':digest(post),'after_sha256':digest(candidate),'edits':[{'field':field,'old':old,**e}for(field,old),e in changes.items()]}
+
+
+def render_native_ezafe(post):
+ # Observed Parsiblog storage turns combining U+0654 into '?'.
+ # Use the standard Persian ezafe spelling BEFORE QA and editorial review.
+ # Do not touch URLs, markup attributes, numbers or unrelated combining marks.
+ if not isinstance(post,dict):return 0
+ count=0
+ def render(value):
+  nonlocal count
+  if not isinstance(value,str):return value
+  count+=value.count('ه\u0654');return value.replace('ه\u0654','ه\u200cی')
+ for key in ('meta_description',):
+  if isinstance(post.get(key),str):post[key]=render(post[key])
+ if isinstance(post.get('tags'),list):post['tags']=[render(v)for v in post['tags']]
+ if isinstance(post.get('html'),str)and 'ه\u0654'in post['html']:
+  soup=BeautifulSoup(post['html'],'html.parser')
+  for node in list(soup.find_all(string=True)):
+   if isinstance(node,Comment)or node.parent.name in ('script','style'):continue
+   result=render(str(node))
+   if result!=str(node):node.replace_with(result)
+  for img in soup.find_all('img'):
+   if isinstance(img.get('alt'),str):img['alt']=render(img['alt'])
+  post['html']=str(soup)
+ return count

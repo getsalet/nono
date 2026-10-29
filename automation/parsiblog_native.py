@@ -65,6 +65,7 @@ def persisted_errors(item,expected,actual):
 def persisted_diagnostic(item,expected,actual):
  # Content-only aggregate evidence: no native response, credentials or body snippets.
  import hashlib,difflib
+ from parsiblog_repair import snapshot_digest
  from city_backlink_policy import Inspect
  q=Inspect();q.feed(expected['html']);p=Inspect();p.feed(actual['html'])
  e=normalized_body(' '.join(q.plain));a=normalized_body(' '.join(p.plain))
@@ -74,7 +75,7 @@ def persisted_diagnostic(item,expected,actual):
   if tag=='equal':continue
   edits.append({'kind':tag,'expected_offset':i,'actual_offset':k,'expected_length':j-i,'actual_length':l-k,'expected_codepoints':['U+%04X'%ord(c) for c in e[i:min(j,i+8)]],'actual_codepoints':['U+%04X'%ord(c) for c in a[k:min(l,k+8)]]})
   if len(edits)>=8:break
- return {'errors':persisted_errors(item,expected,actual),'text':{'expected_length':len(e),'actual_length':len(a),'expected_sha256':digest(e),'actual_sha256':digest(a),'differences':edits},'structure':{'expected_links':len(q.links),'actual_links':len(p.links),'expected_images':len(q.images),'actual_images':len(p.images),'expected_h2':q.tags.count('h2'),'actual_h2':p.tags.count('h2'),'expected_h3':q.tags.count('h3'),'actual_h3':p.tags.count('h3')},'title_matches':title_matches(expected['title'],actual['title']),'published':actual.get('published') is True}
+ return {'native_snapshot_sha256':snapshot_digest(actual),'errors':persisted_errors(item,expected,actual),'text':{'expected_length':len(e),'actual_length':len(a),'expected_sha256':digest(e),'actual_sha256':digest(a),'differences':edits},'structure':{'expected_links':len(q.links),'actual_links':len(p.links),'expected_images':len(q.images),'actual_images':len(p.images),'expected_h2':q.tags.count('h2'),'actual_h2':p.tags.count('h2'),'expected_h3':q.tags.count('h3'),'actual_h3':p.tags.count('h3')},'title_matches':title_matches(expected['title'],actual['title']),'published':actual.get('published') is True}
 def save_post(page,item,publish=False,pid=None,checkpoint=None):
  checkpoint=checkpoint or (lambda phase,pid=None:None)
  checkpoint('editor_validation',pid)
