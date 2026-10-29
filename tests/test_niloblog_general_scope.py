@@ -19,6 +19,18 @@ class GeneralScopeTests(unittest.TestCase):
   for text in ['منبع س2 صراحتا بیان می کند','منبع s2 درباره هزینه','s2-contract0','از سرهنگ کردن هزینه ها جلوگیری می کند','تعویض از جلوگیری از افت کارایی و ضایعات بیشتر جلوگیری می کند']:
    with self.assertRaises(n.PipelineStop):validate_general_visible_prose('<p>'+text+'</p>',n.canon,n.PipelineStop)
   validate_general_visible_prose('<p>مقاله نگهداری نوار تیپ و هزینه های آن سه دسته هزینه را توضیح می دهد.</p>',n.canon,n.PipelineStop)
+ def test_reviewer_cannot_approve_a_self_rewritten_candidate(self):
+  good=n.bind_review_evidence(self.review,self.plan)
+  self.assertTrue(n.review_passes(good,self.bundle))
+  for key in ['candidate','html','post','rewritten_candidate','revised_candidate','corrected_candidate']:
+   for value in [None,{},'متن اصلاح شده']:
+    review=copy.deepcopy(good);review[key]=value
+    self.assertFalse(n.review_passes(review,self.bundle),key)
+  self.assertNotIn('candidate',self.review)
+ def test_review_prompt_forbids_conditional_self_repair(self):
+  prompt=general_review_prompt()
+  self.assertIn('متن را اصلاح یا بازنویسی نکن',prompt)
+  self.assertIn('اگر اصلاح لازم است approved=false',prompt)
  def test_reader_readiness_and_causal_consistency_are_mandatory(self):
   for key in ['reader_ready','causal_consistency']:
    for value in [False,None,'true']:
