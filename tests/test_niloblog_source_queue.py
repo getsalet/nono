@@ -9,6 +9,10 @@ class SourceQueueTests(unittest.TestCase):
  def setUpClass(cls):
   cls.matrix=n.read(n.D/'title-matrix.json');cls.queue=n.read(n.D/'source-bound-queue.json')
  def setUp(self):self.state={'held':{},'published':[],'current':None,'intent':None}
+ def test_cost_evidence_contains_explanations_not_only_contents_headings(self):
+  quote=self.queue['topics'][0]['evidence'][0]['quote']
+  for detail in ('خرید تجهیزات و ابزارهای','خرید و تعویض قطعات یدکی','هزینه های مرتبط با کارکنان'):
+   self.assertIn(detail,quote)
  def test_overlay_keeps_original_matrix_and_state_unchanged(self):
   matrix=copy.deepcopy(self.matrix);state=copy.deepcopy(self.state)
   out,audit=apply_source_queue(matrix,state,self.queue)
