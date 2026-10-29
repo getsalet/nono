@@ -1,0 +1,85 @@
+import copy,json,sys,tempfile,unittest
+from pathlib import Path
+from unittest.mock import patch
+ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'automation'))
+import niloblog_pipeline as n
+from niloblog_general_scope import *
+class GeneralScopeTests(unittest.TestCase):
+ @classmethod
+ def setUpClass(cls):
+  cls.matrix=n.read(n.D/'title-matrix.json');cls.queue=n.read(n.D/'general-source-queue.json')
+ def setUp(self):
+  self.state={'held':{},'published':[],'current':None,'intent':None}
+  self.bundle={'content_scope':SCOPE,'local':None,'locality':{},'article':{'text':'مقاله عمومی فنی معتبر با اطلاعات درباره نگهداری نوار تیپ'},'technical':[{'text':'منبع فنی دوم با دستورهای روشن درباره نگهداری و تمیزی خطوط'}],'links':[]}
+  self.plan=n.source_evidence_plan({'angle_ref':'a'},{'angles':{'a':{'brief':'نگهداری'}}},n.evidence_catalog(self.bundle),self.bundle)
+  ids=[f['excerpt_id']for f in self.plan['facts']]
+  self.brief={'eligible':True,'grounded':True,'scope_appropriate':True,'independently_useful':True,'semantic_duplicate':False,'contains_local_claims':False,'reader_question':'هزینه های نگهداری از چه بخش هایی تشکیل شده است؟','distinct_value':'طبقه بندی محدود هزینه ها با شرح مستند و بدون تکرار موضوع های قبلی','outline':[{'heading':h,'fact_ids':ids}for h in ['دسته نخست','دسته دوم','حدود ادعا']]}
+  self.review={'approved':True,'grounded':True,'scope_appropriate':True,'independently_useful':True,'semantic_duplicate':False,'contains_local_claims':False,'unsupported_claims':[],'technical_evidence_ids':ids}
+ def test_overlay_preserves_original_thousand_rows_and_state(self):
+  m=copy.deepcopy(self.matrix);s=copy.deepcopy(self.state);out,a=apply_general_queue(m,s,self.queue)
+  self.assertEqual(m,self.matrix);self.assertEqual(s,self.state);self.assertEqual(out['titles'][:1000],self.matrix['titles']);self.assertEqual(len(out['titles']),1002)
+  for row in out['titles'][1000:]:self.assertNotIn('locality_ref',row);self.assertNotIn('شهرستان',row['title'])
+  self.assertFalse(a['publication_permission_granted']);self.assertFalse(a['retry_permission_granted'])
+ def test_one_stable_identity_per_question_not_per_county(self):
+  a,_=apply_general_queue(self.matrix,self.state,self.queue);m=copy.deepcopy(self.matrix);m['localities']={}
+  b,_=apply_general_queue(m,self.state,self.queue)
+  self.assertEqual([r['id']for r in a['titles'][1000:]],[r['id']for r in b['titles'][1000:]])
+ def test_held_published_current_intent_and_saved_general_keys_not_recreated(self):
+  out,_=apply_general_queue(self.matrix,self.state,self.queue);key=out['titles'][1000]['id']
+  for s,protected in [({'held':{key:{}}},[]),({'published':[{'key':key}]},[]),({'current':key},[]),({'intent':{'key':key}},[]),({},[key])]:
+   out,_=apply_general_queue(self.matrix,s,self.queue,protected);self.assertNotIn(key,[r['id']for r in out['titles'][1000:]])
+ def test_legacy_holds_preserved_and_general_failure_stops_same_question(self):
+  s={'held':{'legacy':{'editorial_source_contract_id':'maintenance-cost-components-v2'}}};before=copy.deepcopy(s)
+  out,_=apply_general_queue(self.matrix,s,self.queue);self.assertEqual(len(out['titles']),1002);self.assertEqual(s,before)
+  s['held']['general']={'editorial_source_contract_id':self.queue['topics'][0]['id']}
+  out,a=apply_general_queue(self.matrix,s,self.queue);self.assertEqual(a['topics'][0]['pending_rows'],0)
+ def test_manifest_cannot_grant_permissions_or_duplicate_topic_identity(self):
+  for key in ['publication_permission_granted','retry_permission_granted']:
+   q=copy.deepcopy(self.queue);q[key]=True
+   with self.assertRaises(ValueError):apply_general_queue(self.matrix,self.state,q)
+  q=copy.deepcopy(self.queue);q['topics'].append(q['topics'][0])
+  with self.assertRaises(ValueError):apply_general_queue(self.matrix,self.state,q)
+ def test_general_source_bundle_never_fetches_local_news(self):
+  m,_=apply_general_queue(self.matrix,self.state,self.queue);row=m['titles'][1000];targets={t['key']:t for t in n.read(n.D/'article-targets.json')['targets']}
+  topic=row['editorial_source_contract'];quotes={e['source_url']:' '.join(x['quote']for x in topic['evidence']if x['source_url']==e['source_url'])for e in topic['evidence']}
+  def fetch(url,host=None):return {'url':url,'text':quotes.get(url,'منبع فنی عمومی با اطلاعات معتبر درباره نوار تیپ و نگهداری'),'checked_at':'test'}
+  with patch.object(n,'fetch',side_effect=fetch)as f:
+   bundle=n.source_bundle(row,m,targets)
+   self.assertIsNone(bundle['local']);self.assertEqual(len(f.call_args_list),3)
+   self.assertTrue(all(c.args[1]=='navar-abyari.ir'for c in f.call_args_list))
+ def test_general_ledger_has_no_local_fact(self):
+  self.assertTrue(is_general(self.plan));self.assertTrue(all(f['source_index']>0 and f['scope']=='technical_general'for f in self.plan['facts']))
+  self.assertFalse(self.plan['publication_authorized'])
+ def test_fabricated_local_source_index_is_rejected(self):
+  bad=copy.deepcopy(self.plan);bad['facts'][0]['source_index']=0
+  with self.assertRaises(n.PipelineStop):n.verify_evidence_plan(bad,self.bundle)
+ def test_general_requires_two_technical_sources(self):
+  bad=copy.deepcopy(self.plan);bad['facts']=[bad['facts'][0],bad['facts'][0]]
+  with self.assertRaises(n.PipelineStop):n.verify_evidence_plan(bad,self.bundle)
+ def test_general_brief_does_not_need_fake_local_flag(self):
+  self.assertEqual(n.validate_brief(self.brief,self.plan),self.brief);self.assertNotIn('locally_distinct',self.brief)
+ def test_general_brief_unknown_ids_duplicates_local_claims_and_unsupported_scope_blocked(self):
+  for k,v in [('contains_local_claims',True),('semantic_duplicate',True),('grounded',False),('scope_appropriate',False),('independently_useful',False)]:
+   bad=copy.deepcopy(self.brief);bad[k]=v
+   with self.assertRaises(n.PipelineStop):n.validate_brief(bad,self.plan)
+  bad=copy.deepcopy(self.brief);bad['outline'][0]['fact_ids']=['invented']
+  with self.assertRaises(n.PipelineStop):n.validate_brief(bad,self.plan)
+ def test_review_binds_real_technical_quotes_without_fake_local_quote(self):
+  bound=n.bind_review_evidence(self.review,self.plan)
+  self.assertTrue(n.review_passes(bound,self.bundle));self.assertNotIn('local_evidence_quote',bound)
+ def test_general_review_rejects_unsupported_inverted_duplicate_and_local_claims(self):
+  for k,v in [('unsupported_claims',['خلاف منبع']),('semantic_duplicate',True),('contains_local_claims',True),('scope_appropriate',False),('independently_useful',False),('technical_evidence_ids',['invented','s1-e0'])]:
+   review=copy.deepcopy(self.review);review[k]=v
+   self.assertFalse(n.review_passes(n.bind_review_evidence(review,self.plan),self.bundle))
+ def test_local_contract_still_requires_actual_local_evidence(self):
+  plan=copy.deepcopy(self.plan);plan.pop('content_scope')
+  with self.assertRaises(n.PipelineStop):n.validate_brief(self.brief,plan)
+  review=copy.deepcopy(self.review);review['locally_distinct']=True
+  self.assertFalse(n.review_passes(review,dict(self.bundle,content_scope='local',local={'text':'واقعیت محلی'})))
+ def test_general_writer_uses_no_legacy_local_prompt(self):
+  with tempfile.TemporaryDirectory()as tmp,patch.object(n,'A',Path(tmp)),patch.object(n,'source_bundle',return_value=self.bundle),patch.object(n,'all_history',return_value=[]),patch.object(n,'plan_article',return_value=self.brief),patch.object(n,'validate_candidate',return_value=700),patch('roya_backlink_queue.agnes',side_effect=[{'title':'عنوان','html':'<p>متن فارسی</p>'},self.review])as ai,patch.object(n,'reserve')as reserve,patch.object(n,'checkpoint')as checkpoint:
+   row={'id':'general-test','title':'عنوان','content_scope':SCOPE,'angle_ref':'a'}
+   item=n.generate(row,{'angles':{'a':{'brief':'پرسش عمومی'}}},{},{},self.state,validation_only=True)
+   self.assertEqual(item['status'],'validated_not_published');self.assertFalse(item['publication_verified']);reserve.assert_not_called();checkpoint.assert_not_called()
+   self.assertIn('آموزشی عمومی',ai.call_args_list[0].args[0]);self.assertNotIn('گزارش تاریخی',ai.call_args_list[0].args[0]);self.assertIn('بازبین مستقل',ai.call_args_list[1].args[0])
+if __name__=='__main__':unittest.main()
