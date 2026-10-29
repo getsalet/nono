@@ -13,6 +13,16 @@ class SourceQueueTests(unittest.TestCase):
   quote=self.queue['topics'][0]['evidence'][0]['quote']
   for detail in ('خرید تجهیزات و ابزارهای','خرید و تعویض قطعات یدکی','هزینه های مرتبط با کارکنان'):
    self.assertIn(detail,quote)
+ def test_causal_polarity_rejects_observed_inversions(self):
+  bad=['از پاکسازی دقیق باید اطمینان حاصل شود تا از مسدود شدن قطره چکان ها و حفظ جریان آب جلوگیری گردد.','حفظ تمیزی و آزاد بودن قطره چکان ها از خاک و ذرات معلق، مستقیماً به سایش و کاهش کارایی نوار تیپ کمک می کند.']
+  for text in bad:
+   with self.assertRaisesRegex(n.PipelineStop,'Causal polarity'):n.validate_causal_polarity('<p>'+text+'</p>')
+ def test_causal_polarity_allows_correct_prevention_statements(self):
+  for text in ['پاکسازی از مسدود شدن قطره چکان ها جلوگیری می کند و به حفظ جریان آب کمک می کند.','تمیزی از سایش و کاهش کارایی جلوگیری می کند.']:
+   n.validate_causal_polarity('<p>'+text+'</p>')
+ def test_observed_approved_candidate_is_now_blocked_before_publication(self):
+  with self.assertRaisesRegex(n.PipelineStop,'Causal polarity'):
+   n.validate_article({'title':'عنوان'},{'title':'عنوان','html':'<p>تمیزی به سایش زودرس کمک می کند.</p>'},{'links':[]})
  def test_overlay_keeps_original_matrix_and_state_unchanged(self):
   matrix=copy.deepcopy(self.matrix);state=copy.deepcopy(self.state)
   out,audit=apply_source_queue(matrix,state,self.queue)
