@@ -37,8 +37,8 @@ def general_source_bundle(row,m,targets,fetch,safeurl):
  links=[]
  for x in m['link_plans'][row['link_plan_ref']]['required_links']:
   t=targets[x['target_ref']];links.append({'url':safeurl(t['target_url']),'anchor':x.get('anchor_keyword')or t['site_title']})
- article=fetch(links[0]['url'],'navar-abyari.ir')
- technical=[dict(fetch(targets[ref]['target_url'],'navar-abyari.ir'),research_ref=ref)for ref in research_refs(row,m,targets)]
+ article=dict(fetch(links[0]['url'],'navar-abyari.ir'),source_label=links[0]['anchor'])
+ technical=[dict(fetch(targets[ref]['target_url'],'navar-abyari.ir'),research_ref=ref,source_label=targets[ref]['site_title'])for ref in research_refs(row,m,targets)]
  required=verify_source_contract(row['editorial_source_contract'],technical,canon)
  return {'content_scope':SCOPE,'local':None,'locality':{},'article':article,'technical':technical,'links':links,'required_evidence':required}
 
@@ -88,6 +88,15 @@ def general_review_passes(review,bundle,canon):
   if type(i)is not int or not 1<=i<len(sources)or f.get('scope')!='technical_general'or len(q)<20 or q not in canon(sources[i]['text']):return False
   indexes.add(i)
  return len(indexes)>=2
+
+def render_source_labels(text,bundle):
+ # Presentation-only mapping, like approved link tokens; never changes claims.
+ # Unknown or malformed IDs remain untouched and fail the prose gate.
+ sources=[None,bundle['article']]+bundle.get('technical',[])
+ def replace(match):
+  i=int(match.group(1));label=sources[i].get('source_label')if 0<i<len(sources)and sources[i]else None
+  return 'مقاله «'+label+'»'if isinstance(label,str)and label.strip()else match.group(0)
+ return re.sub(r'(?:منبع|شاهد)\s+[سsS]\s*([۰-۹0-9]+)(?![۰-۹0-9A-Za-z_-])',replace,text)
 
 def validate_general_visible_prose(markup,canon,Stop):
  from bs4 import BeautifulSoup

@@ -259,6 +259,9 @@ def prepare_article(obj,bundle,row=None):
  soup=BeautifulSoup(obj.get('html',''),'html.parser')
  for node in list(soup.find_all(string=True)):
   clean=str(node)
+  if is_general(bundle):
+   from niloblog_general_scope import render_source_labels
+   clean=render_source_labels(clean,bundle)
   for bad,good in {'هکتar':'هکتار','سir':'سیر','زraعی':'زراعی'}.items():clean=clean.replace(bad,good)
   if clean!=str(node):node.replace_with(clean)
  # Preserve every word: extra subtopics are h3, not extra top-level sections.
@@ -266,6 +269,9 @@ def prepare_article(obj,bundle,row=None):
  for heading in headings[5:]:heading.name='h3'
  obj['html']=str(soup)
  meta=obj.get('meta_description','')
+ if is_general(bundle)and isinstance(meta,str):
+  from niloblog_general_scope import render_source_labels
+  meta=render_source_labels(meta,bundle);obj['meta_description']=meta
  if not isinstance(meta,str) or not 110<=len(meta)<=165:
   # An extractive description adds no new facts and still goes through review.
   text=canon(BeautifulSoup(obj.get('html',''),'html.parser').get_text(' ',strip=True))
@@ -286,7 +292,7 @@ def validate_article(row,obj,bundle):
  if obj.get('title')!=row['title'] or len(obj['title'])>78:raise PipelineStop('Exact matrix title required')
  if is_general(row):
   from niloblog_general_scope import validate_general_visible_prose
-  validate_general_visible_prose(obj.get('html',''),canon,PipelineStop)
+  validate_general_visible_prose(obj.get('html','')+'<p>'+html.escape(obj.get('meta_description',''))+'</p>',canon,PipelineStop)
  validate_causal_polarity(obj.get('html',''))
  soup=BeautifulSoup(obj.get('html',''),'html.parser');allowed_tags=ARTICLE_ALLOWED_TAGS
  for t in soup.find_all(True):

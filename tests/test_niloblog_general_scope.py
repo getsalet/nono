@@ -39,6 +39,19 @@ class GeneralScopeTests(unittest.TestCase):
   raw=copy.deepcopy(self.brief);raw['outline']=[s['heading']for s in self.brief['outline']]
   for bad in [{'outline':[{'heading':'عنوان تازه','fact_ids':['invented']}]*3},{'outline':[{'heading':h,'fact_ids':['invented']}for h in raw['outline']]},{'blocked':True}]:
    with self.assertRaises(n.PipelineStop):validate_or_complete_outline(raw,self.plan,lambda data:bad,n.PipelineStop)
+ def test_source_label_rendering_is_exact_known_provenance_not_claim_rewrite(self):
+  bundle=copy.deepcopy(self.bundle);bundle['technical'][0]['source_label']='نگهداری نوار تیپ و هزینه های آن'
+  before='منبع س2 هزینه ابزار را بیان می کند.'
+  self.assertEqual(render_source_labels(before,bundle),'مقاله «نگهداری نوار تیپ و هزینه های آن» هزینه ابزار را بیان می کند.')
+  for unknown in ['منبع س9','منبع s2-contract0','منبع س0']:
+   self.assertEqual(render_source_labels(unknown,bundle),unknown)
+ def test_rendering_preserves_markup_and_unknown_ids_still_block(self):
+  bundle=copy.deepcopy(self.bundle);bundle['technical'][0]['source_label']='عنوان واقعی مقاله'
+  obj=n.prepare_article({'title':'عنوان','html':'<p>منبع س2 هزینه ابزار را بیان می کند.</p>'},bundle)
+  self.assertEqual(obj['html'],'<p>مقاله «عنوان واقعی مقاله» هزینه ابزار را بیان می کند.</p>')
+  validate_general_visible_prose(obj['html'],n.canon,n.PipelineStop)
+  bad=n.prepare_article({'title':'عنوان','html':'<p>منبع س9</p>'},bundle)
+  with self.assertRaises(n.PipelineStop):validate_general_visible_prose(bad['html'],n.canon,n.PipelineStop)
  def test_overlay_preserves_original_thousand_rows_and_state(self):
   m=copy.deepcopy(self.matrix);s=copy.deepcopy(self.state);out,a=apply_general_queue(m,s,self.queue)
   self.assertEqual(m,self.matrix);self.assertEqual(s,self.state);self.assertEqual(out['titles'][:1000],self.matrix['titles']);self.assertEqual(len(out['titles']),1002)
