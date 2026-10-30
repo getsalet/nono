@@ -22,7 +22,7 @@ def prompt(item):
  from blog_image_art_direction import closed_package_prompt
  text=closed_package_prompt(scene.article(item),scene.scene_plan(item,'roya'))
  text=text.replace('about one fifth of frame width','about one third of frame width').replace('Elevated three-quarter close view','Near-frontal three-quarter close view').replace('Angle tiny secondary print away from the camera rather than inventing lettering.','Keep the main front label nearly frontal, sharp and large enough for BOTH small captions to be readable.')
- return text+' OWNER-APPROVED BRAND PRINT: directly BELOW the AFP letters, print exactly "Drip Irrigation Tape" in English. Directly BELOW the blue water-drop symbol, print exactly "آبگسترفراپاریان" in correctly joined Persian, right-to-left. These captions belong ON THE PACKAGE, not the scene or contact watermark. No pseudo-letters or substitute wording; preserve the blue lower band and the authentic AFP symbol and wordmark.'
+ return text+' OWNER-APPROVED BRAND PRINT: directly BELOW the AFP letters, print exactly "Drip Irrigation Tape" in English. Directly BELOW the blue water-drop symbol, print exactly "آبگسترفراپارسیان" in correctly joined Persian, right-to-left. These captions belong ON THE PACKAGE, not the scene or contact watermark. No pseudo-letters or substitute wording; preserve the blue lower band and the authentic AFP symbol and wordmark.'
 
 def main():
  run=os.environ['GITHUB_RUN_ID'];out=ROOT/'artifacts/blog-image-calibration'/run;out.mkdir(parents=True,exist_ok=True)

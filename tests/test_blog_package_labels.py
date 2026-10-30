@@ -5,10 +5,10 @@ from PIL import Image
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'automation'))
 import blog_package_labels as p
 class ExactCaptionTests(unittest.TestCase):
- def good(self):return {'english_text':'Drip Irrigation Tape','persian_text':'آبگسترفراپاریان','english_legible':True,'persian_legible':True}
+ def good(self):return {'english_text':'Drip Irrigation Tape','persian_text':'آبگسترفراپارسیان','english_legible':True,'persian_legible':True}
  def test_literal_owner_names(self):self.assertEqual(p.exact_errors(self.good()),[])
  def test_normal_spacing_is_not_a_spelling_error(self):
-  v=self.good();v['persian_text']='آب گستر فراپاریان';self.assertEqual(p.exact_errors(v),[])
+  v=self.good();v['persian_text']='آب گستر فراپارسیان';self.assertEqual(p.exact_errors(v),[])
  def test_guessed_malformed_or_unreadable_is_rejected(self):
   for field,value in [('english_text','Drip Irrigaton Tape'),('persian_text','آبگسترفراباریان'),('persian_text',''),('persian_legible',False),('english_legible',1)]:
    v=self.good();v[field]=value
@@ -85,3 +85,22 @@ class CaptionFoundationTests(unittest.TestCase):
    with patch.object(p,'detect_geometry',side_effect=RuntimeError('Verified caption font unavailable')):
     with self.assertRaisesRegex(RuntimeError,'^Verified caption font'):p.prepare_cached(path)
    self.assertEqual(path.read_bytes(),b'fixture')
+
+class CylindricalCaptionTests(unittest.TestCase):
+ def test_latest_owner_spelling_replaces_old_brand(self):
+  self.assertEqual(p.PERSIAN,'آبگسترفراپارسیان')
+  for old in ('آبگسترفراپاریان','آبگسترفراپارسیان'.replace('سی','ی')):
+   v=ExactCaptionTests().good();v['persian_text']=old;self.assertTrue(p.exact_errors(v))
+ def test_measured_ring_has_correct_curve_sign(self):
+  points={(x,round(100-.002*(x-100)**2))for x in range(200)}
+  c=p.cylinder_curve(points,(0,80,200,130));self.assertLess(c['coefficient'],0);self.assertAlmostEqual(c['coefficient'],-.002,delta=.0003)
+ def test_flat_band_does_not_invent_curvature(self):
+  with self.assertRaisesRegex(RuntimeError,'physically supported'):p.cylinder_curve({(x,100)for x in range(200)},(0,100,200,130))
+ def test_warp_is_nonlinear_and_preserves_layer_size(self):
+  from PIL import ImageDraw
+  im=Image.new('RGBA',(101,40),(0,0,0,0));ImageDraw.Draw(im).line((0,10,100,10),fill=(0,0,255,255),width=2)
+  curved=p.curve_canvas(im,6);self.assertEqual(curved.size,im.size)
+  def top(x):return min(y for y in range(curved.height)if curved.getpixel((x,y))[3]>128)
+  self.assertGreaterEqual(top(50)-top(2),4);self.assertLessEqual(abs(top(2)-top(98)),1)
+ def test_oversized_bend_is_rejected(self):
+  with self.assertRaisesRegex(RuntimeError,'safe height'):p.curve_canvas(Image.new('RGBA',(100,20)),10)

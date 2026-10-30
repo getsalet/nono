@@ -1,8 +1,10 @@
 # Bilingual package-caption calibration — 2026-10-30
 
+> **Latest owner correction:** current company name is **آبگسترفراپارسیان**, not آبگسترفراپاریان. Historical v1 tests below used the superseded spelling. Current experimental policy: `afp-exact-bilingual-captions-v2-cylindrical-faraparsian`. Old proofs cannot satisfy this policy. See [cylindrical update](blog-package-cylindrical-captions-2026-10-30.md).
+
 ## Requested canonical captions
 - Beneath AFP: `Drip Irrigation Tape`.
-- Beneath blue water-drop symbol: `آبگسترفراپاریان`.
+- Beneath blue water-drop symbol, current spelling: `آبگسترفراپارسیان`.
 
 ## Scope and production state
 The experimental renderer is committed under `automation/blog_package_labels.py` and is called by the manual no-publication calibration workflow only. It is **not enabled or connected to production preparation**. No article queue/state or post submission was changed by these calibration scripts. Existing image model, per-blog key allocation, provider backpressure and held product families are unchanged.

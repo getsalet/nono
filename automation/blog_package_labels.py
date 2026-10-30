@@ -7,8 +7,8 @@ from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont,ImageFilter,features
 import roya_backlink_queue as roya
 ENGLISH='Drip Irrigation Tape'
-PERSIAN='آبگسترفراپاریان'
-POLICY='afp-exact-bilingual-captions-v1'
+PERSIAN='آبگسترفراپارسیان'
+POLICY='afp-exact-bilingual-captions-v2-cylindrical-faraparsian'
 
 def normalized(value,lang):
  if not isinstance(value,str):return ''
@@ -113,6 +113,33 @@ def inverse_coefficients(q,width,height):
     z=rows[j][i];rows[j]=[a-z*b for a,b in zip(rows[j],rows[i])]
  return tuple(r[-1]for r in rows)
 
+def cylinder_curve(points,band):
+ """Measure the visible front ring's curvature, not an arbitrary text arc.
+ Three symmetric robust samples cancel the ring's linear camera tilt.
+ """
+ x0,y0,x1,y1=band;span=x1-x0;center=(x0+x1)/2;distance=span*.3
+ tops={}
+ for x,y in points:tops[x]=min(tops.get(x,y),y)
+ def median_at(x):
+  values=sorted(y for px,y in tops.items()if abs(px-x)<=max(2,span*.025))
+  if len(values)<3:raise RuntimeError('Caption cylinder curvature uncertain')
+  return values[len(values)//2]
+ left,middle,right=[median_at(x)for x in (center-distance,center,center+distance)]
+ coefficient=(left+right-2*middle)/(2*distance**2)
+ if not -.01<coefficient<0:raise RuntimeError('Caption cylinder curvature not physically supported')
+ return {'method':'visible-blue-band-front-ring-v1','coefficient':coefficient,'center_x':center,'sample_y':[left,middle,right],'sample_span':distance*2}
+
+def curve_canvas(canvas,sag):
+ """Subpixel vertical cylinder warp; joined glyphs remain one shaped layer.
+ Positive sag is the front-facing ring, lower in its center than its chord.
+ """
+ if not math.isfinite(sag)or sag<0 or sag>canvas.height*.35:raise RuntimeError('Caption cylinder warp exceeds safe height')
+ width,height=canvas.size;mesh=[]
+ for x in range(width):
+  t=2*(x+.5)/width-1;shift=sag*(1-t*t)
+  mesh.append(((x,0,x+1,height),(x,-shift,x,height-shift,x+1,height-shift,x+1,-shift)))
+ return canvas.transform(canvas.size,Image.Transform.MESH,mesh,Image.Resampling.BICUBIC)
+
 def typeset(raw,locations):
  if not features.check('raqm'):raise RuntimeError('Joined Persian shaping unavailable; no disconnected-letter fallback')
  from PIL import ImageChops
@@ -148,16 +175,19 @@ def typeset(raw,locations):
   im=Image.composite(clean,im,mask)
  for lang,text,script in [('english',ENGLISH,'en'),('persian',PERSIAN,'fa')]:
   q,width,height=geometry[lang];width=int(width);height=int(height);direction='rtl'if script=='fa'else'ltr';path=font_file(script)
+  sag=-locations['cylinder_curve']['coefficient']*width**2/4
+  if sag>height*.34:raise RuntimeError('Caption cylinder warp exceeds safe height')
   scale=4;canvas=Image.new('RGBA',(width*scale,height*scale),(0,0,0,0));draw=ImageDraw.Draw(canvas)
   for points in range(height*scale,8*scale,-1):
    font=ImageFont.truetype(path,points,layout_engine=ImageFont.Layout.RAQM);box=draw.textbbox((0,0),text,font=font,direction=direction,language=script)
-   if box[2]-box[0]<=width*scale*.96 and box[3]-box[1]<=height*scale*.92:break
+   if box[2]-box[0]<=width*scale*.96 and box[3]-box[1]+sag*scale<=height*scale*.92:break
   else:raise RuntimeError('Caption too small to typeset legibly')
-  draw.text(((width*scale-box[2]+box[0])/2-box[0],(height*scale-box[3]+box[1])/2-box[1]),text,font=font,fill=(35,67,126,255),direction=direction,language=script)
+  draw.text(((width*scale-box[2]+box[0])/2-box[0],(height*scale-box[3]+box[1])/2-box[1]-sag*scale*.5),text,font=font,fill=(35,67,126,255),direction=direction,language=script)
+  canvas=curve_canvas(canvas,sag*scale)
   canvas=canvas.resize((width,height),Image.Resampling.LANCZOS)
   warped=canvas.transform(im.size,Image.Transform.PERSPECTIVE,inverse_coefficients(q,width,height),Image.Resampling.BICUBIC)
   if ImageChops.multiply(warped.getchannel('A'),protected).getbbox():raise RuntimeError('New caption would overlap original logo')
-  im=Image.alpha_composite(im.convert('RGBA'),warped).convert('RGB');details[lang]={'text':text,'font':Path(path).name,'point_size':points/scale,'quad':q}
+  im=Image.alpha_composite(im.convert('RGBA'),warped).convert('RGB');details[lang]={'text':text,'font':Path(path).name,'point_size':points/scale,'quad':q,'cylinder_sag_px':sag}
  original=Image.open(io.BytesIO(raw)).convert('RGB')
  protected_boxes=locations.get('afp_glyph_bboxes',[locations['afp_bbox']])+[locations['symbol_bbox']]
  for box_ in protected_boxes:
@@ -166,7 +196,7 @@ def typeset(raw,locations):
    for x in range(max(0,int(a[0])),min(im.width,int(math.ceil(a[2])))):
     rgb=original.getpixel((x,y))
     if rgb[2]>rgb[0]*1.3 and rgb[2]>70 and rgb[0]<140 and im.getpixel((x,y))!=rgb:raise RuntimeError('Caption would modify original brand mark')
- return im,{'policy':POLICY,'source_sha256':hashlib.sha256(raw).hexdigest(),'captions':details}
+ return im,{'policy':POLICY,'source_sha256':hashlib.sha256(raw).hexdigest(),'captions':details,'cylinder_curve':locations['cylinder_curve']}
 
 def detect_geometry(raw):
  """Local geometric anchors from the three large blue AFP glyphs and blue band.
@@ -237,7 +267,7 @@ def detect_geometry(raw):
  package=(band[0]-3,max(0,min(afp[1]-ah*1.8,icon[1]-ah*.5)),band[2]+3,band[3]+5)
  normbox=lambda a:[v*1000/(w if i%2==0 else h)for i,v in enumerate(a)]
  normquad=lambda a:[[x*1000/w,y*1000/h]for x,y in a]
- result={'afp_glyph_bboxes':[normbox(c['box'])for c in group],'method':'local-afp-glyph-topology-v1','package_count':1,'geometry_confidence':1,'package_bbox':normbox(package),'afp_bbox':normbox(afp),'symbol_bbox':normbox(icon),'english_quad':normquad(english),'persian_quad':normquad(persian)}
+ result={'cylinder_curve':cylinder_curve(band_component['points'],band),'afp_glyph_bboxes':[normbox(c['box'])for c in group],'method':'local-afp-glyph-topology-v1','package_count':1,'geometry_confidence':1,'package_bbox':normbox(package),'afp_bbox':normbox(afp),'symbol_bbox':normbox(icon),'english_quad':normquad(english),'persian_quad':normquad(persian)}
  safe_geometry(result,im.size)
  return result
 
