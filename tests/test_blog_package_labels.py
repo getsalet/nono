@@ -28,3 +28,22 @@ class ExactCaptionTests(unittest.TestCase):
   c=p.inverse_coefficients([(0,0),(200,0),(200,30),(0,30)],200,30)
   for actual,wanted in zip(c,(1,0,0,0,1,0,0,0)):self.assertAlmostEqual(actual,wanted)
 if __name__=='__main__':unittest.main()
+class AutomaticRealSceneTests(unittest.TestCase):
+ ROOT=Path(__file__).resolve().parents[1]
+ def test_three_real_scene_geometries_without_article_coordinates(self):
+  paths=['41029742464/case-2-candidate-v2.webp','41031355848/case-2-finish-edit.webp','41030647254/case-1-finish-edit.webp']
+  for path in paths:
+   with self.subTest(path=path):
+    raw=(self.ROOT/'artifacts/blog-image-calibration'/path).read_bytes();g=p.detect_geometry(raw)
+    image,proof=p.typeset(raw,g);original=Image.open(io.BytesIO(raw)).convert('RGB')
+    self.assertEqual(proof['captions']['english']['text'],p.ENGLISH);self.assertEqual(proof['captions']['persian']['text'],p.PERSIAN)
+    self.assertEqual(image.crop((800,800,1200,900)).tobytes(),original.crop((800,800,1200,900)).tobytes())
+    for k in('afp_bbox','symbol_bbox'):
+     x0,y0,x1,y1=[round(v*(image.width if i%2==0 else image.height)/1000)for i,v in enumerate(g[k])]
+     for y in range(y0,y1):
+      for x in range(x0,x1):
+       rgb=original.getpixel((x,y))
+       if rgb[2]>rgb[0]*1.3 and rgb[2]>70 and rgb[0]<140:self.assertEqual(rgb,image.getpixel((x,y)))
+ def test_ambiguous_or_absent_brand_is_not_guessed(self):
+  raw=io.BytesIO();Image.new('RGB',(1200,900),'white').save(raw,'PNG')
+  with self.assertRaisesRegex(RuntimeError,'recognized'):p.detect_geometry(raw.getvalue())

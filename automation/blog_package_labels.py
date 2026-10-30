@@ -2,7 +2,7 @@
 Never redraw the AFP mark or replace the product photograph. Only two small
 caption regions on the white package sleeve may be cleaned and typeset.
 """
-import base64,hashlib,io,json,math,os,re,unicodedata
+import base64,hashlib,io,json,math,os,re,time,unicodedata
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont,ImageFilter,features
 import roya_backlink_queue as roya
@@ -37,9 +37,15 @@ def inspect(raw):
  content=[{'type':'text','text':instruction}]
  for label,data,mime in [('FULL FRAME',full.getvalue(),'image/webp'),('OVERLAPPING LEFT DETAIL; coordinates refer to FULL FRAME',buf.getvalue(),'image/jpeg')]:
   content +=[{'type':'text','text':label},{'type':'image_url','image_url':{'url':'data:'+mime+';base64,'+base64.b64encode(data).decode(),'detail':'high'}}]
- key=roya.BASE._key_pool.next()
  payload={'model':os.getenv('IMAGE_REVIEW_MODEL','agnes-3.0-flash'),'temperature':0,'response_format':{'type':'json_object'},'messages':[{'role':'user','content':content}]}
- response=roya.BASE.fetch_json(roya.BASE.AGNES_BASE+'/chat/completions',{'Authorization':'Bearer '+key,'Content-Type':'application/json'},payload,timeout=180)
+ for attempt in range(2):
+  key=roya.BASE._key_pool.next()
+  try:
+   response=roya.BASE.fetch_json(roya.BASE.AGNES_BASE+'/chat/completions',{'Authorization':'Bearer '+key,'Content-Type':'application/json'},payload,timeout=180);break
+  except RuntimeError as exc:
+   status=getattr(exc,'http_status',None);delay=getattr(exc,'rate_limit_retry_after_seconds',None)or getattr(exc,'retry_after_seconds',None)or 5
+   if attempt or status not in(429,500,502,503,504)or delay>180:raise
+   time.sleep(max(5,delay))
  value=response['choices'][0]['message']['content']
  if isinstance(value,list):value=''.join(x.get('text','')for x in value if isinstance(x,dict))
  return json.loads(re.sub(r'^```(?:json)?\s*|\s*```$','',value.strip(),flags=re.I))
@@ -109,7 +115,7 @@ def typeset(raw,locations):
     for n in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
      if n in points:points.remove(n);stack.append(n)
    xs=[p[0]for p in component];ys=[p[1]for p in component];ch=max(ys)-min(ys)+1;cw=max(xs)-min(xs)+1
-   target=sm if ch<=22 and cw<=100 and x0-12<sum(xs)/len(xs)<x1+12 and y0-14<sum(ys)/len(ys)<y1+14 else pr
+   target=sm if ch<=22 and cw<=100 and x0-6<sum(xs)/len(xs)<x1+6 and y0-14<sum(ys)/len(ys)<y1+14 else pr
    for point in component:target[point]=255
   from PIL import ImageChops
   mask=ImageChops.subtract(small.filter(ImageFilter.MaxFilter(5)),protected.filter(ImageFilter.MaxFilter(3)))
@@ -134,3 +140,76 @@ def typeset(raw,locations):
   if ImageChops.multiply(warped.getchannel('A'),protected).getbbox():raise RuntimeError('New caption would overlap original logo')
   im=Image.alpha_composite(im.convert('RGBA'),warped).convert('RGB');details[lang]={'text':text,'font':Path(path).name,'point_size':points/scale,'quad':q}
  return im,{'policy':POLICY,'source_sha256':hashlib.sha256(raw).hexdigest(),'captions':details}
+
+def detect_geometry(raw):
+ """Local geometric anchors from the three large blue AFP glyphs and blue band.
+ Ambiguous/occluded marks fail closed; no template coordinates or article IDs.
+ The A/F/P enclosed-hole pattern is an additional guard against field objects.
+ """
+ import itertools
+ im=Image.open(io.BytesIO(raw)).convert('RGB');w,h=im.size;px=im.load()
+ points={(x,y)for y in range(int(h*.25),h)for x in range(int(w*.04),int(w*.65))if px[x,y][0]<150 and px[x,y][2]>60 and px[x,y][2]>px[x,y][0]*1.2 and px[x,y][2]>px[x,y][1]*1.06};comps=[]
+ while points:
+  seed=points.pop();stack=[seed];part=[]
+  while stack:
+   x,y=stack.pop();part.append((x,y))
+   for n in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
+    if n in points:points.remove(n);stack.append(n)
+  if len(part)<60:continue
+  xs=[p[0]for p in part];ys=[p[1]for p in part];comps.append({'box':(min(xs),min(ys),max(xs)+1,max(ys)+1),'area':len(part),'points':set(part)})
+ def width(c):return c['box'][2]-c['box'][0]
+ def height(c):return c['box'][3]-c['box'][1]
+ def holes(c):
+  x0,y0,x1,y1=c['box'];white={(x,y)for y in range(y0,y1)for x in range(x0,x1)if(x,y)not in c['points']};count=0
+  while white:
+   stack=[white.pop()];edge=False;area=0
+   while stack:
+    x,y=stack.pop();area+=1;edge|=x in(x0,x1-1)or y in(y0,y1-1)
+    for n in((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
+     if n in white:white.remove(n);stack.append(n)
+   if not edge and area>=4:count+=1
+  return count
+ letters=sorted([c for c in comps if 22<=height(c)<=h*.15 and 8<=width(c)<=w*.09 and c['area']>=80],key=lambda c:c['box'][0])
+ if len(letters)>35:raise RuntimeError('Caption anchors ambiguous')
+ candidates=[]
+ for group in itertools.combinations(letters,3):
+  heights=[height(c)for c in group];average=sum(heights)/3
+  if max(heights)>min(heights)*1.4:continue
+  gaps=[group[i+1]['box'][0]-group[i]['box'][2]for i in(0,1)]
+  if min(gaps)<0 or max(gaps)>average*.65:continue
+  tops=[c['box'][1]for c in group]
+  if max(tops)-min(tops)>average*.6:continue
+  span=group[-1]['box'][2]-group[0]['box'][0]
+  if not 1.65<=span/average<=4.2:continue
+  if[holes(c)for c in group]!=[1,0,1]:continue
+  candidates.append(group)
+ if len(candidates)!=1:raise RuntimeError('Caption anchors not uniquely recognized')
+ group=candidates[0];afp=(group[0]['box'][0],min(c['box'][1]for c in group),group[-1]['box'][2],max(c['box'][3]for c in group));aw=afp[2]-afp[0];ah=afp[3]-afp[1]
+ bands=[c for c in comps if width(c)>aw*1.4 and height(c)>12 and c['area']>sum(a['area']for a in group)and c['box'][1]>afp[3]+8 and c['box'][0]<(afp[0]+afp[2])/2<c['box'][2]]
+ if len(bands)!=1:raise RuntimeError('Caption blue base band ambiguous')
+ band_component=bands[0];band=band_component['box']
+ icons=[c for c in comps if 18<=width(c)<=aw*.9 and 15<=height(c)<=ah*2.5 and c['area']>150 and band[0]+10<c['box'][0]<c['box'][2]<afp[0]-4 and c['box'][1]>afp[1]-ah*1.8 and c['box'][3]<afp[3]+10]
+ if not icons:raise RuntimeError('Caption water-drop symbol not located')
+ icon=max(icons,key=lambda c:c['area'])['box']
+ for c in icons:
+  a=c['box']
+  if max(0,a[0]-icon[2],icon[0]-a[2])<8 and max(0,a[1]-icon[3],icon[1]-a[3])<15:icon=(min(icon[0],a[0]),min(icon[1],a[1]),max(icon[2],a[2]),max(icon[3],a[3]))
+ if icon[2]-icon[0]>aw*.9:raise RuntimeError('Caption symbol extent ambiguous')
+ xs=[(c['box'][0]+c['box'][2])/2 for c in group];ys=[c['box'][3]for c in group];mx=sum(xs)/3;my=sum(ys)/3;slope=sum((x-mx)*(y-my)for x,y in zip(xs,ys))/sum((x-mx)**2 for x in xs)
+ if abs(slope)>.3:raise RuntimeError('Caption viewing angle too steep')
+ height_=max(18,min(26,ah*.42));left=max(afp[0]-aw*.12-2,icon[2]+8);right=min(afp[2]+aw*.12+2,band[2]-10)
+ def y(x):return my+slope*(x-mx)+7
+ english=[(left,y(left)),(right,y(right)),(right,y(right)+height_),(left,y(left)+height_)]
+ iw=icon[2]-icon[0];cx=(icon[0]+icon[2])/2;left=max(band[0]+10,cx-iw*.7);right=min(afp[0]-8,cx+iw*.7);fy=icon[3]+7
+ persian=[(left,fy+slope*(right-left)/2),(right,fy-slope*(right-left)/2),(right,fy-slope*(right-left)/2+height_),(left,fy+slope*(right-left)/2+height_)]
+ for quad in(english,persian):
+  for step in range(9):
+   t=step/8;x=quad[3][0]*(1-t)+quad[2][0]*t;y=quad[3][1]*(1-t)+quad[2][1]*t
+   below=[py for px_,py in band_component['points']if abs(px_-x)<=3]
+   if not below or y>min(below)-4:raise RuntimeError('Caption white sleeve has insufficient room')
+ package=(band[0]-3,max(0,min(afp[1]-ah*1.8,icon[1]-ah*.5)),band[2]+3,band[3]+5)
+ normbox=lambda a:[v*1000/(w if i%2==0 else h)for i,v in enumerate(a)]
+ normquad=lambda a:[[x*1000/w,y*1000/h]for x,y in a]
+ result={'method':'local-afp-glyph-topology-v1','package_count':1,'geometry_confidence':1,'package_bbox':normbox(package),'afp_bbox':normbox(afp),'symbol_bbox':normbox(icon),'english_quad':normquad(english),'persian_quad':normquad(persian)}
+ safe_geometry(result,im.size)
+ return result

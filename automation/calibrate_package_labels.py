@@ -11,7 +11,7 @@ import blog_image_gate as gate
 import blog_image_restore as restore
 import blog_package_labels as labels
 ROOT=Path(__file__).resolve().parents[1]
-CASES=(('existing',1),('native-exact-label',0),('holdout-exact-label',2))
+CASES=(('existing',1),('existing-angle',1),('holdout-exact-label',2))
 def clear(item):
  item=copy.deepcopy(item)
  for k in list(item):
@@ -26,7 +26,7 @@ def prompt(item):
 
 def main():
  run=os.environ['GITHUB_RUN_ID'];out=ROOT/'artifacts/blog-image-calibration'/run;out.mkdir(parents=True,exist_ok=True)
- report={'run_id':run,'round':'exact-bilingual-labels','post_submissions':0,'article_state_changes':0,'production_activation':False,'maximum_new_images':2,'expected_english':labels.ENGLISH,'expected_persian':labels.PERSIAN,'cases':[]}
+ report={'run_id':run,'round':'exact-bilingual-labels','post_submissions':0,'article_state_changes':0,'production_activation':False,'maximum_new_images':1,'expected_english':labels.ENGLISH,'expected_persian':labels.PERSIAN,'cases':[]}
  def save():
   raw=json.dumps(report,ensure_ascii=False,indent=2).encode();(out/'report.json').write_bytes(raw);generated.checkpoint_asset(str((out/'report.json').relative_to(ROOT)),raw,ROOT)
  def asset(name,raw):
@@ -36,18 +36,18 @@ def main():
   for i,(kind,index)in enumerate(CASES,1):
    item=clear(items[index]);item['key']='caption-calibration-'+run+'-'+str(i);row={'case':i,'kind':kind,'source_key':items[index]['key'],'accepted':False};report['cases'].append(row);save()
    try:
-    if kind=='existing':
-     source='artifacts/blog-image-calibration/41029742464/case-2-candidate-v2.webp';raw=(ROOT/source).read_bytes();row['source_path']=source
+    if kind.startswith('existing'):
+     source='artifacts/blog-image-calibration/41029742464/case-2-candidate-v2.webp'if kind=='existing'else'artifacts/blog-image-calibration/41031355848/case-2-finish-edit.webp';raw=(ROOT/source).read_bytes();row['source_path']=source
     else:
+     if json.loads((ROOT/'data/blog-generated-image-control.json').read_text()).get('pause_image_production')is not False:raise RuntimeError('Existing production hold remains active')
      text=prompt(item);row['generation_prompt']=text
      ref=base64.b64decode((scene.reference.ASSET_DIR/'afp-tape.webp.b64').read_text().strip());refs=['data:image/webp;base64,'+base64.b64encode(ref).decode()]
      with patch.object(scene,'prompt',return_value=text),patch.object(scene,'references',return_value=refs):raw=generated.generate(item,'roya',slots=slots,max_attempts=1)
      row['native_path']=asset(f'case-{i}-native.webp',raw)
-    row['source_sha256']=hashlib.sha256(raw).hexdigest();row['stage']='blind-source-read';save()
-    reading=labels.inspect(raw);row['original_blind_read']=reading;row['original_caption_errors']=labels.exact_errors(reading);save()
-    if row['original_caption_errors']:
-     row['stage']='exact-local-typesetting';save();image,proof=labels.typeset(raw,reading);buf=io.BytesIO();image.save(buf,'WEBP',quality=95,method=6);raw=buf.getvalue();row['typesetting']=proof
-     row['candidate_path']=asset(f'case-{i}-exact-labels.webp',raw);row['stage']='independent-readback';save();reading=labels.inspect(raw)
+    row['source_sha256']=hashlib.sha256(raw).hexdigest();row['stage']='local-caption-geometry';save()
+    locations=labels.detect_geometry(raw);row['local_geometry']=locations
+    image,proof=labels.typeset(raw,locations);buf=io.BytesIO();image.save(buf,'WEBP',quality=95,method=6);raw=buf.getvalue();row['typesetting']=proof
+    row['candidate_path']=asset(f'case-{i}-exact-labels.webp',raw);row['stage']='independent-readback';save();reading=labels.inspect(raw)
     row['final_blind_read']=reading;row['caption_errors']=labels.exact_errors(reading)
     if not row['caption_errors']:
      row['stage']='full-image-qa';save();record=gate.review(item,'generated://roya/'+item['key'],root=ROOT,_candidate=raw);row.update(primary_review=record['verdict'],focused_physical_review=record.get('focused_physical_review'),accepted=True)
