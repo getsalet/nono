@@ -675,6 +675,22 @@ def pick(queue, state, count):
     return chosen
 
 
+
+def selection_report(queue, targets, ready):
+    """Explain an empty actual picker result without resetting holds or inventing causes."""
+    from blog_generated_image import family_enabled
+    rows=queue.get('items',[])
+    scoped=bool(ONLY) or os.getenv('BLOG_READY_IMAGE_HANDOFF')=='1'
+    return {
+        'scope':'target' if scoped else 'queue',
+        'selected':len(targets), 'ready':len(ready),
+        'pending_disabled_family':sum(1 for i in rows if not i.get('published') and i.get('status')=='pending' and not family_enabled(i,ROOT)),
+        'pending_enabled_family':sum(1 for i in rows if not i.get('published') and i.get('status')=='pending' and family_enabled(i,ROOT)),
+        'held_failed':sum(1 for i in rows if not i.get('published') and i.get('status')=='failed'),
+        'reason':'no_eligible_targets' if not scoped and COUNT>0 and not targets and not ready else None,
+        'note':'Actual picker result, not proof of login failure. Failed items and disabled families remain protected.'
+    }
+
 def main():
     from blog_image_runtime_control import generation_paused
     if generation_paused(ROOT):
@@ -828,7 +844,7 @@ def main():
                                         for i in ready]})
     from blog_generation_status import write as write_generation_status
     from blog_image_stock_preflight import waiting_keys
-    run_status=write_generation_status(ROOT,'roya',completed,failed,blocked_until,waiting=waiting or waiting_keys('roya',ROOT))
+    run_status=write_generation_status(ROOT,'roya',completed,failed,blocked_until,waiting=waiting or waiting_keys('roya',ROOT),selection=selection_report(queue,targets,ready))
     done, total = len(state['completed_keys']), len(queue['items'])
     STATUS_MD.write_text(
         '# صف بک‌لینک وبلاگ AFP\n\n'

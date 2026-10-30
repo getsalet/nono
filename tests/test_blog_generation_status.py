@@ -36,6 +36,21 @@ class GenerationStatusTests(unittest.TestCase):
     self.assertEqual(r.main(),1)
    result=json.loads((art/'generation-status.json').read_text())
    self.assertEqual(result['status'],'failed');self.assertEqual(result['failed_this_run'],1)
+ def test_empty_selection_preserves_holds_and_scopes(self):
+  import copy
+  queue={'items':[{'key':'hose','status':'pending','family':'hose'},{'key':'held','status':'failed','family':'tape20'},{'key':'published','status':'published','published':True}]};before=copy.deepcopy(queue)
+  with patch.object(r,'ONLY',''),patch.object(r,'COUNT',3),patch.dict(os.environ,{'BLOG_READY_IMAGE_HANDOFF':'0'}),patch('blog_generated_image.family_enabled',side_effect=lambda i,root:i.get('family')!='hose'):
+   report=r.selection_report(queue,[],[])
+   self.assertEqual(report['reason'],'no_eligible_targets');self.assertEqual(report['pending_disabled_family'],1);self.assertEqual(report['held_failed'],1)
+   self.assertIsNone(r.selection_report(queue,[queue['items'][0]],[])['reason'])
+   self.assertIsNone(r.selection_report(queue,[],[{}])['reason'])
+   with patch.object(r,'ONLY','missing'):self.assertIsNone(r.selection_report(queue,[],[])['reason'])
+  self.assertEqual(queue,before)
+ def test_selection_report_is_persisted_without_claiming_publication(self):
+  with tempfile.TemporaryDirectory()as d:
+   report={'scope':'queue','reason':'no_eligible_targets','selected':0,'ready':0}
+   row=status.write(Path(d),'roya',[],[],selection=report)
+   self.assertEqual(row['queue_selection'],report);self.assertEqual(row['status'],'idle');self.assertFalse(row['publication_verified_by_this_report'])
  def test_both_generators_track_attempted_failures_and_preflight_waiting(self):
   import inspect,farsiblog_backlink_queue as f
   for module in [r,f]:
