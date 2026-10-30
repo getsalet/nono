@@ -1,6 +1,12 @@
 name: Bounded multi-stage image calibration (no blog publication)
 on:
   workflow_dispatch:
+    inputs:
+      round:
+        description: 'Prompt comparison or two controlled finish edits; no publication'
+        type: choice
+        options: [prompt, finish-edit]
+        default: prompt
 permissions:
   contents: write
   actions: read
@@ -33,7 +39,14 @@ jobs:
       - name: Offline calibration contract tests
         run: python -m unittest discover -s tests -p test_blog_image_calibration.py -v
       - name: Baseline, candidate comparison and unseen-topic repeat
-        run: python automation/calibrate_blog_images.py
+        env:
+          CALIBRATION_ROUND: ${{ inputs.round }}
+        run: |
+          if [ "$CALIBRATION_ROUND" = "finish-edit" ]; then
+            python automation/calibrate_closed_carton_edits.py
+          else
+            python automation/calibrate_blog_images.py
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
