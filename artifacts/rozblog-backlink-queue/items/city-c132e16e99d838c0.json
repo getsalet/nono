@@ -25,7 +25,7 @@
   "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
-    "slot": "AGNES_API_KEY20",
+    "slot": "AGNES_API_KEY21",
     "mode": "verified",
     "max_provider_requests": 1
   },
@@ -40,6 +40,22 @@
     },
     {
       "requested_secret_slot": "AGNES_API_KEY20",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY21",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY21",
       "attempt": 1,
       "route": "audited_image_pool",
       "timeout_seconds": 600,
@@ -70,14 +86,88 @@
     {
       "sha256": "d7ec5943cc0fbab9f7e749ffbb3c5cbbeec6c9936236b61a0cfc5abd0b319a45",
       "reason": "Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo"
+    },
+    {
+      "sha256": "3bb6548debc9b19258e149e0e718633d71580da7c1eaf3f1b6d49e0fedd5e429",
+      "reason": "Product image rejected: New caption would overlap original logo"
+    },
+    {
+      "sha256": "47397734322392e1b043b889f06890db8dbdc2a8c1553847eee4f1d8a4f9b150",
+      "reason": "Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared"
     }
   ],
-  "_image_qa_feedback": "Preserve only authentic reference AFP branding. Rotate the carton to an oblique side view so tiny secondary package lettering faces away or is naturally occluded; keep the genuine central AFP mark recognizable. Never invent pseudo-readable words or redraw logos. Do not remove or imitate the required deterministic phone watermark; it is applied afterwards.",
+  "_image_qa_feedback": "Remove every protruding white ribbon, strap or tape tail; keep the required AFP package closed and separate from the installed black tape.",
   "failure_stage": "image",
-  "attempts": 1,
-  "generated_at": "2026-10-30T07:30:21Z",
-  "last_error": "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError",
-  "next_retry_at": "2026-10-30T08:30:21.009434Z",
+  "attempts": 2,
+  "generated_at": "2026-10-30T19:37:14Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared",
+  "next_retry_at": "2026-10-30T21:37:14.206852Z",
+  "_image_caption_render": {
+    "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+    "source_sha256": "c43a6730d2795cd32a16f9cb3050f163f570b6ddfb24099faad60f8f00858e6a",
+    "captions": {
+      "english": {
+        "text": "Drip Irrigation Tape",
+        "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+        "point_size": 15.5,
+        "quad": [
+          [
+            289.84,
+            640.9616809495928
+          ],
+          [
+            440.16,
+            627.8795922712513
+          ],
+          [
+            440.16,
+            651.8195922712514
+          ],
+          [
+            289.84,
+            664.9016809495929
+          ]
+        ],
+        "cylinder_sag_px": 5.784626775880419
+      },
+      "persian": {
+        "text": "آبگسترفراپارسیان",
+        "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+        "point_size": 12.25,
+        "quad": [
+          [
+            196.6,
+            632.2229733326236
+          ],
+          [
+            283.4,
+            639.7770266673764
+          ],
+          [
+            283.4,
+            663.7170266673763
+          ],
+          [
+            196.6,
+            656.1629733326236
+          ]
+        ],
+        "cylinder_sag_px": 1.945948447406173
+      }
+    },
+    "cylinder_curve": {
+      "method": "visible-blue-band-front-ring-v1",
+      "coefficient": -0.0010283780934898523,
+      "center_x": 319.0,
+      "sample_y": [
+        690,
+        697,
+        688
+      ],
+      "sample_span": 176.4
+    },
+    "sha256": "47397734322392e1b043b889f06890db8dbdc2a8c1553847eee4f1d8a4f9b150"
+  },
   "post": {
     "title": "نوار تیپ در مرزیکلا؛ بازبینی آبیاری",
     "slug": "navar-tip-marzikla-abiyari-bazbini",
@@ -95,7 +185,14 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError"
-    ]
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared"
+    ],
+    "words": 780,
+    "links": [
+      "https://navar-abyari.ir/",
+      "https://navar-abyari.ir/mazandaran/%d9%85%d8%b1%d8%b2%db%8c%da%a9%d9%84%d8%a7-%d9%85%d8%a7%d8%b2%d9%86%d8%af%d8%b1%d8%a7%d9%86-navar-tip-20cm/"
+    ],
+    "checked_against": "Roya + FarsiBlog + RozBlog + LoxBlog + Blogsky corpus",
+    "title_matrix": "نوار تیپ در مرزیکلا؛ بازبینی آبیاری"
   }
 }

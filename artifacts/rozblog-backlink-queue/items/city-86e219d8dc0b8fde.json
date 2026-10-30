@@ -24,7 +24,7 @@
     "summary": "مقدمه اجرای نوار تیپ پایان کار نیست؛ آغاز دوره‌ی عملیات نگهداری است. در کیاشهر، بسیاری از مالکان مزرعه پس از نصب، سیستم را رها می‌کنند و تنها در مواجهه با افت فشار یا پخش ناهمگن آب متوجه مشکل می‌شوند. نگهداری صحیح پس از اجرا، تفاوت بین دو سال و پنج سال عمر مفید نوار آبیاری است. این مقاله، نقشه‌ی راهی است برای کسانی که می‌خواهند مسیر آبیاری خود را بر اساس اصول طراحی و نگهداری برنامه‌ریزی کنند. بازرسی اولیه و تنظیم فشار پس از نصب در هفته‌ی نخست پس از اجرا، سیستم باید بدون بار گیاهی تست شود. نوارها را به شبکه متصل کنید، شیرها را باز کنید و هر سه متر از انتهای خط، محل خروج آب را بررسی نمایید. اگر قطره‌چکان‌هایی خشک هستند یا جریان غیرعادی دارند، احتمال خطای نصب، آسیب مکانیکی حین اجرا، یا گرفتگی اولیه قطره‌چکان وجود دارد. در این مرحله، عیب‌یابی ساده‌تر و کم‌هزینه‌تر است. همچنین فشار ورودی را با مانومتر اندازه بگیرید. فشار کاری تأییدشده نوار تیپ بغل‌دوخت با فاصله روزنه ۱۰ و ۲۰ سانتی‌متر، بین ۰٫۶ تا ۱ اتمسفر است. این محدوده به مدل‌های پلاک‌دار یا لوله‌های انتقال تعمیم داده نمی‌شود. اگر فشار خوانده‌شده خارج از این بازه است، تنظیم شیر فشارشکن یا بررسی لوله اصلی الزامی است. مدیریت فیلتراسیون؛ قلب تپنده‌ی نگهداری بیش از هفتاد درصد اختلالات نوار تیپ ناشی از فیلتراسیون ناکافی است. پس از اجرای سی"
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
-  "_generation_stage": "generation_api",
+  "_generation_stage": "local_vision_qa",
   "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
@@ -121,6 +121,22 @@
       "http_status": 503,
       "status": "provider_queue_full_deferred",
       "provider_code": "image_queue_full"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY21",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY21",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     }
   ],
   "_image_render": {
@@ -182,15 +198,85 @@
     {
       "sha256": "e25d63288d68c87be2afdde4fa9d2d8ba71b29fe4662ca2bef97aa16bc6166db",
       "reason": "Product image rejected: Caption blue base band ambiguous"
+    },
+    {
+      "sha256": "4f9cec8429239c6b86d0db50f066ea08ce6b4400523c316729070e51676078ec",
+      "reason": "Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared"
     }
   ],
-  "_image_qa_feedback": "Product image rejected: Caption blue base band ambiguous",
+  "_image_qa_feedback": "Remove every protruding white ribbon, strap or tape tail; keep the required AFP package closed and separate from the installed black tape.",
   "failure_stage": "image",
-  "attempts": 6,
-  "generated_at": "2026-10-30T14:20:38Z",
-  "last_error": "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy",
-  "next_retry_at": "2026-10-30T14:20:39.775867Z",
+  "attempts": 7,
+  "generated_at": "2026-10-30T19:27:15Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
+  "next_retry_at": "2026-10-31T19:27:15.296326Z",
   "image_retry_at": 1793370039.7758675,
+  "_image_caption_render": {
+    "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+    "source_sha256": "4ca275245baa3a8bba3fb9a39b78c0408abbe5eb2679acebe478bc91f182a5fb",
+    "captions": {
+      "english": {
+        "text": "Drip Irrigation Tape",
+        "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+        "point_size": 13.25,
+        "quad": [
+          [
+            248.52,
+            619.9358957654723
+          ],
+          [
+            381.48,
+            610.624364820847
+          ],
+          [
+            381.48,
+            631.204364820847
+          ],
+          [
+            248.52,
+            640.5158957654724
+          ]
+        ],
+        "cylinder_sag_px": 5.3685804051822945
+      },
+      "persian": {
+        "text": "آبگسترفراپارسیان",
+        "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+        "point_size": 10.0,
+        "quad": [
+          [
+            165.6,
+            614.4508143322475
+          ],
+          [
+            238.4,
+            619.5491856677525
+          ],
+          [
+            238.4,
+            640.1291856677525
+          ],
+          [
+            165.6,
+            635.0308143322476
+          ]
+        ],
+        "cylinder_sag_px": 1.5733348872443333
+      }
+    },
+    "cylinder_curve": {
+      "method": "visible-blue-band-front-ring-v1",
+      "coefficient": -0.0012139929685527264,
+      "center_x": 272.0,
+      "sample_y": [
+        665,
+        672,
+        664
+      ],
+      "sample_span": 157.2
+    },
+    "sha256": "e162171a1ad43e0ec17a56abe8c9f45528536257b97775dbb2f900f7debe0a91"
+  },
   "post": {
     "title": "نوار تیپ در کیاشهر؛ نگهداری پس از اجرا",
     "slug": "navar-tip-keyashahr-neghhdari-pas-az-ern",
@@ -208,7 +294,7 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy"
+      "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError"
     ],
     "words": 910,
     "links": [
