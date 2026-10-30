@@ -21,7 +21,11 @@ def main():
   try:
    record=gate.review(item,'generated://roya/'+item['key'],root=ROOT,_candidate=raw)
    row.update(accepted=True,verdict=record['verdict'],focused_physical_review=record.get('focused_physical_review'),closed_package_required=record.get('closed_package_required'),package_finish_policy=record.get('package_finish_policy'))
-  except Exception as exc:row.update(error_type=type(exc).__name__,http_status=getattr(exc,'http_status',getattr(exc,'code',None)))
+  except Exception as exc:
+   row.update(error_type=type(exc).__name__,http_status=getattr(exc,'http_status',getattr(exc,'code',None)),error_category='quality_rejection'if str(exc).startswith('Product image rejected:')else'validation_failure')
+   saved=ROOT/'artifacts/blog-image-reviews'/('tape20-'+row['sha256']+'.json')
+   if saved.exists():
+    evidence=json.loads(saved.read_text());row.update(verdict=evidence.get('verdict'),focused_physical_review=evidence.get('focused_physical_review'))
   save()
  report['finished_at']=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime());save()
 if __name__=='__main__':main()
