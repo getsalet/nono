@@ -30,16 +30,16 @@ class ExactCaptionTests(unittest.TestCase):
 if __name__=='__main__':unittest.main()
 class AutomaticRealSceneTests(unittest.TestCase):
  ROOT=Path(__file__).resolve().parents[1]
- def test_three_real_scene_geometries_without_article_coordinates(self):
-  paths=['41029742464/case-2-candidate-v2.webp','41031355848/case-2-finish-edit.webp','41030647254/case-1-finish-edit.webp']
+ def test_four_real_scene_geometries_without_article_coordinates(self):
+  paths=['41029742464/case-2-candidate-v2.webp','41031355848/case-2-finish-edit.webp','41030647254/case-1-finish-edit.webp','41037090356/case-3-native.webp']
   for path in paths:
    with self.subTest(path=path):
     raw=(self.ROOT/'artifacts/blog-image-calibration'/path).read_bytes();g=p.detect_geometry(raw)
     image,proof=p.typeset(raw,g);original=Image.open(io.BytesIO(raw)).convert('RGB')
     self.assertEqual(proof['captions']['english']['text'],p.ENGLISH);self.assertEqual(proof['captions']['persian']['text'],p.PERSIAN)
     self.assertEqual(image.crop((800,800,1200,900)).tobytes(),original.crop((800,800,1200,900)).tobytes())
-    for k in('afp_bbox','symbol_bbox'):
-     x0,y0,x1,y1=[round(v*(image.width if i%2==0 else image.height)/1000)for i,v in enumerate(g[k])]
+    for box_ in g['afp_glyph_bboxes']+[g['symbol_bbox']]:
+     x0,y0,x1,y1=[round(v*(image.width if i%2==0 else image.height)/1000)for i,v in enumerate(box_)]
      for y in range(y0,y1):
       for x in range(x0,x1):
        rgb=original.getpixel((x,y))

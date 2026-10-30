@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Three-stage bilingual-label backtest; at most TWO image generations, zero posts."""
+"""Three-stage bilingual-label backtest; zero new image generations, zero posts."""
 import base64,copy,hashlib,io,json,os,time
 from pathlib import Path
 from unittest.mock import patch
@@ -11,7 +11,7 @@ import blog_image_gate as gate
 import blog_image_restore as restore
 import blog_package_labels as labels
 ROOT=Path(__file__).resolve().parents[1]
-CASES=(('existing',1),('existing-angle',1),('holdout-exact-label',2))
+CASES=(('existing',1),('existing-angle',1),('existing-holdout',2))
 def clear(item):
  item=copy.deepcopy(item)
  for k in list(item):
@@ -26,7 +26,7 @@ def prompt(item):
 
 def main():
  run=os.environ['GITHUB_RUN_ID'];out=ROOT/'artifacts/blog-image-calibration'/run;out.mkdir(parents=True,exist_ok=True)
- report={'run_id':run,'round':'exact-bilingual-labels','post_submissions':0,'article_state_changes':0,'production_activation':False,'maximum_new_images':1,'expected_english':labels.ENGLISH,'expected_persian':labels.PERSIAN,'cases':[]}
+ report={'run_id':run,'round':'exact-bilingual-labels','post_submissions':0,'article_state_changes':0,'production_activation':False,'maximum_new_images':0,'expected_english':labels.ENGLISH,'expected_persian':labels.PERSIAN,'cases':[]}
  def save():
   raw=json.dumps(report,ensure_ascii=False,indent=2).encode();(out/'report.json').write_bytes(raw);generated.checkpoint_asset(str((out/'report.json').relative_to(ROOT)),raw,ROOT)
  def asset(name,raw):
@@ -37,7 +37,7 @@ def main():
    item=clear(items[index]);item['key']='caption-calibration-'+run+'-'+str(i);row={'case':i,'kind':kind,'source_key':items[index]['key'],'accepted':False};report['cases'].append(row);save()
    try:
     if kind.startswith('existing'):
-     source='artifacts/blog-image-calibration/41029742464/case-2-candidate-v2.webp'if kind=='existing'else'artifacts/blog-image-calibration/41031355848/case-2-finish-edit.webp';raw=(ROOT/source).read_bytes();row['source_path']=source
+     source={'existing':'artifacts/blog-image-calibration/41029742464/case-2-candidate-v2.webp','existing-angle':'artifacts/blog-image-calibration/41031355848/case-2-finish-edit.webp','existing-holdout':'artifacts/blog-image-calibration/41037090356/case-3-native.webp'}[kind];raw=(ROOT/source).read_bytes();row['source_path']=source
     else:
      if json.loads((ROOT/'data/blog-generated-image-control.json').read_text()).get('pause_image_production')is not False:raise RuntimeError('Existing production hold remains active')
      text=prompt(item);row['generation_prompt']=text

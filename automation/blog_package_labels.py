@@ -25,7 +25,11 @@ def exact_errors(value):
 def inspect(raw):
  """Blind literal OCR plus placement. Expected captions are NOT sent to reader."""
  im=Image.open(io.BytesIO(raw)).convert('RGB');full=io.BytesIO();im.save(full,'WEBP',quality=95)
- detail=im.crop((0,int(im.height*.27),int(im.width*.62),im.height));detail=detail.resize((int(detail.width*2),int(detail.height*2)),Image.Resampling.LANCZOS);buf=io.BytesIO();detail.save(buf,'JPEG',quality=95)
+ try:
+  g=detect_geometry(raw);boxes=[g['afp_bbox'],g['symbol_bbox']];x0=min(a[0]for a in boxes)*im.width/1000-24;x1=max(a[2]for a in boxes)*im.width/1000+32;y0=min(a[1]for a in boxes)*im.height/1000-8;y1=max(max(p[1]for p in g[k+'_quad'])for k in ('english','persian'))*im.height/1000+12
+  detail=im.crop((max(0,int(x0)),max(0,int(y0)),min(im.width,int(x1)),min(im.height,int(y1))))
+ except RuntimeError:detail=im.crop((0,int(im.height*.27),int(im.width*.62),im.height))
+ detail=detail.resize((detail.width*4,detail.height*4),Image.Resampling.LANCZOS);buf=io.BytesIO();detail.save(buf,'PNG')
  instruction=('Read the actual printed package captions literally, without translating, guessing, spelling correction or completing words. No expected wording is provided. '
   'Ignore the phone/contact stamp and side-panel fine print. Find the ONE upright white-and-blue carton in the FULL FRAME. '
   'english_text is the complete small caption directly BELOW the large AFP letters. persian_text is the small company caption directly BELOW the BLUE WATER-DROP SYMBOL to the left of AFP, even if it is actually malformed Latin or unreadable. '
@@ -35,7 +39,7 @@ def inspect(raw):
   'Geometry confidence is about safe exact location, not text recognition. Do not include cast shadow or soil in any caption quad. '
   'Return JSON only: {"english_text":"","persian_text":"","english_legible":false,"persian_legible":false,"package_count":1,"geometry_confidence":0.0,"package_bbox":[0,0,0,0],"afp_bbox":[0,0,0,0],"symbol_bbox":[0,0,0,0],"english_quad":[[0,0],[0,0],[0,0],[0,0]],"persian_quad":[[0,0],[0,0],[0,0],[0,0]]}.')
  content=[{'type':'text','text':instruction}]
- for label,data,mime in [('FULL FRAME',full.getvalue(),'image/webp'),('OVERLAPPING LEFT DETAIL; coordinates refer to FULL FRAME',buf.getvalue(),'image/jpeg')]:
+ for label,data,mime in [('FULL FRAME',full.getvalue(),'image/webp'),('OVERLAPPING LEFT DETAIL; coordinates refer to FULL FRAME',buf.getvalue(),'image/png')]:
   content +=[{'type':'text','text':label},{'type':'image_url','image_url':{'url':'data:'+mime+';base64,'+base64.b64encode(data).decode(),'detail':'high'}}]
  payload={'model':os.getenv('IMAGE_REVIEW_MODEL','agnes-3.0-flash'),'temperature':0,'response_format':{'type':'json_object'},'messages':[{'role':'user','content':content}]}
  for attempt in range(2):
@@ -51,10 +55,15 @@ def inspect(raw):
  return json.loads(re.sub(r'^```(?:json)?\s*|\s*```$','',value.strip(),flags=re.I))
 
 def font_file(lang):
- candidates=(('/usr/share/fonts/truetype/noto/NotoSansArabic-Regular.ttf','/usr/share/fonts/google-noto/NotoSansArabic-Regular.ttf','/usr/share/fonts/google-noto-vf/NotoSansArabic[wght].ttf')if lang=='fa'else('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf','/usr/share/fonts/dejavu/DejaVuSans.ttf','/usr/share/fonts/google-noto-vf/NotoSans[wght].ttf'))
- for name in candidates+('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf','/usr/share/fonts/dejavu/DejaVuSans.ttf'):
-  if Path(name).exists():return name
- raise RuntimeError('Verified caption font unavailable')
+ # Bundled, hash-pinned fonts make local and CI rendering identical.
+ import tempfile
+ name,digest=FONT_ASSETS[lang]
+ raw=base64.b64decode((Path(__file__).parent/'assets/package-caption-fonts'/(name+'.b64')).read_text())
+ if hashlib.sha256(raw).hexdigest()!=digest:raise RuntimeError('Verified caption font checksum failed')
+ target=Path(tempfile.gettempdir())/('afp-'+digest+'.ttf')
+ if not target.exists()or hashlib.sha256(target.read_bytes()).hexdigest()!=digest:target.write_bytes(raw)
+ return str(target)
+FONT_ASSETS={'fa': ('NotoSansArabic-Regular.ttf', 'c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d'), 'en': ('NotoSans-Caption.ttf', 'a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9')}
 
 def safe_geometry(value,size):
  if value.get('package_count')!=1 or type(value.get('geometry_confidence'))not in(int,float)or value['geometry_confidence']<.9:raise RuntimeError('Caption geometry uncertain')
@@ -97,38 +106,39 @@ def inverse_coefficients(q,width,height):
 
 def typeset(raw,locations):
  if not features.check('raqm'):raise RuntimeError('Joined Persian shaping unavailable; no disconnected-letter fallback')
+ from PIL import ImageChops
  im=Image.open(io.BytesIO(raw)).convert('RGB');geometry=safe_geometry(locations,im.size);details={}
+ px=im.load();pb=locations['package_bbox'];crop=(max(0,int(pb[0]*im.width/1000)),max(0,int(pb[1]*im.height/1000)),min(im.width,int(pb[2]*im.width/1000)+1),min(im.height,int(pb[3]*im.height/1000)+1))
+ anchors=[[v*(im.width if i%2==0 else im.height)/1000 for i,v in enumerate(locations[k])]for k in ('afp_bbox','symbol_bbox')]
+ afp,symbol=anchors;aw=afp[2]-afp[0];ah=afp[3]-afp[1]
+ soft=im.filter(ImageFilter.GaussianBlur(2)).load()
+ points={(x,y)for y in range(crop[1],crop[3])for x in range(crop[0],crop[2])if (px[x,y][2]>px[x,y][0]*1.08 and px[x,y][0]<165 and px[x,y][1]<190)or(sum(px[x,y])+18<sum(soft[x,y])and max(px[x,y])<210)}
+ small=Image.new('L',im.size,0);protected=Image.new('L',im.size,0);sm=small.load();pr=protected.load()
+ while points:
+  seed=points.pop();stack=[seed];component=[]
+  while stack:
+   x,y=stack.pop();component.append((x,y))
+   for n in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
+    if n in points:points.remove(n);stack.append(n)
+  xs=[p[0]for p in component];ys=[p[1]for p in component];ch=max(ys)-min(ys)+1;cw=max(xs)-min(xs)+1
+  in_caption=False
+  for lang in ('english','persian'):
+   q=geometry[lang][0];x0=min(p[0]for p in q);x1=max(p[0]for p in q);y0=min(p[1]for p in q)
+   if x0-6<sum(xs)/len(xs)<x1+6 and sum(ys)/len(ys)>y0-14 and max(ys)<crop[3]-(crop[3]-crop[1])*.09:in_caption=True
+  target=sm if ch<=max(22,ah*.65)and cw<=aw*1.1 and in_caption else pr
+  for point in component:target[point]=255
+ mask=ImageChops.subtract(small.filter(ImageFilter.MaxFilter(5)),protected.filter(ImageFilter.MaxFilter(3)))
+ clean=im.copy();cp=clean.load();bounds=mask.getbbox()
+ if bounds:
+  for x in range(bounds[0],bounds[2]):
+   samples=[px[x,y]for y in range(max(crop[1],bounds[1]-10),min(crop[3],bounds[3]+10))if min(px[x,y])>105 and max(px[x,y])-min(px[x,y])<32]
+   if not samples:raise RuntimeError('Clean sleeve shading unavailable')
+   color=tuple(sorted(v[c]for v in samples)[len(samples)//2]for c in range(3))
+   for y in range(bounds[1],bounds[3]):
+    if mask.getpixel((x,y)):cp[x,y]=color
+  im=Image.composite(clean,im,mask)
  for lang,text,script in [('english',ENGLISH,'en'),('persian',PERSIAN,'fa')]:
   q,width,height=geometry[lang];width=int(width);height=int(height);direction='rtl'if script=='fa'else'ltr';path=font_file(script)
-  x0=max(0,int(min(p[0]for p in q)));x1=min(im.width,int(math.ceil(max(p[0]for p in q)))+1);y0=max(2,int(min(p[1]for p in q)));y1=min(im.height-3,int(math.ceil(max(p[1]for p in q)))+1)
-  # Remove small caption-ink components only. Whole-image connected
-  # components keep the much larger AFP letters and water-drop mark protected,
-  # even when the old caption baseline is tilted or the locator is imprecise.
-  px=im.load();pb=locations['package_bbox'];crop=(max(0,int(pb[0]*im.width/1000)),max(0,int(pb[1]*im.height/1000)),min(im.width,int(pb[2]*im.width/1000)+1),min(im.height,int(pb[3]*im.height/1000)+1))
-  soft=im.filter(ImageFilter.GaussianBlur(2)).load()
-  points={(x,y)for y in range(crop[1],crop[3])for x in range(crop[0],crop[2])if (px[x,y][2]>px[x,y][0]*1.08 and px[x,y][0]<165 and px[x,y][1]<190)or(sum(px[x,y])+18<sum(soft[x,y])and max(px[x,y])<210)}
-  small=Image.new('L',im.size,0);protected=Image.new('L',im.size,0);sm=small.load();pr=protected.load()
-  while points:
-   seed=points.pop();stack=[seed];component=[]
-   while stack:
-    x,y=stack.pop();component.append((x,y))
-    for n in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)):
-     if n in points:points.remove(n);stack.append(n)
-   xs=[p[0]for p in component];ys=[p[1]for p in component];ch=max(ys)-min(ys)+1;cw=max(xs)-min(xs)+1
-   target=sm if ch<=22 and cw<=100 and x0-6<sum(xs)/len(xs)<x1+6 and y0-14<sum(ys)/len(ys)<y1+14 else pr
-   for point in component:target[point]=255
-  from PIL import ImageChops
-  mask=ImageChops.subtract(small.filter(ImageFilter.MaxFilter(5)),protected.filter(ImageFilter.MaxFilter(3)))
-  clean=im.copy();cp=clean.load()
-  bounds=mask.getbbox()
-  if bounds:
-   for x in range(bounds[0],bounds[2]):
-    samples=[px[x,y]for y in range(max(0,y0-15),min(im.height,y1+15))if min(px[x,y])>105 and max(px[x,y])-min(px[x,y])<32]
-    if not samples:raise RuntimeError('Clean sleeve shading unavailable')
-    color=tuple(sorted(v[c]for v in samples)[len(samples)//2]for c in range(3))
-    for y in range(bounds[1],bounds[3]):
-     if mask.getpixel((x,y)):cp[x,y]=color
-   im=Image.composite(clean,im,mask)
   scale=4;canvas=Image.new('RGBA',(width*scale,height*scale),(0,0,0,0));draw=ImageDraw.Draw(canvas)
   for points in range(height*scale,8*scale,-1):
    font=ImageFont.truetype(path,points,layout_engine=ImageFont.Layout.RAQM);box=draw.textbbox((0,0),text,font=font,direction=direction,language=script)
@@ -139,6 +149,14 @@ def typeset(raw,locations):
   warped=canvas.transform(im.size,Image.Transform.PERSPECTIVE,inverse_coefficients(q,width,height),Image.Resampling.BICUBIC)
   if ImageChops.multiply(warped.getchannel('A'),protected).getbbox():raise RuntimeError('New caption would overlap original logo')
   im=Image.alpha_composite(im.convert('RGBA'),warped).convert('RGB');details[lang]={'text':text,'font':Path(path).name,'point_size':points/scale,'quad':q}
+ original=Image.open(io.BytesIO(raw)).convert('RGB')
+ protected_boxes=locations.get('afp_glyph_bboxes',[locations['afp_bbox']])+[locations['symbol_bbox']]
+ for box_ in protected_boxes:
+  a=[v*(im.width if i%2==0 else im.height)/1000 for i,v in enumerate(box_)]
+  for y in range(max(0,int(a[1])),min(im.height,int(math.ceil(a[3])))):
+   for x in range(max(0,int(a[0])),min(im.width,int(math.ceil(a[2])))):
+    rgb=original.getpixel((x,y))
+    if rgb[2]>rgb[0]*1.3 and rgb[2]>70 and rgb[0]<140 and im.getpixel((x,y))!=rgb:raise RuntimeError('Caption would modify original brand mark')
  return im,{'policy':POLICY,'source_sha256':hashlib.sha256(raw).hexdigest(),'captions':details}
 
 def detect_geometry(raw):
@@ -210,6 +228,6 @@ def detect_geometry(raw):
  package=(band[0]-3,max(0,min(afp[1]-ah*1.8,icon[1]-ah*.5)),band[2]+3,band[3]+5)
  normbox=lambda a:[v*1000/(w if i%2==0 else h)for i,v in enumerate(a)]
  normquad=lambda a:[[x*1000/w,y*1000/h]for x,y in a]
- result={'method':'local-afp-glyph-topology-v1','package_count':1,'geometry_confidence':1,'package_bbox':normbox(package),'afp_bbox':normbox(afp),'symbol_bbox':normbox(icon),'english_quad':normquad(english),'persian_quad':normquad(persian)}
+ result={'afp_glyph_bboxes':[normbox(c['box'])for c in group],'method':'local-afp-glyph-topology-v1','package_count':1,'geometry_confidence':1,'package_bbox':normbox(package),'afp_bbox':normbox(afp),'symbol_bbox':normbox(icon),'english_quad':normquad(english),'persian_quad':normquad(persian)}
  safe_geometry(result,im.size)
  return result
