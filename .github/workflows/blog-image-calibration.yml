@@ -5,7 +5,7 @@ on:
       round:
         description: 'Prompt comparison or two controlled finish edits; no publication'
         type: choice
-        options: [prompt, finish-edit, review-only]
+        options: [prompt, finish-edit, review-only, labels]
         default: prompt
 permissions:
   contents: write
@@ -55,6 +55,8 @@ jobs:
             python automation/calibrate_closed_carton_edits.py
           elif [ "$CALIBRATION_ROUND" = "review-only" ]; then
             AGNES_PREFERRED_KEY_SLOTS=AGNES_API_KEY,AGNES_API_KEY2,AGNES_API_KEY3 python automation/calibrate_image_validation.py
+          elif [ "$CALIBRATION_ROUND" = "labels" ]; then
+            AGNES_PREFERRED_KEY_SLOTS=AGNES_API_KEY,AGNES_API_KEY2,AGNES_API_KEY3 python automation/calibrate_package_labels.py
           else
             python automation/calibrate_blog_images.py
           fi
