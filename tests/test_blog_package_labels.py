@@ -47,3 +47,41 @@ class AutomaticRealSceneTests(unittest.TestCase):
  def test_ambiguous_or_absent_brand_is_not_guessed(self):
   raw=io.BytesIO();Image.new('RGB',(1200,900),'white').save(raw,'PNG')
   with self.assertRaisesRegex(RuntimeError,'recognized'):p.detect_geometry(raw.getvalue())
+
+class CaptionFoundationTests(unittest.TestCase):
+ def test_opt_in_is_tape_only_and_boolean(self):
+  import tempfile,json
+  with tempfile.TemporaryDirectory()as d:
+   root=Path(d);(root/'data').mkdir();cfg=root/'data/blog-image-acceptance-policy.json'
+   self.assertFalse(p.enabled(root,'tape20'))
+   cfg.write_text(json.dumps({'require_exact_package_labels':True}));self.assertTrue(p.enabled(root,'tape20'));self.assertFalse(p.enabled(root,'hose'))
+   cfg.write_text(json.dumps({'require_exact_package_labels':1}))
+   with self.assertRaises(RuntimeError):p.enabled(root,'tape20')
+ def test_hash_bound_readback_never_accepts_score_alone(self):
+  r={'exact_labels_required':True,'sha256':'a'*64,'verdict':{'score':99}}
+  self.assertTrue(p.record_errors(r))
+  r['package_label_review']={'policy':p.POLICY,'sha256':'a'*64,'reading':ExactCaptionTests().good()};self.assertEqual(p.record_errors(r),[])
+  r['sha256']='b'*64;self.assertTrue(p.record_errors(r))
+ def test_cache_render_once_and_bind_bytes(self):
+  import tempfile
+  raw=(AutomaticRealSceneTests.ROOT/'artifacts/blog-image-calibration/41029742464/case-2-candidate-v2.webp').read_bytes()
+  with tempfile.TemporaryDirectory()as d:
+   path=Path(d)/'candidate.webp';path.write_bytes(raw)
+   with patch.object(p,'typeset',wraps=p.typeset)as render:
+    first,proof=p.prepare_cached(path);second,_=p.prepare_cached(path)
+   self.assertEqual(first,second);self.assertEqual(render.call_count,1)
+   self.assertEqual(proof['sha256'],__import__('hashlib').sha256(second).hexdigest())
+ def test_layout_failure_is_bounded_quality_rejection(self):
+  import tempfile
+  with tempfile.TemporaryDirectory()as d:
+   path=Path(d)/'candidate.webp';path.write_bytes(b'fixture')
+   with patch.object(p,'detect_geometry',side_effect=RuntimeError('Caption anchors not uniquely recognized')):
+    with self.assertRaisesRegex(RuntimeError,'^Product image rejected:'):p.prepare_cached(path)
+   self.assertEqual(path.read_bytes(),b'fixture')
+ def test_runtime_failure_preserves_candidate_without_regeneration(self):
+  import tempfile
+  with tempfile.TemporaryDirectory()as d:
+   path=Path(d)/'candidate.webp';path.write_bytes(b'fixture')
+   with patch.object(p,'detect_geometry',side_effect=RuntimeError('Verified caption font unavailable')):
+    with self.assertRaisesRegex(RuntimeError,'^Verified caption font'):p.prepare_cached(path)
+   self.assertEqual(path.read_bytes(),b'fixture')

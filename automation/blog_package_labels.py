@@ -31,16 +31,25 @@ def inspect(raw):
  except RuntimeError:detail=im.crop((0,int(im.height*.27),int(im.width*.62),im.height))
  detail=detail.resize((detail.width*4,detail.height*4),Image.Resampling.LANCZOS);buf=io.BytesIO();detail.save(buf,'PNG')
  instruction=('Read the actual printed package captions literally, without translating, guessing, spelling correction or completing words. No expected wording is provided. '
-  'Ignore the phone/contact stamp and side-panel fine print. Find the ONE upright white-and-blue carton in the FULL FRAME. '
-  'english_text is the complete small caption directly BELOW the large AFP letters. persian_text is the small company caption directly BELOW the BLUE WATER-DROP SYMBOL to the left of AFP, even if it is actually malformed Latin or unreadable. '
-  'For unreadable text return empty string and legible=false, never infer words from product type. Detail view is a crop of the SAME image; ALL coordinates must use the FULL FRAME, normalized 0..1000. '
-  'Identify package_bbox, afp_bbox and symbol_bbox as [left,top,right,bottom]. Identify english_quad and persian_quad, each in order top-left,top-right,bottom-right,bottom-left. '
-  'The quads must cover the ENTIRE existing caption and a small clean-white margin, below their respective mark, above the blue band, without covering ANY part of AFP or the water-drop symbol. If a caption is absent, identify a safe blank area directly below its mark. '
-  'Geometry confidence is about safe exact location, not text recognition. Do not include cast shadow or soil in any caption quad. '
-  'Return JSON only: {"english_text":"","persian_text":"","english_legible":false,"persian_legible":false,"package_count":1,"geometry_confidence":0.0,"package_bbox":[0,0,0,0],"afp_bbox":[0,0,0,0],"symbol_bbox":[0,0,0,0],"english_quad":[[0,0],[0,0],[0,0],[0,0]],"persian_quad":[[0,0],[0,0],[0,0],[0,0]]}.')
+  'Return the exact visible characters, preserving Persian dots and letters. Ignore contact watermark and side-panel fine print. '
+  'The FULL FRAME establishes context. Detail views show the SAME image, not new products. '
+  'english_text is the small caption BELOW the large AFP letters. persian_text is the company caption BELOW the BLUE WATER-DROP SYMBOL to the left of AFP. '
+  'Two rectified caption crops, if present, contain only the original photographed/printed pixels enlarged for reading. They do not provide expected text. '
+  'For unreadable text return empty string and legible=false; never infer words from product type or a familiar company name. '
+  'Return JSON only: {"english_text":"","persian_text":"","english_legible":false,"persian_legible":false}.')
  content=[{'type':'text','text':instruction}]
  for label,data,mime in [('FULL FRAME',full.getvalue(),'image/webp'),('OVERLAPPING LEFT DETAIL; coordinates refer to FULL FRAME',buf.getvalue(),'image/png')]:
   content +=[{'type':'text','text':label},{'type':'image_url','image_url':{'url':'data:'+mime+';base64,'+base64.b64encode(data).decode(),'detail':'high'}}]
+ try:
+  g=detect_geometry(raw)
+  for lang in ('english','persian'):
+   q=[(x*im.width/1000,y*im.height/1000)for x,y in g[lang+'_quad']]
+   # PIL QUAD order: TL, BL, BR, TR. No generated text or spelling hints.
+   width=max(1,round(math.dist(q[0],q[1])*8));height=max(1,round(math.dist(q[0],q[3])*8))
+   strip=im.transform((width,height),Image.Transform.QUAD,tuple(v for pt in (q[0],q[3],q[2],q[1])for v in pt),Image.Resampling.BICUBIC)
+   data=io.BytesIO();strip.save(data,'PNG')
+   content+=[{'type':'text','text':lang.upper()+' CAPTION ONLY; same original pixels, perspective-rectified for literal reading.'},{'type':'image_url','image_url':{'url':'data:image/png;base64,'+base64.b64encode(data.getvalue()).decode(),'detail':'high'}}]
+ except RuntimeError:pass
  payload={'model':os.getenv('IMAGE_REVIEW_MODEL','agnes-3.0-flash'),'temperature':0,'response_format':{'type':'json_object'},'messages':[{'role':'user','content':content}]}
  for attempt in range(2):
   key=roya.BASE._key_pool.next()
@@ -231,3 +240,35 @@ def detect_geometry(raw):
  result={'afp_glyph_bboxes':[normbox(c['box'])for c in group],'method':'local-afp-glyph-topology-v1','package_count':1,'geometry_confidence':1,'package_bbox':normbox(package),'afp_bbox':normbox(afp),'symbol_bbox':normbox(icon),'english_quad':normquad(english),'persian_quad':normquad(persian)}
  safe_geometry(result,im.size)
  return result
+
+
+def enabled(root,expected):
+ path=Path(root)/'data/blog-image-acceptance-policy.json'
+ if not path.exists():return False
+ flag=json.loads(path.read_text()).get('require_exact_package_labels',False)
+ if type(flag)is not bool:raise RuntimeError('Invalid exact package caption policy')
+ return expected=='tape20' and flag
+
+def record_errors(record):
+ if record.get('exact_labels_required')is not True:return []
+ proof=record.get('package_label_review',{})
+ if not isinstance(proof,dict)or proof.get('policy')!=POLICY or proof.get('sha256')!=record.get('sha256'):return ['Current hash-bound exact package caption review required']
+ return exact_errors(proof.get('reading'))
+
+def prepare_cached(cache):
+ """Render once per candidate; preserve the cache on font/transport failure.
+ OCR happens in the independent gate, never inside the image-provider lease.
+ """
+ cache=Path(cache);raw=cache.read_bytes();digest=hashlib.sha256(raw).hexdigest();path=cache.with_suffix('.captions.json')
+ try:proof=json.loads(path.read_text())
+ except (OSError,ValueError):proof={}
+ if proof.get('policy')==POLICY and proof.get('sha256')==digest:return raw,proof
+ try:im,proof=typeset(raw,detect_geometry(raw))
+ except RuntimeError as exc:
+  # Layout is a definitive candidate defect. Fonts/runtime failures are not.
+  if str(exc).startswith(('Caption anchors','Caption blue','Caption water','Caption symbol','Caption viewing','Caption white','Caption area','Caption overlaps','Caption not aligned','New caption','Caption would modify')):raise RuntimeError('Product image rejected: '+str(exc))from None
+  raise
+ out=io.BytesIO();im.save(out,'WEBP',quality=95,method=6);result=out.getvalue();proof['sha256']=hashlib.sha256(result).hexdigest()
+ tmp=cache.with_suffix('.tmp');tmp.write_bytes(result);tmp.replace(cache)
+ path.write_text(json.dumps(proof,ensure_ascii=False,indent=2))
+ return result,proof
