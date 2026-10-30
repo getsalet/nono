@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Six bounded image-only comparisons; never edits queues, posts or acceptance."""
+"""Bounded image-only comparisons; never edits queues, posts or acceptance."""
 import copy,hashlib,io,json,os,re,subprocess,time
 from pathlib import Path
 from unittest.mock import patch
@@ -12,7 +12,7 @@ from blog_image_art_direction import closed_package_prompt,VERSION
 ROOT=Path(__file__).resolve().parents[1]
 BLOG='roya'
 SOURCE_KEYS=('article-f216134c2b97ce6d','article-4231236eacb8613e','article-98433db6d9a59096')
-CASES=((1,'baseline',0),(1,'baseline',1),(2,'candidate',0),(2,'candidate',1),(3,'holdout',2),(3,'repeat',0))
+CASES=((2,'candidate-v2',0),(2,'candidate-v2',1),(3,'holdout-v2',2),(3,'repeat-v2',0))
 
 def load_items(root=ROOT):
     q=json.loads((root/'data/roya/backlink-queue.json').read_text())
@@ -31,15 +31,17 @@ def cases(items):
     for i,(stage,variant,index)in enumerate(CASES,1):
         item=copy.deepcopy(items[index])
         source=item['key'];item['key']='image-calibration-'+os.getenv('GITHUB_RUN_ID','offline')+'-'+str(i)
-        item.pop('_image_qa_feedback',None)
+        for field in list(item):
+            if (field.startswith('_image_') and field!='_image_article_context')or field in ('image_review','image_generation','image_url'):item.pop(field,None)
         result.append((item,{'case':i,'stage':stage,'variant':variant,'source_key':source,'source_index':index}))
     return result
 
 def encode(raw):
-    from blog_image_watermark import apply
-    image=Image.open(io.BytesIO(raw)).convert('RGB')
-    out=io.BytesIO();apply(image).save(out,'WEBP',quality=92,method=6)
-    return out.getvalue()
+    # generate() already applies the exact watermark and output compression.
+    # Keep those bytes unchanged: calibration must use production postprocessing.
+    from blog_image_watermark import present
+    if not present(Image.open(io.BytesIO(raw))):raise ValueError('Generated watermark missing')
+    return raw
 
 def main():
     run=os.environ['GITHUB_RUN_ID']
@@ -47,7 +49,7 @@ def main():
     report={'run_id':run,'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         'started_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'candidate_version':VERSION,
         'post_submissions':0,'article_state_changes':0,'production_activation':False,'manual_visual_approval':False,
-        'model':os.getenv('IMAGE_MODEL','agnes-image-2.5-flash'),'maximum_candidates':6,'cases':[]}
+        'model':os.getenv('IMAGE_MODEL','agnes-image-2.5-flash'),'maximum_candidates':len(CASES),'cases':[]}
     def save():
         data=json.dumps(report,ensure_ascii=False,indent=2).encode();(out/'report.json').write_bytes(data)
         generated.checkpoint_asset(str((out/'report.json').relative_to(ROOT)),data,ROOT)
@@ -63,6 +65,7 @@ def main():
             prompt=scene.prompt(item,BLOG)if row['variant']=='baseline'else closed_package_prompt(a,plan)
             row.update(title=a['title'],scene=plan,prompt=prompt,prompt_sha256=hashlib.sha256(prompt.encode()).hexdigest(),
                 reference_sha256=[hashlib.sha256(x.encode()).hexdigest()for x in scene.references(item)])
+            save()
             try:
                 # Preserve hosted FIFO admission, cooldown and the owner's image pair.
                 with patch.object(scene,'prompt',return_value=prompt):raw=generated.generate(item,BLOG,slots=slots,max_attempts=1)
@@ -74,6 +77,7 @@ def main():
                     row['primary_review']=review['verdict'];row['primary_passed']=True
                 except Exception as exc:
                     row['primary_passed']=False;row['primary_error_type']=type(exc).__name__
+                    row['primary_http_status']=getattr(exc,'http_status',getattr(exc,'code',None))
                     records=list((ROOT/'artifacts/blog-image-reviews').glob('tape20-'+row['sha256']+'.json'))
                     if records:row['primary_review']=json.loads(records[0].read_text()).get('verdict')
                 key=generated.roya.BASE.next_agnes_key()
@@ -88,6 +92,7 @@ def main():
             print(json.dumps({k:row.get(k)for k in ('case','variant','candidate_passed','no_strip_confirmed','error_type')},ensure_ascii=False),flush=True)
             # Never blindly retry a busy provider in this run.
             if row.get('retry_at'):report['stopped_for_provider_backpressure']=True;break
+            if row.get('error_type'):report['stopped_for_unclassified_service_error']=True;break
     except Exception as exc:report['preflight_error_type']=type(exc).__name__
     finally:
         report['finished_at']=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime());save()
