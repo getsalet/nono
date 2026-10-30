@@ -10,6 +10,13 @@ POLICY='blog-product-family-reference-vision-v7-reference-parity'
 SCENE_GUARD='off-axis-carton-independent-separation-v6'
 PRACTICAL_MODE='practical-score90-v1'
 ACCEPTANCE_CONFIG='data/blog-image-acceptance-policy.json'
+PACKAGE_FINISH_POLICY='no-protruding-carton-strip-v1'
+def closed_package_required(root,expected):
+ path=Path(root)/ACCEPTANCE_CONFIG
+ if not path.exists():return False
+ value=json.loads(path.read_text());flag=value.get('forbid_protruding_package_strip',False)
+ if type(flag)is not bool:raise RuntimeError('Invalid closed-package image policy')
+ return expected=='tape20' and flag
 def acceptance_mode(root):
  path=Path(root)/ACCEPTANCE_CONFIG
  if not path.exists():return 'strict'
@@ -103,7 +110,10 @@ def generated_scene_errors(record,expected,require_focused=True):
   for field,wanted in (('topic_match',True),('product_integrated',True),('product_count_match',True),('technical_evidence_match',True),('packaging_not_used_as_hardware',True),('collage_or_split_layout',False),('crop_contradiction',False)):
    if v.get(field)is not wanted:e.append('Core image condition not met: '+field)
   if v.get('observed_product_count')!=(2 if expected=='hose'else 1):e.append('Core image product count mismatch')
-  return e  # Minor spacing, strip and framing details are advisory at score >=90.
+  if record.get('closed_package_required')is True:
+   focused=record.get('focused_physical_review')
+   if record.get('package_finish_policy')!=PACKAGE_FINISH_POLICY or not isinstance(focused,dict)or focused.get('package_has_protruding_strip')is not False:e.append('Closed package required: protruding strip not independently cleared')
+  return e  # Other minor spacing/framing details remain advisory at score >=90.
  for field in SCENE_FLAGS:
   if v.get(field)is not True:e.append('Physical scene condition not met: '+field)
  if require_focused:e+=focused_separation_errors(record.get('focused_physical_review'))
@@ -200,7 +210,7 @@ def review(item,url,root=None,_candidate=None):
   if generated and mode==PRACTICAL_MODE:
    instruction=(reference_identity_instruction(expected)+' Practical editorial image review requested by the user. Minimum overall quality score is 90 out of 100. '
     'Accept a useful coherent article illustration with the correct recognizable AFP product and authentic branding. '
-    'Minor packaging ribbons or straps, small clearance from irrigation lines, ordinary line contact, modest crop/framing imperfections and nonessential soil-shape details are ADVISORY, not automatic rejection. '
+    'Small clearance from irrigation lines, ordinary line contact, modest crop/framing imperfections and nonessential soil-shape details are ADVISORY, not automatic rejection. '
     'Do not demand perfect commercial photography or an exact one-carton-diameter soil gap. '
     'Classify observed_family by the commercial product rolls or packages, not supporting infrastructure. Ordinary headers, round supply pipes, fittings, filters and installed lines are not an additional hose-family product. Only an actual wrong commercial roll/package makes the family mixed. Evaluate unsuitable installed laterals separately under technical_evidence_match, not by inventing a second product. '
     'The main AFP mark and recognizable package identity must be authentic and readable. Tiny secondary fine print need not be fully legible at scene scale; blur alone is advisory, while clearly invented or altered branding remains a core defect. '
@@ -252,6 +262,15 @@ def review(item,url,root=None,_candidate=None):
       if focused.get('package_has_protruding_strip')is True:verdict['product_role_plausible']=False
   record={'scene_guard_version':SCENE_GUARD if generated else None,'policy':POLICY,'review_model':review_model,'sha256':digest,'family':expected,'source_url':url,'reference_url':REFERENCES[expected],'width':w,'height':h,'verdict':verdict,'reviewed_at':roya.now(),'topic_sha256':topic_sha,'article_owner':owner,'focused_physical_review':focused}
   path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(record,ensure_ascii=False,indent=2))
+ # The owner's no-ribbon request is independent of the overall score. Do not
+ # re-impose strict soil spacing when practical acceptance is selected.
+ if generated and closed_package_required(root,expected):
+  if record.get('package_finish_policy')!=PACKAGE_FINISH_POLICY:
+   key=roya.BASE.next_agnes_key()
+   if not key:raise RuntimeError('Vision credential required for closed-package review')
+   record['focused_physical_review']=focused_physical_check(raw,fmt,review_model,key)
+   record['package_finish_policy']=PACKAGE_FINISH_POLICY
+  record['closed_package_required']=True
  record.setdefault('scene_guard_version',None)
  record.setdefault('focused_physical_review',None)
  record['watermark']=watermark
@@ -266,7 +285,7 @@ def review(item,url,root=None,_candidate=None):
  if generated:errors+=generated_scene_errors(record,expected)
  if errors:raise RuntimeError('Product image rejected: '+'; '.join(errors))
  item.update(image_url=url,image_width=w,image_height=h,image_review={k:record[k]for k in ('policy','sha256','family','width','height','source_url','verdict','watermark','topic_sha256','scene_guard_version','focused_physical_review')})
- if generated:item['image_review'].update({k:record[k]for k in ('acceptance_mode','acceptance_warnings','acceptance_decision')if k in record})
+ if generated:item['image_review'].update({k:record[k]for k in ('acceptance_mode','acceptance_warnings','acceptance_decision','closed_package_required','package_finish_policy')if k in record})
  return record
 
 def validate_record(item):
@@ -284,6 +303,7 @@ def generated_record_errors(item,blog,root=None):
  generation=item.get('image_generation',{})
  if not generation and not rollout_enabled(blog,root):return []
  errors=[];asset_id=identity(item,blog)
+ if closed_package_required(Path(root or roya.ROOT),family(item))and item.get('image_review',{}).get('closed_package_required')is not True:errors.append('Current independent closed-package review required')
  record=item.get('image_review',{})
  errors+=generated_scene_errors(record,family(item))
  if acceptance_mode(Path(root or roya.ROOT))==PRACTICAL_MODE and record.get('acceptance_mode')!=PRACTICAL_MODE:errors.append('Current practical score90 review required')

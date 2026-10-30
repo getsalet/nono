@@ -79,6 +79,6 @@ class ScenePhysicalityTests(unittest.TestCase):
  def test_new_layout_has_separate_off_axis_soil_island(self):
   prompt=scene.prompt(self.item,'roya')
   self.assertIn('LOWER-LEFT',prompt);self.assertIn('RIGHT half',prompt)
-  self.assertIn('one carton diameter',prompt);self.assertIn('No line behind the carton',prompt)
+  self.assertIn('visible strip of bare soil',prompt);self.assertIn('No line behind the carton',prompt)
 
 if __name__=='__main__':unittest.main()

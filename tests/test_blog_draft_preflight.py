@@ -80,7 +80,7 @@ class DraftPreflightTests(unittest.TestCase):
    self.assertIn('same full-frame image',label);image=Image.open(io.BytesIO(data));self.assertLessEqual(max(image.size),1024)
  def test_prompt_forbids_pipe_support_and_white_ribbon(self):
   prompt=scene.prompt(self.item,'loxblog')
-  self.assertIn('visible strip of bare soil',prompt);self.assertIn('No white ribbon',prompt)
+  self.assertIn('visible strip of bare soil',prompt);self.assertIn('white ribbon outside the carton',prompt)
  def test_invalid_text_is_triaged_during_image_retry_window(self):
   import time
   self.enqueue();row=stock.rows(self.root)[0];row['retry_at']=time.time()+1800;stock.persist(self.root,row)

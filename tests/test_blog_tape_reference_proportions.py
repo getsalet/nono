@@ -30,7 +30,7 @@ class TapeReferenceProportionTests(unittest.TestCase):
   item=self.item()
   for feedback in ('','Remove every protruding white ribbon'):
    item['_image_qa_feedback']=feedback;text=scene.prompt(item,'roya')
-   self.assertIn('sidewall-height-to-diameter proportions',text)
+   self.assertIn('sidewall',text);self.assertIn('proportions',text)
    self.assertNotIn('low wide',text);self.assertNotIn('diameter larger than height',text)
   self.assertIn('full carton sidewall',text)
  def test_missing_article_context_still_fails(self):

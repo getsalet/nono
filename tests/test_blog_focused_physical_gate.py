@@ -68,6 +68,6 @@ class FocusedPhysicalGateTests(unittest.TestCase):
   self.assertIn('Independent package separation review required',gate.generated_scene_errors(record,'tape20'))
   record['focused_physical_review']=self.focused;self.assertEqual(gate.generated_scene_errors(record,'tape20'),[])
  def test_monitoring_prompt_separates_dry_package_patch_from_wet_roots(self):
-  text=scene.prompt(self.item,'roya');self.assertIn('dark moist soil',text)
-  self.assertIn('Only the separate carton island is dry',text);self.assertIn('No loose coil',text)
+  text=scene.prompt(self.item,'roya');self.assertIn('dark wet-soil strip',text)
+  self.assertIn('lighter dry soil outside the strip',text);self.assertIn('loose commercial coil',text)
 if __name__=='__main__':unittest.main()

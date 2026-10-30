@@ -13,11 +13,15 @@ class TopicSceneContractTests(unittest.TestCase):
   self.assertIn('no people',text)
   self.assertNotIn('three sibling images',text)
   self.assertEqual(scene_plan(item,'loxblog')['intent'],'connection')
- def test_actual_summary_is_present_and_changes_the_prompt(self):
-  item=self.item('نوار تیپ بامیه؛ مراقبت حین بهره‌برداری');a=prompt(item,'roya')
-  self.assertIn(item['_image_article_context']['summary'],a)
+ def test_actual_summary_is_bound_but_not_raw_layout_instructions(self):
+  from blog_reference_scene import topic_hash,article
+  item=self.item('نوار تیپ بامیه؛ مراقبت حین بهره‌برداری');a=prompt(item,'roya');digest=topic_hash(item)
+  self.assertEqual(article(item)['summary'],item['_image_article_context']['summary'])
+  self.assertNotIn(item['_image_article_context']['summary'],a)
   item['_image_article_context']['summary']='موضوع این مقاله بررسی یکنواختی رطوبت در ناحیه ریشه و فاصله خطوط کشت است و به شرایط دیگری نمی‌پردازد.'
-  self.assertNotEqual(a,prompt(item,'roya'))
+  self.assertNotEqual(digest,topic_hash(item))
+  item['_image_article_context']['summary']='این مقاله درباره بررسی آبیاری در گلخانه و ثبت وضعیت رطوبت کنار ریشه ها است و باید با محل اجرای واقعی تطبیق داده شود.'
+  self.assertNotEqual(a,prompt(item,'roya'));self.assertIn('greenhouse',prompt(item,'roya'))
  def test_reference_scale_and_no_unconditional_hose_coupling(self):
   item=self.item('لوله نخی ذرت؛ عملکرد آبیاری','hose');text=prompt(item,'roya')
   self.assertIn('12 to 15 percent',text)
