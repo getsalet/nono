@@ -55,7 +55,15 @@ def render_city_token(item,post):
  if isinstance(post.get('meta_description'),str):post['meta_description']=render(post['meta_description'])
  if isinstance(post.get('tags'),list):post['tags']=[render(x)for x in post['tags']]
  body=post.get('html')
- if isinstance(body,str)and _CITY_TOKEN_RE.search(body):
+ if isinstance(body,str):
+  # Empty exact placeholder tags represent a matrix locality, not an HTML element.
+  # Attributed/nonempty/unknown elements remain untouched and fail normal HTML QA.
+  empty=re.compile(r'<AFP_CITY\s*>\s*</AFP_CITY\s*>|<AFP_CITY\s*/>',re.I)
+  body,n=empty.subn(lambda m:__import__('html').escape(city),body);count+=n
+  if not re.search(r'</AFP_CITY\s*>',body,re.I):
+   body,n=re.subn(r'<AFP_CITY\s*>',lambda m:__import__('html').escape(city),body,flags=re.I);count+=n
+  post['html']=body
+ if isinstance(body,str)and any(_CITY_TOKEN_RE.search(part)for part in re.split(r'(<[^>]*>)',body)[::2]):
   soup=BeautifulSoup(body,'html.parser')
   for node in list(soup.find_all(string=True)):
    if isinstance(node,Comment)or node.parent.name in ('script','style'):continue

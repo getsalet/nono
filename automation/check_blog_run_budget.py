@@ -5,7 +5,7 @@ from pathlib import Path
 from farsiblog_backlink_queue import remaining_publication_budget
 ROOT=Path(__file__).resolve().parents[1]
 def decision(blog,root=ROOT,current=None,force=False,target=""):
- if blog not in ('farsiblog','rozblog','blogfa','loxblog','blogsky'):raise ValueError('Unsupported blog')
+ if blog not in ('farsiblog','rozblog','loxblog','blogsky'):raise ValueError('Unsupported blog')
  current=current or dt.datetime.now(dt.timezone.utc);state=Path(root)/'state'/(blog+'-backlink-progress.json')
  remaining=remaining_publication_budget(state,current)
  recent=[]
@@ -14,7 +14,7 @@ def decision(blog,root=ROOT,current=None,force=False,target=""):
    at=dt.datetime.fromisoformat(row['at'].replace('Z','+00:00'))
    if at>=current-dt.timedelta(hours=1):recent.append(at)
  result={'proceed':force or remaining>0,'remaining':remaining,'next_eligible_at':(min(recent)+dt.timedelta(hours=1)).isoformat() if remaining==0 and recent else None}
- if blog in ('blogfa','loxblog'):
+ if blog == 'loxblog':
   journal=Path(root)/('artifacts/'+blog+'-backlink-queue/submission-attempts.json')
   rows=json.loads(journal.read_text())if journal.exists()else{}
   blocked=[key for key,row in rows.items()if row.get('phase')in ('submitting','unconfirmed','reconciled_absent')]

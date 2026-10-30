@@ -143,6 +143,7 @@ def retry_transient(operation):
     for attempt in range(3):
         try:return operation()
         except (TimeoutError,urllib.error.URLError,RuntimeError) as exc:
+            if getattr(exc,'http_status',None)==429 or getattr(exc,'code',None)==429:raise
             if isinstance(exc,RuntimeError) and not (re.fullmatch(r'Agnes/provider HTTP (?:408|429|500|502|503|504); raw response withheld',str(exc)) or str(exc)=='Agnes/provider transport failure; private details withheld'):raise
             if isinstance(exc,urllib.error.HTTPError) and exc.code not in (408,429,500,502,503,504):raise
             if attempt==2:raise
@@ -215,7 +216,7 @@ def main():
         except ImageProviderBusy as busy:
             blocked_until=busy.retry_at
             print('Shared image-provider cooldown active; no new source/text/image calls.');break
-        provider_busy=False;exc_pending=None
+        provider_busy=False;exc_pending=None;text_rate_limited=False
         item.pop('_image_prepared_this_run',None)
         links=links_for(item);obj=None;errors=[];info={};stage='recovery'
         try:
@@ -282,6 +283,7 @@ def main():
                     errors,info=qa(item,obj,links);print(f'{item["key"]}: attempt={attempt+1}, words={info.get("words")}, errors={len(errors)}',flush=True)
                     if not errors:break
         except Exception as exc:
+            text_rate_limited=getattr(exc,'http_status',None)==429 or getattr(exc,'code',None)==429
             provider_busy=isinstance(exc,(ImageProviderBusy,ImageQueueBusy));exc_pending=exc if isinstance(exc,ImagePending)else None
             if provider_busy:item['image_retry_at']=exc.retry_at
             errors=['generation/source/validation failed: '+type(exc).__name__+' [stage='+stage+']; '+exception_detail(exc)]
@@ -297,6 +299,8 @@ def main():
         else:
             item.pop('next_retry_at',None);item.pop('failure_stage',None);item.update({'title':obj['title'],'slug':obj['slug']});completed.append(item['key'])
         save(item_path(item['key']),{**item,'post':obj,'blog':BLOG,'target_url':item.get('target_url','https://navar-abyari.ir/'),'qa':{'passed':not errors,'errors':errors,**info}});save(QUEUE,q)
+        if text_rate_limited:break
+        if text_rate_limited:break
         if provider_busy and not isinstance(exc_pending,ImagePending):break  # Real provider errors still stop the batch.
         if isinstance(exc_pending,ImagePending)and not item.get('_image_stock_request'):break  # Stock cap: no more prose.
     refresh_ready(q);state=load(STATE,{});state.update({'updated_at':now(),'completed_keys':[x['key']for x in q['items']if x['status']in('completed','published')],'failed':{x['key']:x.get('last_error','')for x in q['items']if x['status']=='failed'}});save(STATE,state)

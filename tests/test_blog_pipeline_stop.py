@@ -22,13 +22,13 @@ class SharedPipelineStopTests(unittest.TestCase):
   imports=[n.module for n in ast.walk(tree)if isinstance(n,ast.ImportFrom)]
   self.assertEqual(imports,['pathlib'])
  def test_all_direct_publishers_return_before_io_or_browser(self):
-  for module in ('publish_roya_posts','publish_farsiblog_posts','publish_rozblog_posts','publish_blogfa_posts','publish_loxblog_posts'):
+  for module in ('publish_roya_posts','publish_farsiblog_posts','publish_rozblog_posts','publish_loxblog_posts'):
    code="import sys;sys.path.insert(0,'automation');from unittest.mock import patch;import "+module+" as p\nwith patch('blog_image_runtime_control.publication_paused',return_value=True):\n assert p.main()==0\n"
    result=subprocess.run([sys.executable,'-c',code],cwd=ROOT,capture_output=True,text=True)
    self.assertEqual(result.returncode,0,module+': '+result.stderr)
    self.assertIn('no queue mutation',result.stdout)
  def test_runtime_workflow_steps_are_guarded(self):
-  for workflow,blog in [('roya-backlink-queue','roya'),('roya-backlink-publish','roya'),('farsiblog-content','farsiblog'),('rozblog-content','rozblog'),('blogfa-content','blogfa'),('loxblog-content','loxblog')]:
+  for workflow,blog in [('roya-backlink-queue','roya'),('roya-backlink-publish','roya'),('farsiblog-content','farsiblog'),('rozblog-content','rozblog'),('loxblog-content','loxblog')]:
    s=(ROOT/'.github/workflows'/(workflow+'.yml')).read_text();self.assertIn('run: python automation/check_blog_pipeline_control.py '+blog,s)
    after=s.split('id: control',1)[1].split('\n      - ')[1:]
    for step in after:self.assertIn("if: steps.control.outputs.proceed == '1'",step,workflow+': '+step[:100])

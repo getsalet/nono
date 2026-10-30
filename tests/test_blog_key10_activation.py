@@ -11,7 +11,7 @@ class Key10ActivationTests(unittest.TestCase):
   legacy=patch('blog_image_restore.enabled',return_value=False);legacy.start();self.addCleanup(legacy.stop)
  def item(self):return {'key':'key10-test','family':'tape20','site_title':'نوار تیپ','_image_article_context':{'title':'نوار تیپ پیاز','summary':'بررسی فاصله خطوط نوار تیپ برای کشت پیاز و یکنواختی آبیاری و نصب درست خطوط در خاک'}}
  def test_five_generators_bind_only_proven_key(self):
-  for name in ['roya-backlink-queue.yml','farsiblog-content.yml','rozblog-content.yml','blogfa-content.yml','loxblog-content.yml']:
+  for name in ['roya-backlink-queue.yml','farsiblog-content.yml','rozblog-content.yml','loxblog-content.yml']:
    s=(ROOT/'.github/workflows'/name).read_text()
    self.assertIn('IMAGE_API_KEY: ${{ secrets.AGNES_API_KEY10 }}',s);self.assertIn('IMAGE_KEY_SLOT: AGNES_API_KEY10',s)
    self.assertIn("AGNES_IMAGE_TRANSIENT_FAILOVER: '0'",s);self.assertIn("BLOG_IMAGE_QUEUE_ENABLED: '1'",s)

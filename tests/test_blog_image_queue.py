@@ -130,7 +130,7 @@ class QueueIntegrationTests(unittest.TestCase):
    self.assertTrue(lease.retain);self.assertTrue(busy.exception.shared_cooldown_attempted)
  def test_all_active_generation_steps_receive_same_queue_gate(self):
   root=Path(__file__).resolve().parents[1]
-  for name in ['roya-backlink-queue','farsiblog-content','rozblog-content','blogfa-content','loxblog-content','blogsky-content','parsiblog-content','niloblog-content']:
+  for name in ['roya-backlink-queue','farsiblog-content','rozblog-content','loxblog-content','blogsky-content','parsiblog-content','niloblog-content']:
    source=(root/'.github/workflows'/(name+'.yml')).read_text()
    self.assertIn("BLOG_IMAGE_QUEUE_ENABLED: '1'",source);self.assertIn('BLOG_IMAGE_QUEUE_TOKEN: ${{ github.token }}',source);self.assertIn('actions: read',source)
 class AdaptiveBackoffTests(unittest.TestCase):

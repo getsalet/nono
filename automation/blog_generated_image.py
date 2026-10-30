@@ -8,7 +8,7 @@ from pathlib import Path
 from PIL import Image,ImageOps
 import roya_backlink_queue as roya
 from blog_reference_scene import POLICY
-BLOGS={'roya','farsiblog','rozblog','blogfa','loxblog','blogsky','parsiblog','niloblog'}
+BLOGS={'roya','farsiblog','rozblog','loxblog','blogsky','parsiblog','niloblog'}
 RAW='https://raw.githubusercontent.com/getsalet/nono/'
 
 def blog_retired(blog,root=None):

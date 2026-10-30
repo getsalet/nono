@@ -71,7 +71,7 @@ def published_snapshot(root,blog,item):
 
 def corpus(root,exclude_blog='',exclude_key=''):
     records=[]
-    for blog in ('roya','farsiblog','rozblog','blogfa','loxblog','blogsky'):
+    for blog in ('roya','farsiblog','rozblog','loxblog','blogsky'):
         for p in sorted((Path(root)/'artifacts'/f'{blog}-backlink-queue'/'items').glob('*.json')):
             obj=json.loads(p.read_text())
             if blog==exclude_blog and obj.get('key')==exclude_key:continue

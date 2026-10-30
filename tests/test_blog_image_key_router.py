@@ -135,7 +135,7 @@ class ImageKeyRouterTests(unittest.TestCase):
   path=self.root/'data/agnes-usable-key-audit/latest.json';data=json.loads(path.read_text());data['complete_image']=False;path.write_text(json.dumps(data))
   with self.assertRaisesRegex(RuntimeError,'complete image key audit'):router.evidence(self.root)
  def test_five_workflows_enable_router_with_global_queue(self):
-  for name in ['roya-backlink-queue.yml','farsiblog-content.yml','rozblog-content.yml','blogfa-content.yml','loxblog-content.yml']:
+  for name in ['roya-backlink-queue.yml','farsiblog-content.yml','rozblog-content.yml','loxblog-content.yml']:
    s=(ROOT/'.github/workflows'/name).read_text();self.assertIn("IMAGE_KEY_POOL_ENABLED: '1'",s);self.assertIn("BLOG_IMAGE_QUEUE_ENABLED: '1'",s)
  def test_preflight_respects_all_key_cooldowns_and_legacy_global_stop(self):
   from blog_image_backpressure import require_open,STATE

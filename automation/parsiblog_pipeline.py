@@ -87,7 +87,7 @@ def generate(item):
   if isinstance(candidate.get('title'),str)and normalized_title(candidate['title'])==normalized_title(item['assigned_title']):seed_post=candidate
  source=json.dumps(source_context(item),ensure_ascii=False);base=prompt(item,source);obj=None;errors=[]
  for attempt in range(3):
-  request=base
+  request=base+'\nتوکن شهر AFP_CITY فقط متن ساده است؛ آن را داخل <> یا تگ HTML ننویس. <AFP_CITY> ممنوع است.'
   if obj is not None:
    from parsiblog_text import language_feedback
    feedback=language_feedback(obj)

@@ -58,6 +58,7 @@ def call(base,prompt,attempts=None,temperature=None):
    raw=data.get('choices',[{}])[0].get('message',{}).get('content','')
    return parse_object(raw)
   except Exception as exc:
+   if getattr(exc,'http_status',None)==429 or getattr(exc,'code',None)==429:raise
    last=exc
    print(f'agnes_json_retry attempt={attempt}/{attempts} timeout={request_timeout}s error={str(exc)[:240]}',flush=True)
    if attempt<attempts:time.sleep(min(20,2**attempt))

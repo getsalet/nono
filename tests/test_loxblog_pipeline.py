@@ -9,13 +9,13 @@ import content_originality as originality
 class LoxBlogIndependentPipelineTests(unittest.TestCase):
  def test_provider_has_independent_identity(self):
   self.assertEqual(policy.BLOGS['loxblog'],'https://afp.lxb.ir')
-  for other in ('blogfa','farsiblog','rozblog'):self.assertFalse(set(policy.ANGLES['loxblog'])&set(policy.ANGLES[other]))
+  for other in ('farsiblog','rozblog'):self.assertFalse(set(policy.ANGLES['loxblog'])&set(policy.ANGLES[other]))
  def test_title_templates_are_not_other_provider_templates(self):
   m=json.loads((ROOT/'data/blog-city-title-matrix.json').read_text())
   for group in ('templates','article_templates'):
    for family in ('tape20','hose'):
     own=set(m[group]['loxblog'][family]);self.assertTrue(own)
-    for other in ('blogfa','farsiblog','rozblog'):self.assertFalse(own&set(m[group][other][family]))
+    for other in ('farsiblog','rozblog'):self.assertFalse(own&set(m[group][other][family]))
  def test_queue_uses_own_paths(self):
   script='import loxblog_backlink_queue as w;import json;print(json.dumps([w.engine.CITY_BLOG,str(w.engine.QUEUE),str(w.engine.ART),str(w.engine.STATE)]))'
   out=subprocess.check_output([sys.executable,'-c',script],env={**os.environ,'PYTHONPATH':str(ROOT/'automation')},text=True)
@@ -25,7 +25,7 @@ class LoxBlogIndependentPipelineTests(unittest.TestCase):
    p=Path(d)/'state';p.mkdir();now=dt.datetime(2026,10,15,tzinfo=dt.timezone.utc)
    (p/'loxblog-backlink-progress.json').write_text(json.dumps({'published':[{'at':now.isoformat()}]*3}))
    self.assertFalse(budget.decision('loxblog',Path(d),now)['proceed'])
-   self.assertTrue(budget.decision('blogfa',Path(d),now)['proceed'])
+   self.assertTrue(budget.decision('farsiblog',Path(d),now)['proceed'])
  def test_uncertain_submission_stops_new_generation(self):
   with tempfile.TemporaryDirectory()as d:
    p=Path(d)/'artifacts/loxblog-backlink-queue';p.mkdir(parents=True)

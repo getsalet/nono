@@ -24,7 +24,7 @@ class CapacityPreflightTests(unittest.TestCase):
 
  def test_ready_asset_not_blocked_by_twelve_active_requests(self):
   from blog_image_stock_preflight import eligible
-  current=[{'blog':blog,'key':blog+str(i),'status':'ready'if blog=='roya'and i==0 else'requested'}for blog in ['roya','farsiblog','rozblog','blogfa']for i in range(3)]
+  current=[{'blog':blog,'key':blog+str(i),'status':'ready'if blog=='roya'and i==0 else'requested'}for blog in ['roya','farsiblog','rozblog','blogsky']for i in range(3)]
   with patch('blog_image_stock_preflight.enabled',return_value=True),patch('blog_image_stock_preflight.rows',return_value=current),patch('blog_image_stock_preflight.control',return_value={'target':12,'per_blog_limit':3}):
    self.assertEqual(eligible([{'key':'roya0'},{'key':'new'}],'roya',ROOT),[{'key':'roya0'}])
    self.assertEqual(eligible([{'key':'new'}],'loxblog',ROOT),[])

@@ -113,6 +113,7 @@ def agnes(prompt,temperature=None):
                                     'User-Agent': 'roya-backlink-queue-v1'}, payload, timeout=180)
             return parse_object(data.get('choices', [{}])[0].get('message', {}).get('content', ''))
         except Exception as exc:
+            if getattr(exc,'http_status',None)==429 or getattr(exc,'code',None)==429:raise
             last = exc
             print(f'agnes_retry attempt={attempt} error={str(exc)[:200]}', flush=True)
             time.sleep(min(20, 2 ** attempt))
@@ -786,6 +787,7 @@ def main():
                     stage='image'
                     image_url = prepare_article(item,obj,'roya',ROOT,lambda:prepare_roya_image(item))
             except Exception as exc:
+                text_rate_limited=getattr(exc,'http_status',None)==429 or getattr(exc,'code',None)==429
                 errors = ['agnes error: ' + str(exc)[:200]]
                 print(f'{item["key"]} attempt={attempt} {errors[0]}', flush=True)
                 if isinstance(exc,(ImageProviderBusy,ImageQueueBusy)):
@@ -795,7 +797,7 @@ def main():
                 # Image rejection is not a prose defect. Keep the validated draft
                 # and its actual image-stage diagnosis; never spend text retries
                 # rewriting it in response to an image/provider exception.
-                if stage=='image':break
+                if stage=='image' or text_rate_limited:break
                 continue
             # Titles are owned by the approved matrix, not an AI spelling choice.
             obj['title'] = item['assigned_title']
@@ -837,6 +839,7 @@ def main():
         state['in_progress'] = None
         save_json(QUEUE_PATH, queue)
         save_json(STATE_PATH, state)
+        if errors and any('Agnes/provider HTTP 429;'in error for error in errors):break
         if shared_image_deferred and not stock_pending:break  # Actual provider block.
         if stock_pending and not item.get('_image_stock_request'):break  # Stock capacity reached.
     ready = [i for i in queue['items'] if i.get('status') == 'completed' and not i.get('published')]

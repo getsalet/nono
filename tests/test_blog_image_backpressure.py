@@ -46,7 +46,7 @@ class BackpressureTests(unittest.TestCase):
   with tempfile.TemporaryDirectory()as d:
    root=Path(d);(root/'data').mkdir();(root/'data/blog-generated-image-control.json').write_text('{"pause_image_production":false}')
    (root/b.STATE).write_text(json.dumps({'retry_at_epoch':time.time()+300}))
-   for blog in('roya','farsiblog','rozblog','blogfa','loxblog'):self.assertTrue(decision(blog,root)['proceed'])
+   for blog in('roya','farsiblog','rozblog','loxblog'):self.assertTrue(decision(blog,root)['proceed'])
  def test_shared_transient_wrapper_does_not_retry_capacity_errors(self):
   import farsiblog_backlink_queue as f
   with patch.object(f.time,'sleep')as sleep:

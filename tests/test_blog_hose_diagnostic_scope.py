@@ -16,7 +16,7 @@ class HoseDiagnosticScopeTests(unittest.TestCase):
     c['pause_image_production']=True;path.write_text(json.dumps(c));self.assertTrue(g.family_cancelled({'family':'hose'},root))
     c['pause_image_production']=False;c['diagnostic_families']=[];path.write_text(json.dumps(c));self.assertTrue(g.family_cancelled({'family':'hose'},root))
  def test_production_workflows_never_receive_diagnostic_override(self):
-  for name in ('blog-image-stock.yml','roya-backlink-queue.yml','farsiblog-content.yml','rozblog-content.yml','blogfa-content.yml','loxblog-content.yml'):
+  for name in ('blog-image-stock.yml','roya-backlink-queue.yml','farsiblog-content.yml','rozblog-content.yml','loxblog-content.yml'):
    self.assertNotIn('BLOG_IMAGE_DIAGNOSTIC_FAMILY',(ROOT/'.github/workflows'/name).read_text())
  def test_canary_uses_shared_queue_and_audited_single_request(self):
   s=(ROOT/'.github/workflows/blog-hose-fullrefs-check.yml').read_text()

@@ -41,7 +41,7 @@ class StockTests(unittest.TestCase):
   with self.assertRaisesRegex(RuntimeError,'cancelled or held'):stock.request_image(self.item,'roya',self.root)
   self.assertEqual(stock.rows(self.root),[])
  def test_maximum_twelve_total_and_three_per_blog(self):
-  for blog in ['roya','farsiblog','rozblog','blogfa']:
+  for blog in ['roya','farsiblog','rozblog','blogsky']:
    for i in range(3):self.enqueue({**copy.deepcopy(self.item),'key':blog+str(i)},blog)
   with self.assertRaises(stock.ImagePending):stock.request_image({**self.item,'key':'extra'},'loxblog',self.root)
   self.assertEqual(len(stock.rows(self.root)),12)
@@ -201,7 +201,7 @@ class StockTests(unittest.TestCase):
   self.item['key']='repair-global'
   self.enqueue(blog='loxblog');self.source(blog='loxblog')
   repaired=stock.rows(self.root)[0];repaired['status']='needs_text_repair';stock.persist(self.root,repaired)
-  for blog in ('roya','farsiblog','rozblog','blogfa'):
+  for blog in ('roya','farsiblog','rozblog','blogsky'):
    items=[]
    for i in range(3):
     item={**copy.deepcopy(self.item),'key':blog+str(i)};items.append(item);self.enqueue(item,blog)
