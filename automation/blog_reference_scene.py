@@ -170,6 +170,7 @@ def _feedback_direction(a,plan,feedback):
   feedback=feedback.replace('Match the crop, setting and installed evidence of this article.','Match the setting and installed evidence of this article.')
   feedback=feedback.replace('Show this exact installed evidence: crop-specific leaves, continuous installed irrigation lines and localized root-zone wetting.','Show this exact installed evidence: '+plan['evidence']+'.')
  flags={
+  'fake_text_or_logo':'Preserve only authentic reference AFP branding. Rotate the carton to an oblique side view so tiny secondary package lettering faces away or is naturally occluded; keep the genuine central AFP mark recognizable. Never invent pseudo-readable words or redraw logos. Do not remove or imitate the required deterministic phone watermark; it is applied afterwards.',
   'crop_contradiction':'Keep the named crop botanically unmistakable: '+plan['botany']+'.',
   'topic_match':'Match the crop, setting and installed evidence of this article.',
   'technical_evidence_match':'Show this exact installed evidence: '+plan['evidence']+'.',
@@ -198,6 +199,7 @@ def rejection_feedback(item,digest,root,fallback):
  if not isinstance(v,dict):return fallback
  bad=[k for k in ('topic_match','technical_evidence_match','packaging_not_used_as_hardware','product_role_plausible','package_soil_gap_visible','irrigation_geometry_plausible','product_count_match','product_fully_in_frame')if v.get(k)is False]
  if v.get('crop_contradiction')is True:bad.insert(0,'crop_contradiction')
+ if v.get('fake_text_or_logo')is True:bad.insert(0,'fake_text_or_logo')
  focused=record.get('focused_physical_review')
  strip=bool(isinstance(focused,dict)and focused.get('package_has_protruding_strip')is True)
  if not bad and not strip:return fallback

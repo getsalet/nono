@@ -42,5 +42,5 @@ class SupplementTests(unittest.TestCase):
  def test_article_prompt_preserves_quality_and_approved_links(self):
   x=build.append_approved_articles([],{},self.root)[0];x['assigned_title']=x['prepared_title'];p=roya.build_prompt(x,[{'title':x['site_title'],'anchor':x['site_title'],'role':'city','url':x['target_url']},{'title':'AFP','anchor':'نوار تیپ','role':'home','url':'https://navar-abyari.ir/'}])
   self.assertIn(x['assigned_title'],p);self.assertNotIn('برای شهر  در استان ',p);self.assertNotIn('لنگر باید شامل نام شهر',p);self.assertNotIn('نام شهر «»',p)
-  for text in ('AFP_LINK_1','AFP_LINK_2','دقیقاً ۳ سوال','جمع‌بندی','حداقل ۳۰ کلمه','فقط HTML ساده','بدون مرجع، مقدار عددی تجویز نکن','محتوا','غیرشهری'):self.assertIn(text,p)
+  for text in ('AFP_LINK_1','AFP_LINK_2','دقیقاً ۳ سوال','جمع‌بندی','حداقل ۳۰ کلمه','فقط HTML ساده','بدون مرجع، مقدار عددی تجویز نکن','محتوا','غیرشهری','برای بررسی مشخصات به وب‌سایت AFP مراجعه کنید'):self.assertIn(text,p)
 if __name__=='__main__':unittest.main()

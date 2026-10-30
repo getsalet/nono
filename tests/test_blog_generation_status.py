@@ -51,6 +51,15 @@ class GenerationStatusTests(unittest.TestCase):
    report={'scope':'queue','reason':'no_eligible_targets','selected':0,'ready':0}
    row=status.write(Path(d),'roya',[],[],selection=report)
    self.assertEqual(row['queue_selection'],report);self.assertEqual(row['status'],'idle');self.assertFalse(row['publication_verified_by_this_report'])
+ def test_image_rejection_never_rewrites_validated_prose(self):
+  with tempfile.TemporaryDirectory()as d:
+   root=Path(d);art=root/'artifacts/roya-backlink-queue';art.mkdir(parents=True)
+   queue=root/'queue.json';state=root/'state.json';row={'key':'pending','status':'pending','family':'tape20','province':'test','assigned_title':'نوار تیپ پیاز'}
+   r.save_json(queue,{'items':[row]});r.save_json(state,{})
+   post={'title':'نوار تیپ پیاز','slug':'test','html':'<p>متن پیش نویس کافی برای نگهداری و تلاش مجدد پس از خطای موقت تصویر</p>'}
+   with patch.multiple(r,ROOT=root,QUEUE_PATH=queue,STATE_PATH=state,LINKS_PATH=root/'links.json',ITEMS=art/'items',PUBLISH_QUEUE=art/'publish-queue.json',STATUS_MD=art/'status.md',DRY_RUN=False,ATTEMPTS=3),patch.object(r.BASE,'AGNES_KEY','offline-fixture'),patch.object(r,'assign_roya_titles'),patch.object(r,'pick',return_value=[row]),patch.object(r,'approved_links',return_value=[]),patch('blog_image_runtime_control.generation_paused',return_value=False),patch('blog_image_backpressure.require_open'),patch('blog_draft_preflight.active',return_value=True),patch('blog_draft_preflight.check',return_value=[]),patch.object(r,'build_prompt',return_value='validated fixture request'),patch.object(r,'agnes',return_value=post)as text,patch.object(r,'prepare_roya_image',side_effect=RuntimeError('Product image rejected: fake_text_or_logo')):
+    self.assertEqual(r.main(),1);self.assertEqual(text.call_count,1)
+   result=json.loads((art/'items/pending.json').read_text());self.assertEqual(result['failure_stage'],'image');self.assertEqual(result['post'],post);self.assertFalse(result['qa']['passed'])
  def test_both_generators_track_attempted_failures_and_preflight_waiting(self):
   import inspect,farsiblog_backlink_queue as f
   for module in [r,f]:
