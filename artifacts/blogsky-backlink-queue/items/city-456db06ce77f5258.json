@@ -24,7 +24,7 @@
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
   "_generation_stage": "local_vision_qa",
-  "_image_generation_round": 1,
+  "_image_generation_round": 0,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
     "slot": "AGNES_API_KEY25",
@@ -32,6 +32,14 @@
     "max_provider_requests": 1
   },
   "_image_provider_attempts": [
+    {
+      "requested_secret_slot": "AGNES_API_KEY25",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
     {
       "requested_secret_slot": "AGNES_API_KEY25",
       "attempt": 1,
@@ -80,10 +88,76 @@
   ],
   "_image_qa_feedback": "Product image rejected: New caption would overlap original logo",
   "failure_stage": "image",
-  "attempts": 1,
-  "generated_at": "2026-10-30T13:21:42Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo",
-  "next_retry_at": "2026-10-30T14:21:42.974246Z",
+  "attempts": 2,
+  "generated_at": "2026-10-30T18:46:39Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
+  "next_retry_at": "2026-10-30T20:46:39.651627Z",
+  "_image_caption_render": {
+    "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+    "source_sha256": "f283a55bd50407f2ddf8c0cdaf1230138d7b0a5c1bbc08935099620322875ff3",
+    "captions": {
+      "english": {
+        "text": "Drip Irrigation Tape",
+        "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+        "point_size": 16.5,
+        "quad": [
+          [
+            280.76,
+            647.9508612461937
+          ],
+          [
+            442.24000000000007,
+            634.9608326137345
+          ],
+          [
+            442.24000000000007,
+            660.5808326137345
+          ],
+          [
+            280.76,
+            673.5708612461937
+          ]
+        ],
+        "cylinder_sag_px": 6.612244897959184
+      },
+      "persian": {
+        "text": "آبگسترفراپارسیان",
+        "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+        "point_size": 12.75,
+        "quad": [
+          [
+            180.0,
+            639.3398172976413
+          ],
+          [
+            271.0,
+            646.6601827023587
+          ],
+          [
+            271.0,
+            672.2801827023587
+          ],
+          [
+            180.0,
+            664.9598172976413
+          ]
+        ],
+        "cylinder_sag_px": 2.08641975308642
+      }
+    },
+    "cylinder_curve": {
+      "method": "visible-blue-band-front-ring-v1",
+      "coefficient": -0.0010078105316200555,
+      "center_x": 309.5,
+      "sample_y": [
+        702,
+        710,
+        700
+      ],
+      "sample_span": 189.0
+    },
+    "sha256": "a9f2002fe7c40d9b90af4d8df512b040d3aa6516db676675946765a14304a504"
+  },
   "post": {
     "title": "نوار تیپ در سیرجان؛ برگه نیازسنجی",
     "slug": "tape-drip-sirjan-needs-assessment",
@@ -102,7 +176,14 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo"
-    ]
+      "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError"
+    ],
+    "words": 856,
+    "links": [
+      "https://navar-abyari.ir/",
+      "https://navar-abyari.ir/kerman/%d8%b3%db%8c%d8%b1%d8%ac%d8%a7%d9%86-%da%a9%d8%b1%d9%85%d8%a7%d9%86-navar-tip-20cm/"
+    ],
+    "checked_against": "Roya + FarsiBlog + RozBlog + LoxBlog + Blogsky corpus",
+    "title_matrix": "نوار تیپ در سیرجان؛ برگه نیازسنجی"
   }
 }
