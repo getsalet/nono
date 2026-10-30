@@ -1,0 +1,69 @@
+name: Remove Blogfa automation and validate bounded generator repairs
+on:
+  push:
+    branches: [main]
+    paths: [maintenance/remove_blogfa_and_repair.py, .github/workflows/remove-blogfa-and-repair.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: remove-blogfa-and-repair
+  cancel-in-progress: false
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Disable and cancel obsolete Blogfa workflows without contacting Blogfa
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner,repo}=context.repo;
+            const names=new Set(['blogfa-content.yml','blogfa-login-diagnostic.yml','retire-blogfa.yml']);
+            const active=new Set(['queued','in_progress','waiting','pending','requested']);
+            const workflows=await github.paginate(github.rest.actions.listRepoWorkflows,{owner,repo,per_page:100});
+            for (const workflow of workflows) {
+              if (!names.has(workflow.path.split('/').pop())) continue;
+              if (workflow.state==='active') await github.rest.actions.disableWorkflow({owner,repo,workflow_id:workflow.id});
+              const runs=await github.paginate(github.rest.actions.listWorkflowRuns,{owner,repo,workflow_id:workflow.id,per_page:100});
+              for (const run of runs) if (active.has(run.status)) {
+                try {await github.rest.actions.cancelWorkflowRun({owner,repo,run_id:run.id});}
+                catch(error) {if(error.status!==409)throw error;}
+              }
+            }
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install --quiet Pillow beautifulsoup4 playwright numpy
+      - name: Apply exact removal and bounded repairs (no blog or provider requests)
+        run: python maintenance/remove_blogfa_and_repair.py
+      - name: Validate all offline Python regressions
+        run: |
+          python -m unittest discover -s tests > /tmp/generator-repair-tests.log 2>&1 || { tail -100 /tmp/generator-repair-tests.log; exit 1; }
+          tail -8 /tmp/generator-repair-tests.log
+      - name: Preserve test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generator-removal-repair-tests
+          path: /tmp/generator-repair-tests.log
+      - name: Commit tested cleanup without triggering new publications
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -u
+          git add docs/generator-removal-repair-2026-10-30.json
+          if git diff --cached --quiet; then echo 'No further changes'; exit 0; fi
+          git commit -m 'Remove Blogfa automation; repair city placeholders and stop 429 retry bursts [skip ci]'
+          for attempt in 1 2 3; do
+            git fetch --quiet origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
