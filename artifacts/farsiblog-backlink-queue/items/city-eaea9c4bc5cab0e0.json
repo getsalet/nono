@@ -21,8 +21,8 @@
     "summary": "مقدمه: فشار کاری، چالش اصلی نوار تیپ در ضیابر انتخاب نوار تیپ مناسب، زمانی آغاز می‌شود که فشار کاری دستگاه پمپ با محدوده تحمل نوار همخوانی داشته باشد. در کشت‌های ردیفی، نوار تیپ با فاصله قطره‌چکان ۲۰ سانتی‌متر به‌عنوان یکی از پرکاربردترین گزینه‌ها شناخته می‌شود، اما فشار ورودی نامناسب می‌تواند توزیع آب را غیریکنواخت کرده و منجر به خشکی انتهای خط یا آسیب فیزیکی به بدنه نوار شود. این مقاله به‌طور اختصاصی به بررسی فشار کاری تأییدشده و مشخصات فنی نوار تیپ می‌پردازد تا خریداران در خرید نوار تیپ ۲۰ سانتی در ضیابر بتوانند با آگاهی کامل و بر اساس داده‌های فنی، انتخاب دقیقی داشته باشند. ساختار و جنس نوار تیپ جنس غالب نوارهای تیپ، پلی‌اتیلن کم‌چگالی (PE) است. این ماده به دلیل انعطاف‌پذیری بالا و ثبات شیمیایی، گزینه‌ای رایج برای سازندگان نوارهای آبیاری قطره‌ای محسوب می‌شود. ضخامت بدنه نوار تیپ تحت تأثیر شرایط مکانیکی خاک، خطر آسیب فیزیکی ماشین‌آلات کشت و نوع کاربرد (فصلی یا نیمه‌دائم) تعیین می‌گردد. پیش از هر انتخابی، مطالعه برگه فنی ارائه‌شده توسط سازنده الزامی است تا از تطابق مشخصات مدل با نیاز پروژه اطمینان حاصل شود. نقش فاصله قطره‌چکان ۲۰ سانتی‌متر فاصله ۲۰ سانتی‌متر میان قطره‌چکان‌ها، پوشش مرطوب پیوسته‌ای در امتداد ردیف کشت ایجاد می‌کند. این فاصله برای محصولاتی با ریشه سطحی یا نیمه‌عمیق "
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
-  "_generation_stage": "generation_api",
-  "_image_generation_round": 0,
+  "_generation_stage": "local_vision_qa",
+  "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
     "slot": "AGNES_API_KEY18",
@@ -102,6 +102,22 @@
       "http_status": 503,
       "status": "provider_queue_full_deferred",
       "provider_code": "image_queue_full"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     }
   ],
   "_image_render": {
@@ -151,14 +167,22 @@
     {
       "sha256": "3cf37ae0779a9b669bb639a57d13144b3bf709f2dc9256187acb5a10688584c8",
       "reason": "Product image rejected: Core image condition not met: technical_evidence_match; Core image condition not met: packaging_not_used_as_hardware"
+    },
+    {
+      "sha256": "17d671d0d72b9ac46e6104a1ee496c2c26f987a6ef8ceae038672ffa369ef14b",
+      "reason": "Product image rejected: Caption blue base band ambiguous"
+    },
+    {
+      "sha256": "43877a3c7797c86d89fda477d7639fd6434e24da93cb0d02692b36f464ccff1c",
+      "reason": "Product image rejected: New caption would overlap original logo"
     }
   ],
-  "_image_qa_feedback": "Show this exact installed evidence: one small pressure gauge on a short normal threaded port of a continuous irrigation header, and a separate thin flattened drip-tape lateral connected by a normal small take-off fitting; gauge face angled away so no readable scale or pressure rating is invented. The single AFP carton stands separately on soil; no pipe through it. Use normal connected header fittings and a thin flattened drip-tape lateral; 20 cm describes emitter spacing, never line width or diameter.",
+  "_image_qa_feedback": "Product image rejected: New caption would overlap original logo",
   "failure_stage": "image",
-  "attempts": 5,
-  "generated_at": "2026-10-30T13:53:34Z",
-  "last_error": "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy",
-  "next_retry_at": "2026-10-30T13:53:35.381662Z",
+  "attempts": 6,
+  "generated_at": "2026-10-30T18:59:50Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo",
+  "next_retry_at": "2026-10-31T18:59:50.641143Z",
   "image_retry_at": 1793368415.3816624,
   "post": {
     "title": "نوار تیپ در ضیابر؛ بررسی فشار و مشخصات",
@@ -179,7 +203,7 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy"
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo"
     ],
     "words": 882,
     "links": [

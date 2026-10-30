@@ -25,7 +25,7 @@
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
   "_generation_stage": "local_vision_qa",
-  "_image_generation_round": 0,
+  "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
     "slot": "AGNES_API_KEY18",
@@ -33,6 +33,22 @@
     "max_provider_requests": 1
   },
   "_image_provider_attempts": [
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
     {
       "requested_secret_slot": "AGNES_API_KEY18",
       "attempt": 1,
@@ -62,10 +78,87 @@
     "cropped": false
   },
   "failure_stage": "image",
-  "attempts": 1,
-  "generated_at": "2026-10-30T07:11:24Z",
-  "last_error": "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError",
-  "next_retry_at": "2026-10-30T08:11:24.392985Z",
+  "attempts": 2,
+  "generated_at": "2026-10-30T19:10:14Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared",
+  "next_retry_at": "2026-10-30T21:10:14.844892Z",
+  "_image_rejections": [
+    {
+      "sha256": "91bb184c8c328e0009fcd91f4ebf0c8e1d9bfa6270925c40099b0a22be3ec1db",
+      "reason": "Product image rejected: New caption would overlap original logo"
+    },
+    {
+      "sha256": "4c0a38be0ee7fef05f4a89fee559cf1cf84ec1ec9121673071007289a138d788",
+      "reason": "Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared"
+    }
+  ],
+  "_image_qa_feedback": "Remove every protruding white ribbon, strap or tape tail; keep the required AFP package closed and separate from the installed black tape.",
+  "_image_caption_render": {
+    "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+    "source_sha256": "f8de071a13638ef8d116c3c74b682b6470578a394a7664e05f7fdac1c164b018",
+    "captions": {
+      "english": {
+        "text": "Drip Irrigation Tape",
+        "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+        "point_size": 16.75,
+        "quad": [
+          [
+            281.76,
+            645.9467817083693
+          ],
+          [
+            443.24,
+            632.9893701466782
+          ],
+          [
+            443.24,
+            658.6093701466782
+          ],
+          [
+            281.76,
+            671.5667817083693
+          ]
+        ],
+        "cylinder_sag_px": 6.129061960333993
+      },
+      "persian": {
+        "text": "آبگسترفراپارسیان",
+        "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+        "point_size": 13.0,
+        "quad": [
+          [
+            180.8,
+            637.292838654012
+          ],
+          [
+            273.2,
+            644.707161345988
+          ],
+          [
+            273.2,
+            670.327161345988
+          ],
+          [
+            180.8,
+            662.912838654012
+          ]
+        ],
+        "cylinder_sag_px": 2.0013263543947732
+      }
+    },
+    "cylinder_curve": {
+      "method": "visible-blue-band-front-ring-v1",
+      "coefficient": -0.0009458064056686073,
+      "center_x": 310.0,
+      "sample_y": [
+        701,
+        709,
+        700
+      ],
+      "sample_span": 189.6
+    },
+    "sha256": "4c0a38be0ee7fef05f4a89fee559cf1cf84ec1ec9121673071007289a138d788"
+  },
   "post": {
     "title": "نوار تیپ در پیربازار؛ چک‌لیست سفارش",
     "slug": "navar-tip-pirbazar-order-checklist",
@@ -83,7 +176,14 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError"
-    ]
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared"
+    ],
+    "words": 971,
+    "links": [
+      "https://navar-abyari.ir/gilan/%d9%be%db%8c%d8%b1%d8%a8%d8%a7%d8%b2%d8%a7%d8%b1-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm/",
+      "https://navar-abyari.ir/"
+    ],
+    "checked_against": "Roya + FarsiBlog + RozBlog + LoxBlog + Blogsky corpus",
+    "title_matrix": "نوار تیپ در پیربازار؛ چک‌لیست سفارش"
   }
 }
