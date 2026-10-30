@@ -24191,6 +24191,22 @@
           "timeout_seconds": 600,
           "http_status": 200,
           "status": "generation_response_received"
+        },
+        {
+          "requested_secret_slot": "AGNES_API_KEY18",
+          "attempt": 1,
+          "route": "audited_image_pool",
+          "timeout_seconds": 600,
+          "http_status": 200,
+          "status": "generation_response_received"
+        },
+        {
+          "requested_secret_slot": "AGNES_API_KEY18",
+          "attempt": 1,
+          "route": "audited_image_pool",
+          "timeout_seconds": 600,
+          "http_status": 200,
+          "status": "generation_response_received"
         }
       ],
       "_image_render": {
@@ -24213,10 +24229,10 @@
         "cropped": false
       },
       "failure_stage": "image",
-      "attempts": 2,
-      "generated_at": "2026-10-30T19:10:14Z",
-      "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared",
-      "next_retry_at": "2026-10-30T21:10:14.844892Z",
+      "attempts": 3,
+      "generated_at": "2026-10-30T22:49:42Z",
+      "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
+      "next_retry_at": "2026-10-31T02:49:42.204097Z",
       "_image_rejections": [
         {
           "sha256": "91bb184c8c328e0009fcd91f4ebf0c8e1d9bfa6270925c40099b0a22be3ec1db",
@@ -24225,74 +24241,78 @@
         {
           "sha256": "4c0a38be0ee7fef05f4a89fee559cf1cf84ec1ec9121673071007289a138d788",
           "reason": "Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared"
+        },
+        {
+          "sha256": "500b22d27f08153ee3a9f17862749f1a352b5a7b5fa626d7b23eae5a17403259",
+          "reason": "Product image rejected: New caption would overlap original logo"
         }
       ],
-      "_image_qa_feedback": "Remove every protruding white ribbon, strap or tape tail; keep the required AFP package closed and separate from the installed black tape.",
+      "_image_qa_feedback": "Product image rejected: New caption would overlap original logo",
       "_image_caption_render": {
         "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
-        "source_sha256": "f8de071a13638ef8d116c3c74b682b6470578a394a7664e05f7fdac1c164b018",
+        "source_sha256": "a29a62059718b3d7306f61879a1111f2878cc32564efb014b4769dbc5ceb80df",
         "captions": {
           "english": {
             "text": "Drip Irrigation Tape",
             "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
-            "point_size": 16.75,
+            "point_size": 14.75,
             "quad": [
               [
-                281.76,
-                645.9467817083693
+                299.56,
+                631.6507137792483
               ],
               [
-                443.24,
-                632.9893701466782
+                442.44,
+                620.4897967383597
               ],
               [
-                443.24,
-                658.6093701466782
+                442.44,
+                643.1697967383597
               ],
               [
-                281.76,
-                671.5667817083693
+                299.56,
+                654.3307137792483
               ]
             ],
-            "cylinder_sag_px": 6.129061960333993
+            "cylinder_sag_px": 4.964719804772747
           },
           "persian": {
             "text": "آبگسترفراپارسیان",
             "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
-            "point_size": 13.0,
+            "point_size": 11.75,
             "quad": [
               [
-                180.8,
-                637.292838654012
+                210.0,
+                623.7192153155282
               ],
               [
-                273.2,
-                644.707161345988
+                294.0,
+                630.2807846844718
               ],
               [
-                273.2,
-                670.327161345988
+                294.0,
+                652.9607846844717
               ],
               [
-                180.8,
-                662.912838654012
+                210.0,
+                646.3992153155282
               ]
             ],
-            "cylinder_sag_px": 2.0013263543947732
+            "cylinder_sag_px": 1.7130941827217223
           }
         },
         "cylinder_curve": {
           "method": "visible-blue-band-front-ring-v1",
-          "coefficient": -0.0009458064056686073,
-          "center_x": 310.0,
+          "coefficient": -0.0009711418269397519,
+          "center_x": 324.5,
           "sample_y": [
-            701,
-            709,
-            700
+            679,
+            686,
+            679
           ],
-          "sample_span": 189.6
+          "sample_span": 169.79999999999998
         },
-        "sha256": "4c0a38be0ee7fef05f4a89fee559cf1cf84ec1ec9121673071007289a138d788"
+        "sha256": "b0c1ead71a46b684c358fae298d1f82f6f6eec2f3f69128898181281228d970e"
       }
     },
     {
@@ -24331,11 +24351,139 @@
       "_structural_repairs": [
         "invalid_slug_replaced_with_stable_system_slug"
       ],
-      "attempts": 2,
-      "generated_at": "2026-10-30T19:11:23Z",
-      "last_error": "Persian word count outside 500-1000",
-      "failure_stage": "text_validation",
-      "next_retry_at": "2026-10-30T21:11:23.484219Z"
+      "attempts": 3,
+      "generated_at": "2026-10-30T22:54:49Z",
+      "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption blue base band ambiguous",
+      "failure_stage": "image",
+      "next_retry_at": "2026-10-31T02:54:49.483357Z",
+      "_image_article_context": {
+        "title": "نوار تیپ در چابکسر؛ هزینه‌های پیش از خرید",
+        "meta_description": "هزینه‌های پنهان خرید نوار تیپ در چابکسر: خطاهای رایج انتخاب ضخامت، فشار کاری و فاصله روزنه که پیش از خرید باید شناسایی شوند.",
+        "summary": "خرید نوار تیپ در چابکسر شاید ساده به نظر برسد، اما هزینه‌های پنهانی وجود دارند که تنها پس از نصب و با اختلال در عملکرد سیستم آشکار می‌شوند. انتخاب نادرست ضخامت دیواره، فشار کاری خارج از محدوده طراحی و نصب بدون آماده‌سازی خط اصلی، همگی از خطاهایی هستند که پیش از خرید باید شناسایی شوند. این مقاله خطاهای رایج انتخاب و نصب را بررسی می‌کند تا با هزینه‌های پیش از خرید بیشتر آشنا شوید و تصمیم آگاهانه‌تری بگیرید. چرا فاصله روزنه ۲۰ سانتی‌متر برای کشت‌های ردیفی مناسب است؟ نوار تیپ قطره‌ای با فاصله روزنه ۲۰ سانتی‌متر یکی از پرمصرف‌ترین محصولات در آبیاری ردیفی است. این فاصله استاندارد، دایره خیس‌شدن خاک را به‌گونه‌ای ایجاد می‌کند که رطوبت مستقیماٌ ناحیه ریشه را پوشش دهد و تبخیر سطحی به حداقل برسد. برای محصولاتی که به صورت ردیفی کشت می‌شوند، این فاصله انعطاف‌پذیری لازم برای هماهنگی با طرح کشت فراهم می‌آورد. مهم است بدانید که هرچه فاصله قطره‌چکان کمتر باشد، تعداد خروجی‌ها در هر متر بیشتر شده و هزینه اولیه افزایش می‌یابد. در مقابل، فاصله بیشتر ممکن است منجر به خشک شدن نواحی بین ردیف شود. بنابراین تطبیق فاصله با طرح کشت شما، اولین هزینه‌ساز یا صرفه‌جویی‌ساز تصمیم است. برای نمونه غیرمحلی، اگر یک مزرعه با فاصله ۲۵ سانتی‌متر ردیف کاشته شده باشد، استفاده از نوار تیپ با فاصله ۲۰ سانتی‌متر منجر به همپو"
+      },
+      "editorial_image_decision": "mandatory_generated_1_to_2",
+      "_generation_stage": "local_vision_qa",
+      "_image_generation_round": 1,
+      "_image_key_route": {
+        "policy": "audited-image-key-pool-v1",
+        "slot": "AGNES_API_KEY18",
+        "mode": "verified",
+        "max_provider_requests": 1
+      },
+      "_image_provider_attempts": [
+        {
+          "requested_secret_slot": "AGNES_API_KEY18",
+          "attempt": 1,
+          "route": "audited_image_pool",
+          "timeout_seconds": 600,
+          "http_status": 200,
+          "status": "generation_response_received"
+        },
+        {
+          "requested_secret_slot": "AGNES_API_KEY18",
+          "attempt": 1,
+          "route": "audited_image_pool",
+          "timeout_seconds": 600,
+          "http_status": 200,
+          "status": "generation_response_received"
+        }
+      ],
+      "_image_render": {
+        "connection": {
+          "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+          "model": "agnes-image-2.5-flash",
+          "size": "1024x768",
+          "timeout_seconds": 600
+        },
+        "requested_size": "1024x768",
+        "requested_ratio": null,
+        "provider_size": [
+          1152,
+          864
+        ],
+        "output_size": [
+          1200,
+          900
+        ],
+        "cropped": false
+      },
+      "_image_caption_render": {
+        "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+        "source_sha256": "9362acbc0e4150d5db6952b85d2c33bf28a03e6f7b9f5b9493073289c833cf66",
+        "captions": {
+          "english": {
+            "text": "Drip Irrigation Tape",
+            "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+            "point_size": 17.75,
+            "quad": [
+              [
+                297.8,
+                643.0410655737705
+              ],
+              [
+                469.2,
+                629.9753278688524
+              ],
+              [
+                469.2,
+                655.9753278688524
+              ],
+              [
+                297.8,
+                669.0410655737705
+              ]
+            ],
+            "cylinder_sag_px": 4.761180099017938
+          },
+          "persian": {
+            "text": "آبگسترفراپارسیان",
+            "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+            "point_size": 13.75,
+            "quad": [
+              [
+                193.0,
+                634.2647540983606
+              ],
+              [
+                291.0,
+                641.7352459016394
+              ],
+              [
+                291.0,
+                667.7352459016394
+              ],
+              [
+                193.0,
+                660.2647540983606
+              ]
+            ],
+            "cylinder_sag_px": 1.563775988200413
+          }
+        },
+        "cylinder_curve": {
+          "method": "visible-blue-band-front-ring-v1",
+          "coefficient": -0.0006513019526032541,
+          "center_x": 328.5,
+          "sample_y": [
+            683,
+            691,
+            686
+          ],
+          "sample_span": 199.79999999999998
+        },
+        "sha256": "3571ba522a9b4e9c1317cd94e15c0b49ca5516f8f8bbe8e38022607883b067ad"
+      },
+      "_image_rejections": [
+        {
+          "sha256": "3571ba522a9b4e9c1317cd94e15c0b49ca5516f8f8bbe8e38022607883b067ad",
+          "reason": "Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared"
+        },
+        {
+          "sha256": "d8abfa6a2568b99d1c618d8a072152b0d9579c8bd5afb4ed74691329d5173f2a",
+          "reason": "Product image rejected: Caption blue base band ambiguous"
+        }
+      ],
+      "_image_qa_feedback": "Product image rejected: Caption blue base band ambiguous"
     },
     {
       "city_fa": "چابکسر",
@@ -24378,12 +24526,19 @@
       "site_title": "خرید نوار تیپ ۲۰ سانتی در چوبر",
       "key": "city-e9c7402df0c5c0bb",
       "kind": "city",
-      "status": "pending",
+      "status": "failed",
       "source_key": "gilan/%da%86%d9%88%d8%a8%d8%b1-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm",
       "reference_url": "https://navar-abyari.ir/gilan/%da%86%d9%88%d8%a8%d8%b1-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm/",
       "topic": "خرید نوار تیپ ۲۰ سانتی در چوبر",
       "angle": "پرسش‌های مشاوره فنی",
-      "assigned_title": "نوار تیپ در چوبر؛ نکات انتخاب"
+      "assigned_title": "نوار تیپ در چوبر؛ نکات انتخاب",
+      "_image_blog": "farsiblog",
+      "matrix_title": "نوار تیپ در چوبر؛ نکات انتخاب",
+      "attempts": 1,
+      "generated_at": "2026-10-30T22:56:09Z",
+      "last_error": "Exactly two distinct approved contextual destinations, each once; Assigned meaningful anchor required: city",
+      "failure_stage": "text_validation",
+      "next_retry_at": "2026-10-30T23:56:09.794038Z"
     },
     {
       "city_fa": "چوکام",
@@ -24394,12 +24549,22 @@
       "site_title": "خرید نوار تیپ ۲۰ سانتی در چوکام",
       "key": "city-d08394d65efdc5d9",
       "kind": "city",
-      "status": "pending",
+      "status": "failed",
       "source_key": "gilan/%da%86%d9%88%da%a9%d8%a7%d9%85-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm",
       "reference_url": "https://navar-abyari.ir/gilan/%da%86%d9%88%da%a9%d8%a7%d9%85-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm/",
       "topic": "خرید نوار تیپ ۲۰ سانتی در چوکام",
       "angle": "مقایسه مشخصات و هزینه واقعی",
-      "assigned_title": "نوار تیپ در چوکام؛ چک‌لیست سفارش"
+      "assigned_title": "نوار تیپ در چوکام؛ چک‌لیست سفارش",
+      "_image_blog": "farsiblog",
+      "matrix_title": "نوار تیپ در چوکام؛ چک‌لیست سفارش",
+      "_structural_repairs": [
+        "invalid_slug_replaced_with_stable_system_slug"
+      ],
+      "attempts": 1,
+      "generated_at": "2026-10-30T22:57:16Z",
+      "last_error": "Unexpected foreign or mixed-script word in visible Persian text; Persian word count outside 500-1000; unapproved Latin words; Unsupported numeric tape thickness/pressure without model datasheet: ۱ میلی‌متر",
+      "failure_stage": "text_validation",
+      "next_retry_at": "2026-10-30T23:57:16.088371Z"
     },
     {
       "city_fa": "چوکام",
@@ -24426,12 +24591,128 @@
       "site_title": "خرید نوار تیپ ۲۰ سانتی در کلاچای",
       "key": "city-d6bb56e2c2a37391",
       "kind": "city",
-      "status": "pending",
+      "status": "failed",
       "source_key": "gilan/%da%a9%d9%84%d8%a7%da%86%d8%a7%db%8c-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm",
       "reference_url": "https://navar-abyari.ir/gilan/%da%a9%d9%84%d8%a7%da%86%d8%a7%db%8c-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm/",
       "topic": "خرید نوار تیپ ۲۰ سانتی در کلاچای",
       "angle": "مقایسه مشخصات و هزینه واقعی",
-      "assigned_title": "نوار تیپ در کلاچای؛ انتخاب فاصله مناسب"
+      "assigned_title": "نوار تیپ در کلاچای؛ انتخاب فاصله مناسب",
+      "_image_blog": "farsiblog",
+      "matrix_title": "نوار تیپ در کلاچای؛ انتخاب فاصله مناسب",
+      "_image_article_context": {
+        "title": "نوار تیپ در کلاچای؛ انتخاب فاصله مناسب",
+        "meta_description": "راهنمای فنی انتخاب فاصله ۲۰ سانتی‌متر در نوار تیپ آبیاری؛ بررسی اصول طراحی، نصب و نگهداری برای بهینه‌سازی مصرف آب در مزارع.",
+        "summary": "مقدمه‌ای بر آبیاری با نوار تیپ در کلاچای کشت‌های ردیفی در مناطق مختلف نیازمند مدیریت دقیق منابع آبی هستند و یکی از راهکارهای کارآمد، استفاده از سیستم آبیاری قطره‌ای به ویژه نوار تیپ محسوب می‌شود. در کلاچای نیز مانند دیگر مناطق کشاورزی، انتخاب صحیح فاصله قطره‌چکان‌ها نقشی تعیین‌کننده در عملکرد سیستم دارد. فاصله ۲۰ سانتی‌متر به دلیل انعطاف‌پذیری بالا، کاربرد گسترده‌ای پیدا کرده است، اما این فاصله همواره مناسب همه شرایط نیست. بسیاری از کشاورزان تصور می‌کنند که تنها جنس لوله یا نوع نوار تعیین‌کننده کیفیت سیستم است، در حالی که متغیرهایی چون فشار کاری، دبی قطره‌چکان، کیفیت آب و شیب زمین نیز تأثیر مستقیم دارند. در ادامه، اصول فنی انتخاب فاصله مناسب در نوار تیپ ۲۰ سانتی‌متری بررسی می‌شود تا کشاورز بتواند با توجه به شرایط خاص مزرعه خود، تصمیم آگاهانه‌ای بگیرد. برای اطلاع از جزئیات بیشتر می‌توانید به صفحه خرید نوار تیپ ۲۰ سانتی در کلاچای مراجعه کنید. ساختار فنی نوار تیپ ۲۰ سانتی‌متری نوار تیپ ۲۰ سانتی‌متری لوله‌ای باریک با جنس پلی‌اتیلن است که در طول آن، قطره‌چکان‌هایی با فاصله دقیق ۲۰ سانتی‌متر تعبیه شده‌اند. این فاصله ثابت، توزیع یکنواخت رطوبت در محدوده ریشه گیاه را فراهم می‌کند و برای کشت‌های ردیفی با نیاز آبی مشابه گزینه مناسبی است. هنگام انتخاب محصول، سه پارامتر فنی اصلی باید بررسی شوند"
+      },
+      "editorial_image_decision": "mandatory_generated_1_to_2",
+      "_generation_stage": "local_vision_qa",
+      "_image_generation_round": 0,
+      "_image_key_route": {
+        "policy": "audited-image-key-pool-v1",
+        "slot": "AGNES_API_KEY18",
+        "mode": "verified",
+        "max_provider_requests": 1
+      },
+      "_image_provider_attempts": [
+        {
+          "requested_secret_slot": "AGNES_API_KEY18",
+          "attempt": 1,
+          "route": "audited_image_pool",
+          "timeout_seconds": 600,
+          "http_status": 200,
+          "status": "generation_response_received"
+        }
+      ],
+      "_image_render": {
+        "connection": {
+          "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+          "model": "agnes-image-2.5-flash",
+          "size": "1024x768",
+          "timeout_seconds": 600
+        },
+        "requested_size": "1024x768",
+        "requested_ratio": null,
+        "provider_size": [
+          1152,
+          864
+        ],
+        "output_size": [
+          1200,
+          900
+        ],
+        "cropped": false
+      },
+      "_image_caption_render": {
+        "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+        "source_sha256": "64ea05a3e0d18ac76b94a33cab58caa98716670e8bc2d36b2185cc2c253afa05",
+        "captions": {
+          "english": {
+            "text": "Drip Irrigation Tape",
+            "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+            "point_size": 15.75,
+            "quad": [
+              [
+                292.72,
+                678.2929648293418
+              ],
+              [
+                444.28,
+                667.065131695153
+              ],
+              [
+                444.28,
+                690.585131695153
+              ],
+              [
+                292.72,
+                701.8129648293418
+              ]
+            ],
+            "cylinder_sag_px": 4.992486574678819
+          },
+          "persian": {
+            "text": "آبگسترفراپارسیان",
+            "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+            "point_size": 12.25,
+            "quad": [
+              [
+                197.6,
+                670.7848511610993
+              ],
+              [
+                284.4,
+                677.2151488389007
+              ],
+              [
+                284.4,
+                700.7351488389007
+              ],
+              [
+                197.6,
+                694.3048511610992
+              ]
+            ],
+            "cylinder_sag_px": 1.657301472906626
+          }
+        },
+        "cylinder_curve": {
+          "method": "visible-blue-band-front-ring-v1",
+          "coefficient": -0.0008758364237847145,
+          "center_x": 320.0,
+          "sample_y": [
+            728,
+            735,
+            728
+          ],
+          "sample_span": 178.79999999999998
+        },
+        "sha256": "5ff92cf2562f49b9f8deeb6ae54f5247540e414d48793652650ac31898219242"
+      },
+      "failure_stage": "image",
+      "attempts": 1,
+      "generated_at": "2026-10-30T22:59:32Z",
+      "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
+      "next_retry_at": "2026-10-30T23:59:32.660660Z"
     },
     {
       "city_fa": "کلاچای",
@@ -24458,12 +24739,146 @@
       "site_title": "خرید نوار تیپ ۲۰ سانتی در کومله",
       "key": "city-f5ed209c8251e021",
       "kind": "city",
-      "status": "pending",
+      "status": "failed",
       "source_key": "gilan/%da%a9%d9%88%d9%85%d9%84%d9%87-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm",
       "reference_url": "https://navar-abyari.ir/gilan/%da%a9%d9%88%d9%85%d9%84%d9%87-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm/",
       "topic": "خرید نوار تیپ ۲۰ سانتی در کومله",
       "angle": "مقایسه مشخصات و هزینه واقعی",
-      "assigned_title": "نوار تیپ در کومله؛ مقایسه پیش از خرید"
+      "assigned_title": "نوار تیپ در کومله؛ مقایسه پیش از خرید",
+      "_image_blog": "farsiblog",
+      "matrix_title": "نوار تیپ در کومله؛ مقایسه پیش از خرید",
+      "_structural_repairs": [
+        "invalid_slug_replaced_with_stable_system_slug"
+      ],
+      "_image_article_context": {
+        "title": "نوار تیپ در کومله؛ مقایسه پیش از خرید",
+        "meta_description": "راهنمای مقایسه نوار تیپ ۲۰ سانتی‌متر برای خرید آگاهانه در کومله؛ بررسی جنس، فیلتراسیون، نصب و نگهداری.",
+        "summary": "معرفی نوار تیپ با فاصله قطره‌چکان ۲۰ سانتی‌متر نوار تیپ ۲۰ سانتی‌متر یکی از پرتکاربردترین گزینه‌ها در آبیاری قطره‌ای نواری است. این سیستم آب و مواد غذایی را مستقیماً در منطقه ریشه‌ای ارائه می‌دهد و با کاهش تبخیر و شست‌وشوی خاک، بازده مصرف آب را بهبود می‌بخشد. نوار تیپ به‌ویژه برای کشت‌هایی با فاصله نزدیک و ریشه سطحی تا نیمه‌عمیق مورد توجه قرار می‌گیرد، به شرطی که فاصله ۲۰ سانتی‌متری با الگوی کشت شما سازگار باشد. انتخاب این سیستم در هر منطقه‌ای، از جمله خرید نوار تیپ ۲۰ سانتی در کومله ، نیازمند توجه به جزئیات فنی و تطبیق با شرایط خاص مزرعه است. هیچ عدد ثابتی برای دبی، فشار یا نیاز آبی بدون مراجعه به برگه فنی قابل اعتمادسازی نیست. معیارهای فنی انتخاب جنس و ضخامت جنس نوار تیپ معمولاً پلی‌اتیلن با درجه‌بندی‌های متفاوت است. این مواد باید دارای افزودنی‌های ضد اشعه ماوراء بنفش باشند تا در برابر نور آفتاب مقاوم بمانند. ضخامت لوله نیز از مهم‌ترین پارامترهاست؛ نوارهای نازک‌تر معمولاً برای کشت‌های فصلی و کوتاه‌مدت مناسب‌اند و نوارهای ضخیم‌تر دوام بالاتری دارند و برای کشت‌های چندفصلی گزینه بهتری محسوب می‌شوند. برای انتخاب ضخامت و جنس مناسب، حتماً برگه فنی محصول را مطالعه کنید و از مشاوره متخصص بهره ببرید. به‌هیچ‌وجه مشخصات فنی را بدون مرجع معتبر قلمداد نکنید. فشار عملیاتی و فیلتراسیون عملکرد ص"
+      },
+      "editorial_image_decision": "mandatory_generated_1_to_2",
+      "_generation_stage": "local_vision_qa",
+      "_image_generation_round": 1,
+      "_image_key_route": {
+        "policy": "audited-image-key-pool-v1",
+        "slot": "AGNES_API_KEY18",
+        "mode": "verified",
+        "max_provider_requests": 1
+      },
+      "_image_provider_attempts": [
+        {
+          "requested_secret_slot": "AGNES_API_KEY18",
+          "attempt": 1,
+          "route": "audited_image_pool",
+          "timeout_seconds": 600,
+          "http_status": 200,
+          "status": "generation_response_received"
+        },
+        {
+          "requested_secret_slot": "AGNES_API_KEY18",
+          "attempt": 1,
+          "route": "audited_image_pool",
+          "timeout_seconds": 600,
+          "http_status": 200,
+          "status": "generation_response_received"
+        }
+      ],
+      "_image_render": {
+        "connection": {
+          "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
+          "model": "agnes-image-2.5-flash",
+          "size": "1024x768",
+          "timeout_seconds": 600
+        },
+        "requested_size": "1024x768",
+        "requested_ratio": null,
+        "provider_size": [
+          1152,
+          864
+        ],
+        "output_size": [
+          1200,
+          900
+        ],
+        "cropped": false
+      },
+      "_image_rejections": [
+        {
+          "sha256": "5dbfe94a701e3976e71de43b7967b36bc2935be382c34c538afd3bec875d7612",
+          "reason": "Product image rejected: New caption would overlap original logo"
+        }
+      ],
+      "_image_qa_feedback": "Product image rejected: New caption would overlap original logo",
+      "_image_caption_render": {
+        "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+        "source_sha256": "6529bccd841d6b043070540e684f0efa5d1c9064f0e83e37b43933a312dcc16a",
+        "captions": {
+          "english": {
+            "text": "Drip Irrigation Tape",
+            "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+            "point_size": 17.25,
+            "quad": [
+              [
+                294.28,
+                639.6561454982199
+              ],
+              [
+                460.72,
+                624.8348252048213
+              ],
+              [
+                460.72,
+                650.8348252048213
+              ],
+              [
+                294.28,
+                665.6561454982199
+              ]
+            ],
+            "cylinder_sag_px": 6.594398711922947
+          },
+          "persian": {
+            "text": "آبگسترفراپارسیان",
+            "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+            "point_size": 13.25,
+            "quad": [
+              [
+                192.6,
+                628.8236005662077
+              ],
+              [
+                286.4,
+                637.1763994337923
+              ],
+              [
+                286.4,
+                663.1763994337923
+              ],
+              [
+                192.6,
+                654.8236005662077
+              ]
+            ],
+            "cylinder_sag_px": 2.0892863501219536
+          }
+        },
+        "cylinder_curve": {
+          "method": "visible-blue-band-front-ring-v1",
+          "coefficient": -0.0009458064056686073,
+          "center_x": 329.0,
+          "sample_y": [
+            700,
+            707,
+            697
+          ],
+          "sample_span": 189.6
+        },
+        "sha256": "716f6dc3f92611cfadc9acd633fdfd01552ba9da79cef5e8319abd3e69486544"
+      },
+      "failure_stage": "image",
+      "attempts": 1,
+      "generated_at": "2026-10-30T23:03:14Z",
+      "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
+      "next_retry_at": "2026-10-31T00:03:14.524090Z"
     },
     {
       "city_fa": "کومله",
