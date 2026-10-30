@@ -45,6 +45,22 @@
       "timeout_seconds": 600,
       "http_status": 200,
       "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY23",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY23",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     }
   ],
   "_image_render": {
@@ -74,14 +90,84 @@
     {
       "sha256": "76d2ddbc72ef06c428d4021eb0668293f1fafd19468491f55222fb5d8baa71ee",
       "reason": "Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Core image condition not met: technical_evidence_match"
+    },
+    {
+      "sha256": "853220aabc4c8bd5abcf25cfe653dd797fc07512d24b5aad9340b7e0eaaf4958",
+      "reason": "Product image rejected: New caption would overlap original logo"
     }
   ],
-  "_image_qa_feedback": "Show this exact installed evidence: continuous thin flattened installed drip tape beside crop roots, with a clearly visible continuous dark wet-soil strip along the root zone, strongly contrasting with lighter dry soil outside the strip.",
+  "_image_qa_feedback": "Product image rejected: New caption would overlap original logo",
   "failure_stage": "image",
-  "attempts": 1,
-  "generated_at": "2026-10-29T18:02:49Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Core image condition not met: technical_evidence_match",
-  "next_retry_at": "2026-10-29T19:02:49.194939Z",
+  "attempts": 2,
+  "generated_at": "2026-10-30T19:06:45Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
+  "next_retry_at": "2026-10-30T21:06:45.634482Z",
+  "_image_caption_render": {
+    "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+    "source_sha256": "b0c72de60e623c413fbd1c9dbb57af28944a4e35a0d1b8047a508ed779213de8",
+    "captions": {
+      "english": {
+        "text": "Drip Irrigation Tape",
+        "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+        "point_size": 17.5,
+        "quad": [
+          [
+            288.2,
+            609.4187597370521
+          ],
+          [
+            465.8,
+            594.4033704449596
+          ],
+          [
+            465.8,
+            620.4033704449596
+          ],
+          [
+            288.2,
+            635.4187597370521
+          ]
+        ],
+        "cylinder_sag_px": 6.8925609766709295
+      },
+      "persian": {
+        "text": "آبگسترفراپارسیان",
+        "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+        "point_size": 14.25,
+        "quad": [
+          [
+            178.4,
+            599.6796937340882
+          ],
+          [
+            280.6,
+            608.3203062659118
+          ],
+          [
+            280.6,
+            634.3203062659118
+          ],
+          [
+            178.4,
+            625.6796937340882
+          ]
+        ],
+        "cylinder_sag_px": 2.26329391495027
+      }
+    },
+    "cylinder_curve": {
+      "method": "visible-blue-band-front-ring-v1",
+      "coefficient": -0.0008701629815264398,
+      "center_x": 322.5,
+      "sample_y": [
+        669,
+        677,
+        667
+      ],
+      "sample_span": 203.4
+    },
+    "sha256": "50218622c0bf50677b90dea4bd52974b4a0cb5af7d055cb47f1b695fdc83f386"
+  },
   "post": {
     "title": "نوار تیپ در اسکو؛ پرسش‌های پایش مزرعه",
     "slug": "nvar-tip-dar-esko-porsesh-ha-ye-payesh-mazrae",
@@ -99,7 +185,14 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Core image condition not met: technical_evidence_match"
-    ]
+      "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError"
+    ],
+    "words": 642,
+    "links": [
+      "https://navar-abyari.ir/east_azarbaijan/%d8%a7%d8%b3%da%a9%d9%88-%d8%a2%d8%b0%d8%b1%d8%a8%d8%a7%db%8c%d8%ac%d8%a7%d9%86-%d8%b4%d8%b1%d9%82%db%8c-navar-tip-20cm/",
+      "https://navar-abyari.ir/"
+    ],
+    "checked_against": "Roya + FarsiBlog + RozBlog + LoxBlog + Blogsky corpus",
+    "title_matrix": "نوار تیپ در اسکو؛ پرسش‌های پایش مزرعه"
   }
 }

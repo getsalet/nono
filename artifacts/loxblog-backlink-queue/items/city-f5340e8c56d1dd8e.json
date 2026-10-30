@@ -48,6 +48,22 @@
       "timeout_seconds": 600,
       "http_status": 200,
       "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY23",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY23",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     }
   ],
   "_image_render": {
@@ -77,14 +93,84 @@
     {
       "sha256": "cc93f587988ebb69ff3a907a3433e6b3df5308b3f4e3da36b8c0b4a547de22ed",
       "reason": "Product image rejected: Image score below 90 or invalid; Vision flag not cleared: implausible_geometry; Image score below 90 or invalid; Vision flag not cleared: implausible_geometry; Core image condition not met: product_integrated; Core image condition not met: technical_evidence_match; Core image condition not met: packaging_not_used_as_hardware"
+    },
+    {
+      "sha256": "870d539491923eb76eb0b08781f80d9de0a028b0180b838d9850a41f87486d70",
+      "reason": "Product image rejected: Caption blue base band ambiguous"
     }
   ],
-  "_image_qa_feedback": "Show this exact installed evidence: neutral small seedlings, continuous thin flattened installed drip-tape laterals and localized root-zone wetting. The single AFP carton stands separately on soil; no pipe through it. Separate the commercial carton from all installed plumbing. Move the carton to the lower-left dry-soil island; all lines stay one carton diameter to its right, never under or behind it. Use normal connected header fittings and a thin flattened drip-tape lateral; 20 cm describes emitter spacing, never line width or diameter.",
+  "_image_qa_feedback": "Product image rejected: Caption blue base band ambiguous",
   "failure_stage": "image",
-  "attempts": 1,
-  "generated_at": "2026-10-29T18:07:39Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Vision flag not cleared: implausible_geometry; Image score below 90 or invalid; Vision flag not cleared: implausible_geometry; Core image condition not met: product_integrated; Core image condition not met: technical_evidence_match; Core image condition not met: packaging_not_used_as_hardware",
-  "next_retry_at": "2026-10-29T19:07:39.567962Z",
+  "attempts": 2,
+  "generated_at": "2026-10-30T19:14:17Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError",
+  "next_retry_at": "2026-10-30T21:14:17.124560Z",
+  "_image_caption_render": {
+    "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+    "source_sha256": "ed8adaa22194a9ff3c45a1c0c2d2fae2e4d2c128ae60e5da63280c452557df7a",
+    "captions": {
+      "english": {
+        "text": "Drip Irrigation Tape",
+        "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+        "point_size": 16.0,
+        "quad": [
+          [
+            293.12,
+            639.9829106169504
+          ],
+          [
+            450.88,
+            626.9015619121122
+          ],
+          [
+            450.88,
+            651.6815619121122
+          ],
+          [
+            293.12,
+            664.7629106169504
+          ]
+        ],
+        "cylinder_sag_px": 6.173246800701477
+      },
+      "persian": {
+        "text": "آبگسترفراپارسیان",
+        "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+        "point_size": 12.25,
+        "quad": [
+          [
+            195.4,
+            630.3432588876561
+          ],
+          [
+            283.6,
+            637.6567411123439
+          ],
+          [
+            283.6,
+            662.4367411123438
+          ],
+          [
+            195.4,
+            655.1232588876561
+          ]
+        ],
+        "cylinder_sag_px": 1.9149825037907482
+      }
+    },
+    "cylinder_curve": {
+      "method": "visible-blue-band-front-ring-v1",
+      "coefficient": -0.0009891438552638162,
+      "center_x": 323.5,
+      "sample_y": [
+        693,
+        700,
+        690
+      ],
+      "sample_span": 185.4
+    },
+    "sha256": "afbff3740399acc4de86d0b3f8e67a55d41fed92f92d78c17953e515b27079b5"
+  },
   "post": {
     "title": "نوار تیپ در بناب؛ پیگیری نشتی",
     "slug": "navar-tip-dar-bonab-peygiiri-neshti",
@@ -103,7 +189,14 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Vision flag not cleared: implausible_geometry; Image score below 90 or invalid; Vision flag not cleared: implausible_geometry; Core image condition not met: product_integrated; Core image condition not met: technical_evidence_match; Core image condition not met: packaging_not_used_as_hardware"
-    ]
+      "generation/source/validation failed: RuntimeError [stage=image]; RuntimeError"
+    ],
+    "words": 724,
+    "links": [
+      "https://navar-abyari.ir/east_azarbaijan/%d8%a8%d9%86%d8%a7%d8%a8-%d8%a2%d8%b0%d8%b1%d8%a8%d8%a7%db%8c%d8%ac%d8%a7%d9%86-%d8%b4%d8%b1%d9%82%db%8c-navar-tip-20cm/",
+      "https://navar-abyari.ir/"
+    ],
+    "checked_against": "Roya + FarsiBlog + RozBlog + LoxBlog + Blogsky corpus",
+    "title_matrix": "نوار تیپ در بناب؛ پیگیری نشتی"
   }
 }
