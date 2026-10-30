@@ -296,7 +296,7 @@ def prepare_cached(cache):
  try:im,proof=typeset(raw,detect_geometry(raw))
  except RuntimeError as exc:
   # Layout is a definitive candidate defect. Fonts/runtime failures are not.
-  if str(exc).startswith(('Caption anchors','Caption blue','Caption water','Caption symbol','Caption viewing','Caption white','Caption area','Caption overlaps','Caption not aligned','New caption','Caption would modify')):raise RuntimeError('Product image rejected: '+str(exc))from None
+  if str(exc).startswith(('Caption anchors','Caption blue','Caption water','Caption symbol','Caption viewing','Caption white','Caption area','Caption overlaps','Caption not aligned','New caption','Caption would modify','Caption cylinder')):raise RuntimeError('Product image rejected: '+str(exc))from None
   raise
  out=io.BytesIO();im.save(out,'WEBP',quality=95,method=6);result=out.getvalue();proof['sha256']=hashlib.sha256(result).hexdigest()
  tmp=cache.with_suffix('.tmp');tmp.write_bytes(result);tmp.replace(cache)

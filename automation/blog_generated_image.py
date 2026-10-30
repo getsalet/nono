@@ -98,7 +98,8 @@ def identity(item,blog):
  from blog_reference_scene import RECIPE_VERSION,topic_hash,recipe_for
  context_hash=topic_hash(item)if item.get('_image_article_context')or item.get('post')else'no-final-draft'
  from blog_image_connection import fingerprint
- return hashlib.sha256((POLICY+'|'+recipe_for(item)+'|'+fingerprint(roya.BASE.AGNES_BASE)+'|'+watermark_policy+'|'+blog+'|'+str(item['key'])+'|'+expected+'|'+context_hash).encode()).hexdigest()[:32]
+ caption_identity='|'+__import__('blog_package_labels').POLICY if expected=='tape20'else''
+ return hashlib.sha256((POLICY+caption_identity+'|'+recipe_for(item)+'|'+fingerprint(roya.BASE.AGNES_BASE)+'|'+watermark_policy+'|'+blog+'|'+str(item['key'])+'|'+expected+'|'+context_hash).encode()).hexdigest()[:32]
 
 def brief(item,blog):
  from blog_image_gate import family,reference_identity_instruction
@@ -368,6 +369,9 @@ def prepare_now(item,blog,root=None,max_rounds=3,allow_generate=True):
     tmp=cache.with_suffix('.tmp');tmp.write_bytes(raw);tmp.replace(cache)
    raw=cache.read_bytes();item['_generation_stage']='local_vision_qa'
    try:
+    import blog_package_labels as captions
+    if captions.enabled(root,__import__('blog_image_gate').family(item)):
+     raw,proof=captions.prepare_cached(cache);item['_image_caption_render']=proof
     review(item,'generated://'+blog+'/'+asset_id,root=root,_candidate=raw)
     break
    except RuntimeError as exc:
@@ -383,5 +387,5 @@ def prepare_now(item,blog,root=None,max_rounds=3,allow_generate=True):
   url=checkpoint_asset(path,raw,root)
   item['_generation_stage']='public_vision_qa'
   review(item,url,root=root) # Fetch immutable public bytes, not just local success.
- item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'reference-conditioned-single-pass-topic-scene','topic_sha256':__import__('blog_reference_scene').topic_hash(item),'reference_sources':__import__('blog_reference_scene').SOURCES,'rendering':item.get('_image_render',{}),'watermark':__import__('blog_image_watermark').TEXT,'watermark_policy':__import__('blog_image_watermark').POLICY,'product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP')
+ item.update(image_selection=POLICY,image_generation={'policy':POLICY,'blog':blog,'asset_id':asset_id,'url':url,'kind':'reference-conditioned-single-pass-topic-scene','topic_sha256':__import__('blog_reference_scene').topic_hash(item),'reference_sources':__import__('blog_reference_scene').SOURCES,'rendering':item.get('_image_render',{}),'watermark':__import__('blog_image_watermark').TEXT,'watermark_policy':__import__('blog_image_watermark').POLICY,'package_label_policy':__import__('blog_package_labels').POLICY if __import__('blog_package_labels').enabled(root,__import__('blog_image_gate').family(item))else None,'caption_rendering':item.get('_image_caption_render',{}),'product_photos':__import__('blog_product_composite').provenance(__import__('blog_image_gate').family(item))},image_alt=(item.get('site_title')or item.get('topic')or'تجهیزات آبیاری AFP').split('|')[0].strip()+' - تصویر یکپارچه مرتبط با موضوع مقاله و محصول AFP')
  return url
