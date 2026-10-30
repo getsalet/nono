@@ -5,7 +5,7 @@ on:
       round:
         description: 'Prompt comparison or two controlled finish edits; no publication'
         type: choice
-        options: [prompt, finish-edit]
+        options: [prompt, finish-edit, review-only]
         default: prompt
 permissions:
   contents: write
@@ -22,6 +22,15 @@ jobs:
       IMAGE_MODEL: agnes-image-2.5-flash
       IMAGE_REVIEW_MODEL: agnes-3.0-flash
       AGNES_MODEL: agnes-3.0-flash
+      AGNES_API_KEY: ${{ secrets.AGNES_API_KEY }}
+      AGNES_API_KEY2: ${{ secrets.AGNES_API_KEY2 }}
+      AGNES_API_KEY3: ${{ secrets.AGNES_API_KEY3 }}
+      AGNES_API_KEY4: ${{ secrets.AGNES_API_KEY4 }}
+      AGNES_API_KEY5: ${{ secrets.AGNES_API_KEY5 }}
+      AGNES_API_KEY7: ${{ secrets.AGNES_API_KEY7 }}
+      AGNES_API_KEY9: ${{ secrets.AGNES_API_KEY9 }}
+      AGNES_API_KEY10: ${{ secrets.AGNES_API_KEY10 }}
+      AGNES_API_KEY11: ${{ secrets.AGNES_API_KEY11 }}
       AGNES_API_KEY14: ${{ secrets.AGNES_API_KEY14 }}
       AGNES_API_KEY15: ${{ secrets.AGNES_API_KEY15 }}
       AGNES_API_KEY16: ${{ secrets.AGNES_API_KEY16 }}
@@ -44,6 +53,8 @@ jobs:
         run: |
           if [ "$CALIBRATION_ROUND" = "finish-edit" ]; then
             python automation/calibrate_closed_carton_edits.py
+          elif [ "$CALIBRATION_ROUND" = "review-only" ]; then
+            AGNES_PREFERRED_KEY_SLOTS=AGNES_API_KEY,AGNES_API_KEY2,AGNES_API_KEY3 python automation/calibrate_image_validation.py
           else
             python automation/calibrate_blog_images.py
           fi
