@@ -24,11 +24,11 @@
     "summary": "مقدمه اجرای نوار تیپ پایان کار نیست؛ آغاز دوره‌ی عملیات نگهداری است. در کیاشهر، بسیاری از مالکان مزرعه پس از نصب، سیستم را رها می‌کنند و تنها در مواجهه با افت فشار یا پخش ناهمگن آب متوجه مشکل می‌شوند. نگهداری صحیح پس از اجرا، تفاوت بین دو سال و پنج سال عمر مفید نوار آبیاری است. این مقاله، نقشه‌ی راهی است برای کسانی که می‌خواهند مسیر آبیاری خود را بر اساس اصول طراحی و نگهداری برنامه‌ریزی کنند. بازرسی اولیه و تنظیم فشار پس از نصب در هفته‌ی نخست پس از اجرا، سیستم باید بدون بار گیاهی تست شود. نوارها را به شبکه متصل کنید، شیرها را باز کنید و هر سه متر از انتهای خط، محل خروج آب را بررسی نمایید. اگر قطره‌چکان‌هایی خشک هستند یا جریان غیرعادی دارند، احتمال خطای نصب، آسیب مکانیکی حین اجرا، یا گرفتگی اولیه قطره‌چکان وجود دارد. در این مرحله، عیب‌یابی ساده‌تر و کم‌هزینه‌تر است. همچنین فشار ورودی را با مانومتر اندازه بگیرید. فشار کاری تأییدشده نوار تیپ بغل‌دوخت با فاصله روزنه ۱۰ و ۲۰ سانتی‌متر، بین ۰٫۶ تا ۱ اتمسفر است. این محدوده به مدل‌های پلاک‌دار یا لوله‌های انتقال تعمیم داده نمی‌شود. اگر فشار خوانده‌شده خارج از این بازه است، تنظیم شیر فشارشکن یا بررسی لوله اصلی الزامی است. مدیریت فیلتراسیون؛ قلب تپنده‌ی نگهداری بیش از هفتاد درصد اختلالات نوار تیپ ناشی از فیلتراسیون ناکافی است. پس از اجرای سی"
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
-  "_generation_stage": "local_vision_qa",
+  "_generation_stage": "generation_api",
   "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
-    "slot": "AGNES_API_KEY20",
+    "slot": "AGNES_API_KEY21",
     "mode": "verified",
     "max_provider_requests": 1
   },
@@ -104,6 +104,23 @@
       "timeout_seconds": 600,
       "http_status": 200,
       "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY21",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY21",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 503,
+      "status": "provider_queue_full_deferred",
+      "provider_code": "image_queue_full"
     }
   ],
   "_image_render": {
@@ -161,14 +178,19 @@
     {
       "sha256": "739a7ccd1231fead3aead255f06200b4d7418052f275d6575c8126f93cc17cc5",
       "reason": "Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Core image condition not met: packaging_not_used_as_hardware"
+    },
+    {
+      "sha256": "e25d63288d68c87be2afdde4fa9d2d8ba71b29fe4662ca2bef97aa16bc6166db",
+      "reason": "Product image rejected: Caption blue base band ambiguous"
     }
   ],
-  "_image_qa_feedback": "The single AFP carton stands separately on soil; no pipe through it. Separate the commercial carton from all installed plumbing.",
+  "_image_qa_feedback": "Product image rejected: Caption blue base band ambiguous",
   "failure_stage": "image",
-  "attempts": 5,
-  "generated_at": "2026-10-29T19:08:31Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Core image condition not met: packaging_not_used_as_hardware",
-  "next_retry_at": "2026-10-30T11:08:31.610314Z",
+  "attempts": 6,
+  "generated_at": "2026-10-30T14:20:38Z",
+  "last_error": "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy",
+  "next_retry_at": "2026-10-30T14:20:39.775867Z",
+  "image_retry_at": 1793370039.7758675,
   "post": {
     "title": "نوار تیپ در کیاشهر؛ نگهداری پس از اجرا",
     "slug": "navar-tip-keyashahr-neghhdari-pas-az-ern",
@@ -186,14 +208,14 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Image score below 90 or invalid; Vision flag not cleared: fake_text_or_logo; Core image condition not met: packaging_not_used_as_hardware"
+      "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy"
     ],
     "words": 910,
     "links": [
       "https://navar-abyari.ir/",
       "https://navar-abyari.ir/gilan/%da%a9%db%8c%d8%a7%d8%b4%d9%87%d8%b1-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm/"
     ],
-    "checked_against": "Roya + FarsiBlog + RozBlog + Blogfa + LoxBlog + Blogsky corpus",
+    "checked_against": "Roya + FarsiBlog + RozBlog + LoxBlog + Blogsky corpus",
     "title_matrix": "نوار تیپ در کیاشهر؛ نگهداری پس از اجرا"
   }
 }
