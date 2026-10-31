@@ -104,6 +104,22 @@
       "timeout_seconds": 600,
       "http_status": 200,
       "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     }
   ],
   "_image_render": {
@@ -161,14 +177,88 @@
     {
       "sha256": "ded5c63d954a188be5ae8e0d8ed20b81f4a213de2ba4b61525ea99cd346d9c94",
       "reason": "Product image rejected: New caption would overlap original logo"
+    },
+    {
+      "sha256": "c146c39bbca9883352bd1f7037ee5d0b0192c2ef4470c1c9bd79ed2dad748cc8",
+      "reason": "Product image rejected: Current hash-bound exact package caption review required; Core image condition not met: packaging_not_used_as_hardware"
+    },
+    {
+      "sha256": "30ea5df9b80b1280c5391410672d4e657c206cd667e43ced53b1d6192792b5c3",
+      "reason": "Product image rejected: Caption white sleeve has insufficient room"
     }
   ],
-  "_image_qa_feedback": "Product image rejected: New caption would overlap original logo",
+  "_image_qa_feedback": "Product image rejected: Caption white sleeve has insufficient room",
   "failure_stage": "image",
-  "attempts": 6,
-  "generated_at": "2026-10-30T13:50:24Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo",
-  "next_retry_at": "2026-10-31T13:50:24.841944Z",
+  "attempts": 7,
+  "generated_at": "2026-10-31T13:54:03Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption white sleeve has insufficient room",
+  "next_retry_at": "2026-11-01T13:54:03.976667Z",
+  "_image_caption_render": {
+    "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+    "source_sha256": "28b74811e0064cd6a6e2bffaba60bb8b059b57d96eb7c0c581ca13a4c6a30789",
+    "captions": {
+      "english": {
+        "text": "Drip Irrigation Tape",
+        "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+        "point_size": 18.0,
+        "quad": [
+          [
+            300.2,
+            636.2364401683705
+          ],
+          [
+            477.8,
+            623.3943475646422
+          ],
+          [
+            477.8,
+            649.3943475646422
+          ],
+          [
+            300.2,
+            662.2364401683705
+          ]
+        ],
+        "cylinder_sag_px": 6.28526086094029
+      },
+      "persian": {
+        "text": "آبگسترفراپارسیان",
+        "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+        "point_size": 14.5,
+        "quad": [
+          [
+            189.2,
+            628.254389657246
+          ],
+          [
+            292.8,
+            635.745610342754
+          ],
+          [
+            292.8,
+            661.745610342754
+          ],
+          [
+            189.2,
+            654.254389657246
+          ]
+        ],
+        "cylinder_sag_px": 2.1045427494544735
+      }
+    },
+    "cylinder_curve": {
+      "method": "visible-blue-band-front-ring-v1",
+      "coefficient": -0.0007934933544931561,
+      "center_x": 332.5,
+      "sample_y": [
+        698,
+        706,
+        696
+      ],
+      "sample_span": 213.0
+    },
+    "sha256": "c146c39bbca9883352bd1f7037ee5d0b0192c2ef4470c1c9bd79ed2dad748cc8"
+  },
   "post": {
     "title": "نوار تیپ در نوبران؛ بررسی فشار و مشخصات",
     "slug": "navar-tip-nobaran-feshar-mosahhat",
@@ -186,7 +276,7 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo"
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption white sleeve has insufficient room"
     ],
     "words": 955,
     "links": [
