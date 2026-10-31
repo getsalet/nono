@@ -25,7 +25,7 @@
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
   "_generation_stage": "local_vision_qa",
-  "_image_generation_round": 1,
+  "_image_generation_round": 0,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
     "slot": "AGNES_API_KEY21",
@@ -33,6 +33,14 @@
     "max_provider_requests": 1
   },
   "_image_provider_attempts": [
+    {
+      "requested_secret_slot": "AGNES_API_KEY21",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
     {
       "requested_secret_slot": "AGNES_API_KEY21",
       "attempt": 1,
@@ -71,69 +79,69 @@
   },
   "_image_caption_render": {
     "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
-    "source_sha256": "337b8ba8af304540c0a34bcd03ffd5fd84227f5b51f49f128f6d3e6461ac486b",
+    "source_sha256": "b478479826fd4d96c0cc93a7cdf11bde50f6f8b9854e8f5077acbc671c9ba0a9",
     "captions": {
       "english": {
         "text": "Drip Irrigation Tape",
         "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
-        "point_size": 16.0,
+        "point_size": 17.0,
         "quad": [
           [
-            290.12,
-            668.9863081675999
+            286.4,
+            666.9021830649712
           ],
           [
-            447.88,
-            655.8726414365708
+            451.6,
+            653.9104552753787
           ],
           [
-            447.88,
-            680.6526414365708
+            451.6,
+            679.9104552753787
           ],
           [
-            290.12,
-            693.7663081675998
+            286.4,
+            692.9021830649712
           ]
         ],
-        "cylinder_sag_px": 5.886063041046118
+        "cylinder_sag_px": 6.199727055283361
       },
       "persian": {
         "text": "آبگسترفراپارسیان",
         "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
-        "point_size": 12.25,
+        "point_size": 13.25,
         "quad": [
           [
-            193.4,
-            660.3342247538135
+            183.6,
+            658.3116705004123
           ],
           [
-            281.6,
-            667.6657752461865
+            277.4,
+            665.6883294995877
           ],
           [
-            281.6,
-            692.4457752461865
+            277.4,
+            691.6883294995877
           ],
           [
-            193.4,
-            685.1142247538135
+            183.6,
+            684.3116705004123
           ]
         ],
-        "cylinder_sag_px": 1.8258961780908964
+        "cylinder_sag_px": 2.0121501656743352
       }
     },
     "cylinder_curve": {
       "method": "visible-blue-band-front-ring-v1",
-      "coefficient": -0.0009431281911626531,
-      "center_x": 318.5,
+      "coefficient": -0.000910887354311605,
+      "center_x": 316.0,
       "sample_y": [
-        720,
-        728,
-        720
+        724,
+        732,
+        723
       ],
-      "sample_span": 184.2
+      "sample_span": 193.2
     },
-    "sha256": "fd1beb190b4cdb02628c3016e4437fa3bb4fb6e87f6257f9d8852d2444a0f137"
+    "sha256": "42ebe165eb3302a4dfd42d4a97f48484f0e6f37ba4646d6784b4a5094cbb00f7"
   },
   "_image_rejections": [
     {
@@ -147,10 +155,10 @@
   ],
   "_image_qa_feedback": "Product image rejected: New caption would overlap original logo",
   "failure_stage": "image",
-  "attempts": 1,
-  "generated_at": "2026-10-30T23:19:11Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo",
-  "next_retry_at": "2026-10-31T00:19:11.062735Z",
+  "attempts": 2,
+  "generated_at": "2026-10-31T02:27:18Z",
+  "last_error": "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError",
+  "next_retry_at": "2026-10-31T04:27:18.284041Z",
   "post": {
     "title": "نوار تیپ در هچیرود؛ بازبینی فاصله ردیف‌ها",
     "slug": "navar-tip-fasle-ridif-hachirud",
@@ -168,7 +176,14 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo"
-    ]
+      "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError"
+    ],
+    "words": 954,
+    "links": [
+      "https://navar-abyari.ir/mazandaran/%d9%87%da%86%db%8c%d8%b1%d9%88%d8%af-%d9%85%d8%a7%d8%b2%d9%86%d8%af%d8%b1%d8%a7%d9%86-navar-tip-20cm/",
+      "https://navar-abyari.ir/"
+    ],
+    "checked_against": "Roya + FarsiBlog + RozBlog + LoxBlog + Blogsky corpus",
+    "title_matrix": "نوار تیپ در هچیرود؛ بازبینی فاصله ردیف‌ها"
   }
 }
