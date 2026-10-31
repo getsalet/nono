@@ -18,23 +18,23 @@
   "_structural_repairs": [
     "invalid_slug_replaced_with_stable_system_slug"
   ],
-  "attempts": 7,
-  "generated_at": "2026-10-31T18:53:40Z",
-  "last_error": "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy",
+  "attempts": 8,
+  "generated_at": "2026-10-31T22:06:28Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption blue base band ambiguous",
   "failure_stage": "image",
-  "next_retry_at": "2026-10-31T18:53:41.017584Z",
+  "next_retry_at": "2026-11-01T22:06:28.477731Z",
   "_image_article_context": {
     "title": "نوار تیپ در رینه؛ بازرسی اتصالات",
     "meta_description": "راهنمای بازرسی اتصالات نوار تیپ ۲۰ سانتی‌متری پیش از آماده‌سازی مسیر و نصب؛ نکات هیدرولیکی، چک‌لیست اجرایی و پرسش‌های فنی",
     "summary": "چرا بازرسی اتصالات، نخستین گام آماده‌سازی مسیر است نوار تیپ یکی از فناوری‌های کارآمد آبیاری موضعی است که آب و مواد مغذی را مستقیماً به ناحیه‌ی ریشه می‌رساند. فشار کاری تأییدشده‌ی نوار بغل‌دوخت نوار تیپ با فاصله‌ی روزنه‌ی ۱۰ و ۲۰ سانتی‌متر در محدوده‌ی ۰٫۶ تا ۱ اتمسفر است و این عدد فقط برای همین مدل با پلاک مشخصاتی معتبر صدق می‌کند؛ به لوله‌های نخ‌دار، لوله‌های تاشو بدون نخ و سایر مدل‌ها تعمیم داده نمی‌شود. پیش از هرگونه آماده‌سازی مسیر آبیاری و شروع عملیات نصب، بررسی وضعیت اتصالات، واشرها، کلاهک انتهایی و اتصال‌دهنده‌ها گامی اجتناب‌ناپذیر است. در رینه، به دلیل نبود داده‌های محلی دقیق درباره‌ی کیفیت آب و شرایط شبکه‌ی آبیاری موجود، توصیه می‌شود بازرسی اولیه بر اساس استانداردهای فنی هیدرولیکی انجام گیرد و پیش از خرید نوار تیپ ۲۰ سانتی در رینه شرایط واقعی مزرعه مورد ارزیابی قرار گیرد. محدوده‌ی فشار کاری و اصول هیدرولیکی بازرسی در بررسی اتصالات، نخستین قدم تطبیق فشار کاری با مشخصات مدل نوار است. فشار تحمل یا فشار آزمون با فشار کاری تفاوت بنیادین دارد؛ بنابراین عدد بالاتر از ۱ اتمسفر روی برچسب به‌معنای فشار کاری نیست و افزایش فشار صرفاً برای تست نشتی باید با نظارت فنی و به‌صورت موقت انجام شود. افت فشار طولی در خطوط بلند نیازمند محاسبه‌ی هیدرولیکی است و استفاده از رگولاتور یا پمپ با کنترل "
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
-  "_generation_stage": "generation_api",
-  "_image_generation_round": 0,
+  "_generation_stage": "local_vision_qa",
+  "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
-    "slot": "AGNES_API_KEY20",
-    "mode": "controlled_recovery",
+    "slot": "AGNES_API_KEY21",
+    "mode": "verified",
     "max_provider_requests": 1
   },
   "_image_provider_attempts": [
@@ -95,6 +95,22 @@
       "http_status": 503,
       "status": "provider_queue_full_deferred",
       "provider_code": "image_queue_full"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY21",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY21",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     }
   ],
   "_image_render": {
@@ -136,74 +152,82 @@
     {
       "sha256": "96c475e1145d9042d81f8f560eb61887e2d7c3b70781670a4fb605a7a0a899fd",
       "reason": "Product image rejected: Current hash-bound exact package caption review required; Core image condition not met: technical_evidence_match"
+    },
+    {
+      "sha256": "0ed5333b30cb1b37b808ddf19265122edeae04eea51fb60eb1751c570e92c4d2",
+      "reason": "Product image rejected: Image score below 90 or invalid; Current hash-bound exact package caption review required; Image score below 90 or invalid; Core image condition not met: technical_evidence_match"
+    },
+    {
+      "sha256": "e042d5ab2f0280177c26fd08ab1abe009beb31580b29bd58831ae5a1db074977",
+      "reason": "Product image rejected: Caption blue base band ambiguous"
     }
   ],
-  "_image_qa_feedback": "Show this exact installed evidence: one closed ribbed compression union installed inline between two continuous black irrigation pipes; the joined ends and seal are visible, no open pipe end.",
+  "_image_qa_feedback": "Product image rejected: Caption blue base band ambiguous",
   "_image_caption_render": {
     "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
-    "source_sha256": "ac1d937961802c1779fe77544aa70fc0569b4289063fd6d0541fb36f9988bc6d",
+    "source_sha256": "0d5d0875b7514419ae3d4ac309b9a3bfc377ef335c2d83599018d9f1b8d31045",
     "captions": {
       "english": {
         "text": "Drip Irrigation Tape",
         "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
-        "point_size": 16.0,
+        "point_size": 16.5,
         "quad": [
           [
-            291.64,
-            641.0007362632368
+            264.0,
+            645.0116727809805
           ],
           [
-            454.36,
-            627.9109575966913
+            423.0,
+            631.9213873933966
           ],
           [
-            454.36,
-            653.5309575966913
+            423.0,
+            656.7013873933965
           ],
           [
-            291.64,
-            666.6207362632368
+            264.0,
+            669.7916727809804
           ]
         ],
-        "cylinder_sag_px": 6.956619641604088
+        "cylinder_sag_px": 5.552027112497893
       },
       "persian": {
         "text": "آبگسترفراپارسیان",
         "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
-        "point_size": 12.5,
+        "point_size": 12.75,
         "quad": [
           [
-            195.2,
-            632.3961278007545
+            168.0,
+            636.2540378293392
           ],
           [
-            284.8,
-            639.6038721992455
+            259.0,
+            643.7459621706608
           ],
           [
-            284.8,
-            665.2238721992455
+            259.0,
+            668.5259621706608
           ],
           [
-            195.2,
-            658.0161278007545
+            168.0,
+            661.0340378293391
           ]
         ],
-        "cylinder_sag_px": 2.0739728322912407
+        "cylinder_sag_px": 1.8186122589531684
       }
     },
     "cylinder_curve": {
       "method": "visible-blue-band-front-ring-v1",
-      "coefficient": -0.0010473287879263935,
-      "center_x": 325.5,
+      "coefficient": -0.0008784505537752293,
+      "center_x": 297.0,
       "sample_y": [
-        695,
-        702,
-        691
+        698,
+        704,
+        695
       ],
-      "sample_span": 185.4
+      "sample_span": 184.79999999999998
     },
-    "sha256": "96c475e1145d9042d81f8f560eb61887e2d7c3b70781670a4fb605a7a0a899fd"
+    "sha256": "0ed5333b30cb1b37b808ddf19265122edeae04eea51fb60eb1751c570e92c4d2"
   },
   "image_retry_at": 1793472821.017584,
   "post": {
@@ -223,7 +247,7 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy"
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption blue base band ambiguous"
     ],
     "words": 985,
     "links": [
