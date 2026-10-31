@@ -18,11 +18,11 @@
   "_structural_repairs": [
     "invalid_slug_replaced_with_stable_system_slug"
   ],
-  "attempts": 6,
-  "generated_at": "2026-10-30T14:14:22Z",
-  "last_error": "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError",
+  "attempts": 7,
+  "generated_at": "2026-10-31T14:48:37Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Current hash-bound exact package caption review required; Image score below 90 or invalid; Core image condition not met: technical_evidence_match; Closed package required: protruding strip not independently cleared",
   "failure_stage": "image",
-  "next_retry_at": "2026-10-31T14:14:22.069115Z",
+  "next_retry_at": "2026-11-01T14:48:37.492270Z",
   "_image_article_context": {
     "title": "نوار تیپ در چوبر؛ کنترل فشار آب",
     "meta_description": "بررسی فنی کنترل فشار آب در نوار تیپ با مقایسه پیشنهادات فروشندگان و راهنمای انتخاب صحیح سیستم آبیاری قطره‌ای در چوبر",
@@ -30,16 +30,24 @@
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
   "_generation_stage": "local_vision_qa",
-  "_image_generation_round": 0,
+  "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
-    "slot": "AGNES_API_KEY21",
-    "mode": "controlled_recovery",
+    "slot": "AGNES_API_KEY20",
+    "mode": "verified",
     "max_provider_requests": 1
   },
   "_image_provider_attempts": [
     {
       "requested_secret_slot": "AGNES_API_KEY21",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY20",
       "attempt": 1,
       "route": "audited_image_pool",
       "timeout_seconds": 600,
@@ -68,70 +76,81 @@
   },
   "_image_caption_render": {
     "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
-    "source_sha256": "59f5e790135ca1d6febf77bedc9de14d1e3e74dfd56f34a757c74a6f835fcb00",
+    "source_sha256": "dc60950f0f8ca19ea70e293ba3e080ac58860bfa8cf25917c7af1a70b42f7599",
     "captions": {
       "english": {
         "text": "Drip Irrigation Tape",
         "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
-        "point_size": 17.75,
+        "point_size": 18.0,
         "quad": [
           [
-            301.8,
-            630.0451827242525
+            306.44,
+            639.722818139024
           ],
           [
-            473.2,
-            616.948172757475
+            481.56,
+            624.8295120037659
           ],
           [
-            473.2,
-            642.948172757475
+            481.56,
+            650.8295120037659
           ],
           [
-            301.8,
-            656.0451827242525
+            306.44,
+            665.722818139024
           ]
         ],
-        "cylinder_sag_px": 6.30162649117843
+        "cylinder_sag_px": 6.146165949372947
       },
       "persian": {
         "text": "آبگسترفراپارسیان",
         "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
-        "point_size": 13.75,
+        "point_size": 14.5,
         "quad": [
           [
-            196.0,
-            621.2558139534884
+            196.2,
+            629.59460222815
           ],
           [
-            294.0,
-            628.7441860465116
+            299.8,
+            638.40539777185
           ],
           [
-            294.0,
-            654.7441860465116
+            299.8,
+            664.40539777185
           ],
           [
-            196.0,
-            647.2558139534884
+            196.2,
+            655.59460222815
           ]
         ],
-        "cylinder_sag_px": 2.069724729704102
+        "cylinder_sag_px": 2.129132230429309
       }
     },
     "cylinder_curve": {
       "method": "visible-blue-band-front-ring-v1",
-      "coefficient": -0.0008620261264906713,
-      "center_x": 333.5,
+      "coefficient": -0.0008027645321629972,
+      "center_x": 334.5,
       "sample_y": [
-        689,
-        697,
-        688
+        699,
+        707,
+        698
       ],
-      "sample_span": 198.6
+      "sample_span": 205.79999999999998
     },
-    "sha256": "bffbf6be5e431445c6d06f9afb35c9567330cebd95c591b109cf5c0e5fc33729"
+    "sha256": "8a300593d38cf388283a5a92951add8d8fccc5ef5c05f8cfd9380469927b3e40"
   },
+  "_image_rejections": [
+    {
+      "sha256": "bffbf6be5e431445c6d06f9afb35c9567330cebd95c591b109cf5c0e5fc33729",
+      "reason": "Product image rejected: Current hash-bound exact package caption review required; Core image condition not met: technical_evidence_match"
+    },
+    {
+      "sha256": "8a300593d38cf388283a5a92951add8d8fccc5ef5c05f8cfd9380469927b3e40",
+      "reason": "Product image rejected: Image score below 90 or invalid; Current hash-bound exact package caption review required; Image score below 90 or invalid; Core image condition not met: technical_evidence_match; Closed package required: protruding strip not independently cleared"
+    }
+  ],
+  "_image_qa_feedback": "Show this exact installed evidence: one small pressure gauge on a short normal threaded port of a continuous irrigation header, and a separate thin flattened drip-tape lateral connected by a normal small take-off fitting; gauge face angled away so no readable scale or pressure rating is invented. Use normal connected header fittings and a thin flattened drip-tape lateral; 20 cm describes emitter spacing, never line width or diameter. Remove every protruding white ribbon, strap or tape tail; keep the required AFP package closed and separate from the installed black tape.",
   "post": {
     "title": "نوار تیپ در چوبر؛ کنترل فشار آب",
     "slug": "navar-tip-chobar-control-feshar-ab",
@@ -149,9 +168,9 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError"
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Current hash-bound exact package caption review required; Image score below 90 or invalid; Core image condition not met: technical_evidence_match; Closed package required: protruding strip not independently cleared"
     ],
-    "words": 1024,
+    "words": 930,
     "links": [
       "https://navar-abyari.ir/",
       "https://navar-abyari.ir/gilan/%da%86%d9%88%d8%a8%d8%b1-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm/"
