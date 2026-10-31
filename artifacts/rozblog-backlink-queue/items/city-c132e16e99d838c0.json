@@ -25,7 +25,7 @@
   "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
-    "slot": "AGNES_API_KEY21",
+    "slot": "AGNES_API_KEY20",
     "mode": "verified",
     "max_provider_requests": 1
   },
@@ -77,6 +77,22 @@
       "timeout_seconds": 600,
       "http_status": 200,
       "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY20",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY20",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     }
   ],
   "_image_render": {
@@ -118,79 +134,87 @@
     {
       "sha256": "bbea0f86c547c694d0c66c6a36127858d859c875fbba99f7fd468c735e0ae3da",
       "reason": "Product image rejected: New caption would overlap original logo"
+    },
+    {
+      "sha256": "82a214a2140dfe6a8fe965c81f9c6ecf86282bebf7e01c9c4d61f14f0970684f",
+      "reason": "Product image rejected: Image score below 90 or invalid; Image product family mismatch; Vision flag not cleared: wrong_product_present; Current hash-bound exact package caption review required; Image score below 90 or invalid; Image product family mismatch; Vision flag not cleared: wrong_product_present; Core image condition not met: technical_evidence_match; Closed package required: protruding st"
+    },
+    {
+      "sha256": "e4c0b1c95d73ccde20a5fba0cbbf28d73a998506992984717e2399b6fc2af756",
+      "reason": "Product image rejected: Caption white sleeve has insufficient room"
     }
   ],
-  "_image_qa_feedback": "Product image rejected: New caption would overlap original logo",
+  "_image_qa_feedback": "Product image rejected: Caption white sleeve has insufficient room",
   "failure_stage": "image",
-  "attempts": 3,
-  "generated_at": "2026-10-30T23:09:25Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo",
-  "next_retry_at": "2026-10-31T03:09:25.723087Z",
+  "attempts": 4,
+  "generated_at": "2026-10-31T08:42:04Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption white sleeve has insufficient room",
+  "next_retry_at": "2026-10-31T16:42:04.493204Z",
   "_image_caption_render": {
     "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
-    "source_sha256": "c43a6730d2795cd32a16f9cb3050f163f570b6ddfb24099faad60f8f00858e6a",
+    "source_sha256": "d82ebf2dbd61b68826538e4ea077efd36f7830df92b2b79ad347c00611456e49",
     "captions": {
       "english": {
         "text": "Drip Irrigation Tape",
         "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
-        "point_size": 15.5,
+        "point_size": 17.0,
         "quad": [
           [
-            289.84,
-            640.9616809495928
+            293.52,
+            637.5853094910591
           ],
           [
-            440.16,
-            627.8795922712513
+            457.48,
+            626.5343603851444
           ],
           [
-            440.16,
-            651.8195922712514
+            457.48,
+            652.1543603851444
           ],
           [
-            289.84,
-            664.9016809495929
+            293.52,
+            663.2053094910591
           ]
         ],
-        "cylinder_sag_px": 5.784626775880419
+        "cylinder_sag_px": 5.873457305734898
       },
       "persian": {
         "text": "آبگسترفراپارسیان",
         "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
-        "point_size": 12.25,
+        "point_size": 13.0,
         "quad": [
           [
-            196.6,
-            632.2229733326236
+            193.8,
+            629.8861072902339
           ],
           [
-            283.4,
-            639.7770266673764
+            286.2,
+            636.1138927097661
           ],
           [
-            283.4,
-            663.7170266673763
+            286.2,
+            661.7338927097661
           ],
           [
-            196.6,
-            656.1629733326236
+            193.8,
+            655.5061072902339
           ]
         ],
-        "cylinder_sag_px": 1.945948447406173
+        "cylinder_sag_px": 1.84833962803912
       }
     },
     "cylinder_curve": {
       "method": "visible-blue-band-front-ring-v1",
-      "coefficient": -0.0010283780934898523,
-      "center_x": 319.0,
+      "coefficient": -0.000873506440472174,
+      "center_x": 326.5,
       "sample_y": [
-        690,
-        697,
-        688
+        694,
+        701,
+        692
       ],
-      "sample_span": 176.4
+      "sample_span": 191.4
     },
-    "sha256": "47397734322392e1b043b889f06890db8dbdc2a8c1553847eee4f1d8a4f9b150"
+    "sha256": "82a214a2140dfe6a8fe965c81f9c6ecf86282bebf7e01c9c4d61f14f0970684f"
   },
   "post": {
     "title": "نوار تیپ در مرزیکلا؛ بازبینی آبیاری",
@@ -209,7 +233,7 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo"
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption white sleeve has insufficient room"
     ],
     "words": 780,
     "links": [
