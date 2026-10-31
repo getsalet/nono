@@ -18,11 +18,11 @@
   "_structural_repairs": [
     "invalid_slug_replaced_with_stable_system_slug"
   ],
-  "attempts": 3,
-  "generated_at": "2026-10-30T22:54:49Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption blue base band ambiguous",
+  "attempts": 4,
+  "generated_at": "2026-10-31T07:49:22Z",
+  "last_error": "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError",
   "failure_stage": "image",
-  "next_retry_at": "2026-10-31T02:54:49.483357Z",
+  "next_retry_at": "2026-10-31T15:49:22.027461Z",
   "_image_article_context": {
     "title": "نوار تیپ در چابکسر؛ هزینه‌های پیش از خرید",
     "meta_description": "هزینه‌های پنهان خرید نوار تیپ در چابکسر: خطاهای رایج انتخاب ضخامت، فشار کاری و فاصله روزنه که پیش از خرید باید شناسایی شوند.",
@@ -38,6 +38,22 @@
     "max_provider_requests": 1
   },
   "_image_provider_attempts": [
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
     {
       "requested_secret_slot": "AGNES_API_KEY18",
       "attempt": 1,
@@ -76,69 +92,69 @@
   },
   "_image_caption_render": {
     "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
-    "source_sha256": "9362acbc0e4150d5db6952b85d2c33bf28a03e6f7b9f5b9493073289c833cf66",
+    "source_sha256": "a03c4fec6d4e9413798c91d257d9284b0023b21172de2696e10760c3a737ef0a",
     "captions": {
       "english": {
         "text": "Drip Irrigation Tape",
         "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
-        "point_size": 17.75,
+        "point_size": 17.0,
         "quad": [
           [
-            297.8,
-            643.0410655737705
+            274.52,
+            641.3780322421303
           ],
           [
-            469.2,
-            629.9753278688524
+            438.48,
+            630.1130989267592
           ],
           [
-            469.2,
-            655.9753278688524
+            438.48,
+            656.1130989267592
           ],
           [
-            297.8,
-            669.0410655737705
+            274.52,
+            667.3780322421303
           ]
         ],
-        "cylinder_sag_px": 4.761180099017938
+        "cylinder_sag_px": 5.910455370524198
       },
       "persian": {
         "text": "آبگسترفراپارسیان",
         "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
-        "point_size": 13.75,
+        "point_size": 13.25,
         "quad": [
           [
-            193.0,
-            634.2647540983606
+            172.6,
+            632.7777179038125
           ],
           [
-            291.0,
-            641.7352459016394
+            266.4,
+            639.2222820961875
           ],
           [
-            291.0,
-            667.7352459016394
+            266.4,
+            665.2222820961875
           ],
           [
-            193.0,
-            660.2647540983606
+            172.6,
+            658.7777179038125
           ]
         ],
-        "cylinder_sag_px": 1.563775988200413
+        "cylinder_sag_px": 1.9417305046829199
       }
     },
     "cylinder_curve": {
       "method": "visible-blue-band-front-ring-v1",
-      "coefficient": -0.0006513019526032541,
-      "center_x": 328.5,
+      "coefficient": -0.0008790088296436939,
+      "center_x": 304.0,
       "sample_y": [
-        683,
-        691,
-        686
+        698,
+        705,
+        696
       ],
-      "sample_span": 199.79999999999998
+      "sample_span": 190.79999999999998
     },
-    "sha256": "3571ba522a9b4e9c1317cd94e15c0b49ca5516f8f8bbe8e38022607883b067ad"
+    "sha256": "38899f23af625ff7aa2e6252e7b6218c1a05222fbbee6fbb4c3e5c5b9f4c4100"
   },
   "_image_rejections": [
     {
@@ -148,9 +164,13 @@
     {
       "sha256": "d8abfa6a2568b99d1c618d8a072152b0d9579c8bd5afb4ed74691329d5173f2a",
       "reason": "Product image rejected: Caption blue base band ambiguous"
+    },
+    {
+      "sha256": "6b7790651cf4827b54ab8975795e9186dc7a5b2cde21b5afb704dc5fa2b55a13",
+      "reason": "Product image rejected: New caption would overlap original logo"
     }
   ],
-  "_image_qa_feedback": "Product image rejected: Caption blue base band ambiguous",
+  "_image_qa_feedback": "Product image rejected: New caption would overlap original logo",
   "post": {
     "title": "نوار تیپ در چابکسر؛ هزینه‌های پیش از خرید",
     "slug": "navar-tip-chabkasr-hazineha-pish-kharid",
@@ -168,12 +188,12 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption blue base band ambiguous"
+      "generation/source/validation failed: AgnesProviderError [stage=image]; AgnesProviderError"
     ],
-    "words": 1094,
+    "words": 982,
     "links": [
-      "https://navar-abyari.ir/gilan/%da%86%d8%a7%d8%a8%da%a9%d8%b3%d8%b1-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm/",
-      "https://navar-abyari.ir/"
+      "https://navar-abyari.ir/",
+      "https://navar-abyari.ir/gilan/%da%86%d8%a7%d8%a8%da%a9%d8%b3%d8%b1-%da%af%db%8c%d9%84%d8%a7%d9%86-navar-tip-20cm/"
     ],
     "checked_against": "Roya + FarsiBlog + RozBlog + LoxBlog + Blogsky corpus",
     "title_matrix": "نوار تیپ در چابکسر؛ هزینه‌های پیش از خرید"
