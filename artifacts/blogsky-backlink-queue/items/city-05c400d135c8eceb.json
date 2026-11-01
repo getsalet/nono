@@ -56,14 +56,30 @@
       "timeout_seconds": 600,
       "http_status": 200,
       "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY25",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY25",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     }
   ],
   "image_retry_at": 1793482326.9834788,
   "failure_stage": "image",
-  "attempts": 2,
-  "generated_at": "2026-11-01T18:35:01Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared",
-  "next_retry_at": "2026-11-01T20:35:01.448169Z",
+  "attempts": 3,
+  "generated_at": "2026-11-01T22:22:16Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Current hash-bound exact package caption review required; Image score below 90 or invalid; Core image condition not met: product_integrated; Closed package required: protruding strip not independently cleared",
+  "next_retry_at": "2026-11-02T02:22:16.855548Z",
   "_image_render": {
     "connection": {
       "endpoint": "https://apihub.agnes-ai.com/v1/images/generations",
@@ -91,74 +107,82 @@
     {
       "sha256": "4330926133425092ae8de517b15a9347ab5ff2a44bc673a45aa89aaa11beccaa",
       "reason": "Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared"
+    },
+    {
+      "sha256": "42fff8d7f6aa15159357db71527150361c42d7c674e1e83837c2ccd73ee5ea63",
+      "reason": "Product image rejected: Current hash-bound exact package caption review required; Core image condition not met: product_integrated; Closed package required: protruding strip not independently cleared"
+    },
+    {
+      "sha256": "1d25c14ce2af50b727ae966230ab5f2e9956e58fad8fa33db8456ecee4c16b17",
+      "reason": "Product image rejected: Image score below 90 or invalid; Current hash-bound exact package caption review required; Image score below 90 or invalid; Core image condition not met: product_integrated; Closed package required: protruding strip not independently cleared"
     }
   ],
   "_image_qa_feedback": "Remove every protruding white ribbon, strap or tape tail; keep the required AFP package closed and separate from the installed black tape.",
   "_image_caption_render": {
     "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
-    "source_sha256": "c001d1593ea1bf46b50b5d5143a34aef974c337e07efaab41295f903ca2557a8",
+    "source_sha256": "878a561e66bed5fd3dcc5c96faf7759677a5039b3814f76539269ed035ec8147",
     "captions": {
       "english": {
         "text": "Drip Irrigation Tape",
         "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
-        "point_size": 17.25,
+        "point_size": 15.5,
         "quad": [
           [
-            298.28,
-            625.986316839412
+            231.96,
+            608.5990303618615
           ],
           [
-            464.72,
-            612.9289440131836
+            381.0400000000001,
+            597.4801369789138
           ],
           [
-            464.72,
-            638.9289440131836
+            381.0400000000001,
+            621.0001369789138
           ],
           [
-            298.28,
-            651.986316839412
+            231.96,
+            632.1190303618615
           ]
         ],
-        "cylinder_sag_px": 5.69188313834358
+        "cylinder_sag_px": 0.15294925234608078
       },
       "persian": {
         "text": "آبگسترفراپارسیان",
         "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
-        "point_size": 13.5,
+        "point_size": 11.75,
         "quad": [
           [
-            193.2,
-            617.2108200702546
+            138.0,
+            600.867497168743
           ],
           [
-            289.8,
-            624.7891799297454
+            222.0,
+            607.132502831257
           ],
           [
-            289.8,
-            650.7891799297454
+            222.0,
+            630.652502831257
           ],
           [
-            193.2,
-            643.2108200702546
+            138.0,
+            624.3874971687429
           ]
         ],
-        "cylinder_sag_px": 1.9036287923854853
+        "cylinder_sag_px": 0.04861086998576397
       }
     },
     "cylinder_curve": {
       "method": "visible-blue-band-front-ring-v1",
-      "coefficient": -0.0008262277744728669,
-      "center_x": 327.0,
+      "coefficient": -2.7557182531612228e-05,
+      "center_x": 337.5,
       "sample_y": [
-        682,
-        689,
-        680
+        663,
+        660,
+        656
       ],
-      "sample_span": 196.79999999999998
+      "sample_span": 269.4
     },
-    "sha256": "4330926133425092ae8de517b15a9347ab5ff2a44bc673a45aa89aaa11beccaa"
+    "sha256": "1d25c14ce2af50b727ae966230ab5f2e9956e58fad8fa33db8456ecee4c16b17"
   },
   "post": {
     "title": "نوار تیپ در نجف‌آباد؛ پیگیری گرفتگی مسیر",
@@ -178,7 +202,7 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Current hash-bound exact package caption review required; Closed package required: protruding strip not independently cleared"
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Image score below 90 or invalid; Current hash-bound exact package caption review required; Image score below 90 or invalid; Core image condition not met: product_integrated; Closed package required: protruding strip not independently cleared"
     ],
     "words": 796,
     "links": [
