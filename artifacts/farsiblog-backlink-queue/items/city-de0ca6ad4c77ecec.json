@@ -48,6 +48,22 @@
       "timeout_seconds": 600,
       "http_status": 200,
       "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
     }
   ],
   "_image_render": {
@@ -77,14 +93,88 @@
     {
       "sha256": "262c9e159aa76b5e807ac12a1038b4ad84452e4211a7da10cd2e3d35181ff1df",
       "reason": "Product image rejected: New caption would overlap original logo"
+    },
+    {
+      "sha256": "28213bfeed205cf1eab1eeca5f98d96bd096c1a8834e55bdc8ff6090b315ed7b",
+      "reason": "Product image rejected: Current hash-bound exact package caption review required; Core image condition not met: packaging_not_used_as_hardware"
+    },
+    {
+      "sha256": "6b964ed3c8fa6b17a9d20a9e6dc25b94b838e6f5e911ff47aeb9e10a41cacbf2",
+      "reason": "Product image rejected: Caption blue base band ambiguous"
     }
   ],
-  "_image_qa_feedback": "Product image rejected: New caption would overlap original logo",
+  "_image_qa_feedback": "Product image rejected: Caption blue base band ambiguous",
   "failure_stage": "image",
-  "attempts": 1,
-  "generated_at": "2026-11-02T03:00:16Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo",
-  "next_retry_at": "2026-11-02T04:00:16.614399Z",
+  "attempts": 2,
+  "generated_at": "2026-11-02T10:10:00Z",
+  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption blue base band ambiguous",
+  "next_retry_at": "2026-11-02T12:10:00.926624Z",
+  "_image_caption_render": {
+    "policy": "afp-exact-bilingual-captions-v2-cylindrical-faraparsian",
+    "source_sha256": "d346492bc6edd945ab2e8b67208a78bf4a792c78229d206fd13bffad613519e0",
+    "captions": {
+      "english": {
+        "text": "Drip Irrigation Tape",
+        "font": "afp-a4c98c43b4fe681cc0b49ecddc820cfc6e79074f4b693b8a6ccc38dadcda24e9.ttf",
+        "point_size": 17.5,
+        "quad": [
+          [
+            301.08,
+            625.0201623571858
+          ],
+          [
+            479.92,
+            611.9539807576668
+          ],
+          [
+            479.92,
+            637.9539807576668
+          ],
+          [
+            301.08,
+            651.0201623571858
+          ]
+        ],
+        "cylinder_sag_px": 6.671556533967372
+      },
+      "persian": {
+        "text": "آبگسترفراپارسیان",
+        "font": "afp-c270782ee478c685f95509e724125729e1284c82ebfbe414cc67926f29449e1d.ttf",
+        "point_size": 14.75,
+        "quad": [
+          [
+            188.0,
+            616.1643114852676
+          ],
+          [
+            293.0,
+            623.8356885147324
+          ],
+          [
+            293.0,
+            649.8356885147324
+          ],
+          [
+            188.0,
+            642.1643114852676
+          ]
+        ],
+        "cylinder_sag_px": 2.2956184509531625
+      }
+    },
+    "cylinder_curve": {
+      "method": "visible-blue-band-front-ring-v1",
+      "coefficient": -0.0008328774425226894,
+      "center_x": 332.0,
+      "sample_y": [
+        684,
+        692,
+        681
+      ],
+      "sample_span": 213.6
+    },
+    "sha256": "28213bfeed205cf1eab1eeca5f98d96bd096c1a8834e55bdc8ff6090b315ed7b"
+  },
   "post": {
     "title": "نوار تیپ در اکند؛ بررسی فشار و مشخصات",
     "slug": "navar-tip-5fe787d612689d85ea3e",
@@ -103,7 +193,14 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: New caption would overlap original logo"
-    ]
+      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Caption blue base band ambiguous"
+    ],
+    "words": 900,
+    "links": [
+      "https://navar-abyari.ir/mazandaran/%d8%a7%da%a9%d9%86%d8%af-%d9%85%d8%a7%d8%b2%d9%86%d8%af%d8%b1%d8%a7%d9%86-navar-tip-20cm/",
+      "https://navar-abyari.ir/"
+    ],
+    "checked_against": "Roya + FarsiBlog + RozBlog + LoxBlog + Blogsky corpus",
+    "title_matrix": "نوار تیپ در اکند؛ بررسی فشار و مشخصات"
   }
 }
