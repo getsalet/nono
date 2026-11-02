@@ -111,7 +111,14 @@ def exception_detail(exc):
     text=str(exc)
     allowed=('Product image rejected:','Matching product reference','Image dimensions unacceptable',
              'Product title/family conflict:','Unknown product family:', 'Vision credential required',
-             'Approved bare hose identity reference missing', 'originality ')
+             'Approved bare hose identity reference missing', 'originality ',
+             # Fixed internal image-stage diagnostics; they never contain secrets or raw payloads.
+             'Image preflight rejected:','Image provider HTTP ','Image provider transport/format failure',
+             'Image provider returned','Image result requires HTTPS','Generated image ',
+             'Asset-only repository operation failed','Immutable asset commit not available',
+             'Image checkpoint push failed','Image queue recovery checkpoint failed',
+             'No audited healthy credential','At least one audited image-capable credential required',
+             'Approved image credential binding unavailable','Image production explicitly paused')
     return text[:900] if isinstance(exc,RuntimeError) and text.startswith(allowed) else type(exc).__name__
 
 def recover_stale_image_deferrals(q):
