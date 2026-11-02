@@ -623,6 +623,49 @@ def preflight_repair_draft(record, item, state):
     from blog_draft_preflight import clean
     return clean(post)
 
+LINK_DEDUPE_POLICY = 'roya-duplicate-link-unwrap-v1'
+LINK_DEDUPE_ERRORS = ('each destination URL may be linked at most once', 'homepage may be linked at most once',
+                      'Exactly two distinct approved contextual destinations, each once')
+
+def dedupe_repeated_links(obj):
+    """Unwrap repeated anchors to an already-linked destination, keeping their visible text.
+
+    Not a QA pass: unapproved, missing or wrong links still fail the unchanged qa().
+    """
+    seen = set()
+    def repl(m):
+        key = urllib.parse.urldefrag(html_lib.unescape(m.group(1)))[0].rstrip('/')
+        if key in seen:
+            return m.group(2)
+        seen.add(key)
+        return m.group(0)
+    if isinstance(obj, dict) and isinstance(obj.get('html'), str):
+        obj['html'] = re.sub(r'<a\s[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', repl, obj['html'], flags=re.I | re.S)
+    return obj
+
+
+def link_dedupe_draft(record, item, state):
+    """One bounded recovery for drafts that failed only on repeated links."""
+    if (item.get('status') != 'failed' or item.get('link_dedupe_recovery') or record.get('link_dedupe_recovery')
+        or record.get('key') != item.get('key') or record.get('status') != 'failed'
+        or any(x.get('key') == item.get('key') for x in state.get('published', []))):
+        return None
+    for row in (item, record):
+        if any(row.get(k) for k in ('published', 'published_url', 'pid', 'native_id', 'intent')):
+            return None
+    qa_report = record.get('qa', {})
+    errors = qa_report.get('errors') if isinstance(qa_report, dict) else None
+    if not isinstance(errors, list) or not errors:
+        return None
+    def ok(e):
+        return isinstance(e, str) and (e in LINK_DEDUPE_ERRORS or re.fullmatch(r'\d+ links > \d+', e))
+    if not any(isinstance(e, str) and e in LINK_DEDUPE_ERRORS[:1] for e in errors) or not all(ok(e) for e in errors):
+        return None
+    post = record.get('post')
+    if not isinstance(post, dict) or not all(isinstance(post.get(k), str) and post[k].strip() for k in ('title', 'slug', 'html')):
+        return None
+    return dedupe_repeated_links(dict(post))
+
 def pick(queue, state, count):
     from blog_image_draft_recovery import capacity_retry_due,recover
     pending=[]
@@ -640,6 +683,9 @@ def pick(queue, state, count):
             path=ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json')
             eligible=domain_repair_draft(load_json(path,{}),item) is not None
             if not eligible:eligible=preflight_repair_draft(load_json(path,{}),item,state) is not None
+        if not eligible and item.get('status')=='failed':
+            path=ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json')
+            eligible=link_dedupe_draft(load_json(path,{}),item,state) is not None
         if eligible:pending.append(item)
     if ONLY:
         pending = [i for i in pending if i['key'] == ONLY]
@@ -743,6 +789,10 @@ def main():
             saved_record=load_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'),{})
             image_retry_draft=domain_repair_draft(saved_record,item)
             if image_retry_draft is not None:item['text_policy_retry']=DOMAIN_REPAIR_POLICY
+        if image_retry_draft is None and not ready_handoff:
+            image_retry_draft = link_dedupe_draft(saved_record, item, state)
+            if image_retry_draft is not None:
+                item['link_dedupe_recovery'] = LINK_DEDUPE_POLICY
         if image_retry_draft is None and item.get('failure_stage') == 'text_validation':
             saved_record = load_json(ITEMS / (re.sub(r'[^A-Za-z0-9._-]+', '_', item['key']) + '.json'), {})
             image_retry_draft = preflight_repair_draft(saved_record, item, state)
@@ -774,7 +824,7 @@ def main():
                     stage='generation'
                     obj = agnes(repair_prompt(item, links, obj, errors),temperature=0.1)
                 obj['title'] = item['assigned_title']
-                obj = resolve_link_tokens(obj, links)
+                obj = dedupe_repeated_links(resolve_link_tokens(obj, links))
                 from blog_draft_preflight import active,check
                 if active(ROOT):
                     stage='text_validation'
@@ -801,7 +851,7 @@ def main():
                 continue
             # Titles are owned by the approved matrix, not an AI spelling choice.
             obj['title'] = item['assigned_title']
-            obj = resolve_link_tokens(obj, links)
+            obj = dedupe_repeated_links(resolve_link_tokens(obj, links))
             obj = inject_image(item, obj, image_url)
             stage='validation'
             errors, info = qa(item, obj, links)
