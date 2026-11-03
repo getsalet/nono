@@ -9,7 +9,7 @@ on:
         description: Exact approved uncertain item; verify existing article only, never submit
         type: string
         required: true
-        default: 'city-2c396c586e4fb71a'
+        default: 'city-9de7467b26733d14'
 permissions:
   contents: write
 concurrency:
@@ -42,7 +42,7 @@ jobs:
       - name: Read existing article, verify and recover receipt without submission
         if: steps.control.outputs.proceed == '1' && steps.release.outputs.proceed == '1'
         env:
-          RECOVERY_TARGET: ${{ inputs.target || 'city-2c396c586e4fb71a' }}
+          RECOVERY_TARGET: ${{ inputs.target || 'city-9de7467b26733d14' }}
           LOXBLOG_USERNAME: ${{ secrets.LOXBLOG_USERNAME }}
           LOXBLOG_PASSWORD: ${{ secrets.LOXBLOG_PASSWORD }}
           AGNES_API_BASE: https://apihub.agnes-ai.com/v1
