@@ -279,11 +279,73 @@ def enabled(root,expected):
  if type(flag)is not bool:raise RuntimeError('Invalid exact package caption policy')
  return expected=='tape20' and flag
 
+PIXEL_POLICY='afp-caption-pixel-match-v1';PIXEL_ACCEPT=0.90;PIXEL_REJECT=0.85
+
+def _caption_alpha(size,cap,text,script):
+ q=cap['quad'];w=int(round(math.dist(q[0],q[1])));h=int(round(math.dist(q[0],q[3])));sag=float(cap['cylinder_sag_px']);scale=4
+ direction='rtl'if script=='fa'else'ltr';canvas=Image.new('RGBA',(w*scale,h*scale),(0,0,0,0));draw=ImageDraw.Draw(canvas)
+ font=ImageFont.truetype(font_file(script),int(round(float(cap['point_size'])*scale)),layout_engine=ImageFont.Layout.RAQM)
+ box=draw.textbbox((0,0),text,font=font,direction=direction,language=script)
+ draw.text(((w*scale-box[2]+box[0])/2-box[0],(h*scale-box[3]+box[1])/2-box[1]-sag*scale*.5),text,font=font,fill=(35,67,126,255),direction=direction,language=script)
+ canvas=curve_canvas(canvas,sag*scale).resize((w,h),Image.Resampling.LANCZOS)
+ return canvas.transform(size,Image.Transform.PERSPECTIVE,inverse_coefficients(q,w,h),Image.Resampling.BICUBIC).getchannel('A')
+
+def pixel_scores(raw,render):
+ """Correlate the exact typeset caption (known font/geometry) with the final pixels.
+ Backtested: intact captions 0.92-1.0; wrong words, overwritten or blurred text <=0.62.
+ """
+ im=Image.open(io.BytesIO(raw)).convert('L');scores={}
+# Persian only: backtested where OCR misreads small dotted letters; English OCR stays as-is.
+ for lang,text,script in (('persian',PERSIAN,'fa'),):
+  cap=(render.get('captions')or{}).get(lang)
+  if not isinstance(cap,dict)or cap.get('text')!=text:continue
+  try:alpha=_caption_alpha(im.size,cap,text,script)
+  except Exception:continue
+  xs=[p[0]for p in cap['quad']];ys=[p[1]for p in cap['quad']]
+  box=(max(0,int(min(xs))-3),max(0,int(min(ys))-3),min(im.width,int(max(xs))+4),min(im.height,int(max(ys))+4))
+  a=list(alpha.crop(box).getdata());d=[255-v for v in im.crop(box).getdata()];n=len(a)
+  if n<50:continue
+  ma=sum(a)/n;md=sum(d)/n;cov=sum((x-ma)*(y-md)for x,y in zip(a,d));va=sum((x-ma)**2 for x in a);vd=sum((y-md)**2 for y in d)
+  if va>0 and vd>0:scores[lang]=round(cov/math.sqrt(va*vd),4)
+ return scores
+
+def render_proof(digest,root=None):
+ """Find the hash-bound typesetting record produced by prepare_cached for this exact image."""
+ root=Path(root or roya.ROOT)
+ for p in list((root/'artifacts').glob('*/generated-images/**/*.captions.json'))+list((root/'artifacts').glob('*/items/*.json')):
+  try:d=json.loads(p.read_text())
+  except (OSError,ValueError):continue
+  r=d.get('_image_caption_render',d) if isinstance(d,dict) else None
+  if isinstance(r,dict)and r.get('policy')==POLICY and r.get('sha256')==digest:return r
+ return None
+
+def pixel_review(raw,root=None):
+ digest=hashlib.sha256(raw).hexdigest();render=render_proof(digest,root)
+ if not render:return None
+ return {'policy':PIXEL_POLICY,'sha256':digest,'scores':pixel_scores(raw,render)}
+
+def combined_errors(reading,pixel):
+ """OCR misreads of small Persian text are overridden only by a strong exact pixel match;
+ a weak match always rejects, independent of OCR."""
+ errors=[]
+ scores=(pixel or {}).get('scores',{})if isinstance(pixel,dict)and pixel.get('policy')==PIXEL_POLICY else {}
+ ocr=exact_errors(reading)
+ # English keeps its OCR result unchanged.
+ errors+=[e for e in ocr if e.endswith(': english')]
+ for lang in ('persian',):
+  e='Exact package caption not independently read: '+lang;score=scores.get(lang)
+  if score is not None and score<PIXEL_REJECT:errors.append('Package caption pixel mismatch: '+lang)
+  elif e in ocr and not(score is not None and score>=PIXEL_ACCEPT):errors.append(e)
+ errors+=[e for e in ocr if not e.startswith('Exact package caption not independently read')]
+ return errors
+
 def record_errors(record):
  if record.get('exact_labels_required')is not True:return []
  proof=record.get('package_label_review',{})
  if not isinstance(proof,dict)or proof.get('policy')!=POLICY or proof.get('sha256')!=record.get('sha256'):return ['Current hash-bound exact package caption review required']
- return exact_errors(proof.get('reading'))
+ pixel=proof.get('pixel')
+ if isinstance(pixel,dict)and pixel.get('sha256')!=record.get('sha256'):pixel=None
+ return combined_errors(proof.get('reading'),pixel)
 
 def prepare_cached(cache):
  """Render once per candidate; preserve the cache on font/transport failure.

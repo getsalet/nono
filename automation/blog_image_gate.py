@@ -282,7 +282,9 @@ def review(item,url,root=None,_candidate=None):
    proof=record.get('package_label_review',{})
    if not isinstance(proof,dict)or proof.get('policy')!=captions.POLICY or proof.get('sha256')!=digest or captions.exact_errors(proof.get('reading')):
     if image_approved:
-     record['package_label_review']={'policy':captions.POLICY,'sha256':digest,'reading':captions.inspect(raw)}
+     review={'policy':captions.POLICY,'sha256':digest,'reading':captions.inspect(raw)}
+     if captions.exact_errors(review['reading']):review['pixel']=captions.pixel_review(raw,root)
+     record['package_label_review']=review
  record.setdefault('scene_guard_version',None)
  record.setdefault('focused_physical_review',None)
  record['watermark']=watermark
