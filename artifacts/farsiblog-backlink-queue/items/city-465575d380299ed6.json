@@ -18,18 +18,18 @@
   "_structural_repairs": [
     "neutral_unlinked_main_site_next_step_added"
   ],
-  "attempts": 8,
-  "generated_at": "2026-11-03T02:29:33Z",
-  "last_error": "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Current hash-bound exact package caption review required; Core image condition not met: technical_evidence_match",
+  "attempts": 9,
+  "generated_at": "2026-11-04T09:36:01Z",
+  "last_error": "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy",
   "failure_stage": "image",
-  "next_retry_at": "2026-11-04T02:29:33.751622Z",
+  "next_retry_at": "2026-11-04T09:39:55.771598Z",
   "_image_article_context": {
     "title": "نوار تیپ در منجیل؛ انتخاب اتصالات",
     "meta_description": "بررسی خطاهای رایج در انتخاب و نصب اتصالات نوار تیپ و راهنمای فنی برای سیستم آبیاری قطره‌ای بهینه در مزارع.",
     "summary": "اتصالات نوار تیپ؛ گلوگاه عملکرد آبیاری در سیستم‌های آبیاری قطره‌ای، نوار تیپ به دلیل سبکی، نصب سریع و هزینه مناسب جایگاه ویژه‌ای دارد. اما انتخاب اشتباه اتصالات و اجزای جانبی می‌تواند تمام مزایای این سیستم را از بین ببرد. خطاهای رایج در انتخاب فشار، فیلتراسیون، لوله‌های انتقال و نحوه اتصال، همگی راندمان آبیاری را کاهش می‌دهند. در این مقاله به بررسی مهم‌ترین این خطاها می‌پردازیم و چک‌لیستی کاربردی ارائه می‌کنیم. فشار کاری؛ مرز میان عملکرد و خرابی یکی از شایع‌ترین خطاها، نادیده گرفتن فشار کاری تأییدشده محصول است. فشار کاری تأییدشده نوار آبیاری بغل‌دوخت با فاصله روزنه ۱۰ و ۲۰ سانتی‌متر، ۰٫۶ تا ۱ اتمسفر است. این محدوده فقط مربوط به همین مدل است و نباید به نوار پلاک‌دار یا لوله‌های انتقال تعمیم داده شود. نکته حیاتی آن است که فشار تحمل یا فشار آزمون با فشار کاری تفاوت دارد. برخی فروشندگان ممکن است عدد فشار آزمون را به‌عنوان فشار کاری معرفی کنند که این اشتباه منجر به انتخاب نادرست و آسیب به سیستم می‌شود. همیشه برگه فنی سازنده را ملاک قرار دهید و هرگز اعداد عمومی را جایگزین مشخصات مدل خود نکنید. فیلتراسیون؛ قلب تپنده سیستم نوار تیپ دارای دهانه‌های بسیار ریزی است که در برابر رسوب، گل و ذرات معلق حساسیت شدیدی دارد. بسیاری از کاربران پس از نصب نوار، متوجه گرفتگی سریع قطره‌چکان‌ها می‌شوند. دلی"
   },
   "editorial_image_decision": "mandatory_generated_1_to_2",
-  "_generation_stage": "local_vision_qa",
+  "_generation_stage": "generation_api",
   "_image_generation_round": 1,
   "_image_key_route": {
     "policy": "audited-image-key-pool-v1",
@@ -85,6 +85,23 @@
       "timeout_seconds": 600,
       "http_status": 200,
       "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 200,
+      "status": "generation_response_received"
+    },
+    {
+      "requested_secret_slot": "AGNES_API_KEY18",
+      "attempt": 1,
+      "route": "audited_image_pool",
+      "timeout_seconds": 600,
+      "http_status": 503,
+      "status": "provider_queue_full_deferred",
+      "provider_code": "image_queue_full"
     }
   ],
   "_image_render": {
@@ -196,9 +213,14 @@
     {
       "sha256": "1f3725b5ef0b2029a5d417d28359d5687c5f46b81be710d036d8ba1820cb4c17",
       "reason": "Product image rejected: Current hash-bound exact package caption review required; Core image condition not met: technical_evidence_match"
+    },
+    {
+      "sha256": "8054e2542a5634cfe7e148824d590c347882ee0a053f2fee7e008c380fafa7ca",
+      "reason": "Product image rejected: Caption blue base band ambiguous"
     }
   ],
-  "_image_qa_feedback": "Show this exact installed evidence: one closed ribbed compression union installed inline between two continuous black irrigation pipes; the joined ends and seal are visible, no open pipe end. Move the carton to the lower-left dry-soil island; all lines stay one carton diameter to its right, never under or behind it.",
+  "_image_qa_feedback": "Product image rejected: Caption blue base band ambiguous",
+  "image_retry_at": 1793785195.7715976,
   "post": {
     "title": "نوار تیپ در منجیل؛ انتخاب اتصالات",
     "slug": "navar-tip-manjil-intekhabe-etsalat",
@@ -216,7 +238,7 @@
   "qa": {
     "passed": false,
     "errors": [
-      "generation/source/validation failed: RuntimeError [stage=image]; Product image rejected: Current hash-bound exact package caption review required; Core image condition not met: technical_evidence_match"
+      "generation/source/validation failed: ImageProviderBusy [stage=image]; ImageProviderBusy"
     ],
     "words": 850,
     "links": [
