@@ -57,6 +57,16 @@ def factual_errors(plain):
  for sentence in re.split(r'[.!؟؛\n]',text):
   if re.search(r'دشت|منطقه|شهرستان|استان|محلی',sentence) and re.search(r'(?<![آ-ی])(?:خاک|آب|شوری|سختی|بارندگی)(?![آ-ی])',sentence) and re.search(r'عمدتا|معمولا|دارای|هستند|است|افزایش می|کاهش می',sentence) and not re.search(r'باید|لازم|بررسی|اندازه گیری|آزمایش|نمی توان|نمی شود|نباید|اگر|ممکن',sentence):errors.append('Unsupported categorical local soil/water assertion')
  return list(dict.fromkeys(errors))
+SOIL_CLAIM=re.compile(r'(?<![آ-ی])(?:لومی|لوم|رسی|شنی)(?![آ-ی])|هیبرید|تالاب|بحران کم آبی|سختی متوسط|روزنه.{0,15}لیزری|فاقد قطره چکان|قطب.{0,25}کشت|(?:مناطق|مراکز) (?:مهم|اصلی|عمده).{0,35}کشت')
+def factual_feedback(html):
+ """Exact offending sentences for repair prompts; same rules as factual_errors, never a QA pass."""
+ text=normalized_title(re.sub(r'<[^>]+>',' ',html or ''));out=[]
+ for sentence in re.split(r'[.!؟؛\n]',text):
+  sentence=' '.join(sentence.split())
+  if not sentence:continue
+  local=(re.search(r'دشت|منطقه|شهرستان|استان|محلی',sentence) and re.search(r'(?<![آ-ی])(?:خاک|آب|شوری|سختی|بارندگی)(?![آ-ی])',sentence) and re.search(r'عمدتا|معمولا|دارای|هستند|است|افزایش می|کاهش می',sentence) and not re.search(r'باید|لازم|بررسی|اندازه گیری|آزمایش|نمی توان|نمی شود|نباید|اگر|ممکن',sentence))
+  if SOIL_CLAIM.search(soil_claim_text(sentence)) or local:out.append(sentence[:220])
+ return list(dict.fromkeys(out))[:8]
 def review_errors(item,obj):
  review=item.get('editorial_review',{})
  if review.get('policy')!='parsiblog-evidence-review-v2' or review.get('passed')is not True or review.get('post_sha256')!=post_digest(obj):return ['Current independent editorial review missing or changed']

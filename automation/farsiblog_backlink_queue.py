@@ -274,6 +274,9 @@ def main():
                         from farsiblog_editorial_repair import relocate
                         corrected=relocate(obj,links)
                         if corrected is not None:obj=corrected
+                    from blog_claim_scrub import scrub as scrub_claims
+                    scrubbed=scrub_claims(obj)
+                    if scrubbed:item['_claim_scrub']={'policy':'afp-sentence-claim-scrub-v1','blocks':scrubbed}
                     from blog_draft_preflight import active,check
                     if active(ROOT):
                         stage='text_validation'
