@@ -23,8 +23,11 @@ def config(root=None):
 def enabled(root=None):return config(root)is not None
 
 def _rank(item,cfg):
- city=normalize(item.get('city_fa'));kind=item.get('kind');family=item.get('family')
- if not city or kind=='article'or family=='hub':return (4,0,0,'')
+ return (int(item.get('matrix_slot',0)),)+_base_rank(item,cfg)
+
+def _base_rank(item,cfg):
+ city=normalize(item.get('city_fa')or item.get('audience_city'));kind=item.get('kind');family=item.get('family')
+ if not city or (kind=='article'and not item.get('audience_city'))or family=='hub':return (4,0,0,'')
  for tier,name in enumerate(('major_cities','provincial_capitals')):
   names=list(map(normalize,cfg[name]))
   if city in names:return (tier,names.index(city),0,'')
