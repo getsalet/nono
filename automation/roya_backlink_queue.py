@@ -247,6 +247,12 @@ def build_prompt(item, links):
                     break
         prompt = '\n'.join(lines)
         prompt += '\nاین یک راهنمای فنی غیرشهری است: هیچ ادعای مکانی یا آمار محلی نساز. متن منبع کامل در این ورودی ارائه نشده؛ عدد، مشخصات محصول یا نقل‌قولی را به آن نسبت نده. جمع‌بندی کاربردی و حداقل سه بخش فنی مستقیماً به مسئله عنوان پاسخ دهند.'
+        if item.get('audience_city'):
+            city = item['audience_city']
+            prompt += (f"\nمخاطب این مقاله کشاورزان {city} هستند که درباره «{item.get('topic')}» جست‌وجو کرده‌اند. "
+                       f"نام «{city}» را عیناً در مقدمه و جمع‌بندی بیاور، اما فقط به‌عنوان مخاطب؛ ادعا نکن این محصول در {city} کشت می‌شود، "
+                       f"قطب یا رتبه تولید است، یا عملکرد، آمار، اقلیم، خاک و فصل کشت محلی دارد. "
+                       "عدد عملکرد یا مقدار بذر را قطعی ننویس؛ آن را به عوامل مزرعه وابسته بدان و برای جزئیات به راهنمای فنی لینک‌شده ارجاع بده.")
     return prompt
 
 
@@ -466,6 +472,15 @@ def qa(item, obj, links, root=None, require_image=True):
             errors.append('city backlink anchor must contain the city name')
     if any(a in GENERIC_ANCHORS for _, a in pairs):
         errors.append('generic anchor text found')
+    audience = item.get('audience_city')
+    if audience:
+        plain_body = re.sub(r'<[^>]+>', ' ', html)
+        if audience not in title or audience not in plain_body:
+            errors.append('audience city missing from title/body')
+        claim = re.compile(re.escape(audience) + r'[^.!؟\n]{0,60}(?:قطب|رتبه|بیشترین|کشت\s*می[\s‌]*شود|تولید\s*می[\s‌]*شود|اقلیم|آب\s*و\s*هوا)'
+                           r'|(?:قطب|رتبه|بیشترین)[^.!؟\n]{0,40}' + re.escape(audience))
+        if claim.search(plain_body):
+            errors.append('Unverified local crop/production claim about audience city')
     if item['city_fa'] and item['city_fa'] not in (title + ' ' + html):
         errors.append('city name missing from title/body')
     if len(re.findall(r'<details', html, flags=re.I)) < 3:

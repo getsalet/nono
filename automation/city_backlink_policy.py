@@ -18,6 +18,7 @@ def matrix_ready(root=None):
  return m.get('approved') is True and bool(m.get('approval_note'))
 def title_candidates(item,blog,root=None):
  m=read(Path(root or ROOT)/'data/blog-city-title-matrix.json',{})
+ if item.get('matrix_title'):return [item['matrix_title']] if 12<=len(item['matrix_title'])<=65 else []
  table='article_templates'if item.get('kind')=='article'else'templates'
  pool=m.get(table,{}).get(blog,{}).get(item['family'],[])
  if item.get('kind')=='article':

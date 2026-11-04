@@ -209,6 +209,40 @@ def append_approved_articles(items, old, root):
     return items
 
 
+def append_crop_city_topics(items, old, root):
+    """Crop + city + GSC matrix. Retires unpublished legacy topics; published
+    records (receipts/dedupe) are always kept unchanged."""
+    manifest = root / 'data/roya/crop-city-topics.json'
+    if not manifest.exists():
+        return items
+    cfg = json.loads(manifest.read_text(encoding='utf-8'))
+    if cfg.get('enabled') is not True or cfg.get('policy') != 'roya-crop-city-gsc-v1':
+        return items
+    if cfg.get('retire_unpublished_legacy') is True:
+        items = [x for x in items if x.get('published') or x.get('pid') or x.get('published_url')
+                 or str(x.get('key', '')).startswith('cropcity-')]
+    seen = {x['key'] for x in items}
+    titles = {x.get('title') or x.get('assigned_title') for x in items}
+    for t in cfg.get('topics', []):
+        parsed = urllib.parse.urlsplit(t.get('target_url', ''))
+        if parsed.scheme != 'https' or parsed.netloc != 'navar-abyari.ir' or parsed.path in ('', '/') or parsed.query:
+            raise ValueError('Unapproved Roya crop-city destination: ' + str(t.get('key')))
+        if t['key'] in seen or t['matrix_title'] in titles or len(t['matrix_title']) > 65:
+            continue
+        prev = old.get(t['key'])
+        item = copy.deepcopy(prev) if prev else dict(
+            key=t['key'], kind='article', source_key=t['source_key'], family='tape20',
+            target_url=t['target_url'], reference_url=t['target_url'], site_title=t['site_title'],
+            page_title=t['site_title'], topic=t['topic'], province='technical', province_fa='', city_fa='',
+            hub_url='', status='pending', attempts=0, title='', slug='', generated_at=None,
+            published=False, published_url=None, pid=None, image_url=None)
+        item.update(audience_city=t['audience_city'], audience_province=t['audience_province'],
+                    matrix_title=t['matrix_title'], prepared_title=t['matrix_title'])
+        items.append(item)
+        seen.add(t['key']); titles.add(t['matrix_title'])
+    return items
+
+
 def main():
     if TARGETS.exists():
         data = json.loads(TARGETS.read_text(encoding='utf-8'))
@@ -247,6 +281,7 @@ def main():
         items.append(item)
         counter += 1
     items = append_approved_articles(items, old, ROOT)
+    items = append_crop_city_topics(items, old, ROOT)
     from blog_city_priority import prioritize_queue
     ranked=prioritize_queue({'items':items},ROOT);items=ranked['items']
     QUEUE.write_text(json.dumps({'city_priority_policy':ranked.get('city_priority_policy'),'generated_at': __import__('datetime').datetime.now(
