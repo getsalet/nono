@@ -55,3 +55,59 @@ def test_city_keyword_templates_expand_per_city():
             assert x['target_url'] == city['target_url']
         else:
             assert x['audience_city'] == 'همدان' and x['target_url'].startswith('https://navar-abyari.ir/')
+
+
+def test_commercial_cap_preserves_published_and_retires_only_excess():
+    import hashlib
+    tpl = json.loads((ROOT / 'data/roya/crop-city-topics.json').read_text())['city_templates']
+    def row(template, city='همدان', **kwargs):
+        title = template.format(city=city)
+        return dict(key='citykw-' + hashlib.sha256(title.encode()).hexdigest()[:16],
+                    city_fa=city, status='pending', attempts=0, **kwargs)
+    rows = [row(t) for t in tpl['commercial'] + tpl['retired_commercial']]
+    rows[-1].update(status='published', published=True, pid=123, title='اصل منتشرشده')
+    rows[3]['attempts'] = 2
+    b.retire_excess_commercial(rows, tpl)
+    assert rows[-1]['status'] == 'published' and rows[-1]['pid'] == 123
+    assert rows[0]['status'] == 'pending' and rows[0]['matrix_title'] == 'قیمت نوار تیپ در همدان'
+    assert all(x['status'] == 'retired' for x in rows[1:-1])
+    assert rows[3]['attempts'] == 2
+    before = json.dumps(rows, sort_keys=True)
+    b.retire_excess_commercial(rows, tpl)
+    assert json.dumps(rows, sort_keys=True) == before
+
+
+def test_commercial_cap_does_not_modify_existing_or_inflight_selected():
+    import hashlib
+    tpl = json.loads((ROOT / 'data/roya/crop-city-topics.json').read_text())['city_templates']
+    city='تهران'
+    def row(t, status):
+        return dict(key='citykw-'+hashlib.sha256(t.format(city=city).encode()).hexdigest()[:16],
+                    city_fa=city, status=status, generated_at='2026-01-01', assigned_title='عنوان قبلی')
+    rows=[row(t,'published' if i in (2,3,4) else 'pending') for i,t in enumerate(tpl['commercial']+tpl['retired_commercial'])]
+    unrelated={'key':'citykw-method', 'kind':'article', 'status':'pending', 'city_fa':city}
+    rows.append(unrelated)
+    b.retire_excess_commercial(rows, tpl)
+    assert sum(x['status']=='published' for x in rows)==3
+    assert sum(x['status']=='pending' for x in rows[:-1])==0
+    assert unrelated['status']=='pending'
+
+
+def test_publisher_skips_excess_ready_artifact_before_preflight(tmp_path, monkeypatch):
+    import hashlib
+    import publish_roya_posts as pub
+    import blog_image_runtime_control
+    cfg = json.loads((ROOT / 'data/roya/crop-city-topics.json').read_text())
+    folder = tmp_path / 'data/roya'; folder.mkdir(parents=True)
+    (folder / 'crop-city-topics.json').write_text(json.dumps(cfg))
+    city='همدان'; tpl=cfg['city_templates']
+    def key(t): return 'citykw-'+hashlib.sha256(t.format(city=city).encode()).hexdigest()[:16]
+    rows=[dict(key=key(t), city_fa=city, status='pending') for t in tpl['commercial']+tpl['retired_commercial']]
+    queue=tmp_path/'queue.json';queue.write_text(json.dumps({'items':rows}))
+    pq=tmp_path/'publish.json';pq.write_text(json.dumps({'items':[{'key':rows[2]['key'], 'item_file':'missing.json'}]}))
+    monkeypatch.setattr(pub, 'ROOT', tmp_path);monkeypatch.setattr(pub, 'QUEUE', queue)
+    monkeypatch.setattr(pub, 'PUBLISH_QUEUE', pq);monkeypatch.setattr(pub, 'STATE', tmp_path/'state.json')
+    monkeypatch.setattr(pub, 'DO_PUBLISH', False)
+    monkeypatch.setattr(blog_image_runtime_control, 'publication_paused', lambda root: False)
+    assert pub.main() == 0
+    assert json.loads(pq.read_text())['items'][0]['key'] == rows[2]['key']

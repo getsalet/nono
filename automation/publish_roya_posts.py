@@ -237,11 +237,17 @@ def main():
         print('Publication intentionally paused by user control; no queue mutation, QA API, export, login or submission.');return 0
     if os.getenv('ROYA_DRAFT','0')=='1':raise RuntimeError('This queue publisher is configured for public publication, not drafts')
     pq=load(PUBLISH_QUEUE,{'items':[]});queue=load(QUEUE,{'items':[]});state=load(STATE,{})
+    # Apply the same editorial cap to already-prepared artifacts, even if the
+    # generator has not rebuilt its queue since the policy changed.
+    from build_roya_queue import retire_excess_commercial
+    cfg = load(ROOT/'data/roya/crop-city-topics.json', {})
+    retire_excess_commercial(queue['items'], cfg.get('city_templates') or {})
+    retired = {i['key'] for i in queue['items'] if i.get('status') == 'retired'}
     known={i['key'] for i in queue['items'] if i.get('published')}
     known.update(r['key'] for r in state.get('published',[]))
     todo=[]
     for e in list(pq['items']):
-        if e['key'] in known:continue
+        if e['key'] in known or e['key'] in retired:continue
         p=resolve_item(e)
         if not p.exists():raise RuntimeError('Ready artifact missing: '+p.name)
         i=load(p,{});post=i.get('post',{})

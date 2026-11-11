@@ -245,7 +245,10 @@ def append_crop_city_topics(items, old, root):
                     matrix_title=t['matrix_title'], prepared_title=t['matrix_title'], matrix_slot=t_index // 2)
         items.append(item)
         seen.add(t['key']); titles.add(t['matrix_title'])
-    return append_city_keyword_topics(items, old, cfg.get('city_templates') or {}, seen, titles)
+    tpl = cfg.get('city_templates') or {}
+    items = append_city_keyword_topics(items, old, tpl, seen, titles)
+    retire_excess_commercial(items, tpl)
+    return items
 
 
 def append_city_keyword_topics(items, old, tpl, seen, titles):
@@ -307,6 +310,46 @@ def append_city_keyword_topics(items, old, tpl, seen, titles):
             seen.add(key); titles.add(title)
     return items
 
+
+def retire_excess_commercial(items, tpl):
+    """Keep published receipts and at most two commercial topics per city.
+
+    Matching uses stable keys rather than mutable generated or assigned titles.
+    Retired rows remain available to consumers of the shared city target list.
+    """
+    if tpl.get('policy') != 'roya-city-keyword-v1':
+        return
+    preferred = tpl.get('commercial', [])
+    obsolete = tpl.get('retired_commercial', [])
+    if len(preferred) != 2 or not obsolete:
+        return
+    by_city = {}
+    for row in items:
+        if not str(row.get('key', '')).startswith('citykw-') or row.get('kind') == 'article' or not row.get('city_fa'):
+            continue
+        city = row['city_fa']
+        for rank, template in enumerate(preferred + obsolete):
+            title = template.format(city=city)
+            key = 'citykw-' + hashlib.sha256(title.encode()).hexdigest()[:16]
+            if row['key'] == key:
+                by_city.setdefault(city, []).append((rank, title, row))
+                break
+    for rows in by_city.values():
+        published = [(rank, title, row) for rank, title, row in rows
+                     if row.get('published') or row.get('pid') or row.get('published_url') or row.get('status') == 'published']
+        available = max(0, 2 - len(published))
+        candidates = sorted((entry for entry in rows if entry not in published and entry[0] < len(preferred)), key=lambda e: e[0])
+        selected = {row['key'] for _, _, row in candidates[:available]}
+        for rank, title, row in rows:
+            if row in [entry[2] for entry in published]:
+                continue
+            if row['key'] not in selected:
+                row['status'] = 'retired'
+                row['last_error'] = 'Retired excess Roya city commercial topic'
+            elif (row.get('status') == 'pending' and not row.get('generated_at')
+                  and not row.get('_image_stock_request') and not row.get('_image_article_context')):
+                row['matrix_title'] = title
+                row['prepared_title'] = title
 
 def main():
     if TARGETS.exists():
